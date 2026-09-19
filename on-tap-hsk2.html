@@ -1019,7 +1019,7 @@ renderedTabs.add('flashcard');
 (function(){
   try{
     const saved = localStorage.getItem('hsk2_theme');
-    if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
   }catch(e){}
 })();
 </script>
