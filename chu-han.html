@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hồ sơ chữ Hán · Hán Ngữ Cùng Bách Hữu</title>
+<style>
+:root{--bg:#FDFBF7;--card:#fff;--soft:#F5F2EB;--text:#2C3E50;--muted:#566573;--faint:#8492A6;--border:#E5E0D8;--primary:#C0392B;--primary-soft:#FADBD8;--green:#27AE60;--green-soft:#E8F8F5;--amber:#D68910;--amber-soft:#FCF3CF;--shadow:0 4px 18px rgba(44,62,80,.08);--cn:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;--vn:"Times New Roman",Times,serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--vn);padding-bottom:60px}a{color:var(--primary)}
+.wrap{max-width:980px;margin:auto;padding:34px 18px 70px}.back{display:inline-flex;gap:7px;margin-bottom:18px;text-decoration:none;font-weight:700}
+.hero{display:grid;grid-template-columns:220px 1fr;gap:26px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow)}
+.char-box{text-align:center;background:var(--soft);border:1px solid var(--border);border-radius:16px;padding:20px}.char{font-family:var(--cn);font-size:112px;line-height:1.05}.pinyin{font-size:24px;color:var(--primary);font-weight:700;margin-top:8px}.meaning{font-size:18px;color:var(--muted);margin-top:7px}.status{display:inline-block;margin-top:12px;padding:5px 10px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800}
+h1{font-size:30px;margin:0 0 8px}h2{font-size:20px;margin:0 0 14px}.lead{color:var(--muted);line-height:1.75;margin:0 0 18px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.info{background:var(--soft);border-radius:10px;padding:12px}.label{font-size:11px;color:var(--faint);font-weight:800;text-transform:uppercase;letter-spacing:.05em}.value{font-size:17px;margin-top:3px}.value.zh{font-family:var(--cn)}
+.words{display:flex;flex-wrap:wrap;gap:8px}.word{padding:7px 10px;border-radius:9px;background:var(--primary-soft);color:var(--primary);font-family:var(--cn);font-weight:700}
+.sent{padding:12px 0;border-bottom:1px solid var(--border)}.sent:last-child{border-bottom:0}.sent-zh{font-family:var(--cn);font-size:19px;line-height:1.7}.sent-pin{color:var(--primary);font-size:14px;margin-top:3px}.sent-vi{color:var(--muted);font-size:14px;margin-top:3px}
+.sources{display:grid;gap:8px}.source{padding:11px 13px;background:var(--soft);border-radius:9px;font-size:13px}.source b{display:block;margin-bottom:2px}.source a{text-decoration:none}.note{background:var(--amber-soft);border-left:4px solid var(--amber);padding:13px 15px;border-radius:9px;color:#6f5412;font-size:13px;line-height:1.65}.empty{text-align:center;padding:70px 20px;color:var(--muted)}.char-nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.btn{border:1px solid var(--border);background:var(--card);padding:10px 14px;border-radius:10px;font-weight:700;color:var(--text);text-decoration:none}
+@media(max-width:700px){.hero{grid-template-columns:1fr;text-align:center}.char-box{max-width:280px;margin:auto}.grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.char{font-size:92px}}
+</style><link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+<nav class="site-nav no-print"><div class="site-nav-inner"><a class="site-nav-brand" href="trang-chu.html"><span class="site-nav-brand-mark">漢</span><span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span></a><button class="site-nav-burger" id="siteNavBurger" type="button">☰</button><div class="site-nav-links" id="siteNavLinks"><a href="trang-chu.html">Trang chủ</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="hskk.html">HSKK</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a></div></div></nav>
+<main class="wrap"><a class="back" href="on-tap-chung.html">← Quay lại Ôn tập chung · Chữ Hán</a><div id="app"><div class="empty">Đang tải hồ sơ chữ Hán…</div></div></main>
+<footer class="site-footer no-print"><div class="site-footer-inner"><div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div><div class="site-footer-links"><a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a></div></div><div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div></footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button">↑</button>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const wanted=new URLSearchParams(location.search).get('char')||'';
+const urls=h=>[...new Set((h.match(/(?:bvnh\d+-\d+|bai\d+_index)\.html/g)||[]))];
+function parseLesson(h){
+ const m=h.indexOf('const LESSON ='),st=h.indexOf('{',m);if(m<0||st<0)throw Error('LESSON not found');
+ let d=0,q=null,e=false,lc=false,bc=false;
+ for(let i=st;i<h.length;i++){const c=h[i],n=h[i+1];if(lc){if(c==='\n')lc=false;continue}if(bc){if(c==='*'&&n==='/'){bc=false;i++}continue}if(q){if(e){e=false;continue}if(c==='\\'){e=true;continue}if(c===q)q=null;continue}if(c==='/'&&n==='/'){lc=true;i++;continue}if(c==='/'&&n==='*'){bc=true;i++;continue}if(c==='"'||c==="'"||c===String.fromCharCode(96)){q=c;continue}if(c==='{')d++;else if(c==='}'){d--;if(!d)return Function('"use strict";return ('+h.slice(st,i+1)+')')()}}throw Error('LESSON parse failed')}
+async function get(u){const r=await fetch(u+'?hanzi_profile='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(u);return{u,l:parseLesson(await r.text())}}
+const sourceMap={'han-dian':['汉典','https://www.zdic.net/','bộ thủ / số nét / cấu trúc'],'unicode_uax38':['Unicode Unihan / UAX #38','https://www.unicode.org/reports/tr38/','thuộc tính dữ liệu chữ Hán'],'GF0023-2020':['通用规范汉字笔顺规范 GF 0023—2020','https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/202103/W020210318300204215237.pdf','chuẩn thứ tự nét'],'textbook_lesson1':['Giáo trình chuẩn HSK 2 · Bài 1','https://chinese.edu.vn/giao-trinh-chuan-hsk-2-bai-1.html','từ vựng và câu mẫu']};
+function sources(refs){return(refs||[]).map(k=>{const s=sourceMap[k];return s?'<div class="source"><b>'+esc(s[0])+'</b><a href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[2])+' ↗</a></div>':''}).join('')}
+function render(hit){
+ const c=hit.l.content||{},h=(c.hanzi||[]).find(x=>x.char===wanted);
+ if(!h){$('#app').innerHTML='<div class="empty">Không tìm thấy hồ sơ chữ '+esc(wanted)+'.</div>';return}
+ const examples=(c.exampleSentences||[]).filter(x=>x.zh&&x.zh.includes(wanted)),words=h.exampleWords||h.words||[];
+ document.title='Hồ sơ chữ '+wanted+' · Hán Ngữ Cùng Bách Hữu';
+ $('#app').innerHTML='<section class="hero"><div class="char-box"><div class="char">'+esc(h.char)+'</div><div class="pinyin">'+esc(h.pinyin||'Chưa có pinyin')+'</div><div class="meaning">'+esc(h.meaning||'Chưa có nghĩa chuẩn hóa')+'</div><div class="status">'+esc(h.status||'data')+'</div></div><div><h1>'+esc(h.char)+' · '+esc(h.pinyin||'')+'</h1><p class="lead">Hồ sơ chữ Hán dùng dữ liệu canonical của bài học. Không tự điền các trường chưa có xác nhận nguồn.</p><div class="info-grid"><div class="info"><div class="label">Bộ thủ</div><div class="value zh">'+esc(h.radical||'Chưa có')+'</div></div><div class="info"><div class="label">Cấu tạo</div><div class="value zh">'+esc(h.structure||'Chưa có')+'</div></div><div class="info"><div class="label">Số nét</div><div class="value">'+(h.strokes??'Chưa có')+'</div></div><div class="info"><div class="label">Từ trong bài</div><div class="value zh">'+esc(words.join(' · ')||'Chưa có')+'</div></div></div></div></section><div class="grid"><section class="card"><h2>🔎 Ghi chú dữ liệu</h2><div class="note">'+esc(h.notes||'Chưa có ghi chú nguồn.')+'</div></section><section class="card"><h2>📚 Nguồn</h2><div class="sources">'+sources(h.sourceRefs)+'</div></section></div><section class="card" style="margin-top:14px"><h2>🧩 Từ có chứa chữ này trong bài</h2><div class="words">'+(words.length?words.map(w=>'<span class="word">'+esc(w)+'</span>').join(''):'Chưa có')+'</div></section><section class="card" style="margin-top:14px"><h2>💬 Câu mẫu trong bài</h2>'+(examples.length?examples.map(x=>'<div class="sent"><div class="sent-zh">'+esc(x.zh)+'</div><div class="sent-pin">'+esc(x.pinyin||'')+'</div><div class="sent-vi">'+esc(x.vi||'')+'</div></div>').join(''):'<p class="lead">Chưa có câu mẫu chứa trực tiếp chữ này trong dữ liệu bài học.</p>')+'</section><div class="char-nav"><a class="btn" href="on-tap-chung.html">← Danh sách chữ Hán</a><a class="btn" href="'+esc(hit.u)+'">Mở bài học →</a></div>';
+}
+async function load(){
+ if(!wanted){$('#app').innerHTML='<div class="empty">Hãy mở hồ sơ từ Ôn tập chung → Chữ Hán.</div>';return}
+ const home=await(await fetch('trang-chu.html?manifest='+Date.now(),{cache:'no-store'})).text();
+ const all=['bvnh2-1.html',...urls(home)],rs=await Promise.allSettled([...new Set(all)].map(get));
+ const hit=rs.filter(x=>x.status==='fulfilled').map(x=>x.value).find(x=>(x.l.content?.hanzi||[]).some(h=>h.char===wanted));
+ if(!hit){$('#app').innerHTML='<div class="empty">Chưa có hồ sơ cho chữ '+esc(wanted)+' trong dữ liệu bài học hiện tại.</div>';return}render(hit);
+}
+$('#footerYear').textContent=new Date().getFullYear();
+const b=$('#siteNavBurger'),l=$('#siteNavLinks');if(b&&l)b.onclick=()=>{const o=l.classList.toggle('open');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')};
+const bt=$('#siteBackTop');addEventListener('scroll',()=>bt.classList.toggle('visible',scrollY>400));bt.onclick=()=>scrollTo({top:0,behavior:'smooth'});load().catch(()=>$('#app').innerHTML='<div class="empty">Không tải được dữ liệu chữ Hán.</div>');
+})();
+</script></body></html>
