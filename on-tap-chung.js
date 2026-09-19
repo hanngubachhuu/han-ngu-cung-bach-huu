@@ -26,10 +26,23 @@ function qs(l,b,lv){
 }
 function vocab(l,qq,b){
  if(Array.isArray(l.vocab)&&l.vocab.length)return l.vocab.map(v=>({...v,bai:b}));
- let o=[];qq.forEach(x=>{
-  if(x.type==='matching'&&Array.isArray(x.terms)&&Array.isArray(x.optionsPool)&&x.correctMap)x.terms.forEach(t=>{let k=x.correctMap[t.id],op=x.optionsPool.find(a=>String(a.k)===String(k));if(t.zh&&op)o.push({han:t.zh,pinyin:'',nghia:op.t,bai:b,derived:true})});
-  if(x.type==='mcq'&&/nghĩa là gì/i.test(String(x.prompt||''))&&Array.isArray(x.options)){let m=String(x.prompt).match(/[\u3400-\u9fff]{1,12}/),a=x.answer??x.correct,op=x.options.find(o=>String(o.k)===String(a));if(m&&op)o.push({han:m[0],pinyin:'',nghia:op.t,bai:b,derived:true})}
- });return uniq(o,v=>v.han+'|'+v.bai)
+ let o=[];
+ qq.forEach(x=>{
+  const isVocab=String(x.skill||'').toLowerCase().includes('từ vựng');
+  if(x.type==='matching'&&Array.isArray(x.terms)&&Array.isArray(x.optionsPool)&&x.correctMap){
+   x.terms.forEach(t=>{let k=x.correctMap[t.id],op=x.optionsPool.find(a=>String(a.k)===String(k));if(t.zh&&op)o.push({han:t.zh,pinyin:'',nghia:op.t,bai:b,derived:true})});
+  }
+  if(x.type==='mcq'&&/nghĩa là gì/i.test(String(x.prompt||''))&&Array.isArray(x.options)){
+   let m=String(x.prompt).match(/[\\u3400-\\u9fff]{1,12}/),a=x.answer??x.correct,op=x.options.find(o=>String(o.k)===String(a));if(m&&op)o.push({han:m[0],pinyin:'',nghia:op.t,bai:b,derived:true});
+  }
+  if(isVocab&&Array.isArray(x.options)){
+   x.options.forEach(op=>{if(op&&typeof op.t==='string'&&/[\\u3400-\\u9fff]/.test(op.t))o.push({han:op.t.replace(/[^\\u3400-\\u9fff]/g,''),pinyin:'',nghia:'',bai:b,derived:true})});
+  }
+  if(isVocab&&Array.isArray(x.wordBank)){
+   x.wordBank.forEach(w=>{if(typeof w==='string'&&/[\\u3400-\\u9fff]/.test(w))o.push({han:w,pinyin:'',nghia:'',bai:b,derived:true})});
+  }
+ });
+ return uniq(o,v=>v.han+'|'+v.bai)
 }
 function norm(l,u){
  let b=bn(l,u),lv=lvl(l),q=qs(l,b,lv),title=l.zhTitle||l.title||u,v=vocab(l,q,b).map(x=>({...x,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title}));
