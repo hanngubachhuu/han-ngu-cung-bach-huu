@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ôn tập chung — Hán Ngữ Cùng Bách Hữu</title>
+<meta name="description" content="Kho ôn tập chung từ vựng, ngữ pháp, chữ Hán và bài tập được tổng hợp từ các bài học.">
+<style>
+:root{--bg:#FDFBF7;--card:#fff;--soft:#F5F2EB;--text:#2C3E50;--muted:#566573;--faint:#8492A6;--border:#E5E0D8;--primary:#C0392B;--primary-soft:#FADBD8;--green:#27AE60;--green-soft:#E8F8F5;--shadow:0 4px 18px rgba(44,62,80,.08);--radius:14px;--cn:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;--vn:"Times New Roman",Times,serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--vn);padding-bottom:60px}
+button,input,select{font-family:var(--vn)}button{cursor:pointer}a{text-decoration:none;color:var(--primary)}
+.wrap{max-width:1040px;margin:0 auto;padding:38px 18px 80px}.head{text-align:center;max-width:780px;margin:8px auto 24px}.eyebrow{display:inline-block;background:var(--primary-soft);color:var(--primary);font-weight:800;font-size:12px;letter-spacing:.08em;padding:7px 15px;border-radius:999px}
+h1{font-size:35px;line-height:1.2;margin:14px 0 10px}.head p{font-size:16px;line-height:1.75;color:var(--muted);margin:0}.sync{margin-top:16px;padding:11px 14px;border:1px solid var(--border);background:var(--card);border-radius:10px;color:var(--muted);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:22px 0}.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;text-align:center;box-shadow:var(--shadow)}.stat b{display:block;font-size:25px;color:var(--primary)}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;background:var(--soft);padding:6px;border-radius:18px;margin:20px 0 14px}.tab{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:12px;padding:11px 6px;border-radius:12px}.tab.active{background:var(--primary);color:#fff}
+.toolbar{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:9px;margin-bottom:20px}.toolbar input,.toolbar select{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:14px;outline:0}
+.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}.card h2{font-size:19px;margin:0 0 8px}.card p{color:var(--muted);line-height:1.75}
+.tag{display:inline-block;background:var(--primary-soft);color:var(--primary);font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;margin-right:5px}.mini{font-size:12px;color:var(--faint)}
+.lesson-list{display:grid;gap:9px}.lesson-link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border:1px solid var(--border);border-radius:10px;background:var(--soft);color:inherit}.lesson-link:hover{border-color:var(--primary);background:var(--card)}
+.action-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip,.btn{border:1px solid var(--border);background:var(--card);color:var(--muted);padding:9px 12px;border-radius:10px;font-weight:700;font-size:12px}.chip{border-radius:999px}.chip.active,.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}.btn-green{background:var(--green);border-color:var(--green);color:#fff}
+.vocab-grid,.hanzi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}.item .han{font-family:var(--cn);font-size:28px;font-weight:700}.item .pin{color:var(--primary);margin-top:4px}.item .meaning,.item p{color:var(--muted);line-height:1.65}
+.fc{max-width:560px;margin:0 auto}.fc-count{text-align:center;color:var(--muted);font-size:13px;margin-bottom:9px}.fc-card{min-height:300px;background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:28px;cursor:pointer}.fc-card .han{font-family:var(--cn);font-size:58px}.fc-card .pin{color:var(--primary);font-size:17px;margin-top:9px}.fc-back{display:none}.fc-card.flipped .fc-front{display:none}.fc-card.flipped .fc-back{display:block}.fc-back .meaning{font-size:22px;font-weight:700}.fc-actions{display:flex;justify-content:center;gap:8px;margin-top:11px}
+.exercise{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:9px}.exercise .prompt{font-size:15px;line-height:1.7}.answer{display:none;background:var(--green-soft);border-radius:8px;padding:10px;margin-top:10px;line-height:1.65}.exercise.open .answer{display:block}
+.hanzi-grid{grid-template-columns:repeat(5,1fr)}.hanzi{text-align:center}.hanzi .char{font-family:var(--cn);font-size:46px}.hanzi .meta{font-size:11px;color:var(--muted);line-height:1.5;margin-top:6px}
+.quiz{max-width:760px;margin:0 auto}.quiz-opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--soft);padding:11px 13px;border-radius:9px;margin:8px 0}.quiz-opt.selected{border-color:var(--primary);background:var(--primary-soft)}.quiz-input{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;font-size:15px}.result{text-align:center;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:14px}.result b{font-size:44px;color:var(--primary)}
+.empty{text-align:center;color:var(--muted);padding:32px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(3,1fr)}.tabs{grid-template-columns:repeat(3,1fr)}.toolbar{grid-template-columns:1fr}.hanzi-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:520px){.wrap{padding:28px 12px 70px}h1{font-size:29px}.head p{font-size:14px}.stats{grid-template-columns:repeat(2,1fr)}.tabs{grid-template-columns:repeat(2,1fr)}.vocab-grid{grid-template-columns:1fr}.hanzi-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ"><span id="navLogo">Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span></a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-static-head">HSK 2</div>
+          <a class="dd-static-link" href="bvnh2-1.html">Bài 1</a><a class="dd-static-link" href="bai2_index.html">Bài 2</a><a class="dd-static-link" href="bai3_index.html">Bài 3</a><a class="dd-static-link" href="bai4_index.html">Bài 4</a><a class="dd-static-link" href="bai5_index.html">Bài 5</a><a class="dd-static-link" href="bai6_index.html">Bài 6</a><a class="dd-static-link" href="bai7_index.html">Bài 7</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<main class="wrap">
+  <header class="head"><span class="eyebrow">ÔN TẬP CHUNG</span><h1>Ôn tập chung</h1><p>Một kho ôn tập dùng chung cho toàn bộ hệ thống. Từ vựng, ngữ pháp, chữ Hán và bài tập được tổng hợp từ các bài học, không còn gắn riêng với HSK 2.</p><div class="sync" id="syncStatus">Đang đồng bộ dữ liệu bài học…</div></header>
+  <section class="stats"><div class="stat"><b id="statLessons">0</b><span>bài học</span></div><div class="stat"><b id="statVocab">0</b><span>mục từ vựng</span></div><div class="stat"><b id="statGrammar">0</b><span>điểm ngữ pháp</span></div><div class="stat"><b id="statHanzi">0</b><span>chữ Hán</span></div><div class="stat"><b id="statQuestions">0</b><span>câu bài tập</span></div></section>
+  <div class="tabs no-print" id="tabs"><button class="tab active" data-tab="overview">Tổng quan</button><button class="tab" data-tab="vocab">Từ vựng</button><button class="tab" data-tab="grammar">Ngữ pháp</button><button class="tab" data-tab="hanzi">Chữ Hán</button><button class="tab" data-tab="exercises">Bài tập</button><button class="tab" data-tab="quiz">Kiểm tra</button></div>
+  <div class="toolbar no-print"><input id="search" type="search" placeholder="Tìm từ, chữ Hán, ngữ pháp, câu hỏi…"><select id="levelFilter"><option value="all">Tất cả cấp độ</option></select><select id="lessonFilter"><option value="all">Tất cả bài học</option></select></div>
+  <section class="panel active" id="panel-overview"></section><section class="panel" id="panel-vocab"></section><section class="panel" id="panel-grammar"></section><section class="panel" id="panel-hanzi"></section><section class="panel" id="panel-exercises"></section><section class="panel" id="panel-quiz"></section>
+</main>
+<footer class="site-footer no-print"><div class="site-footer-inner"><div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div><div class="site-footer-links"><a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a></div></div><div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div></footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Lên đầu trang" title="Lên đầu trang">↑</button>
+<script src="on-tap-chung.js"></script>
+</body>
+</html>
