@@ -47,6 +47,10 @@ function vocab(l,qq,b){
 function norm(l,u){
  let b=bn(l,u),lv=lvl(l),title=l.zhTitle||l.title||u,c=l.content||{};
  let q=qs(l,b,lv);
+ if(Array.isArray(c.exercises?.all)&&c.exercises.all.length){
+   const cq=c.exercises.all.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title}));
+   const ids=new Set(q.map(x=>String(x.id))); q=q.concat(cq.filter(x=>!ids.has(String(x.id))));
+ }
  let v=Array.isArray(c.vocabulary)&&c.vocabulary.length?c.vocabulary.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):vocab(l,q,b).map(x=>({...x,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title}));
  let g=Array.isArray(c.grammar)&&c.grammar.length?c.grammar.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):Array.isArray(l.grammar)&&l.grammar.length?l.grammar.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):uniq((l.sections||[]).filter(s=>String(s.skill||'').toLowerCase().includes('ngữ pháp')).map(s=>({title:s.title||'Điểm ngữ pháp',desc:s.instruction||'',bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title,derived:true})),x=>x.title+'|'+x.bai);
  let hz=Array.isArray(c.hanzi)&&c.hanzi.length?c.hanzi.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):Array.isArray(l.hanzi)?l.hanzi.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):[];
