@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九月去北京旅游最好 · Bài 1 · Luyện tập HSK 2</title>
+<style>
+/* ============================================================
+   THEME VARIABLES
+============================================================ */
+:root{
+  --bg:#f4f6fb; --bg-card:#ffffff; --bg-soft:#eef1f8;
+  --text:#1c2333; --text-dim:#5b6577; --text-faint:#8992a3;
+  --accent:#3b5bdb; --accent-dark:#2a43a8; --accent-soft:#e9edfd;
+  --green:#1f9d55; --green-soft:#e6f7ec;
+  --red:#e03131; --red-soft:#fdecec;
+  --amber:#f0a500; --amber-soft:#fff6e0;
+  --gray:#9aa2b1; --gray-soft:#eef0f4;
+  --border:#e3e7f0; --shadow:0 4px 18px rgba(30,40,80,.07);
+  --shadow-sm:0 2px 8px rgba(30,40,80,.06);
+  --radius:16px; --radius-sm:10px;
+  --zh-font:"KaiTi","STKaiti","KaiTi_GB2312",serif;
+  --vi-font:"Times New Roman","Times",serif;
+}
+[data-theme="dark"]{
+  --bg:#12151f; --bg-card:#1a1e2b; --bg-soft:#20253544;
+  --text:#e8eaf2; --text-dim:#a9b0c3; --text-faint:#767f95;
+  --accent:#6d8dff; --accent-dark:#4f6ee0; --accent-soft:#232a48;
+  --green:#4bd07a; --green-soft:#16301f;
+  --red:#ff6b6b; --red-soft:#3a1c1c;
+  --amber:#ffc94a; --amber-soft:#3a2f10;
+  --gray:#767f95; --gray-soft:#232838;
+  --border:#2b3145; --shadow:0 4px 20px rgba(0,0,0,.35);
+  --shadow-sm:0 2px 10px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--vi-font); line-height:1.6;
+  transition:background .3s,color .3s;
+  padding-bottom:40px;
+}
+.zh{font-family:var(--zh-font); font-size:1.15em; letter-spacing:.5px;}
+h1,h2,h3,h4{font-family:var(--vi-font); margin:0 0 8px;}
+h1{font-size:36pt; line-height:1.15;}
+h2{font-size:28pt; line-height:1.2;}
+h3{font-size:20pt; line-height:1.25;}
+h4{font-size:16pt;}
+p{margin:0 0 10px;}
+button{font-family:var(--vi-font); cursor:pointer;}
+a{color:var(--accent);}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px;}
+
+.container{max-width:980px; margin:0 auto; padding:0 18px;}
+.hidden{display:none !important;}
+.card{
+  background:var(--bg-card); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:24px; margin-bottom:20px;
+  border:1px solid var(--border);
+}
+.btn{
+  border:none; border-radius:999px; padding:13px 24px; font-size:17px;
+  font-weight:600; transition:.2s; background:var(--accent-soft); color:var(--accent-dark);
+}
+.btn:hover{filter:brightness(1.05); transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn-primary{background:var(--accent); color:#fff; box-shadow:0 4px 14px rgba(59,91,219,.35);}
+.btn-primary:hover{background:var(--accent-dark);}
+.btn-ghost{background:transparent; color:var(--text-dim); border:1px solid var(--border);}
+.btn-danger{background:var(--red-soft); color:var(--red);}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none;}
+.btn-sm{padding:8px 16px; font-size:15px;}
+
+/* ============ HEADER / TOPBAR ============ */
+.topbar{
+  position:sticky; top:0; z-index:50; background:var(--bg-card);
+  border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm);
+}
+.topbar-inner{
+  max-width:980px; margin:0 auto; padding:10px 18px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.brand{font-weight:700; font-size:17px; color:var(--accent-dark); flex:1; min-width:140px;}
+.brand small{display:block; font-weight:400; color:var(--text-faint); font-size:13px;}
+.timer-box{
+  display:flex; align-items:center; gap:6px; background:var(--bg-soft);
+  padding:8px 16px; border-radius:999px; font-weight:700; font-size:17px;
+  font-variant-numeric:tabular-nums;
+}
+.timer-box.warn{color:var(--red); background:var(--red-soft);}
+.icon-btn{
+  background:var(--bg-soft); border:none; border-radius:50%; width:38px; height:38px;
+  display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--text);
+}
+
+/* ============ PROGRESS ============ */
+.progress-wrap{margin:14px 0 6px;}
+.progress-meta{
+  display:flex; justify-content:space-between; font-size:15px; color:var(--text-dim); margin-bottom:6px;
+}
+.progress-bar-track{
+  height:10px; border-radius:999px; background:var(--bg-soft); overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%; background:linear-gradient(90deg,var(--accent),#7c9bff);
+  border-radius:999px; transition:width .4s ease;
+}
+
+/* ============ NAV GRID ============ */
+.nav-toggle-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+.qnav-legend{display:flex; gap:14px; flex-wrap:wrap; font-size:14px; color:var(--text-dim); margin-bottom:10px;}
+.legend-dot{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:middle;}
+.qnav-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(42px,1fr)); gap:8px;}
+.qnav-item{
+  aspect-ratio:1/1; border-radius:8px; border:none; background:var(--gray-soft); color:var(--text-dim);
+  font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  position:relative; transition:.15s;
+}
+.qnav-item.answered{background:var(--accent-soft); color:var(--accent-dark);}
+.qnav-item.current{outline:2px solid var(--accent); outline-offset:2px;}
+.qnav-item.correct{background:var(--green-soft); color:var(--green);}
+.qnav-item.wrong{background:var(--red-soft); color:var(--red);}
+.qnav-item.self{background:var(--amber-soft); color:var(--amber);}
+.qnav-item .dot-type{position:absolute; bottom:2px; right:2px; width:5px; height:5px; border-radius:50%; background:var(--text-faint);}
+
+/* ============ QUESTION CARD ============ */
+.q-section-title{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); font-weight:700; margin-bottom:4px;}
+.q-skill-tag{
+  display:inline-block; font-size:13px; padding:4px 12px; border-radius:999px;
+  background:var(--accent-soft); color:var(--accent-dark); font-weight:700; margin-bottom:10px;
+}
+.q-num{font-size:15px; color:var(--text-faint); margin-bottom:6px;}
+.q-prompt{font-size:24pt; line-height:1.5; margin-bottom:18px;}
+.passage-box{
+  background:var(--bg-soft); border-left:4px solid var(--accent); border-radius:8px;
+  padding:18px 20px; margin-bottom:18px; font-size:22pt; line-height:1.6;
+}
+.options-list{display:flex; flex-direction:column; gap:12px;}
+.option-item{
+  display:flex; align-items:center; gap:14px; padding:16px 20px; border-radius:12px;
+  border:1.5px solid var(--border); background:var(--bg-card); transition:.15s; text-align:left; width:100%;
+  font-size:22pt; color:var(--text);
+}
+.option-item:hover{border-color:var(--accent);}
+.option-item.selected{border-color:var(--accent); background:var(--accent-soft); color:var(--accent-dark); font-weight:600;}
+.option-item .opt-key{
+  width:34px; height:34px; border-radius:50%; background:var(--bg-soft); display:flex; align-items:center;
+  justify-content:center; font-size:15px; font-weight:700; flex-shrink:0;
+}
+.option-item.selected .opt-key{background:var(--accent); color:#fff;}
+.option-item.locked.correct-answer{border-color:var(--green); background:var(--green-soft); color:var(--green);}
+.option-item.locked.wrong-selected{border-color:var(--red); background:var(--red-soft); color:var(--red);}
+
+.text-input, textarea.text-input{
+  width:100%; padding:15px 18px; border-radius:12px; border:1.5px solid var(--border);
+  background:var(--bg-card); color:var(--text); font-size:22pt; font-family:var(--zh-font);
+}
+textarea.text-input{min-height:120px; resize:vertical; font-family:var(--vi-font);}
+.text-input:focus, textarea.text-input:focus{outline:none; border-color:var(--accent);}
+select.blank-select{
+  font-family:var(--zh-font); padding:7px 12px; border-radius:8px; border:1.5px solid var(--accent);
+  background:var(--accent-soft); color:var(--accent-dark); font-size:18pt; font-weight:600; margin:0 4px;
+}
+.sentence-line{font-size:24pt; line-height:2.1;}
+.gap-mark{
+  display:inline-flex; align-items:center; justify-content:center; width:1.1em; height:1.1em;
+  border-radius:50%; background:var(--accent-soft); color:var(--accent-dark); font-size:.6em;
+  font-weight:800; margin:0 2px; vertical-align:middle;
+}
+
+.reorder-tokens-pool, .reorder-answer-row{
+  display:flex; flex-wrap:wrap; gap:10px; min-height:64px; padding:12px; border-radius:12px;
+}
+.reorder-answer-row{background:var(--bg-soft); border:1.5px dashed var(--border); margin-bottom:14px;}
+.token-chip{
+  font-family:var(--zh-font); font-size:20pt; background:var(--accent-soft); color:var(--accent-dark);
+  border:none; padding:10px 16px; border-radius:10px; font-weight:600;
+}
+.token-chip.used{opacity:.35; pointer-events:none;}
+.token-chip.in-answer{background:var(--accent); color:#fff;}
+
+.result-badge{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 16px; border-radius:999px;
+  font-size:15px; font-weight:700; margin-bottom:12px;
+}
+.result-badge.ok{background:var(--green-soft); color:var(--green);}
+.result-badge.no{background:var(--red-soft); color:var(--red);}
+.result-badge.pending{background:var(--amber-soft); color:var(--amber);}
+
+.classification-box{
+  text-align:center; font-size:32pt; font-weight:800; padding:26px 20px; border-radius:18px;
+  margin:16px auto 22px; max-width:640px; border:2.5px solid transparent; line-height:1.3;
+}
+.classification-box .cb-score{font-size:16pt; font-weight:600; display:block; margin-top:6px;}
+.classification-box.tier-good{background:var(--green-soft); color:var(--green); border-color:var(--green);}
+.classification-box.tier-mid{background:var(--amber-soft); color:var(--amber); border-color:var(--amber);}
+.classification-box.tier-low{background:var(--red-soft); color:var(--red); border-color:var(--red);}
+
+.explain-box{
+  margin-top:16px; padding:18px 20px; background:var(--bg-soft); border-radius:12px; font-size:18pt; line-height:1.55;
+}
+.explain-box p{margin:0 0 10px;}
+.explain-box p:last-child{margin-bottom:0;}
+.explain-box b{color:var(--accent-dark);}
+.ref-answer-box{
+  margin-top:16px; padding:18px 20px; background:var(--amber-soft); border-radius:12px; border-left:4px solid var(--amber);
+  font-size:20pt; line-height:1.55;
+}
+.self-mark-row{display:flex; gap:10px; margin-top:14px;}
+
+.qnav-arrows{display:flex; justify-content:space-between; margin-top:20px; gap:10px;}
+
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin:16px 0;}
+.stat-box{background:var(--bg-soft); border-radius:12px; padding:14px; text-align:center;}
+.stat-box .num{font-size:30px; font-weight:800; color:var(--accent-dark);}
+.stat-box .lbl{font-size:14px; color:var(--text-dim); margin-top:2px;}
+
+.filter-row{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0;}
+.filter-chip{
+  padding:8px 18px; border-radius:999px; border:1.5px solid var(--border); background:var(--bg-card);
+  color:var(--text-dim); font-size:15px; font-weight:600;
+}
+.filter-chip.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+
+table.history-table{width:100%; border-collapse:collapse; font-size:16px;}
+table.history-table th, table.history-table td{padding:10px 8px; text-align:left; border-bottom:1px solid var(--border);}
+table.history-table th{color:var(--text-dim); font-size:13px; text-transform:uppercase;}
+table.history-table tr:hover td{background:var(--bg-soft); cursor:pointer;}
+
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(10,14,25,.55); display:flex; align-items:center; justify-content:center;
+  z-index:200; padding:20px;
+}
+.modal-box{
+  background:var(--bg-card); border-radius:var(--radius); padding:26px; max-width:440px; width:100%;
+  box-shadow:var(--shadow);
+}
+.modal-box h3{margin-bottom:10px;}
+.modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap;}
+.missing-list{display:flex; flex-wrap:wrap; gap:6px; margin:12px 0;}
+.missing-chip{background:var(--red-soft); color:var(--red); padding:5px 12px; border-radius:8px; font-size:15px; font-weight:700;}
+
+.float-btns{position:fixed; right:20px; bottom:24px; display:flex; flex-direction:column; gap:10px; z-index:80;}
+.float-btn{
+  width:44px; height:44px; border-radius:50%; background:var(--accent); color:#fff; border:none;
+  box-shadow:var(--shadow); font-size:18px; display:flex; align-items:center; justify-content:center;
+}
+
+.chart-wrap{background:var(--bg-card); border-radius:12px; padding:10px 6px;}
+canvas{max-width:100%;}
+
+.toast{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%); background:var(--text); color:var(--bg-card);
+  padding:11px 22px; border-radius:999px; font-size:16px; z-index:300; box-shadow:var(--shadow);
+  opacity:0; transition:opacity .3s, top .3s; pointer-events:none;
+}
+.toast.show{opacity:1; top:26px;}
+
+.start-hero{text-align:center; padding:34px 20px;}
+.start-hero .zh{font-size:1.8em; display:block; margin-bottom:6px; color:var(--accent-dark);}
+.start-meta{display:flex; justify-content:center; gap:26px; flex-wrap:wrap; margin:22px 0; color:var(--text-dim); font-size:16px;}
+.start-meta b{display:block; font-size:26px; color:var(--text); font-weight:800;}
+
+.history-mini{
+  background:var(--accent-soft); border-radius:12px; padding:16px 20px; margin-top:18px; font-size:16px; color:var(--accent-dark);
+}
+
+@media print{
+  .no-print{display:none !important;}
+  body{background:#fff; color:#000; padding:0;}
+  .card{box-shadow:none; border:1px solid #ccc; page-break-inside:avoid;}
+  .container{max-width:100%;}
+  @page{size:A4; margin:14mm;}
+}
+@media (max-width:640px){
+  .card{padding:16px;}
+  .qnav-grid{grid-template-columns:repeat(auto-fill,minmax(32px,1fr));}
+  .start-meta{gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ TOP BAR ============================================================ -->
+<div class="topbar no-print" id="topbar">
+  <div class="topbar-inner">
+    <div class="brand">九月去北京旅游最好<small>Bài 1 · Giáo trình chuẩn HSK 2</small></div>
+    <div class="timer-box hidden" id="timerBox">⏱ <span id="timerDisplay">45:00</span></div>
+    <button class="icon-btn" id="themeToggle" title="Đổi giao diện sáng/tối">🌙</button>
+    <button class="icon-btn hidden" id="navPanelToggle" title="Bảng câu hỏi">☰</button>
+  </div>
+  <div class="container hidden" id="progressWrap">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="progressText">Đã làm: 0 / 52 câu</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ============================================================ START SCREEN ============================================================ -->
+  <section id="startScreen">
+    <div class="card start-hero">
+      <span class="zh">九月去北京旅游最好</span>
+      <h1>Bài tập về nhà — Bài 1 · Giáo trình chuẩn HSK 2</h1>
+      <p style="color:var(--text-dim);max-width:560px;margin:0 auto;">Củng cố toàn bộ từ vựng (12 từ) và 3 điểm ngữ pháp trọng tâm (要/不想 · 最 · 几/多) — rèn đủ 6 kỹ năng: từ vựng, ngữ pháp, đọc hiểu, viết, dịch, giao tiếp.</p>
+      <div class="start-meta">
+        <div><b id="metaTotalQ">52</b>Câu hỏi</div>
+        <div><b>13</b>Phần bài tập</div>
+        <div><b id="metaTime">45 phút</b>Thời gian đề nghị</div>
+      </div>
+      <button class="btn btn-primary" id="btnStart" style="font-size:18px;padding:16px 38px;">Bắt đầu làm bài</button>
+      <div id="historyMiniBox" class="history-mini hidden"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ QUIZ SCREEN ============================================================ -->
+  <section id="quizScreen" class="hidden">
+    <div class="card no-print" id="navPanel">
+      <div class="nav-toggle-row">
+        <h3 style="margin:0;font-size:17px;">Bảng điều hướng câu hỏi</h3>
+        <span id="unansweredCount" style="font-size:14px;color:var(--text-dim);"></span>
+      </div>
+      <div class="qnav-legend">
+        <span><i class="legend-dot" style="background:var(--gray-soft);"></i>Chưa làm</span>
+        <span><i class="legend-dot" style="background:var(--accent-soft);"></i>Đã làm</span>
+        <span><i class="legend-dot" style="background:var(--accent);"></i>Đang xem</span>
+      </div>
+      <div class="qnav-grid" id="qnavGrid"></div>
+    </div>
+
+    <div class="card" id="questionCard"></div>
+
+    <div class="qnav-arrows no-print">
+      <button class="btn btn-ghost" id="btnPrev">← Câu trước</button>
+      <button class="btn btn-primary hidden" id="btnSubmit">Nộp bài</button>
+      <button class="btn btn-ghost" id="btnNext">Câu sau →</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ RESULT SCREEN ============================================================ -->
+  <section id="resultScreen" class="hidden">
+    <div class="card" id="resultSummaryCard"></div>
+
+    <div class="card no-print">
+      <h3>Biểu đồ kết quả theo nhóm kiến thức</h3>
+      <div class="chart-wrap"><canvas id="skillChart" width="900" height="320"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h3>Thống kê lịch sử làm bài</h3>
+      <div class="stat-grid" id="historyStatGrid"></div>
+      <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+        <button class="btn btn-ghost btn-sm" id="btnShowHistory">Xem lịch sử các lần làm</button>
+        <button class="btn btn-danger btn-sm" id="btnClearHistory">Xóa toàn bộ lịch sử</button>
+      </div>
+      <div id="historyTableWrap" class="hidden" style="margin-top:16px;overflow-x:auto;"></div>
+    </div>
+
+    <div class="card no-print" style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-primary" id="btnRetake">↻ Làm lại bài</button>
+      <button class="btn btn-ghost" id="btnPrintResult">🖨 In kết quả</button>
+      <button class="btn btn-ghost" id="btnPdfExport">⬇ Xuất PDF</button>
+    </div>
+
+    <div class="card no-print">
+      <h3>Xem lại chi tiết từng câu</h3>
+      <div class="filter-row" id="reviewFilters"></div>
+      <div id="reviewList"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Floating buttons -->
+<div class="float-btns no-print">
+  <button class="float-btn" id="btnScrollTop" title="Lên đầu trang">↑</button>
+  <button class="float-btn" id="btnScrollBottom" title="Xuống cuối trang">↓</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Modal container -->
+<div id="modalRoot"></div>
+
+<script>
+"use strict";
+/* ==========================================================================================
+   1. DỮ LIỆU BÀI HỌC — tách biệt hoàn toàn khỏi logic hiển thị.
+   Muốn tái sử dụng cho bài học khác: chỉ cần thay object LESSON này.
+========================================================================================== */
+const LESSON = {
+  id: "hsk2_bai1_jiuyue",
+  title: "九月去北京旅游最好",
+  subtitle: "Bài 1 · Giáo trình chuẩn HSK 2",
+  timeLimitMinutes: 45,
+  version: 1,
+  passages: {
+    xiaoming: "我叫小明。我最喜欢的运动是踢足球，我觉得踢足球很有意思。我也喜欢旅游，我觉得九月去北京旅游最好，因为那时候天气不冷也不热。我家有猫，它叫花花，它的眼睛最漂亮，它现在六个多月了。下午我要和朋友一起去踢足球，你要不要也一起去？"
+  },
+  sections: [
+    {id:"b1", title:"Bài 1. Chọn đáp án đúng (Từ vựng)", skill:"Từ vựng", instruction:"Chọn đáp án đúng nhất để hoàn thành câu."},
+    {id:"b2", title:"Bài 2. Điền từ (Đại từ 它 / 他 / 她)", skill:"Ngữ pháp", instruction:"Điền 它、他 hoặc 她 vào chỗ trống cho phù hợp."},
+    {id:"b3", title:"Bài 3. Điền ngữ pháp (Phó từ 最)", skill:"Ngữ pháp", instruction:"Chọn đúng vị trí cần điền 最 trong câu. Có 1 câu KHÔNG cần điền 最."},
+    {id:"b4", title:"Bài 4. Sắp xếp câu (Cấu trúc 要)", skill:"Ngữ pháp", instruction:"Bấm lần lượt vào các từ để sắp xếp thành câu hoàn chỉnh."},
+    {id:"b5", title:"Bài 5. Sửa lỗi sai", skill:"Ngữ pháp", instruction:"Mỗi câu dưới đây có 1 lỗi sai. Gõ lại câu đã sửa đúng."},
+    {id:"b6", title:"Bài 6. Đặt câu (dùng 几 hoặc 多)", skill:"Ngữ pháp", instruction:"Dựa vào gợi ý, đặt 1 câu hoàn chỉnh. Dạng bài mở — tự đánh giá sau khi xem câu mẫu."},
+    {id:"b7", title:"Bài 7. Hoàn thành hội thoại", skill:"Ngữ pháp", instruction:"Điền từ thích hợp (要 / 不想 / 最 / 几 / 多 / 它 / 觉得) vào chỗ trống — mỗi từ dùng đúng 1 lần."},
+    {id:"b8", title:"Bài 8. Dịch Việt → Trung", skill:"Dịch", instruction:"Dịch các câu sau sang tiếng Trung. Dạng bài mở — tự đánh giá sau khi xem câu mẫu."},
+    {id:"b9", title:"Bài 9. Dịch Trung → Việt", skill:"Dịch", instruction:"Dịch đoạn hội thoại ngắn sau sang tiếng Việt tự nhiên."},
+    {id:"b10", title:"Bài 10. Đọc hiểu", skill:"Đọc hiểu", instruction:"Đọc đoạn văn sau và chọn đáp án đúng.", passage:"xiaoming"},
+    {id:"b11", title:"Bài 11. Trả lời câu hỏi", skill:"Đọc hiểu", instruction:"Dựa vào đoạn văn ở Bài 10, trả lời bằng câu hoàn chỉnh (không chép nguyên câu trong bài).", passage:"xiaoming"},
+    {id:"b12", title:"Bài 12. Viết đoạn văn ngắn", skill:"Viết", instruction:"Viết đoạn văn ngắn (5-6 câu), dùng ít nhất 3/4 điểm ngữ pháp: 要 / 最 / 几 / 多."},
+    {id:"b13", title:"Bài 13. Tình huống giao tiếp", skill:"Giao tiếp", instruction:"Chọn 1 trong 2 tình huống, viết đoạn hội thoại hoàn chỉnh (ít nhất 4 lượt lời)."}
+  ],
+  questions: [
+    // ---------------- BÀI 1: MCQ Từ vựng ----------------
+    {id:"q1",section:"b1",type:"mcq",prompt:"我要去北京______，你觉得什么时候去最好？",
+     options:[{k:"A",t:"运动"},{k:"B",t:"旅游"},{k:"C",t:"眼睛"},{k:"D",t:"一起"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Câu cần một động từ chỉ hành động 'đi Bắc Kinh làm gì' → 旅游 (du lịch) là động từ phù hợp duy nhất về nghĩa.</p><p><b>Vì sao đúng:</b> 旅游 (lǚyóu) nghĩa là 'du lịch', khớp với ngữ cảnh 'đi Bắc Kinh... tốt nhất là khi nào'.</p><p><b>Vì sao các đáp án khác sai:</b> 运动 = vận động/thể thao (sai chủ đề); 眼睛 = mắt (danh từ chỉ bộ phận cơ thể); 一起 = cùng nhau (phó từ, không thể làm tân ngữ sau 去).</p><p><b>Lỗi thường gặp:</b> Học sinh hay nhầm 旅游 và 运动 vì cả hai đều là từ 2 âm tiết mới học cùng bài.</p><p><b>Mẹo ghi nhớ:</b> 旅游 có bộ 方 (gợi ý 'đi xa'); 运动 có bộ 辶/辵 (vận chuyển, chuyển động).</p><p><b>Ví dụ bổ sung:</b> 我暑假要去越南旅游。(Nghỉ hè tôi muốn đi Việt Nam du lịch.)</p>"},
+    {id:"q2",section:"b1",type:"mcq",prompt:"A：你______去吗？ B：好啊！",
+     options:[{k:"A",t:"一起"},{k:"B",t:"最"},{k:"C",t:"也"},{k:"D",t:"新"}],correct:"A",
+     explain:"<p><b>Giải thích:</b> Câu hỏi rủ rê ai đó 'cùng đi không', cấu trúc quen thuộc 一起 + động từ.</p><p><b>Vì sao đúng:</b> 一起 (yìqǐ) = cùng nhau, đứng trước động từ để rủ ai đó làm cùng.</p><p><b>Vì sao các đáp án khác sai:</b> 最 = nhất (không hợp câu rủ rê); 也 = cũng (không tạo nghĩa rủ rê); 新 = mới (tính từ, không đứng trước 去).</p><p><b>Lỗi thường gặp:</b> Học sinh dễ chọn 也 vì nghĩ 'cũng đi' gần giống 'cùng đi', nhưng 也 chỉ dùng khi so sánh với hành động đã nêu trước đó.</p><p><b>Mẹo ghi nhớ:</b> 一起 = '一'(một)+'起'(cùng dậy/lên) = cùng nhau hành động.</p><p><b>Ví dụ bổ sung:</b> 下午我们一起去看电影，好吗？</p>"},
+    {id:"q3",section:"b1",type:"mcq",prompt:"那是我的猫，______的眼睛很漂亮。",
+     options:[{k:"A",t:"他"},{k:"B",t:"她"},{k:"C",t:"它"},{k:"D",t:"你"}],correct:"C",
+     explain:"<p><b>Giải thích:</b> Chủ thể được nhắc đến là 'con mèo' (một con vật), nên phải dùng đại từ chỉ vật/con vật.</p><p><b>Vì sao đúng:</b> 它 (tā) chuyên dùng cho đồ vật và động vật — đúng với 猫.</p><p><b>Vì sao các đáp án khác sai:</b> 他/她 chỉ dùng cho người; 你 là ngôi thứ hai, không phù hợp vì câu đang nói về ngôi thứ ba.</p><p><b>Lỗi thường gặp:</b> Lỗi phổ biến nhất: ba chữ 他/她/它 phát âm giống hệt 'tā' nên dễ dùng lẫn.</p><p><b>Mẹo ghi nhớ:</b> 他 bộ 人 (người, nam); 她 bộ 女 (nữ); 它 dùng cho vật/con vật.</p><p><b>Ví dụ bổ sung:</b> 这是我的狗，它很聪明。</p>"},
+    {id:"q4",section:"b1",type:"mcq",prompt:"我们要不要买几个______的椅子？",
+     options:[{k:"A",t:"新"},{k:"B",t:"最"},{k:"C",t:"也"},{k:"D",t:"要"}],correct:"A",
+     explain:"<p><b>Giải thích:</b> Cần một tính từ bổ nghĩa cho danh từ 椅子, đứng sau lượng từ 个.</p><p><b>Vì sao đúng:</b> 新 (xīn) = mới — đúng nguyên văn câu trong bài khóa (我们要不要买几个新的椅子？)。</p><p><b>Vì sao các đáp án khác sai:</b> 最 là phó từ so sánh, không đứng trực tiếp trước danh từ; 也 là phó từ chỉ phạm vi; 要 là trợ động từ đã xuất hiện đầu câu.</p><p><b>Lỗi thường gặp:</b> Học sinh hay quên trợ từ 的 sau 新 khi bổ nghĩa cho danh từ.</p><p><b>Mẹo ghi nhớ:</b> 新 gồm bộ 斤 (cái rìu) — hình ảnh chặt gỗ mới.</p><p><b>Ví dụ bổ sung:</b> 他昨天买了一件新衣服。</p>"},
+    {id:"q5",section:"b1",type:"mcq",prompt:"A：你喜欢什么______？ B：我最喜欢踢足球。",
+     options:[{k:"A",t:"觉得"},{k:"B",t:"运动"},{k:"C",t:"旅游"},{k:"D",t:"眼睛"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Câu hỏi 'bạn thích [môn] gì' cần danh từ chỉ loại hình hoạt động thể chất.</p><p><b>Vì sao đúng:</b> 运动 khi làm danh từ nghĩa 'môn thể thao' — khớp với câu trả lời 我最喜欢踢足球。</p><p><b>Vì sao các đáp án khác sai:</b> 觉得 là động từ; 旅游, 眼睛 sai chủ đề.</p><p><b>Lỗi thường gặp:</b> Học sinh nhầm 运动 (danh từ) với 运动 (động từ: tập thể dục).</p><p><b>Mẹo ghi nhớ:</b> 什么运动 → luôn là danh từ (loại hình thể thao).</p><p><b>Ví dụ bổ sung:</b> 游泳是我最喜欢的运动。</p>"},
+    {id:"q6",section:"b1",type:"mcq",prompt:"______北京旅游最好？——因为九月天气不冷也不热。",
+     options:[{k:"A",t:"什么"},{k:"B",t:"谁"},{k:"C",t:"为什么"},{k:"D",t:"怎么样"}],correct:"C",
+     explain:"<p><b>Giải thích:</b> Câu trả lời bắt đầu bằng 因为 (vì) → câu hỏi phải hỏi lý do.</p><p><b>Vì sao đúng:</b> 为什么 (tại sao) là từ hỏi lý do duy nhất trong 4 lựa chọn, khớp cặp hỏi-đáp 为什么...？——因为...</p><p><b>Vì sao các đáp án khác sai:</b> 什么 hỏi 'cái gì'; 谁 hỏi 'ai'; 怎么样 hỏi 'như thế nào' — không tạo cặp hợp lý với 因为.</p><p><b>Lỗi thường gặp:</b> Học sinh hay lược bỏ chữ 为, chỉ dùng 什么 để hỏi lý do.</p><p><b>Mẹo ghi nhớ:</b> Hỏi 为什么 → luôn trả lời bằng 因为.</p><p><b>Ví dụ bổ sung:</b> 为什么你今天很高兴？——因为明天是我的生日。</p>"},
+    {id:"q7",section:"b1",type:"mcq",prompt:"我______现在的工作很好。",
+     options:[{k:"A",t:"要"},{k:"B",t:"觉得"},{k:"C",t:"最"},{k:"D",t:"为什么"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Câu cần động từ chỉ ý kiến/quan điểm cá nhân về công việc.</p><p><b>Vì sao đúng:</b> 觉得 (juéde) = cho rằng — đúng cấu trúc 'Chủ ngữ + 觉得 + [nhận định]'.</p><p><b>Vì sao các đáp án khác sai:</b> 要 chỉ nguyện vọng; 最 là phó từ so sánh; 为什么 là từ hỏi.</p><p><b>Lỗi thường gặp:</b> Học sinh phát âm nhầm 觉得 (juéde), quên thanh điệu.</p><p><b>Mẹo ghi nhớ:</b> 觉得 = 觉 (cảm giác) + 得 (đạt được) = cho rằng.</p><p><b>Ví dụ bổ sung:</b> 我觉得这本书很有意思。</p>"},
+    {id:"q8",section:"b1",type:"mcq",prompt:"九月的天气不冷______不热。",
+     options:[{k:"A",t:"很"},{k:"B",t:"也"},{k:"C",t:"最"},{k:"D",t:"都"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Cấu trúc song song phủ định kép 'không A cũng không B' cần phó từ liên kết.</p><p><b>Vì sao đúng:</b> 也 tạo cấu trúc cố định 不...也不... — nguyên văn bài khóa: 九月的北京天气不冷也不热.</p><p><b>Vì sao các đáp án khác sai:</b> 很 chỉ mức độ; 最 là so sánh nhất; 都 dùng cho số nhiều — không tạo được cấu trúc phủ định kép.</p><p><b>Lỗi thường gặp:</b> Học sinh hay thay 也 bằng 都.</p><p><b>Mẹo ghi nhớ:</b> 不 + tính từ 1 + 也 + 不 + tính từ 2 = 'không...cũng không...'</p><p><b>Ví dụ bổ sung:</b> 这件衣服不贵也不便宜。</p>"},
+
+    // ---------------- BÀI 2: Pronoun MCQ Ngữ pháp ----------------
+    {id:"q9",section:"b2",type:"mcq",prompt:"桌子下面有个猫，______叫花花。",
+     options:[{k:"A",t:"它"},{k:"B",t:"他"},{k:"C",t:"她"}],correct:"A",
+     explain:"<p><b>Giải thích:</b> 花花 là tên một con mèo (đã giới thiệu là 猫 ở vế trước) → dùng đại từ chỉ vật/con vật.</p><p><b>Vì sao đúng:</b> 它 chuyên dùng thay thế danh từ chỉ động vật/đồ vật đã nhắc ở câu trước: 那是我的猫，它叫花花。</p><p><b>Lỗi thường gặp:</b> Học sinh dễ dùng 她 vì 花花 nghe như tên người.</p><p><b>Mẹo ghi nhớ:</b> Luôn hỏi 'chủ thể là người hay vật?' trước khi chọn.</p><p><b>Ví dụ bổ sung:</b> 这是我的狗，它叫豆豆。</p>"},
+    {id:"q10",section:"b2",type:"mcq",prompt:"我哥哥要去北京旅游，______觉得九月最好。",
+     options:[{k:"A",t:"它"},{k:"B",t:"他"},{k:"C",t:"她"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> 哥哥 (anh trai) là danh từ chỉ người nam → dùng 他.</p><p><b>Vì sao đúng:</b> 他 dùng cho ngôi thứ ba số ít giống nam, khớp với 哥哥.</p><p><b>Lỗi thường gặp:</b> Học sinh lẫn 他/她 khi viết (âm đọc giống hệt 'tā').</p><p><b>Mẹo ghi nhớ:</b> 他 có bộ 亻(người) → liên tưởng nam giới.</p><p><b>Ví dụ bổ sung:</b> 我弟弟很喜欢踢足球，他每天都去踢球。</p>"},
+    {id:"q11",section:"b2",type:"mcq",prompt:"我姐姐很漂亮，______的眼睛也很漂亮。",
+     options:[{k:"A",t:"它"},{k:"B",t:"他"},{k:"C",t:"她"}],correct:"C",
+     explain:"<p><b>Giải thích:</b> 姐姐 (chị gái) là danh từ chỉ người nữ → dùng 她.</p><p><b>Vì sao đúng:</b> 她 dùng cho ngôi thứ ba số ít giống nữ; cấu trúc 也 lặp lại ý 'đẹp' đã nêu.</p><p><b>Lỗi thường gặp:</b> Học sinh có thể quên chữ 的 sau 她.</p><p><b>Mẹo ghi nhớ:</b> 她 có bộ 女 (nữ).</p><p><b>Ví dụ bổ sung:</b> 我朋友是老师，她教汉语。</p>"},
+    {id:"q12",section:"b2",type:"mcq",prompt:"这是我的新椅子，______是新的。",
+     options:[{k:"A",t:"它"},{k:"B",t:"他"},{k:"C",t:"她"}],correct:"A",
+     explain:"<p><b>Giải thích:</b> 椅子 (cái ghế) là đồ vật → dùng 它.</p><p><b>Vì sao đúng:</b> 它 dùng cho đồ vật, khớp với 椅子 vừa nhắc.</p><p><b>Lỗi thường gặp:</b> Vì có 我的 (sở hữu cá nhân), học sinh dễ nhầm cần đại từ chỉ người.</p><p><b>Mẹo ghi nhớ:</b> Đồ vật + đại từ luôn là 它, bất kể chủ sở hữu là ai.</p><p><b>Ví dụ bổ sung:</b> 这是我的手机，它是新的。</p>"},
+    {id:"q13",section:"b2",type:"mcq",prompt:"我弟弟很喜欢踢足球，______每天都去踢足球。",
+     options:[{k:"A",t:"它"},{k:"B",t:"他"},{k:"C",t:"她"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> 弟弟 (em trai) là danh từ chỉ người nam → dùng 他.</p><p><b>Vì sao đúng:</b> 他 dùng cho ngôi thứ ba số ít giống nam, khớp 弟弟; câu có 都+每天 đúng cấu trúc tần suất.</p><p><b>Lỗi thường gặp:</b> Học sinh lẫn 他/她 khi viết chính tả.</p><p><b>Mẹo ghi nhớ:</b> 他 bộ 亻(người) → nam giới; luôn xác định danh từ đứng trước rồi mới chọn đại từ.</p><p><b>Ví dụ bổ sung:</b> 我哥哥每天都去公司工作，他很忙。</p>"},
+
+    // ---------------- BÀI 3: 最 blank position — mỗi câu có 4 vị trí ①②③④ để chọn + phương án "không cần điền" ----------------
+    {id:"q14",section:"b3",type:"mcq",
+     markedSentence:["我",1,"喜欢",2,"踢",3,"足球",4,"。"],
+     options:[{k:"1",t:"①"},{k:"2",t:"②"},{k:"3",t:"③"},{k:"4",t:"④"},{k:"none",t:"Không cần điền 最"}],
+     correct:"1", fullCorrect:"我最喜欢踢足球。",
+     explain:"<p><b>Giải thích:</b> 最 luôn đứng ngay trước động từ/tính từ cần nhấn mạnh mức độ nhất, ở đây là trước 喜欢 (vị trí ①).</p><p><b>Vì sao đúng:</b> Chủ ngữ + 最 + Động từ tâm lý (喜欢) + Tân ngữ.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ② (最踢) và ③ (最足球) làm gãy cụm động-tân 踢足球; vị trí ④ (sau 足球) không có chức năng ngữ pháp.</p><p><b>Lỗi thường gặp:</b> Học sinh hay đặt 最 ở vị trí ② (我喜欢最踢足球) do ảnh hưởng trật tự tiếng Việt 'thích nhất' (từ 'nhất' đứng sau động từ).</p><p><b>Mẹo ghi nhớ:</b> Tiếng Hán luôn đặt 最 TRƯỚC động từ/tính từ cần so sánh, không đặt sau.</p><p><b>Ví dụ bổ sung:</b> 他最喜欢喝咖啡。</p>"},
+    {id:"q15",section:"b3",type:"mcq",
+     markedSentence:["它",1,"的",2,"眼睛",3,"漂亮",4,"。"],
+     options:[{k:"1",t:"①"},{k:"2",t:"②"},{k:"3",t:"③"},{k:"4",t:"④"},{k:"none",t:"Không cần điền 最"}],
+     correct:"3", fullCorrect:"它的眼睛最漂亮。",
+     explain:"<p><b>Giải thích:</b> 最 đứng trước tính từ 漂亮 (vị trí ③) để nhấn mạnh mức độ đẹp nhất.</p><p><b>Vì sao đúng:</b> Chủ ngữ (它的眼睛) + 最 + Tính từ (漂亮) — đúng câu gốc bài khóa.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ①② nằm giữa cụm sở hữu 它的/眼睛, chèn 最 vào sẽ phá vỡ cụm danh từ; vị trí ④ (sau 漂亮) không có chức năng ngữ pháp.</p><p><b>Lỗi thường gặp:</b> Học sinh có thể quên 的 khi nói 'mắt của nó' (它眼睛 thay vì 它的眼睛), dẫn đến chọn nhầm vị trí.</p><p><b>Mẹo ghi nhớ:</b> 最 luôn đứng sát trước tính từ cần so sánh nhất, không chèn vào giữa cụm sở hữu.</p><p><b>Ví dụ bổ sung:</b> 这条裙子最漂亮。</p>"},
+    {id:"q16",section:"b3",type:"mcq",
+     markedSentence:["九月",1,"去",2,"北京",3,"旅游",4,"好","。"],
+     options:[{k:"1",t:"①"},{k:"2",t:"②"},{k:"3",t:"③"},{k:"4",t:"④"},{k:"none",t:"Không cần điền 最"}],
+     correct:"4", fullCorrect:"九月去北京旅游最好。",
+     explain:"<p><b>Giải thích:</b> 最 đứng trước tính từ 好 (vị trí ④) để khẳng định 'tốt nhất'.</p><p><b>Vì sao đúng:</b> Đúng nguyên văn tiêu đề bài học: 九月去北京旅游最好。</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ①②③ nằm giữa cụm trạng ngữ thời gian-địa điểm-động từ (九月/去/北京/旅游), chèn 最 vào sẽ làm câu tối nghĩa vì 最 chỉ bổ nghĩa cho tính từ/động từ tâm lý phía sau nó.</p><p><b>Mẹo ghi nhớ:</b> Câu này chính là tên bài học — nên thuộc nằm lòng làm câu mẫu chuẩn cho cấu trúc 最.</p><p><b>Ví dụ bổ sung:</b> 冬天去北京旅游不好，夏天去最好。</p>"},
+    {id:"q17",section:"b3",type:"mcq",
+     markedSentence:["我朋友很高兴，他",1,"要",2,"去",3,"学校",4,"。"],
+     options:[{k:"1",t:"①"},{k:"2",t:"②"},{k:"3",t:"③"},{k:"4",t:"④"},{k:"none",t:"Không cần điền 最"}],
+     correct:"none", fullCorrect:"我朋友很高兴，他要去学校。",
+     explain:"<p><b>Giải thích:</b> Đây là câu 'bẫy': 最 chỉ dùng khi có ý so sánh 'nhất trong nhóm nào đó'. Ở đây 他要去学校 không mang ý so sánh nên KHÔNG cần điền 最 ở bất kỳ vị trí nào.</p><p><b>Vì sao đúng:</b> Không có đối tượng nào được so sánh trong câu.</p><p><b>Vì sao các vị trí đều sai nếu chọn:</b> 要 là trợ động từ chỉ nguyện vọng, không phải tính từ/động từ tâm lý có thể so sánh bằng 最; chèn 最 vào bất kỳ vị trí nào cũng khiến câu vô nghĩa hoặc sai ngữ pháp.</p><p><b>Lỗi thường gặp:</b> Học sinh có thói quen thấy khoảng trống là điền ngay 最 mà không xét câu có mang ý so sánh hay không.</p><p><b>Mẹo ghi nhớ:</b> Trước khi điền 最, luôn tự hỏi: 'Câu này có đang so sánh nhất-nhì gì không?' Nếu không, không cần 最.</p><p><b>Ví dụ bổ sung:</b> 他很高兴，他要去公园。(không cần 最)</p>"},
+    {id:"q18",section:"b3",type:"mcq",
+     markedSentence:["你",1,"喜欢",2,"什么",3,"运动",4,"？"],
+     options:[{k:"1",t:"①"},{k:"2",t:"②"},{k:"3",t:"③"},{k:"4",t:"④"},{k:"none",t:"Không cần điền 最"}],
+     correct:"1", fullCorrect:"你最喜欢什么运动？",
+     explain:"<p><b>Giải thích:</b> 最 đứng trước 喜欢 (vị trí ①) để hỏi 'thích nhất môn nào'.</p><p><b>Vì sao đúng:</b> Mở rộng câu hỏi gốc 你喜欢什么运动？ thêm 最 để hỏi rõ mức độ 'nhất'.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ②③ nằm giữa cụm nghi vấn 什么运动, chèn 最 vào sẽ phá cấu trúc hỏi; vị trí ④ (trước dấu ？) không có chức năng ngữ pháp.</p><p><b>Lỗi thường gặp:</b> Học sinh có thể bỏ sót 最 khi dịch câu hỏi 'bạn thích nhất môn gì'.</p><p><b>Mẹo ghi nhớ:</b> Khi câu tiếng Việt có chữ 'nhất', luôn nhớ thêm 最 trước động từ tương ứng.</p><p><b>Ví dụ bổ sung:</b> 你最喜欢吃什么水果？</p>"},
+
+    // ---------------- BÀI 4: Reorder ----------------
+    {id:"q19",section:"b4",type:"reorder",
+     tokens:["旅游","我","北京","要","去"], correctOrder:["我","要","去","北京","旅游"],
+     fullCorrect:"我要去北京旅游。",
+     explain:"<p><b>Giải thích:</b> Trật tự chuẩn: Chủ ngữ (我) + Trợ động từ (要) + Động từ (去) + Địa điểm (北京) + Động từ mục đích (旅游).</p><p><b>Vì sao đúng:</b> Cấu trúc 'đi đâu làm gì': 去 + địa điểm + động từ mục đích, sau trợ động từ 要.</p><p><b>Lỗi thường gặp:</b> Học sinh hay viết 我要旅游北京去 do áp trật tự tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> Chủ ngữ + 要 + 去 + [địa điểm] + [động từ mục đích].</p><p><b>Ví dụ bổ sung:</b> 他要去上海工作。</p>"},
+    {id:"q20",section:"b4",type:"reorder",
+     tokens:["买","椅子","新的","我们","要不要","几个"], correctOrder:["我们","要不要","买","几个","新的","椅子"],
+     fullCorrect:"我们要不要买几个新的椅子？",
+     explain:"<p><b>Giải thích:</b> Chủ ngữ + 要不要 + Động từ (买) + Số lượng từ (几个) + Định ngữ (新的) + Danh từ (椅子).</p><p><b>Vì sao đúng:</b> Lượng từ + định ngữ luôn đứng ngay trước danh từ trung tâm.</p><p><b>Lỗi thường gặp:</b> Học sinh hay đặt 几个 sau 椅子 do quen trật tự tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> Động từ + [số lượng từ] + [định ngữ] + Danh từ.</p><p><b>Ví dụ bổ sung:</b> 他要不要买两本新的书？</p>"},
+    {id:"q21",section:"b4",type:"reorder",
+     tokens:["想","米饭","我","不","吃"], correctOrder:["我","不","想","吃","米饭"],
+     fullCorrect:"我不想吃米饭。",
+     explain:"<p><b>Giải thích:</b> Chủ ngữ + 不想 (cụm phủ định nguyện vọng) + Động từ (吃) + Tân ngữ (米饭).</p><p><b>Vì sao đúng:</b> 不想 phải đứng liền nhau, không tách rời.</p><p><b>Lỗi thường gặp:</b> Học sinh có thể nhầm dùng 不要 thay 不想.</p><p><b>Mẹo ghi nhớ:</b> 不想 luôn đi liền nhau như một khối cố định.</p><p><b>Ví dụ bổ sung:</b> 我不想去公司。</p>"},
+    {id:"q22",section:"b4",type:"reorder",
+     tokens:["什么时候","你","去","要","买衣服"], correctOrder:["你","什么时候","要","去","买衣服"],
+     fullCorrect:"你什么时候要去买衣服？",
+     explain:"<p><b>Giải thích:</b> Chủ ngữ (你) + Từ hỏi thời gian (什么时候) + Trợ động từ (要) + Động từ (去) + Động từ mục đích (买衣服).</p><p><b>Vì sao đúng:</b> 什么时候 đứng sau chủ ngữ, trước trợ động từ/động từ chính.</p><p><b>Lỗi thường gặp:</b> Học sinh hay đặt 什么时候 ở đầu câu.</p><p><b>Mẹo ghi nhớ:</b> Từ hỏi thời gian thường đứng ngay sau chủ ngữ.</p><p><b>Ví dụ bổ sung:</b> 你什么时候能回来？</p>"},
+    {id:"q23",section:"b4",type:"reorder",
+     tokens:["一起","我们","去","踢足球","吧"], correctOrder:["我们","一起","去","踢足球","吧"],
+     fullCorrect:"我们一起去踢足球吧。",
+     explain:"<p><b>Giải thích:</b> Chủ ngữ (我们) + Phó từ (一起) + Động từ (去) + Cụm động từ mục đích (踢足球) + Trợ từ ngữ khí (吧).</p><p><b>Vì sao đúng:</b> 一起 là phó từ đứng trước động từ chính; 吧 luôn đứng cuối câu rủ rê.</p><p><b>Lỗi thường gặp:</b> Học sinh hay quên trợ từ 吧 ở cuối câu.</p><p><b>Mẹo ghi nhớ:</b> Câu rủ rê thường kết thúc bằng 吧, giống 'nhé/nha' tiếng Việt.</p><p><b>Ví dụ bổ sung:</b> 我们一起去看电影吧。</p>"},
+
+    // ---------------- BÀI 5: Error correction ----------------
+    {id:"q24",section:"b5",type:"text_fill",
+     prompt:"我不要吃米饭，我喝牛奶。 (ý muốn nói: không muốn ăn cơm)",
+     correct:"我不想吃米饭，我喝牛奶。",
+     explain:"<p><b>Giải thích:</b> Câu gốc dùng 不要 mang nghĩa 'cấm/từ chối mạnh', không khớp ý định 'không muốn' nhẹ nhàng.</p><p><b>Vì sao đúng:</b> 不想 mới là phủ định chuẩn của 要 khi diễn tả 'không có nguyện vọng làm gì'.</p><p><b>Vì sao sai:</b> 不要 mang sắc thái ngăn cấm/ra lệnh ('đừng ăn cơm').</p><p><b>Lỗi thường gặp:</b> Lỗi kinh điển: cả 不要 và 不想 đều dịch chung 'không muốn' trong tư duy tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> 要 (khẳng định) ↔ 不想 (phủ định) — không đối xứng, học như ngoại lệ.</p><p><b>Ví dụ bổ sung:</b> 我不想喝咖啡，我想喝茶。</p>"},
+    {id:"q25",section:"b5",type:"text_fill",
+     prompt:"教室里有多个学生。", correct:"教室里有几个学生。",
+     explain:"<p><b>Giải thích:</b> Câu không nêu mốc số cụ thể, chỉ ước lượng chung (dưới 10, không xác định) → dùng 几, không dùng 多.</p><p><b>Vì sao đúng:</b> 几 dùng khi số lượng hoàn toàn chưa xác định; 多 chỉ dùng khi có mốc số làm nền rồi cộng thêm.</p><p><b>Lỗi thường gặp:</b> Học sinh lẫn hai từ vì đều dịch 'mấy/hơn'.</p><p><b>Mẹo ghi nhớ:</b> 几 = ước lượng mơ hồ; 多 = dư ra sau một mốc đã biết.</p><p><b>Ví dụ bổ sung:</b> 教室里有几个学生？</p>"},
+    {id:"q26",section:"b5",type:"text_fill",
+     prompt:"我的猫多二十个月了。", correct:"我的猫二十多个月了。",
+     explain:"<p><b>Giải thích:</b> Số chẵn chục ≥10 (ở đây là 20), 多 phải đứng SAU số và TRƯỚC lượng từ, không đứng trước số.</p><p><b>Vì sao đúng:</b> Số (二十) + 多 + Lượng từ (个) + Danh từ (月).</p><p><b>Lỗi thường gặp:</b> Học sinh nhầm lẫn hai quy tắc vị trí của 多 tùy số lớn/nhỏ hơn 10.</p><p><b>Mẹo ghi nhớ:</b> Số nhỏ (&lt;10) → 多 SAU lượng từ (三个多); Số lớn (chẵn chục ≥10) → 多 TRƯỚC lượng từ, SAU số (二十多个).</p><p><b>Ví dụ bổ sung:</b> 他学了三十多个汉字。</p>"},
+    {id:"q27",section:"b5",type:"text_fill",
+     prompt:"你几十岁了？ (ý hỏi tuổi một em nhỏ, dưới 10 tuổi)", correct:"你几岁了？",
+     explain:"<p><b>Giải thích:</b> 几十 nghĩa 'mấy chục' (số lớn hơn 20), không phù hợp khi hỏi tuổi em nhỏ dưới 10.</p><p><b>Vì sao đúng:</b> 几 đứng một mình trước lượng từ/danh từ dùng cho số dưới 10.</p><p><b>Lỗi thường gặp:</b> Học sinh áp dụng máy móc 几十 cho mọi trường hợp hỏi tuổi.</p><p><b>Mẹo ghi nhớ:</b> 几 dùng riêng cho số &lt;10; 几十 dùng cho số hàng chục (20-99).</p><p><b>Ví dụ bổ sung:</b> 你妹妹几岁了？——她五岁了。</p>"},
+    {id:"q28",section:"b5",type:"text_fill",
+     prompt:"我们要不想买新的椅子。", correct:"我们要不要买新的椅子。",
+     explain:"<p><b>Giải thích:</b> Câu hỏi chính phản phải dùng cùng một động từ/trợ động từ ở cả hai vế: 要...不要, không được trộn 要 và 不想.</p><p><b>Vì sao đúng:</b> Cấu trúc chuẩn V + 不 + V (要不要).</p><p><b>Vì sao sai:</b> 不想 là cụm từ khác về bản chất, không thể ghép với 要 để tạo câu hỏi chính phản.</p><p><b>Lỗi thường gặp:</b> Học sinh nhầm lẫn '要不要' (câu hỏi chính phản) và '要...不想' (hai câu riêng).</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi chính phản luôn có dạng ĐỘNG TỪ + 不 + ĐỘNG TỪ GIỐNG HỆT.</p><p><b>Ví dụ bổ sung:</b> 你去不去公园？</p>"},
+    {id:"q29",section:"b5",type:"text_fill",
+     prompt:"他十多几个月没回家了。", correct:"他十几个月没回家了。",
+     explain:"<p><b>Giải thích:</b> Không được dùng đồng thời cả 多 và 几 trong cùng một cụm số ước lượng.</p><p><b>Vì sao đúng:</b> Khi số nằm trong khoảng 11-19, cấu trúc đúng là 十 + 几 + Lượng từ, không cần thêm 多.</p><p><b>Vì sao sai:</b> Trong cấu trúc 十几, bản thân 几 đã mang chức năng ước lượng, thêm 多 là dư thừa.</p><p><b>Lỗi thường gặp:</b> Học sinh 'thêm cho chắc' cả hai từ ước lượng.</p><p><b>Mẹo ghi nhớ:</b> Chỉ chọn MỘT cách diễn đạt ước lượng cho một cụm số.</p><p><b>Ví dụ bổ sung:</b> 他十几岁的时候就会说汉语了。</p>"},
+
+    // ---------------- BÀI 7: Dialog fill (1 câu, 7 blanks) ----------------
+    {id:"q30",section:"b7",type:"dialog_fill",
+     wordBank:["要","不想","最","几","多","它","觉得"],
+     lines:[
+       {sp:"A", segs:["你（",")",1,") 去踢足球吗？"]},
+       {sp:"B", segs:["我（",")",2,") 去，我想在家休息。你家有猫吗？"]},
+       {sp:"A", segs:["有，我家有一只猫，（",")",3,") 叫花花，花花三个（",")",4,") 月了。"]},
+       {sp:"B", segs:["花花的眼睛怎么样？"]},
+       {sp:"A", segs:["我（",")",5,") 它的眼睛（",")",6,") 漂亮。"]},
+       {sp:"B", segs:["你家有（",")",7,") 只猫？"]},
+       {sp:"A", segs:["一只猫。"]}
+     ],
+     correctMap:{1:"要",2:"不想",3:"它",4:"多",5:"觉得",6:"最",7:"几"},
+     explain:"<p><b>(1) 要</b> — hỏi nguyện vọng đối phương: Chủ ngữ + 要 + Động từ + 吗.</p><p><b>(2) 不想</b> — trả lời phủ định lời rủ, nhẹ nhàng lịch sự (không dùng 不要 vì mang nghĩa cấm đoán).</p><p><b>(3) 它</b> — 花花 là tên con mèo vừa nhắc → đại từ chỉ vật.</p><p><b>(4) 多</b> — số 3 &lt;10 → 多 đứng sau lượng từ 个, trước danh từ 月 (có mốc số cụ thể + dư thêm).</p><p><b>(5) 觉得</b> — nêu quan điểm cá nhân về đặc điểm con mèo.</p><p><b>(6) 最</b> — nhấn mạnh mức độ đẹp nhất, đứng trước tính từ 漂亮.</p><p><b>(7) 几</b> — hỏi số lượng chưa xác định, số nhỏ hơn 10.</p><p><b>Lỗi thường gặp:</b> Lẫn 不要/不想; lẫn 几/多 (几 để HỎI số lượng, 多 để bổ sung một số ĐÃ biết).</p>"},
+
+    // ---------------- BÀI 10: Reading MCQ ----------------
+    {id:"q31",section:"b10",type:"mcq",prompt:"小明最喜欢什么运动？",
+     options:[{k:"A",t:"旅游"},{k:"B",t:"踢足球"},{k:"C",t:"跳舞"},{k:"D",t:"游泳"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Đoạn văn nêu rõ: 我最喜欢的运动是踢足球.</p><p><b>Vì sao đúng:</b> Thông tin trực tiếp trong bài đọc.</p><p><b>Vì sao các đáp án khác sai:</b> 旅游 là sở thích thứ hai (không phải môn thể thao thích nhất); 跳舞, 游泳 không được nhắc đến.</p><p><b>Lỗi thường gặp:</b> Đọc lướt dễ nhầm 旅游 vì hai sở thích xuất hiện gần nhau.</p><p><b>Mẹo ghi nhớ:</b> Gạch chân từ khóa trong câu hỏi (运动) rồi tìm đúng câu chứa từ khóa đó.</p>"},
+    {id:"q32",section:"b10",type:"mcq",prompt:"小明觉得什么时候去北京旅游最好？",
+     options:[{k:"A",t:"三月"},{k:"B",t:"六月"},{k:"C",t:"九月"},{k:"D",t:"十二月"}],correct:"C",
+     explain:"<p><b>Giải thích:</b> Đoạn văn nêu: 我觉得九月去北京旅游最好.</p><p><b>Vì sao đúng:</b> Thông tin trực tiếp, trùng khớp chủ đề chính toàn bài.</p><p><b>Lỗi thường gặp:</b> Học sinh có thể nhầm với các tháng khác trong phần khởi động đầu bài.</p><p><b>Mẹo ghi nhớ:</b> Đọc hiểu là bài tập độc lập — chỉ dựa vào chính đoạn văn đang đọc.</p>"},
+    {id:"q33",section:"b10",type:"mcq",prompt:"花花是___。",
+     options:[{k:"A",t:"小明的朋友"},{k:"B",t:"小明的猫"},{k:"C",t:"小明的狗"},{k:"D",t:"小明的老师"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Đoạn văn nêu: 我家有猫，它叫花花.</p><p><b>Vì sao đúng:</b> Thông tin trực tiếp và rõ ràng.</p><p><b>Lỗi thường gặp:</b> Học sinh có thể nhầm 花花 là tên người vì nghe giống tên riêng.</p><p><b>Mẹo ghi nhớ:</b> Luôn xác định danh từ đứng liền trước tên riêng để biết chính xác đối tượng.</p>"},
+    {id:"q34",section:"b10",type:"mcq",prompt:"花花现在多大了？",
+     options:[{k:"A",t:"三个多月"},{k:"B",t:"六个多月"},{k:"C",t:"六岁"},{k:"D",t:"三岁"}],correct:"B",
+     explain:"<p><b>Giải thích:</b> Đoạn văn nêu: 它现在六个多月了.</p><p><b>Vì sao đúng:</b> Thông tin trực tiếp, khớp chính xác đáp án B.</p><p><b>Vì sao các đáp án khác sai:</b> 三个多月 là tuổi con chó ở Bài 9 (đoạn khác); 六岁/三岁 sai đơn vị (đây là tháng tuổi).</p><p><b>Lỗi thường gặp:</b> Học sinh dễ nhầm giữa các đoạn bài đọc khác nhau trong cùng bộ bài tập.</p><p><b>Mẹo ghi nhớ:</b> Mỗi bài đọc là một ngữ cảnh độc lập.</p>"},
+
+    // ---------------- BÀI 6: Self-check open, đặt câu ----------------
+    {id:"q35",section:"b6",type:"self_check",
+     prompt:"(hỏi số lượng sách trên bàn, chưa biết chính xác, dưới 10 quyển)",
+     reference:"桌子上有几本书？",
+     explain:"<p><b>Giải thích:</b> Số lượng hoàn toàn chưa biết và dưới 10 → dùng 几 + lượng từ + danh từ (几本书).</p><p><b>Lỗi thường gặp:</b> Học sinh có thể quên lượng từ 本, viết thành 几书.</p><p><b>Mẹo ghi nhớ:</b> 本 luôn đi với sách/vở.</p>"},
+    {id:"q36",section:"b6",type:"self_check",
+     prompt:"(một con mèo đã hơn 6 tháng tuổi)", reference:"我的猫六个多月了。",
+     explain:"<p><b>Giải thích:</b> Số 6 &lt;10 → 多 đứng SAU lượng từ 个, TRƯỚC danh từ 月.</p><p><b>Mẹo ghi nhớ:</b> [Số]+[Lượng từ]+多+[Danh từ] cho số nhỏ hơn 10.</p>"},
+    {id:"q37",section:"b6",type:"self_check",
+     prompt:"(mua vé hết hơn 20 đồng)", reference:"这张票二十多块钱。",
+     explain:"<p><b>Giải thích:</b> Số 20 là số chẵn chục ≥10 → 多 đứng SAU số, TRƯỚC lượng từ 块.</p><p><b>Mẹo ghi nhớ:</b> [Số chẵn chục]+多+[Lượng từ]+[Danh từ].</p>"},
+    {id:"q38",section:"b6",type:"self_check",
+     prompt:"(lớp học có mười mấy học sinh)", reference:"我们教室里有十几个学生。",
+     explain:"<p><b>Giải thích:</b> Khoảng 11-19 dùng cấu trúc 十 + 几 + Lượng từ.</p><p><b>Mẹo ghi nhớ:</b> 十几 = mười mấy; 几十 = mấy chục — thứ tự chữ quyết định nghĩa hoàn toàn khác nhau.</p>"},
+    {id:"q39",section:"b6",type:"self_check",
+     prompt:"(đợi bạn hơn 3 tiếng đồng hồ)", reference:"我等了你三个多小时。",
+     explain:"<p><b>Giải thích:</b> Số 3 &lt;10 → 多 đứng sau lượng từ 个, trước danh từ 小时.</p><p><b>Mẹo ghi nhớ:</b> Khi diễn tả khoảng thời gian ĐÃ trôi qua, luôn có trợ từ 了 sau động từ.</p>"},
+
+    // ---------------- BÀI 8: Self-check translate vi->zh ----------------
+    {id:"q40",section:"b8",type:"self_check",
+     prompt:"Mình muốn đi Bắc Kinh du lịch, bạn nghĩ đi vào lúc nào là tốt nhất?",
+     reference:"我要去北京旅游，你觉得什么时候去最好？",
+     explain:"<p><b>Giải thích:</b> Câu ghép 2 vế: vế 1 dùng 要 diễn tả nguyện vọng, vế 2 dùng 觉得+最 hỏi ý kiến thời điểm tốt nhất.</p><p><b>Lỗi thường gặp:</b> Học sinh hay dịch thừa từ, thêm 我想要 (dùng cả 想 và 要 cùng lúc).</p><p><b>Mẹo ghi nhớ:</b> Khi dịch 'muốn', chỉ chọn MỘT trong hai trợ động từ 要 hoặc 想.</p>"},
+    {id:"q41",section:"b8",type:"self_check",
+     prompt:"Tôi không muốn mua chiếc ghế đó, tôi muốn mua chiếc ghế mới.",
+     reference:"我不想买那个椅子，我要买新的（椅子）。",
+     explain:"<p><b>Giải thích:</b> Vế phủ định dùng 不想 (không dùng 不要); vế khẳng định dùng 要 hoặc 想 đều được.</p><p><b>Lỗi thường gặp:</b> Dùng 不要 khiến câu sai nghĩa thành 'tôi cấm mua chiếc ghế đó'.</p><p><b>Mẹo ghi nhớ:</b> 要 (khẳng định) đối lập với 不想 (phủ định), không phải 不要.</p>"},
+    {id:"q42",section:"b8",type:"self_check",
+     prompt:"Con mèo của tôi hơn 6 tháng tuổi rồi.", reference:"我的猫六个多月了。",
+     explain:"<p><b>Giải thích:</b> 6 &lt;10 → 多 sau lượng từ 个, trước danh từ 月; câu kết bằng 了.</p><p><b>Lỗi thường gặp:</b> Học sinh hay quên trợ từ 了 cuối câu.</p>"},
+    {id:"q43",section:"b8",type:"self_check",
+     prompt:"Trong lớp học của chúng tôi có hơn 20 học sinh.", reference:"我们教室里有二十多个学生。",
+     explain:"<p><b>Giải thích:</b> 20 là số chẵn chục ≥10 → 多 đứng ngay sau số, trước lượng từ 个.</p><p><b>Lỗi thường gặp:</b> Viết thành 二十个多学生 (sai vị trí 多).</p>"},
+    {id:"q44",section:"b8",type:"self_check",
+     prompt:"Bạn thích môn thể thao nào nhất?", reference:"你最喜欢什么运动？",
+     explain:"<p><b>Giải thích:</b> 最 đứng trước 喜欢 để hỏi mức độ thích nhất.</p><p><b>Lỗi thường gặp:</b> Quên 最, dịch thiếu thành 你喜欢什么运动.</p>"},
+    {id:"q45",section:"b8",type:"self_check",
+     prompt:"Bàn có mười mấy quyển sách.", reference:"桌子上有十几本书。",
+     explain:"<p><b>Giải thích:</b> 'Mười mấy' = khoảng 11-19 → dùng cấu trúc 十 + 几 + Lượng từ.</p><p><b>Lỗi thường gặp:</b> Dịch nhầm thành 几十本书 (mấy chục quyển — sai độ lớn con số).</p>"},
+
+    // ---------------- BÀI 9: Self-check translate zh->vi ----------------
+    {id:"q46",section:"b9",type:"self_check",
+     prompt:"A：你的狗多大了？\nB：它三个多月了，眼睛很漂亮。\nA：你为什么喜欢它？\nB：因为它很漂亮，我们一起玩的时候我很高兴。",
+     prompt_is_zh:true,
+     reference:"A: Con chó của bạn mấy tháng tuổi rồi? B: Nó hơn 3 tháng rồi, mắt nó rất đẹp. A: Vì sao bạn thích nó? B: Vì nó rất đẹp, lúc chúng tôi chơi cùng nhau tôi rất vui.",
+     explain:"<p><b>Giải thích:</b> Dịch theo nghĩa và ngữ cảnh tự nhiên tiếng Việt, không dịch từng chữ máy móc — 多大了 không dịch cứng là 'to bao nhiêu rồi' mà chuyển thành 'mấy tháng/tuổi rồi'.</p><p><b>Lỗi thường gặp:</b> Học sinh mới học hay dịch từng chữ (word-by-word), khiến câu tối nghĩa.</p><p><b>Mẹo ghi nhớ:</b> Khi dịch, luôn tự hỏi 'người Việt sẽ nói câu này thế nào trong đời sống hàng ngày?'</p>"},
+
+    // ---------------- BÀI 11: Self-check trả lời câu hỏi ----------------
+    {id:"q47",section:"b11",type:"self_check",
+     prompt:"小明为什么觉得九月去北京旅游最好？", prompt_is_zh:true,
+     reference:"因为九月的北京天气不冷也不热。",
+     explain:"<p><b>Giải thích:</b> Bám sát thông tin: vì tháng 9 thời tiết Bắc Kinh không lạnh cũng không nóng.</p><p><b>Lỗi thường gặp:</b> Trả lời cộc lốc chỉ bằng 因为天气 (thiếu chủ ngữ, thiếu nội dung cụ thể).</p><p><b>Mẹo ghi nhớ:</b> Câu trả lời dạng 为什么 nên bắt đầu bằng 因为 và có đầy đủ chủ-vị.</p>"},
+    {id:"q48",section:"b11",type:"self_check",
+     prompt:"花花的眼睛怎么样？", prompt_is_zh:true,
+     reference:"花花的眼睛很漂亮 / 最漂亮。",
+     explain:"<p><b>Giải thích:</b> Bám sát: 它的眼睛最漂亮.</p><p><b>Lỗi thường gặp:</b> Quên chủ ngữ 花花的眼睛, chỉ trả lời 很漂亮.</p><p><b>Mẹo ghi nhớ:</b> Khi trả lời 'X 怎么样?', nên lặp lại chủ ngữ X đầy đủ để câu trả lời đứng độc lập.</p>"},
+    {id:"q49",section:"b11",type:"self_check",
+     prompt:"下午小明要做什么？", prompt_is_zh:true,
+     reference:"下午小明要和朋友一起去踢足球。",
+     explain:"<p><b>Giải thích:</b> Bám sát câu cuối đoạn văn: 下午我要和朋友一起去踢足球.</p><p><b>Lỗi thường gặp:</b> Bỏ sót cụm 和朋友一起, chỉ trả lời 小明要踢足球.</p><p><b>Mẹo ghi nhớ:</b> Đọc kỹ toàn câu gốc trước khi rút gọn, không bỏ sót thành phần bổ nghĩa quan trọng.</p>"},
+    {id:"q50",section:"b11",type:"self_check",
+     prompt:"你喜欢什么运动？为什么？ (trả lời theo ý cá nhân)",
+     reference:"Câu trả lời mở — không có đáp án cố định. Ví dụ: 我最喜欢游泳，因为游泳的时候我很高兴。",
+     explain:"<p><b>Giải thích:</b> Đây là câu hỏi giao tiếp cá nhân, không kiểm tra thông tin từ bài đọc.</p><p><b>Lỗi thường gặp:</b> Chỉ trả lời nửa câu (nêu môn thích, quên phần lý do 为什么).</p><p><b>Mẹo ghi nhớ:</b> Khi câu hỏi có 2 phần (X? và Y?), câu trả lời phải có đủ 2 phần tương ứng.</p>"},
+
+    // ---------------- BÀI 12: Self-check essay ----------------
+    {id:"q51",section:"b12",type:"self_check",
+     prompt:"Viết một đoạn văn ngắn (5-6 câu) giới thiệu về một con vật nuôi hoặc một chuyến du lịch mà bạn thích. Dùng ít nhất 3 trong 4 điểm ngữ pháp: 要 / 最 / 几 / 多.\nGợi ý: viết về con vật nuôi (tên gì, mấy tháng/tuổi, đặc điểm gì đẹp nhất), hoặc dự định đi du lịch (muốn đi đâu, khi nào, vì sao).",
+     essay:true,
+     reference:"我家有猫，它叫小白。小白三个多月了，它的眼睛最漂亮。我最喜欢和它一起玩。我们都很喜欢它。下午我要去踢足球，晚上我要和小白一起玩。我觉得小白是最漂亮的猫。\n\n(Dịch: Nhà tôi có một con mèo, nó tên là Tiểu Bạch. Tiểu Bạch hơn 3 tháng tuổi, mắt nó đẹp nhất. Tôi thích nhất là chơi cùng nó. Cả nhà đều rất thích nó. Buổi chiều tôi muốn đi đá bóng, buổi tối tôi muốn chơi cùng Tiểu Bạch. Tôi thấy Tiểu Bạch là con mèo đẹp nhất.)",
+     explain:"<p><b>Tiêu chí chấm điểm gợi ý:</b></p><p><b>Nội dung:</b> Đủ 5-6 câu, có chủ đề rõ ràng (vật nuôi hoặc chuyến du lịch).</p><p><b>Ngữ pháp:</b> Dùng đúng ít nhất 3/4 điểm: 要 / 最 / 几 / 多, đặt đúng vị trí đã học.</p><p><b>Từ vựng:</b> Chỉ dùng từ đã học trong Bài 1 và HSK1.</p><p><b>Lỗi thường gặp:</b> Quên trợ từ 了 khi nói về tuổi/thời gian; dùng 不要 thay 不想.</p><p><b>Mẹo ghi nhớ:</b> Trước khi nộp, tự kiểm tra: có ít nhất 1 câu dùng 要/不想, 1 câu dùng 最, 1 câu dùng 几 hoặc 多.</p>"},
+
+    // ---------------- BÀI 13: Self-check dialogue ----------------
+    {id:"q52",section:"b13",type:"self_check",
+     prompt:"Chọn 1 trong 2 tình huống, viết đoạn hội thoại hoàn chỉnh (ít nhất 4 lượt lời, 2 người):\n\nTình huống 1: Bạn và một người bạn đang bàn về việc đi du lịch. Hỏi xem bạn ấy muốn đi đâu, khi nào đi là tốt nhất, và tại sao.\n\nTình huống 2: Bạn gặp một người bạn mới có nuôi thú cưng (mèo/chó). Hỏi về tên, tuổi, đặc điểm của con vật đó, và nói cảm nghĩ của bạn.",
+     essay:true,
+     reference:"— Tình huống 1 —\nA：你要去哪儿旅游？\nB：我要去北京旅游。\nA：你觉得什么时候去最好？\nB：我觉得九月去最好，因为九月的天气不冷也不热。\nA：好啊，那我们一起去吧！\n\n— Tình huống 2 —\nA：你家有猫吗？\nB：有，我家有猫，它叫花花。\nA：花花多大了？它怎么样？\nB：它六个多月了，我觉得它的眼睛最漂亮。\nA：真漂亮！我也想有猫。",
+     explain:"<p><b>Tiêu chí đánh giá gợi ý:</b></p><p><b>Cấu trúc:</b> Ít nhất 4 lượt lời, có hỏi-đáp qua lại tự nhiên giữa 2 người.</p><p><b>Ngữ pháp:</b> Vận dụng được 要/不想, 最, 几/多 trong hội thoại.</p><p><b>Lỗi thường gặp:</b> Viết hội thoại như văn viết trang trọng, thiếu trợ từ ngữ khí (吧, 啊, 呢).</p><p><b>Mẹo ghi nhớ:</b> Đọc to hội thoại sau khi viết — nếu nghe 'giống văn viết' hơn 'giống nói chuyện', nên thêm trợ từ ngữ khí.</p>"}
+  ]
+};
+
+/* ==========================================================================================
+   2. HẰNG SỐ & TIỆN ÍCH LƯU TRỮ (tách biệt tầng dữ liệu localStorage khỏi logic UI)
+========================================================================================== */
+const STORE = {
+  historyKey: "lms_history__" + LESSON.id,
+  progressKey: "lms_progress__" + LESSON.id,
+  themeKey: "lms_theme_pref",
+
+  readJSON(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) return fallback;
+      const parsed = JSON.parse(raw);
+      return parsed === null || parsed === undefined ? fallback : parsed;
+    }catch(e){ console.warn("Dữ liệu lưu trữ lỗi, dùng giá trị mặc định cho", key, e); return fallback; }
+  },
+  writeJSON(key, value){
+    try{ localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch(e){ console.warn("Không thể ghi localStorage", e); return false; }
+  },
+  remove(key){ try{ localStorage.removeItem(key); }catch(e){} },
+
+  getHistory(){ const h = this.readJSON(this.historyKey, []); return Array.isArray(h) ? h : []; },
+  saveHistory(list){ this.writeJSON(this.historyKey, list); },
+  addAttempt(attempt){
+    const list = this.getHistory();
+    attempt.attemptNumber = list.length + 1;
+    list.push(attempt);
+    this.saveHistory(list);
+    return attempt;
+  },
+  clearHistory(){ this.remove(this.historyKey); },
+
+  getProgress(){ return this.readJSON(this.progressKey, null); },
+  saveProgress(state){ this.writeJSON(this.progressKey, state); },
+  clearProgress(){ this.remove(this.progressKey); }
+};
+
+/* ==========================================================================================
+   3. STATE ỨNG DỤNG
+========================================================================================== */
+const QUESTIONS = LESSON.questions;
+const TOTAL_Q = QUESTIONS.length;
+const AUTO_TYPES = new Set(["mcq","blank_most","reorder","text_fill","dialog_fill"]);
+
+const STATE = {
+  currentIndex: 0,
+  answers: {},         // id -> answer payload (structure depends on type)
+  selfMarks: {},        // id -> true/false/null (student self-assessment for self_check)
+  startTime: null,
+  submitTime: null,
+  timeLimitSec: LESSON.timeLimitMinutes * 60,
+  remainingSec: LESSON.timeLimitMinutes * 60,
+  timerHandle: null,
+  submitted: false,
+  reviewFilter: "all",
+  historyViewOpen: false
+};
+
+/* ==========================================================================================
+   4. TIỆN ÍCH CHUNG
+========================================================================================== */
+function $(sel){ return document.querySelector(sel); }
+function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
+function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!==undefined) e.innerHTML=html; return e; }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function normalizeCompare(s){
+  return String(s||"")
+    .replace(/\s+/g,"")
+    .replace(/[。？！，、]/g,"")
+    .replace(/[?!,.]/g,"")
+    .trim();
+}
+function fmtTime(sec){
+  sec = Math.max(0, Math.round(sec));
+  const m = Math.floor(sec/60), s = sec%60;
+  return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+function fmtDuration(sec){
+  sec = Math.max(0, Math.round(sec));
+  const m = Math.floor(sec/60), s = sec%60;
+  return m>0 ? `${m} phút ${s} giây` : `${s} giây`;
+}
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleString("vi-VN", {day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
+}
+function toast(msg){
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toast._h);
+  toast._h = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+function questionById(id){ return QUESTIONS.find(q=>q.id===id); }
+function sectionById(id){ return LESSON.sections.find(s=>s.id===id); }
+
+/* ==========================================================================================
+   5. THEME (DARK / LIGHT)
+========================================================================================== */
+function initTheme(){
+  const pref = STORE.readJSON(STORE.themeKey, "light");
+  document.documentElement.setAttribute("data-theme", pref);
+  $("#themeToggle").textContent = pref==="dark" ? "☀️" : "🌙";
+}
+$("#themeToggle").addEventListener("click", ()=>{
+  const cur = document.documentElement.getAttribute("data-theme")==="dark" ? "dark" : "light";
+  const next = cur==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  STORE.writeJSON(STORE.themeKey, next);
+  $("#themeToggle").textContent = next==="dark" ? "☀️" : "🌙";
+});
+
+/* ==========================================================================================
+   6. KHỞI ĐỘNG / MÀN HÌNH BẮT ĐẦU
+========================================================================================== */
+function initStartScreen(){
+  $("#metaTotalQ").textContent = TOTAL_Q;
+  $("#metaTime").textContent = LESSON.timeLimitMinutes + " phút";
+
+  const history = STORE.getHistory();
+  const inProgress = STORE.getProgress();
+
+  if(history.length){
+    const scores = history.map(a=>a.percentage);
+    const best = Math.max(...scores);
+    const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+    const last = history[history.length-1];
+    const box = $("#historyMiniBox");
+    box.classList.remove("hidden");
+    box.innerHTML = `📊 Bạn đã làm bài này <b>${history.length}</b> lần. Điểm gần nhất: <b>${last.percentage}%</b> · Điểm cao nhất: <b>${best}%</b> · Trung bình: <b>${avg}%</b>`;
+  }
+
+  if(inProgress && !inProgress.submitted){
+    showResumeModal(inProgress);
+  }
+}
+
+function showResumeModal(saved){
+  const answeredCount = Object.keys(saved.answers||{}).length;
+  openModal(`
+    <h3>Tiếp tục bài làm dở?</h3>
+    <p>Hệ thống phát hiện bạn có một lần làm bài chưa hoàn thành (${answeredCount}/${TOTAL_Q} câu đã trả lời, còn ${fmtTime(saved.remainingSec)} phút).</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="mResumeRestart">Làm lại từ đầu</button>
+      <button class="btn btn-primary" id="mResumeContinue">Tiếp tục làm bài</button>
+    </div>
+  `);
+  $("#mResumeContinue").onclick = ()=>{ closeModal(); restoreProgress(saved); beginQuiz(true); };
+  $("#mResumeRestart").onclick = ()=>{ closeModal(); STORE.clearProgress(); };
+}
+
+function restoreProgress(saved){
+  STATE.answers = saved.answers || {};
+  STATE.selfMarks = saved.selfMarks || {};
+  STATE.currentIndex = saved.currentIndex || 0;
+  STATE.startTime = saved.startTime || Date.now();
+  STATE.remainingSec = saved.remainingSec != null ? saved.remainingSec : STATE.timeLimitSec;
+}
+
+$("#btnStart").addEventListener("click", ()=>{
+  STATE.startTime = Date.now();
+  STATE.remainingSec = STATE.timeLimitSec;
+  beginQuiz(false);
+});
+
+function beginQuiz(resumed){
+  $("#startScreen").classList.add("hidden");
+  $("#quizScreen").classList.remove("hidden");
+  $("#timerBox").classList.remove("hidden");
+  $("#progressWrap").classList.remove("hidden");
+  $("#navPanelToggle").classList.remove("hidden");
+  renderQNav();
+  renderQuestion(STATE.currentIndex);
+  updateProgressBar();
+  startTimer();
+  if(!resumed) toast("Chúc bạn làm bài tốt! 加油！");
+}
+
+/* ==========================================================================================
+   7. ĐỒNG HỒ ĐẾM NGƯỢC
+========================================================================================== */
+function startTimer(){
+  clearInterval(STATE.timerHandle);
+  updateTimerDisplay();
+  STATE.timerHandle = setInterval(()=>{
+    STATE.remainingSec--;
+    if(STATE.remainingSec <= 0){
+      STATE.remainingSec = 0;
+      updateTimerDisplay();
+      clearInterval(STATE.timerHandle);
+      toast("⏰ Đã hết thời gian làm bài!");
+      finalizeSubmit(true);
+      return;
+    }
+    updateTimerDisplay();
+    persistProgress();
+  }, 1000);
+}
+function updateTimerDisplay(){
+  $("#timerDisplay").textContent = fmtTime(STATE.remainingSec);
+  $("#timerBox").classList.toggle("warn", STATE.remainingSec <= 300);
+}
+
+/* ==========================================================================================
+   8. TIẾN ĐỘ / LƯU TẠM (LOCALSTORAGE)
+========================================================================================== */
+function persistProgress(){
+  STORE.saveProgress({
+    currentIndex: STATE.currentIndex,
+    answers: STATE.answers,
+    selfMarks: STATE.selfMarks,
+    startTime: STATE.startTime,
+    remainingSec: STATE.remainingSec,
+    submitted: false
+  });
+}
+function isAnswered(q){
+  const a = STATE.answers[q.id];
+  if(a === undefined || a === null) return false;
+  if(q.type==="mcq") return !!a.choice;
+  if(q.type==="blank_most") return Array.isArray(a.blanks) && a.blanks.every(b=>b!==null && b!==undefined);
+  if(q.type==="reorder") return Array.isArray(a.order) && a.order.length === q.tokens.length;
+  if(q.type==="text_fill") return !!(a.text && a.text.trim().length>0);
+  if(q.type==="dialog_fill") return a.blanks && Object.keys(a.blanks).length === Object.keys(q.correctMap).length && Object.values(a.blanks).every(v=>!!v);
+  if(q.type==="self_check") return !!(a.text && a.text.trim().length>0);
+  return false;
+}
+function answeredCountAll(){ return QUESTIONS.filter(isAnswered).length; }
+
+function updateProgressBar(){
+  const done = answeredCountAll();
+  const pct = Math.round(done/TOTAL_Q*100);
+  $("#progressText").textContent = `Đã làm: ${done} / ${TOTAL_Q} câu`;
+  $("#progressPercent").textContent = pct+"%";
+  $("#progressBarFill").style.width = pct+"%";
+  $("#unansweredCount").textContent = `Chưa làm: ${TOTAL_Q-done} câu`;
+  refreshQNavStates();
+}
+
+/* ==========================================================================================
+   9. BẢNG ĐIỀU HƯỚNG CÂU HỎI
+========================================================================================== */
+function renderQNav(){
+  const grid = $("#qnavGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach((q, idx)=>{
+    const btn = el("button","qnav-item", (idx+1));
+    btn.dataset.idx = idx;
+    btn.title = sectionById(q.section).title;
+    btn.addEventListener("click", ()=>{ STATE.currentIndex = idx; renderQuestion(idx); });
+    grid.appendChild(btn);
+  });
+  refreshQNavStates();
+}
+function refreshQNavStates(){
+  $all(".qnav-item").forEach((btn,idx)=>{
+    const q = QUESTIONS[idx];
+    btn.classList.remove("answered","current","correct","wrong","self");
+    if(idx === STATE.currentIndex) btn.classList.add("current");
+    if(STATE.submitted){
+      const g = gradeQuestion(q);
+      if(g.status==="correct") btn.classList.add("correct");
+      else if(g.status==="wrong") btn.classList.add("wrong");
+      else if(g.status==="self") btn.classList.add("self");
+    } else if(isAnswered(q)){
+      btn.classList.add("answered");
+    }
+  });
+}
+$("#navPanelToggle").addEventListener("click", ()=>{
+  $("#navPanel").scrollIntoView({behavior:"smooth", block:"start"});
+});
+
+/* ==========================================================================================
+   10. RENDER CÂU HỎI (theo từng dạng)
+========================================================================================== */
+function renderQuestion(idx){
+  STATE.currentIndex = idx;
+  const q = QUESTIONS[idx];
+  const sec = sectionById(q.section);
+  const card = $("#questionCard");
+  card.innerHTML = "";
+
+  card.appendChild(el("div","q-section-title", escapeHtml(sec.title)));
+  card.appendChild(el("span","q-skill-tag", escapeHtml(sec.skill)));
+  card.appendChild(el("div","q-num", `Câu ${idx+1} / ${TOTAL_Q}${sec.instruction ? " · "+escapeHtml(sec.instruction) : ""}`));
+
+  if(sec.passage){
+    card.appendChild(el("div","passage-box zh", escapeHtml(LESSON.passages[sec.passage])));
+  }
+
+  const body = el("div","q-body");
+  card.appendChild(body);
+
+  switch(q.type){
+    case "mcq": renderMCQ(body,q); break;
+    case "blank_most": renderBlankMost(body,q); break;
+    case "reorder": renderReorder(body,q); break;
+    case "text_fill": renderTextFill(body,q); break;
+    case "dialog_fill": renderDialogFill(body,q); break;
+    case "self_check": renderSelfCheck(body,q); break;
+  }
+
+  if(STATE.submitted) renderGradedFeedback(card,q);
+
+  $("#btnPrev").disabled = idx===0;
+  $("#btnNext").classList.toggle("hidden", idx===TOTAL_Q-1);
+  $("#btnSubmit").classList.toggle("hidden", idx!==TOTAL_Q-1 || STATE.submitted);
+  updateProgressBar();
+  card.scrollIntoView({behavior:"smooth", block:"start"});
+}
+function autoAdvance(){
+  // Tự động chuyển sang câu tiếp theo sau khi học sinh chọn xong đáp án (không áp dụng cho câu nhập văn bản tự do).
+  if(STATE.submitted) return;
+  if(STATE.currentIndex >= TOTAL_Q-1) return;
+  clearTimeout(autoAdvance._h);
+  autoAdvance._h = setTimeout(()=>{
+    if(STATE.currentIndex < TOTAL_Q-1) renderQuestion(STATE.currentIndex+1);
+  }, 500);
+}
+function isFirstOfSection(idx){
+  const sec = QUESTIONS[idx].section;
+  return idx===0 || QUESTIONS[idx-1].section !== sec;
+}
+
+function renderMCQ(body,q){
+  if(q.prompt) body.appendChild(el("div","q-prompt zh", escapeHtml(q.prompt)));
+  if(q.markedSentence){
+    const CIRCLES = {1:"①",2:"②",3:"③",4:"④"};
+    const line = el("div","sentence-line zh");
+    q.markedSentence.forEach(part=>{
+      if(typeof part === "number"){
+        line.appendChild(el("span","gap-mark", CIRCLES[part] || part));
+      } else {
+        line.appendChild(document.createTextNode(part));
+      }
+    });
+    body.appendChild(line);
+    body.appendChild(el("p",null,'<span style="font-size:15px;color:var(--text-dim);">Chọn vị trí đúng để điền 最, hoặc chọn "Không cần điền 最" nếu câu không cần so sánh nhất.</span>'));
+  }
+  const list = el("div","options-list");
+  const cur = STATE.answers[q.id];
+  q.options.forEach(opt=>{
+    const item = el("button","option-item");
+    item.innerHTML = `<span class="opt-key">${opt.k}</span><span class="zh">${escapeHtml(opt.t)}</span>`;
+    if(cur && cur.choice===opt.k) item.classList.add("selected");
+    item.disabled = STATE.submitted;
+    if(STATE.submitted){
+      item.classList.add("locked");
+      if(opt.k===q.correct) item.classList.add("correct-answer");
+      else if(cur && cur.choice===opt.k) item.classList.add("wrong-selected");
+    }
+    item.addEventListener("click", ()=>{
+      STATE.answers[q.id] = {choice: opt.k};
+      persistProgress();
+      renderQuestion(STATE.currentIndex);
+      autoAdvance();
+    });
+    list.appendChild(item);
+  });
+  body.appendChild(list);
+  if(STATE.submitted && q.fullCorrect){
+    body.appendChild(el("p",null,`<b>Câu hoàn chỉnh đúng:</b> <span class="zh">${escapeHtml(q.fullCorrect)}</span>`));
+  }
+}
+
+function renderBlankMost(body,q){
+  const line = el("div","sentence-line zh");
+  const cur = STATE.answers[q.id] || {blanks:new Array(q.blanks.length).fill(null)};
+  q.segments.forEach((seg,i)=>{
+    line.appendChild(document.createTextNode(seg));
+    if(i < q.blanks.length){
+      const sel = document.createElement("select");
+      sel.className = "blank-select";
+      sel.disabled = STATE.submitted;
+      sel.innerHTML = `<option value="">(chọn)</option><option value="0">(để trống)</option><option value="1">最</option>`;
+      sel.value = cur.blanks[i]==null ? "" : (cur.blanks[i]?"1":"0");
+      sel.addEventListener("change", ()=>{
+        const arr = (STATE.answers[q.id]||{blanks:new Array(q.blanks.length).fill(null)}).blanks.slice();
+        arr[i] = sel.value==="" ? null : sel.value==="1";
+        STATE.answers[q.id] = {blanks:arr};
+        persistProgress();
+        updateProgressBar();
+      });
+      line.appendChild(sel);
+    }
+  });
+  body.appendChild(line);
+  if(STATE.submitted){
+    body.appendChild(el("p",null,`<b>Câu hoàn chỉnh đúng:</b> <span class="zh">${escapeHtml(q.fullCorrect)}</span>`));
+  }
+}
+
+function renderReorder(body,q){
+  const cur = STATE.answers[q.id] || {order:[]};
+  const answerRow = el("div","reorder-answer-row");
+  const poolRow = el("div","reorder-tokens-pool");
+
+  function usedIndices(){ return cur.order.slice(); }
+
+  function draw(){
+    answerRow.innerHTML = "";
+    poolRow.innerHTML = "";
+    if(cur.order.length===0){ answerRow.appendChild(el("span",null,'<span style="color:var(--text-faint);font-size:13px;">Bấm các từ bên dưới theo đúng thứ tự...</span>')); }
+    cur.order.forEach((tok,pos)=>{
+      const chip = el("button","token-chip zh", escapeHtml(tok));
+      chip.disabled = STATE.submitted;
+      chip.addEventListener("click", ()=>{
+        cur.order.splice(pos,1);
+        STATE.answers[q.id] = {order:cur.order};
+        persistProgress(); draw(); updateProgressBar();
+      });
+      answerRow.appendChild(chip);
+    });
+    // pool = remaining tokens (respect duplicates by index)
+    const usedFlags = new Array(q.tokens.length).fill(false);
+    cur.order.forEach(tok=>{
+      const i = q.tokens.findIndex((t,ti)=>t===tok && !usedFlags[ti]);
+      if(i>-1) usedFlags[i]=true;
+    });
+    q.tokens.forEach((tok,ti)=>{
+      const chip = el("button","token-chip zh", escapeHtml(tok));
+      if(usedFlags[ti]){ chip.classList.add("used"); chip.disabled = true; }
+      else{
+        chip.disabled = STATE.submitted;
+        chip.addEventListener("click", ()=>{
+          cur.order.push(tok);
+          STATE.answers[q.id] = {order:cur.order};
+          persistProgress(); draw(); updateProgressBar();
+          if(cur.order.length === q.tokens.length) autoAdvance();
+        });
+      }
+      poolRow.appendChild(chip);
+    });
+  }
+  draw();
+  body.appendChild(el("div",null,'<p style="font-size:13px;color:var(--text-dim);margin-bottom:6px;">Câu bạn đã ghép:</p>'));
+  body.appendChild(answerRow);
+  body.appendChild(el("div",null,'<p style="font-size:13px;color:var(--text-dim);margin:12px 0 6px;">Các từ cho sẵn:</p>'));
+  body.appendChild(poolRow);
+  if(!STATE.submitted){
+    const resetBtn = el("button","btn btn-ghost btn-sm", "Đặt lại");
+    resetBtn.style.marginTop="12px";
+    resetBtn.addEventListener("click", ()=>{ cur.order=[]; STATE.answers[q.id]={order:[]}; persistProgress(); draw(); updateProgressBar(); });
+    body.appendChild(resetBtn);
+  }
+  if(STATE.submitted){
+    body.appendChild(el("p",null,`<b>Câu đúng:</b> <span class="zh">${escapeHtml(q.fullCorrect)}</span>`));
+  }
+}
+
+function renderTextFill(body,q){
+  body.appendChild(el("div","q-prompt zh", escapeHtml(q.prompt)));
+  const cur = STATE.answers[q.id] || {text:""};
+  const input = document.createElement("input");
+  input.type="text"; input.className="text-input zh";
+  input.placeholder="Gõ lại câu đã sửa đúng...";
+  input.value = cur.text || "";
+  input.disabled = STATE.submitted;
+  input.addEventListener("input", ()=>{
+    STATE.answers[q.id] = {text: input.value};
+    persistProgress();
+    updateProgressBar();
+  });
+  body.appendChild(input);
+  if(STATE.submitted){
+    body.appendChild(el("p",null,`<b>Đáp án đúng:</b> <span class="zh">${escapeHtml(q.correct)}</span>`));
+  }
+}
+
+function renderDialogFill(body,q){
+  const cur = STATE.answers[q.id] || {blanks:{}};
+  const box = el("div","sentence-line zh");
+  q.lines.forEach(line=>{
+    const p = document.createElement("div");
+    p.style.marginBottom="8px";
+    const strong = document.createElement("b"); strong.textContent = line.sp+"："; strong.style.fontFamily="var(--vi-font)";
+    p.appendChild(strong);
+    line.segs.forEach(seg=>{
+      if(typeof seg === "number"){
+        const sel = document.createElement("select");
+        sel.className="blank-select";
+        sel.disabled = STATE.submitted;
+        sel.innerHTML = `<option value="">?</option>` + q.wordBank.map(w=>`<option value="${w}">${w}</option>`).join("");
+        sel.value = (cur.blanks && cur.blanks[seg]) || "";
+        sel.addEventListener("change", ()=>{
+          const b = Object.assign({}, (STATE.answers[q.id]||{blanks:{}}).blanks);
+          b[seg] = sel.value;
+          STATE.answers[q.id] = {blanks:b};
+          persistProgress(); updateProgressBar();
+          if(Object.keys(b).length === q.wordBank.length && Object.values(b).every(v=>!!v)) autoAdvance();
+        });
+        p.appendChild(sel);
+      } else if(seg !== "(" && seg !== ")"){
+        p.appendChild(document.createTextNode(seg));
+      }
+    });
+    box.appendChild(p);
+  });
+  body.appendChild(box);
+  body.appendChild(el("p",null,`<span style="font-size:13px;color:var(--text-dim);">Ngân hàng từ: <span class="zh">${q.wordBank.join(" · ")}</span> (mỗi từ dùng đúng 1 lần)</span>`));
+  if(STATE.submitted){
+    const correctStr = Object.entries(q.correctMap).map(([k,v])=>`(${k}) ${v}`).join(" · ");
+    body.appendChild(el("p",null,`<b>Đáp án đúng:</b> <span class="zh">${escapeHtml(correctStr)}</span>`));
+  }
+}
+
+function renderSelfCheck(body,q){
+  const promptClass = q.prompt_is_zh ? "q-prompt zh" : "q-prompt";
+  const p = el("div", promptClass);
+  p.style.whiteSpace = "pre-line";
+  p.textContent = q.prompt;
+  body.appendChild(p);
+
+  const cur = STATE.answers[q.id] || {text:""};
+  const ta = document.createElement("textarea");
+  ta.className = "text-input";
+  ta.placeholder = q.essay ? "Viết câu trả lời của bạn ở đây..." : "Gõ câu trả lời / bản dịch của bạn...";
+  ta.value = cur.text || "";
+  ta.disabled = STATE.submitted;
+  ta.addEventListener("input", ()=>{
+    STATE.answers[q.id] = {text: ta.value};
+    persistProgress();
+    updateProgressBar();
+  });
+  body.appendChild(ta);
+
+  if(STATE.submitted){
+    const refBox = el("div","ref-answer-box");
+    const refP = document.createElement("div");
+    refP.style.whiteSpace="pre-line";
+    refP.className = "zh";
+    refP.innerHTML = `<b style="font-family:var(--vi-font);">Đáp án / câu mẫu tham khảo:</b><br>${escapeHtml(q.reference)}`;
+    refBox.appendChild(refP);
+    body.appendChild(refBox);
+
+    const markRow = el("div","self-mark-row");
+    const mark = STATE.selfMarks[q.id];
+    const okBtn = el("button","btn btn-sm "+(mark===true?"btn-primary":"btn-ghost"), "✓ Tôi làm đúng");
+    const noBtn = el("button","btn btn-sm "+(mark===false?"btn-danger":"btn-ghost"), "✗ Cần ôn lại");
+    okBtn.addEventListener("click", ()=>{ STATE.selfMarks[q.id]=true; persistProgress(); renderQuestion(STATE.currentIndex); });
+    noBtn.addEventListener("click", ()=>{ STATE.selfMarks[q.id]=false; persistProgress(); renderQuestion(STATE.currentIndex); });
+    markRow.appendChild(okBtn); markRow.appendChild(noBtn);
+    body.appendChild(markRow);
+  }
+}
+
+function renderGradedFeedback(card,q){
+  const g = gradeQuestion(q);
+  const badge = el("div","result-badge "+(g.status==="correct"?"ok":g.status==="wrong"?"no":"pending"),
+    g.status==="correct" ? "✓ Đúng" : g.status==="wrong" ? "✗ Sai" : "◐ Tự đánh giá");
+  card.insertBefore(badge, card.querySelector(".q-body"));
+  if(q.explain){
+    card.appendChild(el("div","explain-box", q.explain));
+  }
+}
+
+/* ==========================================================================================
+   11. ĐIỀU HƯỚNG PREV/NEXT + PHÍM TẮT
+========================================================================================== */
+$("#btnPrev").addEventListener("click", ()=>{ if(STATE.currentIndex>0) renderQuestion(STATE.currentIndex-1); });
+$("#btnNext").addEventListener("click", ()=>{ if(STATE.currentIndex<TOTAL_Q-1) renderQuestion(STATE.currentIndex+1); });
+document.addEventListener("keydown", (e)=>{
+  if($("#quizScreen").classList.contains("hidden")) return;
+  if(["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)) return;
+  if(e.key==="ArrowLeft" && STATE.currentIndex>0) renderQuestion(STATE.currentIndex-1);
+  if(e.key==="ArrowRight" && STATE.currentIndex<TOTAL_Q-1) renderQuestion(STATE.currentIndex+1);
+});
+
+/* ==========================================================================================
+   12. NỘP BÀI (kiểm tra trước khi nộp)
+========================================================================================== */
+$("#btnSubmit").addEventListener("click", ()=>{
+  const unanswered = QUESTIONS.filter(q=>!isAnswered(q));
+  if(unanswered.length){
+    const chips = unanswered.slice(0,30).map(q=>`<span class="missing-chip">Câu ${QUESTIONS.indexOf(q)+1}</span>`).join("");
+    openModal(`
+      <h3>Bạn còn ${unanswered.length} câu chưa trả lời</h3>
+      <div class="missing-list">${chips}${unanswered.length>30?"<span class='missing-chip'>...</span>":""}</div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="mBackToWork">Quay lại làm tiếp</button>
+        <button class="btn btn-primary" id="mSubmitAnyway">Vẫn nộp bài</button>
+      </div>
+    `);
+    $("#mBackToWork").onclick = closeModal;
+    $("#mSubmitAnyway").onclick = ()=>{ closeModal(); finalizeSubmit(false); };
+  } else {
+    openModal(`
+      <h3>Bạn đã hoàn thành tất cả câu hỏi</h3>
+      <p>Xác nhận nộp bài? Sau khi nộp bạn sẽ không thể sửa lại đáp án.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="mBackToWork">Kiểm tra lại</button>
+        <button class="btn btn-primary" id="mSubmitAnyway">Nộp bài</button>
+      </div>
+    `);
+    $("#mBackToWork").onclick = closeModal;
+    $("#mSubmitAnyway").onclick = ()=>{ closeModal(); finalizeSubmit(false); };
+  }
+});
+
+function finalizeSubmit(timeUp){
+  clearInterval(STATE.timerHandle);
+  STATE.submitted = true;
+  STATE.submitTime = Date.now();
+  const result = computeResult();
+  STORE.addAttempt(result.attemptRecord);
+  STORE.clearProgress();
+  toast(timeUp ? "Đã hết thời gian — bài đã được nộp tự động." : "Nộp bài thành công!");
+  showResults(result);
+}
+
+/* ==========================================================================================
+   13. CHẤM ĐIỂM
+========================================================================================== */
+function gradeQuestion(q){
+  const a = STATE.answers[q.id];
+  if(q.type === "self_check"){
+    if(!STATE.submitted) return {status:"pending", graded:false};
+    const mark = STATE.selfMarks[q.id];
+    return {status: mark===true ? "correct" : mark===false ? "wrong" : "self", graded:false, selfMark:mark};
+  }
+  if(!STATE.submitted) return {status:"pending", graded:true};
+  if(!a) return {status:"wrong", graded:true, unanswered:true};
+
+  let ok = false;
+  if(q.type === "mcq"){
+    ok = a.choice === q.correct;
+  } else if(q.type === "blank_most"){
+    ok = Array.isArray(a.blanks) && q.blanks.every((b,i)=> a.blanks[i]===b.correct);
+  } else if(q.type === "reorder"){
+    ok = Array.isArray(a.order) && a.order.length===q.correctOrder.length && a.order.every((t,i)=>t===q.correctOrder[i]);
+  } else if(q.type === "text_fill"){
+    ok = normalizeCompare(a.text) === normalizeCompare(q.correct);
+  } else if(q.type === "dialog_fill"){
+    const keys = Object.keys(q.correctMap);
+    ok = a.blanks && keys.every(k => (a.blanks[k]||"") === q.correctMap[k]);
+  }
+  return {status: ok ? "correct":"wrong", graded:true};
+}
+
+function computeResult(){
+  const autoQuestions = QUESTIONS.filter(q=>AUTO_TYPES.has(q.type));
+  const selfQuestions = QUESTIONS.filter(q=>q.type==="self_check");
+  let autoCorrect = 0;
+  autoQuestions.forEach(q=>{ if(gradeQuestion(q).status==="correct") autoCorrect++; });
+  const autoWrong = autoQuestions.length - autoCorrect;
+  const percentage = autoQuestions.length ? Math.round(autoCorrect/autoQuestions.length*100) : 0;
+  const score100 = percentage;
+
+  // group by skill
+  const bySkill = {};
+  QUESTIONS.forEach(q=>{
+    const sec = sectionById(q.section);
+    const skill = sec.skill || "Khác";
+    if(!bySkill[skill]) bySkill[skill] = {total:0, autoTotal:0, autoCorrect:0, selfTotal:0, selfOk:0, selfDone:0};
+    bySkill[skill].total++;
+    if(AUTO_TYPES.has(q.type)){
+      bySkill[skill].autoTotal++;
+      if(gradeQuestion(q).status==="correct") bySkill[skill].autoCorrect++;
+    } else {
+      bySkill[skill].selfTotal++;
+      const mark = STATE.selfMarks[q.id];
+      if(mark!==undefined && mark!==null){ bySkill[skill].selfDone++; if(mark===true) bySkill[skill].selfOk++; }
+    }
+  });
+
+  const unansweredCount = QUESTIONS.filter(q=>!isAnswered(q)).length;
+  const durationSec = Math.round((STATE.submitTime - STATE.startTime)/1000);
+
+  let classification = "";
+  if(percentage>=95) classification="Xuất sắc";
+  else if(percentage>=90) classification="Rất tốt";
+  else if(percentage>=80) classification="Giỏi";
+  else if(percentage>=70) classification="Khá";
+  else if(percentage>=60) classification="Đạt";
+  else classification="Cần cố gắng";
+
+  // strengths / weaknesses based only on measured skill data (no fabrication)
+  const skillEntries = Object.entries(bySkill).filter(([k,v])=>v.autoTotal>0).map(([k,v])=>({skill:k, pct:Math.round(v.autoCorrect/v.autoTotal*100)}));
+  skillEntries.sort((a,b)=>b.pct-a.pct);
+  const strengths = skillEntries.filter(s=>s.pct>=80).map(s=>s.skill);
+  const weaknesses = skillEntries.filter(s=>s.pct<70).map(s=>s.skill);
+
+  const attemptRecord = {
+    lessonId: LESSON.id,
+    lessonTitle: LESSON.title,
+    startTime: STATE.startTime,
+    submitTime: STATE.submitTime,
+    duration: durationSec,
+    totalScore: score100,
+    percentage: percentage,
+    correctAnswers: autoCorrect,
+    wrongAnswers: autoWrong,
+    unansweredQuestions: unansweredCount,
+    scoreBySection: Object.fromEntries(LESSON.sections.map(s=>{
+      const qs = QUESTIONS.filter(q=>q.section===s.id && AUTO_TYPES.has(q.type));
+      const c = qs.filter(q=>gradeQuestion(q).status==="correct").length;
+      return [s.id, {title:s.title, total:qs.length, correct:c}];
+    })),
+    scoreBySkill: Object.fromEntries(Object.entries(bySkill).map(([k,v])=>[k,{autoTotal:v.autoTotal,autoCorrect:v.autoCorrect,selfTotal:v.selfTotal,selfDone:v.selfDone,selfOk:v.selfOk}])),
+    studentAnswers: STATE.answers,
+    selfMarks: STATE.selfMarks,
+    teacherFeedback: null,
+    classification: classification,
+    version: LESSON.version
+  };
+
+  return {autoCorrect, autoWrong, autoTotal: autoQuestions.length, percentage, score100, classification,
+           bySkill, unansweredCount, durationSec, strengths, weaknesses, attemptRecord};
+}
+
+/* ==========================================================================================
+   14. MÀN HÌNH KẾT QUẢ
+========================================================================================== */
+function showResults(result){
+  $("#quizScreen").classList.add("hidden");
+  $("#topbar").querySelector("#timerBox").classList.add("hidden");
+  $("#progressWrap").classList.add("hidden");
+  $("#navPanelToggle").classList.add("hidden");
+  $("#resultScreen").classList.remove("hidden");
+
+  const tierClass = result.percentage>=80 ? "tier-good" : result.percentage>=60 ? "tier-mid" : "tier-low";
+  const tierEmoji = result.percentage>=80 ? "🏆" : result.percentage>=60 ? "📘" : "📖";
+  const sc = $("#resultSummaryCard");
+  sc.innerHTML = `
+    <h2 style="text-align:center;">Kết quả bài làm</h2>
+    <div class="classification-box ${tierClass}">${tierEmoji} ${result.classification}<span class="cb-score">${result.score100} / 100 điểm · ${result.percentage}% đúng</span></div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="num">${result.score100}</div><div class="lbl">Điểm (thang 100)</div></div>
+      <div class="stat-box"><div class="num">${result.autoCorrect}/${result.autoTotal}</div><div class="lbl">Câu đúng (tự động chấm)</div></div>
+      <div class="stat-box"><div class="num">${result.autoWrong}</div><div class="lbl">Câu sai</div></div>
+      <div class="stat-box"><div class="num">${result.percentage}%</div><div class="lbl">Tỷ lệ đúng</div></div>
+      <div class="stat-box"><div class="num">${fmtDuration(result.durationSec)}</div><div class="lbl">Thời gian làm bài</div></div>
+      <div class="stat-box"><div class="num">${result.unansweredCount}</div><div class="lbl">Câu bỏ trống</div></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--text-dim);">Điểm được tính tự động trên <b>${result.autoTotal} câu có đáp án chuẩn cố định</b> (trắc nghiệm, điền từ, sắp xếp câu, sửa lỗi, hoàn thành hội thoại, đọc hiểu). Các câu dạng mở (đặt câu, dịch, viết đoạn, hội thoại tự do) cần bạn <b>tự đánh giá</b> sau khi so sánh với câu mẫu — xem phần "Xem lại chi tiết" bên dưới.</p>
+    ${renderStrengthWeakBlock(result)}
+  `;
+
+  drawSkillChart(result.bySkill);
+  renderHistoryStats();
+  renderReviewFilters();
+  renderReviewList("all");
+  $("#historyTableWrap").classList.add("hidden");
+}
+
+function renderStrengthWeakBlock(result){
+  let html = '<div style="margin-top:16px;">';
+  html += `<p><b>Điểm mạnh:</b> ${result.strengths.length ? escapeHtml(result.strengths.join(", ")) : "Chưa đủ dữ liệu để xác định rõ."}</p>`;
+  html += `<p><b>Điểm cần ôn tập:</b> ${result.weaknesses.length ? escapeHtml(result.weaknesses.join(", ")) : "Không có nhóm nào dưới 70% — rất tốt!"}</p>`;
+  html += '<p style="font-size:12.5px;color:var(--text-faint);">*Phân tích chỉ dựa trên số liệu các câu có đáp án cố định, không suy diễn thêm.</p></div>';
+  return html;
+}
+
+function drawSkillChart(bySkill){
+  const canvas = $("#skillChart");
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = canvas.parentElement.clientWidth - 12;
+  const cssH = 320;
+  canvas.width = cssW*dpr; canvas.height = cssH*dpr;
+  canvas.style.width = cssW+"px"; canvas.style.height = cssH+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,cssW,cssH);
+
+  const styles = getComputedStyle(document.documentElement);
+  const colGreen = styles.getPropertyValue("--green").trim() || "#1f9d55";
+  const colRed = styles.getPropertyValue("--red").trim() || "#e03131";
+  const colAmber = styles.getPropertyValue("--amber").trim() || "#f0a500";
+  const colText = styles.getPropertyValue("--text").trim() || "#1c2333";
+  const colGrid = styles.getPropertyValue("--border").trim() || "#e3e7f0";
+
+  const entries = Object.entries(bySkill);
+  const rowH = Math.min(46, (cssH-40)/Math.max(entries.length,1));
+  const chartLeft = 130, chartRight = cssW-70;
+  const chartW = chartRight - chartLeft;
+
+  ctx.font = "12px Times New Roman, serif";
+  ctx.textBaseline = "middle";
+
+  entries.forEach(([skill,v], i)=>{
+    const y = 24 + i*rowH + rowH/2;
+    ctx.fillStyle = colText;
+    ctx.textAlign = "right";
+    ctx.fillText(skill, chartLeft-12, y);
+
+    // grid line baseline
+    ctx.strokeStyle = colGrid;
+    ctx.beginPath(); ctx.moveTo(chartLeft,y+rowH*0.32); ctx.lineTo(chartRight,y+rowH*0.32); ctx.stroke();
+
+    if(v.autoTotal>0){
+      const pctCorrect = v.autoCorrect/v.autoTotal;
+      const barH = rowH*0.44;
+      // background track
+      ctx.fillStyle = colGrid;
+      ctx.fillRect(chartLeft, y-barH/2, chartW, barH);
+      // correct portion
+      ctx.fillStyle = colGreen;
+      ctx.fillRect(chartLeft, y-barH/2, chartW*pctCorrect, barH);
+      // wrong portion
+      ctx.fillStyle = colRed;
+      ctx.fillRect(chartLeft+chartW*pctCorrect, y-barH/2, chartW*(1-pctCorrect), barH);
+      ctx.fillStyle = colText; ctx.textAlign="left";
+      ctx.fillText(`${v.autoCorrect}/${v.autoTotal} đúng (${Math.round(pctCorrect*100)}%)`, chartRight+8, y);
+    } else if(v.selfTotal>0){
+      const pctDone = v.selfDone/v.selfTotal;
+      const barH = rowH*0.44;
+      ctx.fillStyle = colGrid;
+      ctx.fillRect(chartLeft, y-barH/2, chartW, barH);
+      ctx.fillStyle = colAmber;
+      ctx.fillRect(chartLeft, y-barH/2, chartW*pctDone, barH);
+      ctx.fillStyle = colText; ctx.textAlign="left";
+      ctx.fillText(`${v.selfDone}/${v.selfTotal} đã tự đánh giá`, chartRight+8, y);
+    }
+  });
+}
+window.addEventListener("resize", ()=>{
+  if(!$("#resultScreen").classList.contains("hidden") && STATE.submitted){
+    const result = computeResult();
+    drawSkillChart(result.bySkill);
+  }
+});
+
+/* ==========================================================================================
+   15. LỌC CÂU + XEM LẠI CHI TIẾT
+========================================================================================== */
+function renderReviewFilters(){
+  const filters = [
+    {k:"all", label:"Tất cả"},
+    {k:"wrong", label:"Câu sai"},
+    {k:"correct", label:"Câu đúng"},
+    {k:"unanswered", label:"Câu bỏ trống"},
+    {k:"self", label:"Câu tự đánh giá"}
+  ];
+  const wrap = $("#reviewFilters");
+  wrap.innerHTML = "";
+  filters.forEach(f=>{
+    const chip = el("button","filter-chip"+(STATE.reviewFilter===f.k?" active":""), f.label);
+    chip.addEventListener("click", ()=>{ STATE.reviewFilter=f.k; renderReviewFilters(); renderReviewList(f.k); });
+    wrap.appendChild(chip);
+  });
+}
+function renderReviewList(filter){
+  const list = $("#reviewList");
+  list.innerHTML = "";
+  QUESTIONS.forEach((q,idx)=>{
+    const g = gradeQuestion(q);
+    const a = STATE.answers[q.id];
+    let show = true;
+    if(filter==="wrong") show = g.status==="wrong" && !g.unanswered && q.type!=="self_check";
+    if(filter==="correct") show = g.status==="correct";
+    if(filter==="unanswered") show = !isAnswered(q);
+    if(filter==="self") show = q.type==="self_check";
+    if(!show) return;
+
+    const item = el("div","card");
+    item.style.marginBottom="12px";
+    const sec = sectionById(q.section);
+    item.appendChild(el("div","q-section-title", `Câu ${idx+1} · ${escapeHtml(sec.title)}`));
+    item.appendChild(el("div","result-badge "+(g.status==="correct"?"ok":g.status==="wrong"?"no":"pending"),
+      g.status==="correct" ? "✓ Đúng" : g.status==="wrong" ? "✗ Sai" : "◐ Tự đánh giá"));
+
+    const studentAnsHtml = describeAnswer(q,a);
+    item.appendChild(el("p",null,`<b>Câu hỏi:</b> <span class="zh">${escapeHtml(questionPromptText(q))}</span>`));
+    item.appendChild(el("p",null,`<b>Đáp án của bạn:</b> ${studentAnsHtml}`));
+    if(q.type!=="self_check"){
+      item.appendChild(el("p",null,`<b>Đáp án đúng:</b> <span class="zh">${escapeHtml(correctAnswerText(q))}</span>`));
+    }
+    if(q.explain) item.appendChild(el("div","explain-box", q.explain));
+    if(q.type==="self_check") item.appendChild(el("div","ref-answer-box", `<b>Đáp án tham khảo:</b><br><span style="white-space:pre-line;">${escapeHtml(q.reference)}</span>`));
+
+    const jumpBtn = el("button","btn btn-ghost btn-sm no-print", "Đi tới câu này");
+    jumpBtn.style.marginTop="8px";
+    jumpBtn.addEventListener("click", ()=>{ item.scrollIntoView({behavior:"smooth"}); });
+    list.appendChild(item);
+  });
+  if(!list.children.length) list.appendChild(el("p",null,"Không có câu nào khớp với bộ lọc này."));
+}
+function questionPromptText(q){
+  if(q.markedSentence){
+    return q.markedSentence.map(p=> typeof p==="number" ? "___" : p).join("");
+  }
+  return q.prompt || q.fullCorrect || "";
+}
+function describeAnswer(q,a){
+  if(!a) return "<i>(bỏ trống)</i>";
+  if(q.type==="mcq"){
+    const opt = q.options.find(o=>o.k===a.choice);
+    return `<span class="zh">${escapeHtml(opt ? (q.markedSentence ? opt.t : opt.k+". "+opt.t) : (a.choice||""))}</span>`;
+  }
+  if(q.type==="blank_most") return a.blanks.map(b=> b===true?"最":b===false?"(để trống)":"?").join(" / ");
+  if(q.type==="reorder") return `<span class="zh">${escapeHtml((a.order||[]).join(""))}</span>`;
+  if(q.type==="text_fill") return `<span class="zh">${escapeHtml(a.text||"")}</span>`;
+  if(q.type==="dialog_fill") return Object.entries(a.blanks||{}).map(([k,v])=>`(${k}) ${v}`).join(" · ");
+  if(q.type==="self_check") return `<span style="white-space:pre-line;">${escapeHtml(a.text||"")}</span>`;
+  return "";
+}
+function correctAnswerText(q){
+  if(q.type==="mcq") return q.fullCorrect || q.options.find(o=>o.k===q.correct).t;
+  if(q.type==="blank_most") return q.fullCorrect;
+  if(q.type==="reorder") return q.fullCorrect;
+  if(q.type==="text_fill") return q.correct;
+  if(q.type==="dialog_fill") return Object.entries(q.correctMap).map(([k,v])=>`(${k}) ${v}`).join(" · ");
+  return "";
+}
+
+/* ==========================================================================================
+   16. LỊCH SỬ NHIỀU LẦN LÀM BÀI
+========================================================================================== */
+function renderHistoryStats(){
+  const history = STORE.getHistory();
+  const grid = $("#historyStatGrid");
+  if(!history.length){
+    grid.innerHTML = `<p style="color:var(--text-dim);">Đây là lần làm bài đầu tiên của bạn với bài học này.</p>`;
+    return;
+  }
+  const scores = history.map(a=>a.percentage);
+  const durations = history.map(a=>a.duration);
+  const best = Math.max(...scores);
+  const worst = Math.min(...scores);
+  const avg = Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+  const avgDur = Math.round(durations.reduce((a,b)=>a+b,0)/durations.length);
+  const last = history[history.length-1];
+  grid.innerHTML = `
+    <div class="stat-box"><div class="num">${history.length}</div><div class="lbl">Số lần đã làm</div></div>
+    <div class="stat-box"><div class="num">${best}%</div><div class="lbl">Điểm cao nhất</div></div>
+    <div class="stat-box"><div class="num">${worst}%</div><div class="lbl">Điểm thấp nhất</div></div>
+    <div class="stat-box"><div class="num">${avg}%</div><div class="lbl">Điểm trung bình</div></div>
+    <div class="stat-box"><div class="num">${last.percentage}%</div><div class="lbl">Lần gần nhất</div></div>
+    <div class="stat-box"><div class="num">${fmtDuration(avgDur)}</div><div class="lbl">Thời gian TB</div></div>
+  `;
+}
+
+$("#btnShowHistory").addEventListener("click", ()=>{
+  const wrap = $("#historyTableWrap");
+  wrap.classList.toggle("hidden");
+  if(!wrap.classList.contains("hidden")) renderHistoryTable();
+});
+function renderHistoryTable(){
+  const history = STORE.getHistory();
+  const wrap = $("#historyTableWrap");
+  if(!history.length){ wrap.innerHTML = "<p>Chưa có lịch sử làm bài.</p>"; return; }
+  let html = `<table class="history-table"><thead><tr>
+    <th>Lần</th><th>Ngày</th><th>Thời gian làm</th><th>Điểm</th><th>Tỷ lệ đúng</th><th>Xếp loại</th>
+  </tr></thead><tbody>`;
+  history.forEach((a,i)=>{
+    html += `<tr data-idx="${i}">
+      <td>#${a.attemptNumber}</td><td>${fmtDate(a.submitTime)}</td><td>${fmtDuration(a.duration)}</td>
+      <td>${a.totalScore}</td><td>${a.percentage}%</td><td>${a.classification}</td>
+    </tr>`;
+  });
+  html += "</tbody></table>";
+  wrap.innerHTML = html;
+  $all("table.history-table tbody tr").forEach(tr=>{
+    tr.addEventListener("click", ()=> viewAttemptDetail(history[+tr.dataset.idx]));
+  });
+}
+function viewAttemptDetail(attempt){
+  const skillRows = Object.entries(attempt.scoreBySkill||{}).map(([k,v])=>{
+    const autoStr = v.autoTotal ? `${v.autoCorrect}/${v.autoTotal} đúng` : "—";
+    const selfStr = v.selfTotal ? `${v.selfDone}/${v.selfTotal} đã tự đánh giá (${v.selfOk} đúng)` : "—";
+    return `<tr><td>${escapeHtml(k)}</td><td>${autoStr}</td><td>${selfStr}</td></tr>`;
+  }).join("");
+  openModal(`
+    <h3>Chi tiết lần làm #${attempt.attemptNumber}</h3>
+    <p><b>Ngày:</b> ${fmtDate(attempt.submitTime)} · <b>Thời gian làm:</b> ${fmtDuration(attempt.duration)}</p>
+    <p><b>Điểm:</b> ${attempt.totalScore}/100 (${attempt.percentage}%) · <b>Xếp loại:</b> ${attempt.classification}</p>
+    <p><b>Đúng/Sai/Bỏ trống:</b> ${attempt.correctAnswers} / ${attempt.wrongAnswers} / ${attempt.unansweredQuestions}</p>
+    <table class="history-table" style="margin-top:10px;"><thead><tr><th>Kỹ năng</th><th>Tự động chấm</th><th>Tự đánh giá</th></tr></thead><tbody>${skillRows}</tbody></table>
+    <div class="modal-actions"><button class="btn btn-primary" id="mCloseDetail">Đóng</button></div>
+  `);
+  $("#mCloseDetail").onclick = closeModal;
+}
+$("#btnClearHistory").addEventListener("click", ()=>{
+  openModal(`
+    <h3>Xóa toàn bộ lịch sử?</h3>
+    <p>Thao tác này sẽ xóa vĩnh viễn tất cả các lần làm bài đã lưu của bài học này. Không thể hoàn tác.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="mCancelClear">Hủy</button>
+      <button class="btn btn-danger" id="mConfirmClear">Xóa toàn bộ lịch sử</button>
+    </div>
+  `);
+  $("#mCancelClear").onclick = closeModal;
+  $("#mConfirmClear").onclick = ()=>{ STORE.clearHistory(); closeModal(); renderHistoryStats(); $("#historyTableWrap").classList.add("hidden"); toast("Đã xóa lịch sử."); };
+});
+
+/* ==========================================================================================
+   17. LÀM LẠI / IN / XUẤT PDF
+========================================================================================== */
+$("#btnRetake").addEventListener("click", ()=>{
+  openModal(`
+    <h3>Làm lại bài?</h3>
+    <p>Toàn bộ đáp án hiện tại sẽ bị xóa và đồng hồ sẽ được khởi động lại. Lịch sử các lần làm trước vẫn được giữ nguyên.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="mCancelRetake">Hủy</button>
+      <button class="btn btn-primary" id="mConfirmRetake">Làm lại từ đầu</button>
+    </div>
+  `);
+  $("#mCancelRetake").onclick = closeModal;
+  $("#mConfirmRetake").onclick = ()=>{ closeModal(); resetQuizState(); };
+});
+function resetQuizState(){
+  STATE.currentIndex = 0;
+  STATE.answers = {};
+  STATE.selfMarks = {};
+  STATE.submitted = false;
+  STATE.reviewFilter = "all";
+  STORE.clearProgress();
+  $("#resultScreen").classList.add("hidden");
+  $("#startScreen").classList.remove("hidden");
+  initStartScreen();
+}
+$("#btnPrintResult").addEventListener("click", ()=> window.print());
+$("#btnPdfExport").addEventListener("click", ()=>{
+  toast("Dùng hộp thoại In (Ctrl/Cmd+P) và chọn 'Lưu thành PDF' để xuất file.");
+  window.print();
+});
+
+/* ==========================================================================================
+   18. MODAL DÙNG CHUNG
+========================================================================================== */
+function openModal(innerHtml){
+  const root = $("#modalRoot");
+  root.innerHTML = `<div class="modal-overlay" id="modalOverlay"><div class="modal-box">${innerHtml}</div></div>`;
+  $("#modalOverlay").addEventListener("click", (e)=>{ if(e.target.id==="modalOverlay") closeModal(); });
+}
+function closeModal(){ $("#modalRoot").innerHTML = ""; }
+
+/* ==========================================================================================
+   19. NÚT CUỘN LÊN ĐẦU / XUỐNG CUỐI
+========================================================================================== */
+$("#btnScrollTop").addEventListener("click", ()=> window.scrollTo({top:0, behavior:"smooth"}));
+$("#btnScrollBottom").addEventListener("click", ()=> window.scrollTo({top:document.body.scrollHeight, behavior:"smooth"}));
+
+/* ==========================================================================================
+   20. KHỞI CHẠY
+========================================================================================== */
+initTheme();
+initStartScreen();
+</script>
+</body>
+</html>
