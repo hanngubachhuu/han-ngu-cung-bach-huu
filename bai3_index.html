@@ -715,7 +715,7 @@ function sectionById(id){ return LESSON.sections.find(s=>s.id===id); }
    5. THEME (DARK / LIGHT)
 ========================================================================================== */
 function initTheme(){
-  const pref = STORE.readJSON(STORE.themeKey, "light");
+  const pref = STORE.readJSON(STORE.themeKey, "dark");
   document.documentElement.setAttribute("data-theme", pref);
   $("#themeToggle").textContent = pref==="dark" ? "☀️" : "🌙";
 }
