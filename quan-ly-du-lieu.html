@@ -342,7 +342,7 @@ button.secondary{background:var(--soft);border:1px solid var(--border);color:var
 
     const checks=[];
     checks.push(schemaResults.every(x=>x.ok)
-      ? checkRow('pass','Tất cả schema đều truy cập được','6 schema đã được nối vào khung dữ liệu.')
+      ? checkRow('pass','Tất cả schema đều truy cập được','10 schema đã được nối vào khung dữ liệu.')
       : checkRow('fail','Thiếu schema','Có schema không tải được từ GitHub Pages.'));
     checks.push(duplicateIds===0
       ? checkRow('pass','ID không trùng','Registry hiện có '+uniqueIds.size+' ID khác nhau.')
