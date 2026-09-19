@@ -470,6 +470,46 @@ button{font-family:var(--font-vn); cursor:pointer;}
   .hero-home h1{font-size:26pt;}
   .site-section{padding:44px 18px;}
 }
+
+/* ===================== HSKK HUB ===================== */
+.hskk-home{
+  margin-top:4px;
+  background:linear-gradient(135deg,#182a24,#20242e);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.hskk-home-inner{
+  display:grid;
+  grid-template-columns:1.4fr .9fr;
+  gap:24px;
+  align-items:center;
+  padding:28px;
+}
+.hskk-home .site-section-eyebrow{color:var(--green);}
+.hskk-home h2{color:var(--text);margin-bottom:8px;}
+.hskk-home p{color:var(--text-soft);margin:0 0 16px;line-height:1.7;}
+.hskk-home-list{display:grid;grid-template-columns:1fr;gap:9px;}
+.hskk-mini{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 14px;background:rgba(255,255,255,.035);
+  border:1px solid var(--border);border-radius:12px;
+  color:var(--text);text-decoration:none;
+}
+.hskk-mini:hover{border-color:var(--green);transform:translateY(-1px);}
+.hskk-mini-icon{
+  width:32px;height:32px;border-radius:9px;background:#193528;color:#64c997;
+  display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 auto;
+}
+.hskk-cta{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:46px;padding:0 18px;border-radius:10px;
+  background:var(--color-secondary);color:#fff;text-decoration:none;font-weight:800;
+}
+.hskk-cta:hover{background:var(--color-secondary-hover);transform:translateY(-1px);}
+@media(max-width:760px){.hskk-home-inner{grid-template-columns:1fr;}}
+
 </style>
 </head>
 <body>
@@ -488,6 +528,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
         </button>
         <div class="site-nav-dropdown-panel" id="hskDropdownPanel"></div>
       </div>
+      <a href="hskk.html" class="site-nav-hskk">HSKK</a>
       <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
       <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
     </div>
@@ -519,6 +560,39 @@ button{font-family:var(--font-vn); cursor:pointer;}
     <p>Từ Phát âm đến HSK 6 — mỗi bài gồm phần ôn Từ vựng, Ngữ pháp, Đọc hiểu, Viết, Dịch, Giao tiếp và bài kiểm tra tự chấm điểm.</p>
   </div>
   <div class="level-grid" id="levelGrid"></div>
+</section>
+
+<section class="site-section" id="hskk">
+  <div class="site-section-head">
+    <span class="site-section-eyebrow">HSKK · 汉语水平口试</span>
+    <h2>Kho đề và bài thi nói</h2>
+    <p>Tất cả đề luyện nói, bài thi nói và phiếu chấm HSKK sẽ được tập trung tại đây để sau này mở rộng theo Sơ cấp · Trung cấp · Cao cấp.</p>
+  </div>
+  <div class="hskk-home">
+    <div class="hskk-home-inner">
+      <div>
+        <div class="hskk-home-list">
+          <a class="hskk-mini" href="baithinoihsk1.html">
+            <span class="hskk-mini-icon">初</span>
+            <span><strong>HSKK Sơ cấp</strong><br><small>Bài thi nói HSK1 hiện có</small></span>
+          </a>
+          <a class="hskk-mini" href="hskk.html">
+            <span class="hskk-mini-icon">中</span>
+            <span><strong>HSKK Trung cấp</strong><br><small>Kho đề sẽ được bổ sung dần</small></span>
+          </a>
+          <a class="hskk-mini" href="hskk.html">
+            <span class="hskk-mini-icon">高</span>
+            <span><strong>HSKK Cao cấp</strong><br><small>Kho đề sẽ được bổ sung dần</small></span>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3>🎙️ HSKK</h3>
+        <p>Một khu riêng cho luyện nói, tách khỏi bài học HSK để sau này có thể chứa nhiều đề và bài thi mà vẫn gọn gàng.</p>
+        <a class="hskk-cta" href="hskk.html">Mở kho HSKK →</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="site-section" id="cach-hoc">
