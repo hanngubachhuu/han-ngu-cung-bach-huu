@@ -45,10 +45,12 @@ function vocab(l,qq,b){
  return uniq(o,v=>v.han+'|'+v.bai)
 }
 function norm(l,u){
- let b=bn(l,u),lv=lvl(l),q=qs(l,b,lv),title=l.zhTitle||l.title||u,v=vocab(l,q,b).map(x=>({...x,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title}));
- let g=Array.isArray(l.grammar)&&l.grammar.length?l.grammar.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):uniq((l.sections||[]).filter(s=>String(s.skill||'').toLowerCase().includes('ngữ pháp')).map(s=>({title:s.title||'Điểm ngữ pháp',desc:s.instruction||'',bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title,derived:true})),x=>x.title+'|'+x.bai);
- const hz=Array.isArray(l.hanzi)?l.hanzi.map(h=>({...h,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})): [];
- return {id:l.id||u,href:u,bai:b,level:lv,title,vi:l.titleVi||l.viSubtitle||l.subtitle||'',vocab:v,grammar:g,hanzi:hz,questions:q}
+ let b=bn(l,u),lv=lvl(l),title=l.zhTitle||l.title||u,c=l.content||{};
+ let q=qs(l,b,lv);
+ let v=Array.isArray(c.vocabulary)&&c.vocabulary.length?c.vocabulary.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):vocab(l,q,b).map(x=>({...x,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title}));
+ let g=Array.isArray(c.grammar)&&c.grammar.length?c.grammar.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):Array.isArray(l.grammar)&&l.grammar.length?l.grammar.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):uniq((l.sections||[]).filter(s=>String(s.skill||'').toLowerCase().includes('ngữ pháp')).map(s=>({title:s.title||'Điểm ngữ pháp',desc:s.instruction||'',bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title,derived:true})),x=>x.title+'|'+x.bai);
+ let hz=Array.isArray(c.hanzi)&&c.hanzi.length?c.hanzi.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):Array.isArray(l.hanzi)?l.hanzi.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):[];
+ return {id:l.id||u,href:u,bai:b,level:lv,title,vi:l.titleVi||l.viSubtitle||l.subtitle||'',vocab:v,grammar:g,hanzi:hz,exampleSentences:c.exampleSentences||[],commonErrors:c.commonErrors||[],exerciseGroups:c.exercises||{},coverage:c.coverage||{},questions:q,content:c};
 }
 async function get(u){let r=await fetch(u+'?review='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(u);return norm(lessonObj(await r.text()),u)}
 function agg(ls){
