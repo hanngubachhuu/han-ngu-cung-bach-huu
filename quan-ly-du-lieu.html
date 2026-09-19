@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiểm soát dữ liệu HSK/HSKK · Hán Ngữ Cùng Bách Hữu</title>
+<meta name="description" content="Bảng điều khiển cấu trúc dữ liệu, kiểm định và kiểm soát chất lượng HSK/HSKK của Hán Ngữ Cùng Bách Hữu.">
+<link rel="stylesheet" href="navigation.css">
+<style>
+:root{
+  --bg:#20262F; --card:#2A313C; --soft:#333B47; --border:#414A57;
+  --text:#F2EFE9; --muted:#C7CDD6; --faint:#8E99A6;
+  --primary:#E0574A; --primary-soft:#4A2A26;
+  --green:#3FC177; --green-soft:#1E3A2A;
+  --amber:#E5A230; --amber-soft:#3D3018;
+  --blue:#62A8FF; --blue-soft:#20364F;
+  --danger:#E0574A;
+  --shadow:0 12px 32px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Times New Roman",Times,serif;line-height:1.65}
+a{color:#8FC1FF}
+.page{max-width:1180px;margin:0 auto;padding:34px 18px 60px}
+.hero{
+  border:1px solid var(--border);background:linear-gradient(135deg,var(--card),#252C36);
+  border-radius:20px;padding:30px;box-shadow:var(--shadow);margin-bottom:22px
+}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--green);text-transform:uppercase}
+h1{margin:6px 0 10px;font-size:clamp(28px,5vw,48px);line-height:1.12}
+h2{margin:0 0 12px;font-size:24px}
+h3{margin:0 0 8px;font-size:17px}
+.lead{max-width:850px;color:var(--muted);font-size:16px;margin:0}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{padding:6px 10px;border:1px solid var(--border);border-radius:999px;background:var(--soft);font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:16px}
+.card{grid-column:span 12;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.card.half{grid-column:span 6}
+.card.third{grid-column:span 4}
+@media(max-width:820px){.card.half,.card.third{grid-column:span 12}}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:760px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.kpi{border:1px solid var(--border);background:var(--soft);border-radius:12px;padding:14px}
+.kpi strong{display:block;font-size:27px;line-height:1.1}
+.kpi span{display:block;color:var(--faint);font-size:12px;margin-top:4px}
+.ok{color:#81E3AE}.warn{color:#F2C15B}.bad{color:#FF8E83}.info{color:#9FC8FF}
+.check-list{display:grid;gap:9px}
+.check{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:var(--soft)}
+.check-icon{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex:0 0 auto;font-weight:800}
+.check.pass .check-icon{background:var(--green-soft);color:#81E3AE}
+.check.warn .check-icon{background:var(--amber-soft);color:#F2C15B}
+.check.fail .check-icon{background:var(--primary-soft);color:#FF9B91}
+.check-text{min-width:0}.check-text b{display:block}.check-text small{color:var(--faint)}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;vertical-align:top}
+th{background:#303844;color:#EDE9E2;font-size:12px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0}
+tr:last-child td{border-bottom:none}
+code,.mono{font-family:"SFMono-Regular",Consolas,monospace;font-size:12px}
+code{background:#1F242C;padding:2px 5px;border-radius:5px}
+.tag{display:inline-flex;padding:3px 8px;border-radius:999px;background:var(--soft);color:var(--muted);font-size:11px}
+.tag.green{background:var(--green-soft);color:#81E3AE}.tag.amber{background:var(--amber-soft);color:#F2C15B}.tag.red{background:var(--primary-soft);color:#FF9B91}
+.arch{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch
+}
+@media(max-width:760px){.arch{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.arch{grid-template-columns:1fr}}
+.arch-box{border:1px solid var(--border);background:var(--soft);border-radius:14px;padding:16px;position:relative}
+.arch-box:not(:last-child)::after{content:"→";position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:20px;font-weight:800}
+@media(max-width:760px){.arch-box:nth-child(2)::after{display:none}.arch-box:nth-child(1)::after,.arch-box:nth-child(3)::after{content:"↓";right:50%;top:auto;bottom:-16px;transform:translateX(50%)}}
+@media(max-width:520px){.arch-box::after{display:none!important}}
+.arch-num{font-size:11px;color:var(--green);font-weight:800;letter-spacing:.05em}
+.arch-box b{display:block;margin:4px 0}.arch-box span{color:var(--faint);font-size:12px}
+.decisions{display:grid;gap:12px}
+.decision{border:1px solid var(--border);background:var(--soft);border-radius:12px;padding:14px}
+.decision label{display:block;font-weight:700;margin-bottom:8px}
+select,input,textarea{
+  width:100%;border:1px solid var(--border);background:#242A33;color:var(--text);
+  border-radius:8px;padding:10px 11px;font:inherit
+}
+textarea{min-height:80px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+button{
+  border:0;border-radius:9px;padding:10px 14px;font:700 13px "Times New Roman",Times,serif;
+  cursor:pointer;background:var(--primary);color:white
+}
+button.secondary{background:var(--soft);border:1px solid var(--border);color:var(--text)}
+.notice{border-left:4px solid var(--green);background:var(--green-soft);padding:14px 16px;border-radius:10px;color:#D6F8E3}
+.danger-note{border-left:4px solid var(--amber);background:var(--amber-soft);padding:14px 16px;border-radius:10px;color:#FFECC2}
+.muted{color:var(--faint)}
+.small{font-size:12px}
+.footer-note{margin-top:20px;color:var(--faint);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<nav class="site-nav no-print" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html"><span class="site-nav-brand-mark" aria-hidden="true">漢</span><span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span></a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-hsk2.html">Ôn tập HSK 2</a>
+      <a href="quan-ly-du-lieu.html" class="site-nav-cta">Kiểm soát dữ liệu</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <div class="eyebrow">Data Architecture · HSK / HSKK</div>
+    <h1>Bảng điều khiển chất lượng dữ liệu</h1>
+    <p class="lead">Đây là “phòng máy” của hệ thống học liệu. Trang này không tự thêm bài học, từ vựng hay câu hỏi. Nó chỉ mô tả cấu trúc dữ liệu, kiểm tra tính nhất quán và giúp giáo viên quyết định cách hệ thống phát triển.</p>
+    <div class="pills">
+      <span class="pill">Schema v1.0.0</span>
+      <span class="pill">Không thêm học liệu tự động</span>
+      <span class="pill">Legacy HTML được bảo toàn</span>
+      <span class="pill">Đáp án tách khỏi payload học sinh</span>
+      <span class="pill">HSK ≠ HSKK nhưng cùng lõi</span>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Tình trạng khung hiện tại</h2>
+      <div class="kpi-grid" id="kpis">
+        <div class="kpi"><strong>…</strong><span>Schema</span></div>
+        <div class="kpi"><strong>…</strong><span>Trang học liệu legacy</span></div>
+        <div class="kpi"><strong>…</strong><span>File DOCX legacy</span></div>
+        <div class="kpi"><strong>0</strong><span>Nội dung JSON chính thức</span></div>
+        <div class="kpi"><strong>✓</strong><span>Nguyên tắc bảo toàn</span></div>
+      </div>
+    </div>
+
+    <div class="card half">
+      <h2>Kiểm tra tự động</h2>
+      <div class="check-list" id="checks">
+        <div class="check warn"><div class="check-icon">…</div><div class="check-text"><b>Đang kiểm tra</b><small>Đọc registry và schema…</small></div></div>
+      </div>
+    </div>
+
+    <div class="card half">
+      <h2>Nguyên tắc bất biến</h2>
+      <div class="check-list">
+        <div class="check pass"><div class="check-icon">✓</div><div class="check-text"><b>Không tự ý thêm học liệu</b><small>AI có thể dựng cấu trúc, nhưng nội dung mới cần giáo viên cho phép.</small></div></div>
+        <div class="check pass"><div class="check-icon">✓</div><div class="check-text"><b>Không để HTML làm database</b><small>HTML chỉ là một lớp trình bày.</small></div></div>
+        <div class="check pass"><div class="check-icon">✓</div><div class="check-text"><b>Mọi nội dung đều có provenance</b><small>Nguồn chính thức, sách, giáo viên tự biên soạn… phải được phân biệt.</small></div></div>
+        <div class="check pass"><div class="check-icon">✓</div><div class="check-text"><b>Không trộn đề và đáp án</b><small>Thiết kế để sau này backend có thể kiểm soát dữ liệu gửi cho học sinh.</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Kiến trúc 4 lớp</h2>
+    <div class="arch">
+      <div class="arch-box"><div class="arch-num">01 · CANONICAL</div><b>Dữ liệu chuẩn</b><span>Vocabulary, lesson, exercise, exam, HSKK task, source, QA.</span></div>
+      <div class="arch-box"><div class="arch-num">02 · CURRICULUM</div><b>Ánh xạ chương trình</b><span>Cấp độ, bài học, kỹ năng, phiên bản hệ thống thi.</span></div>
+      <div class="arch-box"><div class="arch-num">03 · PRESENTATION</div><b>Giao diện</b><span>HTML/JS hiện tại, sau này có thể đổi sang framework khác mà không phá dữ liệu gốc.</span></div>
+      <div class="arch-box"><div class="arch-num">04 · USER STATE</div><b>Dữ liệu học sinh</b><span>Tài khoản, tiến độ, lịch sử làm bài, điểm và phân tích. Sẽ đặt ở backend/database.</span></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card half">
+      <h2>Các thực thể lõi</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Entity</th><th>Vai trò</th><th>HSK</th><th>HSKK</th></tr></thead>
+          <tbody>
+            <tr><td><code>lesson</code></td><td>Bài học / đơn vị nội dung</td><td><span class="tag green">Có</span></td><td><span class="tag">Có thể dùng</span></td></tr>
+            <tr><td><code>vocabulary</code></td><td>Từ vựng chuẩn hóa</td><td><span class="tag green">Có</span></td><td><span class="tag">Dùng chung</span></td></tr>
+            <tr><td><code>exercise</code></td><td>Bài tập / item</td><td><span class="tag green">Có</span></td><td><span class="tag green">Có</span></td></tr>
+            <tr><td><code>exam</code></td><td>Cấu trúc một phiên bản đề</td><td><span class="tag green">Có</span></td><td><span class="tag green">Có</span></td></tr>
+            <tr><td><code>hskkTask</code></td><td>Task nói đặc thù HSKK</td><td><span class="tag">Không</span></td><td><span class="tag green">Có</span></td></tr>
+            <tr><td><code>source</code></td><td>Nguồn và xuất xứ</td><td><span class="tag green">Có</span></td><td><span class="tag green">Có</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card half">
+      <h2>Điểm chống “vỡ hệ thống”</h2>
+      <div class="check-list">
+        <div class="check pass"><div class="check-icon">1</div><div class="check-text"><b>ID ổn định</b><small>Đổi tên bài hiển thị không làm mất liên kết dữ liệu.</small></div></div>
+        <div class="check pass"><div class="check-icon">2</div><div class="check-text"><b>Version hóa</b><small>Thay cấu trúc đề hoặc sửa nội dung không xóa lịch sử.</small></div></div>
+        <div class="check pass"><div class="check-icon">3</div><div class="check-text"><b>Exam system độc lập</b><small>Có thể chứa nhiều phiên bản chuẩn thi mà không sửa toàn bộ dữ liệu.</small></div></div>
+        <div class="check pass"><div class="check-icon">4</div><div class="check-text"><b>Publish gate</b><small>Draft/review/published/archived được kiểm soát riêng.</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Kho hiện tại đang được quản lý như thế nào?</h2>
+    <div class="table-wrap">
+      <table id="inventory">
+        <thead><tr><th>Nhóm</th><th>Số lượng</th><th>Trạng thái</th><th>Chiến lược</th></tr></thead>
+        <tbody><tr><td colspan="4">Đang đọc registry…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="muted small">“Legacy” không có nghĩa là xóa bỏ. Nó có nghĩa là giữ nguyên bản đang chạy, rồi từng nhóm nội dung mới được chuẩn hóa sang dữ liệu JSON sau khi kiểm tra parity.</p>
+  </section>
+
+  <section class="card">
+    <h2>6 quyết định giáo viên cần chốt</h2>
+    <p class="muted">Các lựa chọn dưới đây chỉ lưu trên thiết bị này bằng <code>localStorage</code>. Chúng chưa phải cấu hình backend và không thay đổi học liệu.</p>
+    <div class="decisions">
+      <div class="decision">
+        <label for="q1">1. Chiến lược di chuyển HTML hiện tại</label>
+        <select id="q1"><option value="preserve">Giữ HTML đang chạy, chuẩn hóa từng nhóm nội dung rồi mới thay dần.</option><option value="rewrite">Viết lại toàn bộ HTML sang hệ dữ liệu mới ngay.</option></select>
+      </div>
+      <div class="decision">
+        <label for="q2">2. Cách bảo vệ đáp án về sau</label>
+        <select id="q2"><option value="separate">Tách answer key khỏi dữ liệu gửi cho học sinh.</option><option value="public">Để đáp án trong cùng payload như hiện tại.</option></select>
+      </div>
+      <div class="decision">
+        <label for="q3">3. Kiểm soát nguồn</label>
+        <select id="q3"><option value="strict">Mỗi nội dung phải có nguồn hoặc ghi rõ “giáo viên tự biên soạn”.</option><option value="light">Chỉ lưu nguồn cho nội dung quan trọng.</option></select>
+      </div>
+      <div class="decision">
+        <label for="q4">4. Quy trình xuất bản</label>
+        <select id="q4"><option value="four-stage">draft → review → published → archived.</option><option value="two-stage">draft → published.</option></select>
+      </div>
+      <div class="decision">
+        <label for="q5">5. Dữ liệu học sinh</label>
+        <select id="q5"><option value="backend-later">Để riêng một lớp backend/database, triển khai sau khi data model ổn định.</option><option value="frontend-only">Giữ toàn bộ tiến độ học trên trình duyệt.</option></select>
+      </div>
+      <div class="decision">
+        <label for="q6">6. Hệ thống đề thi</label>
+        <select id="q6"><option value="per-exam">Gắn examSystemId/version vào từng cấu trúc đề và nội dung liên quan.</option><option value="global">Chọn một phiên bản toàn hệ thống.</option></select>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="saveDecisions">Lưu quyết định trên thiết bị</button>
+      <button class="secondary" id="resetDecisions">Khôi phục mặc định đề xuất</button>
+    </div>
+    <div id="decisionStatus" class="muted small" style="margin-top:8px"></div>
+  </section>
+
+  <section class="grid">
+    <div class="card half">
+      <h2>Những gì chưa làm</h2>
+      <div class="check-list">
+        <div class="check warn"><div class="check-icon">!</div><div class="check-text"><b>Chưa di chuyển học liệu</b><small>Chưa đụng vào nội dung bài học cũ.</small></div></div>
+        <div class="check warn"><div class="check-icon">!</div><div class="check-text"><b>Chưa bật database</b><small>Chưa tạo tài khoản học sinh hay lưu tiến độ online.</small></div></div>
+        <div class="check warn"><div class="check-icon">!</div><div class="check-text"><b>Chưa có trình soạn thảo nội dung</b><small>Đây là bước kế tiếp sau khi giáo viên chốt data contract.</small></div></div>
+      </div>
+    </div>
+    <div class="card half">
+      <h2>Đường đi tiếp theo</h2>
+      <div class="notice"><b>Bước 1:</b> chốt 6 quyết định trên → <b>Bước 2:</b> chuẩn hóa một bài HSK2 hiện có → <b>Bước 3:</b> kiểm tra parity → <b>Bước 4:</b> mới mở rộng HSKK và các cấp độ khác → <b>Bước 5:</b> kết nối backend/database.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Nguồn tham chiếu cấu trúc kỳ thi</h2>
+    <p class="muted">Phần khung dữ liệu không khóa vào một phiên bản đề duy nhất. Registry chỉ mô hình hóa khả năng chứa các cấp độ và phiên bản khác nhau. Khi nhập dữ liệu thi thực tế, nguồn chính thức sẽ được ghi vào <code>sourceRefs</code>.</p>
+    <div class="check-list">
+      <div class="check pass"><div class="check-icon">↗</div><div class="check-text"><b>Chinese Testing Service</b><small><a href="https://www.chinesetest.cn/" target="_blank" rel="noopener">chinesetest.cn</a></small></div></div>
+      <div class="check pass"><div class="check-icon">↗</div><div class="check-text"><b>HSK 7–9 test structure</b><small><a href="https://www.chinesetest.cn/HSK/7-9" target="_blank" rel="noopener">Trang cấu trúc HSK 7–9</a></small></div></div>
+    </div>
+  </section>
+
+  <p class="footer-note">Bảng này là công cụ kiểm soát kiến trúc dữ liệu. Không có tác dụng xuất bản học liệu và không tự tạo nội dung học tập.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-hsk2.html">Ôn tập HSK 2</a>
+      <a href="quan-ly-du-lieu.html">Kiểm soát dữ liệu</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="siteYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
+<button class="site-back-top" id="siteBackTop" type="button" aria-label="Quay về đầu trang">↑</button>
+
+<script>
+(function(){
+  const navBurger=document.getElementById('siteNavBurger');
+  const navLinks=document.getElementById('siteNavLinks');
+  if(navBurger&&navLinks){
+    navBurger.addEventListener('click',function(){
+      const open=navLinks.classList.toggle('open');
+      navBurger.setAttribute('aria-expanded',String(open));
+    });
+  }
+  document.getElementById('siteYear').textContent=new Date().getFullYear();
+
+  const schemaPaths=[
+    'data/schema/lesson.schema.json',
+    'data/schema/vocabulary.schema.json',
+    'data/schema/exercise.schema.json',
+    'data/schema/exam.schema.json',
+    'data/schema/hskk-task.schema.json',
+    'data/schema/source.schema.json'
+  ];
+
+  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  function setKpis(values){
+    document.getElementById('kpis').innerHTML=
+      '<div class="kpi"><strong>'+values.schemas+'</strong><span>Schema</span></div>'+
+      '<div class="kpi"><strong>'+values.pages+'</strong><span>Trang học liệu legacy</span></div>'+
+      '<div class="kpi"><strong>'+values.docs+'</strong><span>File DOCX legacy</span></div>'+
+      '<div class="kpi"><strong>'+values.json+'</strong><span>Nội dung JSON chính thức</span></div>'+
+      '<div class="kpi"><strong class="ok">'+values.protected+'</strong><span>Nguyên tắc bảo toàn</span></div>';
+  }
+  function checkRow(kind,title,detail){
+    const map={pass:['✓','pass'],warn:['!','warn'],fail:['×','fail']};
+    const m=map[kind];
+    return '<div class="check '+m[1]+'"><div class="check-icon">'+m[0]+'</div><div class="check-text"><b>'+esc(title)+'</b><small>'+esc(detail)+'</small></div></div>';
+  }
+
+  Promise.all([
+    fetch('data/catalog/registry.json').then(r=>r.json()),
+    ...schemaPaths.map(p=>fetch(p).then(r=>({path:p,ok:r.ok})))
+  ]).then(results=>{
+    const registry=results[0];
+    const schemaResults=results.slice(1);
+    const uniqueIds=new Set();
+    let duplicateIds=0;
+    [...(registry.siteLearningPages||[]),...(registry.legacyDocumentAssets||[])].forEach(x=>{
+      if(uniqueIds.has(x.id)) duplicateIds++; uniqueIds.add(x.id);
+    });
+    const pages=(registry.siteLearningPages||[]).length;
+    const docs=(registry.legacyDocumentAssets||[]).length;
+    const hsk=(registry.programs||[]).find(x=>x.id==='hsk');
+    const hskk=(registry.programs||[]).find(x=>x.id==='hskk');
+    setKpis({
+      schemas:schemaResults.filter(x=>x.ok).length+'/'+schemaPaths.length,
+      pages,
+      docs,
+      json:registry.migration?.canonicalJsonContentItems??0,
+      protected:registry.rules?.learningContentMayBeAddedWithoutApproval===false?'✓':'!'
+    });
+
+    const checks=[];
+    checks.push(schemaResults.every(x=>x.ok)
+      ? checkRow('pass','Tất cả schema đều truy cập được','6 schema đã được nối vào khung dữ liệu.')
+      : checkRow('fail','Thiếu schema','Có schema không tải được từ GitHub Pages.'));
+    checks.push(duplicateIds===0
+      ? checkRow('pass','ID không trùng','Registry hiện có '+uniqueIds.size+' ID khác nhau.')
+      : checkRow('fail','ID trùng','Phát hiện '+duplicateIds+' ID bị trùng.'));
+    checks.push(hsk && hsk.levels.length===9
+      ? checkRow('pass','HSK model có 9 level slot','Có hsk1 → hsk9 trong curriculum model.')
+      : checkRow('fail','HSK model thiếu level','Cấu trúc HSK cần đủ slot hsk1 → hsk9.'));
+    checks.push(hskk && hskk.levels.join(',')==='primary,intermediate,advanced'
+      ? checkRow('pass','HSKK model có 3 cấp','primary / intermediate / advanced.')
+      : checkRow('fail','HSKK model sai cấp','Kiểm tra lại ba cấp HSKK.'));
+    checks.push(registry.rules?.answersMustBeSeparatedFromStudentPayload===true
+      ? checkRow('pass','Đáp án được đánh dấu tách riêng','Đúng với nguyên tắc thiết kế backend tương lai.')
+      : checkRow('warn','Chưa bật nguyên tắc tách đáp án','Không nên trộn answer key vào payload học sinh.'));
+    checks.push(registry.migration?.currentPhase==='framework-only'
+      ? checkRow('pass','Chưa di chuyển học liệu','Giai đoạn này đúng mục tiêu: dựng móng, không sửa nội dung.')
+      : checkRow('warn','Đã có migration','Kiểm tra parity trước khi thay thế legacy.'));
+    document.getElementById('checks').innerHTML=checks.join('');
+
+    const body=document.querySelector('#inventory tbody');
+    body.innerHTML=[
+      ['HSK lesson pages',pages-(registry.siteLearningPages||[]).filter(x=>x.kind==='review').length-2,'Legacy live','Giữ nguyên → migrate từng bài'],
+      ['HSK review page',1,'Legacy live','Giữ nguyên → tách thành data khi cần'],
+      ['HSKK pages',2,'Legacy live','Giữ nguyên → chuẩn hóa task sau'],
+      ['DOCX exercise/answer assets',docs,'Legacy files','Đối chiếu parity trước khi chuyển JSON'],
+      ['Canonical JSON content',registry.migration?.canonicalJsonContentItems??0,'Chưa có','Chưa thêm học liệu mới']
+    ].map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td><td><span class="tag '+(String(r[2]).includes('Chưa')?'amber':'green')+'">'+esc(r[2])+'</span></td><td>'+esc(r[3])+'</td></tr>').join('');
+  }).catch(err=>{
+    setKpis({schemas:'?',pages:'?',docs:'?',json:'?',protected:'!'});
+    document.getElementById('checks').innerHTML=checkRow('fail','Không đọc được registry','Mở trực tiếp từ GitHub Pages để kiểm tra đường dẫn data/.');
+  });
+
+  const decisionIds=['q1','q2','q3','q4','q5','q6'];
+  const defaults={
+    q1:'preserve',q2:'separate',q3:'strict',q4:'four-stage',q5:'backend-later',q6:'per-exam'
+  };
+  function loadDecisions(){
+    decisionIds.forEach(id=>{
+      const saved=localStorage.getItem('hnbh-data-'+id);
+      document.getElementById(id).value=saved||defaults[id];
+    });
+    document.getElementById('decisionStatus').textContent='Đang dùng lựa chọn mặc định đề xuất hoặc lựa chọn anh đã lưu trên thiết bị này.';
+  }
+  document.getElementById('saveDecisions').addEventListener('click',()=>{
+    decisionIds.forEach(id=>localStorage.setItem('hnbh-data-'+id,document.getElementById(id).value));
+    document.getElementById('decisionStatus').textContent='Đã lưu 6 quyết định trên thiết bị này. Không có học liệu nào bị thay đổi.';
+  });
+  document.getElementById('resetDecisions').addEventListener('click',()=>{
+    decisionIds.forEach(id=>localStorage.removeItem('hnbh-data-'+id));
+    loadDecisions();
+  });
+  loadDecisions();
+
+  const back=document.getElementById('siteBackTop');
+  window.addEventListener('scroll',()=>back.classList.toggle('visible',window.scrollY>420),{passive:true});
+  back.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+</script>
+</body>
+</html>
