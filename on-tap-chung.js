@@ -12,7 +12,7 @@ function lessonObj(h){
     if(bc){if(c==='*'&&n==='/'){bc=false;i++}continue}
     if(qu){if(es){es=false;continue}if(c==='\\'){es=true;continue}if(c===qu)qu=null;continue}
     if(c==='/'&&n==='/'){lc=true;i++;continue}if(c==='/'&&n==='*'){bc=true;i++;continue}
-    if(c==='"'||c==="'"){qu=c;continue}
+    if(c==='"'||c==="'"||c===String.fromCharCode(96)){qu=c;continue}
     if(c==='{')d++;else if(c==='}'){d--;if(d===0)return Function('"use strict";return ('+h.slice(st,i+1)+')')()}
   }throw Error('LESSON parse failed');
 }
