@@ -339,8 +339,76 @@ footer.app-footer{
 [data-theme="dark"] .timer-box{background:#0f1318;color:#eef1f4;}
 
 </style>
+<link rel="stylesheet" href="navigation.css">
 </head>
 <body>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <span class="site-nav-brand-mark" aria-hidden="true">漢</span>
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">
+          Lộ trình HSK <span class="dd-caret">▾</span>
+        </button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-static-head">HSK 2</div>
+          <a class="dd-static-link" href="bvnh2-1.html">Bài 1</a>
+          <a class="dd-static-link" href="bai2_index.html">Bài 2</a>
+          <a class="dd-static-link" href="bai3_index.html">Bài 3</a>
+          <a class="dd-static-link" href="bai4_index.html">Bài 4</a>
+          <a class="dd-static-link" href="bai5_index.html">Bài 5</a>
+          <a class="dd-static-link" href="bai6_index.html">Bài 6</a>
+          <a class="dd-static-link" href="bai7_index.html">Bài 7</a>
+          <a class="dd-static-link dd-review-link" href="on-tap-hsk2.html">Ôn tập HSK 2 →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-hsk2.html">Ôn tập HSK 2</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var btn=document.getElementById('siteNavBurger');
+  var links=document.getElementById('siteNavLinks');
+  var ddBtn=document.getElementById('hskDropdownBtn');
+  var ddWrap=document.getElementById('hskDropdown');
+  if(ddBtn&&ddWrap){
+    ddBtn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=ddWrap.classList.toggle('open');
+      ddBtn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    document.addEventListener('click',function(e){
+      if(ddWrap.classList.contains('open')&&!ddWrap.contains(e.target)){
+        ddWrap.classList.remove('open');
+        ddBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+  if(btn&&links){
+    btn.addEventListener('click',function(){
+      var open=links.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      btn.textContent=open?'✕':'☰';
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        btn.textContent='☰';
+      });
+    });
+  }
+})();
+</script>
 
 <div class="app-shell">
 
