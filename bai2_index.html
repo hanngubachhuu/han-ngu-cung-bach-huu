@@ -467,6 +467,1890 @@ canvas{max-width:100%;}
    Muốn tái sử dụng cho bài học khác: chỉ cần thay object LESSON này.
 ========================================================================================== */
 const LESSON = {
+  schemaVersion: 2,
+  content: {
+  "course": {
+    "system": "HSK",
+    "level": 2,
+    "lessonNo": 2,
+    "textbook": "Giáo trình chuẩn HSK 2",
+    "titleZh": "我每天六点起床",
+    "titleVi": "Bài 2 · Giáo trình chuẩn HSK 2"
+  },
+  "meta": {
+    "timeLimitMinutes": 55,
+    "version": 1,
+    "lessonId": "hsk2_bai2_liudian_qichuang"
+  },
+  "vocabulary": [
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v1",
+      "han": "生病",
+      "pinyin": null,
+      "meaning": null,
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q40"
+      ],
+      "status": "derived_from_description"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v2",
+      "han": "身体",
+      "pinyin": "shēntǐ",
+      "meaning": "sức khỏe, cơ thể",
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q2"
+      ],
+      "status": "derived_from_description"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v3",
+      "han": "忙",
+      "pinyin": "máng",
+      "meaning": "bận",
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q3"
+      ],
+      "status": "derived_from_description"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v4",
+      "han": "知道",
+      "pinyin": "zhīdào",
+      "meaning": "biết (thông tin)",
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q4",
+        "q13",
+        "q40"
+      ],
+      "status": "derived_from_description"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v5",
+      "han": "休息",
+      "pinyin": "xiūxi",
+      "meaning": "nghỉ ngơi",
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q5"
+      ],
+      "status": "derived_from_description"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v6",
+      "han": "起床",
+      "pinyin": "qǐchuáng",
+      "meaning": "thức dậy",
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q1"
+      ],
+      "status": "derived_from_meaning_question"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v7",
+      "han": "认识",
+      "pinyin": "quen biết người",
+      "meaning": null,
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q13"
+      ],
+      "status": "derived_from_wordbank"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v8",
+      "han": "怎么",
+      "pinyin": null,
+      "meaning": null,
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q40"
+      ],
+      "status": "derived_from_wordbank"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v9",
+      "han": "药",
+      "pinyin": null,
+      "meaning": null,
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q40"
+      ],
+      "status": "derived_from_wordbank"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_v10",
+      "han": "时间",
+      "pinyin": "không có thời gian",
+      "meaning": null,
+      "partOfSpeech": null,
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "q40"
+      ],
+      "status": "derived_from_wordbank"
+    }
+  ],
+  "grammar": [
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g1",
+      "title": "Dạng 3. Phân biệt từ dễ nhầm: 知道 vs 认识",
+      "pattern": null,
+      "explanation": "Chọn từ đúng giữa 知道 và 认识.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q11",
+        "q12",
+        "q13"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g2",
+      "title": "Dạng 4. Điền ngữ pháp: câu hỏi với 是不是",
+      "pattern": null,
+      "explanation": "Chọn đúng vị trí cần điền 是不是 trong câu (4 vị trí ①②③④).",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q14",
+        "q15",
+        "q16",
+        "q17"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g3",
+      "title": "Dạng 5. Viết lại câu: chuyển câu hỏi 吗 sang 是不是",
+      "pattern": null,
+      "explanation": "Viết lại câu hỏi đã cho sang dạng dùng 是不是.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q18",
+        "q19",
+        "q20",
+        "q21"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g4",
+      "title": "Dạng 6. Đặt câu với 每",
+      "pattern": null,
+      "explanation": "Dựa vào gợi ý, đặt 1 câu hoàn chỉnh. Dạng bài mở — tự đánh giá sau khi xem câu mẫu.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q22",
+        "q23",
+        "q24",
+        "q25"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g5",
+      "title": "Dạng 7. Hỏi đáp với đại từ nghi vấn 多",
+      "pattern": null,
+      "explanation": "Chọn từ đúng để hoàn thành câu hỏi mức độ với 多.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q26",
+        "q27",
+        "q28",
+        "q29"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g6",
+      "title": "Dạng 8. Sắp xếp thành câu đúng",
+      "pattern": null,
+      "explanation": "Bấm lần lượt vào các từ để sắp xếp thành câu hoàn chỉnh.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q30",
+        "q31",
+        "q32",
+        "q33",
+        "q34"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g7",
+      "title": "Dạng 9. Tìm và sửa lỗi sai",
+      "pattern": null,
+      "explanation": "Mỗi câu dưới đây có 1 lỗi sai. Gõ lại câu đã sửa đúng.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q35",
+        "q36",
+        "q37",
+        "q38",
+        "q39"
+      ],
+      "status": "derived_from_sections"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_g8",
+      "title": "Dạng 10. Hoàn thành đoạn hội thoại",
+      "pattern": null,
+      "explanation": "Điền từ thích hợp vào các chỗ trống trong đoạn hội thoại.",
+      "examples": [],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "q40"
+      ],
+      "status": "derived_from_sections"
+    }
+  ],
+  "hanzi": [
+    {
+      "char": "生",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "生病"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    },
+    {
+      "char": "病",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "生病"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    },
+    {
+      "char": "身",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "身体"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q2"
+      ]
+    },
+    {
+      "char": "体",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "身体"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q2"
+      ]
+    },
+    {
+      "char": "忙",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "忙"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q3"
+      ]
+    },
+    {
+      "char": "知",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "知道"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q4",
+        "q13",
+        "q40"
+      ]
+    },
+    {
+      "char": "道",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "知道"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q4",
+        "q13",
+        "q40"
+      ]
+    },
+    {
+      "char": "休",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "休息"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q5"
+      ]
+    },
+    {
+      "char": "息",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "休息"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q5"
+      ]
+    },
+    {
+      "char": "起",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "起床"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q1"
+      ]
+    },
+    {
+      "char": "床",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "起床"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q1"
+      ]
+    },
+    {
+      "char": "认",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "认识"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q13"
+      ]
+    },
+    {
+      "char": "识",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "认识"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q13"
+      ]
+    },
+    {
+      "char": "怎",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "怎么"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    },
+    {
+      "char": "么",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "怎么"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    },
+    {
+      "char": "药",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "药"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    },
+    {
+      "char": "时",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "时间"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    },
+    {
+      "char": "间",
+      "pinyin": null,
+      "meaning": null,
+      "radical": null,
+      "structure": null,
+      "strokes": null,
+      "notes": null,
+      "exampleWords": [
+        "时间"
+      ],
+      "status": "derived_from_vocabulary",
+      "sourceRefs": [
+        "q40"
+      ]
+    }
+  ],
+  "exampleSentences": [
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s1",
+      "zh": "你是不是明天休息？",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q14"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s2",
+      "zh": "是不是你昨天生病了？",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q15"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s3",
+      "zh": "他是不是每天都跑步？",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q16"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s4",
+      "zh": "你们是不是要去北京旅游？",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q17"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s5",
+      "zh": "我每天六点起床。",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q30"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s6",
+      "zh": "你是不是喜欢运动？",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q31"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s7",
+      "zh": "他现在身体好多了。",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q32"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s8",
+      "zh": "你妹妹多高？",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q33"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s9",
+      "zh": "我没有时间休息。",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q34"
+      ],
+      "status": "derived_from_exercise"
+    },
+    {
+      "id": "hsk2_bai2_liudian_qichuang_s10",
+      "zh": "我每天没有时间运动。",
+      "pinyin": null,
+      "vi": null,
+      "sourceRefs": [
+        "q59"
+      ],
+      "status": "derived_from_exercise"
+    }
+  ],
+  "commonErrors": [],
+  "skills": {
+    "vocabulary": [
+      "q1",
+      "q2",
+      "q3",
+      "q4",
+      "q5",
+      "q6",
+      "q7",
+      "q8",
+      "q9",
+      "q10"
+    ],
+    "grammar": [
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16",
+      "q17",
+      "q18",
+      "q19",
+      "q20",
+      "q21",
+      "q22",
+      "q23",
+      "q24",
+      "q25",
+      "q26",
+      "q27",
+      "q28",
+      "q29",
+      "q30",
+      "q31",
+      "q32",
+      "q33",
+      "q34",
+      "q35",
+      "q36",
+      "q37",
+      "q38",
+      "q39",
+      "q40"
+    ],
+    "reading": [
+      "q51",
+      "q52",
+      "q53",
+      "q54"
+    ],
+    "translation": [
+      "q41",
+      "q42",
+      "q43",
+      "q44",
+      "q45",
+      "q46",
+      "q47",
+      "q48",
+      "q49",
+      "q50"
+    ],
+    "writing": [
+      "q55"
+    ],
+    "speaking": [
+      "q56"
+    ],
+    "mixed": [
+      "q57",
+      "q58",
+      "q59",
+      "q60",
+      "q61"
+    ]
+  },
+  "exercises": {
+    "all": [
+      {
+        "id": "q1",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "起床 nghĩa là gì?",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> 起床 (qǐchuáng) = thức dậy, rời khỏi giường. 起 = dậy/nổi lên, 床 = giường.</p><p><b>Lỗi thường gặp:</b> Học sinh dễ nhầm 起床 với 睡觉 (đi ngủ) vì cả hai đều liên quan đến giường.</p><p><b>Mẹo ghi nhớ:</b> 起 = 'dậy' (như 起来 = đứng dậy) + 床 = 'giường' → 'dậy khỏi giường' = thức dậy.</p><p><b>Ví dụ bổ sung:</b> 他每天七点起床。(Anh ấy mỗi ngày 7 giờ dậy.)</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q2",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "身体 nghĩa là gì?",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> 身体 (shēntǐ) = cơ thể / sức khỏe. Thường dùng trong câu hỏi thăm sức khỏe: 身体怎么样？</p><p><b>Lỗi thường gặp:</b> Nhầm 身体 với 医院 (bệnh viện) do cùng xuất hiện trong ngữ cảnh nói về bệnh tật.</p><p><b>Mẹo ghi nhớ:</b> 身 = thân mình, 体 = thân thể → 身体 = cơ thể/sức khỏe.</p><p><b>Ví dụ bổ sung:</b> 你要多运动，运动对身体很好。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q3",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "忙 nghĩa là gì?",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 忙 (máng) = bận, có nhiều việc phải làm.</p><p><b>Lỗi thường gặp:</b> Nhầm 忙 (bận) với 累 (mệt) vì hai trạng thái này hay đi cùng nhau trong câu.</p><p><b>Mẹo ghi nhớ:</b> So sánh: 忙 = nhiều việc phải làm; 累 = cảm giác kiệt sức. Hai từ khác nghĩa nhưng hay xuất hiện chung.</p><p><b>Ví dụ bổ sung:</b> 他这几天很忙。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q4",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "知道 nghĩa là gì?",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> 知道 (zhīdào) = biết một thông tin/sự việc, KHÔNG dùng cho việc quen biết người.</p><p><b>Lỗi thường gặp:</b> Nhầm 知道 với 认识 (quen biết người) — xem thêm Dạng 3.</p><p><b>Mẹo ghi nhớ:</b> 知道 luôn đi với một SỰ VIỆC/THÔNG TIN, không đi với NGƯỜI.</p><p><b>Ví dụ bổ sung:</b> 我知道他家在哪儿。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q5",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "休息 nghĩa là gì?",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> 休息 (xiūxi) = nghỉ ngơi.</p><p><b>Lỗi thường gặp:</b> Không nhiều, chủ yếu là nhầm thanh điệu (xiūxi, không phải xiùxī).</p><p><b>Mẹo ghi nhớ:</b> 休 gồm bộ 亻(người) + 木(cây) → hình ảnh người dựa vào cây để nghỉ.</p><p><b>Ví dụ bổ sung:</b> 你要多休息。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q6",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "他昨天______了，今天没来上课。",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> Ngữ cảnh 'hôm qua...hôm nay không đến lớp' cho thấy nguyên nhân là ốm → 生病.</p><p><b>Lỗi thường gặp:</b> Có thể điền nhầm 休息 (nghỉ ngơi) vì cả hai đều liên quan đến việc nghỉ học.</p><p><b>Mẹo ghi nhớ:</b> 生病 = bị bệnh (nguyên nhân); 休息 = nghỉ ngơi (hành động chủ động).</p><p><b>Ví dụ bổ sung:</b> 她上个星期生病了。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q7",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "我每天早上都要出去______。",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> Câu lấy nguyên mẫu từ hội thoại SGK: 'mỗi sáng đều ra ngoài chạy bộ' → 出去 (ra ngoài) + 跑步 (chạy bộ).</p><p><b>Lỗi thường gặp:</b> Không nhiều lỗi, chủ yếu là viết sai chữ 跑 (bộ 足).</p><p><b>Mẹo ghi nhớ:</b> 跑步 = 跑 (chạy) + 步 (bước) → chạy từng bước = chạy bộ.</p><p><b>Ví dụ bổ sung:</b> 他每天早上跑步。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q8",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "我最近很忙，没有______休息。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> Cấu trúc '没有 + danh từ' → 没有时间 (không có thời gian).</p><p><b>Lỗi thường gặp:</b> Nhầm với 身体 do không nắm chắc từ loại (身体 là danh từ chỉ cơ thể, không hợp nghĩa câu).</p><p><b>Mẹo ghi nhớ:</b> 没有时间 + động từ = không có thời gian để làm gì.</p><p><b>Ví dụ bổ sung:</b> 他没有时间运动。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q9",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "你要多______，不要太累。",
+        "answer": "D",
+        "explanation": "<p><b>Giải thích:</b> '不要太累' (đừng quá mệt) gợi ý hành động nên làm là 休息 (nghỉ ngơi).</p><p><b>Lỗi thường gặp:</b> Nhầm với 跑步 vì không để ý câu sau mang nghĩa khuyên nhủ nghỉ ngơi, không phải vận động thêm.</p><p><b>Mẹo ghi nhớ:</b> 多 + động từ = làm nhiều hơn việc gì đó. 多休息 = nghỉ ngơi nhiều hơn.</p><p><b>Ví dụ bổ sung:</b> 生病了要多休息。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q10",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "经常运动对______很好。",
+        "answer": "E",
+        "explanation": "<p><b>Giải thích:</b> Cấu trúc 'A 对 B 很好' (A tốt cho B) — 运动对身体很好 = vận động tốt cho sức khỏe.</p><p><b>Lỗi thường gặp:</b> Nhầm với 时间 do không hiểu cấu trúc giới từ 对.</p><p><b>Mẹo ghi nhớ:</b> 对 + (đối tượng) + 很好/不好 = tốt/không tốt cho...</p><p><b>Ví dụ bổ sung:</b> 水果对身体很好。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q11",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "我不______他叫什么名字。",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> Nói về THÔNG TIN (tên gọi) → dùng 知道.</p><p><b>Lỗi thường gặp:</b> Học sinh Việt hay dịch thẳng 'biết' = 知道 trong mọi trường hợp, kể cả khi nói về quen người.</p><p><b>Mẹo ghi nhớ:</b> 知道 = biết SỰ VIỆC/THÔNG TIN. 认识 = quen biết NGƯỜI/ĐỊA ĐIỂM/CHỮ.</p><p><b>Ví dụ bổ sung:</b> 我不知道他住在哪儿。</p>",
+        "sectionId": "b3"
+      },
+      {
+        "id": "q12",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "我______王老师，他是我的汉语老师。",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> Nói về việc QUEN một NGƯỜI cụ thể (王老师) → dùng 认识.</p><p><b>Lỗi thường gặp:</b> Dùng nhầm 知道王老师 (sai) — 知道 không đi trực tiếp với tên người khi ý là 'quen biết'.</p><p><b>Mẹo ghi nhớ:</b> 认识 + người = quen biết người đó (đã gặp/biết mặt).</p><p><b>Ví dụ bổ sung:</b> 你认识那个医生吗？</p>",
+        "sectionId": "b3"
+      },
+      {
+        "id": "q13",
+        "skill": "grammar",
+        "type": "dialog_fill",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu hỏi chính phản với động từ 知道: 知道不知道 (có biết hay không).</p><p><b>Lỗi thường gặp:</b> Nhầm dùng 认识不认识 vì câu hỏi về địa điểm (地方) chứ không phải người.</p><p><b>Mẹo ghi nhớ:</b> 知道不知道 hỏi về thông tin/sự việc; 认识不认识 hỏi về việc quen người.</p><p><b>Ví dụ bổ sung:</b> 你知道不知道他几点回来？</p>",
+        "sectionId": "b3"
+      },
+      {
+        "id": "q14",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "2",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng ngay sau chủ ngữ 你 (vị trí ②), trước phần vị ngữ 明天休息 cần xác nhận.</p><p><b>Vì sao đúng:</b> 是不是 thường đứng ngay trước phần vị ngữ muốn xác nhận.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ① (đầu câu, trước 你) làm mất trọng tâm nhấn vào chủ ngữ; vị trí ③④ chèn vào giữa cụm trạng ngữ-vị ngữ 明天休息 sẽ phá cấu trúc.</p><p><b>Lỗi thường gặp:</b> Đặt 是不是 sai vị trí, ví dụ tách rời trạng ngữ thời gian và động từ.</p><p><b>Mẹo ghi nhớ:</b> 是不是 thường đứng ngay sau chủ ngữ, trước cụm vị ngữ muốn xác nhận.</p><p><b>Ví dụ bổ sung:</b> 他是不是很忙？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q15",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "1",
+        "explanation": "<p><b>Giải thích:</b> 是不是 có thể đứng đầu câu (vị trí ①) để mở đầu một câu hỏi xác nhận.</p><p><b>Vì sao đúng:</b> Đề bài yêu cầu rõ 'là câu hỏi mở đầu câu' — chỉ vị trí ① thỏa điều kiện này.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ②③④ đều nằm sau chủ ngữ hoặc trong cụm vị ngữ, không phải 'đầu câu'.</p><p><b>Lỗi thường gặp:</b> Quên rằng 是不是 có thể đứng ở đầu câu, chỉ nhớ vị trí giữa câu.</p><p><b>Mẹo ghi nhớ:</b> 是不是 linh hoạt: đầu câu / giữa câu (trước vị ngữ).</p><p><b>Ví dụ bổ sung:</b> 是不是你不喜欢运动？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q16",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "2",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng ngay sau chủ ngữ 他 (vị trí ②), trước cụm vị ngữ '每天都跑步' để xác nhận thói quen.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ①③④ đều phá vỡ cấu trúc chủ ngữ-vị ngữ tự nhiên của câu.</p><p><b>Lỗi thường gặp:</b> Thêm luôn cả 吗 phía sau (是不是...吗) — lỗi trùng lặp chức năng hỏi.</p><p><b>Mẹo ghi nhớ:</b> Không bao giờ dùng 是不是 và 吗 trong cùng một câu.</p><p><b>Ví dụ bổ sung:</b> 她是不是每天六点起床？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q17",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "2",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng ngay sau chủ ngữ 你们 (vị trí ②), trước trợ động từ 要, xác nhận phỏng đoán về việc đi du lịch (tái sử dụng từ 旅游/要 đã học ở Bài 1).</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ③④ chèn vào giữa cụm 要去北京旅游 sẽ tách rời trợ động từ khỏi động từ chính.</p><p><b>Lỗi thường gặp:</b> Quên trợ động từ 要 (Bài 1) khi ghép với 是不是, viết thiếu thành 'bạn có phải Bắc Kinh du lịch'.</p><p><b>Mẹo ghi nhớ:</b> 是不是 không thay thế cho trợ động từ 要 — cả hai cùng tồn tại trong câu.</p><p><b>Ví dụ bổ sung:</b> 你是不是要去旅游？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q18",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "你今天忙吗？",
+        "answer": [
+          "你是不是今天很忙？",
+          "你今天是不是很忙？"
+        ],
+        "explanation": "<p><b>Giải thích:</b> Chuyển 吗 → 是不是, giữ nguyên nghĩa nhưng thêm sắc thái 'đã đoán trước, muốn xác nhận'. Cả hai vị trí đặt 是不是 (trước hoặc sau trạng ngữ thời gian 今天) đều được chấp nhận.</p><p><b>Lỗi thường gặp:</b> Quên thêm 很 trước tính từ 忙 khi chuyển câu (是不是 + tính từ đơn thường cần 很 bổ trợ).</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi 吗 mang tính trung tính; 是不是 mang tính đã có dự đoán.</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q19",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他生病了吗？",
+        "answer": "他是不是生病了？",
+        "explanation": "<p><b>Giải thích:</b> 是不是 chèn trước vị ngữ 生病了, giữ nguyên trợ từ 了 ở cuối.</p><p><b>Lỗi thường gặp:</b> Đặt sai vị trí 是不是 sau 了.</p><p><b>Mẹo ghi nhớ:</b> 是不是 luôn đứng trước cụm vị ngữ, không đứng sau trợ từ ngữ khí.</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q20",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "你每天六点起床吗？",
+        "answer": "你是不是每天六点起床？",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng trước cụm '每天六点起床'.</p><p><b>Lỗi thường gặp:</b> Bỏ sót 每天 khi viết lại câu, làm mất nghĩa thói quen lặp lại.</p><p><b>Mẹo ghi nhớ:</b> Khi chuyển câu, giữ nguyên toàn bộ trạng ngữ thời gian (每天/六点).</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q21",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "医生说下星期能出院吗？",
+        "answer": "医生是不是说下星期能出院？",
+        "explanation": "<p><b>Giải thích:</b> 是不是 chèn ngay sau chủ ngữ 医生, trước động từ 说.</p><p><b>Lỗi thường gặp:</b> Đặt 是不是 trước cả câu (是不是医生说...) làm sai trọng tâm xác nhận.</p><p><b>Mẹo ghi nhớ:</b> 是不是 nên đứng gần phần thông tin cần xác nhận nhất.</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q22",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每天 / 起床 / 六点",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu nêu quy luật giờ giấc đơn thuần → KHÔNG cần 都 (đúng như câu mẫu SGK).</p><p><b>Lỗi thường gặp:</b> Thêm 都 không cần thiết: '我每天都六点起床' — không sai hẳn nhưng không tự nhiên bằng bản gốc.</p><p><b>Mẹo ghi nhớ:</b> 每 + thời gian + số giờ cụ thể → không bắt buộc có 都.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q23",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每天 / 都 / 忙",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu này CẦN 都 vì nhấn mạnh 'ngày nào cũng vậy, không ngoại lệ'.</p><p><b>Lỗi thường gặp:</b> Bỏ 都 làm mất sắc thái nhấn mạnh 'không trừ ngày nào'.</p><p><b>Mẹo ghi nhớ:</b> Khi muốn nhấn mạnh tính khái quát/không ngoại lệ → bắt buộc có 都.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q24",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每个星期六 / 休息",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu nêu lịch trình cố định, không bắt buộc 都.</p><p><b>Lỗi thường gặp:</b> Quên lượng từ 个 trong '每个星期六' (viết thiếu thành 每星期六).</p><p><b>Mẹo ghi nhớ:</b> 每 + 个 + danh từ thời gian khi thời gian không phải đơn vị đo lường cố định như 天/年.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q25",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每次 / 运动 / 身体好 (运动 — ôn từ Bài 1)",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 每次 thường đi kèm 都 để nhấn mạnh kết quả lặp lại nhất quán mỗi lần.</p><p><b>Lỗi thường gặp:</b> Thiếu 都 làm câu mất tính khái quát 'mỗi lần đều vậy'.</p><p><b>Mẹo ghi nhớ:</b> 每次 + 都 là kết hợp rất phổ biến khi mô tả kết quả lặp lại.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q26",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：你______大？ B：我18岁。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多 + tính từ (大) để hỏi mức độ tuổi tác.</p><p><b>Vì sao các đáp án khác sai:</b> 几 dùng cho số nhỏ/trẻ em (几岁), không hợp hỏi tuổi qua 大; 很 là phó từ mức độ khẳng định, không tạo câu hỏi.</p><p><b>Lỗi thường gặp:</b> Nhầm dùng 几 (dùng cho số nhỏ, trẻ em) thay vì 多 (dùng cho người lớn/số lớn).</p><p><b>Mẹo ghi nhớ:</b> 几岁 hỏi tuổi trẻ em; 多大 hỏi tuổi người lớn hơn.</p><p><b>Ví dụ bổ sung:</b> 你妈妈今年多大？</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q27",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：他______高？ B：一米七几。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多 + 高 hỏi chiều cao, trả lời bằng đơn vị 米.</p><p><b>Vì sao các đáp án khác sai:</b> 几 không dùng để hỏi chiều cao; 很高 chỉ là câu khẳng định 'rất cao', không phải câu hỏi.</p><p><b>Lỗi thường gặp:</b> Quên rằng câu trả lời phải nêu số lượng cụ thể (一米七几), không trả lời chung chung.</p><p><b>Mẹo ghi nhớ:</b> Trả lời cho câu hỏi 多 + tính từ luôn cần có SỐ LƯỢNG cụ thể.</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q28",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：你家______远？ B：不太远。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多远 hỏi khoảng cách.</p><p><b>Vì sao các đáp án khác sai:</b> 几远 không tồn tại trong tiếng Hán; 很远 là câu khẳng định, không phải câu hỏi.</p><p><b>Lỗi thường gặp:</b> Nhầm 多远 với 多长 (hỏi độ dài vật) — 远 dùng riêng cho khoảng cách địa lý.</p><p><b>Mẹo ghi nhớ:</b> 多远 chuyên dùng hỏi khoảng cách giữa hai nơi.</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q29",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：这本书______贵？ B：不贵，很便宜。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多贵 hỏi mức giá.</p><p><b>Vì sao các đáp án khác sai:</b> 几贵 không tồn tại; 很贵 là khẳng định 'rất đắt', không phải câu hỏi.</p><p><b>Lỗi thường gặp:</b> Không nhiều lỗi, chủ yếu nhầm trật tự từ (贵多 sai, phải là 多贵).</p><p><b>Mẹo ghi nhớ:</b> 多 luôn đứng TRƯỚC tính từ, không bao giờ đứng sau.</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q30",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Trật tự: Chủ ngữ (我) + trạng ngữ thời gian (每天六点) + động từ (起床).</p><p><b>Lỗi thường gặp:</b> Đặt 每天 sau 六点, sai trật tự trạng ngữ thời gian (phải từ lớn→nhỏ: 每天 trước, giờ cụ thể sau).</p><p><b>Mẹo ghi nhớ:</b> Trạng ngữ thời gian tiếng Trung luôn đi từ đơn vị lớn đến nhỏ: 每天 (ngày) → 六点 (giờ).</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q31",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Chủ ngữ (你) + 是不是 + động từ (喜欢) + tân ngữ (运动).</p><p><b>Lỗi thường gặp:</b> Đặt 是不是 sau 喜欢运动, làm sai vị trí xác nhận.</p><p><b>Mẹo ghi nhớ:</b> 是不是 đứng ngay sau chủ ngữ, trước cụm vị ngữ cần xác nhận.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q32",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Chủ ngữ (他) + trạng ngữ thời gian (现在) + chủ đề (身体) + vị ngữ (好多了).</p><p><b>Lỗi thường gặp:</b> Đặt 了 sai vị trí, ví dụ đưa lên đầu câu.</p><p><b>Mẹo ghi nhớ:</b> 了 luôn đứng cuối cùng khi diễn tả sự thay đổi trạng thái.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q33",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 你妹妹 (chủ ngữ ghép) + 多 + 高 (tính từ).</p><p><b>Lỗi thường gặp:</b> Tách rời 你 và 妹妹, đặt 多高 ở giữa gây sai cấu trúc chủ ngữ.</p><p><b>Mẹo ghi nhớ:</b> 你妹妹 là một cụm chủ ngữ không thể chia cắt.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q34",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Chủ ngữ (我) + 没有 + tân ngữ (时间) + động từ mục đích (休息).</p><p><b>Lỗi thường gặp:</b> Đặt 休息 trước 时间, làm sai cấu trúc '没有 + danh từ + động từ mục đích'.</p><p><b>Mẹo ghi nhớ:</b> 没有时间 + động từ = không có thời gian để làm gì.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q35",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "你是不是喜欢运动吗？",
+        "answer": "你是不是喜欢运动？",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: dùng thừa 吗 sau khi đã có 是不是 — hai cách hỏi trùng chức năng, không dùng chung.</p><p><b>Lỗi thường gặp:</b> Đây chính là lỗi điển hình: kết hợp cả 是不是 và 吗 trong một câu.</p><p><b>Mẹo ghi nhớ:</b> Chỉ chọn MỘT trong hai: hoặc 是不是, hoặc 吗 — không dùng cả hai.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q36",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他多高吗？",
+        "answer": "他多高？",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: 多 + tính từ đã tự nó là câu hỏi hoàn chỉnh, không cần thêm 吗.</p><p><b>Lỗi thường gặp:</b> Học sinh quen thêm 吗 vào cuối mọi câu hỏi theo phản xạ từ HSK1.</p><p><b>Mẹo ghi nhớ:</b> 多 + tính từ (多高/多大/多远...) đã đủ để tạo câu hỏi, không cần 吗.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q37",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "我知道王老师，他教我们汉语。",
+        "answer": "我认识王老师，他教我们汉语。",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: 知道 dùng sai khi nói về việc quen một người cụ thể — phải dùng 认识.</p><p><b>Lỗi thường gặp:</b> Lỗi phân biệt 知道 vs 认识 (xem Dạng 3).</p><p><b>Mẹo ghi nhớ:</b> 知道 = biết sự việc; 认识 = quen người.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q38",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他生了病三天了。",
+        "answer": "他生病三天了。",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: 生病 là động từ ly hợp (离合词) — không chèn 了 vào giữa 生 và 病 khi có bổ ngữ thời lượng phía sau; 了 chỉ cần đặt cuối câu.</p><p><b>Lỗi thường gặp:</b> Đặc điểm 'động từ ly hợp' rất mới với học sinh HSK2, dễ nhầm với động từ thường.</p><p><b>Mẹo ghi nhớ:</b> 生病 + thời lượng + 了 (không chèn 了 vào giữa 生 và 病 trong trường hợp này).</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q39",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他很多高。",
+        "answer": "他多高？",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: nhầm 多 (nghi vấn 'bao nhiêu') với 很 + 多 (nghĩa 'rất nhiều'); câu muốn hỏi chiều cao thì không thể có 很 đứng trước 多.</p><p><b>Lỗi thường gặp:</b> Nhầm lẫn giữa hai chức năng của chữ 多.</p><p><b>Mẹo ghi nhớ:</b> 多 nghi vấn không bao giờ đứng sau 很; nếu có 很 thì 多 chỉ có thể mang nghĩa 'nhiều'.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q40",
+        "skill": "grammar",
+        "type": "dialog_fill",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>(1) 知道</b> — dùng để hỏi về thông tin (nhà thầy Trương ở đâu).</p><p><b>(2) 生病</b> — ngữ cảnh 'đang nghỉ ở bệnh viện' → nguyên nhân là 生病.</p><p><b>(3) 怎么</b> — 怎么样 là cách hỏi tình trạng chung ('身体怎么样？').</p><p><b>(4) 药</b> — 吃药 = uống thuốc, hợp ngữ cảnh 'khỏe hơn nhiều rồi'.</p><p><b>(5) 时间</b> — 没有时间 + 运动 = không có thời gian vận động.</p><p><b>Lỗi thường gặp:</b> Lẫn 知道/认识 khi điền ô (1); quên 药 phải đi sau 吃 chứ không đứng một mình.</p>",
+        "sectionId": "b10"
+      },
+      {
+        "id": "q41",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Tôi mỗi ngày 6 giờ dậy.",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu nêu quy luật giờ giấc, không cần 都 (giống câu mẫu SGK).</p><p><b>Lỗi thường gặp:</b> Thêm 都 không cần thiết, làm câu kém tự nhiên hơn bản gốc.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q42",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Anh ấy có phải là bị ốm không?",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Dùng 是不是 để hỏi xác nhận phỏng đoán.</p><p><b>Lỗi thường gặp:</b> Dùng nhầm 吗 kèm 是不是 trong cùng câu.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q43",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Bạn cao bao nhiêu?",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 多 + tính từ (高) hỏi mức độ.</p><p><b>Lỗi thường gặp:</b> Thêm 吗 thừa sau 多高.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q44",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Tôi không có thời gian nghỉ ngơi.",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 没有 + 时间 + động từ mục đích.</p><p><b>Lỗi thường gặp:</b> Đặt 休息 trước 时间.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q45",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Chị ấy quen bác sĩ Vương.",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 认识 dùng khi nói về quen biết người.</p><p><b>Lỗi thường gặp:</b> Dùng nhầm 知道王医生 (sai vì 知道 không đi với người khi nghĩa là quen biết).</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q46",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "你每天几点起床？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Dịch tự nhiên, không dịch cứng từng chữ.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q47",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "医生说下个星期能出院。",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 出院 = xuất viện, ra viện.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q48",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "他这几天很忙，没有时间休息。",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 这几天 = mấy hôm nay, dịch tự nhiên không word-by-word.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q49",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "你怎么知道这么多啊？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 怎么 ở đây mang nghĩa 'sao/tại sao', không phải 'như thế nào'.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q50",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "我觉得每天运动身体最好。",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu ôn lại cấu trúc 觉得/最 của Bài 1.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q51",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美每天几点起床？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Thông tin trực tiếp trong bài đọc: 她每天早上六点起床。</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q52",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美每天早上做什么运动？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Bài đọc nêu: 去跑步。</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q53",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美这个星期为什么很累？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Bám sát câu: 因为工作太多，没有时间休息。</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q54",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美的朋友觉得她怎么样？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Yêu cầu học sinh dùng lại đúng cấu trúc 是不是 đã học khi trả lời — bạn của Tiểu Mỹ hỏi 'bạn có phải bị ốm không?', tức là nghĩ Tiểu Mỹ có thể bị ốm.</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q55",
+        "skill": "writing",
+        "type": "self_check",
+        "prompt": "Viết một đoạn văn ngắn (4-6 câu) miêu tả lịch sinh hoạt hàng ngày của bạn. Dùng ít nhất 2 từ mới Bài 2 (起床、跑步、休息、忙、时间...) và ít nhất 1 điểm ngữ pháp đã học (每 / 是不是 / 多).",
+        "answer": null,
+        "explanation": "<p><b>Lỗi thường gặp:</b> Dùng từ ngoài phạm vi đã học để diễn đạt ý phức tạp hơn khả năng hiện có.</p><p><b>Mẹo ghi nhớ:</b> Khuyến khích học sinh dùng câu ngắn, đơn giản thay vì cố dịch ý phức tạp từ tiếng Việt.</p>",
+        "sectionId": "b14"
+      },
+      {
+        "id": "q56",
+        "skill": "speaking",
+        "type": "self_check",
+        "prompt": "Tình huống: Bạn gặp lại một người bạn lâu ngày không gặp. Hỏi thăm sức khỏe bạn ấy và hỏi xem bạn ấy có phải đang rất bận không. Viết đoạn hội thoại 3-4 lượt, bắt buộc dùng 是不是 và 每.",
+        "answer": null,
+        "explanation": "<p><b>Tiêu chí đánh giá gợi ý:</b> có đủ 是不是 và 每, hội thoại tự nhiên, đúng ngữ cảnh hỏi thăm.</p><p><b>Mẹo ghi nhớ:</b> Khuyến khích học sinh luyện nói to đoạn hội thoại sau khi viết xong (shadowing).</p>",
+        "sectionId": "b15"
+      },
+      {
+        "id": "q57",
+        "skill": "mixed",
+        "type": "mcq",
+        "prompt": "他______在医院休息，医生说他快能出院了。",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> Sau chỗ trống đã có sẵn chữ 在, nên chỉ cần điền 正 (không điền 正在, vì sẽ tạo thành '正在在' trùng chữ 在).</p><p><b>Vì sao đúng:</b> 正 (đang, ôn lại từ 正在 đã học trước đó) diễn tả hành động đang tiếp diễn, kết hợp với 在 sẵn có phía sau thành 正在.</p><p><b>Lỗi thường gặp:</b> Chọn nhầm 正在 vì không để ý câu đã có sẵn chữ 在 phía sau chỗ trống.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q58",
+        "skill": "mixed",
+        "type": "mcq",
+        "prompt": "Chọn từ phù hợp điền vào chỗ trống dựa theo mô tả: 'Anh ấy ho, sắc mặt không tốt' → 你是不是______？",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> Dấu hiệu ho + sắc mặt xấu → suy đoán hợp lý nhất là 生病了.</p><p><b>Vì sao các đáp án khác sai:</b> 忙 (bận) và 累 (mệt) không liên quan trực tiếp đến triệu chứng ho/sắc mặt xấu được mô tả.</p><p><b>Mẹo ghi nhớ:</b> Khi thấy dấu hiệu sức khỏe bất thường (ho, mệt mỏi, sắc mặt xấu), suy đoán hợp lý nhất thường là 生病.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q59",
+        "skill": "mixed",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Trạng ngữ thời gian (每天) + 没有 + tân ngữ (时间) + động từ mục đích (运动).</p><p><b>Lỗi thường gặp:</b> Đặt 每天 sai vị trí (không phải ngay sau chủ ngữ).</p><p><b>Mẹo ghi nhớ:</b> Trạng ngữ thời gian luôn đứng ngay sau chủ ngữ, trước 没有.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q60",
+        "skill": "mixed",
+        "type": "self_check",
+        "prompt": "Dịch nhanh: \"Bạn ấy mỗi tuần đều rất bận.\"",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 每 + 个 + 星期 + 都 (nhấn mạnh không ngoại lệ) + 很忙.</p><p><b>Lỗi thường gặp:</b> Quên lượng từ 个 sau 每 khi đi với 星期.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q61",
+        "skill": "mixed",
+        "type": "mcq",
+        "prompt": "Chọn câu đúng ngữ pháp:",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> Câu B đúng ngữ pháp: 是不是 + tính từ (很忙) là cấu trúc chuẩn để hỏi xác nhận.</p><p><b>Vì sao A sai:</b> 多 không đi với 忙 theo cách này (多忙 không phải cấu trúc chuẩn để hỏi mức độ bận), và thừa 吗 phía sau.</p><p><b>Vì sao C sai:</b> Sai trật tự từ — 多 phải đứng trước tính từ để tạo câu hỏi nghi vấn, không phải 很多 (rất nhiều).</p><p><b>Mẹo ghi nhớ:</b> 是不是 + tính từ/vị ngữ là cấu trúc hỏi xác nhận chuẩn và linh hoạt nhất trong các lựa chọn.</p>",
+        "sectionId": "b16"
+      }
+    ],
+    "vocabulary": [
+      {
+        "id": "q1",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "起床 nghĩa là gì?",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> 起床 (qǐchuáng) = thức dậy, rời khỏi giường. 起 = dậy/nổi lên, 床 = giường.</p><p><b>Lỗi thường gặp:</b> Học sinh dễ nhầm 起床 với 睡觉 (đi ngủ) vì cả hai đều liên quan đến giường.</p><p><b>Mẹo ghi nhớ:</b> 起 = 'dậy' (như 起来 = đứng dậy) + 床 = 'giường' → 'dậy khỏi giường' = thức dậy.</p><p><b>Ví dụ bổ sung:</b> 他每天七点起床。(Anh ấy mỗi ngày 7 giờ dậy.)</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q2",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "身体 nghĩa là gì?",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> 身体 (shēntǐ) = cơ thể / sức khỏe. Thường dùng trong câu hỏi thăm sức khỏe: 身体怎么样？</p><p><b>Lỗi thường gặp:</b> Nhầm 身体 với 医院 (bệnh viện) do cùng xuất hiện trong ngữ cảnh nói về bệnh tật.</p><p><b>Mẹo ghi nhớ:</b> 身 = thân mình, 体 = thân thể → 身体 = cơ thể/sức khỏe.</p><p><b>Ví dụ bổ sung:</b> 你要多运动，运动对身体很好。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q3",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "忙 nghĩa là gì?",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 忙 (máng) = bận, có nhiều việc phải làm.</p><p><b>Lỗi thường gặp:</b> Nhầm 忙 (bận) với 累 (mệt) vì hai trạng thái này hay đi cùng nhau trong câu.</p><p><b>Mẹo ghi nhớ:</b> So sánh: 忙 = nhiều việc phải làm; 累 = cảm giác kiệt sức. Hai từ khác nghĩa nhưng hay xuất hiện chung.</p><p><b>Ví dụ bổ sung:</b> 他这几天很忙。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q4",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "知道 nghĩa là gì?",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> 知道 (zhīdào) = biết một thông tin/sự việc, KHÔNG dùng cho việc quen biết người.</p><p><b>Lỗi thường gặp:</b> Nhầm 知道 với 认识 (quen biết người) — xem thêm Dạng 3.</p><p><b>Mẹo ghi nhớ:</b> 知道 luôn đi với một SỰ VIỆC/THÔNG TIN, không đi với NGƯỜI.</p><p><b>Ví dụ bổ sung:</b> 我知道他家在哪儿。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q5",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "休息 nghĩa là gì?",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> 休息 (xiūxi) = nghỉ ngơi.</p><p><b>Lỗi thường gặp:</b> Không nhiều, chủ yếu là nhầm thanh điệu (xiūxi, không phải xiùxī).</p><p><b>Mẹo ghi nhớ:</b> 休 gồm bộ 亻(người) + 木(cây) → hình ảnh người dựa vào cây để nghỉ.</p><p><b>Ví dụ bổ sung:</b> 你要多休息。</p>",
+        "sectionId": "b1"
+      },
+      {
+        "id": "q6",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "他昨天______了，今天没来上课。",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> Ngữ cảnh 'hôm qua...hôm nay không đến lớp' cho thấy nguyên nhân là ốm → 生病.</p><p><b>Lỗi thường gặp:</b> Có thể điền nhầm 休息 (nghỉ ngơi) vì cả hai đều liên quan đến việc nghỉ học.</p><p><b>Mẹo ghi nhớ:</b> 生病 = bị bệnh (nguyên nhân); 休息 = nghỉ ngơi (hành động chủ động).</p><p><b>Ví dụ bổ sung:</b> 她上个星期生病了。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q7",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "我每天早上都要出去______。",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> Câu lấy nguyên mẫu từ hội thoại SGK: 'mỗi sáng đều ra ngoài chạy bộ' → 出去 (ra ngoài) + 跑步 (chạy bộ).</p><p><b>Lỗi thường gặp:</b> Không nhiều lỗi, chủ yếu là viết sai chữ 跑 (bộ 足).</p><p><b>Mẹo ghi nhớ:</b> 跑步 = 跑 (chạy) + 步 (bước) → chạy từng bước = chạy bộ.</p><p><b>Ví dụ bổ sung:</b> 他每天早上跑步。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q8",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "我最近很忙，没有______休息。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> Cấu trúc '没有 + danh từ' → 没有时间 (không có thời gian).</p><p><b>Lỗi thường gặp:</b> Nhầm với 身体 do không nắm chắc từ loại (身体 là danh từ chỉ cơ thể, không hợp nghĩa câu).</p><p><b>Mẹo ghi nhớ:</b> 没有时间 + động từ = không có thời gian để làm gì.</p><p><b>Ví dụ bổ sung:</b> 他没有时间运动。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q9",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "你要多______，不要太累。",
+        "answer": "D",
+        "explanation": "<p><b>Giải thích:</b> '不要太累' (đừng quá mệt) gợi ý hành động nên làm là 休息 (nghỉ ngơi).</p><p><b>Lỗi thường gặp:</b> Nhầm với 跑步 vì không để ý câu sau mang nghĩa khuyên nhủ nghỉ ngơi, không phải vận động thêm.</p><p><b>Mẹo ghi nhớ:</b> 多 + động từ = làm nhiều hơn việc gì đó. 多休息 = nghỉ ngơi nhiều hơn.</p><p><b>Ví dụ bổ sung:</b> 生病了要多休息。</p>",
+        "sectionId": "b2"
+      },
+      {
+        "id": "q10",
+        "skill": "vocabulary",
+        "type": "mcq",
+        "prompt": "经常运动对______很好。",
+        "answer": "E",
+        "explanation": "<p><b>Giải thích:</b> Cấu trúc 'A 对 B 很好' (A tốt cho B) — 运动对身体很好 = vận động tốt cho sức khỏe.</p><p><b>Lỗi thường gặp:</b> Nhầm với 时间 do không hiểu cấu trúc giới từ 对.</p><p><b>Mẹo ghi nhớ:</b> 对 + (đối tượng) + 很好/不好 = tốt/không tốt cho...</p><p><b>Ví dụ bổ sung:</b> 水果对身体很好。</p>",
+        "sectionId": "b2"
+      }
+    ],
+    "grammar": [
+      {
+        "id": "q11",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "我不______他叫什么名字。",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> Nói về THÔNG TIN (tên gọi) → dùng 知道.</p><p><b>Lỗi thường gặp:</b> Học sinh Việt hay dịch thẳng 'biết' = 知道 trong mọi trường hợp, kể cả khi nói về quen người.</p><p><b>Mẹo ghi nhớ:</b> 知道 = biết SỰ VIỆC/THÔNG TIN. 认识 = quen biết NGƯỜI/ĐỊA ĐIỂM/CHỮ.</p><p><b>Ví dụ bổ sung:</b> 我不知道他住在哪儿。</p>",
+        "sectionId": "b3"
+      },
+      {
+        "id": "q12",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "我______王老师，他是我的汉语老师。",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> Nói về việc QUEN một NGƯỜI cụ thể (王老师) → dùng 认识.</p><p><b>Lỗi thường gặp:</b> Dùng nhầm 知道王老师 (sai) — 知道 không đi trực tiếp với tên người khi ý là 'quen biết'.</p><p><b>Mẹo ghi nhớ:</b> 认识 + người = quen biết người đó (đã gặp/biết mặt).</p><p><b>Ví dụ bổ sung:</b> 你认识那个医生吗？</p>",
+        "sectionId": "b3"
+      },
+      {
+        "id": "q13",
+        "skill": "grammar",
+        "type": "dialog_fill",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu hỏi chính phản với động từ 知道: 知道不知道 (có biết hay không).</p><p><b>Lỗi thường gặp:</b> Nhầm dùng 认识不认识 vì câu hỏi về địa điểm (地方) chứ không phải người.</p><p><b>Mẹo ghi nhớ:</b> 知道不知道 hỏi về thông tin/sự việc; 认识不认识 hỏi về việc quen người.</p><p><b>Ví dụ bổ sung:</b> 你知道不知道他几点回来？</p>",
+        "sectionId": "b3"
+      },
+      {
+        "id": "q14",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "2",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng ngay sau chủ ngữ 你 (vị trí ②), trước phần vị ngữ 明天休息 cần xác nhận.</p><p><b>Vì sao đúng:</b> 是不是 thường đứng ngay trước phần vị ngữ muốn xác nhận.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ① (đầu câu, trước 你) làm mất trọng tâm nhấn vào chủ ngữ; vị trí ③④ chèn vào giữa cụm trạng ngữ-vị ngữ 明天休息 sẽ phá cấu trúc.</p><p><b>Lỗi thường gặp:</b> Đặt 是不是 sai vị trí, ví dụ tách rời trạng ngữ thời gian và động từ.</p><p><b>Mẹo ghi nhớ:</b> 是不是 thường đứng ngay sau chủ ngữ, trước cụm vị ngữ muốn xác nhận.</p><p><b>Ví dụ bổ sung:</b> 他是不是很忙？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q15",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "1",
+        "explanation": "<p><b>Giải thích:</b> 是不是 có thể đứng đầu câu (vị trí ①) để mở đầu một câu hỏi xác nhận.</p><p><b>Vì sao đúng:</b> Đề bài yêu cầu rõ 'là câu hỏi mở đầu câu' — chỉ vị trí ① thỏa điều kiện này.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ②③④ đều nằm sau chủ ngữ hoặc trong cụm vị ngữ, không phải 'đầu câu'.</p><p><b>Lỗi thường gặp:</b> Quên rằng 是不是 có thể đứng ở đầu câu, chỉ nhớ vị trí giữa câu.</p><p><b>Mẹo ghi nhớ:</b> 是不是 linh hoạt: đầu câu / giữa câu (trước vị ngữ).</p><p><b>Ví dụ bổ sung:</b> 是不是你不喜欢运动？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q16",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "2",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng ngay sau chủ ngữ 他 (vị trí ②), trước cụm vị ngữ '每天都跑步' để xác nhận thói quen.</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ①③④ đều phá vỡ cấu trúc chủ ngữ-vị ngữ tự nhiên của câu.</p><p><b>Lỗi thường gặp:</b> Thêm luôn cả 吗 phía sau (是不是...吗) — lỗi trùng lặp chức năng hỏi.</p><p><b>Mẹo ghi nhớ:</b> Không bao giờ dùng 是不是 và 吗 trong cùng một câu.</p><p><b>Ví dụ bổ sung:</b> 她是不是每天六点起床？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q17",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": null,
+        "answer": "2",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng ngay sau chủ ngữ 你们 (vị trí ②), trước trợ động từ 要, xác nhận phỏng đoán về việc đi du lịch (tái sử dụng từ 旅游/要 đã học ở Bài 1).</p><p><b>Vì sao các vị trí khác sai:</b> Vị trí ③④ chèn vào giữa cụm 要去北京旅游 sẽ tách rời trợ động từ khỏi động từ chính.</p><p><b>Lỗi thường gặp:</b> Quên trợ động từ 要 (Bài 1) khi ghép với 是不是, viết thiếu thành 'bạn có phải Bắc Kinh du lịch'.</p><p><b>Mẹo ghi nhớ:</b> 是不是 không thay thế cho trợ động từ 要 — cả hai cùng tồn tại trong câu.</p><p><b>Ví dụ bổ sung:</b> 你是不是要去旅游？</p>",
+        "sectionId": "b4"
+      },
+      {
+        "id": "q18",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "你今天忙吗？",
+        "answer": [
+          "你是不是今天很忙？",
+          "你今天是不是很忙？"
+        ],
+        "explanation": "<p><b>Giải thích:</b> Chuyển 吗 → 是不是, giữ nguyên nghĩa nhưng thêm sắc thái 'đã đoán trước, muốn xác nhận'. Cả hai vị trí đặt 是不是 (trước hoặc sau trạng ngữ thời gian 今天) đều được chấp nhận.</p><p><b>Lỗi thường gặp:</b> Quên thêm 很 trước tính từ 忙 khi chuyển câu (是不是 + tính từ đơn thường cần 很 bổ trợ).</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi 吗 mang tính trung tính; 是不是 mang tính đã có dự đoán.</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q19",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他生病了吗？",
+        "answer": "他是不是生病了？",
+        "explanation": "<p><b>Giải thích:</b> 是不是 chèn trước vị ngữ 生病了, giữ nguyên trợ từ 了 ở cuối.</p><p><b>Lỗi thường gặp:</b> Đặt sai vị trí 是不是 sau 了.</p><p><b>Mẹo ghi nhớ:</b> 是不是 luôn đứng trước cụm vị ngữ, không đứng sau trợ từ ngữ khí.</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q20",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "你每天六点起床吗？",
+        "answer": "你是不是每天六点起床？",
+        "explanation": "<p><b>Giải thích:</b> 是不是 đứng trước cụm '每天六点起床'.</p><p><b>Lỗi thường gặp:</b> Bỏ sót 每天 khi viết lại câu, làm mất nghĩa thói quen lặp lại.</p><p><b>Mẹo ghi nhớ:</b> Khi chuyển câu, giữ nguyên toàn bộ trạng ngữ thời gian (每天/六点).</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q21",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "医生说下星期能出院吗？",
+        "answer": "医生是不是说下星期能出院？",
+        "explanation": "<p><b>Giải thích:</b> 是不是 chèn ngay sau chủ ngữ 医生, trước động từ 说.</p><p><b>Lỗi thường gặp:</b> Đặt 是不是 trước cả câu (是不是医生说...) làm sai trọng tâm xác nhận.</p><p><b>Mẹo ghi nhớ:</b> 是不是 nên đứng gần phần thông tin cần xác nhận nhất.</p>",
+        "sectionId": "b5"
+      },
+      {
+        "id": "q22",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每天 / 起床 / 六点",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu nêu quy luật giờ giấc đơn thuần → KHÔNG cần 都 (đúng như câu mẫu SGK).</p><p><b>Lỗi thường gặp:</b> Thêm 都 không cần thiết: '我每天都六点起床' — không sai hẳn nhưng không tự nhiên bằng bản gốc.</p><p><b>Mẹo ghi nhớ:</b> 每 + thời gian + số giờ cụ thể → không bắt buộc có 都.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q23",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每天 / 都 / 忙",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu này CẦN 都 vì nhấn mạnh 'ngày nào cũng vậy, không ngoại lệ'.</p><p><b>Lỗi thường gặp:</b> Bỏ 都 làm mất sắc thái nhấn mạnh 'không trừ ngày nào'.</p><p><b>Mẹo ghi nhớ:</b> Khi muốn nhấn mạnh tính khái quát/không ngoại lệ → bắt buộc có 都.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q24",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每个星期六 / 休息",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu nêu lịch trình cố định, không bắt buộc 都.</p><p><b>Lỗi thường gặp:</b> Quên lượng từ 个 trong '每个星期六' (viết thiếu thành 每星期六).</p><p><b>Mẹo ghi nhớ:</b> 每 + 个 + danh từ thời gian khi thời gian không phải đơn vị đo lường cố định như 天/年.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q25",
+        "skill": "grammar",
+        "type": "self_check",
+        "prompt": "Đặt câu với gợi ý: 每次 / 运动 / 身体好 (运动 — ôn từ Bài 1)",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 每次 thường đi kèm 都 để nhấn mạnh kết quả lặp lại nhất quán mỗi lần.</p><p><b>Lỗi thường gặp:</b> Thiếu 都 làm câu mất tính khái quát 'mỗi lần đều vậy'.</p><p><b>Mẹo ghi nhớ:</b> 每次 + 都 là kết hợp rất phổ biến khi mô tả kết quả lặp lại.</p>",
+        "sectionId": "b6"
+      },
+      {
+        "id": "q26",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：你______大？ B：我18岁。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多 + tính từ (大) để hỏi mức độ tuổi tác.</p><p><b>Vì sao các đáp án khác sai:</b> 几 dùng cho số nhỏ/trẻ em (几岁), không hợp hỏi tuổi qua 大; 很 là phó từ mức độ khẳng định, không tạo câu hỏi.</p><p><b>Lỗi thường gặp:</b> Nhầm dùng 几 (dùng cho số nhỏ, trẻ em) thay vì 多 (dùng cho người lớn/số lớn).</p><p><b>Mẹo ghi nhớ:</b> 几岁 hỏi tuổi trẻ em; 多大 hỏi tuổi người lớn hơn.</p><p><b>Ví dụ bổ sung:</b> 你妈妈今年多大？</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q27",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：他______高？ B：一米七几。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多 + 高 hỏi chiều cao, trả lời bằng đơn vị 米.</p><p><b>Vì sao các đáp án khác sai:</b> 几 không dùng để hỏi chiều cao; 很高 chỉ là câu khẳng định 'rất cao', không phải câu hỏi.</p><p><b>Lỗi thường gặp:</b> Quên rằng câu trả lời phải nêu số lượng cụ thể (一米七几), không trả lời chung chung.</p><p><b>Mẹo ghi nhớ:</b> Trả lời cho câu hỏi 多 + tính từ luôn cần có SỐ LƯỢNG cụ thể.</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q28",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：你家______远？ B：不太远。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多远 hỏi khoảng cách.</p><p><b>Vì sao các đáp án khác sai:</b> 几远 không tồn tại trong tiếng Hán; 很远 là câu khẳng định, không phải câu hỏi.</p><p><b>Lỗi thường gặp:</b> Nhầm 多远 với 多长 (hỏi độ dài vật) — 远 dùng riêng cho khoảng cách địa lý.</p><p><b>Mẹo ghi nhớ:</b> 多远 chuyên dùng hỏi khoảng cách giữa hai nơi.</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q29",
+        "skill": "grammar",
+        "type": "mcq",
+        "prompt": "A：这本书______贵？ B：不贵，很便宜。",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> 多贵 hỏi mức giá.</p><p><b>Vì sao các đáp án khác sai:</b> 几贵 không tồn tại; 很贵 là khẳng định 'rất đắt', không phải câu hỏi.</p><p><b>Lỗi thường gặp:</b> Không nhiều lỗi, chủ yếu nhầm trật tự từ (贵多 sai, phải là 多贵).</p><p><b>Mẹo ghi nhớ:</b> 多 luôn đứng TRƯỚC tính từ, không bao giờ đứng sau.</p>",
+        "sectionId": "b7"
+      },
+      {
+        "id": "q30",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Trật tự: Chủ ngữ (我) + trạng ngữ thời gian (每天六点) + động từ (起床).</p><p><b>Lỗi thường gặp:</b> Đặt 每天 sau 六点, sai trật tự trạng ngữ thời gian (phải từ lớn→nhỏ: 每天 trước, giờ cụ thể sau).</p><p><b>Mẹo ghi nhớ:</b> Trạng ngữ thời gian tiếng Trung luôn đi từ đơn vị lớn đến nhỏ: 每天 (ngày) → 六点 (giờ).</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q31",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Chủ ngữ (你) + 是不是 + động từ (喜欢) + tân ngữ (运动).</p><p><b>Lỗi thường gặp:</b> Đặt 是不是 sau 喜欢运动, làm sai vị trí xác nhận.</p><p><b>Mẹo ghi nhớ:</b> 是不是 đứng ngay sau chủ ngữ, trước cụm vị ngữ cần xác nhận.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q32",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Chủ ngữ (他) + trạng ngữ thời gian (现在) + chủ đề (身体) + vị ngữ (好多了).</p><p><b>Lỗi thường gặp:</b> Đặt 了 sai vị trí, ví dụ đưa lên đầu câu.</p><p><b>Mẹo ghi nhớ:</b> 了 luôn đứng cuối cùng khi diễn tả sự thay đổi trạng thái.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q33",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 你妹妹 (chủ ngữ ghép) + 多 + 高 (tính từ).</p><p><b>Lỗi thường gặp:</b> Tách rời 你 và 妹妹, đặt 多高 ở giữa gây sai cấu trúc chủ ngữ.</p><p><b>Mẹo ghi nhớ:</b> 你妹妹 là một cụm chủ ngữ không thể chia cắt.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q34",
+        "skill": "grammar",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Chủ ngữ (我) + 没有 + tân ngữ (时间) + động từ mục đích (休息).</p><p><b>Lỗi thường gặp:</b> Đặt 休息 trước 时间, làm sai cấu trúc '没有 + danh từ + động từ mục đích'.</p><p><b>Mẹo ghi nhớ:</b> 没有时间 + động từ = không có thời gian để làm gì.</p>",
+        "sectionId": "b8"
+      },
+      {
+        "id": "q35",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "你是不是喜欢运动吗？",
+        "answer": "你是不是喜欢运动？",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: dùng thừa 吗 sau khi đã có 是不是 — hai cách hỏi trùng chức năng, không dùng chung.</p><p><b>Lỗi thường gặp:</b> Đây chính là lỗi điển hình: kết hợp cả 是不是 và 吗 trong một câu.</p><p><b>Mẹo ghi nhớ:</b> Chỉ chọn MỘT trong hai: hoặc 是不是, hoặc 吗 — không dùng cả hai.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q36",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他多高吗？",
+        "answer": "他多高？",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: 多 + tính từ đã tự nó là câu hỏi hoàn chỉnh, không cần thêm 吗.</p><p><b>Lỗi thường gặp:</b> Học sinh quen thêm 吗 vào cuối mọi câu hỏi theo phản xạ từ HSK1.</p><p><b>Mẹo ghi nhớ:</b> 多 + tính từ (多高/多大/多远...) đã đủ để tạo câu hỏi, không cần 吗.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q37",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "我知道王老师，他教我们汉语。",
+        "answer": "我认识王老师，他教我们汉语。",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: 知道 dùng sai khi nói về việc quen một người cụ thể — phải dùng 认识.</p><p><b>Lỗi thường gặp:</b> Lỗi phân biệt 知道 vs 认识 (xem Dạng 3).</p><p><b>Mẹo ghi nhớ:</b> 知道 = biết sự việc; 认识 = quen người.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q38",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他生了病三天了。",
+        "answer": "他生病三天了。",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: 生病 là động từ ly hợp (离合词) — không chèn 了 vào giữa 生 và 病 khi có bổ ngữ thời lượng phía sau; 了 chỉ cần đặt cuối câu.</p><p><b>Lỗi thường gặp:</b> Đặc điểm 'động từ ly hợp' rất mới với học sinh HSK2, dễ nhầm với động từ thường.</p><p><b>Mẹo ghi nhớ:</b> 生病 + thời lượng + 了 (không chèn 了 vào giữa 生 và 病 trong trường hợp này).</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q39",
+        "skill": "grammar",
+        "type": "text_fill",
+        "prompt": "他很多高。",
+        "answer": "他多高？",
+        "explanation": "<p><b>Giải thích:</b> Lỗi: nhầm 多 (nghi vấn 'bao nhiêu') với 很 + 多 (nghĩa 'rất nhiều'); câu muốn hỏi chiều cao thì không thể có 很 đứng trước 多.</p><p><b>Lỗi thường gặp:</b> Nhầm lẫn giữa hai chức năng của chữ 多.</p><p><b>Mẹo ghi nhớ:</b> 多 nghi vấn không bao giờ đứng sau 很; nếu có 很 thì 多 chỉ có thể mang nghĩa 'nhiều'.</p>",
+        "sectionId": "b9"
+      },
+      {
+        "id": "q40",
+        "skill": "grammar",
+        "type": "dialog_fill",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>(1) 知道</b> — dùng để hỏi về thông tin (nhà thầy Trương ở đâu).</p><p><b>(2) 生病</b> — ngữ cảnh 'đang nghỉ ở bệnh viện' → nguyên nhân là 生病.</p><p><b>(3) 怎么</b> — 怎么样 là cách hỏi tình trạng chung ('身体怎么样？').</p><p><b>(4) 药</b> — 吃药 = uống thuốc, hợp ngữ cảnh 'khỏe hơn nhiều rồi'.</p><p><b>(5) 时间</b> — 没有时间 + 运动 = không có thời gian vận động.</p><p><b>Lỗi thường gặp:</b> Lẫn 知道/认识 khi điền ô (1); quên 药 phải đi sau 吃 chứ không đứng một mình.</p>",
+        "sectionId": "b10"
+      }
+    ],
+    "reading": [
+      {
+        "id": "q51",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美每天几点起床？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Thông tin trực tiếp trong bài đọc: 她每天早上六点起床。</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q52",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美每天早上做什么运动？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Bài đọc nêu: 去跑步。</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q53",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美这个星期为什么很累？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Bám sát câu: 因为工作太多，没有时间休息。</p>",
+        "sectionId": "b13"
+      },
+      {
+        "id": "q54",
+        "skill": "reading",
+        "type": "self_check",
+        "prompt": "小美的朋友觉得她怎么样？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Yêu cầu học sinh dùng lại đúng cấu trúc 是不是 đã học khi trả lời — bạn của Tiểu Mỹ hỏi 'bạn có phải bị ốm không?', tức là nghĩ Tiểu Mỹ có thể bị ốm.</p>",
+        "sectionId": "b13"
+      }
+    ],
+    "translation": [
+      {
+        "id": "q41",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Tôi mỗi ngày 6 giờ dậy.",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu nêu quy luật giờ giấc, không cần 都 (giống câu mẫu SGK).</p><p><b>Lỗi thường gặp:</b> Thêm 都 không cần thiết, làm câu kém tự nhiên hơn bản gốc.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q42",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Anh ấy có phải là bị ốm không?",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Dùng 是不是 để hỏi xác nhận phỏng đoán.</p><p><b>Lỗi thường gặp:</b> Dùng nhầm 吗 kèm 是不是 trong cùng câu.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q43",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Bạn cao bao nhiêu?",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 多 + tính từ (高) hỏi mức độ.</p><p><b>Lỗi thường gặp:</b> Thêm 吗 thừa sau 多高.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q44",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Tôi không có thời gian nghỉ ngơi.",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 没有 + 时间 + động từ mục đích.</p><p><b>Lỗi thường gặp:</b> Đặt 休息 trước 时间.</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q45",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "Chị ấy quen bác sĩ Vương.",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 认识 dùng khi nói về quen biết người.</p><p><b>Lỗi thường gặp:</b> Dùng nhầm 知道王医生 (sai vì 知道 không đi với người khi nghĩa là quen biết).</p>",
+        "sectionId": "b11"
+      },
+      {
+        "id": "q46",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "你每天几点起床？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Dịch tự nhiên, không dịch cứng từng chữ.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q47",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "医生说下个星期能出院。",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 出院 = xuất viện, ra viện.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q48",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "他这几天很忙，没有时间休息。",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 这几天 = mấy hôm nay, dịch tự nhiên không word-by-word.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q49",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "你怎么知道这么多啊？",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 怎么 ở đây mang nghĩa 'sao/tại sao', không phải 'như thế nào'.</p>",
+        "sectionId": "b12"
+      },
+      {
+        "id": "q50",
+        "skill": "translation",
+        "type": "self_check",
+        "prompt": "我觉得每天运动身体最好。",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Câu ôn lại cấu trúc 觉得/最 của Bài 1.</p>",
+        "sectionId": "b12"
+      }
+    ],
+    "writing": [
+      {
+        "id": "q55",
+        "skill": "writing",
+        "type": "self_check",
+        "prompt": "Viết một đoạn văn ngắn (4-6 câu) miêu tả lịch sinh hoạt hàng ngày của bạn. Dùng ít nhất 2 từ mới Bài 2 (起床、跑步、休息、忙、时间...) và ít nhất 1 điểm ngữ pháp đã học (每 / 是不是 / 多).",
+        "answer": null,
+        "explanation": "<p><b>Lỗi thường gặp:</b> Dùng từ ngoài phạm vi đã học để diễn đạt ý phức tạp hơn khả năng hiện có.</p><p><b>Mẹo ghi nhớ:</b> Khuyến khích học sinh dùng câu ngắn, đơn giản thay vì cố dịch ý phức tạp từ tiếng Việt.</p>",
+        "sectionId": "b14"
+      }
+    ],
+    "speaking": [
+      {
+        "id": "q56",
+        "skill": "speaking",
+        "type": "self_check",
+        "prompt": "Tình huống: Bạn gặp lại một người bạn lâu ngày không gặp. Hỏi thăm sức khỏe bạn ấy và hỏi xem bạn ấy có phải đang rất bận không. Viết đoạn hội thoại 3-4 lượt, bắt buộc dùng 是不是 và 每.",
+        "answer": null,
+        "explanation": "<p><b>Tiêu chí đánh giá gợi ý:</b> có đủ 是不是 và 每, hội thoại tự nhiên, đúng ngữ cảnh hỏi thăm.</p><p><b>Mẹo ghi nhớ:</b> Khuyến khích học sinh luyện nói to đoạn hội thoại sau khi viết xong (shadowing).</p>",
+        "sectionId": "b15"
+      }
+    ],
+    "mixed": [
+      {
+        "id": "q57",
+        "skill": "mixed",
+        "type": "mcq",
+        "prompt": "他______在医院休息，医生说他快能出院了。",
+        "answer": "A",
+        "explanation": "<p><b>Giải thích:</b> Sau chỗ trống đã có sẵn chữ 在, nên chỉ cần điền 正 (không điền 正在, vì sẽ tạo thành '正在在' trùng chữ 在).</p><p><b>Vì sao đúng:</b> 正 (đang, ôn lại từ 正在 đã học trước đó) diễn tả hành động đang tiếp diễn, kết hợp với 在 sẵn có phía sau thành 正在.</p><p><b>Lỗi thường gặp:</b> Chọn nhầm 正在 vì không để ý câu đã có sẵn chữ 在 phía sau chỗ trống.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q58",
+        "skill": "mixed",
+        "type": "mcq",
+        "prompt": "Chọn từ phù hợp điền vào chỗ trống dựa theo mô tả: 'Anh ấy ho, sắc mặt không tốt' → 你是不是______？",
+        "answer": "C",
+        "explanation": "<p><b>Giải thích:</b> Dấu hiệu ho + sắc mặt xấu → suy đoán hợp lý nhất là 生病了.</p><p><b>Vì sao các đáp án khác sai:</b> 忙 (bận) và 累 (mệt) không liên quan trực tiếp đến triệu chứng ho/sắc mặt xấu được mô tả.</p><p><b>Mẹo ghi nhớ:</b> Khi thấy dấu hiệu sức khỏe bất thường (ho, mệt mỏi, sắc mặt xấu), suy đoán hợp lý nhất thường là 生病.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q59",
+        "skill": "mixed",
+        "type": "reorder",
+        "prompt": null,
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> Trạng ngữ thời gian (每天) + 没有 + tân ngữ (时间) + động từ mục đích (运动).</p><p><b>Lỗi thường gặp:</b> Đặt 每天 sai vị trí (không phải ngay sau chủ ngữ).</p><p><b>Mẹo ghi nhớ:</b> Trạng ngữ thời gian luôn đứng ngay sau chủ ngữ, trước 没有.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q60",
+        "skill": "mixed",
+        "type": "self_check",
+        "prompt": "Dịch nhanh: \"Bạn ấy mỗi tuần đều rất bận.\"",
+        "answer": null,
+        "explanation": "<p><b>Giải thích:</b> 每 + 个 + 星期 + 都 (nhấn mạnh không ngoại lệ) + 很忙.</p><p><b>Lỗi thường gặp:</b> Quên lượng từ 个 sau 每 khi đi với 星期.</p>",
+        "sectionId": "b16"
+      },
+      {
+        "id": "q61",
+        "skill": "mixed",
+        "type": "mcq",
+        "prompt": "Chọn câu đúng ngữ pháp:",
+        "answer": "B",
+        "explanation": "<p><b>Giải thích:</b> Câu B đúng ngữ pháp: 是不是 + tính từ (很忙) là cấu trúc chuẩn để hỏi xác nhận.</p><p><b>Vì sao A sai:</b> 多 không đi với 忙 theo cách này (多忙 không phải cấu trúc chuẩn để hỏi mức độ bận), và thừa 吗 phía sau.</p><p><b>Vì sao C sai:</b> Sai trật tự từ — 多 phải đứng trước tính từ để tạo câu hỏi nghi vấn, không phải 很多 (rất nhiều).</p><p><b>Mẹo ghi nhớ:</b> 是不是 + tính từ/vị ngữ là cấu trúc hỏi xác nhận chuẩn và linh hoạt nhất trong các lựa chọn.</p>",
+        "sectionId": "b16"
+      }
+    ]
+  },
+  "passages": [
+    {
+      "id": "xiaomei",
+      "text": "小美每天很忙。她每天早上六点起床，去跑步。跑步以后，她觉得身体很好。可是她这个星期很累，因为工作太多，没有时间休息。她的朋友问她：“你是不是生病了？”小美说：“没有，我没有生病，我很忙。”",
+      "source": "lesson.passages"
+    }
+  ],
+  "coverage": {
+    "vocabulary": "derived",
+    "grammar": "derived_from_sections",
+    "hanzi": "derived_from_vocabulary_pending_enrichment",
+    "exampleSentences": "derived_from_existing_content",
+    "commonErrors": "empty",
+    "translation": "present",
+    "writing": "present",
+    "speaking": "present",
+    "reading": "present"
+  }
+},
   id: "hsk2_bai2_liudian_qichuang",
   zhTitle: "我每天六点起床",
   viSubtitle: "Bài 2 · Giáo trình chuẩn HSK 2",
