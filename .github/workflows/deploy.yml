@@ -1,0 +1,36 @@
+name: Deploy website
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare website
+        run: |
+          rm -rf dist
+          mkdir -p dist
+          unzip -q web.zip -d extracted
+          cp -a extracted/web/. dist/
+          if [ -f "dist/trang-chu.html" ]; then
+            cp "dist/trang-chu.html" "dist/index.html"
+          fi
+          touch dist/.nojekyll
+
+      - name: Publish to GitHub Pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          force_orphan: true
+          commit_message: "Deploy website"
