@@ -1,0 +1,69 @@
+{
+  "version":"v1.0.0",
+  "gates":[
+    {
+      "id":"G01",
+      "name":"Stable ID",
+      "severity":"block",
+      "rule":"Mỗi thực thể phải có ID duy nhất và không đổi khi đổi tên hiển thị."
+    },
+    {
+      "id":"G02",
+      "name":"Schema validity",
+      "severity":"block",
+      "rule":"Dữ liệu phải hợp lệ theo schema tương ứng trước khi publish."
+    },
+    {
+      "id":"G03",
+      "name":"Provenance",
+      "severity":"block",
+      "rule":"Nội dung phải có sourceRefs hoặc được khai báo là teacher-authored."
+    },
+    {
+      "id":"G04",
+      "name":"Answer isolation",
+      "severity":"block",
+      "rule":"answerKey phải là thực thể riêng và visibility=teacher-only."
+    },
+    {
+      "id":"G05",
+      "name":"Language review",
+      "severity":"block",
+      "rule":"Nội dung ngôn ngữ phải qua kiểm tra tiếng Trung và bản dịch khi có."
+    },
+    {
+      "id":"G06",
+      "name":"Pedagogical review",
+      "severity":"block",
+      "rule":"Nội dung dùng cho học sinh phải được giáo viên duyệt về mục tiêu và mức độ."
+    },
+    {
+      "id":"G07",
+      "name":"Exam-version traceability",
+      "severity":"block",
+      "rule":"Item gắn với cấu trúc thi phải xác định examSystemId/version."
+    },
+    {
+      "id":"G08",
+      "name":"Media integrity",
+      "severity":"warn",
+      "rule":"Media phải có URI hợp lệ và thông tin bản quyền/nguồn khi áp dụng."
+    },
+    {
+      "id":"G09",
+      "name":"Legacy parity",
+      "severity":"block",
+      "rule":"Không thay legacy content trước khi dữ liệu mới đạt parity."
+    },
+    {
+      "id":"G10",
+      "name":"Publish state",
+      "severity":"block",
+      "rule":"Chỉ trạng thái published mới được đưa vào luồng học sinh."
+    }
+  ],
+  "publishPolicy":{
+    "requiredGates":["G01","G02","G03","G04","G05","G06","G07","G09","G10"],
+    "warningGates":["G08"]
+  }
+}
