@@ -76,13 +76,17 @@ function hanziPanel(){
  const detail=x=>'chu-han.html?char='+encodeURIComponent(x.char);
  p.innerHTML='<div class="card"><p>Chữ Hán trong kho này hiển thị theo dữ liệu canonical của từng bài. Nhấn vào từng chữ để mở <b>hồ sơ chữ riêng</b>: pinyin, nghĩa, bộ thủ, cấu tạo, số nét, từ trong bài, câu mẫu và nguồn dữ liệu.</p></div>'+
  (a.length?'<div class="hanzi-grid">'+a.map(x=>{
-   let inner='<div class="item hanzi"><div class="char">'+esc(x.char)+'</div>'+
+   let inner='<div class="item hanzi"><a href="'+detail(x)+'" style="text-decoration:none;color:inherit;display:block" aria-label="Mở hồ sơ chữ '+esc(x.char)+'"><div class="char">'+esc(x.char)+'</div></a>'+
    (x.pinyin?'<div class="pin">'+esc(x.pinyin)+'</div>':'<div class="pin">Chưa có pinyin</div>')+
    (x.meaning?'<div class="meaning">'+esc(x.meaning)+'</div>':'')+
    '<div class="meta">'+esc([x.radical?'Bộ: '+x.radical:'',x.structure?'Cấu tạo: '+x.structure:'',x.strokes!=null?'Nét: '+x.strokes:''].filter(Boolean).join(' · '))+'</div>'+
    '<div class="meta">Từ: '+esc(x.words?.slice(0,4).join(' · ')||'')+(x.words&&x.words.length>4?' …':'')+'<br>'+esc(x.levels.join(' · '))+'</div>'+
-   '</div>';
-   return '<a href="'+detail(x)+'" style="text-decoration:none;color:inherit;display:block" aria-label="Mở hồ sơ chữ '+esc(x.char)+'">'+inner+'</a>';
+   '<div class="hanzi-action-row">'+
+   '<button type="button" class="hanzi-action stroke hanzi-practice-btn" data-char="'+esc(x.char)+'" data-pinyin="'+esc(x.pinyin||'')+'" data-mode="stroke">▶ Xem nét</button>'+
+   '<button type="button" class="hanzi-action trace hanzi-practice-btn" data-char="'+esc(x.char)+'" data-pinyin="'+esc(x.pinyin||'')+'" data-mode="trace">✎ Viết mờ</button>'+
+   '<button type="button" class="hanzi-action quiz hanzi-practice-btn" data-char="'+esc(x.char)+'" data-pinyin="'+esc(x.pinyin||'')+'" data-mode="quiz">📝 Tự viết</button>'+
+   '</div></div>';
+   return inner;
  }).join('')+'</div>':'<div class="empty">Không có chữ Hán phù hợp.</div>');
 }
 function ans(q){if(q.type==='mcq')return((q.options||[]).find(x=>String(x.k)===String(q.answer))||{}).t||String(q.answer||'');if(Array.isArray(q.answer))return q.answer.join(' / ');if(q.correctMap)return JSON.stringify(q.correctMap);return String(q.answer||'')}
