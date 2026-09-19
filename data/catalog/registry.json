@@ -47,7 +47,7 @@
     { "id": "legacy-doc-hsk2-5-exercise", "levelId": "hsk2", "path": "data/Bai5_BaiTap.docx", "kind": "exercise" },
     { "id": "legacy-doc-hsk2-5-answer", "levelId": "hsk2", "path": "data/Bai5_DapAn.docx", "kind": "answer-key" },
     { "id": "legacy-doc-hsk2-6-exercise", "levelId": "hsk2", "path": "data/Bai6_BaiTap.docx", "kind": "exercise" },
-    { "id": "legacy-doc-hsk2-6-answer", "levelId": "hsk2", "path": "data/Dap_an_Bai6_HSK2.docx", "kind": "answer-key" },
+    { "id": "legacy-doc-hsk2-6-answer", "levelId": "hsk2", "path": "data/Bai6_DapAn.docx", "kind": "answer-key" },
     { "id": "legacy-doc-hsk2-7-exercise", "levelId": "hsk2", "path": "data/Bai7_BaiTap.docx", "kind": "exercise" },
     { "id": "legacy-doc-hsk2-7-answer", "levelId": "hsk2", "path": "data/Bai7_DapAn.docx", "kind": "answer-key" }
   ],
