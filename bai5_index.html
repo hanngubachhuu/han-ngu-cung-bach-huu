@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bài 5: 就买这件吧 — Bài tập HSK 2</title>
+<script>document.documentElement.setAttribute("data-theme","dark");</script>
 <style>
 /* ============================================================
    THIẾT KẾ MỚI — "CLAYMORPHISM" THÂN THIỆN HỌC SINH
@@ -1261,8 +1262,7 @@ function escapeHtml(s){ return (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<'
    3) DARK / LIGHT MODE
    ================================================================ */
 function initTheme(){
-  const saved = localStorage.getItem('hsk2_theme');
-  const theme = saved || 'dark';
+  const theme = 'dark';
   document.documentElement.setAttribute('data-theme', theme);
   $('#themeToggle').textContent = theme === 'dark' ? '☀️' : '🌙';
 }
