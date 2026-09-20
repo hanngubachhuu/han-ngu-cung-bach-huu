@@ -560,7 +560,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
       <a href="#lien-he" class="btn btn-ghost btn-lg">💬 Liên hệ ngay</a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><b>6</b><span>Bài học HSK 2</span></div>
+      <div class="hero-stat"><b id="heroHsk2Count">0</b><span>Bài học HSK 2</span></div>
       <div class="hero-stat"><b>10+</b><span>năm kinh nghiệm</span></div>
       <div class="hero-stat"><b>HSK 1–6</b><span>&amp; HSKK</span></div>
     </div>
@@ -850,6 +850,9 @@ function renderLevelGrid(){
   mergeLessonManifest();
   renderHskDropdown();
   renderLevelGrid();
+  var heroHsk2Count = document.getElementById('heroHsk2Count');
+  var heroHsk2Level = HSK_LEVELS.find(function(level){ return level.id === 'hsk2'; });
+  if(heroHsk2Count && heroHsk2Level) heroHsk2Count.textContent = heroHsk2Level.lessons.length;
 
   // FAQ accordion — bấm câu hỏi để mở/thu câu trả lời tương ứng.
   document.querySelectorAll('.faq-item .faq-q').forEach(function(btn){
