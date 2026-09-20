@@ -853,6 +853,13 @@ footer.print-footer{display:none;}
 @media (max-width:480px){
   .mini-nav-popover{right:14px; bottom:150px;}
 }
+
+/* Audio player: one focused learning action, with clear keyboard states. */
+.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+.audio-player-mini button:hover{background:var(--color-primary-subtle);}
+.audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+.audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -2398,7 +2405,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và xác định mốc bắt đầu.",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -2410,11 +2417,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai"
+              "t": "Hôm qua"
             },
             {
               "k": "B",
-              "t": "Hôm qua"
+              "t": "Ngày mai"
             },
             {
               "k": "C",
@@ -2433,7 +2440,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và chọn nghĩa đúng.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -2445,15 +2452,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đây là ngày đầu tôi đến Trung Quốc"
-            },
-            {
-              "k": "B",
               "t": "Tôi đến Trung Quốc lần hai"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Tôi đã ở Trung Quốc một năm"
+            },
+            {
+              "k": "C",
+              "t": "Đây là ngày đầu tôi đến Trung Quốc"
             },
             {
               "k": "D",
@@ -2474,7 +2481,7 @@ const LESSON = {
             "还没",
             "做完"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -2486,19 +2493,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Chưa hiểu"
-            },
-            {
-              "k": "B",
               "t": "Đã hiểu hết"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Đã làm xong"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Đã viết sai"
+            },
+            {
+              "k": "D",
+              "t": "Chưa hiểu"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -2516,7 +2523,7 @@ const LESSON = {
             "他",
             "做"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -2528,11 +2535,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Làm sai và cần làm lại"
+              "t": "Làm xong ngay"
             },
             {
               "k": "B",
-              "t": "Làm xong ngay"
+              "t": "Làm sai và cần làm lại"
             },
             {
               "k": "C",
@@ -2558,7 +2565,7 @@ const LESSON = {
             "你",
             "学校"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -2570,15 +2577,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Công ty"
-            },
-            {
-              "k": "B",
               "t": "Trường học"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Nhà hàng"
+            },
+            {
+              "k": "C",
+              "t": "Công ty"
             },
             {
               "k": "D",
@@ -2605,22 +2612,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai làm xong bài tập"
-            },
-            {
-              "k": "B",
               "t": "Ngày mai không đi học"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Hôm qua làm sai"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Bắt đầu đi làm"
+            },
+            {
+              "k": "D",
+              "t": "Ngày mai làm xong bài tập"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2663,27 +2670,27 @@ const LESSON = {
         {
           "id": "B9-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “今天老师给我们很多题”。",
+          "prompt": "Giáo viên giao cho lớp điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "做完"
+              "t": "Nhiều câu bài tập"
             },
             {
               "k": "B",
-              "t": "从"
+              "t": "Một bài hát"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "Một chiếc điện thoại"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Một công việc"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 做完.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 做完.",
@@ -2695,27 +2702,27 @@ const LESSON = {
         {
           "id": "B9-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小李说：“题太多了，我还没做完”。",
+          "prompt": "Vì sao Tiểu Lý chưa làm xong?",
           "options": [
             {
               "k": "A",
-              "t": "从"
+              "t": "Vì có quá nhiều câu"
             },
             {
               "k": "B",
-              "t": "做完"
+              "t": "Vì không đến lớp"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "Vì làm mất vở"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Vì đã đi làm"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 从.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 从.",
@@ -2727,27 +2734,27 @@ const LESSON = {
         {
           "id": "B9-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”他从第一题开始做，后来终于做完了全部的问题，也发现了两个错题”。",
+          "prompt": "Tiểu Lý bắt đầu làm từ đâu?",
           "options": [
             {
               "k": "A",
-              "t": "第一"
+              "t": "Câu thứ nhất"
             },
             {
               "k": "B",
-              "t": "做完"
+              "t": "Câu cuối cùng"
             },
             {
               "k": "C",
-              "t": "从"
+              "t": "Ngày mai"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Ở công ty"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 第一.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 第一.",
@@ -2760,27 +2767,27 @@ const LESSON = {
           "id": "B9-C04",
           "section": "reading",
           "type": "mcq",
-          "prompt": "Đọc: “老师给了我们二十道题。我从第一题开始做，可是题太多，晚上十点还没做完。” Vì sao người nói chưa làm xong?",
+          "prompt": "Sau khi làm xong, Tiểu Lý phát hiện bao nhiêu câu sai?",
           "options": [
             {
               "k": "A",
-              "t": "Vì có quá nhiều câu"
+              "t": "Hai câu"
             },
             {
               "k": "B",
-              "t": "Vì không hiểu giáo viên"
+              "t": "Một câu"
             },
             {
               "k": "C",
-              "t": "Vì không có vở"
+              "t": "Không có câu nào"
             },
             {
               "k": "D",
-              "t": "Vì không đi học"
+              "t": "Mười câu"
             }
           ],
           "answer": "A",
-          "explain": "题太多 nêu trực tiếp nguyên nhân.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2788,7 +2795,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "passageId": "p9"
         },
         {
           "id": "B9-C05",
@@ -4129,7 +4137,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và xác định mốc bắt đầu.",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -4141,11 +4149,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai"
+              "t": "Hôm qua"
             },
             {
               "k": "B",
-              "t": "Hôm qua"
+              "t": "Ngày mai"
             },
             {
               "k": "C",
@@ -4164,7 +4172,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và chọn nghĩa đúng.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -4176,15 +4184,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đây là ngày đầu tôi đến Trung Quốc"
-            },
-            {
-              "k": "B",
               "t": "Tôi đến Trung Quốc lần hai"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Tôi đã ở Trung Quốc một năm"
+            },
+            {
+              "k": "C",
+              "t": "Đây là ngày đầu tôi đến Trung Quốc"
             },
             {
               "k": "D",
@@ -4205,7 +4213,7 @@ const LESSON = {
             "还没",
             "做完"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -4217,19 +4225,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Chưa hiểu"
-            },
-            {
-              "k": "B",
               "t": "Đã hiểu hết"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Đã làm xong"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Đã viết sai"
+            },
+            {
+              "k": "D",
+              "t": "Chưa hiểu"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -4247,7 +4255,7 @@ const LESSON = {
             "他",
             "做"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -4259,11 +4267,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Làm sai và cần làm lại"
+              "t": "Làm xong ngay"
             },
             {
               "k": "B",
-              "t": "Làm xong ngay"
+              "t": "Làm sai và cần làm lại"
             },
             {
               "k": "C",
@@ -4289,7 +4297,7 @@ const LESSON = {
             "你",
             "学校"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l09",
@@ -4301,15 +4309,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Công ty"
-            },
-            {
-              "k": "B",
               "t": "Trường học"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Nhà hàng"
+            },
+            {
+              "k": "C",
+              "t": "Công ty"
             },
             {
               "k": "D",
@@ -4336,22 +4344,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai làm xong bài tập"
-            },
-            {
-              "k": "B",
               "t": "Ngày mai không đi học"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Hôm qua làm sai"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Bắt đầu đi làm"
+            },
+            {
+              "k": "D",
+              "t": "Ngày mai làm xong bài tập"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4396,27 +4404,27 @@ const LESSON = {
         {
           "id": "B9-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “今天老师给我们很多题”。",
+          "prompt": "Giáo viên giao cho lớp điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "做完"
+              "t": "Nhiều câu bài tập"
             },
             {
               "k": "B",
-              "t": "从"
+              "t": "Một bài hát"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "Một chiếc điện thoại"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Một công việc"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 做完.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 做完.",
@@ -4428,27 +4436,27 @@ const LESSON = {
         {
           "id": "B9-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小李说：“题太多了，我还没做完”。",
+          "prompt": "Vì sao Tiểu Lý chưa làm xong?",
           "options": [
             {
               "k": "A",
-              "t": "从"
+              "t": "Vì có quá nhiều câu"
             },
             {
               "k": "B",
-              "t": "做完"
+              "t": "Vì không đến lớp"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "Vì làm mất vở"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Vì đã đi làm"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 从.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 从.",
@@ -4460,27 +4468,27 @@ const LESSON = {
         {
           "id": "B9-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”他从第一题开始做，后来终于做完了全部的问题，也发现了两个错题”。",
+          "prompt": "Tiểu Lý bắt đầu làm từ đâu?",
           "options": [
             {
               "k": "A",
-              "t": "第一"
+              "t": "Câu thứ nhất"
             },
             {
               "k": "B",
-              "t": "做完"
+              "t": "Câu cuối cùng"
             },
             {
               "k": "C",
-              "t": "从"
+              "t": "Ngày mai"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Ở công ty"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 第一.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 第一.",
@@ -4493,27 +4501,27 @@ const LESSON = {
           "id": "B9-C04",
           "section": "reading",
           "type": "mcq",
-          "prompt": "Đọc: “老师给了我们二十道题。我从第一题开始做，可是题太多，晚上十点还没做完。” Vì sao người nói chưa làm xong?",
+          "prompt": "Sau khi làm xong, Tiểu Lý phát hiện bao nhiêu câu sai?",
           "options": [
             {
               "k": "A",
-              "t": "Vì có quá nhiều câu"
+              "t": "Hai câu"
             },
             {
               "k": "B",
-              "t": "Vì không hiểu giáo viên"
+              "t": "Một câu"
             },
             {
               "k": "C",
-              "t": "Vì không có vở"
+              "t": "Không có câu nào"
             },
             {
               "k": "D",
-              "t": "Vì không đi học"
+              "t": "Mười câu"
             }
           ],
           "answer": "A",
-          "explain": "题太多 nêu trực tiếp nguyên nhân.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4521,7 +4529,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "passageId": "p9"
         },
         {
           "id": "B9-C05",
@@ -6161,17 +6170,17 @@ const LESSON = {
           "id": "B9-B13",
           "type": "listening",
           "prompt": "Nghe và xác định mốc bắt đầu.",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "我从明天开始上班。",
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai"
+              "t": "Hôm qua"
             },
             {
               "k": "B",
-              "t": "Hôm qua"
+              "t": "Ngày mai"
             },
             {
               "k": "C",
@@ -6187,21 +6196,21 @@ const LESSON = {
           "id": "B9-B14",
           "type": "listening",
           "prompt": "Nghe và chọn nghĩa đúng.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这是我第一天来中国。",
           "options": [
             {
               "k": "A",
-              "t": "Đây là ngày đầu tôi đến Trung Quốc"
-            },
-            {
-              "k": "B",
               "t": "Tôi đến Trung Quốc lần hai"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Tôi đã ở Trung Quốc một năm"
+            },
+            {
+              "k": "C",
+              "t": "Đây là ngày đầu tôi đến Trung Quốc"
             },
             {
               "k": "D",
@@ -6219,25 +6228,25 @@ const LESSON = {
             "还没",
             "做完"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你听懂了吗？B：我还没听懂。",
           "options": [
             {
               "k": "A",
-              "t": "Chưa hiểu"
-            },
-            {
-              "k": "B",
               "t": "Đã hiểu hết"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Đã làm xong"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Đã viết sai"
+            },
+            {
+              "k": "D",
+              "t": "Chưa hiểu"
             }
           ]
         },
@@ -6252,17 +6261,17 @@ const LESSON = {
             "他",
             "做"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这道题我做错了，要再做一遍。",
           "options": [
             {
               "k": "A",
-              "t": "Làm sai và cần làm lại"
+              "t": "Làm xong ngay"
             },
             {
               "k": "B",
-              "t": "Làm xong ngay"
+              "t": "Làm sai và cần làm lại"
             },
             {
               "k": "C",
@@ -6285,21 +6294,21 @@ const LESSON = {
             "你",
             "学校"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "欢迎你来我们公司上班。",
           "options": [
             {
               "k": "A",
-              "t": "Công ty"
-            },
-            {
-              "k": "B",
               "t": "Trường học"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Nhà hàng"
+            },
+            {
+              "k": "C",
+              "t": "Công ty"
             },
             {
               "k": "D",
@@ -6317,22 +6326,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai làm xong bài tập"
-            },
-            {
-              "k": "B",
               "t": "Ngày mai không đi học"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Hôm qua làm sai"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Bắt đầu đi làm"
+            },
+            {
+              "k": "D",
+              "t": "Ngày mai làm xong bài tập"
             }
           ],
-          "answer": "A"
+          "answer": "D"
         },
         {
           "id": "B9-F09",
@@ -6368,32 +6377,38 @@ const LESSON = {
       "title": "D. ĐỌC HIỂU",
       "skill": "docHieu",
       "instruction": "Đọc lấy thông tin, ý chính và suy luận đơn giản.",
-      "passages": [],
+      "passages": [
+        {
+          "id": "p9",
+          "text": "今天老师给我们很多题。小李说：“题太多了，我还没做完。”他从第一题开始做，后来终于做完了全部的问题，也发现了两个错题。",
+          "source": "original_extension"
+        }
+      ],
       "questions": [
         {
           "id": "B9-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “今天老师给我们很多题”。",
+          "prompt": "Giáo viên giao cho lớp điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "做完"
+              "t": "Nhiều câu bài tập"
             },
             {
               "k": "B",
-              "t": "从"
+              "t": "Một bài hát"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "Một chiếc điện thoại"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Một công việc"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 做完.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 做完.",
@@ -6402,27 +6417,27 @@ const LESSON = {
         {
           "id": "B9-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小李说：“题太多了，我还没做完”。",
+          "prompt": "Vì sao Tiểu Lý chưa làm xong?",
           "options": [
             {
               "k": "A",
-              "t": "从"
+              "t": "Vì có quá nhiều câu"
             },
             {
               "k": "B",
-              "t": "做完"
+              "t": "Vì không đến lớp"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "Vì làm mất vở"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Vì đã đi làm"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 从.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 从.",
@@ -6431,27 +6446,27 @@ const LESSON = {
         {
           "id": "B9-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”他从第一题开始做，后来终于做完了全部的问题，也发现了两个错题”。",
+          "prompt": "Tiểu Lý bắt đầu làm từ đâu?",
           "options": [
             {
               "k": "A",
-              "t": "第一"
+              "t": "Câu thứ nhất"
             },
             {
               "k": "B",
-              "t": "做完"
+              "t": "Câu cuối cùng"
             },
             {
               "k": "C",
-              "t": "从"
+              "t": "Ngày mai"
             },
             {
               "k": "D",
-              "t": "错"
+              "t": "Ở công ty"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 第一.",
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 第一.",
@@ -6460,27 +6475,28 @@ const LESSON = {
         {
           "id": "B9-C04",
           "type": "mcq",
-          "prompt": "Đọc: “老师给了我们二十道题。我从第一题开始做，可是题太多，晚上十点还没做完。” Vì sao người nói chưa làm xong?",
+          "prompt": "Sau khi làm xong, Tiểu Lý phát hiện bao nhiêu câu sai?",
           "options": [
             {
               "k": "A",
-              "t": "Vì có quá nhiều câu"
+              "t": "Hai câu"
             },
             {
               "k": "B",
-              "t": "Vì không hiểu giáo viên"
+              "t": "Một câu"
             },
             {
               "k": "C",
-              "t": "Vì không có vở"
+              "t": "Không có câu nào"
             },
             {
               "k": "D",
-              "t": "Vì không đi học"
+              "t": "Mười câu"
             }
           ],
           "answer": "A",
-          "explain": "题太多 nêu trực tiếp nguyên nhân."
+          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "passageId": "p9"
         },
         {
           "id": "B9-C05",
@@ -7257,16 +7273,26 @@ function renderMcq(q, body){
 function renderListening(q, body){
   const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
   body.appendChild(intro);
-  const button = el('button','listen-button','▶ Nghe lại');
-  button.type = 'button';
-  button.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+  const player = el('div','audio-player-mini');
+  const play = el('button','audio-play','Phát'); play.type='button';
+  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
+  const speed = el('button','audio-speed','1.0×'); speed.type='button';
+  speed.setAttribute('aria-label','Đổi tốc độ phát');
+  let rate=.82, paused=false;
+  const setRest=()=>{ paused=false; play.textContent='Phát'; };
+  play.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
+    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
+    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    utterance.lang = 'zh-CN'; utterance.rate = rate;
+    utterance.onend=setRest; utterance.onerror=setRest;
     window.speechSynthesis.speak(utterance);
+    play.textContent='Tạm dừng';
   });
-  body.appendChild(button);
+  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
+  player.append(play,speed); body.appendChild(player);
   renderMcq(q, body);
 }
 function renderTextFill(q, body){

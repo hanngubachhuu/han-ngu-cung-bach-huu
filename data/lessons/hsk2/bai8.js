@@ -1936,8 +1936,16 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
   const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
   c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]};
-  lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction}));
+  lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction,passages:id==="reading"?c.passages:[]}));
   for(const [section,qids] of Object.entries(matrix)) for(const id of qids){const q=all.find(x=>x.id===id); if(q){q.section=section;q.sectionTitle=info[section][0];q.skill=info[section][1];}}
   all.sort((a,b)=>Object.keys(info).indexOf(a.section)-Object.keys(info).indexOf(b.section));
   Object.assign(c.coverage,{listening:"present",reading:"present",writing:"present",speaking:"present",translation:"present",exercises:"gold_template_v1",skillMatrix:"balanced_4skills_v1"});
+  const read={
+    "B8-C01":["Theo đoạn đọc, người bạn hỏi Tiểu Vương điều gì?",["Tối nay có đi ăn cùng không","Ngày mai có đi học không","Có muốn mua quần áo không","Đang tìm ai"],"A"],
+    "B8-C02":["Tiểu Vương hẹn khi nào sẽ trả lời bạn?",["Ngày mai","Ngay bây giờ","Tối nay","Tuần sau"],"A"],
+    "B8-C03":["Cuối cùng Tiểu Vương quyết định thế nào?",["Tối cùng đi ăn với bạn","Không đi ăn","Đi mua quần áo","Ở nhà học"],"A"],
+    "B8-C04":["Vì sao Tiểu Vương chưa trả lời ngay?",["Hôm nay anh ấy không có thời gian","Anh ấy không hiểu câu hỏi","Anh ấy không có điện thoại","Nhà hàng đã đóng cửa"],"A"]
+  };
+  for(const [id,[prompt,options,answer]] of Object.entries(read)) Object.assign(all.find(q=>q.id===id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,passageId:"p8",explain:"Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ."});
+  ["A","B","C","D","B","C","D","A"].forEach((key,i)=>{const q=all.find(x=>x.type==="listening"); const list=all.filter(x=>x.type==="listening"); const item=list[i],correct=item.options.find(o=>o.k===item.answer).t,others=item.options.filter(o=>o.k!==item.answer).map(o=>o.t); const p="ABCD".indexOf(key); others.splice(p,0,correct); item.options=others.map((t,j)=>({k:"ABCD"[j],t})); item.answer=key;});
 })();

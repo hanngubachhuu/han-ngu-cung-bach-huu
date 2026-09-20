@@ -853,6 +853,13 @@ footer.print-footer{display:none;}
 @media (max-width:480px){
   .mini-nav-popover{right:14px; bottom:150px;}
 }
+
+/* Audio player: one focused learning action, with clear keyboard states. */
+.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+.audio-player-mini button:hover{background:var(--color-primary-subtle);}
+.audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+.audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -2348,7 +2355,7 @@ const LESSON = {
             "看",
             "手机"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l10",
@@ -2360,11 +2367,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Anh trai đang giặt quần áo"
+              "t": "Anh trai đang tìm điện thoại"
             },
             {
               "k": "B",
-              "t": "Anh trai đang tìm điện thoại"
+              "t": "Anh trai đang giặt quần áo"
             },
             {
               "k": "C",
@@ -2390,7 +2397,7 @@ const LESSON = {
             "你",
             "好"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l10",
@@ -2402,15 +2409,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "好的，我帮你找。"
-            },
-            {
-              "k": "B",
               "t": "我正在上课。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "别洗西瓜。"
+            },
+            {
+              "k": "C",
+              "t": "好的，我帮你找。"
             },
             {
               "k": "D",
@@ -2431,7 +2438,7 @@ const LESSON = {
             "西瓜",
             "洗"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l10",
@@ -2443,19 +2450,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "别玩手机了。"
-            },
-            {
-              "k": "B",
               "t": "请吃鸡蛋。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "哥哥在右边。"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "这个很便宜。"
+            },
+            {
+              "k": "D",
+              "t": "别玩手机了。"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -2478,11 +2485,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Mẹ nói với tôi"
+              "t": "Tôi nói với mẹ"
             },
             {
               "k": "B",
-              "t": "Tôi nói với mẹ"
+              "t": "Mẹ nói với tôi"
             },
             {
               "k": "C",
@@ -2493,7 +2500,7 @@ const LESSON = {
               "t": "Tôi đang rửa mẹ"
             }
           ],
-          "answer": "A",
+          "answer": "B",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2514,22 +2521,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Dưa hấu"
-            },
-            {
-              "k": "B",
               "t": "Trứng"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Điện thoại"
+            },
+            {
+              "k": "C",
+              "t": "Dưa hấu"
             },
             {
               "k": "D",
               "t": "Quần áo"
             }
           ],
-          "answer": "A",
+          "answer": "C",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2550,22 +2557,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Muộn một chút"
-            },
-            {
-              "k": "B",
               "t": "Ngay bây giờ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Năm ngoái"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Ngày đầu tiên"
+            },
+            {
+              "k": "D",
+              "t": "Muộn một chút"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2608,27 +2615,27 @@ const LESSON = {
         {
           "id": "B10-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王找不到手机，一直在房间里找”。",
+          "prompt": "Tiểu Vương tìm điện thoại ở đâu?",
           "options": [
             {
               "k": "A",
-              "t": "别...了"
+              "t": "Trong phòng"
             },
             {
               "k": "B",
-              "t": "对"
+              "t": "Trên bàn"
             },
             {
               "k": "C",
-              "t": "正在"
+              "t": "Ở trường"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Trong cửa hàng"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 别...了.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 别...了.",
@@ -2640,27 +2647,27 @@ const LESSON = {
         {
           "id": "B10-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “哥哥告诉他：“别找了，手机在桌子上呢”。",
+          "prompt": "Điện thoại thực ra ở đâu?",
           "options": [
             {
               "k": "A",
-              "t": "对"
+              "t": "Trên bàn"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Trong phòng"
             },
             {
               "k": "C",
-              "t": "正在"
+              "t": "Ở công ty"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Trong túi anh trai"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 对.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 对.",
@@ -2672,27 +2679,27 @@ const LESSON = {
         {
           "id": "B10-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”小王看见以后发现哥哥说得对”。",
+          "prompt": "Sau khi thấy điện thoại, Tiểu Vương nhận ra điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "正在"
+              "t": "Anh trai nói đúng"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Anh trai đang rửa dưa"
             },
             {
               "k": "C",
-              "t": "对"
+              "t": "Điện thoại bị hỏng"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Mẹ gọi điện"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 正在.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 正在.",
@@ -2704,27 +2711,27 @@ const LESSON = {
         {
           "id": "B10-C04",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “晚上他们一起洗水果、吃西瓜”。",
+          "prompt": "Buổi tối họ cùng làm gì?",
           "options": [
             {
               "k": "A",
-              "t": "手机"
+              "t": "Rửa hoa quả và ăn dưa hấu"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Tìm điện thoại"
             },
             {
               "k": "C",
-              "t": "对"
+              "t": "Đi học"
             },
             {
               "k": "D",
-              "t": "正在"
+              "t": "Mua trứng"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 手机.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 手机.",
@@ -4100,7 +4107,7 @@ const LESSON = {
             "看",
             "手机"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l10",
@@ -4112,11 +4119,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Anh trai đang giặt quần áo"
+              "t": "Anh trai đang tìm điện thoại"
             },
             {
               "k": "B",
-              "t": "Anh trai đang tìm điện thoại"
+              "t": "Anh trai đang giặt quần áo"
             },
             {
               "k": "C",
@@ -4142,7 +4149,7 @@ const LESSON = {
             "你",
             "好"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l10",
@@ -4154,15 +4161,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "好的，我帮你找。"
-            },
-            {
-              "k": "B",
               "t": "我正在上课。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "别洗西瓜。"
+            },
+            {
+              "k": "C",
+              "t": "好的，我帮你找。"
             },
             {
               "k": "D",
@@ -4183,7 +4190,7 @@ const LESSON = {
             "西瓜",
             "洗"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l10",
@@ -4195,19 +4202,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "别玩手机了。"
-            },
-            {
-              "k": "B",
               "t": "请吃鸡蛋。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "哥哥在右边。"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "这个很便宜。"
+            },
+            {
+              "k": "D",
+              "t": "别玩手机了。"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -4230,11 +4237,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Mẹ nói với tôi"
+              "t": "Tôi nói với mẹ"
             },
             {
               "k": "B",
-              "t": "Tôi nói với mẹ"
+              "t": "Mẹ nói với tôi"
             },
             {
               "k": "C",
@@ -4245,7 +4252,7 @@ const LESSON = {
               "t": "Tôi đang rửa mẹ"
             }
           ],
-          "answer": "A",
+          "answer": "B",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4266,22 +4273,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Dưa hấu"
-            },
-            {
-              "k": "B",
               "t": "Trứng"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Điện thoại"
+            },
+            {
+              "k": "C",
+              "t": "Dưa hấu"
             },
             {
               "k": "D",
               "t": "Quần áo"
             }
           ],
-          "answer": "A",
+          "answer": "C",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4302,22 +4309,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Muộn một chút"
-            },
-            {
-              "k": "B",
               "t": "Ngay bây giờ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Năm ngoái"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Ngày đầu tiên"
+            },
+            {
+              "k": "D",
+              "t": "Muộn một chút"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4362,27 +4369,27 @@ const LESSON = {
         {
           "id": "B10-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王找不到手机，一直在房间里找”。",
+          "prompt": "Tiểu Vương tìm điện thoại ở đâu?",
           "options": [
             {
               "k": "A",
-              "t": "别...了"
+              "t": "Trong phòng"
             },
             {
               "k": "B",
-              "t": "对"
+              "t": "Trên bàn"
             },
             {
               "k": "C",
-              "t": "正在"
+              "t": "Ở trường"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Trong cửa hàng"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 别...了.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 别...了.",
@@ -4394,27 +4401,27 @@ const LESSON = {
         {
           "id": "B10-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “哥哥告诉他：“别找了，手机在桌子上呢”。",
+          "prompt": "Điện thoại thực ra ở đâu?",
           "options": [
             {
               "k": "A",
-              "t": "对"
+              "t": "Trên bàn"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Trong phòng"
             },
             {
               "k": "C",
-              "t": "正在"
+              "t": "Ở công ty"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Trong túi anh trai"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 对.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 对.",
@@ -4426,27 +4433,27 @@ const LESSON = {
         {
           "id": "B10-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”小王看见以后发现哥哥说得对”。",
+          "prompt": "Sau khi thấy điện thoại, Tiểu Vương nhận ra điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "正在"
+              "t": "Anh trai nói đúng"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Anh trai đang rửa dưa"
             },
             {
               "k": "C",
-              "t": "对"
+              "t": "Điện thoại bị hỏng"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Mẹ gọi điện"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 正在.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 正在.",
@@ -4458,27 +4465,27 @@ const LESSON = {
         {
           "id": "B10-C04",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “晚上他们一起洗水果、吃西瓜”。",
+          "prompt": "Buổi tối họ cùng làm gì?",
           "options": [
             {
               "k": "A",
-              "t": "手机"
+              "t": "Rửa hoa quả và ăn dưa hấu"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Tìm điện thoại"
             },
             {
               "k": "C",
-              "t": "对"
+              "t": "Đi học"
             },
             {
               "k": "D",
-              "t": "正在"
+              "t": "Mua trứng"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 手机.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 手机.",
@@ -6136,17 +6143,17 @@ const LESSON = {
             "看",
             "手机"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "哥哥正在洗衣服。",
           "options": [
             {
               "k": "A",
-              "t": "Anh trai đang giặt quần áo"
+              "t": "Anh trai đang tìm điện thoại"
             },
             {
               "k": "B",
-              "t": "Anh trai đang tìm điện thoại"
+              "t": "Anh trai đang giặt quần áo"
             },
             {
               "k": "C",
@@ -6169,21 +6176,21 @@ const LESSON = {
             "你",
             "好"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "请你帮助我找一下手机。",
           "options": [
             {
               "k": "A",
-              "t": "好的，我帮你找。"
-            },
-            {
-              "k": "B",
               "t": "我正在上课。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "别洗西瓜。"
+            },
+            {
+              "k": "C",
+              "t": "好的，我帮你找。"
             },
             {
               "k": "D",
@@ -6201,25 +6208,25 @@ const LESSON = {
             "西瓜",
             "洗"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "现在正在上课。",
           "options": [
             {
               "k": "A",
-              "t": "别玩手机了。"
-            },
-            {
-              "k": "B",
               "t": "请吃鸡蛋。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "哥哥在右边。"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "这个很便宜。"
+            },
+            {
+              "k": "D",
+              "t": "别玩手机了。"
             }
           ]
         },
@@ -6233,11 +6240,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Mẹ nói với tôi"
+              "t": "Tôi nói với mẹ"
             },
             {
               "k": "B",
-              "t": "Tôi nói với mẹ"
+              "t": "Mẹ nói với tôi"
             },
             {
               "k": "C",
@@ -6248,7 +6255,7 @@ const LESSON = {
               "t": "Tôi đang rửa mẹ"
             }
           ],
-          "answer": "A"
+          "answer": "B"
         },
         {
           "id": "B10-B17",
@@ -6260,22 +6267,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Dưa hấu"
-            },
-            {
-              "k": "B",
               "t": "Trứng"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Điện thoại"
+            },
+            {
+              "k": "C",
+              "t": "Dưa hấu"
             },
             {
               "k": "D",
               "t": "Quần áo"
             }
           ],
-          "answer": "A"
+          "answer": "C"
         },
         {
           "id": "B10-B18",
@@ -6287,22 +6294,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Muộn một chút"
-            },
-            {
-              "k": "B",
               "t": "Ngay bây giờ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Năm ngoái"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Ngày đầu tiên"
+            },
+            {
+              "k": "D",
+              "t": "Muộn một chút"
             }
           ],
-          "answer": "A"
+          "answer": "D"
         },
         {
           "id": "B10-F09",
@@ -6338,32 +6345,38 @@ const LESSON = {
       "title": "D. ĐỌC HIỂU",
       "skill": "docHieu",
       "instruction": "Đọc lấy thông tin, ý chính và suy luận đơn giản.",
-      "passages": [],
+      "passages": [
+        {
+          "id": "p10",
+          "text": "小王找不到手机，一直在房间里找。哥哥告诉他：“别找了，手机在桌子上呢。”小王看见以后发现哥哥说得对。晚上他们一起洗水果、吃西瓜。",
+          "source": "original_extension"
+        }
+      ],
       "questions": [
         {
           "id": "B10-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王找不到手机，一直在房间里找”。",
+          "prompt": "Tiểu Vương tìm điện thoại ở đâu?",
           "options": [
             {
               "k": "A",
-              "t": "别...了"
+              "t": "Trong phòng"
             },
             {
               "k": "B",
-              "t": "对"
+              "t": "Trên bàn"
             },
             {
               "k": "C",
-              "t": "正在"
+              "t": "Ở trường"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Trong cửa hàng"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 别...了.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 别...了.",
@@ -6372,27 +6385,27 @@ const LESSON = {
         {
           "id": "B10-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “哥哥告诉他：“别找了，手机在桌子上呢”。",
+          "prompt": "Điện thoại thực ra ở đâu?",
           "options": [
             {
               "k": "A",
-              "t": "对"
+              "t": "Trên bàn"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Trong phòng"
             },
             {
               "k": "C",
-              "t": "正在"
+              "t": "Ở công ty"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Trong túi anh trai"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 对.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 对.",
@@ -6401,27 +6414,27 @@ const LESSON = {
         {
           "id": "B10-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”小王看见以后发现哥哥说得对”。",
+          "prompt": "Sau khi thấy điện thoại, Tiểu Vương nhận ra điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "正在"
+              "t": "Anh trai nói đúng"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Anh trai đang rửa dưa"
             },
             {
               "k": "C",
-              "t": "对"
+              "t": "Điện thoại bị hỏng"
             },
             {
               "k": "D",
-              "t": "手机"
+              "t": "Mẹ gọi điện"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 正在.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 正在.",
@@ -6430,27 +6443,27 @@ const LESSON = {
         {
           "id": "B10-C04",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “晚上他们一起洗水果、吃西瓜”。",
+          "prompt": "Buổi tối họ cùng làm gì?",
           "options": [
             {
               "k": "A",
-              "t": "手机"
+              "t": "Rửa hoa quả và ăn dưa hấu"
             },
             {
               "k": "B",
-              "t": "别...了"
+              "t": "Tìm điện thoại"
             },
             {
               "k": "C",
-              "t": "对"
+              "t": "Đi học"
             },
             {
               "k": "D",
-              "t": "正在"
+              "t": "Mua trứng"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 手机.",
+          "explain": "Dựa vào diễn biến của cả đoạn để trả lời.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 手机.",
@@ -7249,16 +7262,26 @@ function renderMcq(q, body){
 function renderListening(q, body){
   const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
   body.appendChild(intro);
-  const button = el('button','listen-button','▶ Nghe lại');
-  button.type = 'button';
-  button.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+  const player = el('div','audio-player-mini');
+  const play = el('button','audio-play','Phát'); play.type='button';
+  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
+  const speed = el('button','audio-speed','1.0×'); speed.type='button';
+  speed.setAttribute('aria-label','Đổi tốc độ phát');
+  let rate=.82, paused=false;
+  const setRest=()=>{ paused=false; play.textContent='Phát'; };
+  play.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
+    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
+    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    utterance.lang = 'zh-CN'; utterance.rate = rate;
+    utterance.onend=setRest; utterance.onerror=setRest;
     window.speechSynthesis.speak(utterance);
+    play.textContent='Tạm dừng';
   });
-  body.appendChild(button);
+  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
+  player.append(play,speed); body.appendChild(player);
   renderMcq(q, body);
 }
 function renderTextFill(q, body){

@@ -853,6 +853,13 @@ footer.print-footer{display:none;}
 @media (max-width:480px){
   .mini-nav-popover{right:14px; bottom:150px;}
 }
+
+/* Audio player: one focused learning action, with clear keyboard states. */
+.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+.audio-player-mini button:hover{background:var(--color-primary-subtle);}
+.audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+.audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -2370,7 +2377,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe hội thoại. Người A muốn gì?",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -2382,11 +2389,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Hỏi giá chiếc màu đen"
+              "t": "Tìm một người bạn"
             },
             {
               "k": "B",
-              "t": "Tìm một người bạn"
+              "t": "Hỏi giá chiếc màu đen"
             },
             {
               "k": "C",
@@ -2405,7 +2412,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và chọn câu đáp phù hợp.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -2417,15 +2424,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người B tìm phục vụ viên"
-            },
-            {
-              "k": "B",
               "t": "Người B chờ xe buýt"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Người B mua sách"
+            },
+            {
+              "k": "C",
+              "t": "Người B tìm phục vụ viên"
             },
             {
               "k": "D",
@@ -2440,7 +2447,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe câu và chọn hành động tiếp theo.",
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -2452,19 +2459,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Xem thêm món khác"
-            },
-            {
-              "k": "B",
               "t": "Mua ngay chiếc áo"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Gọi điện cho giáo viên"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Về nhà ngủ"
+            },
+            {
+              "k": "D",
+              "t": "Xem thêm món khác"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -2483,7 +2490,7 @@ const LESSON = {
             "你",
             "吧"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -2495,11 +2502,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Nhờ người nghe xem giúp"
+              "t": "Bảo người nghe đợi"
             },
             {
               "k": "B",
-              "t": "Bảo người nghe đợi"
+              "t": "Nhờ người nghe xem giúp"
             },
             {
               "k": "C",
@@ -2524,7 +2531,7 @@ const LESSON = {
             "一下",
             "这件事情"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -2536,15 +2543,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Câu trả lời sẽ được nói vào ngày mai"
-            },
-            {
-              "k": "B",
               "t": "Người nói đã trả lời xong"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Người nói không muốn nói nữa"
+            },
+            {
+              "k": "C",
+              "t": "Câu trả lời sẽ được nói vào ngày mai"
             },
             {
               "k": "D",
@@ -2571,22 +2578,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đen"
-            },
-            {
-              "k": "B",
               "t": "Đỏ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Xanh"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Vàng"
+            },
+            {
+              "k": "D",
+              "t": "Đen"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2629,27 +2636,27 @@ const LESSON = {
         {
           "id": "B8-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王今天没有时间，朋友问他晚上要不要一起吃饭”。",
+          "prompt": "Theo đoạn đọc, người bạn hỏi Tiểu Vương điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "再"
+              "t": "Tối nay có đi ăn cùng không"
             },
             {
               "k": "B",
-              "t": "让我想想"
+              "t": "Ngày mai có đi học không"
             },
             {
               "k": "C",
-              "t": "告诉"
+              "t": "Có muốn mua quần áo không"
             },
             {
               "k": "D",
-              "t": "好吗"
+              "t": "Đang tìm ai"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 再.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 再.",
@@ -2661,27 +2668,27 @@ const LESSON = {
         {
           "id": "B8-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王说：“让我想想，明天再告诉你，好吗？”后来他想好了，告诉朋友晚上一起去吃饭”。",
+          "prompt": "Tiểu Vương hẹn khi nào sẽ trả lời bạn?",
           "options": [
             {
               "k": "A",
-              "t": "让我想想"
+              "t": "Ngày mai"
             },
             {
               "k": "B",
-              "t": "再"
+              "t": "Ngay bây giờ"
             },
             {
               "k": "C",
-              "t": "告诉"
+              "t": "Tối nay"
             },
             {
               "k": "D",
-              "t": "好吗"
+              "t": "Tuần sau"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 让我想想.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 让我想想.",
@@ -2694,27 +2701,27 @@ const LESSON = {
           "id": "B8-C03",
           "section": "reading",
           "type": "mcq",
-          "prompt": "Đọc: “小王想买一件衣服，可是觉得有点儿贵。他说：‘让我想想，明天再来吧。’” Vì sao Tiểu Vương chưa mua?",
+          "prompt": "Cuối cùng Tiểu Vương quyết định thế nào?",
           "options": [
             {
               "k": "A",
-              "t": "Vì thấy hơi đắt"
+              "t": "Tối cùng đi ăn với bạn"
             },
             {
               "k": "B",
-              "t": "Vì không có cửa hàng"
+              "t": "Không đi ăn"
             },
             {
               "k": "C",
-              "t": "Vì không tìm thấy nhân viên"
+              "t": "Đi mua quần áo"
             },
             {
               "k": "D",
-              "t": "Vì đã mua rồi"
+              "t": "Ở nhà học"
             }
           ],
           "answer": "A",
-          "explain": "Cụm 可是觉得有点儿贵 nêu trực tiếp nguyên nhân.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
@@ -2722,33 +2729,34 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "passageId": "p8"
         },
         {
           "id": "B8-C04",
           "section": "reading",
           "type": "mcq",
-          "prompt": "Theo đoạn trên, 小王 có thể làm gì vào ngày mai?",
+          "prompt": "Vì sao Tiểu Vương chưa trả lời ngay?",
           "options": [
             {
               "k": "A",
-              "t": "Quay lại cửa hàng"
+              "t": "Hôm nay anh ấy không có thời gian"
             },
             {
               "k": "B",
-              "t": "Đi đến trường"
+              "t": "Anh ấy không hiểu câu hỏi"
             },
             {
               "k": "C",
-              "t": "Gọi điện cho mẹ"
+              "t": "Anh ấy không có điện thoại"
             },
             {
               "k": "D",
-              "t": "Đợi bạn ở nhà"
+              "t": "Nhà hàng đã đóng cửa"
             }
           ],
           "answer": "A",
-          "explain": "明天再来 = ngày mai lại/quay lại.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
@@ -2756,7 +2764,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "passageId": "p8"
         },
         {
           "id": "B8-C05",
@@ -4095,7 +4104,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe hội thoại. Người A muốn gì?",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -4107,11 +4116,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Hỏi giá chiếc màu đen"
+              "t": "Tìm một người bạn"
             },
             {
               "k": "B",
-              "t": "Tìm một người bạn"
+              "t": "Hỏi giá chiếc màu đen"
             },
             {
               "k": "C",
@@ -4130,7 +4139,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và chọn câu đáp phù hợp.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -4142,15 +4151,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người B tìm phục vụ viên"
-            },
-            {
-              "k": "B",
               "t": "Người B chờ xe buýt"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Người B mua sách"
+            },
+            {
+              "k": "C",
+              "t": "Người B tìm phục vụ viên"
             },
             {
               "k": "D",
@@ -4165,7 +4174,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe câu và chọn hành động tiếp theo.",
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -4177,19 +4186,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Xem thêm món khác"
-            },
-            {
-              "k": "B",
               "t": "Mua ngay chiếc áo"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Gọi điện cho giáo viên"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Về nhà ngủ"
+            },
+            {
+              "k": "D",
+              "t": "Xem thêm món khác"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -4208,7 +4217,7 @@ const LESSON = {
             "你",
             "吧"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -4220,11 +4229,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Nhờ người nghe xem giúp"
+              "t": "Bảo người nghe đợi"
             },
             {
               "k": "B",
-              "t": "Bảo người nghe đợi"
+              "t": "Nhờ người nghe xem giúp"
             },
             {
               "k": "C",
@@ -4249,7 +4258,7 @@ const LESSON = {
             "一下",
             "这件事情"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l08",
@@ -4261,15 +4270,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Câu trả lời sẽ được nói vào ngày mai"
-            },
-            {
-              "k": "B",
               "t": "Người nói đã trả lời xong"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Người nói không muốn nói nữa"
+            },
+            {
+              "k": "C",
+              "t": "Câu trả lời sẽ được nói vào ngày mai"
             },
             {
               "k": "D",
@@ -4296,22 +4305,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đen"
-            },
-            {
-              "k": "B",
               "t": "Đỏ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Xanh"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Vàng"
+            },
+            {
+              "k": "D",
+              "t": "Đen"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4356,27 +4365,27 @@ const LESSON = {
         {
           "id": "B8-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王今天没有时间，朋友问他晚上要不要一起吃饭”。",
+          "prompt": "Theo đoạn đọc, người bạn hỏi Tiểu Vương điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "再"
+              "t": "Tối nay có đi ăn cùng không"
             },
             {
               "k": "B",
-              "t": "让我想想"
+              "t": "Ngày mai có đi học không"
             },
             {
               "k": "C",
-              "t": "告诉"
+              "t": "Có muốn mua quần áo không"
             },
             {
               "k": "D",
-              "t": "好吗"
+              "t": "Đang tìm ai"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 再.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 再.",
@@ -4388,27 +4397,27 @@ const LESSON = {
         {
           "id": "B8-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王说：“让我想想，明天再告诉你，好吗？”后来他想好了，告诉朋友晚上一起去吃饭”。",
+          "prompt": "Tiểu Vương hẹn khi nào sẽ trả lời bạn?",
           "options": [
             {
               "k": "A",
-              "t": "让我想想"
+              "t": "Ngày mai"
             },
             {
               "k": "B",
-              "t": "再"
+              "t": "Ngay bây giờ"
             },
             {
               "k": "C",
-              "t": "告诉"
+              "t": "Tối nay"
             },
             {
               "k": "D",
-              "t": "好吗"
+              "t": "Tuần sau"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 让我想想.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 让我想想.",
@@ -4421,27 +4430,27 @@ const LESSON = {
           "id": "B8-C03",
           "section": "reading",
           "type": "mcq",
-          "prompt": "Đọc: “小王想买一件衣服，可是觉得有点儿贵。他说：‘让我想想，明天再来吧。’” Vì sao Tiểu Vương chưa mua?",
+          "prompt": "Cuối cùng Tiểu Vương quyết định thế nào?",
           "options": [
             {
               "k": "A",
-              "t": "Vì thấy hơi đắt"
+              "t": "Tối cùng đi ăn với bạn"
             },
             {
               "k": "B",
-              "t": "Vì không có cửa hàng"
+              "t": "Không đi ăn"
             },
             {
               "k": "C",
-              "t": "Vì không tìm thấy nhân viên"
+              "t": "Đi mua quần áo"
             },
             {
               "k": "D",
-              "t": "Vì đã mua rồi"
+              "t": "Ở nhà học"
             }
           ],
           "answer": "A",
-          "explain": "Cụm 可是觉得有点儿贵 nêu trực tiếp nguyên nhân.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
@@ -4449,33 +4458,34 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "passageId": "p8"
         },
         {
           "id": "B8-C04",
           "section": "reading",
           "type": "mcq",
-          "prompt": "Theo đoạn trên, 小王 có thể làm gì vào ngày mai?",
+          "prompt": "Vì sao Tiểu Vương chưa trả lời ngay?",
           "options": [
             {
               "k": "A",
-              "t": "Quay lại cửa hàng"
+              "t": "Hôm nay anh ấy không có thời gian"
             },
             {
               "k": "B",
-              "t": "Đi đến trường"
+              "t": "Anh ấy không hiểu câu hỏi"
             },
             {
               "k": "C",
-              "t": "Gọi điện cho mẹ"
+              "t": "Anh ấy không có điện thoại"
             },
             {
               "k": "D",
-              "t": "Đợi bạn ở nhà"
+              "t": "Nhà hàng đã đóng cửa"
             }
           ],
           "answer": "A",
-          "explain": "明天再来 = ngày mai lại/quay lại.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
@@ -4483,7 +4493,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "passageId": "p8"
         },
         {
           "id": "B8-C05",
@@ -6120,17 +6131,17 @@ const LESSON = {
           "id": "B8-B13",
           "type": "listening",
           "prompt": "Nghe hội thoại. Người A muốn gì?",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：这个黑色的贵不贵？B：不贵。",
           "options": [
             {
               "k": "A",
-              "t": "Hỏi giá chiếc màu đen"
+              "t": "Tìm một người bạn"
             },
             {
               "k": "B",
-              "t": "Tìm một người bạn"
+              "t": "Hỏi giá chiếc màu đen"
             },
             {
               "k": "C",
@@ -6146,21 +6157,21 @@ const LESSON = {
           "id": "B8-B14",
           "type": "listening",
           "prompt": "Nghe và chọn câu đáp phù hợp.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你找谁？B：我找服务员。",
           "options": [
             {
               "k": "A",
-              "t": "Người B tìm phục vụ viên"
-            },
-            {
-              "k": "B",
               "t": "Người B chờ xe buýt"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Người B mua sách"
+            },
+            {
+              "k": "C",
+              "t": "Người B tìm phục vụ viên"
             },
             {
               "k": "D",
@@ -6172,25 +6183,25 @@ const LESSON = {
           "id": "B8-B15",
           "type": "listening",
           "prompt": "Nghe câu và chọn hành động tiếp theo.",
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这件衣服有点儿贵，我们再看看吧。",
           "options": [
             {
               "k": "A",
-              "t": "Xem thêm món khác"
-            },
-            {
-              "k": "B",
               "t": "Mua ngay chiếc áo"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Gọi điện cho giáo viên"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Về nhà ngủ"
+            },
+            {
+              "k": "D",
+              "t": "Xem thêm món khác"
             }
           ]
         },
@@ -6206,17 +6217,17 @@ const LESSON = {
             "你",
             "吧"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "你帮我看看这个，好吗？",
           "options": [
             {
               "k": "A",
-              "t": "Nhờ người nghe xem giúp"
+              "t": "Bảo người nghe đợi"
             },
             {
               "k": "B",
-              "t": "Bảo người nghe đợi"
+              "t": "Nhờ người nghe xem giúp"
             },
             {
               "k": "C",
@@ -6238,21 +6249,21 @@ const LESSON = {
             "一下",
             "这件事情"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "我先想想，明天再告诉你。",
           "options": [
             {
               "k": "A",
-              "t": "Câu trả lời sẽ được nói vào ngày mai"
-            },
-            {
-              "k": "B",
               "t": "Người nói đã trả lời xong"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Người nói không muốn nói nữa"
+            },
+            {
+              "k": "C",
+              "t": "Câu trả lời sẽ được nói vào ngày mai"
             },
             {
               "k": "D",
@@ -6270,22 +6281,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đen"
-            },
-            {
-              "k": "B",
               "t": "Đỏ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Xanh"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Vàng"
+            },
+            {
+              "k": "D",
+              "t": "Đen"
             }
           ],
-          "answer": "A"
+          "answer": "D"
         },
         {
           "id": "B8-F09",
@@ -6321,32 +6332,38 @@ const LESSON = {
       "title": "D. ĐỌC HIỂU",
       "skill": "docHieu",
       "instruction": "Đọc lấy thông tin, ý chính và suy luận đơn giản.",
-      "passages": [],
+      "passages": [
+        {
+          "id": "p8",
+          "text": "小王今天没有时间，朋友问他晚上要不要一起吃饭。小王说：“让我想想，明天再告诉你，好吗？”后来他想好了，告诉朋友晚上一起去吃饭。",
+          "source": "original_extension"
+        }
+      ],
       "questions": [
         {
           "id": "B8-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王今天没有时间，朋友问他晚上要不要一起吃饭”。",
+          "prompt": "Theo đoạn đọc, người bạn hỏi Tiểu Vương điều gì?",
           "options": [
             {
               "k": "A",
-              "t": "再"
+              "t": "Tối nay có đi ăn cùng không"
             },
             {
               "k": "B",
-              "t": "让我想想"
+              "t": "Ngày mai có đi học không"
             },
             {
               "k": "C",
-              "t": "告诉"
+              "t": "Có muốn mua quần áo không"
             },
             {
               "k": "D",
-              "t": "好吗"
+              "t": "Đang tìm ai"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 再.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 再.",
@@ -6355,27 +6372,27 @@ const LESSON = {
         {
           "id": "B8-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王说：“让我想想，明天再告诉你，好吗？”后来他想好了，告诉朋友晚上一起去吃饭”。",
+          "prompt": "Tiểu Vương hẹn khi nào sẽ trả lời bạn?",
           "options": [
             {
               "k": "A",
-              "t": "让我想想"
+              "t": "Ngày mai"
             },
             {
               "k": "B",
-              "t": "再"
+              "t": "Ngay bây giờ"
             },
             {
               "k": "C",
-              "t": "告诉"
+              "t": "Tối nay"
             },
             {
               "k": "D",
-              "t": "好吗"
+              "t": "Tuần sau"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 让我想想.",
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 让我想想.",
@@ -6384,52 +6401,54 @@ const LESSON = {
         {
           "id": "B8-C03",
           "type": "mcq",
-          "prompt": "Đọc: “小王想买一件衣服，可是觉得有点儿贵。他说：‘让我想想，明天再来吧。’” Vì sao Tiểu Vương chưa mua?",
+          "prompt": "Cuối cùng Tiểu Vương quyết định thế nào?",
           "options": [
             {
               "k": "A",
-              "t": "Vì thấy hơi đắt"
+              "t": "Tối cùng đi ăn với bạn"
             },
             {
               "k": "B",
-              "t": "Vì không có cửa hàng"
+              "t": "Không đi ăn"
             },
             {
               "k": "C",
-              "t": "Vì không tìm thấy nhân viên"
+              "t": "Đi mua quần áo"
             },
             {
               "k": "D",
-              "t": "Vì đã mua rồi"
+              "t": "Ở nhà học"
             }
           ],
           "answer": "A",
-          "explain": "Cụm 可是觉得有点儿贵 nêu trực tiếp nguyên nhân."
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
+          "passageId": "p8"
         },
         {
           "id": "B8-C04",
           "type": "mcq",
-          "prompt": "Theo đoạn trên, 小王 có thể làm gì vào ngày mai?",
+          "prompt": "Vì sao Tiểu Vương chưa trả lời ngay?",
           "options": [
             {
               "k": "A",
-              "t": "Quay lại cửa hàng"
+              "t": "Hôm nay anh ấy không có thời gian"
             },
             {
               "k": "B",
-              "t": "Đi đến trường"
+              "t": "Anh ấy không hiểu câu hỏi"
             },
             {
               "k": "C",
-              "t": "Gọi điện cho mẹ"
+              "t": "Anh ấy không có điện thoại"
             },
             {
               "k": "D",
-              "t": "Đợi bạn ở nhà"
+              "t": "Nhà hàng đã đóng cửa"
             }
           ],
           "answer": "A",
-          "explain": "明天再来 = ngày mai lại/quay lại."
+          "explain": "Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ.",
+          "passageId": "p8"
         },
         {
           "id": "B8-C05",
@@ -7214,16 +7233,26 @@ function renderMcq(q, body){
 function renderListening(q, body){
   const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
   body.appendChild(intro);
-  const button = el('button','listen-button','▶ Nghe lại');
-  button.type = 'button';
-  button.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+  const player = el('div','audio-player-mini');
+  const play = el('button','audio-play','Phát'); play.type='button';
+  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
+  const speed = el('button','audio-speed','1.0×'); speed.type='button';
+  speed.setAttribute('aria-label','Đổi tốc độ phát');
+  let rate=.82, paused=false;
+  const setRest=()=>{ paused=false; play.textContent='Phát'; };
+  play.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
+    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
+    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    utterance.lang = 'zh-CN'; utterance.rate = rate;
+    utterance.onend=setRest; utterance.onerror=setRest;
     window.speechSynthesis.speak(utterance);
+    play.textContent='Tạm dừng';
   });
-  body.appendChild(button);
+  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
+  player.append(play,speed); body.appendChild(player);
   renderMcq(q, body);
 }
 function renderTextFill(q, body){

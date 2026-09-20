@@ -853,6 +853,13 @@ footer.print-footer{display:none;}
 @media (max-width:480px){
   .mini-nav-popover{right:14px; bottom:150px;}
 }
+
+/* Audio player: one focused learning action, with clear keyboard states. */
+.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+.audio-player-mini button:hover{background:var(--color-primary-subtle);}
+.audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+.audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -2375,7 +2382,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và xác định người được nói đến.",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -2387,11 +2394,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Cô gái bên phải đang hát"
+              "t": "Cậu bé bên trái"
             },
             {
               "k": "B",
-              "t": "Cậu bé bên trái"
+              "t": "Cô gái bên phải đang hát"
             },
             {
               "k": "C",
@@ -2410,7 +2417,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và chọn mức chênh lệch.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -2422,15 +2429,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "100 tệ"
-            },
-            {
-              "k": "B",
               "t": "10 tệ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "1 tuổi"
+            },
+            {
+              "k": "C",
+              "t": "100 tệ"
             },
             {
               "k": "D",
@@ -2452,7 +2459,7 @@ const LESSON = {
             "那本书",
             "贵"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -2464,19 +2471,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Chỉ là phỏng đoán"
-            },
-            {
-              "k": "B",
               "t": "Chắc chắn đang ốm"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Đang hát"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Đang mua đồ"
+            },
+            {
+              "k": "D",
+              "t": "Chỉ là phỏng đoán"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -2494,7 +2501,7 @@ const LESSON = {
             "那个",
             "很高"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -2506,11 +2513,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Năm ngoái"
+              "t": "Ngày mai"
             },
             {
               "k": "B",
-              "t": "Ngày mai"
+              "t": "Năm ngoái"
             },
             {
               "k": "C",
@@ -2535,7 +2542,7 @@ const LESSON = {
             "今天",
             "很忙"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -2547,15 +2554,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "我姓李。"
-            },
-            {
-              "k": "B",
               "t": "我很便宜。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "我在右边。"
+            },
+            {
+              "k": "C",
+              "t": "我姓李。"
             },
             {
               "k": "D",
@@ -2582,22 +2589,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Hát"
-            },
-            {
-              "k": "B",
               "t": "Đi làm"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Rửa quần áo"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Làm bài tập"
+            },
+            {
+              "k": "D",
+              "t": "Hát"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2640,27 +2647,27 @@ const LESSON = {
         {
           "id": "B11-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王和小李是朋友”。",
+          "prompt": "Mối quan hệ của Tiểu Vương và Tiểu Lý là gì?",
           "options": [
             {
               "k": "A",
-              "t": "比"
+              "t": "Bạn bè"
             },
             {
               "k": "B",
-              "t": "大三岁"
+              "t": "Anh em"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "Thầy trò"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Đồng nghiệp"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 比.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 比.",
@@ -2672,27 +2679,27 @@ const LESSON = {
         {
           "id": "B11-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王二十岁，小李二十三岁，所以小李比小王大三岁”。",
+          "prompt": "Tiểu Lý lớn hơn Tiểu Vương mấy tuổi?",
           "options": [
             {
               "k": "A",
-              "t": "大三岁"
+              "t": "Ba tuổi"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Hai tuổi"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "Hai mươi tuổi"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Hai mươi ba tuổi"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 大三岁.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 大三岁.",
@@ -2704,27 +2711,27 @@ const LESSON = {
         {
           "id": "B11-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小李右边坐着一个女孩，她可能是新同学”。",
+          "prompt": "Cô gái ngồi bên phải Tiểu Lý có thể là ai?",
           "options": [
             {
               "k": "A",
-              "t": "可能"
+              "t": "Bạn học mới"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Em gái Tiểu Lý"
             },
             {
               "k": "C",
-              "t": "大三岁"
+              "t": "Giáo viên"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Phục vụ viên"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 可能.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 可能.",
@@ -2736,27 +2743,27 @@ const LESSON = {
         {
           "id": "B11-C04",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “她姓王，去年刚来这个学校”。",
+          "prompt": "Theo đoạn đọc, cô gái họ gì và đến trường khi nào?",
           "options": [
             {
               "k": "A",
-              "t": "姓"
+              "t": "Họ Vương, đến năm ngoái"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Họ Lý, đến hôm nay"
             },
             {
               "k": "C",
-              "t": "大三岁"
+              "t": "Họ Vương, đến ngày mai"
             },
             {
               "k": "D",
-              "t": "可能"
+              "t": "Họ Trần, đến năm nay"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 姓.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 姓.",
@@ -4153,7 +4160,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và xác định người được nói đến.",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -4165,11 +4172,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Cô gái bên phải đang hát"
+              "t": "Cậu bé bên trái"
             },
             {
               "k": "B",
-              "t": "Cậu bé bên trái"
+              "t": "Cô gái bên phải đang hát"
             },
             {
               "k": "C",
@@ -4188,7 +4195,7 @@ const LESSON = {
           "section": "listening",
           "type": "listening",
           "prompt": "Nghe và chọn mức chênh lệch.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -4200,15 +4207,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "100 tệ"
-            },
-            {
-              "k": "B",
               "t": "10 tệ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "1 tuổi"
+            },
+            {
+              "k": "C",
+              "t": "100 tệ"
             },
             {
               "k": "D",
@@ -4230,7 +4237,7 @@ const LESSON = {
             "那本书",
             "贵"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -4242,19 +4249,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Chỉ là phỏng đoán"
-            },
-            {
-              "k": "B",
               "t": "Chắc chắn đang ốm"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Đang hát"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Đang mua đồ"
+            },
+            {
+              "k": "D",
+              "t": "Chỉ là phỏng đoán"
             }
           ],
           "sectionTitle": "C. NGHE HIỂU",
@@ -4272,7 +4279,7 @@ const LESSON = {
             "那个",
             "很高"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -4284,11 +4291,11 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Năm ngoái"
+              "t": "Ngày mai"
             },
             {
               "k": "B",
-              "t": "Ngày mai"
+              "t": "Năm ngoái"
             },
             {
               "k": "C",
@@ -4313,7 +4320,7 @@ const LESSON = {
             "今天",
             "很忙"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
             "textbook_l11",
@@ -4325,15 +4332,15 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "我姓李。"
-            },
-            {
-              "k": "B",
               "t": "我很便宜。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "我在右边。"
+            },
+            {
+              "k": "C",
+              "t": "我姓李。"
             },
             {
               "k": "D",
@@ -4360,22 +4367,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Hát"
-            },
-            {
-              "k": "B",
               "t": "Đi làm"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Rửa quần áo"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Làm bài tập"
+            },
+            {
+              "k": "D",
+              "t": "Hát"
             }
           ],
-          "answer": "A",
+          "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4420,27 +4427,27 @@ const LESSON = {
         {
           "id": "B11-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王和小李是朋友”。",
+          "prompt": "Mối quan hệ của Tiểu Vương và Tiểu Lý là gì?",
           "options": [
             {
               "k": "A",
-              "t": "比"
+              "t": "Bạn bè"
             },
             {
               "k": "B",
-              "t": "大三岁"
+              "t": "Anh em"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "Thầy trò"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Đồng nghiệp"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 比.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 比.",
@@ -4452,27 +4459,27 @@ const LESSON = {
         {
           "id": "B11-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王二十岁，小李二十三岁，所以小李比小王大三岁”。",
+          "prompt": "Tiểu Lý lớn hơn Tiểu Vương mấy tuổi?",
           "options": [
             {
               "k": "A",
-              "t": "大三岁"
+              "t": "Ba tuổi"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Hai tuổi"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "Hai mươi tuổi"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Hai mươi ba tuổi"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 大三岁.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 大三岁.",
@@ -4484,27 +4491,27 @@ const LESSON = {
         {
           "id": "B11-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小李右边坐着一个女孩，她可能是新同学”。",
+          "prompt": "Cô gái ngồi bên phải Tiểu Lý có thể là ai?",
           "options": [
             {
               "k": "A",
-              "t": "可能"
+              "t": "Bạn học mới"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Em gái Tiểu Lý"
             },
             {
               "k": "C",
-              "t": "大三岁"
+              "t": "Giáo viên"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Phục vụ viên"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 可能.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 可能.",
@@ -4516,27 +4523,27 @@ const LESSON = {
         {
           "id": "B11-C04",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “她姓王，去年刚来这个学校”。",
+          "prompt": "Theo đoạn đọc, cô gái họ gì và đến trường khi nào?",
           "options": [
             {
               "k": "A",
-              "t": "姓"
+              "t": "Họ Vương, đến năm ngoái"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Họ Lý, đến hôm nay"
             },
             {
               "k": "C",
-              "t": "大三岁"
+              "t": "Họ Vương, đến ngày mai"
             },
             {
               "k": "D",
-              "t": "可能"
+              "t": "Họ Trần, đến năm nay"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 姓.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 姓.",
@@ -6228,17 +6235,17 @@ const LESSON = {
           "id": "B11-B13",
           "type": "listening",
           "prompt": "Nghe và xác định người được nói đến.",
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "右边那个唱歌的女孩姓王。",
           "options": [
             {
               "k": "A",
-              "t": "Cô gái bên phải đang hát"
+              "t": "Cậu bé bên trái"
             },
             {
               "k": "B",
-              "t": "Cậu bé bên trái"
+              "t": "Cô gái bên phải đang hát"
             },
             {
               "k": "C",
@@ -6254,21 +6261,21 @@ const LESSON = {
           "id": "B11-B14",
           "type": "listening",
           "prompt": "Nghe và chọn mức chênh lệch.",
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这个手机比那个便宜一百块。",
           "options": [
             {
               "k": "A",
-              "t": "100 tệ"
-            },
-            {
-              "k": "B",
               "t": "10 tệ"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "1 tuổi"
+            },
+            {
+              "k": "C",
+              "t": "100 tệ"
             },
             {
               "k": "D",
@@ -6287,25 +6294,25 @@ const LESSON = {
             "那本书",
             "贵"
           ],
-          "answer": "A",
+          "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "他今天没来，可能生病了。",
           "options": [
             {
               "k": "A",
-              "t": "Chỉ là phỏng đoán"
-            },
-            {
-              "k": "B",
               "t": "Chắc chắn đang ốm"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Đang hát"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Đang mua đồ"
+            },
+            {
+              "k": "D",
+              "t": "Chỉ là phỏng đoán"
             }
           ]
         },
@@ -6320,17 +6327,17 @@ const LESSON = {
             "那个",
             "很高"
           ],
-          "answer": "A",
+          "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "去年我开始学汉语。",
           "options": [
             {
               "k": "A",
-              "t": "Năm ngoái"
+              "t": "Ngày mai"
             },
             {
               "k": "B",
-              "t": "Ngày mai"
+              "t": "Năm ngoái"
             },
             {
               "k": "C",
@@ -6352,21 +6359,21 @@ const LESSON = {
             "今天",
             "很忙"
           ],
-          "answer": "A",
+          "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你姓什么？B：",
           "options": [
             {
               "k": "A",
-              "t": "我姓李。"
-            },
-            {
-              "k": "B",
               "t": "我很便宜。"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "我在右边。"
+            },
+            {
+              "k": "C",
+              "t": "我姓李。"
             },
             {
               "k": "D",
@@ -6384,22 +6391,22 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Hát"
-            },
-            {
-              "k": "B",
               "t": "Đi làm"
             },
             {
-              "k": "C",
+              "k": "B",
               "t": "Rửa quần áo"
             },
             {
-              "k": "D",
+              "k": "C",
               "t": "Làm bài tập"
+            },
+            {
+              "k": "D",
+              "t": "Hát"
             }
           ],
-          "answer": "A"
+          "answer": "D"
         },
         {
           "id": "B11-F09",
@@ -6435,32 +6442,38 @@ const LESSON = {
       "title": "D. ĐỌC HIỂU",
       "skill": "docHieu",
       "instruction": "Đọc lấy thông tin, ý chính và suy luận đơn giản.",
-      "passages": [],
+      "passages": [
+        {
+          "id": "p11",
+          "text": "小王和小李是朋友。小王二十岁，小李二十三岁，所以小李比小王大三岁。小李右边坐着一个女孩，她可能是新同学。她姓王，去年刚来这个学校。",
+          "source": "original_extension"
+        }
+      ],
       "questions": [
         {
           "id": "B11-C01",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王和小李是朋友”。",
+          "prompt": "Mối quan hệ của Tiểu Vương và Tiểu Lý là gì?",
           "options": [
             {
               "k": "A",
-              "t": "比"
+              "t": "Bạn bè"
             },
             {
               "k": "B",
-              "t": "大三岁"
+              "t": "Anh em"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "Thầy trò"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Đồng nghiệp"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 比.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 比.",
@@ -6469,27 +6482,27 @@ const LESSON = {
         {
           "id": "B11-C02",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王二十岁，小李二十三岁，所以小李比小王大三岁”。",
+          "prompt": "Tiểu Lý lớn hơn Tiểu Vương mấy tuổi?",
           "options": [
             {
               "k": "A",
-              "t": "大三岁"
+              "t": "Ba tuổi"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Hai tuổi"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "Hai mươi tuổi"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Hai mươi ba tuổi"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 大三岁.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 大三岁.",
@@ -6498,27 +6511,27 @@ const LESSON = {
         {
           "id": "B11-C03",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小李右边坐着一个女孩，她可能是新同学”。",
+          "prompt": "Cô gái ngồi bên phải Tiểu Lý có thể là ai?",
           "options": [
             {
               "k": "A",
-              "t": "可能"
+              "t": "Bạn học mới"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Em gái Tiểu Lý"
             },
             {
               "k": "C",
-              "t": "大三岁"
+              "t": "Giáo viên"
             },
             {
               "k": "D",
-              "t": "姓"
+              "t": "Phục vụ viên"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 可能.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 可能.",
@@ -6527,27 +6540,27 @@ const LESSON = {
         {
           "id": "B11-C04",
           "type": "mcq",
-          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “她姓王，去年刚来这个学校”。",
+          "prompt": "Theo đoạn đọc, cô gái họ gì và đến trường khi nào?",
           "options": [
             {
               "k": "A",
-              "t": "姓"
+              "t": "Họ Vương, đến năm ngoái"
             },
             {
               "k": "B",
-              "t": "比"
+              "t": "Họ Lý, đến hôm nay"
             },
             {
               "k": "C",
-              "t": "大三岁"
+              "t": "Họ Vương, đến ngày mai"
             },
             {
               "k": "D",
-              "t": "可能"
+              "t": "Họ Trần, đến năm nay"
             }
           ],
           "answer": "A",
-          "explain": "Câu trên có liên quan trực tiếp đến 姓.",
+          "explain": "Dựa vào thông tin cụ thể trong đoạn đọc.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 姓.",
@@ -7356,16 +7369,26 @@ function renderMcq(q, body){
 function renderListening(q, body){
   const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
   body.appendChild(intro);
-  const button = el('button','listen-button','▶ Nghe lại');
-  button.type = 'button';
-  button.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+  const player = el('div','audio-player-mini');
+  const play = el('button','audio-play','Phát'); play.type='button';
+  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
+  const speed = el('button','audio-speed','1.0×'); speed.type='button';
+  speed.setAttribute('aria-label','Đổi tốc độ phát');
+  let rate=.82, paused=false;
+  const setRest=()=>{ paused=false; play.textContent='Phát'; };
+  play.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
+    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
+    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    utterance.lang = 'zh-CN'; utterance.rate = rate;
+    utterance.onend=setRest; utterance.onerror=setRest;
     window.speechSynthesis.speak(utterance);
+    play.textContent='Tạm dừng';
   });
-  body.appendChild(button);
+  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
+  player.append(play,speed); body.appendChild(player);
   renderMcq(q, body);
 }
 function renderTextFill(q, body){

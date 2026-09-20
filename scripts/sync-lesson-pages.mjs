@@ -72,30 +72,54 @@ function addListeningRenderer(html) {
   const switchNeedle = "    case 'self_check': renderSelfCheck(q, body); break;";
   const labelNeedle = "self_check:'Tự luận'";
   const anchor = "function renderTextFill(q, body){";
-  if (!html.includes("function renderListening(q, body)")) {
-    const renderer = `function renderListening(q, body){
+  const renderer = `function renderListening(q, body){
   const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
   body.appendChild(intro);
-  const button = el('button','listen-button','▶ Nghe lại');
-  button.type = 'button';
-  button.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+  const player = el('div','audio-player-mini');
+  const play = el('button','audio-play','Phát'); play.type='button';
+  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
+  const speed = el('button','audio-speed','1.0×'); speed.type='button';
+  speed.setAttribute('aria-label','Đổi tốc độ phát');
+  let rate=.82, paused=false;
+  const setRest=()=>{ paused=false; play.textContent='Phát'; };
+  play.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
+    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
+    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    utterance.lang = 'zh-CN'; utterance.rate = rate;
+    utterance.onend=setRest; utterance.onerror=setRest;
     window.speechSynthesis.speak(utterance);
+    play.textContent='Tạm dừng';
   });
-  body.appendChild(button);
+  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
+  player.append(play,speed); body.appendChild(player);
   renderMcq(q, body);
 }
 `;
-    if (!html.includes(switchNeedle) || !html.includes(labelNeedle) || !html.includes(anchor)) {
-      throw new Error("Không tìm thấy renderer cần thiết để bổ sung dạng nghe.");
-    }
+  const css = `
+/* Audio player: one focused learning action, with clear keyboard states. */
+.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+.audio-player-mini button:hover{background:var(--color-primary-subtle);}
+.audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
+.audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
+`;
+  if (!html.includes(switchNeedle) || !html.includes(labelNeedle) || !html.includes(anchor)) {
+    throw new Error("Không tìm thấy renderer cần thiết để bổ sung dạng nghe.");
+  }
+  if (!html.includes("function renderListening(q, body)")) {
     html = html.replace(switchNeedle, `${switchNeedle}\n    case 'listening': renderListening(q, body); break;`)
       .replace(labelNeedle, "listening:'Nghe hiểu', self_check:'Tự luận'")
       .replace(anchor, `${renderer}${anchor}`);
+  } else {
+    const start = html.indexOf("function renderListening(q, body)");
+    const end = html.indexOf(anchor, start);
+    if (end < 0) throw new Error("Không xác định được cuối renderer nghe.");
+    html = html.slice(0, start) + renderer + html.slice(end);
   }
+  if (!html.includes(".audio-player-mini{")) html = html.replace("</style>", `${css}</style>`);
   return html;
 }
 
