@@ -731,7 +731,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
   <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
 </footer>
 <button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Quay về đầu trang" title="Quay về đầu trang">↑</button>
-<script>
+<script src="data/lesson-registry.js"></script><script src="data/lesson-manifest.js"></script><script>
 // ============================================================
 // DỮ LIỆU LỘ TRÌNH HSK — nguồn dùng chung cho menu điều hướng và
 // khối "Bài học theo cấp độ" ở trang chủ. Khi có bài học mới, chỉ
@@ -787,7 +787,20 @@ function renderHskDropdown(){
   });
 }
 
-// Vẽ lưới thẻ cấp độ ở khối "Lộ trình HSK" trên trang chủ — bấm vào
+function mergeLessonManifest(){
+  if(!window.HAN_NGU_DATA || !Array.isArray(window.HAN_NGU_DATA.manifest)) return;
+  window.HAN_NGU_DATA.manifest.forEach(function(item){
+    var level=HSK_LEVELS.find(function(x){ return x.id === "hsk"+item.level; });
+    if(!level) return;
+    var row={num:item.lessonNo,zh:item.titleZh,vi:item.titleVi,href:item.href};
+    var idx=level.lessons.findIndex(function(x){ return x.num===item.lessonNo; });
+    if(idx>=0) level.lessons[idx]=row;
+    else level.lessons.push(row);
+    level.lessons.sort(function(a,b){return a.num-b.num;});
+  });
+}
+
+// // Vẽ lưới thẻ cấp độ ở khối "Lộ trình HSK" trên trang chủ — bấm vào
 // thẻ có bài học để mở/thu danh sách bài ngay tại chỗ.
 function renderLevelGrid(){
   var grid = document.getElementById('levelGrid');
@@ -830,6 +843,7 @@ function renderLevelGrid(){
 }
 
 (function(){
+  mergeLessonManifest();
   renderHskDropdown();
   renderLevelGrid();
 
