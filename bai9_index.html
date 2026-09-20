@@ -2183,60 +2183,58 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "结果补语",
-            "造句"
+            "题太多",
+            "我",
+            "没做完"
           ],
           "answer": [
-            "请",
-            "用",
-            "结果补语",
-            "造句"
+            "题太多",
+            "我",
+            "没做完"
           ],
-          "explain": "Sắp xếp theo mẫu: 找到.",
+          "explain": "题太多 là nguyên nhân/tình trạng; 我没做完 là kết quả chưa hoàn tất.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B9-D02",
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
+            "我",
             "从",
-            "造句"
+            "第一题",
+            "开始做"
           ],
           "answer": [
-            "请",
-            "用",
+            "我",
             "从",
-            "造句"
+            "第一题",
+            "开始做"
           ],
-          "explain": "Sắp xếp theo mẫu: 我从北京来.",
+          "explain": "从 + điểm bắt đầu + V.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B9-D03",
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "第 + số + lượng từ",
-            "造句"
+            "第一题",
+            "是",
+            "今天",
+            "要做的"
           ],
           "answer": [
-            "请",
-            "用",
-            "第 + số + lượng từ",
-            "造句"
+            "第一题",
+            "是",
+            "今天",
+            "要做的"
           ],
-          "explain": "Sắp xếp theo mẫu: 第一题.",
+          "explain": "Dùng 第 để xác định thứ tự.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         }
       ]
     },
@@ -2249,11 +2247,11 @@ const LESSON = {
         {
           "id": "B9-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Bài tập nhiều quá, tôi chưa làm xong",
-          "model": "找到",
-          "explain": "Ưu tiên sử dụng điểm ngữ pháp 结果补语.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "prompt": "Dịch sang tiếng Trung: Tôi chưa làm xong.",
+          "model": "我没做完。",
+          "explain": "V + 完 là bổ ngữ kết quả, cho biết hành động đã hoàn tất.",
+          "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
+          "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch."
         },
         {
           "id": "B9-E02",
