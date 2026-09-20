@@ -36,7 +36,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v02",
@@ -57,7 +64,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v03",
@@ -78,7 +92,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v04",
@@ -99,7 +120,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v05",
@@ -120,7 +148,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v06",
@@ -141,7 +176,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v07",
@@ -162,7 +204,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v08",
@@ -183,7 +232,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v09",
@@ -204,7 +260,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v10",
@@ -225,7 +288,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l09_v11",
@@ -246,7 +316,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l09"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       }
     ],
     "grammar": [
