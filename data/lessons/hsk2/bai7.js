@@ -36,7 +36,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v2",
@@ -57,7 +64,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v3",
@@ -78,7 +92,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v4",
@@ -99,7 +120,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v5",
@@ -120,7 +148,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v6",
@@ -141,7 +176,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v7",
@@ -162,7 +204,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v8",
@@ -183,7 +232,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v9",
@@ -204,7 +260,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v10",
@@ -225,7 +288,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v11",
@@ -246,7 +316,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v12",
@@ -267,7 +344,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai7_v13",
@@ -288,7 +372,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       }
     ],
     "grammar": [
