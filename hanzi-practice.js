@@ -18,8 +18,10 @@ function styleOnce(){if(document.getElementById('hanziPracticeStyle'))return;con
 .hanzi-mode-btn.active{background:var(--primary,#c0392b);color:#fff;border-color:var(--primary,#c0392b)}
 .hanzi-stage{position:relative;margin:auto;width:min(360px,88vw);height:min(360px,88vw);border:1px solid var(--border,#e5e0d8);border-radius:16px;background:#fff;overflow:hidden}
 .hanzi-grid-bg{position:absolute;inset:0;background:linear-gradient(#dfe8e2 1px,transparent 1px),linear-gradient(90deg,#dfe8e2 1px,transparent 1px),linear-gradient(45deg,transparent calc(50% - .5px),#edf1ee calc(50% - .5px),#edf1ee calc(50% + .5px),transparent calc(50% + .5px)),linear-gradient(-45deg,transparent calc(50% - .5px),#edf1ee calc(50% - .5px),#edf1ee calc(50% + .5px),transparent calc(50% + .5px));background-size:50% 50%,50% 50%,100% 100%,100% 100%;pointer-events:none}
-.hanzi-writer-target,.hanzi-trace-layer{position:absolute;inset:0}
-.hanzi-draw-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.hanzi-writer-target{position:absolute;inset:0;z-index:2;pointer-events:auto;touch-action:none;-webkit-user-select:none;user-select:none}
+.hanzi-writer-target svg{display:block;width:100%;height:100%;pointer-events:auto !important;touch-action:none;-webkit-user-select:none;user-select:none}
+.hanzi-trace-layer{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hanzi-draw-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;pointer-events:auto;cursor:crosshair;-webkit-user-select:none;user-select:none}
 .hanzi-practice-info{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:11px;padding:9px 11px;border-radius:10px;background:var(--bg-soft,#f5f2eb);font-size:12px;color:var(--text-soft,#566573)}
 .hanzi-clear{border:1px solid var(--border,#e5e0d8);background:var(--card,#fff);padding:7px 11px;border-radius:9px;font-weight:700;cursor:pointer}
 .hanzi-source-note{margin-top:10px;font-size:11px;color:var(--text-faint,#8492a6);line-height:1.5}
@@ -30,8 +32,24 @@ function setupMode(char,pinyin,mode){document.querySelectorAll('.hanzi-mode-btn'
 function makeWriter(char,opts){return window.HanziWriter.create('hanziWriterTarget',char,Object.assign({width:360,height:360,padding:20,strokeColor:'#1d8f63',radicalColor:'#d94a3a'},opts||{}))}
 function info(a,b){const el=document.getElementById('hanziPracticeInfo');if(el)el.innerHTML='<span>'+a+'</span><span>'+b+'</span>'}
 function setupStroke(char){info('Đang phát thứ tự nét…','Chạm “Xem nét” để xem lại');currentWriter=makeWriter(char,{showCharacter:false,showOutline:true,strokeAnimationSpeed:1.2,delayBetweenStrokes:420});currentWriter.animateCharacter({onComplete:()=>{info('✓ Hoàn tất thứ tự nét','Có thể xem lại hoặc chuyển sang viết')}})}
-function setupTrace(char){info('Viết đè theo chữ mờ','Dùng chuột hoặc ngón tay để viết');makeWriter(char,{showCharacter:true,showOutline:false,strokeColor:'#b8ddca',radicalColor:'#b8ddca'});const layer=document.getElementById('hanziTraceLayer'),canvas=document.createElement('canvas');canvas.className='hanzi-draw-canvas';canvas.width=720;canvas.height=720;layer.appendChild(canvas);const ctx=canvas.getContext('2d');ctx.lineWidth=12;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#D68910';let drawing=false,pts=0;const pos=e=>{const r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)*(canvas.width/r.width),y:(p.clientY-r.top)*(canvas.height/r.height)}};const down=e=>{e.preventDefault();drawing=true;pts=0;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y)},move=e=>{if(!drawing)return;e.preventDefault();const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();pts++},up=()=>{drawing=false;if(pts)info('Đang viết mờ','Tiếp tục luyện từng nét')};canvas.addEventListener('mousedown',down);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',up);canvas.addEventListener('touchstart',down,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});window.addEventListener('touchend',up);drawCleanup=()=>{canvas.removeEventListener('mousedown',down);canvas.removeEventListener('mousemove',move);window.removeEventListener('mouseup',up);canvas.removeEventListener('touchstart',down);canvas.removeEventListener('touchmove',move);window.removeEventListener('touchend',up)}}
-function setupQuiz(char){info('Tự viết · bắt đầu theo thứ tự nét','Lỗi sẽ được phản hồi ngay');currentWriter=window.HanziWriter.create('hanziWriterTarget',char,{width:360,height:360,padding:20,showCharacter:false,showOutline:false,strokeColor:'#1d8f63',radicalColor:'#d94a3a'});currentWriter.quiz({leniency:1,showHintAfterMisses:1,onMistake:d=>info('✗ Sai ở nét '+(d.strokeNum+1),'Tổng lỗi: '+d.totalMistakes),onCorrectStroke:d=>info('✓ Đúng nét '+d.strokeNum,'Còn '+d.strokesRemaining+' nét'),onComplete:d=>info('🎉 Hoàn thành chữ '+d.character,'Tổng lỗi: '+d.totalMistakes)})}
+function setupTrace(char){info('Viết đè theo chữ mờ','Dùng chuột hoặc ngón tay để viết');makeWriter(char,{showCharacter:true,showOutline:false,strokeColor:'#b8ddca',radicalColor:'#b8ddca'});const layer=document.getElementById('hanziTraceLayer');if(layer)layer.style.pointerEvents='none';const canvas=document.createElement('canvas');canvas.className='hanzi-draw-canvas';canvas.width=720;canvas.height=720;layer.appendChild(canvas);const ctx=canvas.getContext('2d');ctx.lineWidth=12;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#D68910';let drawing=false,pts=0;const pos=e=>{const r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)*(canvas.width/r.width),y:(p.clientY-r.top)*(canvas.height/r.height)}};const down=e=>{e.preventDefault();drawing=true;pts=0;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y)},move=e=>{if(!drawing)return;e.preventDefault();const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();pts++},up=()=>{drawing=false;if(pts)info('Đang viết mờ','Tiếp tục luyện từng nét')};canvas.addEventListener('mousedown',down);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',up);canvas.addEventListener('touchstart',down,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});window.addEventListener('touchend',up);drawCleanup=()=>{canvas.removeEventListener('mousedown',down);canvas.removeEventListener('mousemove',move);window.removeEventListener('mouseup',up);canvas.removeEventListener('touchstart',down);canvas.removeEventListener('touchmove',move);window.removeEventListener('touchend',up)}}
+function setupQuiz(char){
+  info('Tự viết · bắt đầu theo thứ tự nét','Đưa ngón tay hoặc chuột vào ô chữ để viết');
+  const target=document.getElementById('hanziWriterTarget');
+  if(!target) return;
+  target.style.pointerEvents='auto';
+  target.style.touchAction='none';
+  currentWriter=window.HanziWriter.create(target,char,{width:360,height:360,padding:20,showCharacter:false,showOutline:false,strokeColor:'#1d8f63',radicalColor:'#d94a3a'});
+  const svg=target.querySelector('svg');
+  if(svg){svg.style.pointerEvents='auto';svg.style.touchAction='none';svg.style.userSelect='none';}
+  currentWriter.quiz({
+    leniency:1,
+    showHintAfterMisses:1,
+    onMistake:d=>info('✗ Sai ở nét '+(d.strokeNum+1),'Tổng lỗi: '+d.totalMistakes),
+    onCorrectStroke:d=>info('✓ Đúng nét '+d.strokeNum,'Còn '+d.strokesRemaining+' nét'),
+    onComplete:d=>info('🎉 Hoàn thành chữ '+d.character,'Tổng lỗi: '+d.totalMistakes)
+  });
+}
 function clearDrawing(){const c=document.querySelector('.hanzi-draw-canvas');if(c)c.getContext('2d').clearRect(0,0,c.width,c.height)}
 function closeModal(){const o=document.getElementById('hanziPracticeOverlay');if(o)o.remove();clearStage()}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.hanzi-practice-btn');if(!b)return;e.preventDefault();openModal(b.dataset.char||'',b.dataset.pinyin||'',b.dataset.mode||'stroke')});
