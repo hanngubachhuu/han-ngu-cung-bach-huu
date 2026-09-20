@@ -1,0 +1,157 @@
+{
+  "version": "v1.0.0",
+  "purpose": "Chuẩn hóa enrich dữ liệu HSK/HSKK ở tầng canonical; giao diện học sinh chỉ tiêu thụ phần phù hợp trình độ.",
+  "contentSystem": {
+    "primaryCurriculum": "hsk2.0",
+    "secondaryAlignment": "hsk3.0",
+    "hsk2Scope": "HSK 1-6 theo hệ HSK 2.0; HSK 2.0 là chuẩn chính để gắn level, từ vựng, ngữ pháp, cấu trúc bài và khả năng xuất bản.",
+    "hsk3Alignment": {
+      "mode": "direct_cross_reference",
+      "rule": "Không coi mapping HSK 2.0 -> HSK 3.0 là đồng nhất một-một. Mỗi mapping phải có levelRefs, mappingType, sourceRefs và note/evidence.",
+      "officialReference": "https://www.chinesetest.cn/Development"
+    }
+  },
+  "characterEnrichment": {
+    "scope": "Chữ Hán xuất hiện trong từ vựng trọng tâm, câu mẫu, ngữ pháp và phần học liệu của bài; được phép mở rộng các chữ có giá trị sư phạm.",
+    "depth": "deep",
+    "studentUi": "progressive-disclosure",
+    "requiredCore": [
+      "char",
+      "pinyin",
+      "hanViet",
+      "meaning",
+      "traditionalForm",
+      "radical",
+      "structure",
+      "strokes",
+      "components",
+      "sourceRefs"
+    ],
+    "requiredReading": [
+      "lessonReading",
+      "readings",
+      "note"
+    ],
+    "requiredDeep": [
+      "coreMeaning",
+      "usageNotes",
+      "commonConfusions",
+      "formation",
+      "historicalNotes",
+      "semanticPhoneticAnalysis"
+    ],
+    "historicalRule": "Thông tin giáp cốt/kim văn/tiểu triện, diễn biến hình thể, âm hệ hoặc giải thích cấu tạo lịch sử chỉ được điền khi có nguồn xác minh; nếu chưa đủ bằng chứng thì để pending, không suy đoán."
+  },
+  "vocabularyEnrichment": {
+    "hanViet": "pinyin [Hán-Việt]",
+    "required": [
+      "collocations",
+      "usageNotes",
+      "commonConfusions",
+      "relatedWords",
+      "characterAnalysis",
+      "hsk20LevelRefs",
+      "hsk30LevelRefs",
+      "sourceRefs"
+    ],
+    "pedagogical": [
+      "teacherAuthoredNotes",
+      "commonVietnameseErrors",
+      "sentenceExpansionLayers",
+      "carryOldWordsForward"
+    ]
+  },
+  "grammarEnrichment": {
+    "required": [
+      "pattern",
+      "functions",
+      "constraints",
+      "contrastiveNotes",
+      "commonVietnameseErrors",
+      "examples",
+      "sourceRefs",
+      "hsk20LevelRefs",
+      "hsk30Alignment"
+    ],
+    "pedagogy": "Mỗi điểm ngữ pháp nên có đường đi từ mẫu cơ bản -> mở rộng thành phần -> câu phức -> ứng dụng giao tiếp."
+  },
+  "exampleSentenceEnrichment": {
+    "requiredForPublished": [
+      "zh",
+      "pinyin",
+      "vi"
+    ],
+    "provenance": [
+      "textbook",
+      "derived",
+      "teacher-authored"
+    ],
+    "rule": "Không trộn câu tự biên soạn với câu giáo trình mà không ghi provenance."
+  },
+  "exerciseEnrichment": {
+    "mode": "explanation-rich",
+    "required": [
+      "answer",
+      "whyCorrect",
+      "whyDistractorsWrong",
+      "testedSkill",
+      "testedPoint",
+      "sourceRefs"
+    ],
+    "answerIsolation": "teacher-only"
+  },
+  "qaLifecycle": {
+    "draft": "Có thể thiếu dữ liệu enrich nhưng phải được đánh dấu rõ.",
+    "review": "Không được thiếu trường bắt buộc của family dữ liệu; phải có provenance.",
+    "published": "Đủ schema + provenance + language QA + pedagogy QA + answer isolation + legacy parity.",
+    "archived": "Giữ lịch sử, không dùng cho luồng học sinh."
+  },
+  "uiExposure": {
+    "default": "level-appropriate",
+    "studentNeverReceivesByDefault": [
+      "privateTeacherNotes",
+      "internalQA",
+      "hiddenAnswers",
+      "unreviewedHistoricalClaims"
+    ],
+    "advancedStudentMode": "Có thể mở rộng thông tin chữ Hán chuyên sâu theo cấp độ."
+  },
+  "authoritativeSources": [
+    {
+      "id": "cti-hsk20",
+      "kind": "official",
+      "title": "HSK 2.0 / HSK 1-6 reference",
+      "url": "https://admin.chinesetest.cn/gonewcontent.do?id=40575936"
+    },
+    {
+      "id": "cti-hsk30-development",
+      "kind": "official",
+      "title": "Chinese Test development / HSK 3.0",
+      "url": "https://www.chinesetest.cn/Development"
+    },
+    {
+      "id": "cti-standard-query",
+      "kind": "official",
+      "title": "国际中文教育中文水平等级标准查询系统",
+      "url": "https://admin.chinesetest.cn/standardsAction.do?means=standardInfo"
+    },
+    {
+      "id": "gf0023-2020",
+      "kind": "official",
+      "title": "通用规范汉字笔顺规范 GF 0023—2020",
+      "url": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/202103/W020210318300204215237.pdf"
+    },
+    {
+      "id": "unicode-unihan",
+      "kind": "official",
+      "title": "Unicode Unihan Database / UAX #38",
+      "url": "https://unicode.org/reports/tr38/"
+    },
+    {
+      "id": "zdic",
+      "kind": "dictionary",
+      "title": "汉典",
+      "url": "https://www.zdic.net/"
+    }
+  ]
+}
