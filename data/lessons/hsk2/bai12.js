@@ -1,6 +1,6 @@
 window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   "schemaVersion": 5,
-  "id": "hsk2-bai12",
+  "id": "hsk2_bai12_chuande",
   "content": {
     "course": {
       "system": "HSK",
@@ -13,7 +13,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "meta": {
       "timeLimitMinutes": 55,
       "version": 1,
-      "lessonId": "hsk2_lesson_12",
+      "lessonId": "hsk2_bai12_chuande",
       "detailSchemaVersion": 2
     },
     "vocabulary": [
