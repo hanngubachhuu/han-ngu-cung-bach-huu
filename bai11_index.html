@@ -854,12 +854,33 @@ footer.print-footer{display:none;}
   .mini-nav-popover{right:14px; bottom:150px;}
 }
 
-/* Audio player: one focused learning action, with clear keyboard states. */
-.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
-.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+
+
+/* HSK-LESSON-UX-PATCH:START */
+/* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
+:root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
+.q-card,.passage-card,.q-prompt,.q-body,.opt,.hint-inline,.selfcheck-area,.model-answer-box,.answer-reveal-box{overflow-wrap:break-word;word-break:break-word;}
+.q-card{padding:var(--space-xl);}
+.q-head{gap:var(--space-xs);margin-bottom:var(--space-md);}
+.q-prompt{margin:var(--space-sm) 0 var(--space-lg);line-height:1.65;}
+.q-body{display:grid;gap:var(--space-md);}
+.opt-list{gap:var(--space-sm);}
+.opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
+.opt .opt-letter{margin-top:var(--space-2xs);}
+.hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
+.audio-player-mini{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin:0;padding:var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface);color:var(--color-primary);}
 .audio-player-mini button:hover{background:var(--color-primary-subtle);}
 .audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
 .audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
+.audio-status{flex:1 1 100%;font-size:var(--fs-sm,14px);line-height:var(--lh-normal,1.5);color:var(--color-text-secondary);}
+.audio-player-mini audio{display:none;}
+.retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);}
+.retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
+.retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
+.retell-timer{color:var(--color-text-secondary);font-weight:700;}
+@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-md);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}}
+/* HSK-LESSON-UX-PATCH:END */
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -1534,9 +1555,7 @@ const LESSON = {
         "B11-A09",
         "B11-A10",
         "B11-A11",
-        "B11-A12",
-        "B11-A13",
-        "B11-A14"
+        "B11-A12"
       ],
       "grammar": [
         "B11-B01",
@@ -1548,9 +1567,7 @@ const LESSON = {
         "B11-B07",
         "B11-B08",
         "B11-B09",
-        "B11-B10",
-        "B11-B11",
-        "B11-B12"
+        "B11-B10"
       ],
       "listening": [
         "B11-A15",
@@ -1586,11 +1603,15 @@ const LESSON = {
         "B11-D09",
         "B11-D10",
         "B11-E01",
-        "B11-E02"
+        "B11-E02",
+        "B11-E03",
+        "B11-E04"
       ],
       "translation": [
-        "B11-E03",
-        "B11-E04",
+        "B11-A13",
+        "B11-A14",
+        "B11-B11",
+        "B11-B12",
         "B11-E05",
         "B11-E06",
         "B11-E07",
@@ -1995,38 +2016,6 @@ const LESSON = {
           "skill": "tuvung"
         },
         {
-          "id": "B11-A13",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền 比 hoặc 可能: 今天的菜___昨天便宜。",
-          "answer": "比",
-          "explain": "比 dùng để so sánh hai đối tượng.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
-        },
-        {
-          "id": "B11-A14",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 那个___在唱歌。",
-          "answer": "孩子",
-          "explain": "孩子 = trẻ em/con; chủ ngữ phù hợp với hành động hát.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
-        },
-        {
           "id": "B11-B01",
           "type": "mcq",
           "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词短语作定语”?",
@@ -2292,56 +2281,6 @@ const LESSON = {
           "skill": "nguphap"
         },
         {
-          "id": "B11-B11",
-          "section": "grammar",
-          "type": "mcq",
-          "prompt": "Trong “他可能不知道”，可能 biểu thị:",
-          "options": [
-            {
-              "k": "A",
-              "t": "phỏng đoán/chưa chắc chắn"
-            },
-            {
-              "k": "B",
-              "t": "đã biết chắc"
-            },
-            {
-              "k": "C",
-              "t": "mệnh lệnh"
-            },
-            {
-              "k": "D",
-              "t": "so sánh"
-            }
-          ],
-          "answer": "A",
-          "explain": "可能 = có lẽ/có thể, diễn tả khả năng.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
-        },
-        {
-          "id": "B11-B12",
-          "section": "grammar",
-          "type": "text_fill",
-          "prompt": "Điền 的: 我喜欢那个会唱歌___孩子。",
-          "answer": "的",
-          "explain": "Cụm 会唱歌 làm định ngữ, cần 的 trước danh từ 孩子.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
-        },
-        {
           "id": "B11-A15",
           "section": "listening",
           "type": "listening",
@@ -2355,6 +2294,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "他比我大三岁。",
+          "audioSrc": "audio/hsk2/bai11/b11-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2391,6 +2332,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "右边那个唱歌的女孩姓王。",
+          "audioSrc": "audio/hsk2/bai11/b11-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2426,6 +2369,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "这个手机比那个便宜一百块。",
+          "audioSrc": "audio/hsk2/bai11/b11-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2468,6 +2413,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "他今天没来，可能生病了。",
+          "audioSrc": "audio/hsk2/bai11/b11-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2510,6 +2457,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "去年我开始学汉语。",
+          "audioSrc": "audio/hsk2/bai11/b11-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2551,6 +2500,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "A：你姓什么？B：",
+          "audioSrc": "audio/hsk2/bai11/b11-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2586,6 +2537,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "那个孩子正在唱歌。",
+          "audioSrc": "audio/hsk2/bai11/b11-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2622,6 +2575,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "A：左边和右边的手机哪个好？B：",
+          "audioSrc": "audio/hsk2/bai11/b11-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -3085,32 +3040,34 @@ const LESSON = {
         {
           "id": "B11-D07",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành: 我___妹妹高一点儿。",
+          "type": "self_check",
+          "prompt": "Đặt 2 câu có ngữ cảnh: so sánh hai món đồ và phỏng đoán lý do một người vắng mặt. Dùng 比、可能.",
           "answer": "比",
-          "explain": "So sánh chiều cao: 比 + người + 高.",
+          "explain": "Câu so sánh cần đủ hai đối tượng; câu phỏng đoán không nói như sự thật chắc chắn.",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
             "teacher_enriched_l11"
           ],
           "status": "teacher_enriched",
+          "model": "这个手机比那个便宜五十块。他今天没来，可能生病了。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
         {
           "id": "B11-D08",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành: 那个说话___男孩是我同学。",
+          "type": "self_check",
+          "prompt": "Viết 2 câu giới thiệu một người: nói họ gì và dùng cụm động từ + 的 để chỉ đúng người đó.",
           "answer": "的",
-          "explain": "说话的 làm định ngữ cho 男孩.",
+          "explain": "Câu thứ hai phải đưa cụm động từ + 的 trước danh từ.",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
             "teacher_enriched_l11"
           ],
           "status": "teacher_enriched",
+          "model": "她姓王。右边那个唱歌的女孩是我朋友。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -3149,9 +3106,9 @@ const LESSON = {
         {
           "id": "B11-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Anh ấy lớn hơn tôi ba tuổi.",
-          "model": "他比我大三岁。",
-          "explain": "比 + đối tượng + tính từ + số lượng chênh lệch.",
+          "prompt": "Viết đoạn 3–4 câu so sánh hai người hoặc hai món đồ: nêu họ/tên, một điểm khác nhau và một phỏng đoán.",
+          "model": "我朋友姓王，他比我大两岁。他唱歌很好。今天他没来，可能很忙。",
+          "explain": "Rubric: 3–4 câu; có 比字句 đúng và một câu 可能 dùng đúng.",
           "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
           "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch.",
           "section": "writing",
@@ -3160,10 +3117,24 @@ const LESSON = {
         },
         {
           "id": "B11-E02",
+          "type": "retell",
+          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
+          "model": "小王二十岁，他哥哥二十三岁。右边唱歌的女孩姓李，是新朋友。小王觉得她可能喜欢汉语。",
+          "explain": "Kể lại giữ quan hệ/độ tuổi, người ở bên phải và phỏng đoán.",
+          "error": "Không cần lặp nguyên văn; không đổi quan hệ hoặc mức chênh lệch.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "writing",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet",
+          "sourceText": "小王二十岁，他哥哥比他大三岁。右边那个唱歌的女孩姓李，是他们的新朋友。小王觉得她可能很喜欢汉语。",
+          "readSeconds": 60
+        },
+        {
+          "id": "B11-E03",
           "type": "self_check",
-          "prompt": "Viết một câu ngắn dùng từ “唱歌”.",
-          "model": "唱歌 + câu của em",
-          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 唱歌.",
+          "prompt": "Viết tin nhắn 3 câu: giới thiệu một bạn mới, nói bạn ấy đứng ở đâu/đang làm gì và so sánh một điểm đơn giản.",
+          "model": "我有一个新朋友，她姓李。右边那个唱歌的女孩就是她。她比我小一岁。",
+          "explain": "Đoạn phải giúp người đọc nhận diện đúng người, không chỉ liệt kê từ.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "writing",
@@ -3171,30 +3142,104 @@ const LESSON = {
           "skill": "viet"
         },
         {
-          "id": "B11-E03",
-          "type": "self_check",
-          "prompt": "Viết một câu có từ “姓”.",
-          "model": "姓 + câu của em",
-          "explain": "Cần đặt từ đúng vị trí trong câu.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
-          "section": "translation",
-          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
-          "skill": "dich"
-        },
-        {
           "id": "B11-E04",
-          "section": "translation",
+          "section": "writing",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Cô gái đang hát ở bên phải là bạn tôi.",
-          "model": "右边那个唱歌的女孩是我朋友。",
-          "explain": "Dùng nhiều định ngữ trước danh từ 女孩.",
+          "prompt": "Viết hội thoại 3 lượt: hỏi người ở bên phải là ai, hỏi họ và nói một so sánh về tuổi.",
+          "model": "A：右边那个唱歌的女孩是谁？B：她是我朋友。A：她姓什么？她比你大吗？",
+          "explain": "Có thao tác hỏi–đáp và dùng đúng vị trí của 的 / 比.",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
             "teacher_enriched_l11"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet"
+        },
+        {
+          "id": "B11-A13",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 今天的菜比昨天便宜。",
+          "answer": "比",
+          "explain": "比 nối hai đối tượng được so sánh.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "Món ăn hôm nay rẻ hơn hôm qua.",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B11-A14",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Đứa trẻ kia đang hát.",
+          "answer": "孩子",
+          "explain": "Câu nêu hành động đang diễn ra; chủ ngữ là 那个孩子.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "那个孩子在唱歌。",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B11-B11",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 他可能不知道。",
+          "options": [
+            {
+              "k": "A",
+              "t": "phỏng đoán/chưa chắc chắn"
+            },
+            {
+              "k": "B",
+              "t": "đã biết chắc"
+            },
+            {
+              "k": "C",
+              "t": "mệnh lệnh"
+            },
+            {
+              "k": "D",
+              "t": "so sánh"
+            }
+          ],
+          "answer": "A",
+          "explain": "可能 biểu thị phỏng đoán, không khẳng định chắc chắn.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "Có lẽ anh ấy không biết.",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B11-B12",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Tôi thích đứa trẻ biết hát kia.",
+          "answer": "的",
+          "explain": "Cụm động từ + 的 đứng trước danh từ.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "我喜欢那个会唱歌的孩子。",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich"
         },
@@ -3767,38 +3812,6 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
           "skill": "tuvung"
-        },
-        {
-          "id": "B11-A13",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền 比 hoặc 可能: 今天的菜___昨天便宜。",
-          "answer": "比",
-          "explain": "比 dùng để so sánh hai đối tượng.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
-        },
-        {
-          "id": "B11-A14",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 那个___在唱歌。",
-          "answer": "孩子",
-          "explain": "孩子 = trẻ em/con; chủ ngữ phù hợp với hành động hát.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
         }
       ],
       "grammar": [
@@ -4066,56 +4079,6 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
           "skill": "nguphap"
-        },
-        {
-          "id": "B11-B11",
-          "section": "grammar",
-          "type": "mcq",
-          "prompt": "Trong “他可能不知道”，可能 biểu thị:",
-          "options": [
-            {
-              "k": "A",
-              "t": "phỏng đoán/chưa chắc chắn"
-            },
-            {
-              "k": "B",
-              "t": "đã biết chắc"
-            },
-            {
-              "k": "C",
-              "t": "mệnh lệnh"
-            },
-            {
-              "k": "D",
-              "t": "so sánh"
-            }
-          ],
-          "answer": "A",
-          "explain": "可能 = có lẽ/có thể, diễn tả khả năng.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
-        },
-        {
-          "id": "B11-B12",
-          "section": "grammar",
-          "type": "text_fill",
-          "prompt": "Điền 的: 我喜欢那个会唱歌___孩子。",
-          "answer": "的",
-          "explain": "Cụm 会唱歌 làm định ngữ, cần 的 trước danh từ 孩子.",
-          "sourceRefs": [
-            "textbook_l11",
-            "workbook_l11",
-            "teacher_enriched_l11"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
         }
       ],
       "listening": [
@@ -4133,6 +4096,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "他比我大三岁。",
+          "audioSrc": "audio/hsk2/bai11/b11-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4169,6 +4134,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "右边那个唱歌的女孩姓王。",
+          "audioSrc": "audio/hsk2/bai11/b11-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4204,6 +4171,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "这个手机比那个便宜一百块。",
+          "audioSrc": "audio/hsk2/bai11/b11-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4246,6 +4215,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "他今天没来，可能生病了。",
+          "audioSrc": "audio/hsk2/bai11/b11-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4288,6 +4259,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "去年我开始学汉语。",
+          "audioSrc": "audio/hsk2/bai11/b11-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4329,6 +4302,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "A：你姓什么？B：",
+          "audioSrc": "audio/hsk2/bai11/b11-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4364,6 +4339,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "那个孩子正在唱歌。",
+          "audioSrc": "audio/hsk2/bai11/b11-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4400,6 +4377,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "audioText": "A：左边和右边的手机哪个好？B：",
+          "audioSrc": "audio/hsk2/bai11/b11-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4867,32 +4846,34 @@ const LESSON = {
         {
           "id": "B11-D07",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành: 我___妹妹高一点儿。",
+          "type": "self_check",
+          "prompt": "Đặt 2 câu có ngữ cảnh: so sánh hai món đồ và phỏng đoán lý do một người vắng mặt. Dùng 比、可能.",
           "answer": "比",
-          "explain": "So sánh chiều cao: 比 + người + 高.",
+          "explain": "Câu so sánh cần đủ hai đối tượng; câu phỏng đoán không nói như sự thật chắc chắn.",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
             "teacher_enriched_l11"
           ],
           "status": "teacher_enriched",
+          "model": "这个手机比那个便宜五十块。他今天没来，可能生病了。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
         {
           "id": "B11-D08",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành: 那个说话___男孩是我同学。",
+          "type": "self_check",
+          "prompt": "Viết 2 câu giới thiệu một người: nói họ gì và dùng cụm động từ + 的 để chỉ đúng người đó.",
           "answer": "的",
-          "explain": "说话的 làm định ngữ cho 男孩.",
+          "explain": "Câu thứ hai phải đưa cụm động từ + 的 trước danh từ.",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
             "teacher_enriched_l11"
           ],
           "status": "teacher_enriched",
+          "model": "她姓王。右边那个唱歌的女孩是我朋友。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -4931,9 +4912,9 @@ const LESSON = {
         {
           "id": "B11-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Anh ấy lớn hơn tôi ba tuổi.",
-          "model": "他比我大三岁。",
-          "explain": "比 + đối tượng + tính từ + số lượng chênh lệch.",
+          "prompt": "Viết đoạn 3–4 câu so sánh hai người hoặc hai món đồ: nêu họ/tên, một điểm khác nhau và một phỏng đoán.",
+          "model": "我朋友姓王，他比我大两岁。他唱歌很好。今天他没来，可能很忙。",
+          "explain": "Rubric: 3–4 câu; có 比字句 đúng và một câu 可能 dùng đúng.",
           "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
           "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch.",
           "section": "writing",
@@ -4942,43 +4923,131 @@ const LESSON = {
         },
         {
           "id": "B11-E02",
+          "type": "retell",
+          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
+          "model": "小王二十岁，他哥哥二十三岁。右边唱歌的女孩姓李，是新朋友。小王觉得她可能喜欢汉语。",
+          "explain": "Kể lại giữ quan hệ/độ tuổi, người ở bên phải và phỏng đoán.",
+          "error": "Không cần lặp nguyên văn; không đổi quan hệ hoặc mức chênh lệch.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "writing",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet",
+          "sourceText": "小王二十岁，他哥哥比他大三岁。右边那个唱歌的女孩姓李，是他们的新朋友。小王觉得她可能很喜欢汉语。",
+          "readSeconds": 60
+        },
+        {
+          "id": "B11-E03",
           "type": "self_check",
-          "prompt": "Viết một câu ngắn dùng từ “唱歌”.",
-          "model": "唱歌 + câu của em",
-          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 唱歌.",
+          "prompt": "Viết tin nhắn 3 câu: giới thiệu một bạn mới, nói bạn ấy đứng ở đâu/đang làm gì và so sánh một điểm đơn giản.",
+          "model": "我有一个新朋友，她姓李。右边那个唱歌的女孩就是她。她比我小一岁。",
+          "explain": "Đoạn phải giúp người đọc nhận diện đúng người, không chỉ liệt kê từ.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
-        }
-      ],
-      "translation": [
-        {
-          "id": "B11-E03",
-          "type": "self_check",
-          "prompt": "Viết một câu có từ “姓”.",
-          "model": "姓 + câu của em",
-          "explain": "Cần đặt từ đúng vị trí trong câu.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
-          "section": "translation",
-          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
-          "skill": "dich"
         },
         {
           "id": "B11-E04",
-          "section": "translation",
+          "section": "writing",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Cô gái đang hát ở bên phải là bạn tôi.",
-          "model": "右边那个唱歌的女孩是我朋友。",
-          "explain": "Dùng nhiều định ngữ trước danh từ 女孩.",
+          "prompt": "Viết hội thoại 3 lượt: hỏi người ở bên phải là ai, hỏi họ và nói một so sánh về tuổi.",
+          "model": "A：右边那个唱歌的女孩是谁？B：她是我朋友。A：她姓什么？她比你大吗？",
+          "explain": "Có thao tác hỏi–đáp và dùng đúng vị trí của 的 / 比.",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
             "teacher_enriched_l11"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet"
+        }
+      ],
+      "translation": [
+        {
+          "id": "B11-A13",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 今天的菜比昨天便宜。",
+          "answer": "比",
+          "explain": "比 nối hai đối tượng được so sánh.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "Món ăn hôm nay rẻ hơn hôm qua.",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B11-A14",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Đứa trẻ kia đang hát.",
+          "answer": "孩子",
+          "explain": "Câu nêu hành động đang diễn ra; chủ ngữ là 那个孩子.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "那个孩子在唱歌。",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B11-B11",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 他可能不知道。",
+          "options": [
+            {
+              "k": "A",
+              "t": "phỏng đoán/chưa chắc chắn"
+            },
+            {
+              "k": "B",
+              "t": "đã biết chắc"
+            },
+            {
+              "k": "C",
+              "t": "mệnh lệnh"
+            },
+            {
+              "k": "D",
+              "t": "so sánh"
+            }
+          ],
+          "answer": "A",
+          "explain": "可能 biểu thị phỏng đoán, không khẳng định chắc chắn.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "Có lẽ anh ấy không biết.",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B11-B12",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Tôi thích đứa trẻ biết hát kia.",
+          "answer": "的",
+          "explain": "Cụm động từ + 的 đứng trước danh từ.",
+          "sourceRefs": [
+            "textbook_l11",
+            "workbook_l11",
+            "teacher_enriched_l11"
+          ],
+          "status": "teacher_enriched",
+          "model": "我喜欢那个会唱歌的孩子。",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich"
         },
@@ -5928,20 +5997,6 @@ const LESSON = {
           ],
           "answer": "A",
           "explain": "男 và 女 là nam/nữ."
-        },
-        {
-          "id": "B11-A13",
-          "type": "text_fill",
-          "prompt": "Điền 比 hoặc 可能: 今天的菜___昨天便宜。",
-          "answer": "比",
-          "explain": "比 dùng để so sánh hai đối tượng."
-        },
-        {
-          "id": "B11-A14",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 那个___在唱歌。",
-          "answer": "孩子",
-          "explain": "孩子 = trẻ em/con; chủ ngữ phù hợp với hành động hát."
         }
       ]
     },
@@ -6162,38 +6217,6 @@ const LESSON = {
           ],
           "answer": "A",
           "explain": "说汉语的 bổ nghĩa cho 老师."
-        },
-        {
-          "id": "B11-B11",
-          "type": "mcq",
-          "prompt": "Trong “他可能不知道”，可能 biểu thị:",
-          "options": [
-            {
-              "k": "A",
-              "t": "phỏng đoán/chưa chắc chắn"
-            },
-            {
-              "k": "B",
-              "t": "đã biết chắc"
-            },
-            {
-              "k": "C",
-              "t": "mệnh lệnh"
-            },
-            {
-              "k": "D",
-              "t": "so sánh"
-            }
-          ],
-          "answer": "A",
-          "explain": "可能 = có lẽ/có thể, diễn tả khả năng."
-        },
-        {
-          "id": "B11-B12",
-          "type": "text_fill",
-          "prompt": "Điền 的: 我喜欢那个会唱歌___孩子。",
-          "answer": "的",
-          "explain": "Cụm 会唱歌 làm định ngữ, cần 的 trước danh từ 孩子."
         }
       ]
     },
@@ -6211,6 +6234,8 @@ const LESSON = {
           "model": "我姓阮。去年我去北京了。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "他比我大三岁。",
+          "audioSrc": "audio/hsk2/bai11/b11-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6238,6 +6263,8 @@ const LESSON = {
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "右边那个唱歌的女孩姓王。",
+          "audioSrc": "audio/hsk2/bai11/b11-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6264,6 +6291,8 @@ const LESSON = {
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这个手机比那个便宜一百块。",
+          "audioSrc": "audio/hsk2/bai11/b11-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6297,6 +6326,8 @@ const LESSON = {
           "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "他今天没来，可能生病了。",
+          "audioSrc": "audio/hsk2/bai11/b11-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6330,6 +6361,8 @@ const LESSON = {
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "去年我开始学汉语。",
+          "audioSrc": "audio/hsk2/bai11/b11-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6362,6 +6395,8 @@ const LESSON = {
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你姓什么？B：",
+          "audioSrc": "audio/hsk2/bai11/b11-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6388,6 +6423,8 @@ const LESSON = {
           "model": "我比他高。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "那个孩子正在唱歌。",
+          "audioSrc": "audio/hsk2/bai11/b11-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6415,6 +6452,8 @@ const LESSON = {
           "model": "去年我买了两个手机。右边那个比左边那个便宜。卖手机的人可能是新来的。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：左边和右边的手机哪个好？B：",
+          "audioSrc": "audio/hsk2/bai11/b11-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6797,17 +6836,19 @@ const LESSON = {
         },
         {
           "id": "B11-D07",
-          "type": "text_fill",
-          "prompt": "Hoàn thành: 我___妹妹高一点儿。",
+          "type": "self_check",
+          "prompt": "Đặt 2 câu có ngữ cảnh: so sánh hai món đồ và phỏng đoán lý do một người vắng mặt. Dùng 比、可能.",
           "answer": "比",
-          "explain": "So sánh chiều cao: 比 + người + 高."
+          "explain": "Câu so sánh cần đủ hai đối tượng; câu phỏng đoán không nói như sự thật chắc chắn.",
+          "model": "这个手机比那个便宜五十块。他今天没来，可能生病了。"
         },
         {
           "id": "B11-D08",
-          "type": "text_fill",
-          "prompt": "Hoàn thành: 那个说话___男孩是我同学。",
+          "type": "self_check",
+          "prompt": "Viết 2 câu giới thiệu một người: nói họ gì và dùng cụm động từ + 的 để chỉ đúng người đó.",
           "answer": "的",
-          "explain": "说话的 làm định ngữ cho 男孩."
+          "explain": "Câu thứ hai phải đưa cụm động từ + 的 trước danh từ.",
+          "model": "她姓王。右边那个唱歌的女孩是我朋友。"
         },
         {
           "id": "B11-D09",
@@ -6826,20 +6867,38 @@ const LESSON = {
         {
           "id": "B11-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Anh ấy lớn hơn tôi ba tuổi.",
-          "model": "他比我大三岁。",
-          "explain": "比 + đối tượng + tính từ + số lượng chênh lệch.",
+          "prompt": "Viết đoạn 3–4 câu so sánh hai người hoặc hai món đồ: nêu họ/tên, một điểm khác nhau và một phỏng đoán.",
+          "model": "我朋友姓王，他比我大两岁。他唱歌很好。今天他没来，可能很忙。",
+          "explain": "Rubric: 3–4 câu; có 比字句 đúng và một câu 可能 dùng đúng.",
           "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
           "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch."
         },
         {
           "id": "B11-E02",
+          "type": "retell",
+          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
+          "model": "小王二十岁，他哥哥二十三岁。右边唱歌的女孩姓李，是新朋友。小王觉得她可能喜欢汉语。",
+          "explain": "Kể lại giữ quan hệ/độ tuổi, người ở bên phải và phỏng đoán.",
+          "error": "Không cần lặp nguyên văn; không đổi quan hệ hoặc mức chênh lệch.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "sourceText": "小王二十岁，他哥哥比他大三岁。右边那个唱歌的女孩姓李，是他们的新朋友。小王觉得她可能很喜欢汉语。",
+          "readSeconds": 60
+        },
+        {
+          "id": "B11-E03",
           "type": "self_check",
-          "prompt": "Viết một câu ngắn dùng từ “唱歌”.",
-          "model": "唱歌 + câu của em",
-          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 唱歌.",
+          "prompt": "Viết tin nhắn 3 câu: giới thiệu một bạn mới, nói bạn ấy đứng ở đâu/đang làm gì và so sánh một điểm đơn giản.",
+          "model": "我有一个新朋友，她姓李。右边那个唱歌的女孩就是她。她比我小一岁。",
+          "explain": "Đoạn phải giúp người đọc nhận diện đúng người, không chỉ liệt kê từ.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
+        },
+        {
+          "id": "B11-E04",
+          "type": "self_check",
+          "prompt": "Viết hội thoại 3 lượt: hỏi người ở bên phải là ai, hỏi họ và nói một so sánh về tuổi.",
+          "model": "A：右边那个唱歌的女孩是谁？B：她是我朋友。A：她姓什么？她比你大吗？",
+          "explain": "Có thao tác hỏi–đáp và dùng đúng vị trí của 的 / 比."
         }
       ]
     },
@@ -6851,20 +6910,54 @@ const LESSON = {
       "passages": [],
       "questions": [
         {
-          "id": "B11-E03",
+          "id": "B11-A13",
           "type": "self_check",
-          "prompt": "Viết một câu có từ “姓”.",
-          "model": "姓 + câu của em",
-          "explain": "Cần đặt từ đúng vị trí trong câu.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "prompt": "Dịch sang tiếng Việt: 今天的菜比昨天便宜。",
+          "answer": "比",
+          "explain": "比 nối hai đối tượng được so sánh.",
+          "model": "Món ăn hôm nay rẻ hơn hôm qua."
         },
         {
-          "id": "B11-E04",
+          "id": "B11-A14",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Cô gái đang hát ở bên phải là bạn tôi.",
-          "model": "右边那个唱歌的女孩是我朋友。",
-          "explain": "Dùng nhiều định ngữ trước danh từ 女孩."
+          "prompt": "Dịch sang tiếng Trung: Đứa trẻ kia đang hát.",
+          "answer": "孩子",
+          "explain": "Câu nêu hành động đang diễn ra; chủ ngữ là 那个孩子.",
+          "model": "那个孩子在唱歌。"
+        },
+        {
+          "id": "B11-B11",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 他可能不知道。",
+          "options": [
+            {
+              "k": "A",
+              "t": "phỏng đoán/chưa chắc chắn"
+            },
+            {
+              "k": "B",
+              "t": "đã biết chắc"
+            },
+            {
+              "k": "C",
+              "t": "mệnh lệnh"
+            },
+            {
+              "k": "D",
+              "t": "so sánh"
+            }
+          ],
+          "answer": "A",
+          "explain": "可能 biểu thị phỏng đoán, không khẳng định chắc chắn.",
+          "model": "Có lẽ anh ấy không biết."
+        },
+        {
+          "id": "B11-B12",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Tôi thích đứa trẻ biết hát kia.",
+          "answer": "的",
+          "explain": "Cụm động từ + 的 đứng trước danh từ.",
+          "model": "我喜欢那个会唱歌的孩子。"
         },
         {
           "id": "B11-E05",
@@ -7313,6 +7406,7 @@ function renderQuestion(){
     case 'text_fill': renderTextFill(q, body); break;
     case 'reorder': renderReorder(q, body); break;
     case 'self_check': renderSelfCheck(q, body); break;
+    case 'retell': renderRetell(q, body); break;
     case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
@@ -7322,7 +7416,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -7367,28 +7461,30 @@ function renderMcq(q, body){
 }
 
 function renderListening(q, body){
-  const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
+  const intro = el('div','hint-inline','Nghe 2–3 lần, sau đó chọn đáp án. Không đọc lời thoại trước khi trả lời.');
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
-  const play = el('button','audio-play','Phát'); play.type='button';
-  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
-  const speed = el('button','audio-speed','1.0×'); speed.type='button';
-  speed.setAttribute('aria-label','Đổi tốc độ phát');
-  let rate=.82, paused=false;
-  const setRest=()=>{ paused=false; play.textContent='Phát'; };
-  play.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
-    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
-    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = rate;
-    utterance.onend=setRest; utterance.onerror=setRest;
-    window.speechSynthesis.speak(utterance);
-    play.textContent='Tạm dừng';
-  });
-  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
-  player.append(play,speed); body.appendChild(player);
+  if(q.audioStatus !== 'ready' || !q.audioSrc){
+    const status = el('div','audio-status','Bản ghi đang chuẩn bị. Giáo viên sẽ bổ sung tệp nghe cho câu này.');
+    status.setAttribute('role','status');
+    player.appendChild(status); body.appendChild(player);
+  } else {
+    const audio = document.createElement('audio'); audio.preload='metadata'; audio.src=q.audioSrc;
+    const play = el('button','audio-play','Phát audio'); play.type='button';
+    play.setAttribute('aria-label','Phát hoặc tạm dừng tệp nghe tiếng Trung');
+    const speed = el('button','audio-speed','1.0×'); speed.type='button';
+    speed.setAttribute('aria-label','Đổi tốc độ phát audio');
+    const status = el('div','audio-status','Sẵn sàng nghe.'); status.setAttribute('role','status');
+    const setRest=()=>{ play.textContent='Phát audio'; };
+    play.addEventListener('click', async () => {
+      if(audio.paused){ try{ await audio.play(); play.textContent='Tạm dừng'; status.textContent='Đang phát audio.'; }catch{ status.textContent='Không thể phát tệp. Hãy thử lại hoặc báo giáo viên.'; } }
+      else { audio.pause(); play.textContent='Tiếp tục'; status.textContent='Đã tạm dừng.'; }
+    });
+    audio.addEventListener('ended',()=>{setRest();status.textContent='Đã phát xong. Em có thể nghe lại.';});
+    audio.addEventListener('error',()=>{setRest();status.textContent='Không tìm thấy tệp nghe. Giáo viên đang bổ sung.';});
+    speed.addEventListener('click',()=>{ const rates=[.8,1,1.15]; const next=rates[(rates.indexOf(audio.playbackRate)+1)%rates.length]; audio.playbackRate=next; speed.textContent=next.toFixed(2).replace(/0$/,'')+'×'; });
+    player.append(play,speed,status,audio); body.appendChild(player);
+  }
   renderMcq(q, body);
 }
 function renderTextFill(q, body){
@@ -7465,6 +7561,15 @@ function renderReorder(q, body){
   }
 }
 
+function renderRetell(q, body){
+  const source=el('div','retell-source',mixText(q.sourceText));
+  const actions=el('div','retell-actions'); const button=el('button','', 'Bắt đầu đọc'); button.type='button';
+  const timer=el('span','retell-timer', 'Đọc trong '+q.readSeconds+' giây rồi kể lại bằng lời của em.');
+  actions.append(button,timer); body.append(source,actions);
+  let left=q.readSeconds, interval;
+  button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
+  renderSelfCheck(q, body);
+}
 function renderSelfCheck(q, body){
   const wrap = el('div','selfcheck-area');
   const ta = el('textarea');
@@ -7537,7 +7642,7 @@ function gradeQuestion(q){
     const ok = arr.length === q.answer.length && arr.every((t,i) => t === q.answer[i]);
     return { score: ok ? 1 : 0, max };
   }
-  if(q.type === 'self_check'){
+  if(q.type === 'self_check' || q.type === 'retell'){
     const mark = state.selfMarks[q.id];
     return { score: (mark === undefined ? 0 : mark), max };
   }
@@ -7986,7 +8091,7 @@ function showAttemptDetailModal(record){
       studentText = Array.isArray(studentVal) && studentVal.length ? studentVal.join('') : '(chưa trả lời)';
       correctText = (q.answer||[]).join('');
       isCorrect = Array.isArray(studentVal) && studentVal.length===q.answer.length && studentVal.every((t,i)=>t===q.answer[i]);
-    } else if(q.type === 'self_check'){
+    } else if(q.type === 'self_check' || q.type === 'retell'){
       studentText = studentVal || '(chưa trả lời)';
       correctText = q.model;
       const mark = (record.selfMarks||{})[q.id];

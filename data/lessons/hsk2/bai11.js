@@ -1902,11 +1902,27 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   lesson.content.meta.version=2; lesson.content.meta.timeLimitMinutes=75; lesson.content.coverage.exercises="gold_template_v1";
 })();
 
+/* Bài viết - dịch cân bằng: từ trật tự câu đến kể lại, dịch hai chiều. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai11_bida"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id);
+  const open=(id,prompt,model,explain,extra={})=>Object.assign(q(id),{type:"self_check",prompt,model,explain,...extra});
+  open("B11-A13","Dịch sang tiếng Việt: 今天的菜比昨天便宜。","Món ăn hôm nay rẻ hơn hôm qua.","比 nối hai đối tượng được so sánh.");
+  open("B11-A14","Dịch sang tiếng Trung: Đứa trẻ kia đang hát.","那个孩子在唱歌。","Câu nêu hành động đang diễn ra; chủ ngữ là 那个孩子.");
+  open("B11-B11","Dịch sang tiếng Việt: 他可能不知道。","Có lẽ anh ấy không biết.","可能 biểu thị phỏng đoán, không khẳng định chắc chắn.");
+  open("B11-B12","Dịch sang tiếng Trung: Tôi thích đứa trẻ biết hát kia.","我喜欢那个会唱歌的孩子。","Cụm động từ + 的 đứng trước danh từ.");
+  open("B11-D07","Đặt 2 câu có ngữ cảnh: so sánh hai món đồ và phỏng đoán lý do một người vắng mặt. Dùng 比、可能.","这个手机比那个便宜五十块。他今天没来，可能生病了。","Câu so sánh cần đủ hai đối tượng; câu phỏng đoán không nói như sự thật chắc chắn.");
+  open("B11-D08","Viết 2 câu giới thiệu một người: nói họ gì và dùng cụm động từ + 的 để chỉ đúng người đó.","她姓王。右边那个唱歌的女孩是我朋友。","Câu thứ hai phải đưa cụm động từ + 的 trước danh từ.");
+  open("B11-E01","Viết đoạn 3–4 câu so sánh hai người hoặc hai món đồ: nêu họ/tên, một điểm khác nhau và một phỏng đoán.","我朋友姓王，他比我大两岁。他唱歌很好。今天他没来，可能很忙。","Rubric: 3–4 câu; có 比字句 đúng và một câu 可能 dùng đúng.");
+  Object.assign(q("B11-E02"),{type:"retell",prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:"小王二十岁，他哥哥比他大三岁。右边那个唱歌的女孩姓李，是他们的新朋友。小王觉得她可能很喜欢汉语。",readSeconds:60,model:"小王二十岁，他哥哥二十三岁。右边唱歌的女孩姓李，是新朋友。小王觉得她可能喜欢汉语。",explain:"Kể lại giữ quan hệ/độ tuổi, người ở bên phải và phỏng đoán.",error:"Không cần lặp nguyên văn; không đổi quan hệ hoặc mức chênh lệch."});
+  open("B11-E03","Viết tin nhắn 3 câu: giới thiệu một bạn mới, nói bạn ấy đứng ở đâu/đang làm gì và so sánh một điểm đơn giản.","我有一个新朋友，她姓李。右边那个唱歌的女孩就是她。她比我小一岁。","Đoạn phải giúp người đọc nhận diện đúng người, không chỉ liệt kê từ.");
+  open("B11-E04","Viết hội thoại 3 lượt: hỏi người ở bên phải là ai, hỏi họ và nói một so sánh về tuổi.","A：右边那个唱歌的女孩是谁？B：她是我朋友。A：她姓什么？她比你大吗？","Có thao tác hỏi–đáp và dùng đúng vị trí của 的 / 比.");
+})();
+
 /* Ma trận 4 kỹ năng: cân lại theo cấu trúc Bài 5, có phần nghe thực thi bằng TTS. */
 (() => {
   const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai11_bida"], c=lesson.content, all=c.exercises.all;
   const ids=(part,a,b)=>Array.from({length:b-a+1},(_,i)=>`B11-${part}${String(a+i).padStart(2,"0")}`);
-  const matrix={vocabulary:ids("A",1,14),grammar:ids("B",1,12),listening:["B11-A15",...ids("B",13,18),"B11-F09"],reading:[...ids("C",1,10),"B11-D01","B11-D02"],writing:[...ids("D",3,10),"B11-E01","B11-E02"],translation:ids("E",3,8),speaking:ids("F",1,8),mixed:[]};
+  const matrix={vocabulary:ids("A",1,12),grammar:ids("B",1,10),listening:["B11-A15",...ids("B",13,18),"B11-F09"],reading:[...ids("C",1,10),"B11-D01","B11-D02"],writing:[...ids("D",3,10),"B11-E01","B11-E02","B11-E03","B11-E04"],translation:["B11-A13","B11-A14","B11-B11","B11-B12","B11-E05","B11-E06","B11-E07","B11-E08"],speaking:ids("F",1,8),mixed:[]};
   const listen={
     "B11-A15":["Nghe câu và chọn ý đúng.","他比我大三岁。",["Anh ấy lớn hơn tôi ba tuổi","Anh ấy nhỏ hơn tôi ba tuổi","Chúng tôi bằng tuổi","Anh ấy hai mươi tuổi"],"A"],
     "B11-B13":["Nghe và xác định người được nói đến.","右边那个唱歌的女孩姓王。",["Cô gái bên phải đang hát","Cậu bé bên trái","Người đàn ông đang nói","Một đứa trẻ"],"A"],
@@ -1917,7 +1933,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "B11-B18":["Nghe câu và chọn hoạt động.","那个孩子正在唱歌。",["Hát","Đi làm","Rửa quần áo","Làm bài tập"],"A"],
     "B11-F09":["Nghe tình huống và chọn câu tự nhiên nhất.","A：左边和右边的手机哪个好？B：",["右边的比左边的便宜。","我姓王。","别找了。","我没做完。"],"A"]
   };
-  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
+  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,audioSrc:`audio/hsk2/bai11/${id.toLowerCase()}.mp3`,audioStatus:"awaiting_recording",options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
   const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
   c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]}; lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction,passages:id==="reading"?c.passages:[]}));
   for(const [section,qids] of Object.entries(matrix)) for(const id of qids){const q=all.find(x=>x.id===id); if(q){q.section=section;q.sectionTitle=info[section][0];q.skill=info[section][1];}}

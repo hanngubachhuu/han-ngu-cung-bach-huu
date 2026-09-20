@@ -1876,11 +1876,27 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   lesson.content.coverage.exercises="gold_template_v1";
 })();
 
+/* Bài viết - dịch cân bằng: tránh ép một từ, tăng nhiệm vụ có ngữ cảnh. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id);
+  const open=(id,prompt,model,explain,extra={})=>Object.assign(q(id),{type:"self_check",prompt,model,explain,...extra});
+  open("B9-A13","Dịch sang tiếng Việt: 老师说得很清楚，我都听懂了。","Thầy/cô nói rất rõ, tôi đều nghe hiểu rồi.","听懂 là nghe và hiểu được nội dung.");
+  open("B9-A14","Dịch sang tiếng Trung: Chào mừng bạn đến công ty chúng tôi làm việc.","欢迎你来我们公司工作。","欢迎 + người + 来 + nơi chốn + V.");
+  open("B9-B11","Dịch sang tiếng Việt: 我看完这本书了。","Tôi đã đọc xong quyển sách này rồi.","V + 完 biểu thị hoàn thành hành động.");
+  open("B9-B12","Dịch sang tiếng Trung: Bạn đã viết sai tên tôi rồi.","你写错我的名字了。","写错 + tân ngữ: viết sai cái gì.");
+  open("B9-D07","Đặt 2 câu có ngữ cảnh: một câu nói chưa làm xong việc, một câu nói đã hiểu một bài khó. Dùng 完、懂.","我作业还没做完。这个问题我听懂了。","Mỗi câu phải có chủ ngữ và tình huống rõ, không chỉ liệt kê từ.");
+  open("B9-D08","Viết 2 câu: nhờ bạn viết lại một chữ bị sai, rồi nói bạn ấy đã làm xong chưa.","这个字写错了，请你再写一下。你写完了吗？","Kết hợp sửa lỗi với hỏi kết quả; chú ý 写错 / 写完.");
+  open("B9-E01","Viết đoạn 3–4 câu về ngày đầu đi học hoặc đi làm: em bắt đầu từ khi nào, một điều chưa hiểu và điều em đã làm xong.","我从九月开始上班。第一天有很多事情我不懂。晚上我做完了作业。","Rubric: có mốc bắt đầu, một khó khăn và một kết quả; dùng đúng ít nhất 2 mục 从…开始、懂、完、第一次.");
+  Object.assign(q("B9-E02"),{type:"retell",prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:"小王第一天来公司工作。他有很多事情不懂，同事帮助他。下午他做完了第一份工作。",readSeconds:60,model:"小王第一天来公司。他有很多事情不懂，同事帮助他。下午他做完了工作。",explain:"Kể lại đủ: ngày đầu, khó khăn/giúp đỡ, kết quả.",error:"Không cần chép nguyên văn; giữ thông tin chính bằng cách nói của mình."});
+  open("B9-E03","Viết tin nhắn 3 câu cho bạn: em làm bài sai một chỗ, chưa hiểu và muốn bạn giải thích.","我有一道题做错了。我还不懂，你可以给我讲讲吗？谢谢！","Tin nhắn phải có lỗi, mức độ hiểu và lời đề nghị lịch sự.");
+  open("B9-E04","Viết hội thoại 3 lượt giữa nhân viên mới và đồng nghiệp: hỏi việc bắt đầu thế nào, nói chưa hiểu, rồi nhận lời giúp.","A：这份工作从哪儿开始做？B：你还不懂吗？A：是的，请你帮助我。","Có câu hỏi, câu nêu khó khăn và phản hồi hợp tác.");
+})();
+
 /* Ma trận 4 kỹ năng: cân lại theo cấu trúc Bài 5, có phần nghe thực thi bằng TTS. */
 (() => {
   const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"], c=lesson.content, all=c.exercises.all;
   const ids=(part,a,b)=>Array.from({length:b-a+1},(_,i)=>`B9-${part}${String(a+i).padStart(2,"0")}`);
-  const matrix={vocabulary:ids("A",1,14),grammar:ids("B",1,12),listening:["B9-A15",...ids("B",13,18),"B9-F09"],reading:[...ids("C",1,10),"B9-D01","B9-D02"],writing:[...ids("D",3,10),"B9-E01","B9-E02"],translation:ids("E",3,8),speaking:ids("F",1,8),mixed:[]};
+  const matrix={vocabulary:ids("A",1,12),grammar:ids("B",1,10),listening:["B9-A15",...ids("B",13,18),"B9-F09"],reading:[...ids("C",1,10),"B9-D01","B9-D02"],writing:[...ids("D",3,10),"B9-E01","B9-E02","B9-E03","B9-E04"],translation:["B9-A13","B9-A14","B9-B11","B9-B12","B9-E05","B9-E06","B9-E07","B9-E08"],speaking:ids("F",1,8),mixed:[]};
   const listen={
     "B9-A15":["Nghe câu và chọn ý đúng.","题太多了，我今天没做完。",["Bài quá nhiều nên chưa làm xong","Đã làm xong toàn bộ","Không có bài tập","Ngày mai không làm"],"A"],
     "B9-B13":["Nghe và xác định mốc bắt đầu.","我从明天开始上班。",["Ngày mai","Hôm qua","Tháng trước","Buổi tối"],"A"],
@@ -1891,7 +1907,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "B9-B18":["Nghe câu và chọn hành động đúng.","我希望明天能做完作业。",["Ngày mai làm xong bài tập","Ngày mai không đi học","Hôm qua làm sai","Bắt đầu đi làm"],"A"],
     "B9-F09":["Nghe lời nhắn và chọn phản hồi phù hợp.","别着急，明天再做吧。",["好的，我明天做。","我已经上班。","欢迎你。","第一题错。"],"A"]
   };
-  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
+  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,audioSrc:`audio/hsk2/bai9/${id.toLowerCase()}.mp3`,audioStatus:"awaiting_recording",options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
   const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
   c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]}; lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction,passages:id==="reading"?c.passages:[]}));
   for(const [section,qids] of Object.entries(matrix)) for(const id of qids){const q=all.find(x=>x.id===id); if(q){q.section=section;q.sectionTitle=info[section][0];q.skill=info[section][1];}}

@@ -59,7 +59,7 @@ for (const item of manifest) {
     if (!q.id) fail("exercise thiếu id");
     if (!q.section || !sectionIds.has(q.section)) fail(`exercise ${q.id} có section không tồn tại: ${q.section}`);
     if (!q.type) fail(`exercise ${q.id} thiếu type`);
-    if (q.type !== "self_check" && q.answer === undefined) fail(`exercise ${q.id} cần answer cho type ${q.type}`);
+    if (q.type !== "self_check" && q.type !== "retell" && q.answer === undefined) fail(`exercise ${q.id} cần answer cho type ${q.type}`);
   }
 
   for (const v of c.vocabulary || []) {

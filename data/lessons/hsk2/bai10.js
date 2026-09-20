@@ -1710,11 +1710,27 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   });
 })();
 
+/* Bài viết - dịch cân bằng: thực hành câu, đoạn và tường thuật. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai10_biezhao"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id);
+  const open=(id,prompt,model,explain,extra={})=>Object.assign(q(id),{type:"self_check",prompt,model,explain,...extra});
+  open("B10-A13","Dịch sang tiếng Việt: 哥哥在洗衣服呢。","Anh trai đang giặt quần áo.","正在/在…呢 cho biết hành động đang diễn ra.");
+  open("B10-A14","Dịch sang tiếng Trung: Bạn giúp tôi một chút được không?","请你帮助我一下，好吗？","帮助 + người; 一下 và 好吗 làm lời nhờ nhẹ nhàng.");
+  open("B10-B11","Dịch sang tiếng Việt: 妈妈对我说：‘快吃饭吧。’","Mẹ nói với tôi: ‘Mau ăn cơm đi.’","对 + người + 说: nói với ai.");
+  open("B10-B12","Dịch sang tiếng Trung: Anh ấy rất tôn trọng thầy giáo.","他对老师很尊敬。","对 + người + tính từ/động từ nêu thái độ.");
+  open("B10-D07","Đặt 2 câu có ngữ cảnh: một câu nhắc bạn đừng làm gì nữa, một câu nói một người đang làm việc nhà. Dùng 别……了、在……呢.","别玩手机了，快上课吧。哥哥在洗衣服呢。","Câu nhắc phải có hành động cần dừng; câu thứ hai phải nêu người và hành động đang diễn ra.");
+  open("B10-D08","Viết 2 câu về việc tìm điện thoại: nhờ người thân giúp, rồi báo điện thoại ở đâu.","请你帮助我找一下手机。手机在桌子上呢。","Hai câu có liên kết tình huống: lời nhờ → thông tin vị trí.");
+  open("B10-E01","Viết đoạn 3–4 câu về một buổi ở nhà: ai đang làm việc gì, em nhờ ai giúp và một lời nhắc lịch sự.","妈妈在做饭呢，哥哥在洗衣服。我在找手机。哥哥，请你帮助我一下。", "Rubric: 3–4 câu; có hoạt động đang diễn ra và một tương tác lịch sự.");
+  Object.assign(q("B10-E02"),{type:"retell",prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:"小王在找手机。哥哥对他说：‘别找了，手机在桌子上呢。’小王找到了手机，谢谢哥哥。",readSeconds:60,model:"小王在找手机。哥哥说手机在桌子上，叫他别找了。小王找到了手机。",explain:"Kể lại đủ việc đang tìm, thông tin của anh trai và kết quả.",error:"Không chép từng câu; hãy kể theo trình tự sự việc."});
+  open("B10-E03","Viết tin nhắn 3 câu cho người nhà: em đang tìm đồ, cần giúp và sẽ cảm ơn sau khi tìm thấy.","我在找我的书。你可以帮助我找一下吗？找到了我谢谢你。","Tin nhắn cần có việc đang diễn ra, lời nhờ rõ ràng và phản hồi lịch sự.");
+  open("B10-E04","Viết hội thoại 3 lượt: một người đang vào học, nhắc bạn không dùng điện thoại nữa và đề nghị cùng học.","A：现在上课呢。B：别玩手机了。A：我们一起学习吧。","Thể hiện đúng ngữ cảnh lớp học, không chỉ đặt câu rời rạc.");
+})();
+
 /* Ma trận 4 kỹ năng: cân lại theo cấu trúc Bài 5, có phần nghe thực thi bằng TTS. */
 (() => {
   const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai10_biezhao"], c=lesson.content, all=c.exercises.all;
   const ids=(part,a,b)=>Array.from({length:b-a+1},(_,i)=>`B10-${part}${String(a+i).padStart(2,"0")}`);
-  const matrix={vocabulary:ids("A",1,14),grammar:ids("B",1,12),listening:["B10-A15",...ids("B",13,18),"B10-F09"],reading:[...ids("C",1,10),"B10-D01","B10-D02"],writing:[...ids("D",3,10),"B10-E01","B10-E02"],translation:ids("E",3,8),speaking:ids("F",1,8),mixed:[]};
+  const matrix={vocabulary:ids("A",1,12),grammar:ids("B",1,10),listening:["B10-A15",...ids("B",13,18),"B10-F09"],reading:[...ids("C",1,10),"B10-D01","B10-D02"],writing:[...ids("D",3,10),"B10-E01","B10-E02","B10-E03","B10-E04"],translation:["B10-A13","B10-A14","B10-B11","B10-B12","B10-E05","B10-E06","B10-E07","B10-E08"],speaking:ids("F",1,8),mixed:[]};
   const listen={
     "B10-A15":["Nghe câu và chọn ý đúng.","别找了，手机在桌子上呢。",["Điện thoại ở trên bàn","Điện thoại bị mất","Điện thoại ở trường","Người nói đang mua điện thoại"],"A"],
     "B10-B13":["Nghe và chọn người đang làm việc gì.","哥哥正在洗衣服。",["Anh trai đang giặt quần áo","Anh trai đang tìm điện thoại","Mẹ đang rửa dưa","Em đang lên lớp"],"A"],
@@ -1725,7 +1741,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "B10-B18":["Nghe và chọn thời điểm hành động.","你晚一点儿再找他吧。",["Muộn một chút","Ngay bây giờ","Năm ngoái","Ngày đầu tiên"],"A"],
     "B10-F09":["Nghe tình huống và chọn câu nói tự nhiên nhất.","A：你的手机在哪儿？B：",["在桌子上呢。","我比你大。","欢迎你来。","我没做完。"],"A"]
   };
-  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
+  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,audioSrc:`audio/hsk2/bai10/${id.toLowerCase()}.mp3`,audioStatus:"awaiting_recording",options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
   const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
   c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]}; lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction,passages:id==="reading"?c.passages:[]}));
   for(const [section,qids] of Object.entries(matrix)) for(const id of qids){const q=all.find(x=>x.id===id); if(q){q.section=section;q.sectionTitle=info[section][0];q.skill=info[section][1];}}

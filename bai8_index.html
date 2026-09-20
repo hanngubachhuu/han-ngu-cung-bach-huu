@@ -854,12 +854,34 @@ footer.print-footer{display:none;}
   .mini-nav-popover{right:14px; bottom:150px;}
 }
 
-/* Audio player: one focused learning action, with clear keyboard states. */
-.audio-player-mini{display:flex;gap:var(--space-sm);align-items:center;margin:var(--space-sm) 0;}
-.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface-subtle);color:var(--color-primary);}
+
+
+
+/* HSK-LESSON-UX-PATCH:START */
+/* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
+:root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
+.q-card,.passage-card,.q-prompt,.q-body,.opt,.hint-inline,.selfcheck-area,.model-answer-box,.answer-reveal-box{overflow-wrap:break-word;word-break:break-word;}
+.q-card{padding:var(--space-xl);}
+.q-head{gap:var(--space-xs);margin-bottom:var(--space-md);}
+.q-prompt{margin:var(--space-sm) 0 var(--space-lg);line-height:1.65;}
+.q-body{display:grid;gap:var(--space-md);}
+.opt-list{gap:var(--space-sm);}
+.opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
+.opt .opt-letter{margin-top:var(--space-2xs);}
+.hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
+.audio-player-mini{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin:0;padding:var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);}
+.audio-player-mini button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;cursor:pointer;background:var(--color-surface);color:var(--color-primary);}
 .audio-player-mini button:hover{background:var(--color-primary-subtle);}
 .audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
 .audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
+.audio-status{flex:1 1 100%;font-size:var(--fs-sm,14px);line-height:var(--lh-normal,1.5);color:var(--color-text-secondary);}
+.audio-player-mini audio{display:none;}
+.retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);}
+.retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
+.retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
+.retell-timer{color:var(--color-text-secondary);font-weight:700;}
+@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-md);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}}
+/* HSK-LESSON-UX-PATCH:END */
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -1554,9 +1576,7 @@ const LESSON = {
         "B8-A09",
         "B8-A10",
         "B8-A11",
-        "B8-A12",
-        "B8-A13",
-        "B8-A14"
+        "B8-A12"
       ],
       "grammar": [
         "B8-B01",
@@ -1568,9 +1588,7 @@ const LESSON = {
         "B8-B07",
         "B8-B08",
         "B8-B09",
-        "B8-B10",
-        "B8-B11",
-        "B8-B12"
+        "B8-B10"
       ],
       "listening": [
         "B8-A15",
@@ -1606,11 +1624,15 @@ const LESSON = {
         "B8-D09",
         "B8-D10",
         "B8-E01",
-        "B8-E02"
+        "B8-E02",
+        "B8-E03",
+        "B8-E04"
       ],
       "translation": [
-        "B8-E03",
-        "B8-E04",
+        "B8-A13",
+        "B8-A14",
+        "B8-B11",
+        "B8-B12",
         "B8-E05",
         "B8-E06",
         "B8-E07",
@@ -1997,38 +2019,6 @@ const LESSON = {
           "skill": "tuvung"
         },
         {
-          "id": "B8-A13",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 你在___什么？我找不到我的手机了。",
-          "answer": "找",
-          "explain": "找 + đồ vật/người = tìm.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
-        },
-        {
-          "id": "B8-A14",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 服务员，请___我一杯水。",
-          "answer": "给",
-          "explain": "给 + người + vật: đưa/cho ai cái gì. Đây là từ đã học trước, dùng để đặt từ mới 服务员 vào ngữ cảnh.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
-        },
-        {
           "id": "B8-B01",
           "type": "mcq",
           "prompt": "Mẫu câu nào đúng với điểm ngữ pháp ““……，好吗””?",
@@ -2269,74 +2259,6 @@ const LESSON = {
           "skill": "nguphap"
         },
         {
-          "id": "B8-B11",
-          "section": "grammar",
-          "type": "mcq",
-          "prompt": "Chọn câu đúng về trật tự của 再:",
-          "options": [
-            {
-              "k": "A",
-              "t": "我想想再回答你。"
-            },
-            {
-              "k": "B",
-              "t": "我再想想回答你。"
-            },
-            {
-              "k": "C",
-              "t": "我想再想你回答。"
-            },
-            {
-              "k": "D",
-              "t": "我回答你再想想。"
-            }
-          ],
-          "answer": "A",
-          "explain": "Khi diễn tả hai hành động nối tiếp, V1 + 再 + V2: nghĩ xong rồi mới trả lời.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
-        },
-        {
-          "id": "B8-B12",
-          "section": "grammar",
-          "type": "mcq",
-          "prompt": "Trong “你看一看这个”，看一看 có tác dụng gì?",
-          "options": [
-            {
-              "k": "A",
-              "t": "Làm lời đề nghị/động tác nghe nhẹ nhàng hơn"
-            },
-            {
-              "k": "B",
-              "t": "Chỉ hành động đã hoàn thành"
-            },
-            {
-              "k": "C",
-              "t": "Biểu thị phủ định"
-            },
-            {
-              "k": "D",
-              "t": "Thay cho quá khứ"
-            }
-          ],
-          "answer": "A",
-          "explain": "Động từ đơn âm có thể lặp AA để thử/làm một chút, tạo sắc thái nhẹ.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
-        },
-        {
           "id": "B8-A15",
           "section": "listening",
           "type": "listening",
@@ -2349,7 +2271,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "请你等我一下，我想想再告诉你。",
+          "audioSrc": "audio/hsk2/bai8/b8-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2368,9 +2294,7 @@ const LESSON = {
               "t": "Người nói đang gọi phục vụ viên"
             }
           ],
-          "answer": "A",
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          "answer": "A"
         },
         {
           "id": "B8-B13",
@@ -2385,7 +2309,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "A：这个黑色的贵不贵？B：不贵。",
+          "audioSrc": "audio/hsk2/bai8/b8-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2403,9 +2331,7 @@ const LESSON = {
               "k": "D",
               "t": "Đổi sang màu trắng"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B14",
@@ -2420,7 +2346,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "A：你找谁？B：我找服务员。",
+          "audioSrc": "audio/hsk2/bai8/b8-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2438,9 +2368,7 @@ const LESSON = {
               "k": "D",
               "t": "Người B đi học"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B15",
@@ -2455,7 +2383,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "这件衣服有点儿贵，我们再看看吧。",
+          "audioSrc": "audio/hsk2/bai8/b8-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2473,9 +2405,7 @@ const LESSON = {
               "k": "D",
               "t": "Xem thêm món khác"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B16",
@@ -2498,7 +2428,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "你帮我看看这个，好吗？",
+          "audioSrc": "audio/hsk2/bai8/b8-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2516,9 +2450,7 @@ const LESSON = {
               "k": "D",
               "t": "Hỏi giá"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B17",
@@ -2539,7 +2471,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "我先想想，明天再告诉你。",
+          "audioSrc": "audio/hsk2/bai8/b8-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2557,9 +2493,7 @@ const LESSON = {
               "k": "D",
               "t": "Người nói đang tìm điện thoại"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B18",
@@ -2574,7 +2508,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "白色的太贵，黑色的怎么样？",
+          "audioSrc": "audio/hsk2/bai8/b8-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2593,9 +2531,7 @@ const LESSON = {
               "t": "Đen"
             }
           ],
-          "answer": "D",
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          "answer": "D"
         },
         {
           "id": "B8-F09",
@@ -2610,7 +2546,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "A：你现在能告诉我吗？B：",
+          "audioSrc": "audio/hsk2/bai8/b8-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2629,9 +2569,7 @@ const LESSON = {
               "t": "我找不到白。"
             }
           ],
-          "answer": "A",
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          "answer": "A"
         },
         {
           "id": "B8-C01",
@@ -3051,35 +2989,37 @@ const LESSON = {
         {
           "id": "B8-D07",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành câu theo mẫu V一V: 你先___这个问题___，再回答。",
+          "type": "self_check",
+          "prompt": "Đặt 2 câu có ngữ cảnh: (1) nhờ bạn chờ mình suy nghĩ; (2) hẹn ngày mai trả lời. Dùng 等、想想、再.",
           "answer": [
             "想一想",
             "想想"
           ],
-          "explain": "Có thể dùng 想一想 hoặc 想想; không dùng đồng thời cả hai.",
+          "explain": "Mỗi câu cần rõ người nghe và thời điểm; 再 đứng trước động từ hành động sau.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "model": "请你等我一下，让我想想。明天我再告诉你。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
         {
           "id": "B8-D08",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành hội thoại: A：这件白的怎么样？B：我觉得很好看，___买这件吧。",
+          "type": "self_check",
+          "prompt": "Viết 2 câu trong tình huống mua quần áo: hỏi nhân viên về chiếc màu trắng, rồi nói chưa quyết vì hơi đắt.",
           "answer": "就",
-          "explain": "就 trong ngữ cảnh này nêu quyết định: vậy thì/cứ mua chiếc này.",
+          "explain": "Không ép một từ đơn lẻ: câu phải nêu được người nói, đồ vật và lý do.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "model": "服务员，请给我看看那件白的。这件有点儿贵，让我想想。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -3118,9 +3058,9 @@ const LESSON = {
         {
           "id": "B8-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Hãy để tôi suy nghĩ một chút.",
-          "model": "让我想想。",
-          "explain": "Áp dụng cấu trúc 兼语句 với 让.",
+          "prompt": "Viết đoạn 3–4 câu: Bạn đang chọn một món đồ nhưng chưa quyết định. Hãy nêu món đồ, ý kiến về giá và khi nào sẽ trả lời.",
+          "model": "我想买一件白色的衣服，可是有点儿贵。让我想想吧。明天我再告诉服务员。",
+          "explain": "Rubric: 3–4 câu; có tình huống rõ; dùng đúng ít nhất 2 mục 让、再、有点儿贵、告诉.",
           "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
           "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch.",
           "section": "writing",
@@ -3129,10 +3069,24 @@ const LESSON = {
         },
         {
           "id": "B8-E02",
+          "type": "retell",
+          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu, không cần lặp nguyên văn.",
+          "model": "小李想买一件白色的衣服，但是觉得贵。他还没决定，明天会再来。",
+          "explain": "Kể lại cần giữ 3 ý: món đồ, lý do chưa mua, quyết định sau đó.",
+          "error": "Không chép từng câu; hãy đổi cách nói nhưng không đổi thông tin chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "writing",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet",
+          "sourceText": "小李想买一件白色的衣服，可是觉得有点儿贵。他请服务员等一下，说：‘让我想想，明天再来。’",
+          "readSeconds": 60
+        },
+        {
+          "id": "B8-E03",
           "type": "self_check",
-          "prompt": "Viết một câu ngắn dùng từ “再”.",
-          "model": "再 + câu của em",
-          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 再.",
+          "prompt": "Viết tin nhắn 3 câu cho bạn: bạn chưa thể trả lời lời mời vì cần suy nghĩ, và hẹn lúc trả lời.",
+          "model": "我现在还不能决定。让我想想，晚上再告诉你，好吗？",
+          "explain": "Tin nhắn cần có phản hồi lịch sự, lý do/độ trễ và mốc trả lời.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "writing",
@@ -3140,30 +3094,122 @@ const LESSON = {
           "skill": "viet"
         },
         {
-          "id": "B8-E03",
-          "type": "self_check",
-          "prompt": "Viết một câu có từ “贵”.",
-          "model": "贵 + câu của em",
-          "explain": "Cần đặt từ đúng vị trí trong câu.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
-          "section": "translation",
-          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
-          "skill": "dich"
-        },
-        {
           "id": "B8-E04",
-          "section": "translation",
+          "section": "writing",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Để tôi suy nghĩ rồi tối nay nói cho bạn biết.",
-          "model": "让我想想，今天晚上再告诉你。",
-          "explain": "让 + 我 + 想想; thời gian + 再 + 告诉 + người.",
+          "prompt": "Viết đoạn hội thoại 3 lượt giữa khách và nhân viên: khách muốn xem một món, thấy đắt và xin suy nghĩ thêm.",
+          "model": "A：服务员，请给我看看那件白的。B：好的。A：有点儿贵，让我想想，再告诉你。",
+          "explain": "Đủ vai giao tiếp và diễn biến xem → cân nhắc → hoãn quyết định.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet"
+        },
+        {
+          "id": "B8-A13",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 我在找手机，你看见了吗？",
+          "answer": "找",
+          "explain": "找 + đồ vật: tìm một đồ vật/người; dịch tự nhiên theo ngữ cảnh hỏi.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "Tôi đang tìm điện thoại, bạn có thấy không?",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B8-A14",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Nhân viên ơi, cho tôi một cốc nước nhé.",
+          "answer": "给",
+          "explain": "服务员 dùng để gọi nhân viên phục vụ; 给 + người + vật.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "服务员，请给我一杯水。",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B8-B11",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 我想想再回答你。",
+          "options": [
+            {
+              "k": "A",
+              "t": "我想想再回答你。"
+            },
+            {
+              "k": "B",
+              "t": "我再想想回答你。"
+            },
+            {
+              "k": "C",
+              "t": "我想再想你回答。"
+            },
+            {
+              "k": "D",
+              "t": "我回答你再想想。"
+            }
+          ],
+          "answer": "A",
+          "explain": "再 đánh dấu hành động thứ hai diễn ra sau.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "Tôi suy nghĩ một chút rồi sẽ trả lời bạn.",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B8-B12",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Bạn xem thử chiếc áo này nhé.",
+          "options": [
+            {
+              "k": "A",
+              "t": "Làm lời đề nghị/động tác nghe nhẹ nhàng hơn"
+            },
+            {
+              "k": "B",
+              "t": "Chỉ hành động đã hoàn thành"
+            },
+            {
+              "k": "C",
+              "t": "Biểu thị phủ định"
+            },
+            {
+              "k": "D",
+              "t": "Thay cho quá khứ"
+            }
+          ],
+          "answer": "A",
+          "explain": "Dùng 看一看 để lời đề nghị nhẹ nhàng, tự nhiên.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "你看一看这件衣服吧。",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich"
         },
@@ -3718,38 +3764,6 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
           "skill": "tuvung"
-        },
-        {
-          "id": "B8-A13",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 你在___什么？我找不到我的手机了。",
-          "answer": "找",
-          "explain": "找 + đồ vật/người = tìm.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
-        },
-        {
-          "id": "B8-A14",
-          "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 服务员，请___我一杯水。",
-          "answer": "给",
-          "explain": "给 + người + vật: đưa/cho ai cái gì. Đây là từ đã học trước, dùng để đặt từ mới 服务员 vào ngữ cảnh.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
-          "skill": "tuvung"
         }
       ],
       "grammar": [
@@ -3992,74 +4006,6 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
           "skill": "nguphap"
-        },
-        {
-          "id": "B8-B11",
-          "section": "grammar",
-          "type": "mcq",
-          "prompt": "Chọn câu đúng về trật tự của 再:",
-          "options": [
-            {
-              "k": "A",
-              "t": "我想想再回答你。"
-            },
-            {
-              "k": "B",
-              "t": "我再想想回答你。"
-            },
-            {
-              "k": "C",
-              "t": "我想再想你回答。"
-            },
-            {
-              "k": "D",
-              "t": "我回答你再想想。"
-            }
-          ],
-          "answer": "A",
-          "explain": "Khi diễn tả hai hành động nối tiếp, V1 + 再 + V2: nghĩ xong rồi mới trả lời.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
-        },
-        {
-          "id": "B8-B12",
-          "section": "grammar",
-          "type": "mcq",
-          "prompt": "Trong “你看一看这个”，看一看 có tác dụng gì?",
-          "options": [
-            {
-              "k": "A",
-              "t": "Làm lời đề nghị/động tác nghe nhẹ nhàng hơn"
-            },
-            {
-              "k": "B",
-              "t": "Chỉ hành động đã hoàn thành"
-            },
-            {
-              "k": "C",
-              "t": "Biểu thị phủ định"
-            },
-            {
-              "k": "D",
-              "t": "Thay cho quá khứ"
-            }
-          ],
-          "answer": "A",
-          "explain": "Động từ đơn âm có thể lặp AA để thử/làm một chút, tạo sắc thái nhẹ.",
-          "sourceRefs": [
-            "textbook_l08",
-            "workbook_l08",
-            "teacher_enriched_l08"
-          ],
-          "status": "teacher_enriched",
-          "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
         }
       ],
       "listening": [
@@ -4076,7 +4022,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "请你等我一下，我想想再告诉你。",
+          "audioSrc": "audio/hsk2/bai8/b8-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4095,9 +4045,7 @@ const LESSON = {
               "t": "Người nói đang gọi phục vụ viên"
             }
           ],
-          "answer": "A",
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          "answer": "A"
         },
         {
           "id": "B8-B13",
@@ -4112,7 +4060,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "A：这个黑色的贵不贵？B：不贵。",
+          "audioSrc": "audio/hsk2/bai8/b8-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4130,9 +4082,7 @@ const LESSON = {
               "k": "D",
               "t": "Đổi sang màu trắng"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B14",
@@ -4147,7 +4097,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "A：你找谁？B：我找服务员。",
+          "audioSrc": "audio/hsk2/bai8/b8-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4165,9 +4119,7 @@ const LESSON = {
               "k": "D",
               "t": "Người B đi học"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B15",
@@ -4182,7 +4134,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "这件衣服有点儿贵，我们再看看吧。",
+          "audioSrc": "audio/hsk2/bai8/b8-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4200,9 +4156,7 @@ const LESSON = {
               "k": "D",
               "t": "Xem thêm món khác"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B16",
@@ -4225,7 +4179,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "你帮我看看这个，好吗？",
+          "audioSrc": "audio/hsk2/bai8/b8-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4243,9 +4201,7 @@ const LESSON = {
               "k": "D",
               "t": "Hỏi giá"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B17",
@@ -4266,7 +4222,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "我先想想，明天再告诉你。",
+          "audioSrc": "audio/hsk2/bai8/b8-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4284,9 +4244,7 @@ const LESSON = {
               "k": "D",
               "t": "Người nói đang tìm điện thoại"
             }
-          ],
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          ]
         },
         {
           "id": "B8-B18",
@@ -4301,7 +4259,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "白色的太贵，黑色的怎么样？",
+          "audioSrc": "audio/hsk2/bai8/b8-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4320,9 +4282,7 @@ const LESSON = {
               "t": "Đen"
             }
           ],
-          "answer": "D",
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          "answer": "D"
         },
         {
           "id": "B8-F09",
@@ -4337,7 +4297,11 @@ const LESSON = {
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "C. NGHE HIỂU",
+          "skill": "nghe",
           "audioText": "A：你现在能告诉我吗？B：",
+          "audioSrc": "audio/hsk2/bai8/b8-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4356,9 +4320,7 @@ const LESSON = {
               "t": "我找不到白。"
             }
           ],
-          "answer": "A",
-          "sectionTitle": "C. NGHE HIỂU",
-          "skill": "nghe"
+          "answer": "A"
         }
       ],
       "reading": [
@@ -4782,35 +4744,37 @@ const LESSON = {
         {
           "id": "B8-D07",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành câu theo mẫu V一V: 你先___这个问题___，再回答。",
+          "type": "self_check",
+          "prompt": "Đặt 2 câu có ngữ cảnh: (1) nhờ bạn chờ mình suy nghĩ; (2) hẹn ngày mai trả lời. Dùng 等、想想、再.",
           "answer": [
             "想一想",
             "想想"
           ],
-          "explain": "Có thể dùng 想一想 hoặc 想想; không dùng đồng thời cả hai.",
+          "explain": "Mỗi câu cần rõ người nghe và thời điểm; 再 đứng trước động từ hành động sau.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "model": "请你等我一下，让我想想。明天我再告诉你。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
         {
           "id": "B8-D08",
           "section": "writing",
-          "type": "text_fill",
-          "prompt": "Hoàn thành hội thoại: A：这件白的怎么样？B：我觉得很好看，___买这件吧。",
+          "type": "self_check",
+          "prompt": "Viết 2 câu trong tình huống mua quần áo: hỏi nhân viên về chiếc màu trắng, rồi nói chưa quyết vì hơi đắt.",
           "answer": "就",
-          "explain": "就 trong ngữ cảnh này nêu quyết định: vậy thì/cứ mua chiếc này.",
+          "explain": "Không ép một từ đơn lẻ: câu phải nêu được người nói, đồ vật và lý do.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "model": "服务员，请给我看看那件白的。这件有点儿贵，让我想想。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -4849,9 +4813,9 @@ const LESSON = {
         {
           "id": "B8-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Hãy để tôi suy nghĩ một chút.",
-          "model": "让我想想。",
-          "explain": "Áp dụng cấu trúc 兼语句 với 让.",
+          "prompt": "Viết đoạn 3–4 câu: Bạn đang chọn một món đồ nhưng chưa quyết định. Hãy nêu món đồ, ý kiến về giá và khi nào sẽ trả lời.",
+          "model": "我想买一件白色的衣服，可是有点儿贵。让我想想吧。明天我再告诉服务员。",
+          "explain": "Rubric: 3–4 câu; có tình huống rõ; dùng đúng ít nhất 2 mục 让、再、有点儿贵、告诉.",
           "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
           "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch.",
           "section": "writing",
@@ -4860,43 +4824,149 @@ const LESSON = {
         },
         {
           "id": "B8-E02",
+          "type": "retell",
+          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu, không cần lặp nguyên văn.",
+          "model": "小李想买一件白色的衣服，但是觉得贵。他还没决定，明天会再来。",
+          "explain": "Kể lại cần giữ 3 ý: món đồ, lý do chưa mua, quyết định sau đó.",
+          "error": "Không chép từng câu; hãy đổi cách nói nhưng không đổi thông tin chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "writing",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet",
+          "sourceText": "小李想买一件白色的衣服，可是觉得有点儿贵。他请服务员等一下，说：‘让我想想，明天再来。’",
+          "readSeconds": 60
+        },
+        {
+          "id": "B8-E03",
           "type": "self_check",
-          "prompt": "Viết một câu ngắn dùng từ “再”.",
-          "model": "再 + câu của em",
-          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 再.",
+          "prompt": "Viết tin nhắn 3 câu cho bạn: bạn chưa thể trả lời lời mời vì cần suy nghĩ, và hẹn lúc trả lời.",
+          "model": "我现在还不能决定。让我想想，晚上再告诉你，好吗？",
+          "explain": "Tin nhắn cần có phản hồi lịch sự, lý do/độ trễ và mốc trả lời.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
-        }
-      ],
-      "translation": [
-        {
-          "id": "B8-E03",
-          "type": "self_check",
-          "prompt": "Viết một câu có từ “贵”.",
-          "model": "贵 + câu của em",
-          "explain": "Cần đặt từ đúng vị trí trong câu.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
-          "section": "translation",
-          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
-          "skill": "dich"
         },
         {
           "id": "B8-E04",
-          "section": "translation",
+          "section": "writing",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Để tôi suy nghĩ rồi tối nay nói cho bạn biết.",
-          "model": "让我想想，今天晚上再告诉你。",
-          "explain": "让 + 我 + 想想; thời gian + 再 + 告诉 + người.",
+          "prompt": "Viết đoạn hội thoại 3 lượt giữa khách và nhân viên: khách muốn xem một món, thấy đắt và xin suy nghĩ thêm.",
+          "model": "A：服务员，请给我看看那件白的。B：好的。A：有点儿贵，让我想想，再告诉你。",
+          "explain": "Đủ vai giao tiếp và diễn biến xem → cân nhắc → hoãn quyết định.",
           "sourceRefs": [
             "textbook_l08",
             "workbook_l08",
             "teacher_enriched_l08"
           ],
           "status": "teacher_enriched",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet"
+        }
+      ],
+      "translation": [
+        {
+          "id": "B8-A13",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 我在找手机，你看见了吗？",
+          "answer": "找",
+          "explain": "找 + đồ vật: tìm một đồ vật/người; dịch tự nhiên theo ngữ cảnh hỏi.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "Tôi đang tìm điện thoại, bạn có thấy không?",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B8-A14",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Nhân viên ơi, cho tôi một cốc nước nhé.",
+          "answer": "给",
+          "explain": "服务员 dùng để gọi nhân viên phục vụ; 给 + người + vật.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "服务员，请给我一杯水。",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B8-B11",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 我想想再回答你。",
+          "options": [
+            {
+              "k": "A",
+              "t": "我想想再回答你。"
+            },
+            {
+              "k": "B",
+              "t": "我再想想回答你。"
+            },
+            {
+              "k": "C",
+              "t": "我想再想你回答。"
+            },
+            {
+              "k": "D",
+              "t": "我回答你再想想。"
+            }
+          ],
+          "answer": "A",
+          "explain": "再 đánh dấu hành động thứ hai diễn ra sau.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "Tôi suy nghĩ một chút rồi sẽ trả lời bạn.",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich"
+        },
+        {
+          "id": "B8-B12",
+          "section": "translation",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Bạn xem thử chiếc áo này nhé.",
+          "options": [
+            {
+              "k": "A",
+              "t": "Làm lời đề nghị/động tác nghe nhẹ nhàng hơn"
+            },
+            {
+              "k": "B",
+              "t": "Chỉ hành động đã hoàn thành"
+            },
+            {
+              "k": "C",
+              "t": "Biểu thị phủ định"
+            },
+            {
+              "k": "D",
+              "t": "Thay cho quá khứ"
+            }
+          ],
+          "answer": "A",
+          "explain": "Dùng 看一看 để lời đề nghị nhẹ nhàng, tự nhiên.",
+          "sourceRefs": [
+            "textbook_l08",
+            "workbook_l08",
+            "teacher_enriched_l08"
+          ],
+          "status": "teacher_enriched",
+          "model": "你看一看这件衣服吧。",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich"
         },
@@ -5819,20 +5889,6 @@ const LESSON = {
           "prompt": "Điền 再 hoặc 还: 这个问题让我想想，明天___告诉你。",
           "answer": "再",
           "explain": "再 đứng trước động từ, diễn tả làm việc đó sau một thời điểm khác."
-        },
-        {
-          "id": "B8-A13",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 你在___什么？我找不到我的手机了。",
-          "answer": "找",
-          "explain": "找 + đồ vật/người = tìm."
-        },
-        {
-          "id": "B8-A14",
-          "type": "text_fill",
-          "prompt": "Điền từ phù hợp: 服务员，请___我一杯水。",
-          "answer": "给",
-          "explain": "给 + người + vật: đưa/cho ai cái gì. Đây là từ đã học trước, dùng để đặt từ mới 服务员 vào ngữ cảnh."
         }
       ]
     },
@@ -6040,56 +6096,6 @@ const LESSON = {
           ],
           "answer": "A",
           "explain": "让 + người + V tạo câu kiêm ngữ: để/nhờ ai làm gì."
-        },
-        {
-          "id": "B8-B11",
-          "type": "mcq",
-          "prompt": "Chọn câu đúng về trật tự của 再:",
-          "options": [
-            {
-              "k": "A",
-              "t": "我想想再回答你。"
-            },
-            {
-              "k": "B",
-              "t": "我再想想回答你。"
-            },
-            {
-              "k": "C",
-              "t": "我想再想你回答。"
-            },
-            {
-              "k": "D",
-              "t": "我回答你再想想。"
-            }
-          ],
-          "answer": "A",
-          "explain": "Khi diễn tả hai hành động nối tiếp, V1 + 再 + V2: nghĩ xong rồi mới trả lời."
-        },
-        {
-          "id": "B8-B12",
-          "type": "mcq",
-          "prompt": "Trong “你看一看这个”，看一看 có tác dụng gì?",
-          "options": [
-            {
-              "k": "A",
-              "t": "Làm lời đề nghị/động tác nghe nhẹ nhàng hơn"
-            },
-            {
-              "k": "B",
-              "t": "Chỉ hành động đã hoàn thành"
-            },
-            {
-              "k": "C",
-              "t": "Biểu thị phủ định"
-            },
-            {
-              "k": "D",
-              "t": "Thay cho quá khứ"
-            }
-          ],
-          "answer": "A",
-          "explain": "Động từ đơn âm có thể lặp AA để thử/làm một chút, tạo sắc thái nhẹ."
         }
       ]
     },
@@ -6107,6 +6113,8 @@ const LESSON = {
           "model": "我在学校门口等朋友。我的书不见了，我在找书。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "请你等我一下，我想想再告诉你。",
+          "audioSrc": "audio/hsk2/bai8/b8-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6134,6 +6142,8 @@ const LESSON = {
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：这个黑色的贵不贵？B：不贵。",
+          "audioSrc": "audio/hsk2/bai8/b8-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6160,6 +6170,8 @@ const LESSON = {
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你找谁？B：我找服务员。",
+          "audioSrc": "audio/hsk2/bai8/b8-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6186,6 +6198,8 @@ const LESSON = {
           "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这件衣服有点儿贵，我们再看看吧。",
+          "audioSrc": "audio/hsk2/bai8/b8-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6220,6 +6234,8 @@ const LESSON = {
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "你帮我看看这个，好吗？",
+          "audioSrc": "audio/hsk2/bai8/b8-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6252,6 +6268,8 @@ const LESSON = {
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "我先想想，明天再告诉你。",
+          "audioSrc": "audio/hsk2/bai8/b8-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6278,6 +6296,8 @@ const LESSON = {
           "model": "我让他帮我看一看这件衣服。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "白色的太贵，黑色的怎么样？",
+          "audioSrc": "audio/hsk2/bai8/b8-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6305,6 +6325,8 @@ const LESSON = {
           "model": "这件事情我不能马上决定。让我想想，明天再告诉你。请你等我一天。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你现在能告诉我吗？B：",
+          "audioSrc": "audio/hsk2/bai8/b8-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6658,20 +6680,22 @@ const LESSON = {
         },
         {
           "id": "B8-D07",
-          "type": "text_fill",
-          "prompt": "Hoàn thành câu theo mẫu V一V: 你先___这个问题___，再回答。",
+          "type": "self_check",
+          "prompt": "Đặt 2 câu có ngữ cảnh: (1) nhờ bạn chờ mình suy nghĩ; (2) hẹn ngày mai trả lời. Dùng 等、想想、再.",
           "answer": [
             "想一想",
             "想想"
           ],
-          "explain": "Có thể dùng 想一想 hoặc 想想; không dùng đồng thời cả hai."
+          "explain": "Mỗi câu cần rõ người nghe và thời điểm; 再 đứng trước động từ hành động sau.",
+          "model": "请你等我一下，让我想想。明天我再告诉你。"
         },
         {
           "id": "B8-D08",
-          "type": "text_fill",
-          "prompt": "Hoàn thành hội thoại: A：这件白的怎么样？B：我觉得很好看，___买这件吧。",
+          "type": "self_check",
+          "prompt": "Viết 2 câu trong tình huống mua quần áo: hỏi nhân viên về chiếc màu trắng, rồi nói chưa quyết vì hơi đắt.",
           "answer": "就",
-          "explain": "就 trong ngữ cảnh này nêu quyết định: vậy thì/cứ mua chiếc này."
+          "explain": "Không ép một từ đơn lẻ: câu phải nêu được người nói, đồ vật và lý do.",
+          "model": "服务员，请给我看看那件白的。这件有点儿贵，让我想想。"
         },
         {
           "id": "B8-D09",
@@ -6690,20 +6714,38 @@ const LESSON = {
         {
           "id": "B8-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Hãy để tôi suy nghĩ một chút.",
-          "model": "让我想想。",
-          "explain": "Áp dụng cấu trúc 兼语句 với 让.",
+          "prompt": "Viết đoạn 3–4 câu: Bạn đang chọn một món đồ nhưng chưa quyết định. Hãy nêu món đồ, ý kiến về giá và khi nào sẽ trả lời.",
+          "model": "我想买一件白色的衣服，可是有点儿贵。让我想想吧。明天我再告诉服务员。",
+          "explain": "Rubric: 3–4 câu; có tình huống rõ; dùng đúng ít nhất 2 mục 让、再、有点儿贵、告诉.",
           "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
           "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch."
         },
         {
           "id": "B8-E02",
+          "type": "retell",
+          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu, không cần lặp nguyên văn.",
+          "model": "小李想买一件白色的衣服，但是觉得贵。他还没决定，明天会再来。",
+          "explain": "Kể lại cần giữ 3 ý: món đồ, lý do chưa mua, quyết định sau đó.",
+          "error": "Không chép từng câu; hãy đổi cách nói nhưng không đổi thông tin chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "sourceText": "小李想买一件白色的衣服，可是觉得有点儿贵。他请服务员等一下，说：‘让我想想，明天再来。’",
+          "readSeconds": 60
+        },
+        {
+          "id": "B8-E03",
           "type": "self_check",
-          "prompt": "Viết một câu ngắn dùng từ “再”.",
-          "model": "再 + câu của em",
-          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 再.",
+          "prompt": "Viết tin nhắn 3 câu cho bạn: bạn chưa thể trả lời lời mời vì cần suy nghĩ, và hẹn lúc trả lời.",
+          "model": "我现在还不能决定。让我想想，晚上再告诉你，好吗？",
+          "explain": "Tin nhắn cần có phản hồi lịch sự, lý do/độ trễ và mốc trả lời.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
+        },
+        {
+          "id": "B8-E04",
+          "type": "self_check",
+          "prompt": "Viết đoạn hội thoại 3 lượt giữa khách và nhân viên: khách muốn xem một món, thấy đắt và xin suy nghĩ thêm.",
+          "model": "A：服务员，请给我看看那件白的。B：好的。A：有点儿贵，让我想想，再告诉你。",
+          "explain": "Đủ vai giao tiếp và diễn biến xem → cân nhắc → hoãn quyết định."
         }
       ]
     },
@@ -6715,20 +6757,72 @@ const LESSON = {
       "passages": [],
       "questions": [
         {
-          "id": "B8-E03",
+          "id": "B8-A13",
           "type": "self_check",
-          "prompt": "Viết một câu có từ “贵”.",
-          "model": "贵 + câu của em",
-          "explain": "Cần đặt từ đúng vị trí trong câu.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "prompt": "Dịch sang tiếng Việt: 我在找手机，你看见了吗？",
+          "answer": "找",
+          "explain": "找 + đồ vật: tìm một đồ vật/người; dịch tự nhiên theo ngữ cảnh hỏi.",
+          "model": "Tôi đang tìm điện thoại, bạn có thấy không?"
         },
         {
-          "id": "B8-E04",
+          "id": "B8-A14",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Để tôi suy nghĩ rồi tối nay nói cho bạn biết.",
-          "model": "让我想想，今天晚上再告诉你。",
-          "explain": "让 + 我 + 想想; thời gian + 再 + 告诉 + người."
+          "prompt": "Dịch sang tiếng Trung: Nhân viên ơi, cho tôi một cốc nước nhé.",
+          "answer": "给",
+          "explain": "服务员 dùng để gọi nhân viên phục vụ; 给 + người + vật.",
+          "model": "服务员，请给我一杯水。"
+        },
+        {
+          "id": "B8-B11",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Việt: 我想想再回答你。",
+          "options": [
+            {
+              "k": "A",
+              "t": "我想想再回答你。"
+            },
+            {
+              "k": "B",
+              "t": "我再想想回答你。"
+            },
+            {
+              "k": "C",
+              "t": "我想再想你回答。"
+            },
+            {
+              "k": "D",
+              "t": "我回答你再想想。"
+            }
+          ],
+          "answer": "A",
+          "explain": "再 đánh dấu hành động thứ hai diễn ra sau.",
+          "model": "Tôi suy nghĩ một chút rồi sẽ trả lời bạn."
+        },
+        {
+          "id": "B8-B12",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Bạn xem thử chiếc áo này nhé.",
+          "options": [
+            {
+              "k": "A",
+              "t": "Làm lời đề nghị/động tác nghe nhẹ nhàng hơn"
+            },
+            {
+              "k": "B",
+              "t": "Chỉ hành động đã hoàn thành"
+            },
+            {
+              "k": "C",
+              "t": "Biểu thị phủ định"
+            },
+            {
+              "k": "D",
+              "t": "Thay cho quá khứ"
+            }
+          ],
+          "answer": "A",
+          "explain": "Dùng 看一看 để lời đề nghị nhẹ nhàng, tự nhiên.",
+          "model": "你看一看这件衣服吧。"
         },
         {
           "id": "B8-E05",
@@ -7177,6 +7271,7 @@ function renderQuestion(){
     case 'text_fill': renderTextFill(q, body); break;
     case 'reorder': renderReorder(q, body); break;
     case 'self_check': renderSelfCheck(q, body); break;
+    case 'retell': renderRetell(q, body); break;
     case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
@@ -7186,7 +7281,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -7231,28 +7326,30 @@ function renderMcq(q, body){
 }
 
 function renderListening(q, body){
-  const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
+  const intro = el('div','hint-inline','Nghe 2–3 lần, sau đó chọn đáp án. Không đọc lời thoại trước khi trả lời.');
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
-  const play = el('button','audio-play','Phát'); play.type='button';
-  play.setAttribute('aria-label','Phát hoặc tạm dừng câu tiếng Trung');
-  const speed = el('button','audio-speed','1.0×'); speed.type='button';
-  speed.setAttribute('aria-label','Đổi tốc độ phát');
-  let rate=.82, paused=false;
-  const setRest=()=>{ paused=false; play.textContent='Phát'; };
-  play.addEventListener('click', () => {
-    if(!('speechSynthesis' in window)){ play.textContent='Không hỗ trợ'; return; }
-    if(window.speechSynthesis.speaking && !paused){ window.speechSynthesis.pause(); paused=true; play.textContent='Tiếp tục'; return; }
-    if(window.speechSynthesis.speaking && paused){ window.speechSynthesis.resume(); paused=false; play.textContent='Tạm dừng'; return; }
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(q.audioText || '');
-    utterance.lang = 'zh-CN'; utterance.rate = rate;
-    utterance.onend=setRest; utterance.onerror=setRest;
-    window.speechSynthesis.speak(utterance);
-    play.textContent='Tạm dừng';
-  });
-  speed.addEventListener('click',()=>{ rate=rate===.82?1:rate===1?1.15:.82; speed.textContent=rate===.82?'0.8×':rate===1?'1.0×':'1.15×'; });
-  player.append(play,speed); body.appendChild(player);
+  if(q.audioStatus !== 'ready' || !q.audioSrc){
+    const status = el('div','audio-status','Bản ghi đang chuẩn bị. Giáo viên sẽ bổ sung tệp nghe cho câu này.');
+    status.setAttribute('role','status');
+    player.appendChild(status); body.appendChild(player);
+  } else {
+    const audio = document.createElement('audio'); audio.preload='metadata'; audio.src=q.audioSrc;
+    const play = el('button','audio-play','Phát audio'); play.type='button';
+    play.setAttribute('aria-label','Phát hoặc tạm dừng tệp nghe tiếng Trung');
+    const speed = el('button','audio-speed','1.0×'); speed.type='button';
+    speed.setAttribute('aria-label','Đổi tốc độ phát audio');
+    const status = el('div','audio-status','Sẵn sàng nghe.'); status.setAttribute('role','status');
+    const setRest=()=>{ play.textContent='Phát audio'; };
+    play.addEventListener('click', async () => {
+      if(audio.paused){ try{ await audio.play(); play.textContent='Tạm dừng'; status.textContent='Đang phát audio.'; }catch{ status.textContent='Không thể phát tệp. Hãy thử lại hoặc báo giáo viên.'; } }
+      else { audio.pause(); play.textContent='Tiếp tục'; status.textContent='Đã tạm dừng.'; }
+    });
+    audio.addEventListener('ended',()=>{setRest();status.textContent='Đã phát xong. Em có thể nghe lại.';});
+    audio.addEventListener('error',()=>{setRest();status.textContent='Không tìm thấy tệp nghe. Giáo viên đang bổ sung.';});
+    speed.addEventListener('click',()=>{ const rates=[.8,1,1.15]; const next=rates[(rates.indexOf(audio.playbackRate)+1)%rates.length]; audio.playbackRate=next; speed.textContent=next.toFixed(2).replace(/0$/,'')+'×'; });
+    player.append(play,speed,status,audio); body.appendChild(player);
+  }
   renderMcq(q, body);
 }
 function renderTextFill(q, body){
@@ -7329,6 +7426,15 @@ function renderReorder(q, body){
   }
 }
 
+function renderRetell(q, body){
+  const source=el('div','retell-source',mixText(q.sourceText));
+  const actions=el('div','retell-actions'); const button=el('button','', 'Bắt đầu đọc'); button.type='button';
+  const timer=el('span','retell-timer', 'Đọc trong '+q.readSeconds+' giây rồi kể lại bằng lời của em.');
+  actions.append(button,timer); body.append(source,actions);
+  let left=q.readSeconds, interval;
+  button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
+  renderSelfCheck(q, body);
+}
 function renderSelfCheck(q, body){
   const wrap = el('div','selfcheck-area');
   const ta = el('textarea');
@@ -7401,7 +7507,7 @@ function gradeQuestion(q){
     const ok = arr.length === q.answer.length && arr.every((t,i) => t === q.answer[i]);
     return { score: ok ? 1 : 0, max };
   }
-  if(q.type === 'self_check'){
+  if(q.type === 'self_check' || q.type === 'retell'){
     const mark = state.selfMarks[q.id];
     return { score: (mark === undefined ? 0 : mark), max };
   }
@@ -7850,7 +7956,7 @@ function showAttemptDetailModal(record){
       studentText = Array.isArray(studentVal) && studentVal.length ? studentVal.join('') : '(chưa trả lời)';
       correctText = (q.answer||[]).join('');
       isCorrect = Array.isArray(studentVal) && studentVal.length===q.answer.length && studentVal.every((t,i)=>t===q.answer[i]);
-    } else if(q.type === 'self_check'){
+    } else if(q.type === 'self_check' || q.type === 'retell'){
       studentText = studentVal || '(chưa trả lời)';
       correctText = q.model;
       const mark = (record.selfMarks||{})[q.id];

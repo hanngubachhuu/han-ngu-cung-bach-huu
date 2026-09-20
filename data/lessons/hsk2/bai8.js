@@ -1918,11 +1918,32 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   lesson.content.coverage.exercises = "gold_template_v1";
 })();
 
+/* Bài viết - dịch cân bằng: từ câu có kiểm soát đến giao tiếp thực. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai8_rangwo"], all=l.content.exercises.all;
+  const q=id=>all.find(x=>x.id===id), open=(id,prompt,model,explain,extra={})=>Object.assign(q(id),{type:"self_check",prompt,model,explain,...extra});
+  const trans=(id,prompt,model,explain)=>open(id,prompt,model,explain);
+  trans("B8-A13","Dịch sang tiếng Việt: 我在找手机，你看见了吗？","Tôi đang tìm điện thoại, bạn có thấy không?","找 + đồ vật: tìm một đồ vật/người; dịch tự nhiên theo ngữ cảnh hỏi.");
+  trans("B8-A14","Dịch sang tiếng Trung: Nhân viên ơi, cho tôi một cốc nước nhé.","服务员，请给我一杯水。","服务员 dùng để gọi nhân viên phục vụ; 给 + người + vật.");
+  trans("B8-B11","Dịch sang tiếng Việt: 我想想再回答你。","Tôi suy nghĩ một chút rồi sẽ trả lời bạn.","再 đánh dấu hành động thứ hai diễn ra sau.");
+  trans("B8-B12","Dịch sang tiếng Trung: Bạn xem thử chiếc áo này nhé.","你看一看这件衣服吧。","Dùng 看一看 để lời đề nghị nhẹ nhàng, tự nhiên.");
+  open("B8-D07","Đặt 2 câu có ngữ cảnh: (1) nhờ bạn chờ mình suy nghĩ; (2) hẹn ngày mai trả lời. Dùng 等、想想、再.","请你等我一下，让我想想。明天我再告诉你。","Mỗi câu cần rõ người nghe và thời điểm; 再 đứng trước động từ hành động sau.");
+  open("B8-D08","Viết 2 câu trong tình huống mua quần áo: hỏi nhân viên về chiếc màu trắng, rồi nói chưa quyết vì hơi đắt.","服务员，请给我看看那件白的。这件有点儿贵，让我想想。","Không ép một từ đơn lẻ: câu phải nêu được người nói, đồ vật và lý do.");
+  open("B8-E01","Viết đoạn 3–4 câu: Bạn đang chọn một món đồ nhưng chưa quyết định. Hãy nêu món đồ, ý kiến về giá và khi nào sẽ trả lời.","我想买一件白色的衣服，可是有点儿贵。让我想想吧。明天我再告诉服务员。","Rubric: 3–4 câu; có tình huống rõ; dùng đúng ít nhất 2 mục 让、再、有点儿贵、告诉.");
+  Object.assign(q("B8-E02"),{type:"retell",prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu, không cần lặp nguyên văn.",sourceText:"小李想买一件白色的衣服，可是觉得有点儿贵。他请服务员等一下，说：‘让我想想，明天再来。’",readSeconds:60,model:"小李想买一件白色的衣服，但是觉得贵。他还没决定，明天会再来。",explain:"Kể lại cần giữ 3 ý: món đồ, lý do chưa mua, quyết định sau đó.",error:"Không chép từng câu; hãy đổi cách nói nhưng không đổi thông tin chính."});
+  open("B8-E03","Viết tin nhắn 3 câu cho bạn: bạn chưa thể trả lời lời mời vì cần suy nghĩ, và hẹn lúc trả lời.","我现在还不能决定。让我想想，晚上再告诉你，好吗？","Tin nhắn cần có phản hồi lịch sự, lý do/độ trễ và mốc trả lời.");
+  open("B8-E04","Viết đoạn hội thoại 3 lượt giữa khách và nhân viên: khách muốn xem một món, thấy đắt và xin suy nghĩ thêm.","A：服务员，请给我看看那件白的。B：好的。A：有点儿贵，让我想想，再告诉你。","Đủ vai giao tiếp và diễn biến xem → cân nhắc → hoãn quyết định.");
+  const m={vocabulary:[...Array.from({length:12},(_,i)=>`B8-A${String(i+1).padStart(2,'0')}`)],grammar:Array.from({length:10},(_,i)=>`B8-B${String(i+1).padStart(2,'0')}`),listening:["B8-A15",...Array.from({length:6},(_,i)=>`B8-B${String(i+13).padStart(2,'0')}`),"B8-F09"],reading:[...Array.from({length:10},(_,i)=>`B8-C${String(i+1).padStart(2,'0')}`),"B8-D01","B8-D02"],writing:[...Array.from({length:8},(_,i)=>`B8-D${String(i+3).padStart(2,'0')}`),"B8-E01","B8-E02","B8-E03","B8-E04"],translation:["B8-A13","B8-A14","B8-B11","B8-B12","B8-E05","B8-E06","B8-E07","B8-E08"],speaking:Array.from({length:8},(_,i)=>`B8-F${String(i+1).padStart(2,'0')}`),mixed:[]};
+  const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện và vận dụng từ trong ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng tệp audio; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, đặt câu theo tình huống, viết đoạn và kể lại."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch hai chiều theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
+  l.content.skills=m; l.content.exercises={all,...Object.fromEntries(Object.entries(m).map(([k,v])=>[k,k==='mixed'?[]:v.map(id=>q(id))]))}; l.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction,passages:id==='reading'?l.content.passages:[]}));
+  Object.entries(m).forEach(([section,ids])=>ids.forEach(id=>Object.assign(q(id),{section,sectionTitle:info[section][0],skill:info[section][1]}))); all.sort((a,b)=>Object.keys(info).indexOf(a.section)-Object.keys(info).indexOf(b.section));
+})();
+
 /* Ma trận 4 kỹ năng: cân lại theo cấu trúc Bài 5, có phần nghe thực thi bằng TTS. */
 (() => {
   const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai8_rangwo"], c=lesson.content, all=c.exercises.all;
   const ids=(part,a,b)=>Array.from({length:b-a+1},(_,i)=>`B8-${part}${String(a+i).padStart(2,"0")}`);
-  const matrix={vocabulary:ids("A",1,14),grammar:ids("B",1,12),listening:["B8-A15",...ids("B",13,18),"B8-F09"],reading:[...ids("C",1,10),"B8-D01","B8-D02"],writing:[...ids("D",3,10),"B8-E01","B8-E02"],translation:ids("E",3,8),speaking:ids("F",1,8),mixed:[]};
+  const matrix={vocabulary:ids("A",1,12),grammar:ids("B",1,10),listening:["B8-A15",...ids("B",13,18),"B8-F09"],reading:[...ids("C",1,10),"B8-D01","B8-D02"],writing:[...ids("D",3,10),"B8-E01","B8-E02","B8-E03","B8-E04"],translation:["B8-A13","B8-A14","B8-B11","B8-B12","B8-E05","B8-E06","B8-E07","B8-E08"],speaking:ids("F",1,8),mixed:[]};
   const listen={
     "B8-A15":["Nghe câu và chọn ý đúng.","请你等我一下，我想想再告诉你。",["Người nói cần thêm thời gian suy nghĩ","Người nói muốn rời đi ngay","Người nói không biết địa chỉ","Người nói đang gọi phục vụ viên"],"A"],
     "B8-B13":["Nghe hội thoại. Người A muốn gì?","A：这个黑色的贵不贵？B：不贵。",["Hỏi giá chiếc màu đen","Tìm một người bạn","Gọi đồ ăn","Đổi sang màu trắng"],"A"],
@@ -1933,7 +1954,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "B8-B18":["Nghe câu và chọn màu được nhắc đến.","白色的太贵，黑色的怎么样？",["Đen","Đỏ","Xanh","Vàng"],"A"],
     "B8-F09":["Nghe tình huống và chọn phản hồi lịch sự nhất.","A：你现在能告诉我吗？B：",["让我想想再告诉你，好吗？","我是服务员。","这件很黑。","我找不到白。"],"A"]
   };
-  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
+  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,audioSrc:`audio/hsk2/bai8/${id.toLowerCase()}.mp3`,audioStatus:"awaiting_recording",options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
   const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
   c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]};
   lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction,passages:id==="reading"?c.passages:[]}));
