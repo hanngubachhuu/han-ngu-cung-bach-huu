@@ -53,7 +53,7 @@ function norm(l,u){
 function agg(ls){
  let v=uniq(ls.flatMap(x=>x.vocab),x=>x.level+'|'+x.bai+'|'+x.han),g=uniq(ls.flatMap(x=>x.grammar),x=>x.level+'|'+x.bai+'|'+x.title),q=ls.flatMap(x=>x.questions),hm=new Map();
  ls.flatMap(x=>x.hanzi||[]).forEach(x=>{if(!x.char)return;hm.set(x.char,{...x,words:Array.isArray(x.words)?[...x.words]:[],levels:new Set([x.level]),bais:new Set([x.bai])})});
- v.forEach(x=>chars(x.han).forEach(c=>{if(!hm.has(c))hm.set(c,{char:c,words:[],levels:new Set(),bais:new Set()});let h=hm.get(c);if(!h.words.includes(x.han))h.words.push(x.han);h.levels.add(x.level);h.bais.add(x.bai)}));
+ ls.filter(x=>x.content?.coverage?.hanzi==='enriched_verified').flatMap(x=>x.vocab||[]).forEach(x=>chars(x.han).forEach(c=>{if(!hm.has(c))hm.set(c,{char:c,words:[],levels:new Set(),bais:new Set()});let h=hm.get(c);if(!h.words.includes(x.han))h.words.push(x.han);h.levels.add(x.level);h.bais.add(x.bai)}));
  let h=[...hm.values()].map(x=>({...x,levels:[...x.levels],bais:[...x.bais]}));return{lessons:ls,vocab:v,grammar:g,questions:q,hanzi:h}
 }
 function filt(x){return(S.level==='all'||x.level===S.level)&&(S.lesson==='all'||x.lessonId===S.lesson)&&(!S.q||JSON.stringify(x).toLowerCase().includes(S.q.toLowerCase()))}
