@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hồ sơ từ vựng · Hán Ngữ Cùng Bách Hữu</title>
+<style>
+:root{--bg:#FDFBF7;--card:#fff;--soft:#F5F2EB;--text:#2C3E50;--muted:#566573;--faint:#8492A6;--border:#E5E0D8;--primary:#C0392B;--primary-soft:#FADBD8;--green:#27AE60;--green-soft:#E8F8F5;--amber:#D68910;--amber-soft:#FCF3CF;--shadow:0 4px 18px rgba(44,62,80,.08);--cn:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;--vn:"Times New Roman",Times,serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--vn);padding-bottom:60px}a{color:var(--primary)}
+.wrap{max-width:980px;margin:auto;padding:34px 18px 70px}.back{display:inline-flex;gap:7px;margin-bottom:18px;text-decoration:none;font-weight:700}
+.hero{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow)}.eyebrow{display:inline-block;background:var(--primary-soft);color:var(--primary);font-weight:800;font-size:11px;letter-spacing:.07em;padding:6px 10px;border-radius:999px}.han{font-family:var(--cn);font-size:58px;font-weight:800;margin-top:12px}.pinyin{font-size:23px;color:var(--primary);font-weight:700;margin-top:4px}.meaning{font-size:19px;color:var(--muted);margin-top:5px}.meta{font-size:13px;color:var(--faint);margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}.card h2{font-size:19px;margin:0 0 12px}.card p{color:var(--muted);line-height:1.75}
+.item{padding:13px 0;border-bottom:1px solid var(--border)}.item:last-child{border-bottom:0}.pattern{font-weight:800;font-family:var(--cn);font-size:17px}.desc{color:var(--muted);margin-top:3px}.note{margin-top:6px;padding:9px 11px;background:var(--soft);border-radius:9px;color:var(--muted);font-size:13px;line-height:1.6}.examples{margin-top:7px}.ex-zh{font-family:var(--cn);font-size:17px}.ex-vi{font-size:13px;color:var(--muted);margin-top:2px}
+ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.8}.confusion{padding:11px 12px;background:#fff8e7;border-left:4px solid var(--amber);border-radius:8px;margin-bottom:8px}.confusion b{color:#6f5412}.related{display:flex;flex-wrap:wrap;gap:8px}.related a,.char-link{display:inline-flex;padding:7px 10px;border-radius:9px;background:var(--primary-soft);color:var(--primary);font-weight:700;text-decoration:none}.char-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.source-badge{display:inline-block;margin-top:12px;padding:5px 9px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800}
+.sentence{padding:12px 0;border-bottom:1px solid var(--border)}.sentence:last-child{border-bottom:0}.sent-zh{font-family:var(--cn);font-size:19px;line-height:1.65}.sent-pin{color:var(--primary);font-size:13px;margin-top:3px}.sent-vi{color:var(--muted);font-size:13px;margin-top:2px}
+.empty{text-align:center;padding:70px 20px;color:var(--muted)}.nav-row{display:flex;justify-content:space-between;gap:10px;margin-top:16px}.btn{border:1px solid var(--border);background:var(--card);padding:10px 14px;border-radius:10px;font-weight:700;color:var(--text);text-decoration:none}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.han{font-size:50px}}
+</style>
+<link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+<nav class="site-nav no-print"><div class="site-nav-inner"><a class="site-nav-brand" href="trang-chu.html"><span class="site-nav-brand-mark">漢</span><span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span></a><button class="site-nav-burger" id="siteNavBurger" type="button">☰</button><div class="site-nav-links" id="siteNavLinks"><a href="trang-chu.html">Trang chủ</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="hskk.html">HSKK</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a></div></div></nav>
+<main class="wrap"><a class="back" href="on-tap-chung.html">← Quay lại Ôn tập chung · Từ vựng</a><div id="app"><div class="empty">Đang tải hồ sơ từ vựng…</div></div></main>
+<footer class="site-footer no-print"><div class="site-footer-inner"><div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div><div class="site-footer-links"><a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a></div></div><div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div></footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button">↑</button>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const wanted=new URLSearchParams(location.search).get('word')||'';
+const urls=h=>[...new Set((h.match(/(?:bvnh\d+-\d+|bai\d+_index)\.html/g)||[]))];
+function parseLesson(h){
+ const m=h.indexOf('const LESSON ='),st=h.indexOf('{',m);if(m<0||st<0)throw Error('LESSON not found');
+ let d=0,q=null,e=false,lc=false,bc=false;
+ for(let i=st;i<h.length;i++){const c=h[i],n=h[i+1];if(lc){if(c==='\n')lc=false;continue}if(bc){if(c==='*'&&n==='/'){bc=false;i++}continue}if(q){if(e){e=false;continue}if(c==='\\'){e=true;continue}if(c===q)q=null;continue}if(c==='/'&&n==='/'){lc=true;i++;continue}if(c==='/'&&n==='*'){bc=true;i++;continue}if(c==='"'||c==="'"||c===String.fromCharCode(96)){q=c;continue}if(c==='{')d++;else if(c==='}'){d--;if(!d)return Function('"use strict";return ('+h.slice(st,i+1)+')')()}}throw Error('LESSON parse failed')}
+async function get(u){const r=await fetch(u+'?word_profile='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(u);return{u,l:parseLesson(await r.text())}}
+function chars(s){return Array.from(String(s||'')).filter(c=>/[\u3400-\u9fff]/.test(c))}
+function charLinks(word){return chars(word).map(c=>'<a class="char-link" href="chu-han.html?char='+encodeURIComponent(c)+'">'+esc(c)+' · chữ Hán</a>').join('')}
+function render(hit,v){
+ const c=hit.l.content||{},detail=v.detail||{},examples=(c.exampleSentences||[]).filter(x=>x.zh&&x.zh.includes(v.han));
+ document.title='Hồ sơ từ '+v.han+' · Hán Ngữ Cùng Bách Hữu';
+ const coll=Array.isArray(detail.collocations)?detail.collocations:[];
+ const notes=Array.isArray(detail.usageNotes)?detail.usageNotes:[];
+ const conf=Array.isArray(detail.commonConfusions)?detail.commonConfusions:[];
+ const related=Array.isArray(detail.relatedWords)?detail.relatedWords:[];
+ $('#app').innerHTML=
+ '<section class="hero"><span class="eyebrow">'+esc(hit.l.content?.course?.system||'HSK')+' · BÀI '+esc(hit.l.content?.course?.lessonNo||hit.u)+'</span>'+
+ '<div class="han">'+esc(v.han)+'</div><div class="pinyin">'+esc(v.pinyin||'Chưa có pinyin')+'</div><div class="meaning">'+esc(v.meaning||'Chưa có nghĩa chuẩn hóa')+'</div>'+
+ '<div class="meta">'+esc(v.partOfSpeech||'')+' · '+esc(hit.l.content?.course?.titleZh||'')+'</div><div class="char-links">'+charLinks(v.han)+'</div>'+
+ (detail.status?'<div class="source-badge">Nội dung mở rộng · '+esc(detail.status)+'</div>':'')+'</section>'+
+ '<div class="grid">'+
+ '<section class="card"><h2>🧩 Cách kết hợp thường gặp</h2>'+(coll.length?coll.map(x=>'<div class="item"><div class="pattern">'+esc(x.pattern||'')+'</div><div class="desc">'+esc(x.meaning||'')+'</div>'+(x.note?'<div class="note">'+esc(x.note)+'</div>':'')+(Array.isArray(x.examples)&&x.examples.length?'<div class="examples">'+x.examples.map(e=>'<div class="ex-zh">'+esc(e)+'</div>').join('')+'</div>':'')+'</div>').join(''):'<p>Chưa có dữ liệu mở rộng.</p>')+'</section>'+
+ '<section class="card"><h2>⚠️ Lưu ý khi sử dụng</h2>'+(notes.length?'<ul>'+notes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Chưa có lưu ý mở rộng.</p>')+
+ (conf.length?'<h2 style="margin-top:18px">🔎 Dễ nhầm với</h2>'+conf.map(x=>'<div class="confusion"><b>'+esc(x.with||'')+'</b><div>'+esc(x.difference||'')+'</div></div>').join(''):'')+'</section>'+
+ '<section class="card"><h2>🔗 Từ liên quan</h2>'+(related.length?'<div class="related">'+related.map(w=>'<a href="tu-vung.html?word='+encodeURIComponent(w)+'">'+esc(w)+'</a>').join('')+'</div>':'<p>Chưa có dữ liệu liên quan.</p>')+'</section>'+
+ '<section class="card"><h2>💬 Câu mẫu trong bài</h2>'+(examples.length?examples.map(x=>'<div class="sentence"><div class="sent-zh">'+esc(x.zh)+'</div><div class="sent-pin">'+esc(x.pinyin||'')+'</div><div class="sent-vi">'+esc(x.vi||'')+'</div></div>').join(''):'<p>Chưa có câu mẫu trực tiếp cho từ này trong dữ liệu bài học.</p>')+'</section>'+
+ '</div><div class="nav-row"><a class="btn" href="on-tap-chung.html">← Danh sách từ</a><a class="btn" href="'+esc(hit.u)+'">Mở bài học →</a></div>';
+}
+async function load(){
+ if(!wanted){$('#app').innerHTML='<div class="empty">Hãy mở hồ sơ từ vựng từ Ôn tập chung.</div>';return}
+ const home=await(await fetch('trang-chu.html?word_manifest='+Date.now(),{cache:'no-store'})).text();
+ const all=['bvnh2-1.html',...urls(home)],rs=await Promise.allSettled([...new Set(all)].map(get));
+ for(const r of rs){if(r.status!=='fulfilled')continue;const c=r.value.l.content||{},v=(c.vocabulary||[]).find(x=>x.han===wanted);if(v){render(r.value,v);return}}
+ $('#app').innerHTML='<div class="empty">Chưa có hồ sơ mở rộng cho từ '+esc(wanted)+'.</div>';
+}
+$('#footerYear').textContent=new Date().getFullYear();
+const b=$('#siteNavBurger'),l=$('#siteNavLinks');if(b&&l)b.onclick=()=>{const o=l.classList.toggle('open');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')};
+const bt=$('#siteBackTop');addEventListener('scroll',()=>bt.classList.toggle('visible',scrollY>400));bt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+load().catch(()=>$('#app').innerHTML='<div class="empty">Không tải được dữ liệu từ vựng.</div>');
+})();
+</script>
+</body>
+</html>
