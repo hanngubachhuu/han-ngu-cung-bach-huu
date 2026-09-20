@@ -113,7 +113,16 @@ function addListeningRenderer(html) {
     row.appendChild(el('span','opt-letter',opt.k)); row.appendChild(el('span','',mixText(opt.t)));
     if(selected) row.classList.add('selected');
     if(state.submitted){ row.disabled=true; row.classList.add('locked'); if(opt.k===q.answer) row.classList.add('correct-answer'); else if(selected) row.classList.add('wrong-answer'); }
-    else row.addEventListener('click',()=>{ state.answers[q.id]=opt.k; DataStore.saveInProgress(); renderAll(); });
+    else row.addEventListener('click',()=>{
+      // Khi người học đang kéo để bôi đen/copy, không biến thao tác đó thành chọn đáp án.
+      if(window.getSelection && window.getSelection().toString().trim()) return;
+      state.answers[q.id]=opt.k;
+      DataStore.saveInProgress();
+      // Trắc nghiệm một đáp án: chọn xong chuyển ngay sang câu kế tiếp để giữ nhịp làm bài.
+      if(state.current < TOTAL_Q-1) state.current += 1;
+      renderAll();
+      window.setTimeout(scrollToQuestion, 0);
+    });
     list.appendChild(row);
   }); body.appendChild(list);
 }
@@ -129,7 +138,8 @@ function addListeningRenderer(html) {
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
-.q-card,.q-card *{user-select:text;}
+.q-card,.q-card *{user-select:text!important;-webkit-user-select:text!important;}
+.q-prompt,.q-prompt *,.opt,.opt *,.passage-text,.passage-text *{user-select:text!important;-webkit-user-select:text!important;}
 .opt{width:100%;text-align:left;color:var(--text);font-family:var(--font-vn);cursor:pointer;}
 .opt .opt-letter{margin-top:var(--space-2xs);}
 .hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
@@ -195,9 +205,12 @@ function renderMultiFill(q, body){
       .replace("case 'retell': renderRetell(q, body); break;", "case 'retell': renderRetell(q, body); break;\n    case 'multi_fill': renderMultiFill(q, body); break;")
       .replace("retell:'Đọc - kể lại', self_check:'Tự luận'", "retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'");
   }
-  if (!html.includes("if(q.readingText){")) {
+  if (!html.includes("if(q.readingText){") && !html.includes("if(q.readingText &&")) {
     html = html.replace("  const card = el('div','q-card');", "  if(q.readingText){\n    const pc = el('div','passage-card');\n    pc.appendChild(el('div','passage-label','阅读材料'));\n    pc.appendChild(el('div','passage-text',mixText(q.readingText)));\n    area.appendChild(pc);\n  }\n\n  const card = el('div','q-card');");
   }
+  // Một số câu đã có passageId và readingText cùng trỏ tới cùng một đoạn. Chỉ hiện bản thứ hai
+  // khi đó thật sự là một đoạn hỗ trợ khác, tránh lặp nguyên văn trên màn hình.
+  html = html.replace(/  if\(q\.readingText(?: && \(!q\._passage \|\| String\(q\._passage\.text\)\.trim\(\) !== String\(q\.readingText\)\.trim\(\)\))?\)\{\r?\n/, "  if(q.readingText && (!q._passage || String(q._passage.text).trim() !== String(q.readingText).trim())){\n");
   html = html.replace("  const promptDiv = el('div','q-prompt', mixText(q.prompt));", "  const promptText = String(q.prompt || '').replace(/([：:])\\s+(?=[\\u4e00-\\u9fff])/u, '$1\\n');\n  const promptDiv = el('div','q-prompt', mixText(promptText));");
   html = html.replace(/\/\* HSK-LESSON-UX-PATCH:START \*\/[\s\S]*?\/\* HSK-LESSON-UX-PATCH:END \*\/\n?/, '');
   html = html.replace(/\/\* Audio player:[\s\S]*?\.audio-speed\{[^}]*\}\n/, '');
@@ -207,6 +220,64 @@ function renderMultiFill(q, body){
   html = html.replace("if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token", "if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);\n  if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token")
     .replace("  if(q.type === 'reorder'){", "  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }\n  if(q.type === 'reorder'){");
   html = html.replace(/  renderAll\(\);\r?\n  window\.scrollTo\(\{top:0, behavior:'smooth'\}\);/, "  renderAll();\n  window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);");
+  html = html.replace(/  reviewFilter: 'all'(?:,\r?\n  reviewMode: false)?\r?\n};/, "  reviewFilter: 'all',\n  reviewMode: false\n};");
+  html = html.replace(/timeLeftSec: LESSON\.timeLimitMinutes\*60, timerHandle:null, reviewFilter:'all'(?:, reviewMode:false)? };/g, "timeLeftSec: LESSON.timeLimitMinutes*60, timerHandle:null, reviewFilter:'all', reviewMode:false };");
+  html = html.replace("  state.submitted = true;\n  clearInterval(state.timerHandle);", "  state.submitted = true;\n  state.reviewMode = false;\n  closeMiniNav();\n  clearInterval(state.timerHandle);");
+  html = html.replace("    chip.addEventListener('click', () => { state.reviewFilter = k; renderAll(); });", `    chip.addEventListener('click', () => {
+      state.reviewFilter = k;
+      const nextIndex = ALL_QUESTIONS.findIndex(questionMatchesFilter);
+      state.reviewMode = nextIndex >= 0;
+      if(nextIndex >= 0) state.current = nextIndex;
+      renderAll();
+      if(state.reviewMode) window.setTimeout(scrollToQuestion, 0);
+    });`);
+  html = html.replace(/  ALL_QUESTIONS\.forEach\(\(q, i\) => \{\r?\n(?:    if\(state\.submitted && state\.reviewMode && !questionMatchesFilter\(q\)\) return;\r?\n)?/, "  ALL_QUESTIONS.forEach((q, i) => {\n    if(state.submitted && state.reviewMode && !questionMatchesFilter(q)) return;\n");
+  html = html.replace("$('#btnPrev').addEventListener('click', () => { if(state.current>0){ state.current--; renderAll(); scrollToQuestion(); }});\n$('#btnNext').addEventListener('click', () => { if(state.current<TOTAL_Q-1){ state.current++; renderAll(); scrollToQuestion(); }});", `function moveQuestion(step){
+  const visible = ALL_QUESTIONS.map((q, index) => ({q, index}))
+    .filter(({q}) => !state.submitted || !state.reviewMode || questionMatchesFilter(q))
+    .map(({index}) => index);
+  const target = visible[visible.indexOf(state.current) + step];
+  if(Number.isInteger(target)){ state.current = target; renderAll(); scrollToQuestion(); }
+}
+$('#btnPrev').addEventListener('click', () => moveQuestion(-1));
+$('#btnNext').addEventListener('click', () => moveQuestion(1));`);
+  const renderAllStart = html.indexOf("function renderAll(){");
+  const nextSection = html.indexOf("   18) KHỞI TẠO", renderAllStart);
+  const renderAllEnd = nextSection < 0 ? -1 : html.lastIndexOf("/* ================================================================", nextSection);
+  if(renderAllStart < 0 || renderAllEnd < 0) throw new Error("Không tìm thấy renderAll để cập nhật luồng xem kết quả.");
+  const renderAll = `function renderAll(){
+  updateProgress();
+  const visibleIndexes = ALL_QUESTIONS.map((q, index) => ({q, index}))
+    .filter(({q}) => !state.submitted || !state.reviewMode || questionMatchesFilter(q))
+    .map(({index}) => index);
+  const hasReviewItems = visibleIndexes.length > 0;
+  const showQuestionUI = !state.submitted || (state.reviewMode && hasReviewItems);
+  const navPanel = $('#navPanel'), questionArea = $('#questionArea'), navButtons = $('#qNavButtons');
+  if(navPanel) navPanel.style.display = showQuestionUI ? '' : 'none';
+  if(questionArea) questionArea.style.display = showQuestionUI ? '' : 'none';
+  if(navButtons) navButtons.style.display = showQuestionUI ? 'flex' : 'none';
+  const miniNavButton = $('#btnMiniNav');
+  if(miniNavButton) miniNavButton.style.display = showQuestionUI ? '' : 'none';
+  if(!showQuestionUI) closeMiniNav();
+
+  if(showQuestionUI){
+    if(state.submitted && !questionMatchesFilter(ALL_QUESTIONS[state.current])) jumpToFirstFilterMatch();
+    renderNavGrid();
+    renderQuestion();
+  } else {
+    const navGrid = $('#navGridContainer'), miniGrid = $('#miniNavGridContainer');
+    if(navGrid) navGrid.innerHTML = '';
+    if(miniGrid) miniGrid.innerHTML = '';
+    if(questionArea) questionArea.innerHTML = '';
+  }
+  $('#btnSubmit').style.display = state.submitted ? 'none' : 'inline-flex';
+  renderResultArea();
+  renderHistoryBanner();
+  const currentPosition = visibleIndexes.indexOf(state.current);
+  $('#btnPrev').disabled = currentPosition <= 0;
+  $('#btnNext').disabled = currentPosition < 0 || currentPosition >= visibleIndexes.length - 1;
+}`;
+  html = html.slice(0, renderAllStart) + renderAll + html.slice(renderAllEnd);
   return html;
 }
 

@@ -862,6 +862,7 @@ footer.print-footer{display:none;}
 
 
 
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -872,7 +873,8 @@ footer.print-footer{display:none;}
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
-.q-card,.q-card *{user-select:text;}
+.q-card,.q-card *{user-select:text!important;-webkit-user-select:text!important;}
+.q-prompt,.q-prompt *,.opt,.opt *,.passage-text,.passage-text *{user-select:text!important;-webkit-user-select:text!important;}
 .opt{width:100%;text-align:left;color:var(--text);font-family:var(--font-vn);cursor:pointer;}
 .opt .opt-letter{margin-top:var(--space-2xs);}
 .hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
@@ -3129,7 +3131,8 @@ let state = {
   startTime: null,
   timeLeftSec: LESSON.timeLimitMinutes * 60,
   timerHandle: null,
-  reviewFilter: 'all'
+  reviewFilter: 'all',
+  reviewMode: false
 };
 
 const $ = sel => document.querySelector(sel);
@@ -3319,6 +3322,7 @@ function isAnswered(q){
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -3375,6 +3379,7 @@ function renderNavGrid(){
   const miniContainer = $('#miniNavGridContainer');
   if(miniContainer) miniContainer.innerHTML = '';
   ALL_QUESTIONS.forEach((q, i) => {
+    if(state.submitted && state.reviewMode && !questionMatchesFilter(q)) return;
     const cell = el('button','nav-cell', String(i+1));
     cell.type = 'button';
     if(i === state.current) cell.classList.add('current');
@@ -3427,7 +3432,7 @@ function renderQuestion(){
     area.appendChild(pc);
   }
 
-  if(q.readingText){
+  if(q.readingText && (!q._passage || String(q._passage.text).trim() !== String(q.readingText).trim())){
     const pc = el('div','passage-card');
     pc.appendChild(el('div','passage-label','阅读材料'));
     pc.appendChild(el('div','passage-text',mixText(q.readingText)));
@@ -3488,7 +3493,16 @@ function renderMcq(q, body){
     row.appendChild(el('span','opt-letter',opt.k)); row.appendChild(el('span','',mixText(opt.t)));
     if(selected) row.classList.add('selected');
     if(state.submitted){ row.disabled=true; row.classList.add('locked'); if(opt.k===q.answer) row.classList.add('correct-answer'); else if(selected) row.classList.add('wrong-answer'); }
-    else row.addEventListener('click',()=>{ state.answers[q.id]=opt.k; DataStore.saveInProgress(); renderAll(); });
+    else row.addEventListener('click',()=>{
+      // Khi người học đang kéo để bôi đen/copy, không biến thao tác đó thành chọn đáp án.
+      if(window.getSelection && window.getSelection().toString().trim()) return;
+      state.answers[q.id]=opt.k;
+      DataStore.saveInProgress();
+      // Trắc nghiệm một đáp án: chọn xong chuyển ngay sang câu kế tiếp để giữ nhịp làm bài.
+      if(state.current < TOTAL_Q-1) state.current += 1;
+      renderAll();
+      window.setTimeout(scrollToQuestion, 0);
+    });
     list.appendChild(row);
   }); body.appendChild(list);
 }
@@ -3683,6 +3697,7 @@ function gradeQuestion(q){
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'reorder'){
     const arr = v || [];
     const ok = arr.length === q.answer.length && arr.every((t,i) => t === q.answer[i]);
@@ -3858,7 +3873,14 @@ function renderResultArea(){
   const filterBar = el('div','filter-bar');
   [['all','Tất cả'],['correct','Câu đúng'],['wrong','Câu sai'],['partial','Một phần'],['unanswered','Chưa làm']].forEach(([k,label]) => {
     const chip = el('button','filter-chip'+(state.reviewFilter===k?' active':''), label);
-    chip.addEventListener('click', () => { state.reviewFilter = k; renderAll(); });
+    chip.addEventListener('click', () => {
+      state.reviewFilter = k;
+      const nextIndex = ALL_QUESTIONS.findIndex(questionMatchesFilter);
+      state.reviewMode = nextIndex >= 0;
+      if(nextIndex >= 0) state.current = nextIndex;
+      renderAll();
+      if(state.reviewMode) window.setTimeout(scrollToQuestion, 0);
+    });
     filterBar.appendChild(chip);
   });
   area.appendChild(filterBar);
@@ -3998,7 +4020,7 @@ function retakeQuiz(){
     modal.remove();
     DataStore.clearInProgress();
     state = { current:0, answers:{}, selfMarks:{}, submitted:false, startTime:Date.now(),
-      timeLeftSec: LESSON.timeLimitMinutes*60, timerHandle:null, reviewFilter:'all' };
+      timeLeftSec: LESSON.timeLimitMinutes*60, timerHandle:null, reviewFilter:'all', reviewMode:false };
     clearInterval(state.timerHandle);
     startTimer();
     renderAll();
@@ -4322,22 +4344,36 @@ document.addEventListener('click', (e) => {
    ================================================================ */
 function renderAll(){
   updateProgress();
-  renderNavGrid();
-  if(state.submitted){
-    if(!questionMatchesFilter(ALL_QUESTIONS[state.current])) jumpToFirstFilterMatch();
-    $('#qNavButtons').style.display='flex';
-    $('#btnSubmit').style.display='none';
+  const visibleIndexes = ALL_QUESTIONS.map((q, index) => ({q, index}))
+    .filter(({q}) => !state.submitted || !state.reviewMode || questionMatchesFilter(q))
+    .map(({index}) => index);
+  const hasReviewItems = visibleIndexes.length > 0;
+  const showQuestionUI = !state.submitted || (state.reviewMode && hasReviewItems);
+  const navPanel = $('#navPanel'), questionArea = $('#questionArea'), navButtons = $('#qNavButtons');
+  if(navPanel) navPanel.style.display = showQuestionUI ? '' : 'none';
+  if(questionArea) questionArea.style.display = showQuestionUI ? '' : 'none';
+  if(navButtons) navButtons.style.display = showQuestionUI ? 'flex' : 'none';
+  const miniNavButton = $('#btnMiniNav');
+  if(miniNavButton) miniNavButton.style.display = showQuestionUI ? '' : 'none';
+  if(!showQuestionUI) closeMiniNav();
+
+  if(showQuestionUI){
+    if(state.submitted && !questionMatchesFilter(ALL_QUESTIONS[state.current])) jumpToFirstFilterMatch();
+    renderNavGrid();
+    renderQuestion();
   } else {
-    $('#btnSubmit').style.display='inline-flex';
+    const navGrid = $('#navGridContainer'), miniGrid = $('#miniNavGridContainer');
+    if(navGrid) navGrid.innerHTML = '';
+    if(miniGrid) miniGrid.innerHTML = '';
+    if(questionArea) questionArea.innerHTML = '';
   }
-  renderQuestion();
+  $('#btnSubmit').style.display = state.submitted ? 'none' : 'inline-flex';
   renderResultArea();
   renderHistoryBanner();
-  $('#btnPrev').disabled = state.current===0;
-  $('#btnNext').disabled = state.current===TOTAL_Q-1;
-}
-
-/* ================================================================
+  const currentPosition = visibleIndexes.indexOf(state.current);
+  $('#btnPrev').disabled = currentPosition <= 0;
+  $('#btnNext').disabled = currentPosition < 0 || currentPosition >= visibleIndexes.length - 1;
+}/* ================================================================
    18) KHỞI TẠO
    Trang luôn mở ra ở màn hình giới thiệu (#introScreen) trước tiên;
    #appShell (thanh công cụ + câu hỏi) chỉ hiển thị và đồng hồ chỉ

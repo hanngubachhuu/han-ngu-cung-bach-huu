@@ -1997,3 +1997,11 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   Object.assign(q("B9-D08"),{type:"self_check",prompt:"Đặt một câu tiếng Trung có cụm từ 听懂. Em tự chọn tình huống.",model:"老师说得很清楚，我听懂了。",explain:"Một câu là một ý để hệ thống và giáo viên chấm riêng."});
   Object.assign(q("B9-E02"),{type:"retell",prompt:"Đọc đoạn văn trong 60 giây. Khi đoạn tự ẩn, kể lại bằng tiếng Trung bằng 3–4 câu.",sourceText:"小王第一天来公司工作。他早上八点到公司，先认识了一个新同事。同事告诉他怎么做第一份工作，可是小王有几个地方还不懂。中午以后，同事又慢慢帮助他一起看题。下午四点，小王终于做完了第一份工作。他很高兴，也希望明天能做得更好。",readSeconds:60,model:"小王第一天来公司工作。开始有些地方不懂，同事帮助他。下午他做完了第一份工作，希望明天做得更好。",explain:"Kể đủ: ngày đầu, điều chưa hiểu/được giúp, và kết quả cuối cùng.",error:"Không cần chép nguyên văn; hãy dùng câu của em để kể các ý chính."});
 })();
+
+/* Hiệu chỉnh cuối theo trải nghiệm học sinh: kiểm tra cách dùng trong ngữ cảnh, không hỏi thuật ngữ. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id);
+  const mc=(id,prompt,options,answer=0,extra={})=>Object.assign(q(id),{type:"mcq",prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[answer],...extra});
+  mc("B9-A09","Chọn cụm phù hợp để hoàn thành câu: 老师说得很清楚，我___了。",["听懂","听完","做完","写错"],0,{explain:"Người nói đã hiểu điều giáo viên nói, nên dùng 听懂。听完 chỉ nghe hết, còn 做完 / 写错 không hợp với ngữ cảnh.",example:"老师说得很清楚，我听懂了。"});
+  mc("B9-A11","Chọn câu tiếng Trung phù hợp với ý: Bắt đầu làm từ câu thứ nhất.",["从第一题开始做。","从明天开始做。","第一题做错了。","我做完第一题了。"],0,{explain:"从第一题开始做 = bắt đầu làm từ câu thứ nhất. Các đáp án còn lại lần lượt nhầm mốc thời gian, làm sai và làm xong.",example:"请从第一题开始做。"});
+})();
