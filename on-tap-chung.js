@@ -3,19 +3,6 @@ const S={d:{lessons:[],vocab:[],grammar:[],hanzi:[],questions:[]},tab:'overview'
 const $=x=>document.getElementById(x), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), uniq=(a,k)=>{let z=new Set(),o=[];for(const x of a){let v=k(x);if(!z.has(v)){z.add(v);o.push(x)}}return o};
 const chars=s=>Array.from(String(s||'')).filter(c=>/[\u3400-\u9fff]/.test(c));
 function stat(t,ok=false){let e=$('syncStatus');if(e){e.textContent=t;e.style.color=ok?'var(--green)':'var(--muted)'}}
-function urls(h){return [...new Set(h.match(/(?:bvnh\d+-\d+|bai\d+_index)\.html/g)||[])]}
-function lessonObj(h){
-  let m=h.indexOf('const LESSON ='),st=h.indexOf('{',m),d=0,qu=null,es=false,lc=false,bc=false;
-  if(m<0||st<0)throw Error('LESSON not found');
-  for(let i=st;i<h.length;i++){let c=h[i],n=h[i+1];
-    if(lc){if(c==='\n')lc=false;continue}
-    if(bc){if(c==='*'&&n==='/'){bc=false;i++}continue}
-    if(qu){if(es){es=false;continue}if(c==='\\'){es=true;continue}if(c===qu)qu=null;continue}
-    if(c==='/'&&n==='/'){lc=true;i++;continue}if(c==='/'&&n==='*'){bc=true;i++;continue}
-    if(c==='"'||c==="'"||c===String.fromCharCode(96)){qu=c;continue}
-    if(c==='{')d++;else if(c==='}'){d--;if(d===0)return Function('"use strict";return ('+h.slice(st,i+1)+')')()}
-  }throw Error('LESSON parse failed');
-}
 function lvl(l){let s=[l.title,l.zhTitle,l.titleVi,l.viSubtitle,l.subtitle,l.heroTitle,...(l.meta||[])].filter(Boolean).join(' '),m=s.match(/HSK\s*([1-9]\d?)/i);return m?'HSK '+m[1]:'Khác'}
 function bn(l,u){let s=[l.id,l.title,l.zhTitle,l.viSubtitle,l.subtitle,...(l.meta||[]),u].filter(Boolean).join(' '),m=s.match(/(?:Bài|bai|hsk\d+_bai)[\s_-]?(\d+)/i);return m?+m[1]:(+(u.match(/bai(\d+)/i)||[])[1]||1)}
 function qs(l,b,lv){
@@ -56,7 +43,6 @@ function norm(l,u){
  let hz=Array.isArray(c.hanzi)&&c.hanzi.length?c.hanzi.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):Array.isArray(l.hanzi)?l.hanzi.map(x=>({...x,bai:b,level:lv,lessonId:l.id||u,sourceHref:u,sourceTitle:title})):[];
  return {id:l.id||u,href:u,bai:b,level:lv,title,vi:l.titleVi||l.viSubtitle||l.subtitle||'',vocab:v,grammar:g,hanzi:hz,exampleSentences:c.exampleSentences||[],commonErrors:c.commonErrors||[],exerciseGroups:c.exercises||{},coverage:c.coverage||{},questions:q,content:c};
 }
-async function get(u){let r=await fetch(u+'?review='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(u);return norm(lessonObj(await r.text()),u)}
 function agg(ls){
  let v=uniq(ls.flatMap(x=>x.vocab),x=>x.level+'|'+x.bai+'|'+x.han),g=uniq(ls.flatMap(x=>x.grammar),x=>x.level+'|'+x.bai+'|'+x.title),q=ls.flatMap(x=>x.questions),hm=new Map();
  ls.flatMap(x=>x.hanzi||[]).forEach(x=>{if(!x.char)return;hm.set(x.char,{...x,words:Array.isArray(x.words)?[...x.words]:[],levels:new Set([x.level]),bais:new Set([x.bai])})});
