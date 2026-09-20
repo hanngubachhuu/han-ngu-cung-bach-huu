@@ -101,5 +101,8 @@ async function load(){
  S.d=agg(ls);filters();stats();render();
  stat('Đã đồng bộ '+ls.length+' bài học từ lesson registry.',true);
 }
-bind();load().catch(e=>{stat('Không đồng bộ được dữ liệu bài học. Kiểm tra cấu trúc LESSON của các trang bài.',false)});
+bind();load().catch(e=>{
+  const detail = window.HAN_NGU_DATA?.loadErrors?.map(x=>x.id+': '+x.message).join(' | ');
+  stat(detail ? ('Lỗi dữ liệu: '+detail) : ('Không đồng bộ được dữ liệu bài học: '+(e?.message||e)),false);
+});
 })();
