@@ -18,9 +18,49 @@ h1{font-size:30px;margin:0 0 8px}h2{font-size:20px;margin:0 0 14px}.lead{color:v
 .deep-hanzi{margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--soft)}.deep-hanzi h3{font-size:14px;margin:0 0 8px}.deep-hanzi p{font-size:13px;line-height:1.7;margin:0 0 8px;color:var(--muted)}.deep-hanzi ul{margin:0;padding-left:19px;color:var(--muted);font-size:13px;line-height:1.7}.deep-confusion{margin-top:8px;padding:8px 10px;background:var(--amber-soft);border-left:3px solid var(--amber);border-radius:7px;font-size:12px;color:#6f5412}.reading-box{margin-top:16px;padding:15px;border:1px solid var(--border);border-radius:12px;background:var(--soft)}.reading-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px}.reading-head strong{font-size:14px}.reading-active{padding:4px 8px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800}.reading-tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:11px}.reading-tab{border:1px solid var(--border);background:var(--card);color:var(--text);padding:7px 11px;border-radius:9px;font-weight:800;cursor:pointer}.reading-tab.active{border-color:var(--primary);background:var(--primary-soft);color:var(--primary)}.reading-detail{padding:11px 12px;border-radius:10px;background:#fff;border:1px solid var(--border)}.reading-meta{color:var(--muted);font-size:13px;line-height:1.65}.reading-when{margin-top:7px;color:var(--muted);font-size:13px;line-height:1.65}.reading-examples{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.reading-word{display:inline-flex;flex-direction:column;padding:7px 9px;border-radius:9px;background:var(--primary-soft);color:var(--primary);text-decoration:none}.reading-word b{font-family:var(--cn);font-size:15px}.reading-word span{font-size:11px;color:var(--muted);margin-top:2px}.reading-note{margin-top:9px;padding:8px 10px;border-left:3px solid var(--amber);background:var(--amber-soft);color:#6f5412;border-radius:7px;font-size:12px;line-height:1.6}.inline-hanzi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:16px}.inline-hanzi-stage{position:relative;width:min(390px,100%);aspect-ratio:1;margin:auto;border:1px solid var(--border);border-radius:13px;overflow:hidden;background:#fff}.inline-hanzi-grid{position:absolute;inset:0;background:linear-gradient(#e3ebe6 1px,transparent 1px),linear-gradient(90deg,#e3ebe6 1px,transparent 1px),linear-gradient(45deg,transparent calc(50% - .5px),#edf1ee calc(50% - .5px),#edf1ee calc(50% + .5px),transparent calc(50% + .5px)),linear-gradient(-45deg,transparent calc(50% - .5px),#edf1ee calc(50% - .5px),#edf1ee calc(50% + .5px),transparent calc(50% + .5px));background-size:50% 50%,50% 50%,100% 100%,100% 100%;pointer-events:none}.inline-hanzi-target,.inline-hanzi-draw{position:absolute;inset:0}.inline-hanzi-draw{width:100%;height:100%;touch-action:none}.inline-hanzi-actions{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:10px}.inline-hanzi-actions button{border:0;border-radius:10px;padding:9px 13px;font-weight:800;font-size:12px;cursor:pointer}.inline-hanzi-actions .s{background:#27ae60;color:#fff}.inline-hanzi-actions .t{background:#f2b01e;color:#432f00}.inline-hanzi-actions .q{background:#d94a3a;color:#fff}.inline-hanzi-actions button.active{box-shadow:0 0 0 3px rgba(44,62,80,.12)}.inline-hanzi-status{margin-top:9px;padding:9px 11px;border-radius:9px;background:var(--soft);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}.inline-hanzi-speed{text-align:center;margin-top:8px;font-size:12px;color:var(--muted)}.inline-hanzi-speed select{border:1px solid var(--border);border-radius:8px;padding:5px;background:#fff}.inline-hanzi-note{text-align:center;margin-top:7px;font-size:11px;color:var(--faint)}</style><link rel="stylesheet" href="navigation.css">
 </head>
 <body>
-<nav class="site-nav no-print"><div class="site-nav-inner"><a class="site-nav-brand" href="trang-chu.html"><span class="site-nav-brand-mark">漢</span><span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span></a><button class="site-nav-burger" id="siteNavBurger" type="button">☰</button><div class="site-nav-links" id="siteNavLinks"><a href="trang-chu.html">Trang chủ</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="hskk.html">HSKK</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a></div></div></nav>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
+            <div class="dd-level-lessons">
+              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a><a href="bai2_index.html">Bài 2 · 我每天六点起床</a><a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a><a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a><a href="bai5_index.html">Bài 5 · 就买这件吧</a><a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a><a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+            </div>
+          </div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
 <main class="wrap"><a class="back" href="on-tap-chung.html">← Quay lại Ôn tập chung · Chữ Hán</a><div id="app"><div class="empty">Đang tải hồ sơ chữ Hán…</div></div></main>
-<footer class="site-footer no-print"><div class="site-footer-inner"><div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div><div class="site-footer-links"><a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a></div></div><div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div></footer>
+<footer class="site-footer no-print" id="siteFooter">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
 <button class="site-back-top no-print" id="siteBackTop" type="button">↑</button>
 <script src="data/lesson-registry.js"></script><script src="data/lesson-manifest.js"></script><script src="hanzi-practice.js"></script>
 <script>
@@ -85,4 +125,14 @@ $('#footerYear').textContent=new Date().getFullYear();
 const b=$('#siteNavBurger'),l=$('#siteNavLinks');if(b&&l)b.onclick=()=>{const o=l.classList.toggle('open');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')};
 const bt=$('#siteBackTop');addEventListener('scroll',()=>bt.classList.toggle('visible',scrollY>400));bt.onclick=()=>scrollTo({top:0,behavior:'smooth'});load().catch(()=>$('#app').innerHTML='<div class="empty">Không tải được dữ liệu chữ Hán.</div>');
 })();
-</script></body></html>
+</script><script data-nav-dropdown-fix="1">
+(function(){
+  var b=document.getElementById('hskDropdownBtn'),d=document.getElementById('hskDropdown');
+  if(!b||!d||b.dataset.dropdownBound)return;
+  b.dataset.dropdownBound='1';
+  b.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');});
+  document.addEventListener('click',function(e){if(d.classList.contains('open')&&!d.contains(e.target)){d.classList.remove('open');b.setAttribute('aria-expanded','false');}});
+  d.querySelectorAll('.dd-level-head').forEach(function(h){h.addEventListener('click',function(){var x=h.closest('.dd-level');if(x&&x.querySelector('.dd-level-lessons'))x.classList.toggle('open');});});
+})();
+</script>
+</body></html>
