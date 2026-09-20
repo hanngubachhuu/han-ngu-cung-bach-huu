@@ -10,6 +10,8 @@ on:
     paths:
       - "data/**"
       - "scripts/validate-lessons.mjs"
+      - "scripts/validate-publish-readiness.mjs"
+      - ".github/workflows/validate-lessons.yml"
 
 jobs:
   validate:
