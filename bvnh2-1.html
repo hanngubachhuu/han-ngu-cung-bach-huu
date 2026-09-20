@@ -481,7 +481,7 @@ const LESSON = {
       "timeLimitMinutes": 45,
       "version": 2,
       "lessonId": "hsk2_bai1_jiuyue",
-      "detailSchemaVersion": 1
+      "detailSchemaVersion": 2
     },
     "vocabulary": [
       {
@@ -1137,27 +1137,69 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
           "lessonReading": "yī",
-          "readings": [
+          "toneSandhi": [
             {
-              "pinyin": "yī",
-              "pos": "本课用法",
-              "meaning": "một",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "environment": "Đứng trước âm 4",
+              "pinyin": "yí",
               "examples": [
                 {
+                  "word": "一共",
+                  "pinyin": "yígòng"
+                }
+              ]
+            },
+            {
+              "environment": "Đứng trước âm 1, 2 hoặc 3",
+              "pinyin": "yì",
+              "examples": [
+                {
+                  "word": "一天",
+                  "pinyin": "yìtiān"
+                },
+                {
+                  "word": "一年",
+                  "pinyin": "yìnián"
+                },
+                {
                   "word": "一起",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "yìqǐ"
+                }
+              ]
+            },
+            {
+              "environment": "Đọc độc lập / đọc số",
+              "pinyin": "yī",
+              "examples": [
+                {
+                  "word": "一",
+                  "pinyin": "yī"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "readings": [
+            {
+              "pinyin": "yī",
+              "pos": "数词",
+              "meaning": "một",
+              "when": "Đếm hoặc biểu thị một đơn vị."
+            }
+          ],
+          "note": "Trong tiếng phổ thông, 一 có biến điệu theo âm tiết sau. Trong 一起 của Bài 1, phát âm thực tế là yìqǐ."
+        },
+        "deepProfile": {
+          "coreMeaning": "một; một đơn vị",
+          "usageNotes": [
+            "一 là số từ cơ bản, đồng thời tham gia nhiều kết cấu cố định.",
+            "Khi nói, phải chú ý biến điệu của 一 thay vì luôn đọc cứng yī."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1175,7 +1217,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1184,8 +1227,8 @@ const LESSON = {
             {
               "pinyin": "wèi",
               "pos": "介词",
-              "meaning": "vì; cho; cho/đối với; để",
-              "when": "Khi biểu thị nguyên nhân, đối tượng hưởng lợi/đối tượng hướng tới hoặc mục đích.",
+              "meaning": "vì; cho; để",
+              "when": "Biểu thị nguyên nhân, đối tượng hướng tới hoặc mục đích. Trong 为什么, 为 đọc wèi.",
               "examples": [
                 {
                   "word": "为什么",
@@ -1195,16 +1238,15 @@ const LESSON = {
                 {
                   "word": "为了",
                   "pinyin": "wèile",
-                  "meaning": "để, vì"
+                  "meaning": "để; vì"
                 }
-              ],
-              "note": "Trong 为什么 của Bài 1, 为 đọc wèi."
+              ]
             },
             {
               "pinyin": "wéi",
               "pos": "动词 / 介词",
-              "meaning": "làm; trở thành; coi là, cho là; bị",
-              "when": "Thường gặp trong các từ và kết cấu như 认为、成为、以为、为人, hoặc mẫu 为……所…….",
+              "meaning": "làm; trở thành; cho là",
+              "when": "Trong nhiều từ/kết cấu như 认为、成为、以为、作为.",
               "examples": [
                 {
                   "word": "认为",
@@ -1217,18 +1259,22 @@ const LESSON = {
                   "meaning": "trở thành"
                 },
                 {
-                  "word": "以为",
-                  "pinyin": "yǐwéi",
-                  "meaning": "cho rằng, tưởng rằng"
+                  "word": "作为",
+                  "pinyin": "zuòwéi",
+                  "meaning": "với tư cách là; làm"
                 }
-              ],
-              "note": "Không đọc theo chữ đơn lẻ; phải nhìn vào từ hoặc kết cấu cụ thể."
+              ]
             }
           ],
-          "readingSources": [
-            "han-dian"
+          "note": "Bài 1 dùng 为 trong 为什么, nên đọc wèi."
+        },
+        "deepProfile": {
+          "coreMeaning": "tạo thành nhiều từ với các nghĩa 'vì/cho/để' và 'làm/trở thành/cho là'",
+          "usageNotes": [
+            "Không quyết định âm của 为 chỉ bằng hình thức chữ đơn.",
+            "Ưu tiên học theo từ cố định và kết cấu."
           ],
-          "status": "teacher_enriched"
+          "commonConfusions": []
         }
       },
       {
@@ -1246,7 +1292,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1254,19 +1301,50 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "shén",
-              "pos": "本课用法",
-              "meaning": "gì, trong 什么",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "疑问代词的一部分",
+              "meaning": "thành phần trong 什么",
+              "when": "Trong 什么、为什么、怎么等 từ nghi vấn có 什 theo cách đọc shén.",
               "examples": [
                 {
+                  "word": "什么",
+                  "pinyin": "shénme",
+                  "meaning": "cái gì"
+                },
+                {
                   "word": "为什么",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "wèishénme",
+                  "meaning": "tại sao"
+                }
+              ]
+            },
+            {
+              "pinyin": "shí",
+              "pos": "数词 / 形容词",
+              "meaning": "mười; nhiều loại",
+              "when": "Trong các từ như 什锦、什物 hoặc cách dùng văn viết/cổ hơn.",
+              "examples": [
+                {
+                  "word": "什锦",
+                  "pinyin": "shíjǐn",
+                  "meaning": "thập cẩm"
+                },
+                {
+                  "word": "什物",
+                  "pinyin": "shíwù",
+                  "meaning": "đồ dùng linh tinh"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong Bài 1, 什 của 为什么 đọc shén."
+        },
+        "deepProfile": {
+          "coreMeaning": "trong tiếng Hán hiện đại thường gặp nhất trong 什么系列; ngoài ra có cách đọc shí ở một số từ",
+          "usageNotes": [
+            "Ở trình độ cơ bản, nên gắn 什 với 什么/为什么 để đọc shén.",
+            "Không suy ra shí chỉ từ mặt chữ khi đang đọc câu hỏi."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1284,7 +1362,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1292,19 +1371,45 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "me",
-              "pos": "本课用法",
-              "meaning": "thành phần trong 什么",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "后缀 / 语气助词",
+              "meaning": "hậu tố trong từ nghi vấn và một số cấu trúc",
+              "when": "Trong 什么、怎么、多么等.",
               "examples": [
                 {
-                  "word": "为什么",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "什么",
+                  "pinyin": "shénme",
+                  "meaning": "cái gì"
+                },
+                {
+                  "word": "怎么",
+                  "pinyin": "zěnme",
+                  "meaning": "thế nào; sao"
+                }
+              ]
+            },
+            {
+              "pinyin": "yāo",
+              "pos": "字音",
+              "meaning": "đồng âm với 幺 trong một số từ",
+              "when": "Chủ yếu gặp trong cách dùng riêng của 幺/排行等, không phải cách đọc của 么 trong 什么.",
+              "examples": [
+                {
+                  "word": "么妹",
+                  "pinyin": "yāomèi",
+                  "meaning": "em út gái"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 什么 của Bài 1, 么 đọc me, âm nhẹ."
+        },
+        "deepProfile": {
+          "coreMeaning": "hậu tố nghi vấn trong các từ như 什么",
+          "usageNotes": [
+            "Trong 什么、怎么, 么 là âm nhẹ me.",
+            "Không nên đem yāo vào các từ nghi vấn cơ bản."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1322,7 +1427,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1330,19 +1436,31 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "yě",
-              "pos": "本课用法",
+              "pos": "副词",
               "meaning": "cũng",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "when": "Thêm một đối tượng/tình huống có đặc điểm giống điều đã nêu.",
               "examples": [
                 {
-                  "word": "也",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "我也喜欢运动。",
+                  "pinyin": "Wǒ yě xǐhuan yùndòng."
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "也 thường đứng trước động từ hoặc tính từ cần nhấn mạnh."
+        },
+        "deepProfile": {
+          "coreMeaning": "cũng",
+          "usageNotes": [
+            "Vị trí cơ bản: chủ ngữ + 也 + vị ngữ.",
+            "Trong 不冷也不热, 也 nối hai trạng thái phủ định song song."
+          ],
+          "commonConfusions": [
+            {
+              "with": "都",
+              "difference": "也 = cũng; 都 = đều/tất cả. Có thể cùng xuất hiện nhưng chức năng khác."
+            }
+          ]
         }
       },
       {
@@ -1360,7 +1478,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1368,19 +1487,32 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "dòng",
-              "pos": "本课用法",
-              "meaning": "động; vận động",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "动词 / 名词语素",
+              "meaning": "động; di chuyển; vận động",
+              "when": "Trong các từ liên quan đến chuyển động hoặc hoạt động.",
               "examples": [
                 {
                   "word": "运动",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "yùndòng",
+                  "meaning": "vận động/thể thao"
+                },
+                {
+                  "word": "活动",
+                  "pinyin": "huódòng",
+                  "meaning": "hoạt động"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 运动, 动 đọc dòng."
+        },
+        "deepProfile": {
+          "coreMeaning": "chuyển động; vận động",
+          "usageNotes": [
+            "动 là một hình vị rất thường dùng trong từ ghép.",
+            "Trong 运动, toàn từ chứ không phải chỉ 动 quyết định nghĩa 'thể thao'."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1398,7 +1530,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1406,19 +1539,31 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "yùn",
-              "pos": "本课用法",
-              "meaning": "vận chuyển; vận động",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "动词 / 语素",
+              "meaning": "vận chuyển; vận hành; vận",
+              "when": "Trong các từ chỉ chuyển động, vận chuyển hoặc vận hành.",
               "examples": [
                 {
                   "word": "运动",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "yùndòng",
+                  "meaning": "vận động/thể thao"
+                },
+                {
+                  "word": "运气",
+                  "pinyin": "yùnqì",
+                  "meaning": "vận may"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 运动, 运 đọc yùn."
+        },
+        "deepProfile": {
+          "coreMeaning": "di chuyển/vận chuyển",
+          "usageNotes": [
+            "运 trong 运动 là một thành tố của từ ghép, không nên tách nghĩa máy móc thành 'vận' rồi ghép vào mọi trường hợp."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1436,7 +1581,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1444,19 +1590,31 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "lǚ",
-              "pos": "本课用法",
-              "meaning": "du lịch; lữ hành",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "语素",
+              "meaning": "lữ hành; du lịch",
+              "when": "Trong 旅游、旅行等 từ chỉ đi xa/du lịch.",
               "examples": [
                 {
                   "word": "旅游",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "lǚyóu",
+                  "meaning": "du lịch"
+                },
+                {
+                  "word": "旅行",
+                  "pinyin": "lǚxíng",
+                  "meaning": "du lịch; hành trình"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 旅游, 旅 đọc lǚ."
+        },
+        "deepProfile": {
+          "coreMeaning": "lữ hành; đi xa",
+          "usageNotes": [
+            "旅 thường xuất hiện trong từ ghép liên quan đến hành trình hoặc du lịch."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1474,7 +1632,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1482,19 +1641,31 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "yóu",
-              "pos": "本课用法",
-              "meaning": "du ngoạn; đi chơi",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "动词 / 语素",
+              "meaning": "du ngoạn; đi chơi; bơi",
+              "when": "Tùy từ ghép có thể chỉ đi chơi, du ngoạn hoặc bơi.",
               "examples": [
                 {
                   "word": "旅游",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "lǚyóu",
+                  "meaning": "du lịch"
+                },
+                {
+                  "word": "游泳",
+                  "pinyin": "yóuyǒng",
+                  "meaning": "bơi"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 旅游, 游 mang nghĩa du ngoạn/đi du lịch."
+        },
+        "deepProfile": {
+          "coreMeaning": "đi chơi, du ngoạn; bơi",
+          "usageNotes": [
+            "Nghĩa của 游 thay đổi theo từ ghép. Không dịch 游 luôn luôn thành 'du lịch'."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1512,7 +1683,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1521,8 +1693,8 @@ const LESSON = {
             {
               "pinyin": "jué",
               "pos": "动词",
-              "meaning": "cảm thấy; nhận ra; giác ngộ",
-              "when": "Khi nói về cảm nhận, nhận thức hoặc nhận ra điều gì. Trong 觉得, 觉 đọc jué.",
+              "meaning": "cảm thấy; nhận thức",
+              "when": "Trong 觉得、感觉 và các từ liên quan đến cảm nhận/nhận thức.",
               "examples": [
                 {
                   "word": "觉得",
@@ -1534,14 +1706,13 @@ const LESSON = {
                   "pinyin": "gǎnjué",
                   "meaning": "cảm giác; cảm thấy"
                 }
-              ],
-              "note": "Đây là cách đọc của 觉 trong từ 觉得 của Bài 1."
+              ]
             },
             {
               "pinyin": "jiào",
-              "pos": "动词 / 名词",
-              "meaning": "ngủ; giấc ngủ",
-              "when": "Xuất hiện trong các từ chỉ ngủ hoặc một lần ngủ, đặc biệt là 睡觉.",
+              "pos": "名词 / 动词",
+              "meaning": "giấc ngủ; ngủ",
+              "when": "Trong 睡觉、午觉等 từ liên quan đến ngủ.",
               "examples": [
                 {
                   "word": "睡觉",
@@ -1553,14 +1724,18 @@ const LESSON = {
                   "pinyin": "wǔjiào",
                   "meaning": "giấc ngủ trưa"
                 }
-              ],
-              "note": "Khi gặp 睡觉, 觉 đọc jiào, không đọc jué."
+              ]
             }
           ],
-          "readingSources": [
-            "han-dian"
+          "note": "觉得 đọc juéde, còn 睡觉 đọc shuìjiào."
+        },
+        "deepProfile": {
+          "coreMeaning": "nhận thức/cảm nhận hoặc giấc ngủ, tùy cách đọc",
+          "usageNotes": [
+            "Học theo từ ghép để tránh đọc nhầm.",
+            "觉得 và 睡觉 là cặp rất hữu ích để ghi nhớ jué/jiào."
           ],
-          "status": "teacher_enriched"
+          "commonConfusions": []
         }
       },
       {
@@ -1578,7 +1753,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1587,8 +1763,8 @@ const LESSON = {
             {
               "pinyin": "de",
               "pos": "助词",
-              "meaning": "trợ từ dùng sau động từ/tính từ để nối bổ ngữ; biểu thị kết quả, mức độ hoặc khả năng",
-              "when": "Đứng sau động từ/tính từ, như 说得很好、跑得快. Trong 觉得, cách đọc của 得 cũng là de.",
+              "meaning": "trợ từ dùng sau động từ/tính từ trong kết cấu bổ ngữ",
+              "when": "Trong 说得很好、跑得快. Trong 觉得, 得 thuộc cách đọc de.",
               "examples": [
                 {
                   "word": "觉得",
@@ -1600,14 +1776,13 @@ const LESSON = {
                   "pinyin": "shuō de hěn hǎo",
                   "meaning": "nói rất hay"
                 }
-              ],
-              "note": "de thường không mang nghĩa từ vựng độc lập; nó phụ thuộc vào cấu trúc."
+              ]
             },
             {
               "pinyin": "dé",
               "pos": "动词",
               "meaning": "được; đạt được; nhận được",
-              "when": "Khi 得 là động từ mang nghĩa đạt được hoặc nhận được.",
+              "when": "Khi mang nghĩa đạt được/nhận được.",
               "examples": [
                 {
                   "word": "得到",
@@ -1619,33 +1794,31 @@ const LESSON = {
                   "pinyin": "défēn",
                   "meaning": "ghi điểm"
                 }
-              ],
-              "note": "Cách đọc dé gắn với nghĩa 'đạt được/nhận được'."
+              ]
             },
             {
               "pinyin": "děi",
-              "pos": "动词 / 副词",
+              "pos": "助动词",
               "meaning": "phải; cần phải",
-              "when": "Khi diễn đạt sự bắt buộc hoặc điều nhất thiết phải làm.",
+              "when": "Trong khẩu ngữ, diễn tả điều bắt buộc hoặc cần thiết.",
               "examples": [
                 {
                   "word": "得去",
                   "pinyin": "děi qù",
                   "meaning": "phải đi"
-                },
-                {
-                  "word": "得买",
-                  "pinyin": "děi mǎi",
-                  "meaning": "phải mua"
                 }
-              ],
-              "note": "děi là cách đọc khẩu ngữ rất thường gặp để diễn đạt 'phải'."
+              ]
             }
           ],
-          "readingSources": [
-            "han-dian"
+          "note": "觉得 của Bài 1 dùng de; đây là chữ có ba cách đọc rất quan trọng ở trình độ sơ-trung cấp."
+        },
+        "deepProfile": {
+          "coreMeaning": "nhiều cách đọc với chức năng khác nhau",
+          "usageNotes": [
+            "de thường là trợ từ; dé là động từ 'được/đạt được'; děi là 'phải'.",
+            "Không chọn âm bằng mặt chữ; phải nhìn kết cấu."
           ],
-          "status": "teacher_enriched"
+          "commonConfusions": []
         }
       },
       {
@@ -1663,7 +1836,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1671,19 +1845,32 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "zuì",
-              "pos": "本课用法",
+              "pos": "副词",
               "meaning": "nhất",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "when": "Biểu thị mức độ cao nhất.",
               "examples": [
                 {
-                  "word": "最",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "最好",
+                  "pinyin": "zuìhǎo",
+                  "meaning": "tốt nhất"
+                },
+                {
+                  "word": "最喜欢",
+                  "pinyin": "zuì xǐhuan",
+                  "meaning": "thích nhất"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong bài, 最 đứng trước 好 hoặc 喜欢."
+        },
+        "deepProfile": {
+          "coreMeaning": "nhất; cao nhất",
+          "usageNotes": [
+            "最 đứng trước tính từ/động từ phù hợp với cấu trúc.",
+            "Đừng dịch máy móc thành một hậu tố 'nhất' đặt cuối câu."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1701,7 +1888,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1709,19 +1897,26 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "tī",
-              "pos": "本课用法",
+              "pos": "动词",
               "meaning": "đá",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "when": "Dùng cho hành động đá bằng chân.",
               "examples": [
                 {
                   "word": "踢足球",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "tī zúqiú",
+                  "meaning": "đá bóng"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "踢 thường kết hợp với đối tượng bị đá."
+        },
+        "deepProfile": {
+          "coreMeaning": "đá",
+          "usageNotes": [
+            "踢足球 là kết hợp quen thuộc của động từ + tân ngữ."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1730,7 +1925,7 @@ const LESSON = {
         "pinyin": "zú",
         "meaning": "chân; bóng đá trong 足球",
         "radical": "足",
-        "structure": "独体字",
+        "structure": "上下结构",
         "strokes": 7,
         "notes": "Đối chiếu bộ thủ/số nét/cấu trúc với dữ liệu từ điển chữ Hán; thứ tự nét tham chiếu chuẩn GF 0023—2020.",
         "exampleWords": [
@@ -1739,7 +1934,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1747,19 +1943,45 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "zú",
-              "pos": "本课用法",
-              "meaning": "chân; bóng đá trong 足球",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "名词 / 形容词 / 语素",
+              "meaning": "chân; đủ; đầy; bóng đá",
+              "when": "Trong 足球 đọc zú; cũng gặp 足够、足以、足月.",
               "examples": [
                 {
-                  "word": "踢足球",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "足球",
+                  "pinyin": "zúqiú",
+                  "meaning": "bóng đá"
+                },
+                {
+                  "word": "足够",
+                  "pinyin": "zúgòu",
+                  "meaning": "đủ"
+                }
+              ]
+            },
+            {
+              "pinyin": "jù",
+              "pos": "文言/少见用法",
+              "meaning": "quá mức; trong một số từ cổ",
+              "when": "Chủ yếu ở các cách dùng văn cổ như 足恭. Không phải cách đọc dùng trong 足球.",
+              "examples": [
+                {
+                  "word": "足恭",
+                  "pinyin": "jùgōng",
+                  "meaning": "quá cung kính, nịnh bợ"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong Bài 1, 足 luôn đọc zú trong 足球."
+        },
+        "deepProfile": {
+          "coreMeaning": "chân; đủ; trong 足球 chỉ bóng đá",
+          "usageNotes": [
+            "Ở HSK2, ưu tiên zú.",
+            "jù là cách đọc hiếm, có thể tạm ghi chú để học sinh biết chữ có âm khác nhưng không cần học thuộc ngay."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1777,7 +1999,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1785,19 +2008,31 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "qiú",
-              "pos": "本课用法",
-              "meaning": "quả bóng",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "名词 / 语素",
+              "meaning": "quả bóng; vật hình cầu",
+              "when": "Trong 足球 và nhiều từ chỉ đồ vật hình cầu.",
               "examples": [
                 {
-                  "word": "踢足球",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "足球",
+                  "pinyin": "zúqiú",
+                  "meaning": "bóng đá"
+                },
+                {
+                  "word": "篮球",
+                  "pinyin": "lánqiú",
+                  "meaning": "bóng rổ"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 足球, 球 chỉ quả bóng."
+        },
+        "deepProfile": {
+          "coreMeaning": "quả bóng; vật hình cầu",
+          "usageNotes": [
+            "球 thường đứng sau tên môn hoặc màu/loại để tạo từ chỉ bóng."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1815,7 +2050,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1823,19 +2059,32 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "qǐ",
-              "pos": "本课用法",
-              "meaning": "dậy; bắt đầu",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "动词 / 语素",
+              "meaning": "dậy; đứng lên; bắt đầu",
+              "when": "Trong 起床、起来、起身等.",
               "examples": [
                 {
                   "word": "一起",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "yìqǐ",
+                  "meaning": "cùng nhau"
+                },
+                {
+                  "word": "起床",
+                  "pinyin": "qǐchuáng",
+                  "meaning": "thức dậy"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 一起, 起 đọc qǐ; ở đây cả cụm 一起 là 'cùng nhau'."
+        },
+        "deepProfile": {
+          "coreMeaning": "dậy; đứng lên; khởi",
+          "usageNotes": [
+            "Không suy ra nghĩa của cả từ ghép chỉ từ một chữ.",
+            "一起 là trường hợp cần học trọn cụm, không tách thành 'một + khởi'."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1853,7 +2102,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1861,19 +2111,50 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "yào",
-              "pos": "本课用法",
-              "meaning": "muốn; cần",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "助动词 / 动词",
+              "meaning": "muốn; cần; định; sẽ",
+              "when": "Trong Bài 1, 要 đứng trước động từ để chỉ mong muốn, ý định hoặc kế hoạch.",
               "examples": [
                 {
-                  "word": "要",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "要去",
+                  "pinyin": "yào qù",
+                  "meaning": "muốn/định đi"
+                },
+                {
+                  "word": "要不要",
+                  "pinyin": "yào bu yào",
+                  "meaning": "có muốn/có định... không"
+                }
+              ]
+            },
+            {
+              "pinyin": "yāo",
+              "pos": "动词 / 语素",
+              "meaning": "yêu cầu; ép; mời/đòi hỏi trong một số từ",
+              "when": "Trong một số từ như 要求、要挟; không phải cách đọc của 要 trong 我要.",
+              "examples": [
+                {
+                  "word": "要求",
+                  "pinyin": "yāoqiú",
+                  "meaning": "yêu cầu"
+                },
+                {
+                  "word": "要挟",
+                  "pinyin": "yāoxié",
+                  "meaning": "uy hiếp; ép buộc"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 我要、要不要 của Bài 1, đọc yào."
+        },
+        "deepProfile": {
+          "coreMeaning": "yào là âm chính ở HSK2; yāo xuất hiện trong một số từ vựng khác",
+          "usageNotes": [
+            "Đừng đọc 要求 là yàoqiú.",
+            "Nên học âm theo từ cố định: 要去 yào qù, 要求 yāoqiú."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1891,7 +2172,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1899,19 +2181,27 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "xīn",
-              "pos": "本课用法",
+              "pos": "形容词",
               "meaning": "mới",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "when": "Mô tả đồ vật/sự việc chưa cũ, vừa xuất hiện.",
               "examples": [
                 {
-                  "word": "新",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "新的椅子",
+                  "pinyin": "xīn de yǐzi",
+                  "meaning": "ghế mới"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 几个新的椅子, 新 làm định ngữ cho 椅子."
+        },
+        "deepProfile": {
+          "coreMeaning": "mới",
+          "usageNotes": [
+            "新 có thể đứng trực tiếp trước danh từ hoặc trong cụm có 的.",
+            "与 旧 đối lập: 新/旧."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -1929,7 +2219,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1937,19 +2228,36 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "tā",
-              "pos": "本课用法",
+              "pos": "代词",
               "meaning": "nó",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "when": "Dùng chủ yếu để chỉ sự vật và động vật.",
               "examples": [
                 {
-                  "word": "它",
-                  "pinyin": "",
-                  "meaning": ""
+                  "word": "它很漂亮。",
+                  "pinyin": "Tā hěn piàoliang."
+                },
+                {
+                  "word": "它的眼睛",
+                  "pinyin": "tā de yǎnjing",
+                  "meaning": "mắt của nó"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong bài, 它 quay lại con mèo 花花."
+        },
+        "deepProfile": {
+          "coreMeaning": "nó, chỉ vật/động vật",
+          "usageNotes": [
+            "他、她 dùng cho người; 它 chủ yếu dùng cho vật và động vật trong văn viết hiện đại.",
+            "Khi đã có tên riêng như 花花, vẫn có thể dùng 它 để chỉ lại con vật."
+          ],
+          "commonConfusions": [
+            {
+              "with": "他 / 她",
+              "difference": "他/她 chỉ người; 它 chủ yếu chỉ vật và động vật."
+            }
+          ]
         }
       },
       {
@@ -1967,7 +2275,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -1975,19 +2284,27 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "yǎn",
-              "pos": "本课用法",
-              "meaning": "mắt",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "语素 / 名词",
+              "meaning": "mắt; liên quan đến thị giác",
+              "when": "Trong 眼睛、眼睛大、眼看等 từ/cụm.",
               "examples": [
                 {
                   "word": "眼睛",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "yǎnjing",
+                  "meaning": "mắt"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 眼睛, 眼 đọc yǎn."
+        },
+        "deepProfile": {
+          "coreMeaning": "mắt",
+          "usageNotes": [
+            "Ở HSK2 nên học trọn từ 眼睛 thay vì tách 眼 = mắt, 睛 = ? để tạo câu.",
+            "眼 là thành tố tạo nhiều từ liên quan đến thị giác."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -2005,7 +2322,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -2013,19 +2331,27 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "jīng",
-              "pos": "本课用法",
-              "meaning": "trong 眼睛",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "语素",
+              "meaning": "thành tố trong 眼睛",
+              "when": "Trong từ 眼睛 và một số từ liên quan đến mắt.",
               "examples": [
                 {
                   "word": "眼睛",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "yǎnjing",
+                  "meaning": "mắt"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "Trong 眼睛, 睛 thường được phát âm jīng ở dạng từ điển, nhưng âm tiết cuối trong khẩu ngữ thường nhẹ: yǎnjing."
+        },
+        "deepProfile": {
+          "coreMeaning": "thành tố liên quan đến mắt",
+          "usageNotes": [
+            "眼睛 là từ hai âm tiết; âm tiết thứ hai thường đọc nhẹ trong khẩu ngữ phổ thông.",
+            "Không nên tách 睛 thành một từ độc lập khi học HSK2."
+          ],
+          "commonConfusions": []
         }
       },
       {
@@ -2044,7 +2370,8 @@ const LESSON = {
         "sourceRefs": [
           "han-dian",
           "unicode_uax38",
-          "GF0023-2020"
+          "GF0023-2020",
+          "zdic-character-profile"
         ],
         "status": "enriched_verified",
         "readingProfile": {
@@ -2052,24 +2379,27 @@ const LESSON = {
           "readings": [
             {
               "pinyin": "huā",
-              "pos": "本课用法",
-              "meaning": "hoa; trong 花花",
-              "when": "Cách đọc được dùng trong từ/câu của bài học.",
+              "pos": "名词 / 动词 / 语素",
+              "meaning": "hoa; tiêu, dùng (tiền/thời gian)",
+              "when": "Tùy từ ghép. Trong 花花 của Bài 1, 花 là một phần của tên riêng, không phải nghĩa 'hoa'.",
               "examples": [
                 {
                   "word": "花花",
-                  "pinyin": "",
-                  "meaning": ""
-                },
-                {
-                  "word": "花花",
-                  "pinyin": "",
-                  "meaning": ""
+                  "pinyin": "Huāhuā",
+                  "meaning": "tên riêng của con mèo"
                 }
               ]
             }
           ],
-          "status": "teacher_enriched"
+          "note": "花 có nhiều nghĩa từ vựng nhưng cách đọc phổ thông huā trong các trường hợp trên."
+        },
+        "deepProfile": {
+          "coreMeaning": "hoa; tiêu/dùng; thành tố tên riêng",
+          "usageNotes": [
+            "Không nên gán nghĩa 'hoa' cho 花 trong mọi từ ghép.",
+            "花花 trong Bài 1 là tên riêng, nên ưu tiên nhớ như một tên gọi."
+          ],
+          "commonConfusions": []
         }
       }
     ],
@@ -3645,7 +3975,7 @@ const LESSON = {
       "explain": "<p><b>Tiêu chí đánh giá gợi ý:</b></p><p><b>Cấu trúc:</b> Ít nhất 4 lượt lời, có hỏi-đáp qua lại tự nhiên giữa 2 người.</p><p><b>Ngữ pháp:</b> Vận dụng được 要/不想, 最, 几/多 trong hội thoại.</p><p><b>Lỗi thường gặp:</b> Viết hội thoại như văn viết trang trọng, thiếu trợ từ ngữ khí (吧, 啊, 呢).</p><p><b>Mẹo ghi nhớ:</b> Đọc to hội thoại sau khi viết — nếu nghe 'giống văn viết' hơn 'giống nói chuyện', nên thêm trợ từ ngữ khí.</p>"
     }
   ]
-};;
+};;;
 
 /* ==========================================================================================
    2. HẰNG SỐ & TIỆN ÍCH LƯU TRỮ (tách biệt tầng dữ liệu localStorage khỏi logic UI)
