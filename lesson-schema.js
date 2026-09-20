@@ -15,12 +15,18 @@
       meta:{timeLimitMinutes:null,version:1},
       vocabulary:[],
       grammar:[],
+      sentencePatterns:[],
+      dialogues:[],
       hanzi:[],
       exampleSentences:[],
       commonErrors:[],
       skills:{vocabulary:[],grammar:[],reading:[],translation:[],writing:[],speaking:[],mixed:[]},
       exercises:{all:[],vocabulary:[],grammar:[],reading:[],translation:[],writing:[],speaking:[],mixed:[]},
       passages:[],
+      reviewLinks:[],
+      oldWordReuse:{enabled:false,sourceLessons:[],strategy:null},
+      difficulty:{},
+      teachingMetadata:{},
       coverage:{}
     };
   }
