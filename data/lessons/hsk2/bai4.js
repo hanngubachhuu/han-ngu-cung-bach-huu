@@ -12,9 +12,10 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     },
     "meta": {
       "timeLimitMinutes": 60,
-      "version": 1,
+      "version": 2,
       "lessonId": "hsk2_bai4_zhege_gongzuo",
-      "detailSchemaVersion": 2
+      "detailSchemaVersion": 2,
+      "publishStatus": "review"
     },
     "vocabulary": [
       {
@@ -38,11 +39,59 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "过生日",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "过生日"
+              ]
+            },
+            {
+              "pattern": "生日快乐",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "生日快乐"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "生",
+              "日"
+            ],
+            "components": [
+              "生",
+              "日"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "生日"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 生日"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 生日"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "shēngrì [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -66,11 +115,59 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "快乐地生活",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "快乐地生活"
+              ]
+            },
+            {
+              "pattern": "很快乐",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "很快乐"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "忄",
+              "丿"
+            ],
+            "components": [
+              "快",
+              "乐"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "快乐"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 快乐"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 快乐"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "kuàilè [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -94,11 +191,62 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "给我",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "给我"
+              ]
+            },
+            {
+              "pattern": "给他打电话",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "给他打电话"
+              ]
+            }
+          ],
           "usageNotes": [],
-          "commonConfusions": [],
+          "commonConfusions": [
+            {
+              "with": "送",
+              "difference": "给 nhấn mạnh đối tượng nhận; 送 nhấn mạnh hành động đưa/tặng/tiễn."
+            }
+          ],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "纟"
+            ],
+            "components": [
+              "给"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "给"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 给"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 给"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "gěi [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -122,11 +270,62 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "接电话",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "接电话"
+              ]
+            },
+            {
+              "pattern": "接人",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "接人"
+              ]
+            }
+          ],
           "usageNotes": [],
-          "commonConfusions": [],
+          "commonConfusions": [
+            {
+              "with": "拿",
+              "difference": "接 nhấn mạnh nhận/đón hoặc tiếp nhận; 拿 nhấn mạnh cầm/lấy."
+            }
+          ],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "扌"
+            ],
+            "components": [
+              "接"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "接"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 接"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 接"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "jiē [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -150,11 +349,59 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "晚上八点",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "晚上八点"
+              ]
+            },
+            {
+              "pattern": "今天晚上",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "今天晚上"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "日",
+              "一"
+            ],
+            "components": [
+              "晚",
+              "上"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "晚上"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 晚上"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 晚上"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "wǎnshang [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -178,11 +425,57 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "问问题",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "问问题"
+              ]
+            },
+            {
+              "pattern": "问老师",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "问老师"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "门"
+            ],
+            "components": [
+              "问"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "问"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 问"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 问"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "wèn [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -206,11 +499,59 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "非常好",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "非常好"
+              ]
+            },
+            {
+              "pattern": "非常喜欢",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "非常喜欢"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "非",
+              "巾"
+            ],
+            "components": [
+              "非",
+              "常"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "非常"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 非常"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 非常"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "fēicháng [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -234,11 +575,59 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "开始学习",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "开始学习"
+              ]
+            },
+            {
+              "pattern": "开始工作",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "开始工作"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "廾",
+              "女"
+            ],
+            "components": [
+              "开",
+              "始"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "开始"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 开始"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 开始"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "kāishǐ [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -262,11 +651,64 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "已经……了",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "已经……了"
+              ]
+            },
+            {
+              "pattern": "已经开始",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "已经开始"
+              ]
+            }
+          ],
           "usageNotes": [],
-          "commonConfusions": [],
+          "commonConfusions": [
+            {
+              "with": "过",
+              "difference": "已经 nhấn mạnh trạng thái/hành động đã xảy ra đến thời điểm nói; 过 nhấn mạnh kinh nghiệm đã từng."
+            }
+          ],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "己",
+              "纟"
+            ],
+            "components": [
+              "已",
+              "经"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "已经"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 已经"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 已经"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "yǐjīng [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -290,11 +732,62 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "长时间",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "长时间"
+              ]
+            },
+            {
+              "pattern": "长一点",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "长一点"
+              ]
+            }
+          ],
           "usageNotes": [],
-          "commonConfusions": [],
+          "commonConfusions": [
+            {
+              "with": "常",
+              "difference": "长 trong bài đọc cháng, nghĩa dài; 常 cũng đọc cháng nhưng nghĩa thường."
+            }
+          ],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "长"
+            ],
+            "components": [
+              "长"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "长"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 长"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 长"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "cháng [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -318,11 +811,62 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "两个人",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "两个人"
+              ]
+            },
+            {
+              "pattern": "两本书",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "两本书"
+              ]
+            }
+          ],
           "usageNotes": [],
-          "commonConfusions": [],
+          "commonConfusions": [
+            {
+              "with": "二",
+              "difference": "两 thường đứng trước lượng từ/danh từ chỉ số lượng: 两个人; 二 dùng trong đọc số, thứ tự và một số kết cấu."
+            }
+          ],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "一"
+            ],
+            "components": [
+              "两"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "两"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 两"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 两"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "liǎng [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -346,11 +890,57 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "帮助别人",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "帮助别人"
+              ]
+            },
+            {
+              "pattern": "帮我",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "帮我"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "巾"
+            ],
+            "components": [
+              "帮"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "帮"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 帮"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 帮"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "bāng [undefined]",
+          "status": "teacher_enriched"
         }
       },
       {
@@ -374,11 +964,59 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "status": "explicit",
         "core": true,
         "detail": {
-          "collocations": [],
+          "collocations": [
+            {
+              "pattern": "介绍工作",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "介绍工作"
+              ]
+            },
+            {
+              "pattern": "介绍朋友",
+              "meaning": "Kết hợp thường dùng.",
+              "examples": [
+                "介绍朋友"
+              ]
+            }
+          ],
           "usageNotes": [],
           "commonConfusions": [],
           "relatedWords": [],
-          "status": "pending_enrichment"
+          "characterAnalysis": {
+            "radicals": [
+              "人",
+              "纟"
+            ],
+            "components": [
+              "介",
+              "绍"
+            ],
+            "notes": "Hồ sơ chữ Hán chi tiết nằm trong content.hanzi."
+          },
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30LevelRefs": [],
+          "teacherAuthoredNotes": [],
+          "commonVietnameseErrors": [],
+          "sentenceExpansionLayers": [
+            {
+              "level": "basic",
+              "pattern": "介绍"
+            },
+            {
+              "level": "phrase",
+              "pattern": "修饰成分 + 介绍"
+            },
+            {
+              "level": "sentence",
+              "pattern": "主语 + 谓语 + 介绍"
+            }
+          ],
+          "carryOldWordsForward": [],
+          "hanVietDisplay": "jièshào [undefined]",
+          "status": "teacher_enriched"
         }
       }
     ],
@@ -399,7 +1037,27 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "sourceRefs": [
           "textbook_l04"
         ],
-        "status": "explicit"
+        "status": "teacher_enriched",
+        "constraints": [
+          "是……的 thường nhìn lại một sự việc đã xảy ra và làm nổi bật thành phần cần xác định.",
+          "Không dùng 是……的 như một bản sao của 了 trong mọi câu quá khứ."
+        ],
+        "contrastiveNotes": [
+          "他是昨天来的。 nhấn mạnh thời gian; 这个工作是他帮我介绍的。 nhấn mạnh người thực hiện.",
+          "Nếu chỉ kể sự việc đã xảy ra mà không nhấn mạnh thành phần, 了 thường là lựa chọn tự nhiên hơn."
+        ],
+        "commonVietnameseErrors": [
+          "Dùng 是……的 cho mọi câu quá khứ.",
+          "Đặt thành phần tiêu điểm sai vị trí giữa 是 và động từ."
+        ],
+        "hsk20LevelRefs": [
+          "HSK2"
+        ],
+        "hsk30Alignment": {
+          "mappingType": "not-yet-mapped",
+          "levelRefs": [],
+          "sourceRefs": []
+        }
       },
       {
         "id": "hsk2_l04_g02",
@@ -416,7 +1074,27 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "sourceRefs": [
           "textbook_l04"
         ],
-        "status": "explicit"
+        "status": "teacher_enriched",
+        "constraints": [
+          "的时候 đứng sau danh từ chỉ thời gian hoặc mệnh đề/hành động.",
+          "Có thể đặt cả cụm thời gian + 的时候 làm trạng ngữ cho mệnh đề sau."
+        ],
+        "contrastiveNotes": [
+          "我睡觉的时候 = khi tôi ngủ; 睡觉的时候 không phải một động từ riêng.",
+          "的时候 có thể kết hợp với quá khứ, hiện tại hoặc thói quen tùy ngữ cảnh."
+        ],
+        "commonVietnameseErrors": [
+          "Dịch 的时候 thành 'của thời gian'.",
+          "Đặt 的时候 ở vị trí cuối câu khi muốn nói 'khi...'."
+        ],
+        "hsk20LevelRefs": [
+          "HSK2"
+        ],
+        "hsk30Alignment": {
+          "mappingType": "not-yet-mapped",
+          "levelRefs": [],
+          "sourceRefs": []
+        }
       },
       {
         "id": "hsk2_l04_g03",
@@ -434,63 +1112,2880 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
         "sourceRefs": [
           "textbook_l04"
         ],
-        "status": "explicit"
+        "status": "teacher_enriched",
+        "constraints": [
+          "已经 thường đi với hành động/trạng thái đã xảy ra; 了 thường xuất hiện khi muốn biểu thị hoàn thành hoặc thay đổi trạng thái.",
+          "Không phải câu nào có 已经 cũng bắt buộc có 了, tùy cấu trúc."
+        ],
+        "contrastiveNotes": [
+          "已经……了 = đã... rồi, nhấn mạnh trạng thái đã đạt tới.",
+          "已经 và 以前 khác nhau: 已经 nói đã xảy ra, 以前 nói trước đây."
+        ],
+        "commonVietnameseErrors": [
+          "Cho rằng 已经 luôn phải dịch thành 'đã rồi' theo đúng từng từ.",
+          "Dùng 已经 cho hành động chưa xảy ra."
+        ],
+        "hsk20LevelRefs": [
+          "HSK2"
+        ],
+        "hsk30Alignment": {
+          "mappingType": "not-yet-mapped",
+          "levelRefs": [],
+          "sourceRefs": []
+        }
       }
     ],
-    "hanzi": [],
+    "hanzi": [
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h1",
+        "char": "生",
+        "pinyin": "shēng",
+        "hanViet": "sinh",
+        "meaning": "sinh; phát sinh; sống",
+        "traditionalForm": null,
+        "radical": "生",
+        "structure": "独体字",
+        "strokes": 5,
+        "components": [
+          "生",
+          "生"
+        ],
+        "exampleWords": [
+          "生日"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shēng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shēng",
+              "pos": "lesson-relevant",
+              "meaning": "sinh; phát sinh; sống",
+              "when": "Cách đọc dùng trong 生日.",
+              "examples": [
+                {
+                  "word": "生日",
+                  "pinyin": "shēng"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 生 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "sinh; phát sinh; sống",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h2",
+        "char": "日",
+        "pinyin": "rì",
+        "hanViet": "nhật",
+        "meaning": "ngày; mặt trời",
+        "traditionalForm": null,
+        "radical": "日",
+        "structure": "独体字",
+        "strokes": 4,
+        "components": [
+          "日",
+          "日"
+        ],
+        "exampleWords": [
+          "生日"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "rì",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "rì",
+              "pos": "lesson-relevant",
+              "meaning": "ngày; mặt trời",
+              "when": "Cách đọc dùng trong 生日.",
+              "examples": [
+                {
+                  "word": "生日",
+                  "pinyin": "rì"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 日 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "ngày; mặt trời",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h3",
+        "char": "快",
+        "pinyin": "kuài",
+        "hanViet": "khoái",
+        "meaning": "nhanh; vui sướng",
+        "traditionalForm": null,
+        "radical": "忄",
+        "structure": "左右结构",
+        "strokes": 7,
+        "components": [
+          "忄",
+          "快"
+        ],
+        "exampleWords": [
+          "快乐"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "kuài",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "kuài",
+              "pos": "lesson-relevant",
+              "meaning": "nhanh; vui sướng",
+              "when": "Cách đọc dùng trong 快乐.",
+              "examples": [
+                {
+                  "word": "快乐",
+                  "pinyin": "kuài"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 快 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "nhanh; vui sướng",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h4",
+        "char": "乐",
+        "pinyin": "lè",
+        "hanViet": "lạc",
+        "meaning": "vui; niềm vui",
+        "traditionalForm": "Trong 快乐 đọc lè; 乐 còn đọc yuè trong 音乐.",
+        "radical": "丿",
+        "structure": "独体字",
+        "strokes": 5,
+        "components": [
+          "丿",
+          "乐"
+        ],
+        "exampleWords": [
+          "快乐"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "lè",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "lè",
+              "pos": "lesson-relevant",
+              "meaning": "vui; niềm vui",
+              "when": "Cách đọc dùng trong 快乐.",
+              "examples": [
+                {
+                  "word": "快乐",
+                  "pinyin": "lè"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 乐; dạng phồn thể là Trong 快乐 đọc lè; 乐 còn đọc yuè trong 音乐.."
+        },
+        "deepProfile": {
+          "coreMeaning": "vui; niềm vui",
+          "usageNotes": [
+            "Trong 快乐 đọc lè; 乐 còn đọc yuè trong 音乐."
+          ],
+          "commonConfusions": [
+            {
+              "with": "快乐/音乐",
+              "difference": "乐 trong 快乐 đọc lè, còn trong 音乐 đọc yuè; phải học theo từ."
+            }
+          ],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h5",
+        "char": "给",
+        "pinyin": "gěi",
+        "hanViet": "cấp",
+        "meaning": "cho; đưa cho",
+        "traditionalForm": null,
+        "radical": "纟",
+        "structure": "左右结构",
+        "strokes": 9,
+        "components": [
+          "纟",
+          "给"
+        ],
+        "exampleWords": [
+          "给我"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "gěi",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "gěi",
+              "pos": "lesson-relevant",
+              "meaning": "cho; đưa cho",
+              "when": "Cách đọc dùng trong 给我.",
+              "examples": [
+                {
+                  "word": "给我",
+                  "pinyin": "gěi"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 给 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "cho; đưa cho",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [
+            {
+              "with": "送",
+              "difference": "给 nhấn mạnh đối tượng nhận; 送 nhấn mạnh hành động đưa/tặng/tiễn."
+            }
+          ],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h6",
+        "char": "接",
+        "pinyin": "jiē",
+        "hanViet": "tiếp",
+        "meaning": "đón; nhận; nghe máy",
+        "traditionalForm": null,
+        "radical": "扌",
+        "structure": "左右结构",
+        "strokes": 11,
+        "components": [
+          "扌",
+          "接"
+        ],
+        "exampleWords": [
+          "接电话"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "jiē",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "jiē",
+              "pos": "lesson-relevant",
+              "meaning": "đón; nhận; nghe máy",
+              "when": "Cách đọc dùng trong 接电话.",
+              "examples": [
+                {
+                  "word": "接电话",
+                  "pinyin": "jiē"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 接 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "đón; nhận; nghe máy",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [
+            {
+              "with": "拿",
+              "difference": "接 nhấn mạnh nhận/đón hoặc tiếp nhận; 拿 nhấn mạnh cầm/lấy."
+            }
+          ],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h7",
+        "char": "晚",
+        "pinyin": "wǎn",
+        "hanViet": "vãn",
+        "meaning": "muộn; tối",
+        "traditionalForm": null,
+        "radical": "日",
+        "structure": "左右结构",
+        "strokes": 11,
+        "components": [
+          "日",
+          "晚"
+        ],
+        "exampleWords": [
+          "晚上"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "wǎn",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "wǎn",
+              "pos": "lesson-relevant",
+              "meaning": "muộn; tối",
+              "when": "Cách đọc dùng trong 晚上.",
+              "examples": [
+                {
+                  "word": "晚上",
+                  "pinyin": "wǎn"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 晚 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "muộn; tối",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h8",
+        "char": "上",
+        "pinyin": "shàng",
+        "hanViet": "thượng",
+        "meaning": "trên; lên",
+        "traditionalForm": null,
+        "radical": "一",
+        "structure": "独体字",
+        "strokes": 3,
+        "components": [
+          "一",
+          "上"
+        ],
+        "exampleWords": [
+          "晚上"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shàng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shàng",
+              "pos": "lesson-relevant",
+              "meaning": "trên; lên",
+              "when": "Cách đọc dùng trong 晚上.",
+              "examples": [
+                {
+                  "word": "晚上",
+                  "pinyin": "shàng"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 上 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "trên; lên",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h9",
+        "char": "问",
+        "pinyin": "wèn",
+        "hanViet": "vấn",
+        "meaning": "hỏi",
+        "traditionalForm": null,
+        "radical": "门",
+        "structure": "半包围结构",
+        "strokes": 6,
+        "components": [
+          "门",
+          "问"
+        ],
+        "exampleWords": [
+          "问问题"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "wèn",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "wèn",
+              "pos": "lesson-relevant",
+              "meaning": "hỏi",
+              "when": "Cách đọc dùng trong 问问题.",
+              "examples": [
+                {
+                  "word": "问问题",
+                  "pinyin": "wèn"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 问 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "hỏi",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h10",
+        "char": "非",
+        "pinyin": "fēi",
+        "hanViet": "phi",
+        "meaning": "không phải; phi",
+        "traditionalForm": null,
+        "radical": "非",
+        "structure": "独体字",
+        "strokes": 8,
+        "components": [
+          "非",
+          "非"
+        ],
+        "exampleWords": [
+          "非常"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "fēi",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "fēi",
+              "pos": "lesson-relevant",
+              "meaning": "không phải; phi",
+              "when": "Cách đọc dùng trong 非常.",
+              "examples": [
+                {
+                  "word": "非常",
+                  "pinyin": "fēi"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 非 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "không phải; phi",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h11",
+        "char": "常",
+        "pinyin": "cháng",
+        "hanViet": "thường",
+        "meaning": "thường; thường xuyên",
+        "traditionalForm": null,
+        "radical": "巾",
+        "structure": "上下结构",
+        "strokes": 11,
+        "components": [
+          "巾",
+          "常"
+        ],
+        "exampleWords": [
+          "非常"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "cháng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "cháng",
+              "pos": "lesson-relevant",
+              "meaning": "thường; thường xuyên",
+              "when": "Cách đọc dùng trong 非常.",
+              "examples": [
+                {
+                  "word": "非常",
+                  "pinyin": "cháng"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 常 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "thường; thường xuyên",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h12",
+        "char": "开",
+        "pinyin": "kāi",
+        "hanViet": "khai",
+        "meaning": "mở; bắt đầu",
+        "traditionalForm": null,
+        "radical": "廾",
+        "structure": "独体字",
+        "strokes": 4,
+        "components": [
+          "廾",
+          "开"
+        ],
+        "exampleWords": [
+          "开始"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "kāi",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "kāi",
+              "pos": "lesson-relevant",
+              "meaning": "mở; bắt đầu",
+              "when": "Cách đọc dùng trong 开始.",
+              "examples": [
+                {
+                  "word": "开始",
+                  "pinyin": "kāi"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 开 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "mở; bắt đầu",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h13",
+        "char": "始",
+        "pinyin": "shǐ",
+        "hanViet": "thủy",
+        "meaning": "bắt đầu",
+        "traditionalForm": null,
+        "radical": "女",
+        "structure": "左右结构",
+        "strokes": 8,
+        "components": [
+          "女",
+          "始"
+        ],
+        "exampleWords": [
+          "开始"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shǐ",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shǐ",
+              "pos": "lesson-relevant",
+              "meaning": "bắt đầu",
+              "when": "Cách đọc dùng trong 开始.",
+              "examples": [
+                {
+                  "word": "开始",
+                  "pinyin": "shǐ"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 始 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "bắt đầu",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h14",
+        "char": "已",
+        "pinyin": "yǐ",
+        "hanViet": "dĩ",
+        "meaning": "đã; rồi",
+        "traditionalForm": null,
+        "radical": "己",
+        "structure": "独体字",
+        "strokes": 3,
+        "components": [
+          "己",
+          "已"
+        ],
+        "exampleWords": [
+          "已经"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "yǐ",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "yǐ",
+              "pos": "lesson-relevant",
+              "meaning": "đã; rồi",
+              "when": "Cách đọc dùng trong 已经.",
+              "examples": [
+                {
+                  "word": "已经",
+                  "pinyin": "yǐ"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 已 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "đã; rồi",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h15",
+        "char": "经",
+        "pinyin": "jīng",
+        "hanViet": "kinh",
+        "meaning": "trải qua; kinh qua",
+        "traditionalForm": "經",
+        "radical": "纟",
+        "structure": "左右结构",
+        "strokes": 8,
+        "components": [
+          "纟",
+          "经"
+        ],
+        "exampleWords": [
+          "已经"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "jīng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "jīng",
+              "pos": "lesson-relevant",
+              "meaning": "trải qua; kinh qua",
+              "when": "Cách đọc dùng trong 已经.",
+              "examples": [
+                {
+                  "word": "已经",
+                  "pinyin": "jīng"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 经; dạng phồn thể là 經."
+        },
+        "deepProfile": {
+          "coreMeaning": "trải qua; kinh qua",
+          "usageNotes": [
+            "經"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h16",
+        "char": "长",
+        "pinyin": "cháng",
+        "hanViet": "trường",
+        "meaning": "dài",
+        "traditionalForm": "長",
+        "radical": "长",
+        "structure": "独体字",
+        "strokes": 4,
+        "components": [
+          "长",
+          "长"
+        ],
+        "exampleWords": [
+          "长一点"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "cháng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "cháng",
+              "pos": "lesson-relevant",
+              "meaning": "dài",
+              "when": "Cách đọc dùng trong 长一点.",
+              "examples": [
+                {
+                  "word": "长一点",
+                  "pinyin": "cháng"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 长; dạng phồn thể là 長."
+        },
+        "deepProfile": {
+          "coreMeaning": "dài",
+          "usageNotes": [
+            "長"
+          ],
+          "commonConfusions": [
+            {
+              "with": "常",
+              "difference": "长 trong bài đọc cháng, nghĩa dài; 常 cũng đọc cháng nhưng nghĩa thường."
+            }
+          ],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h17",
+        "char": "两",
+        "pinyin": "liǎng",
+        "hanViet": "lưỡng",
+        "meaning": "hai",
+        "traditionalForm": "兩",
+        "radical": "一",
+        "structure": "独体字",
+        "strokes": 7,
+        "components": [
+          "一",
+          "两"
+        ],
+        "exampleWords": [
+          "两个人"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "liǎng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "liǎng",
+              "pos": "lesson-relevant",
+              "meaning": "hai",
+              "when": "Cách đọc dùng trong 两个人.",
+              "examples": [
+                {
+                  "word": "两个人",
+                  "pinyin": "liǎng"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 两; dạng phồn thể là 兩."
+        },
+        "deepProfile": {
+          "coreMeaning": "hai",
+          "usageNotes": [
+            "兩"
+          ],
+          "commonConfusions": [
+            {
+              "with": "二",
+              "difference": "两 thường đứng trước lượng từ/danh từ chỉ số lượng: 两个人; 二 dùng trong đọc số, thứ tự và một số kết cấu."
+            }
+          ],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h18",
+        "char": "帮",
+        "pinyin": "bāng",
+        "hanViet": "bang",
+        "meaning": "giúp",
+        "traditionalForm": "幫",
+        "radical": "巾",
+        "structure": "上下结构",
+        "strokes": 9,
+        "components": [
+          "巾",
+          "帮"
+        ],
+        "exampleWords": [
+          "帮助"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "bāng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "bāng",
+              "pos": "lesson-relevant",
+              "meaning": "giúp",
+              "when": "Cách đọc dùng trong 帮助.",
+              "examples": [
+                {
+                  "word": "帮助",
+                  "pinyin": "bāng"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 帮; dạng phồn thể là 幫."
+        },
+        "deepProfile": {
+          "coreMeaning": "giúp",
+          "usageNotes": [
+            "幫"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h19",
+        "char": "介",
+        "pinyin": "jiè",
+        "hanViet": "giới",
+        "meaning": "giữa; giới thiệu/thành tố",
+        "traditionalForm": null,
+        "radical": "人",
+        "structure": "独体字",
+        "strokes": 4,
+        "components": [
+          "人",
+          "介"
+        ],
+        "exampleWords": [
+          "介绍"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "jiè",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "jiè",
+              "pos": "lesson-relevant",
+              "meaning": "giữa; giới thiệu/thành tố",
+              "when": "Cách đọc dùng trong 介绍.",
+              "examples": [
+                {
+                  "word": "介绍",
+                  "pinyin": "jiè"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 介 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "giữa; giới thiệu/thành tố",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h20",
+        "char": "绍",
+        "pinyin": "shào",
+        "hanViet": "thiệu",
+        "meaning": "giới thiệu",
+        "traditionalForm": "紹",
+        "radical": "纟",
+        "structure": "左右结构",
+        "strokes": 8,
+        "components": [
+          "纟",
+          "绍"
+        ],
+        "exampleWords": [
+          "介绍"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shào",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shào",
+              "pos": "lesson-relevant",
+              "meaning": "giới thiệu",
+              "when": "Cách đọc dùng trong 介绍.",
+              "examples": [
+                {
+                  "word": "介绍",
+                  "pinyin": "shào"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 绍; dạng phồn thể là 紹."
+        },
+        "deepProfile": {
+          "coreMeaning": "giới thiệu",
+          "usageNotes": [
+            "紹"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h21",
+        "char": "这",
+        "pinyin": "zhè",
+        "hanViet": "giá",
+        "meaning": "này; đây",
+        "traditionalForm": "這",
+        "radical": "辶",
+        "structure": "半包围结构",
+        "strokes": 7,
+        "components": [
+          "辶",
+          "这"
+        ],
+        "exampleWords": [
+          "这个"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "zhè",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "zhè",
+              "pos": "lesson-relevant",
+              "meaning": "này; đây",
+              "when": "Cách đọc dùng trong 这个.",
+              "examples": [
+                {
+                  "word": "这个",
+                  "pinyin": "zhè"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 这; dạng phồn thể là 這."
+        },
+        "deepProfile": {
+          "coreMeaning": "này; đây",
+          "usageNotes": [
+            "這"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h22",
+        "char": "本",
+        "pinyin": "běn",
+        "hanViet": "bản",
+        "meaning": "gốc; quyển; bản",
+        "traditionalForm": null,
+        "radical": "木",
+        "structure": "独体字",
+        "strokes": 5,
+        "components": [
+          "木",
+          "本"
+        ],
+        "exampleWords": [
+          "这本书"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "běn",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "běn",
+              "pos": "lesson-relevant",
+              "meaning": "gốc; quyển; bản",
+              "when": "Cách đọc dùng trong 这本书.",
+              "examples": [
+                {
+                  "word": "这本书",
+                  "pinyin": "běn"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 本 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "gốc; quyển; bản",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h23",
+        "char": "书",
+        "pinyin": "shū",
+        "hanViet": "thư",
+        "meaning": "sách",
+        "traditionalForm": "書",
+        "radical": "乛",
+        "structure": "独体字",
+        "strokes": 4,
+        "components": [
+          "乛",
+          "书"
+        ],
+        "exampleWords": [
+          "这本书"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shū",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shū",
+              "pos": "lesson-relevant",
+              "meaning": "sách",
+              "when": "Cách đọc dùng trong 这本书.",
+              "examples": [
+                {
+                  "word": "这本书",
+                  "pinyin": "shū"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 书; dạng phồn thể là 書."
+        },
+        "deepProfile": {
+          "coreMeaning": "sách",
+          "usageNotes": [
+            "書"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h24",
+        "char": "是",
+        "pinyin": "shì",
+        "hanViet": "thị",
+        "meaning": "là",
+        "traditionalForm": null,
+        "radical": "日",
+        "structure": "上下结构",
+        "strokes": 9,
+        "components": [
+          "日",
+          "是"
+        ],
+        "exampleWords": [
+          "是我写的"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shì",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shì",
+              "pos": "lesson-relevant",
+              "meaning": "là",
+              "when": "Cách đọc dùng trong 是我写的.",
+              "examples": [
+                {
+                  "word": "是我写的",
+                  "pinyin": "shì"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 是 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "là",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h25",
+        "char": "我",
+        "pinyin": "wǒ",
+        "hanViet": "ngã",
+        "meaning": "tôi",
+        "traditionalForm": null,
+        "radical": "戈",
+        "structure": "独体字",
+        "strokes": 7,
+        "components": [
+          "戈",
+          "我"
+        ],
+        "exampleWords": [
+          "我的"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "wǒ",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "wǒ",
+              "pos": "lesson-relevant",
+              "meaning": "tôi",
+              "when": "Cách đọc dùng trong 我的.",
+              "examples": [
+                {
+                  "word": "我的",
+                  "pinyin": "wǒ"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 我 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "tôi",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h26",
+        "char": "写",
+        "pinyin": "xiě",
+        "hanViet": "tả",
+        "meaning": "viết",
+        "traditionalForm": "寫",
+        "radical": "冖",
+        "structure": "上下结构",
+        "strokes": 5,
+        "components": [
+          "冖",
+          "写"
+        ],
+        "exampleWords": [
+          "写书"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "xiě",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "xiě",
+              "pos": "lesson-relevant",
+              "meaning": "viết",
+              "when": "Cách đọc dùng trong 写书.",
+              "examples": [
+                {
+                  "word": "写书",
+                  "pinyin": "xiě"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 写; dạng phồn thể là 寫."
+        },
+        "deepProfile": {
+          "coreMeaning": "viết",
+          "usageNotes": [
+            "寫"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h27",
+        "char": "的",
+        "pinyin": "de",
+        "hanViet": "đích",
+        "meaning": "trợ từ kết cấu; của",
+        "traditionalForm": null,
+        "radical": "白",
+        "structure": "左右结构",
+        "strokes": 8,
+        "components": [
+          "白",
+          "的"
+        ],
+        "exampleWords": [
+          "我的"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "de",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "de",
+              "pos": "lesson-relevant",
+              "meaning": "trợ từ kết cấu; của",
+              "when": "Cách đọc dùng trong 我的.",
+              "examples": [
+                {
+                  "word": "我的",
+                  "pinyin": "de"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 的 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "trợ từ kết cấu; của",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h28",
+        "char": "他",
+        "pinyin": "tā",
+        "hanViet": "tha",
+        "meaning": "anh ấy; ông ấy",
+        "traditionalForm": null,
+        "radical": "亻",
+        "structure": "左右结构",
+        "strokes": 5,
+        "components": [
+          "亻",
+          "他"
+        ],
+        "exampleWords": [
+          "他八岁"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "tā",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "tā",
+              "pos": "lesson-relevant",
+              "meaning": "anh ấy; ông ấy",
+              "when": "Cách đọc dùng trong 他八岁.",
+              "examples": [
+                {
+                  "word": "他八岁",
+                  "pinyin": "tā"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 他 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "anh ấy; ông ấy",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h29",
+        "char": "八",
+        "pinyin": "bā",
+        "hanViet": "bát",
+        "meaning": "tám",
+        "traditionalForm": null,
+        "radical": "八",
+        "structure": "独体字",
+        "strokes": 2,
+        "components": [
+          "八",
+          "八"
+        ],
+        "exampleWords": [
+          "八岁"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "bā",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "bā",
+              "pos": "lesson-relevant",
+              "meaning": "tám",
+              "when": "Cách đọc dùng trong 八岁.",
+              "examples": [
+                {
+                  "word": "八岁",
+                  "pinyin": "bā"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 八 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "tám",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h30",
+        "char": "岁",
+        "pinyin": "suì",
+        "hanViet": "tuế",
+        "meaning": "tuổi",
+        "traditionalForm": "歲",
+        "radical": "山",
+        "structure": "上下结构",
+        "strokes": 6,
+        "components": [
+          "山",
+          "岁"
+        ],
+        "exampleWords": [
+          "八岁"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "suì",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "suì",
+              "pos": "lesson-relevant",
+              "meaning": "tuổi",
+              "when": "Cách đọc dùng trong 八岁.",
+              "examples": [
+                {
+                  "word": "八岁",
+                  "pinyin": "suì"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 岁; dạng phồn thể là 歲."
+        },
+        "deepProfile": {
+          "coreMeaning": "tuổi",
+          "usageNotes": [
+            "歲"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h31",
+        "char": "时",
+        "pinyin": "shí",
+        "hanViet": "thời",
+        "meaning": "thời gian; lúc",
+        "traditionalForm": "時",
+        "radical": "日",
+        "structure": "左右结构",
+        "strokes": 7,
+        "components": [
+          "日",
+          "时"
+        ],
+        "exampleWords": [
+          "时候"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shí",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shí",
+              "pos": "lesson-relevant",
+              "meaning": "thời gian; lúc",
+              "when": "Cách đọc dùng trong 时候.",
+              "examples": [
+                {
+                  "word": "时候",
+                  "pinyin": "shí"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 时; dạng phồn thể là 時."
+        },
+        "deepProfile": {
+          "coreMeaning": "thời gian; lúc",
+          "usageNotes": [
+            "時"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h32",
+        "char": "候",
+        "pinyin": "hòu",
+        "hanViet": "hậu",
+        "meaning": "khi; thời điểm",
+        "traditionalForm": null,
+        "radical": "亻",
+        "structure": "左右结构",
+        "strokes": 10,
+        "components": [
+          "亻",
+          "候"
+        ],
+        "exampleWords": [
+          "时候"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "hòu",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "hòu",
+              "pos": "lesson-relevant",
+              "meaning": "khi; thời điểm",
+              "when": "Cách đọc dùng trong 时候.",
+              "examples": [
+                {
+                  "word": "时候",
+                  "pinyin": "hòu"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 候 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "khi; thời điểm",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h33",
+        "char": "踢",
+        "pinyin": "tī",
+        "hanViet": "thích",
+        "meaning": "đá",
+        "traditionalForm": null,
+        "radical": "足",
+        "structure": "左右结构",
+        "strokes": 15,
+        "components": [
+          "足",
+          "踢"
+        ],
+        "exampleWords": [
+          "踢足球"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "tī",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "tī",
+              "pos": "lesson-relevant",
+              "meaning": "đá",
+              "when": "Cách đọc dùng trong 踢足球.",
+              "examples": [
+                {
+                  "word": "踢足球",
+                  "pinyin": "tī"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 踢 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "đá",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h34",
+        "char": "足",
+        "pinyin": "zú",
+        "hanViet": "túc",
+        "meaning": "chân; đủ; bóng đá trong 足球",
+        "traditionalForm": null,
+        "radical": "足",
+        "structure": "上下结构",
+        "strokes": 7,
+        "components": [
+          "足",
+          "足"
+        ],
+        "exampleWords": [
+          "足球"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "zú",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "zú",
+              "pos": "lesson-relevant",
+              "meaning": "chân; đủ; bóng đá trong 足球",
+              "when": "Cách đọc dùng trong 足球.",
+              "examples": [
+                {
+                  "word": "足球",
+                  "pinyin": "zú"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 足 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "chân; đủ; bóng đá trong 足球",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h35",
+        "char": "球",
+        "pinyin": "qiú",
+        "hanViet": "cầu",
+        "meaning": "quả bóng; vật hình cầu",
+        "traditionalForm": null,
+        "radical": "王",
+        "structure": "左右结构",
+        "strokes": 11,
+        "components": [
+          "王",
+          "球"
+        ],
+        "exampleWords": [
+          "足球"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "qiú",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "qiú",
+              "pos": "lesson-relevant",
+              "meaning": "quả bóng; vật hình cầu",
+              "when": "Cách đọc dùng trong 足球.",
+              "examples": [
+                {
+                  "word": "足球",
+                  "pinyin": "qiú"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 球 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "quả bóng; vật hình cầu",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h36",
+        "char": "回",
+        "pinyin": "huí",
+        "hanViet": "hồi",
+        "meaning": "quay về; trở lại",
+        "traditionalForm": null,
+        "radical": "囗",
+        "structure": "全包围结构",
+        "strokes": 6,
+        "components": [
+          "囗",
+          "回"
+        ],
+        "exampleWords": [
+          "回家"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "huí",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "huí",
+              "pos": "lesson-relevant",
+              "meaning": "quay về; trở lại",
+              "when": "Cách đọc dùng trong 回家.",
+              "examples": [
+                {
+                  "word": "回家",
+                  "pinyin": "huí"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 回 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "quay về; trở lại",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h37",
+        "char": "家",
+        "pinyin": "jiā",
+        "hanViet": "gia",
+        "meaning": "nhà; gia đình",
+        "traditionalForm": null,
+        "radical": "宀",
+        "structure": "上下结构",
+        "strokes": 10,
+        "components": [
+          "宀",
+          "家"
+        ],
+        "exampleWords": [
+          "回家"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "jiā",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "jiā",
+              "pos": "lesson-relevant",
+              "meaning": "nhà; gia đình",
+              "when": "Cách đọc dùng trong 回家.",
+              "examples": [
+                {
+                  "word": "回家",
+                  "pinyin": "jiā"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 家 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "nhà; gia đình",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h38",
+        "char": "了",
+        "pinyin": "le",
+        "hanViet": "liễu",
+        "meaning": "trợ từ hoàn thành/thay đổi trạng thái; rồi",
+        "traditionalForm": null,
+        "radical": "亅",
+        "structure": "独体字",
+        "strokes": 2,
+        "components": [
+          "亅",
+          "了"
+        ],
+        "exampleWords": [
+          "已经……了"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "le",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "le",
+              "pos": "lesson-relevant",
+              "meaning": "trợ từ hoàn thành/thay đổi trạng thái; rồi",
+              "when": "Cách đọc dùng trong 已经……了.",
+              "examples": [
+                {
+                  "word": "已经……了",
+                  "pinyin": "le"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 了 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "trợ từ hoàn thành/thay đổi trạng thái; rồi",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h39",
+        "char": "个",
+        "pinyin": "gè",
+        "hanViet": "cá",
+        "meaning": "cái, chiếc; lượng từ chung",
+        "traditionalForm": null,
+        "radical": "人",
+        "structure": "独体字",
+        "strokes": 3,
+        "components": [
+          "人",
+          "个"
+        ],
+        "exampleWords": [
+          "这个"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "gè",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "gè",
+              "pos": "lesson-relevant",
+              "meaning": "cái, chiếc; lượng từ chung",
+              "when": "Cách đọc dùng trong 这个.",
+              "examples": [
+                {
+                  "word": "这个",
+                  "pinyin": "gè"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 个 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "cái, chiếc; lượng từ chung",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h40",
+        "char": "工",
+        "pinyin": "gōng",
+        "hanViet": "công",
+        "meaning": "công việc; công",
+        "traditionalForm": null,
+        "radical": "工",
+        "structure": "独体字",
+        "strokes": 3,
+        "components": [
+          "工",
+          "工"
+        ],
+        "exampleWords": [
+          "工作"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "gōng",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "gōng",
+              "pos": "lesson-relevant",
+              "meaning": "công việc; công",
+              "when": "Cách đọc dùng trong 工作.",
+              "examples": [
+                {
+                  "word": "工作",
+                  "pinyin": "gōng"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 工 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "công việc; công",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h41",
+        "char": "作",
+        "pinyin": "zuò",
+        "hanViet": "tác",
+        "meaning": "làm; công việc/tác phẩm theo từ ghép",
+        "traditionalForm": null,
+        "radical": "亻",
+        "structure": "左右结构",
+        "strokes": 7,
+        "components": [
+          "亻",
+          "作"
+        ],
+        "exampleWords": [
+          "工作"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "zuò",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "zuò",
+              "pos": "lesson-relevant",
+              "meaning": "làm; công việc/tác phẩm theo từ ghép",
+              "when": "Cách đọc dùng trong 工作.",
+              "examples": [
+                {
+                  "word": "工作",
+                  "pinyin": "zuò"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 作 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "làm; công việc/tác phẩm theo từ ghép",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h42",
+        "char": "谁",
+        "pinyin": "shéi",
+        "hanViet": "thùy",
+        "meaning": "ai",
+        "traditionalForm": "誰",
+        "radical": "讠",
+        "structure": "左右结构",
+        "strokes": 10,
+        "components": [
+          "讠",
+          "谁"
+        ],
+        "exampleWords": [
+          "谁"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "shéi",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "shéi",
+              "pos": "lesson-relevant",
+              "meaning": "ai",
+              "when": "Cách đọc dùng trong 谁.",
+              "examples": [
+                {
+                  "word": "谁",
+                  "pinyin": "shéi"
+                }
+              ]
+            }
+          ],
+          "note": "Trong bài dùng dạng giản thể 谁; dạng phồn thể là 誰."
+        },
+        "deepProfile": {
+          "coreMeaning": "ai",
+          "usageNotes": [
+            "誰"
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h43",
+        "char": "你",
+        "pinyin": "nǐ",
+        "hanViet": "nhĩ",
+        "meaning": "bạn",
+        "traditionalForm": null,
+        "radical": "亻",
+        "structure": "左右结构",
+        "strokes": 7,
+        "components": [
+          "亻",
+          "你"
+        ],
+        "exampleWords": [
+          "你的"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "nǐ",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "nǐ",
+              "pos": "lesson-relevant",
+              "meaning": "bạn",
+              "when": "Cách đọc dùng trong 你的.",
+              "examples": [
+                {
+                  "word": "你的",
+                  "pinyin": "nǐ"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 你 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "bạn",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h44",
+        "char": "不",
+        "pinyin": "bù",
+        "hanViet": "bất",
+        "meaning": "không",
+        "traditionalForm": null,
+        "radical": "一",
+        "structure": "独体字",
+        "strokes": 4,
+        "components": [
+          "一",
+          "不"
+        ],
+        "exampleWords": [
+          "不是"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "bù",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "bù",
+              "pos": "lesson-relevant",
+              "meaning": "không",
+              "when": "Cách đọc dùng trong 不是.",
+              "examples": [
+                {
+                  "word": "不是",
+                  "pinyin": "bù"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 不 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "không",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      },
+      {
+        "id": "hsk2_bai4_zhege_gongzuo_h45",
+        "char": "打",
+        "pinyin": "dǎ",
+        "hanViet": "đả",
+        "meaning": "đánh; làm; gọi/đánh (điện thoại)",
+        "traditionalForm": null,
+        "radical": "扌",
+        "structure": "左右结构",
+        "strokes": 5,
+        "components": [
+          "扌",
+          "打"
+        ],
+        "exampleWords": [
+          "打电话"
+        ],
+        "sourceRefs": [
+          "textbook_l04",
+          "zdic-character-profile",
+          "GF0023-2020"
+        ],
+        "status": "enriched_verified",
+        "readingProfile": {
+          "lessonReading": "dǎ",
+          "toneSandhi": [],
+          "readings": [
+            {
+              "pinyin": "dǎ",
+              "pos": "lesson-relevant",
+              "meaning": "đánh; làm; gọi/đánh (điện thoại)",
+              "when": "Cách đọc dùng trong 打电话.",
+              "examples": [
+                {
+                  "word": "打电话",
+                  "pinyin": "dǎ"
+                }
+              ]
+            }
+          ],
+          "note": "Ưu tiên học 打 theo từ/cụm xuất hiện trong bài."
+        },
+        "deepProfile": {
+          "coreMeaning": "đánh; làm; gọi/đánh (điện thoại)",
+          "usageNotes": [
+            "Ưu tiên học theo từ/cụm trong bài."
+          ],
+          "commonConfusions": [],
+          "formation": null,
+          "historicalNotes": [],
+          "semanticPhoneticAnalysis": null,
+          "hsk20LevelRefs": [
+            "HSK2"
+          ],
+          "hsk30Alignment": {
+            "mappingType": "not-yet-mapped",
+            "levelRefs": [],
+            "note": "Chưa gắn mapping HSK3.0 trực tiếp."
+          }
+        }
+      }
+    ],
     "exampleSentences": [
       {
         "id": "hsk2_bai4_zhege_gongzuo_s1",
         "zh": "这本书是我写的。",
-        "pinyin": null,
-        "vi": null,
+        "pinyin": "Zhè běn shū shì wǒ xiě de.",
+        "vi": "Quyển sách này là do tôi viết.",
         "sourceRefs": [
           "q17"
         ],
-        "status": "derived_from_exercise"
+        "status": "derived_from_exercise",
+        "provenance": "derived"
       },
       {
         "id": "hsk2_bai4_zhege_gongzuo_s2",
         "zh": "他八岁的时候开始踢足球。",
-        "pinyin": null,
-        "vi": null,
+        "pinyin": "Tā bā suì de shíhou kāishǐ tī zúqiú.",
+        "vi": "Khi tám tuổi, anh ấy bắt đầu đá bóng.",
         "sourceRefs": [
           "q18"
         ],
-        "status": "derived_from_exercise"
+        "status": "derived_from_exercise",
+        "provenance": "derived"
       },
       {
         "id": "hsk2_bai4_zhege_gongzuo_s3",
         "zh": "他回家的时候已经晚上了。",
-        "pinyin": null,
-        "vi": null,
+        "pinyin": "Tā huí jiā de shíhou yǐjīng wǎnshang le.",
+        "vi": "Khi anh ấy về nhà thì đã là buổi tối rồi.",
         "sourceRefs": [
           "q19"
         ],
-        "status": "derived_from_exercise"
+        "status": "derived_from_exercise",
+        "provenance": "derived"
       },
       {
         "id": "hsk2_bai4_zhege_gongzuo_s4",
         "zh": "这个工作是谁帮你介绍的？",
-        "pinyin": null,
-        "vi": null,
+        "pinyin": "Zhège gōngzuò shì shéi bāng nǐ jièshào de?",
+        "vi": "Công việc này là ai giới thiệu giúp bạn vậy?",
         "sourceRefs": [
           "q20"
         ],
-        "status": "derived_from_exercise"
+        "status": "derived_from_exercise",
+        "provenance": "derived"
       },
       {
         "id": "hsk2_bai4_zhege_gongzuo_s5",
         "zh": "这不是我打的。",
-        "pinyin": null,
-        "vi": null,
+        "pinyin": "Zhè bú shì wǒ dǎ de.",
+        "vi": "Cái này không phải do tôi làm.",
         "sourceRefs": [
           "q21"
         ],
-        "status": "derived_from_exercise"
+        "status": "derived_from_exercise",
+        "provenance": "derived"
       }
     ],
-    "commonErrors": [],
+    "commonErrors": [
+      {
+        "id": "hsk2_l04_e01",
+        "target": "是……的",
+        "error": "Dùng cấu trúc này cho mọi câu quá khứ.",
+        "correction": "Dùng khi muốn nhấn mạnh/xác định một thành phần của sự việc đã xảy ra.",
+        "explanation": "Cấu trúc có chức năng tiêu điểm thông tin, không chỉ đơn thuần đánh dấu quá khứ.",
+        "sourceRefs": [
+          "textbook_l04"
+        ]
+      },
+      {
+        "id": "hsk2_l04_e02",
+        "target": "已经",
+        "error": "Đặt 已经 sau động từ như tiếng Việt.",
+        "correction": "已经 thường đứng trước động từ/tính từ: 已经开始、已经好了.",
+        "explanation": "已经 là phó từ thời gian/trạng thái, vị trí cơ bản đứng trước vị ngữ.",
+        "sourceRefs": [
+          "textbook_l04"
+        ]
+      }
+    ],
     "skills": {
       "vocabulary": [
         "q1",
@@ -2214,15 +5709,17 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
       }
     ],
     "coverage": {
-      "vocabulary": "explicit",
-      "grammar": "explicit",
-      "hanzi": "pending_enrichment",
-      "exampleSentences": "existing",
-      "commonErrors": "pending_enrichment",
+      "vocabulary": "enriched_verified",
+      "grammar": "enriched_verified",
+      "hanzi": "enriched_verified",
+      "exampleSentences": "enriched_verified",
+      "commonErrors": "teacher_enriched",
       "translation": "present",
       "writing": "present",
       "speaking": "present",
-      "reading": "present"
+      "reading": "present",
+      "exercises": "gold_template_v1",
+      "curriculumMapping": "hsk2_primary_hsk3_pending_direct_crosswalk"
     },
     "sentencePatterns": [
       {
@@ -2286,7 +5783,46 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
       "vocabularyReuse": true,
       "contextFirst": true,
       "pinyinRequired": true
-    }
+    },
+    "sources": [
+      {
+        "type": "textbook",
+        "id": "textbook_l04",
+        "title": "Giáo trình chuẩn HSK 2",
+        "lesson": 4,
+        "pages": "31-38"
+      },
+      {
+        "type": "official",
+        "id": "GF0023-2020",
+        "title": "通用规范汉字笔顺规范 GF 0023—2020",
+        "url": "https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/202103/W020210318300204215237.pdf"
+      },
+      {
+        "type": "dictionary",
+        "id": "zdic-character-profile",
+        "title": "汉典 · 字形、部首、笔画、字源",
+        "url": "https://www.zdic.net/"
+      },
+      {
+        "type": "official",
+        "id": "unicode_uax38",
+        "title": "Unicode Unihan Database / UAX #38",
+        "url": "https://unicode.org/reports/tr38/"
+      },
+      {
+        "type": "official",
+        "id": "cti-hsk20",
+        "title": "HSK 2.0 reference",
+        "url": "https://admin.chinesetest.cn/gonewcontent.do?id=40575936"
+      },
+      {
+        "type": "official",
+        "id": "cti-hsk30-development",
+        "title": "Chinese Test development / HSK 3.0",
+        "url": "https://www.chinesetest.cn/Development"
+      }
+    ]
   },
   "exerciseSections": [
     {
