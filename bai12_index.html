@@ -2042,40 +2042,60 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "状态/程度补语",
-            "造句"
+            "他说得",
+            "很好"
           ],
           "answer": [
-            "请",
-            "用",
-            "状态/程度补语",
-            "造句"
+            "他说得",
+            "很好"
           ],
-          "explain": "Sắp xếp theo mẫu: 他说得很好.",
+          "explain": "说得很好 dùng 得 nối động từ với bổ ngữ.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B12-D02",
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "比字句",
-            "造句"
+            "今天",
+            "比",
+            "昨天",
+            "冷",
+            "多了"
           ],
           "answer": [
-            "请",
-            "用",
-            "比字句",
-            "造句"
+            "今天",
+            "比",
+            "昨天",
+            "冷",
+            "多了"
           ],
-          "explain": "Sắp xếp theo mẫu: 今天比昨天冷多了.",
+          "explain": "比 dùng để so sánh mức độ; 多了 nhấn mạnh mức chênh lệch.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
+        },
+        {
+          "id": "B12-D03",
+          "type": "reorder",
+          "prompt": "Sắp xếp thành câu đúng:",
+          "tokens": [
+            "弟弟",
+            "说",
+            "英语",
+            "说得",
+            "不流利"
+          ],
+          "answer": [
+            "弟弟",
+            "说",
+            "英语",
+            "说得",
+            "不流利"
+          ],
+          "explain": "Động từ lặp lại để đưa tân ngữ vào trước bổ ngữ 得.",
+          "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         }
       ]
     },
@@ -2088,11 +2108,11 @@ const LESSON = {
         {
           "id": "B12-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Bạn mặc ít quá",
-          "model": "他说得很好。",
-          "explain": "Ưu tiên sử dụng điểm ngữ pháp 状态/程度补语.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "prompt": "Dịch sang tiếng Trung: Bạn mặc ít quá.",
+          "model": "你穿得太少了。",
+          "explain": "V + 得 + bổ ngữ mô tả trạng thái/mức độ.",
+          "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
+          "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch."
         },
         {
           "id": "B12-E02",
