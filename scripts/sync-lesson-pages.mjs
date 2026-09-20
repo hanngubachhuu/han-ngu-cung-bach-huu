@@ -68,10 +68,41 @@ function replaceLessonObject(html, objectText) {
   return html.slice(0, objectStart) + objectText + html.slice(end);
 }
 
+function addListeningRenderer(html) {
+  const switchNeedle = "    case 'self_check': renderSelfCheck(q, body); break;";
+  const labelNeedle = "self_check:'Tự luận'";
+  const anchor = "function renderTextFill(q, body){";
+  if (!html.includes("function renderListening(q, body)")) {
+    const renderer = `function renderListening(q, body){
+  const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
+  body.appendChild(intro);
+  const button = el('button','listen-button','▶ Nghe lại');
+  button.type = 'button';
+  button.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(q.audioText || '');
+    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    window.speechSynthesis.speak(utterance);
+  });
+  body.appendChild(button);
+  renderMcq(q, body);
+}
+`;
+    if (!html.includes(switchNeedle) || !html.includes(labelNeedle) || !html.includes(anchor)) {
+      throw new Error("Không tìm thấy renderer cần thiết để bổ sung dạng nghe.");
+    }
+    html = html.replace(switchNeedle, `${switchNeedle}\n    case 'listening': renderListening(q, body); break;`)
+      .replace(labelNeedle, "listening:'Nghe hiểu', self_check:'Tự luận'")
+      .replace(anchor, `${renderer}${anchor}`);
+  }
+  return html;
+}
+
 for (let lessonNo = FIRST_SYNCED_LESSON; lessonNo <= 15; lessonNo += 1) {
   const lesson = loadLesson(lessonNo);
   const page = path.join(ROOT, `bai${lessonNo}_index.html`);
-  const output = replaceLessonObject(fs.readFileSync(page, "utf8"), JSON.stringify(toLegacy(lesson), null, 2));
+  const output = addListeningRenderer(replaceLessonObject(fs.readFileSync(page, "utf8"), JSON.stringify(toLegacy(lesson), null, 2)));
   fs.writeFileSync(page, output);
   console.log(`Đồng bộ Bài ${lessonNo}: ${lesson.content.exercises.all.length} câu.`);
 }

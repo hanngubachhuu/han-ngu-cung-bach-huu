@@ -3379,6 +3379,7 @@ function renderQuestion(){
     case 'text_fill': renderTextFill(q, body); break;
     case 'reorder': renderReorder(q, body); break;
     case 'self_check': renderSelfCheck(q, body); break;
+    case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
 
@@ -3387,7 +3388,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -3431,6 +3432,21 @@ function renderMcq(q, body){
   body.appendChild(list);
 }
 
+function renderListening(q, body){
+  const intro = el('div','hint-inline','🔊 Bấm nghe 2–3 lần, sau đó chọn đáp án. Không đọc phần lời thoại trước khi trả lời.');
+  body.appendChild(intro);
+  const button = el('button','listen-button','▶ Nghe lại');
+  button.type = 'button';
+  button.addEventListener('click', () => {
+    if(!('speechSynthesis' in window)){ button.textContent='Trình duyệt chưa hỗ trợ phát giọng nói'; return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(q.audioText || '');
+    utterance.lang = 'zh-CN'; utterance.rate = .82;
+    window.speechSynthesis.speak(utterance);
+  });
+  body.appendChild(button);
+  renderMcq(q, body);
+}
 function renderTextFill(q, body){
   const input = el('input');
   input.type = 'text'; input.className = 'fill-input';

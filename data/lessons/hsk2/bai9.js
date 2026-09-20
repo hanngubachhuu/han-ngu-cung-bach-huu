@@ -1875,3 +1875,25 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   lesson.content.meta.timeLimitMinutes=75;
   lesson.content.coverage.exercises="gold_template_v1";
 })();
+
+/* Ma trận 4 kỹ năng: cân lại theo cấu trúc Bài 5, có phần nghe thực thi bằng TTS. */
+(() => {
+  const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"], c=lesson.content, all=c.exercises.all;
+  const ids=(part,a,b)=>Array.from({length:b-a+1},(_,i)=>`B9-${part}${String(a+i).padStart(2,"0")}`);
+  const matrix={vocabulary:ids("A",1,14),grammar:ids("B",1,12),listening:["B9-A15",...ids("B",13,18),"B9-F09"],reading:[...ids("C",1,10),"B9-D01","B9-D02"],writing:[...ids("D",3,10),"B9-E01","B9-E02"],translation:ids("E",3,8),speaking:ids("F",1,8),mixed:[]};
+  const listen={
+    "B9-A15":["Nghe câu và chọn ý đúng.","题太多了，我今天没做完。",["Bài quá nhiều nên chưa làm xong","Đã làm xong toàn bộ","Không có bài tập","Ngày mai không làm"],"A"],
+    "B9-B13":["Nghe và xác định mốc bắt đầu.","我从明天开始上班。",["Ngày mai","Hôm qua","Tháng trước","Buổi tối"],"A"],
+    "B9-B14":["Nghe và chọn nghĩa đúng.","这是我第一天来中国。",["Đây là ngày đầu tôi đến Trung Quốc","Tôi đến Trung Quốc lần hai","Tôi đã ở Trung Quốc một năm","Tôi muốn về nước"],"A"],
+    "B9-B15":["Nghe hội thoại. Người B hiểu chưa?","A：你听懂了吗？B：我还没听懂。",["Chưa hiểu","Đã hiểu hết","Đã làm xong","Đã viết sai"],"A"],
+    "B9-B16":["Nghe và chọn kết quả đúng.","这道题我做错了，要再做一遍。",["Làm sai và cần làm lại","Làm xong ngay","Không có câu hỏi","Đang đi làm"],"A"],
+    "B9-B17":["Nghe lời chào và chọn nơi phù hợp.","欢迎你来我们公司上班。",["Công ty","Trường học","Nhà hàng","Bệnh viện"],"A"],
+    "B9-B18":["Nghe câu và chọn hành động đúng.","我希望明天能做完作业。",["Ngày mai làm xong bài tập","Ngày mai không đi học","Hôm qua làm sai","Bắt đầu đi làm"],"A"],
+    "B9-F09":["Nghe lời nhắn và chọn phản hồi phù hợp.","别着急，明天再做吧。",["好的，我明天做。","我已经上班。","欢迎你。","第一题错。"],"A"]
+  };
+  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
+  const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
+  c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]}; lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction}));
+  for(const [section,qids] of Object.entries(matrix)) for(const id of qids){const q=all.find(x=>x.id===id); if(q){q.section=section;q.sectionTitle=info[section][0];q.skill=info[section][1];}}
+  all.sort((a,b)=>Object.keys(info).indexOf(a.section)-Object.keys(info).indexOf(b.section)); Object.assign(c.coverage,{listening:"present",reading:"present",writing:"present",speaking:"present",translation:"present",exercises:"gold_template_v1",skillMatrix:"balanced_4skills_v1"});
+})();

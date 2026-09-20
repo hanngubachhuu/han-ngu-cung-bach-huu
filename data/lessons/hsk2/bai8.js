@@ -1917,3 +1917,27 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   lesson.content.meta.timeLimitMinutes = 75;
   lesson.content.coverage.exercises = "gold_template_v1";
 })();
+
+/* Ma trận 4 kỹ năng: cân lại theo cấu trúc Bài 5, có phần nghe thực thi bằng TTS. */
+(() => {
+  const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai8_rangwo"], c=lesson.content, all=c.exercises.all;
+  const ids=(part,a,b)=>Array.from({length:b-a+1},(_,i)=>`B8-${part}${String(a+i).padStart(2,"0")}`);
+  const matrix={vocabulary:ids("A",1,14),grammar:ids("B",1,12),listening:["B8-A15",...ids("B",13,18),"B8-F09"],reading:[...ids("C",1,10),"B8-D01","B8-D02"],writing:[...ids("D",3,10),"B8-E01","B8-E02"],translation:ids("E",3,8),speaking:ids("F",1,8),mixed:[]};
+  const listen={
+    "B8-A15":["Nghe câu và chọn ý đúng.","请你等我一下，我想想再告诉你。",["Người nói cần thêm thời gian suy nghĩ","Người nói muốn rời đi ngay","Người nói không biết địa chỉ","Người nói đang gọi phục vụ viên"],"A"],
+    "B8-B13":["Nghe hội thoại. Người A muốn gì?","A：这个黑色的贵不贵？B：不贵。",["Hỏi giá chiếc màu đen","Tìm một người bạn","Gọi đồ ăn","Đổi sang màu trắng"],"A"],
+    "B8-B14":["Nghe và chọn câu đáp phù hợp.","A：你找谁？B：我找服务员。",["Người B tìm phục vụ viên","Người B chờ xe buýt","Người B mua sách","Người B đi học"],"A"],
+    "B8-B15":["Nghe câu và chọn hành động tiếp theo.","这件衣服有点儿贵，我们再看看吧。",["Xem thêm món khác","Mua ngay chiếc áo","Gọi điện cho giáo viên","Về nhà ngủ"],"A"],
+    "B8-B16":["Nghe và nhận ra lời đề nghị.","你帮我看看这个，好吗？",["Nhờ người nghe xem giúp","Bảo người nghe đợi","Từ chối giúp đỡ","Hỏi giá"],"A"],
+    "B8-B17":["Nghe hai câu. Ý nào đúng?","我先想想，明天再告诉你。",["Câu trả lời sẽ được nói vào ngày mai","Người nói đã trả lời xong","Người nói không muốn nói nữa","Người nói đang tìm điện thoại"],"A"],
+    "B8-B18":["Nghe câu và chọn màu được nhắc đến.","白色的太贵，黑色的怎么样？",["Đen","Đỏ","Xanh","Vàng"],"A"],
+    "B8-F09":["Nghe tình huống và chọn phản hồi lịch sự nhất.","A：你现在能告诉我吗？B：",["让我想想再告诉你，好吗？","我是服务员。","这件很黑。","我找不到白。"],"A"]
+  };
+  for(const [id,[prompt,audioText,options,answer]] of Object.entries(listen)) Object.assign(all.find(q=>q.id===id),{type:"listening",prompt,audioText,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,explain:"Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại."});
+  const info={vocabulary:["A. TỪ VỰNG & CỤM TỪ","tuvung","Nhận diện, kết hợp từ và điền từ theo ngữ cảnh."],grammar:["B. NGỮ PHÁP TRONG NGỮ CẢNH","nguphap","Nhận diện, sửa lỗi và vận dụng mẫu câu."],listening:["C. NGHE HIỂU","nghe","Nghe bằng nút phát; không nhìn lời thoại trước khi trả lời."],reading:["D. ĐỌC HIỂU","docHieu","Đọc lấy thông tin, ý chính và suy luận đơn giản."],writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Sắp xếp, hoàn thành và viết câu/đoạn ngắn."],translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo tình huống, không dịch từng chữ."],speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc đóng vai theo yêu cầu."]};
+  c.skills=matrix; c.exercises={all,...Object.fromEntries(Object.entries(matrix).filter(([k])=>k!=="mixed").map(([k,v])=>[k,v.map(id=>all.find(q=>q.id===id))])),mixed:[]};
+  lesson.exerciseSections=Object.entries(info).map(([id,[title,skill,instruction]])=>({id,title,skill,instruction}));
+  for(const [section,qids] of Object.entries(matrix)) for(const id of qids){const q=all.find(x=>x.id===id); if(q){q.section=section;q.sectionTitle=info[section][0];q.skill=info[section][1];}}
+  all.sort((a,b)=>Object.keys(info).indexOf(a.section)-Object.keys(info).indexOf(b.section));
+  Object.assign(c.coverage,{listening:"present",reading:"present",writing:"present",speaking:"present",translation:"present",exercises:"gold_template_v1",skillMatrix:"balanced_4skills_v1"});
+})();
