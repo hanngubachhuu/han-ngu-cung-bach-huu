@@ -2004,60 +2004,62 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "过",
-            "造句"
+            "你",
+            "看过",
+            "那个电影",
+            "吗"
           ],
           "answer": [
-            "请",
-            "用",
-            "过",
-            "造句"
+            "你",
+            "看过",
+            "那个电影",
+            "吗"
           ],
-          "explain": "Sắp xếp theo mẫu: 我看过那个电影.",
+          "explain": "过 đứng sau động từ để biểu thị đã từng.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B14-D02",
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "虽然……但是……",
-            "造句"
+            "虽然",
+            "很累",
+            "但是",
+            "我",
+            "还想",
+            "玩儿"
           ],
           "answer": [
-            "请",
-            "用",
-            "虽然……但是……",
-            "造句"
+            "虽然",
+            "很累",
+            "但是",
+            "我",
+            "还想",
+            "玩儿"
           ],
-          "explain": "Sắp xếp theo mẫu: 虽然很累，但是我还想玩儿.",
+          "explain": "虽然 và 但是 tạo quan hệ nhượng bộ.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B14-D03",
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "次",
-            "造句"
+            "我",
+            "看过",
+            "三次"
           ],
           "answer": [
-            "请",
-            "用",
-            "次",
-            "造句"
+            "我",
+            "看过",
+            "三次"
           ],
-          "explain": "Sắp xếp theo mẫu: 我看过三次.",
+          "explain": "三次 đếm số lần hành động xem xảy ra.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         }
       ]
     },
@@ -2071,10 +2073,10 @@ const LESSON = {
           "id": "B14-E01",
           "type": "self_check",
           "prompt": "Dịch sang tiếng Trung: Bạn đã từng xem bộ phim đó chưa?",
-          "model": "我看过那个电影。",
-          "explain": "Ưu tiên sử dụng điểm ngữ pháp 过.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "model": "你看过那个电影吗？",
+          "explain": "V + 过 biểu thị kinh nghiệm, 吗 tạo câu hỏi.",
+          "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
+          "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch."
         },
         {
           "id": "B14-E02",
