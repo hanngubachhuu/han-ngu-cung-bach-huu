@@ -59,7 +59,7 @@
   R.loadAll = async () => {
     if(!Array.isArray(R.manifest)) return [];
     await Promise.all(R.manifest.map(x=>R.loadScript(x.data)));
-    return R.manifest.map(x=>R.lessons[x.id]).filter(Boolean);
+    return R.manifest.map(x=>{const l=R.lessons[x.id]; return l ? {...l,__href:x.href,__data:x.data} : null;}).filter(Boolean);
   };
   global.HAN_NGU_DATA = R;
 })(window);
