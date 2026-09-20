@@ -22,17 +22,12 @@ h1{font-size:30px;margin:0 0 8px}h2{font-size:20px;margin:0 0 14px}.lead{color:v
 <main class="wrap"><a class="back" href="on-tap-chung.html">← Quay lại Ôn tập chung · Chữ Hán</a><div id="app"><div class="empty">Đang tải hồ sơ chữ Hán…</div></div></main>
 <footer class="site-footer no-print"><div class="site-footer-inner"><div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div><div class="site-footer-links"><a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a></div></div><div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div></footer>
 <button class="site-back-top no-print" id="siteBackTop" type="button">↑</button>
-<script src="hanzi-practice.js"></script>
+<script src="data/lesson-registry.js"></script><script src="data/lesson-manifest.js"></script><script src="hanzi-practice.js"></script>
 <script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const wanted=new URLSearchParams(location.search).get('char')||'';
-const urls=h=>[...new Set((h.match(/(?:bvnh\d+-\d+|bai\d+_index)\.html/g)||[]))];
-function parseLesson(h){
- const m=h.indexOf('const LESSON ='),st=h.indexOf('{',m);if(m<0||st<0)throw Error('LESSON not found');
- let d=0,q=null,e=false,lc=false,bc=false;
- for(let i=st;i<h.length;i++){const c=h[i],n=h[i+1];if(lc){if(c==='\n')lc=false;continue}if(bc){if(c==='*'&&n==='/'){bc=false;i++}continue}if(q){if(e){e=false;continue}if(c==='\\'){e=true;continue}if(c===q)q=null;continue}if(c==='/'&&n==='/'){lc=true;i++;continue}if(c==='/'&&n==='*'){bc=true;i++;continue}if(c==='"'||c==="'"||c===String.fromCharCode(96)){q=c;continue}if(c==='{')d++;else if(c==='}'){d--;if(!d)return Function('"use strict";return ('+h.slice(st,i+1)+')')()}}throw Error('LESSON parse failed')}
-async function get(u){const r=await fetch(u+'?hanzi_profile='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error(u);return{u,l:parseLesson(await r.text())}}
+
 const sourceMap={'han-dian':['汉典','https://www.zdic.net/','bộ thủ / số nét / cấu trúc'],'unicode_uax38':['Unicode Unihan / UAX #38','https://www.unicode.org/reports/tr38/','thuộc tính dữ liệu chữ Hán'],'GF0023-2020':['通用规范汉字笔顺规范 GF 0023—2020','https://www.moe.gov.cn/jyb_sjzl/ziliao/A19/202103/W020210318300204215237.pdf','chuẩn thứ tự nét'],'textbook_lesson1':['Giáo trình chuẩn HSK 2 · Bài 1','https://chinese.edu.vn/giao-trinh-chuan-hsk-2-bai-1.html','từ vựng và câu mẫu']};
 function sources(refs){return(refs||[]).map(k=>{const s=sourceMap[k];return s?'<div class="source"><b>'+esc(s[0])+'</b><a href="'+s[1]+'" target="_blank" rel="noopener">'+esc(s[2])+' ↗</a></div>':''}).join('')}
 function loadInlineWriter(){if(window.HanziWriter)return Promise.resolve(window.HanziWriter);return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hanzi-writer@3.7.3/dist/hanzi-writer.min.js';s.onload=()=>window.HanziWriter?resolve(window.HanziWriter):reject(Error('HanziWriter unavailable'));s.onerror=()=>reject(Error('Cannot load HanziWriter'));document.head.appendChild(s)})}
@@ -82,10 +77,9 @@ function render(hit){
  mountInlineHanzi(h.char);
 }async function load(){
  if(!wanted){$('#app').innerHTML='<div class="empty">Hãy mở hồ sơ từ Ôn tập chung → Chữ Hán.</div>';return}
- const home=await(await fetch('trang-chu.html?manifest='+Date.now(),{cache:'no-store'})).text();
- const all=['bvnh2-1.html',...urls(home)],rs=await Promise.allSettled([...new Set(all)].map(get));
- const hit=rs.filter(x=>x.status==='fulfilled').map(x=>x.value).find(x=>(x.l.content?.hanzi||[]).some(h=>h.char===wanted));
- if(!hit){$('#app').innerHTML='<div class="empty">Chưa có hồ sơ cho chữ '+esc(wanted)+' trong dữ liệu bài học hiện tại.</div>';return}render(hit);
+ const lessons=(await window.HAN_NGU_DATA.loadAll()).map(window.HAN_NGU_DATA.prepare);
+ const hit=lessons.find(x=>(x.content?.hanzi||[]).some(h=>h.char===wanted));
+ if(!hit){$('#app').innerHTML='<div class="empty">Chưa có hồ sơ cho chữ '+esc(wanted)+' trong dữ liệu bài học hiện tại.</div>';return}render({u:hit.__href||hit.href||'',l:hit});
 }
 $('#footerYear').textContent=new Date().getFullYear();
 const b=$('#siteNavBurger'),l=$('#siteNavLinks');if(b&&l)b.onclick=()=>{const o=l.classList.toggle('open');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')};
