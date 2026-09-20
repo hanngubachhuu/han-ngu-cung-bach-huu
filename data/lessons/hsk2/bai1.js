@@ -2733,6 +2733,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "id": "q19",
           "section": "b4",
           "type": "reorder",
+          "answer": [,
+            "我",
+            "要",
+            "去",
+            "北京",
+            "旅游"
+          ]
           "tokens": [
             "旅游",
             "我",
@@ -2759,6 +2766,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "id": "q20",
           "section": "b4",
           "type": "reorder",
+          "answer": [,
+            "我们",
+            "要不要",
+            "买",
+            "几个",
+            "新的",
+            "椅子"
+          ]
           "tokens": [
             "买",
             "椅子",
@@ -2787,6 +2802,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "id": "q21",
           "section": "b4",
           "type": "reorder",
+          "answer": [,
+            "我",
+            "不",
+            "想",
+            "吃",
+            "米饭"
+          ]
           "tokens": [
             "想",
             "米饭",
@@ -2813,6 +2835,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "id": "q22",
           "section": "b4",
           "type": "reorder",
+          "answer": [,
+            "你",
+            "什么时候",
+            "要",
+            "去",
+            "买衣服"
+          ]
           "tokens": [
             "什么时候",
             "你",
@@ -2839,6 +2868,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "id": "q23",
           "section": "b4",
           "type": "reorder",
+          "answer": [,
+            "我们",
+            "一起",
+            "去",
+            "踢足球",
+            "吧"
+          ]
           "tokens": [
             "一起",
             "我们",
@@ -2949,6 +2985,15 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "id": "q30",
           "section": "b7",
           "type": "dialog_fill",
+          "answer": {,
+            "1": "要",
+            "2": "不想",
+            "3": "它",
+            "4": "多",
+            "5": "觉得",
+            "6": "最",
+            "7": "几"
+          }
           "wordBank": [
             "要",
             "不想",
