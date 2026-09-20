@@ -2171,40 +2171,44 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "动词短语作定语",
-            "造句"
+            "他",
+            "比",
+            "我",
+            "大",
+            "三岁"
           ],
           "answer": [
-            "请",
-            "用",
-            "动词短语作定语",
-            "造句"
+            "他",
+            "比",
+            "我",
+            "大",
+            "三岁"
           ],
-          "explain": "Sắp xếp theo mẫu: 那个学中文的学生.",
+          "explain": "Đây là mẫu câu 比 cơ bản.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B11-D02",
           "type": "reorder",
           "prompt": "Sắp xếp thành câu đúng:",
           "tokens": [
-            "请",
-            "用",
-            "比字句",
-            "造句"
+            "那个",
+            "学中文的",
+            "学生",
+            "是",
+            "我的朋友"
           ],
           "answer": [
-            "请",
-            "用",
-            "比字句",
-            "造句"
+            "那个",
+            "学中文的",
+            "学生",
+            "是",
+            "我的朋友"
           ],
-          "explain": "Sắp xếp theo mẫu: 他比我大三岁.",
+          "explain": "Cụm 学中文的 làm định ngữ cho 学生.",
           "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
-          "tip": "Nhớ khung cấu trúc ngữ pháp của bài."
+          "tip": "Nhớ trật tự của mẫu câu đang luyện."
         },
         {
           "id": "B11-D03",
@@ -2237,11 +2241,11 @@ const LESSON = {
         {
           "id": "B11-E01",
           "type": "self_check",
-          "prompt": "Dịch sang tiếng Trung: Anh ấy lớn hơn tôi ba tuổi",
-          "model": "那个学中文的学生",
-          "explain": "Ưu tiên sử dụng điểm ngữ pháp 动词短语作定语.",
-          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "prompt": "Dịch sang tiếng Trung: Anh ấy lớn hơn tôi ba tuổi.",
+          "model": "他比我大三岁。",
+          "explain": "比 + đối tượng + tính từ + số lượng chênh lệch.",
+          "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
+          "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch."
         },
         {
           "id": "B11-E02",
