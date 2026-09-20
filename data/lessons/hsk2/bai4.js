@@ -36,7 +36,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v02",
@@ -57,7 +64,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v03",
@@ -78,7 +92,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v04",
@@ -99,7 +120,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v05",
@@ -120,7 +148,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v06",
@@ -141,7 +176,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v07",
@@ -162,7 +204,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v08",
@@ -183,7 +232,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v09",
@@ -204,7 +260,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v10",
@@ -225,7 +288,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v11",
@@ -246,7 +316,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v12",
@@ -267,7 +344,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l04_v13",
@@ -288,7 +372,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "textbook_l04"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       }
     ],
     "grammar": [
@@ -839,7 +930,17 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "7": "B",
             "8": "F"
           },
-          "explain": "<p><b>1. 生日→C</b>: 生 (sinh) + 日 (ngày) = ngày sinh. Không nhầm với 生病 (Bài 2) vì cùng có chữ 生.</p><p><b>2. 快乐→H</b>: thường đi sau danh từ ngày lễ (生日快乐, 新年快乐).</p><p><b>3. 晚上→E</b>: đối lập với 早上 (Bài 2). Lỗi hay gặp: viết nhầm thứ tự 上晚.</p><p><b>4. 问→A</b>: có bộ 口 (miệng) trong chữ 门 → dùng miệng để hỏi. Không nhầm với 请 (mời/xin).</p><p><b>5. 非常→G</b>: mạnh hơn 很, đứng trước tính từ/động từ tâm lý. Không nhầm với 真 (Bài 3).</p><p><b>6. 开始→D</b>: 开 (mở) + 始 (đầu) = mở đầu. Luôn cần theo sau bởi một động từ khác.</p><p><b>7. 已经→B</b>: thường đi cùng 了 cuối câu. Không nhầm với 开始 (điểm bắt đầu, không phải trạng thái hoàn thành).</p><p><b>8. 介绍→F</b>: thường đi với 帮 (帮我介绍 = giúp tôi giới thiệu). Không nhầm với 认识 (kết quả sau khi giới thiệu).</p>"
+          "explain": "<p><b>1. 生日→C</b>: 生 (sinh) + 日 (ngày) = ngày sinh. Không nhầm với 生病 (Bài 2) vì cùng có chữ 生.</p><p><b>2. 快乐→H</b>: thường đi sau danh từ ngày lễ (生日快乐, 新年快乐).</p><p><b>3. 晚上→E</b>: đối lập với 早上 (Bài 2). Lỗi hay gặp: viết nhầm thứ tự 上晚.</p><p><b>4. 问→A</b>: có bộ 口 (miệng) trong chữ 门 → dùng miệng để hỏi. Không nhầm với 请 (mời/xin).</p><p><b>5. 非常→G</b>: mạnh hơn 很, đứng trước tính từ/động từ tâm lý. Không nhầm với 真 (Bài 3).</p><p><b>6. 开始→D</b>: 开 (mở) + 始 (đầu) = mở đầu. Luôn cần theo sau bởi một động từ khác.</p><p><b>7. 已经→B</b>: thường đi cùng 了 cuối câu. Không nhầm với 开始 (điểm bắt đầu, không phải trạng thái hoàn thành).</p><p><b>8. 介绍→F</b>: thường đi với 帮 (帮我介绍 = giúp tôi giới thiệu). Không nhầm với 认识 (kết quả sau khi giới thiệu).</p>",
+          "answer": {
+            "1": "C",
+            "2": "H",
+            "3": "E",
+            "4": "A",
+            "5": "G",
+            "6": "D",
+            "7": "B",
+            "8": "F"
+          }
         },
         {
           "id": "q2",
@@ -865,7 +966,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "A",
-          "explain": "<p><b>Giải thích:</b> 给 (gěi) ở đây là động từ 'đưa, cho' — 给 + người + vật: 给我一杯牛奶 = đưa/cho tôi một cốc sữa.</p><p><b>Vì sao các đáp án khác sai:</b> 送 (tặng) dùng khi biếu quà có tính lâu dài; 问 (hỏi) và 帮 (giúp) không phù hợp nghĩa 'đưa đồ uống'.</p><p><b>Lỗi HS Việt hay gặp:</b> Dùng 送 thay 给 vì cả hai đều dịch là 'cho/tặng' trong tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> 给 = trao tận tay ngay lúc đó; 送 = tặng món quà có ý nghĩa hơn.</p><p><b>Ví dụ bổ sung:</b> 服务员，请给我一杯咖啡。</p>"
+          "explain": "<p><b>Giải thích:</b> 给 (gěi) ở đây là động từ 'đưa, cho' — 给 + người + vật: 给我一杯牛奶 = đưa/cho tôi một cốc sữa.</p><p><b>Vì sao các đáp án khác sai:</b> 送 (tặng) dùng khi biếu quà có tính lâu dài; 问 (hỏi) và 帮 (giúp) không phù hợp nghĩa 'đưa đồ uống'.</p><p><b>Lỗi HS Việt hay gặp:</b> Dùng 送 thay 给 vì cả hai đều dịch là 'cho/tặng' trong tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> 给 = trao tận tay ngay lúc đó; 送 = tặng món quà có ý nghĩa hơn.</p><p><b>Ví dụ bổ sung:</b> 服务员，请给我一杯咖啡。</p>",
+          "answer": "A"
         },
         {
           "id": "q3",
@@ -891,7 +993,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> 帮 (bāng) = giúp — 帮 + người + động từ khác: 帮你介绍 = giúp bạn giới thiệu.</p><p><b>Vì sao các đáp án khác sai:</b> 给 cũng đứng trước động từ (给你介绍) nhưng nghĩa là 'giới thiệu cho bạn', không khớp 'giúp' trong đề; 已经/两 không phải động từ giúp đỡ.</p><p><b>Lỗi HS Việt hay gặp:</b> Lẫn 帮 và 给 vì cả hai đều đứng trước động từ khác.</p><p><b>Mẹo ghi nhớ:</b> 帮 luôn mang nghĩa 'ra tay giúp đỡ'; 给 thiên về 'làm việc đó cho ai'.</p><p><b>Ví dụ bổ sung:</b> 谁帮你介绍这个工作的？</p>"
+          "explain": "<p><b>Giải thích:</b> 帮 (bāng) = giúp — 帮 + người + động từ khác: 帮你介绍 = giúp bạn giới thiệu.</p><p><b>Vì sao các đáp án khác sai:</b> 给 cũng đứng trước động từ (给你介绍) nhưng nghĩa là 'giới thiệu cho bạn', không khớp 'giúp' trong đề; 已经/两 không phải động từ giúp đỡ.</p><p><b>Lỗi HS Việt hay gặp:</b> Lẫn 帮 và 给 vì cả hai đều đứng trước động từ khác.</p><p><b>Mẹo ghi nhớ:</b> 帮 luôn mang nghĩa 'ra tay giúp đỡ'; 给 thiên về 'làm việc đó cho ai'.</p><p><b>Ví dụ bổ sung:</b> 谁帮你介绍这个工作的？</p>",
+          "answer": "B"
         },
         {
           "id": "q4",
@@ -917,7 +1020,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "A",
-          "explain": "<p><b>Giải thích:</b> 已经 + số tuổi + 了 diễn tả mức độ/trạng thái đã đạt được: 已经二十岁了.</p><p><b>Vì sao các đáp án khác sai:</b> 非常 (rất) không đi trước số tuổi; 开始 (bắt đầu) không hợp nghĩa; 两 chỉ dùng trước lượng từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên 了 cuối câu khi có 已经.</p><p><b>Mẹo ghi nhớ:</b> 已经……了 luôn đi thành cặp trong câu khẳng định trạng thái đã đạt tới.</p><p><b>Ví dụ bổ sung:</b> 我已经工作两年多了。</p>"
+          "explain": "<p><b>Giải thích:</b> 已经 + số tuổi + 了 diễn tả mức độ/trạng thái đã đạt được: 已经二十岁了.</p><p><b>Vì sao các đáp án khác sai:</b> 非常 (rất) không đi trước số tuổi; 开始 (bắt đầu) không hợp nghĩa; 两 chỉ dùng trước lượng từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên 了 cuối câu khi có 已经.</p><p><b>Mẹo ghi nhớ:</b> 已经……了 luôn đi thành cặp trong câu khẳng định trạng thái đã đạt tới.</p><p><b>Ví dụ bổ sung:</b> 我已经工作两年多了。</p>",
+          "answer": "A"
         },
         {
           "id": "q5",
@@ -943,7 +1047,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "C",
-          "explain": "<p><b>Giải thích:</b> 晚上 = buổi tối, khớp nghĩa 'tối nay'; ngữ cảnh 'xem tivi cùng chồng' thường diễn ra buổi tối.</p><p><b>Vì sao các đáp án khác sai:</b> 早上 (sáng) trái nghĩa; 时间 (thời gian nói chung) không xác định buổi; 生日 (sinh nhật) không liên quan.</p><p><b>Lỗi HS Việt hay gặp:</b> Nhầm 今天晚上 (tối nay) với 明天晚上 (tối mai) khi dịch.</p><p><b>Mẹo ghi nhớ:</b> 今天 + 晚上 = tối của ngày hôm nay.</p><p><b>Ví dụ bổ sung:</b> 今天晚上你有电话吗？</p>"
+          "explain": "<p><b>Giải thích:</b> 晚上 = buổi tối, khớp nghĩa 'tối nay'; ngữ cảnh 'xem tivi cùng chồng' thường diễn ra buổi tối.</p><p><b>Vì sao các đáp án khác sai:</b> 早上 (sáng) trái nghĩa; 时间 (thời gian nói chung) không xác định buổi; 生日 (sinh nhật) không liên quan.</p><p><b>Lỗi HS Việt hay gặp:</b> Nhầm 今天晚上 (tối nay) với 明天晚上 (tối mai) khi dịch.</p><p><b>Mẹo ghi nhớ:</b> 今天 + 晚上 = tối của ngày hôm nay.</p><p><b>Ví dụ bổ sung:</b> 今天晚上你有电话吗？</p>",
+          "answer": "C"
         },
         {
           "id": "q6",
@@ -969,7 +1074,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "C",
-          "explain": "<p><b>Giải thích:</b> 开始 + động từ = bắt đầu làm gì: 开始踢足球 = bắt đầu đá bóng.</p><p><b>Vì sao các đáp án khác sai:</b> 已经 diễn tả việc đã hoàn thành, không phải điểm bắt đầu; 两/长 không phải động từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Lẫn 开始 (bắt đầu một hành động) với 已经 (đã ở trạng thái nào đó).</p><p><b>Mẹo ghi nhớ:</b> [mốc thời gian] + 的时候 + 开始 + V.</p><p><b>Ví dụ bổ sung:</b> 我六岁的时候开始学中文。</p>"
+          "explain": "<p><b>Giải thích:</b> 开始 + động từ = bắt đầu làm gì: 开始踢足球 = bắt đầu đá bóng.</p><p><b>Vì sao các đáp án khác sai:</b> 已经 diễn tả việc đã hoàn thành, không phải điểm bắt đầu; 两/长 không phải động từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Lẫn 开始 (bắt đầu một hành động) với 已经 (đã ở trạng thái nào đó).</p><p><b>Mẹo ghi nhớ:</b> [mốc thời gian] + 的时候 + 开始 + V.</p><p><b>Ví dụ bổ sung:</b> 我六岁的时候开始学中文。</p>",
+          "answer": "C"
         },
         {
           "id": "q7",
@@ -995,7 +1101,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> 两 dùng trước lượng từ (本, 个, 年...): 两本书 đúng quy tắc 两 + lượng từ + danh từ.</p><p><b>Vì sao các đáp án khác sai:</b> 二本书 sai ngữ pháp (二 không đứng trước lượng từ); 已经/长 không phải số từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Đây là lỗi rất phổ biến của HS Việt: dùng '二' thay '两' trước lượng từ.</p><p><b>Mẹo ghi nhớ:</b> 两 + lượng từ; 二 + đơn vị đếm thứ tự/số điện thoại/toán học.</p><p><b>Ví dụ bổ sung:</b> 我家有两个孩子。</p>"
+          "explain": "<p><b>Giải thích:</b> 两 dùng trước lượng từ (本, 个, 年...): 两本书 đúng quy tắc 两 + lượng từ + danh từ.</p><p><b>Vì sao các đáp án khác sai:</b> 二本书 sai ngữ pháp (二 không đứng trước lượng từ); 已经/长 không phải số từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Đây là lỗi rất phổ biến của HS Việt: dùng '二' thay '两' trước lượng từ.</p><p><b>Mẹo ghi nhớ:</b> 两 + lượng từ; 二 + đơn vị đếm thứ tự/số điện thoại/toán học.</p><p><b>Ví dụ bổ sung:</b> 我家有两个孩子。</p>",
+          "answer": "B"
         },
         {
           "id": "q8",
@@ -1013,7 +1120,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> 两 luôn đứng trước lượng từ 个/本/张... — '两个孩子' đúng quy tắc, '二个孩子' sai ngữ pháp.</p><p><b>Vì sao 二 sai:</b> 二 chỉ dùng để đếm số đơn thuần (一二三...) hoặc số điện thoại/số nhà, không đứng trước lượng từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Lỗi phổ biến nhất của HS Việt khi học số đếm HSK2.</p><p><b>Mẹo ghi nhớ:</b> 'Hai' trước lượng từ → luôn là 两, không bao giờ là 二.</p><p><b>Ví dụ bổ sung:</b> 我要两杯咖啡。</p>"
+          "explain": "<p><b>Giải thích:</b> 两 luôn đứng trước lượng từ 个/本/张... — '两个孩子' đúng quy tắc, '二个孩子' sai ngữ pháp.</p><p><b>Vì sao 二 sai:</b> 二 chỉ dùng để đếm số đơn thuần (一二三...) hoặc số điện thoại/số nhà, không đứng trước lượng từ.</p><p><b>Lỗi HS Việt hay gặp:</b> Lỗi phổ biến nhất của HS Việt khi học số đếm HSK2.</p><p><b>Mẹo ghi nhớ:</b> 'Hai' trước lượng từ → luôn là 两, không bao giờ là 二.</p><p><b>Ví dụ bổ sung:</b> 我要两杯咖啡。</p>",
+          "answer": "B"
         },
         {
           "id": "q9",
@@ -1031,7 +1139,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> 点 (giờ) là lượng từ chỉ thời gian, nên phải dùng 两 — '两点半' là cách nói giờ chuẩn.</p><p><b>Vì sao 二 sai:</b> '二点半' là lỗi sai điển hình, không tồn tại trong tiếng Trung chuẩn.</p><p><b>Lỗi HS Việt hay gặp:</b> Áp dụng máy móc 'hai = 二' trong mọi trường hợp kể cả khi nói giờ.</p><p><b>Mẹo ghi nhớ:</b> Nói giờ luôn dùng 两点, không dùng 二点 (trừ 十二点 vì đó là số ghép).</p><p><b>Ví dụ bổ sung:</b> 现在两点十分。</p>"
+          "explain": "<p><b>Giải thích:</b> 点 (giờ) là lượng từ chỉ thời gian, nên phải dùng 两 — '两点半' là cách nói giờ chuẩn.</p><p><b>Vì sao 二 sai:</b> '二点半' là lỗi sai điển hình, không tồn tại trong tiếng Trung chuẩn.</p><p><b>Lỗi HS Việt hay gặp:</b> Áp dụng máy móc 'hai = 二' trong mọi trường hợp kể cả khi nói giờ.</p><p><b>Mẹo ghi nhớ:</b> Nói giờ luôn dùng 两点, không dùng 二点 (trừ 十二点 vì đó là số ghép).</p><p><b>Ví dụ bổ sung:</b> 现在两点十分。</p>",
+          "answer": "B"
         },
         {
           "id": "q10",
@@ -1049,7 +1158,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "A",
-          "explain": "<p><b>Giải thích:</b> 长 đọc cháng khi mang nghĩa 'dài' (khoảng cách/độ dài) — '很长' miêu tả độ dài dòng sông.</p><p><b>Vì sao zhǎng sai:</b> zhǎng dùng khi 长 mang nghĩa 'lớn tuổi hơn/trưởng thành', không phù hợp ngữ cảnh miêu tả độ dài.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc lẫn lộn hai âm vì mặt chữ giống nhau hoàn toàn.</p><p><b>Mẹo ghi nhớ:</b> 长 vốn nghĩa 'người già chống gậy' → nghĩa mở rộng 'khoảng cách xa' đọc cháng, còn 'lớn tuổi' đọc zhǎng.</p><p><b>Ví dụ bổ sung:</b> 那条路很长。</p>"
+          "explain": "<p><b>Giải thích:</b> 长 đọc cháng khi mang nghĩa 'dài' (khoảng cách/độ dài) — '很长' miêu tả độ dài dòng sông.</p><p><b>Vì sao zhǎng sai:</b> zhǎng dùng khi 长 mang nghĩa 'lớn tuổi hơn/trưởng thành', không phù hợp ngữ cảnh miêu tả độ dài.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc lẫn lộn hai âm vì mặt chữ giống nhau hoàn toàn.</p><p><b>Mẹo ghi nhớ:</b> 长 vốn nghĩa 'người già chống gậy' → nghĩa mở rộng 'khoảng cách xa' đọc cháng, còn 'lớn tuổi' đọc zhǎng.</p><p><b>Ví dụ bổ sung:</b> 那条路很长。</p>",
+          "answer": "A"
         },
         {
           "id": "q11",
@@ -1067,7 +1177,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> 长 đọc zhǎng khi mang nghĩa 'lớn tuổi, trưởng thành' (年长 = cao niên, lớn tuổi).</p><p><b>Vì sao cháng sai:</b> cháng chỉ dùng cho nghĩa 'dài/lâu' như trong 时间很长, 路很长.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc mọi trường hợp của 长 là cháng vì đó là nghĩa được học chính thức trong Bài 4.</p><p><b>Mẹo ghi nhớ:</b> Câu thần chú: 'đo độ dài → cháng; đo tuổi tác → zhǎng'.</p><p><b>Ví dụ bổ sung:</b> 他是家里最年长的哥哥。</p>"
+          "explain": "<p><b>Giải thích:</b> 长 đọc zhǎng khi mang nghĩa 'lớn tuổi, trưởng thành' (年长 = cao niên, lớn tuổi).</p><p><b>Vì sao cháng sai:</b> cháng chỉ dùng cho nghĩa 'dài/lâu' như trong 时间很长, 路很长.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc mọi trường hợp của 长 là cháng vì đó là nghĩa được học chính thức trong Bài 4.</p><p><b>Mẹo ghi nhớ:</b> Câu thần chú: 'đo độ dài → cháng; đo tuổi tác → zhǎng'.</p><p><b>Ví dụ bổ sung:</b> 他是家里最年长的哥哥。</p>",
+          "answer": "B"
         },
         {
           "id": "q12",
@@ -1093,7 +1204,11 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "1": "是",
             "2": "的"
           },
-          "explain": "<p><b>Giải thích:</b> Cấu trúc 是……的 nhấn mạnh địa điểm (北京) của hành động 买 đã xảy ra: Tân ngữ (这本书) + 是 + chủ thể/nơi chốn + động từ + 的.</p><p><b>Vì sao đúng:</b> Nếu chỉ dùng 我在北京买了这本书 thì đúng ngữ pháp nhưng không nhấn mạnh được địa điểm bằng 是……的.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên 的 ở cuối, chỉ viết '这本书是我在北京买。'</p><p><b>Mẹo ghi nhớ:</b> 是……的 giống như đóng khung: 是 mở đầu nhấn mạnh, 的 đóng lại cuối câu.</p><p><b>Ví dụ bổ sung:</b> 这件衣服是我在商店买的。</p>"
+          "explain": "<p><b>Giải thích:</b> Cấu trúc 是……的 nhấn mạnh địa điểm (北京) của hành động 买 đã xảy ra: Tân ngữ (这本书) + 是 + chủ thể/nơi chốn + động từ + 的.</p><p><b>Vì sao đúng:</b> Nếu chỉ dùng 我在北京买了这本书 thì đúng ngữ pháp nhưng không nhấn mạnh được địa điểm bằng 是……的.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên 的 ở cuối, chỉ viết '这本书是我在北京买。'</p><p><b>Mẹo ghi nhớ:</b> 是……的 giống như đóng khung: 是 mở đầu nhấn mạnh, 的 đóng lại cuối câu.</p><p><b>Ví dụ bổ sung:</b> 这件衣服是我在商店买的。</p>",
+          "answer": {
+            "1": "是",
+            "2": "的"
+          }
         },
         {
           "id": "q13",
@@ -1130,7 +1245,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "3": "是",
             "4": "的"
           },
-          "explain": "<p><b>Giải thích:</b> Câu hỏi và câu trả lời đều dùng khung 是……的 để nhấn mạnh người tặng (谁/我妈妈) — cấu trúc hỏi-đáp song song.</p><p><b>Vì sao đúng:</b> Nếu bỏ 是 ở câu trả lời, câu vẫn đúng nhưng mất sắc thái nhấn mạnh 'chính là mẹ tôi'.</p><p><b>Lỗi HS Việt hay gặp:</b> Chỉ điền một trong hai từ (thiếu 是 hoặc thiếu 的).</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi dùng 谁 ở vị trí chủ thể thì câu trả lời cũng đặt tên người ở đúng vị trí đó.</p><p><b>Ví dụ bổ sung:</b> A: 这个电话是谁打的？ B: 是我姐姐打的。</p>"
+          "explain": "<p><b>Giải thích:</b> Câu hỏi và câu trả lời đều dùng khung 是……的 để nhấn mạnh người tặng (谁/我妈妈) — cấu trúc hỏi-đáp song song.</p><p><b>Vì sao đúng:</b> Nếu bỏ 是 ở câu trả lời, câu vẫn đúng nhưng mất sắc thái nhấn mạnh 'chính là mẹ tôi'.</p><p><b>Lỗi HS Việt hay gặp:</b> Chỉ điền một trong hai từ (thiếu 是 hoặc thiếu 的).</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi dùng 谁 ở vị trí chủ thể thì câu trả lời cũng đặt tên người ở đúng vị trí đó.</p><p><b>Ví dụ bổ sung:</b> A: 这个电话是谁打的？ B: 是我姐姐打的。</p>",
+          "answer": {
+            "1": "是",
+            "2": "的",
+            "3": "是",
+            "4": "的"
+          }
         },
         {
           "id": "q14",
@@ -1156,7 +1277,11 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "1": "是",
             "2": "的"
           },
-          "explain": "<p><b>Giải thích:</b> Nhấn mạnh mốc thời gian (什么时候) của hành động 来 đã xảy ra trong quá khứ. Câu hỏi về thời gian của việc đã biết chắc chắn xảy ra bắt buộc dùng 是……的, không dùng 了.</p><p><b>Vì sao đúng:</b> '你什么时候来中国了？' không tự nhiên bằng cấu trúc 是……的 khi hỏi lại thông tin đã biết.</p><p><b>Lỗi HS Việt hay gặp:</b> Dùng 了 thay vì 是……的 khi hỏi về thời gian của việc đã xảy ra.</p><p><b>Mẹo ghi nhớ:</b> Hỏi 'khi nào/ở đâu/bằng cách nào' cho việc ĐÃ XẢY RA và ĐÃ BIẾT → luôn nghĩ đến 是……的.</p><p><b>Ví dụ bổ sung:</b> 你是几月来的越南？</p>"
+          "explain": "<p><b>Giải thích:</b> Nhấn mạnh mốc thời gian (什么时候) của hành động 来 đã xảy ra trong quá khứ. Câu hỏi về thời gian của việc đã biết chắc chắn xảy ra bắt buộc dùng 是……的, không dùng 了.</p><p><b>Vì sao đúng:</b> '你什么时候来中国了？' không tự nhiên bằng cấu trúc 是……的 khi hỏi lại thông tin đã biết.</p><p><b>Lỗi HS Việt hay gặp:</b> Dùng 了 thay vì 是……的 khi hỏi về thời gian của việc đã xảy ra.</p><p><b>Mẹo ghi nhớ:</b> Hỏi 'khi nào/ở đâu/bằng cách nào' cho việc ĐÃ XẢY RA và ĐÃ BIẾT → luôn nghĩ đến 是……的.</p><p><b>Ví dụ bổ sung:</b> 你是几月来的越南？</p>",
+          "answer": {
+            "1": "是",
+            "2": "的"
+          }
         },
         {
           "id": "q15",
@@ -1188,7 +1313,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "3": "是",
             "4": "的"
           },
-          "explain": "<p><b>Giải thích:</b> Phủ định của 是……的 là thêm 不 trước 是: 不是……的. 不是我打的 (phủ định) + 是我丈夫打的 (khẳng định lại chủ thể đúng).</p><p><b>Vì sao đúng:</b> Không thể nói '这个电话不我打的' — thiếu 是 sau 不.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên thêm 是 sau 不, chỉ viết 不打的.</p><p><b>Mẹo ghi nhớ:</b> Phủ định luôn thêm 不 ngay trước 是, giữ nguyên 的 ở cuối.</p><p><b>Ví dụ bổ sung:</b> 这个汉字不是我写的，是老师写的。</p>"
+          "explain": "<p><b>Giải thích:</b> Phủ định của 是……的 là thêm 不 trước 是: 不是……的. 不是我打的 (phủ định) + 是我丈夫打的 (khẳng định lại chủ thể đúng).</p><p><b>Vì sao đúng:</b> Không thể nói '这个电话不我打的' — thiếu 是 sau 不.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên thêm 是 sau 不, chỉ viết 不打的.</p><p><b>Mẹo ghi nhớ:</b> Phủ định luôn thêm 不 ngay trước 是, giữ nguyên 的 ở cuối.</p><p><b>Ví dụ bổ sung:</b> 这个汉字不是我写的，是老师写的。</p>",
+          "answer": {
+            "1": "是",
+            "2": "的",
+            "3": "是",
+            "4": "的"
+          }
         },
         {
           "id": "q16",
@@ -1225,7 +1356,13 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "3": "是",
             "4": "的"
           },
-          "explain": "<p><b>Giải thích:</b> Câu gốc trong bài khóa: 这个工作是他帮我介绍的 — nhấn mạnh chủ thể (王先生) thực hiện hành động 帮…介绍.</p><p><b>Vì sao đúng:</b> Nếu nói '这个工作王先生介绍了' thì đúng nhưng không nhấn mạnh được 'chính là ai' như bài khóa yêu cầu.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt 是 sai vị trí, để trước 谁 thay vì đầu cụm chủ thể.</p><p><b>Mẹo ghi nhớ:</b> Đây chính là câu chủ đề của Bài 4 — học thuộc câu mẫu này để nhớ cấu trúc.</p><p><b>Ví dụ bổ sung:</b> 这个工作是他帮我介绍的。(câu gốc bài khóa)</p>"
+          "explain": "<p><b>Giải thích:</b> Câu gốc trong bài khóa: 这个工作是他帮我介绍的 — nhấn mạnh chủ thể (王先生) thực hiện hành động 帮…介绍.</p><p><b>Vì sao đúng:</b> Nếu nói '这个工作王先生介绍了' thì đúng nhưng không nhấn mạnh được 'chính là ai' như bài khóa yêu cầu.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt 是 sai vị trí, để trước 谁 thay vì đầu cụm chủ thể.</p><p><b>Mẹo ghi nhớ:</b> Đây chính là câu chủ đề của Bài 4 — học thuộc câu mẫu này để nhớ cấu trúc.</p><p><b>Ví dụ bổ sung:</b> 这个工作是他帮我介绍的。(câu gốc bài khóa)</p>",
+          "answer": {
+            "1": "是",
+            "2": "的",
+            "3": "是",
+            "4": "的"
+          }
         },
         {
           "id": "q17",
@@ -1246,7 +1383,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "的"
           ],
           "fullCorrect": "这本书是我写的。",
-          "explain": "<p><b>Giải thích:</b> Trật tự: Tân ngữ (这本书) + 是 + Chủ thể (我) + Động từ (写) + 的.</p><p><b>Vì sao đúng:</b> Đúng khung 是……的 đã học ở B1.</p><p><b>Lỗi HS Việt hay gặp:</b> Để 是 ở đầu câu theo thói quen tiếng Việt 'Là tôi viết quyển sách này.'</p><p><b>Mẹo ghi nhớ:</b> Luôn đưa vật/sự việc được nhắc tới lên đầu câu trước 是.</p><p><b>Ví dụ bổ sung:</b> 这封信是他写的。</p>"
+          "explain": "<p><b>Giải thích:</b> Trật tự: Tân ngữ (这本书) + 是 + Chủ thể (我) + Động từ (写) + 的.</p><p><b>Vì sao đúng:</b> Đúng khung 是……的 đã học ở B1.</p><p><b>Lỗi HS Việt hay gặp:</b> Để 是 ở đầu câu theo thói quen tiếng Việt 'Là tôi viết quyển sách này.'</p><p><b>Mẹo ghi nhớ:</b> Luôn đưa vật/sự việc được nhắc tới lên đầu câu trước 是.</p><p><b>Ví dụ bổ sung:</b> 这封信是他写的。</p>",
+          "answer": ""
         },
         {
           "id": "q18",
@@ -1267,7 +1405,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "踢足球"
           ],
           "fullCorrect": "他八岁的时候开始踢足球。",
-          "explain": "<p><b>Giải thích:</b> Trật tự: Chủ ngữ + [mốc thời gian] + 的时候 + Động từ. 的时候 luôn đứng ngay sau cụm chỉ thời gian/tuổi, trước phần hành động chính.</p><p><b>Vì sao đúng:</b> '他的时候八岁开始踢足球' sai vì 的时候 phải theo sau 八岁 chứ không xen giữa chủ ngữ và số tuổi.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt 的时候 ngay sau chủ ngữ vì dịch theo trật tự tiếng Việt 'khi anh ấy...'.</p><p><b>Mẹo ghi nhớ:</b> 的时候 giống một 'dấu ngoặc đóng' cho cụm thời gian phía trước nó.</p><p><b>Ví dụ bổ sung:</b> 她五岁的时候开始学画画。</p>"
+          "explain": "<p><b>Giải thích:</b> Trật tự: Chủ ngữ + [mốc thời gian] + 的时候 + Động từ. 的时候 luôn đứng ngay sau cụm chỉ thời gian/tuổi, trước phần hành động chính.</p><p><b>Vì sao đúng:</b> '他的时候八岁开始踢足球' sai vì 的时候 phải theo sau 八岁 chứ không xen giữa chủ ngữ và số tuổi.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt 的时候 ngay sau chủ ngữ vì dịch theo trật tự tiếng Việt 'khi anh ấy...'.</p><p><b>Mẹo ghi nhớ:</b> 的时候 giống một 'dấu ngoặc đóng' cho cụm thời gian phía trước nó.</p><p><b>Ví dụ bổ sung:</b> 她五岁的时候开始学画画。</p>",
+          "answer": ""
         },
         {
           "id": "q19",
@@ -1288,7 +1427,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "晚上了"
           ],
           "fullCorrect": "他回家的时候已经晚上了。",
-          "explain": "<p><b>Giải thích:</b> Mệnh đề động từ (回家) + 的时候 đứng trước, mệnh đề kết quả (已经晚上了) đứng sau.</p><p><b>Vì sao đúng:</b> Đúng cấu trúc [Động từ] + 的时候, [已经 + trạng thái + 了].</p><p><b>Lỗi HS Việt hay gặp:</b> Để 已经 lên đầu câu theo thói quen tiếng Việt 'đã... khi...'.</p><p><b>Mẹo ghi nhớ:</b> Câu có hai mệnh đề: mệnh đề '的时候' luôn là bối cảnh, đứng trước mệnh đề chính.</p><p><b>Ví dụ bổ sung:</b> 我到公司的时候，同事已经开始工作了。</p>"
+          "explain": "<p><b>Giải thích:</b> Mệnh đề động từ (回家) + 的时候 đứng trước, mệnh đề kết quả (已经晚上了) đứng sau.</p><p><b>Vì sao đúng:</b> Đúng cấu trúc [Động từ] + 的时候, [已经 + trạng thái + 了].</p><p><b>Lỗi HS Việt hay gặp:</b> Để 已经 lên đầu câu theo thói quen tiếng Việt 'đã... khi...'.</p><p><b>Mẹo ghi nhớ:</b> Câu có hai mệnh đề: mệnh đề '的时候' luôn là bối cảnh, đứng trước mệnh đề chính.</p><p><b>Ví dụ bổ sung:</b> 我到公司的时候，同事已经开始工作了。</p>",
+          "answer": ""
         },
         {
           "id": "q20",
@@ -1313,7 +1453,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "的"
           ],
           "fullCorrect": "这个工作是谁帮你介绍的？",
-          "explain": "<p><b>Giải thích:</b> Câu hỏi dùng 是……的, từ nghi vấn 谁 thay cho vị trí chủ thể. Trật tự giống câu khẳng định, chỉ thay chủ thể bằng 谁.</p><p><b>Vì sao đúng:</b> '谁是这个工作帮你介绍的' sai vì 是 phải đứng ngay sau tân ngữ 这个工作.</p><p><b>Lỗi HS Việt hay gặp:</b> Đưa 谁 lên đầu câu như trong tiếng Việt 'Ai giới thiệu công việc này cho bạn?'</p><p><b>Mẹo ghi nhớ:</b> Từ nghi vấn 谁 luôn thay vào đúng vị trí của thành phần được hỏi, không dời lên đầu câu.</p><p><b>Ví dụ bổ sung:</b> 这本书是谁写的？</p>"
+          "explain": "<p><b>Giải thích:</b> Câu hỏi dùng 是……的, từ nghi vấn 谁 thay cho vị trí chủ thể. Trật tự giống câu khẳng định, chỉ thay chủ thể bằng 谁.</p><p><b>Vì sao đúng:</b> '谁是这个工作帮你介绍的' sai vì 是 phải đứng ngay sau tân ngữ 这个工作.</p><p><b>Lỗi HS Việt hay gặp:</b> Đưa 谁 lên đầu câu như trong tiếng Việt 'Ai giới thiệu công việc này cho bạn?'</p><p><b>Mẹo ghi nhớ:</b> Từ nghi vấn 谁 luôn thay vào đúng vị trí của thành phần được hỏi, không dời lên đầu câu.</p><p><b>Ví dụ bổ sung:</b> 这本书是谁写的？</p>",
+          "answer": ""
         },
         {
           "id": "q21",
@@ -1334,7 +1475,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "的"
           ],
           "fullCorrect": "这不是我打的。",
-          "explain": "<p><b>Giải thích:</b> Phủ định 是……的: Tân ngữ/chủ đề + 不是 + chủ thể + động từ + 的.</p><p><b>Vì sao đúng:</b> Giữ nguyên khung câu, chỉ thêm 不 trước 是.</p><p><b>Lỗi HS Việt hay gặp:</b> Để 不是 ở giữa câu thay vì ngay sau chủ đề.</p><p><b>Mẹo ghi nhớ:</b> Chủ đề luôn đứng đầu, 不是 đứng ngay sau, phần còn lại giữ nguyên trật tự câu khẳng định.</p><p><b>Ví dụ bổ sung:</b> 这不是他送的礼物。</p>"
+          "explain": "<p><b>Giải thích:</b> Phủ định 是……的: Tân ngữ/chủ đề + 不是 + chủ thể + động từ + 的.</p><p><b>Vì sao đúng:</b> Giữ nguyên khung câu, chỉ thêm 不 trước 是.</p><p><b>Lỗi HS Việt hay gặp:</b> Để 不是 ở giữa câu thay vì ngay sau chủ đề.</p><p><b>Mẹo ghi nhớ:</b> Chủ đề luôn đứng đầu, 不是 đứng ngay sau, phần còn lại giữ nguyên trật tự câu khẳng định.</p><p><b>Ví dụ bổ sung:</b> 这不是他送的礼物。</p>",
+          "answer": ""
         },
         {
           "id": "q22",
@@ -1342,7 +1484,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "Viết lại câu dùng \"已经……了\": 他现在会做饭。 (Trước đây không biết, giờ đã biết.)",
           "correct": "他已经会做饭了。",
-          "explain": "<p><b>Giải thích:</b> 已经 + V + 了 nhấn mạnh sự thay đổi/đạt được kỹ năng, diễn tả đúng ý 'trước không biết, giờ đã biết'.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên thêm 了 cuối câu dù đã có 已经.</p><p><b>Mẹo ghi nhớ:</b> 已经 và 了 luôn đi cùng nhau trong câu khẳng định trạng thái mới đạt được.</p><p><b>Ví dụ bổ sung:</b> 他已经会说汉语了。</p>"
+          "explain": "<p><b>Giải thích:</b> 已经 + V + 了 nhấn mạnh sự thay đổi/đạt được kỹ năng, diễn tả đúng ý 'trước không biết, giờ đã biết'.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên thêm 了 cuối câu dù đã có 已经.</p><p><b>Mẹo ghi nhớ:</b> 已经 và 了 luôn đi cùng nhau trong câu khẳng định trạng thái mới đạt được.</p><p><b>Ví dụ bổ sung:</b> 他已经会说汉语了。</p>",
+          "answer": "他已经会做饭了。"
         },
         {
           "id": "q23",
@@ -1350,7 +1493,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "Viết lại câu dùng \"已经……了\" để nhấn mạnh việc đã hoàn thành: 我做完了作业。",
           "correct": "我已经做完作业了。",
-          "explain": "<p><b>Giải thích:</b> Thêm 已经 trước động từ để nhấn mạnh mức độ hoàn thành: 已经做完...了 nhấn mạnh hơn chỉ dùng 了 đơn thuần.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt 已经 ngay trước 了 ở cuối câu thay vì trước động từ.</p><p><b>Mẹo ghi nhớ:</b> Trật tự chuẩn: Chủ ngữ + 已经 + Động từ (+ Tân ngữ) + 了.</p><p><b>Ví dụ bổ sung:</b> 我已经吃完饭了。</p>"
+          "explain": "<p><b>Giải thích:</b> Thêm 已经 trước động từ để nhấn mạnh mức độ hoàn thành: 已经做完...了 nhấn mạnh hơn chỉ dùng 了 đơn thuần.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt 已经 ngay trước 了 ở cuối câu thay vì trước động từ.</p><p><b>Mẹo ghi nhớ:</b> Trật tự chuẩn: Chủ ngữ + 已经 + Động từ (+ Tân ngữ) + 了.</p><p><b>Ví dụ bổ sung:</b> 我已经吃完饭了。</p>",
+          "answer": "我已经做完作业了。"
         },
         {
           "id": "q24",
@@ -1358,7 +1502,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "Dùng \"是……的\" để viết câu nhấn mạnh thời gian, từ thông tin sau: (thời gian: hôm qua; hành động: đến Bắc Kinh)",
           "correct": "我是昨天来北京的。",
-          "explain": "<p><b>Giải thích:</b> 是……的 nhấn mạnh mốc thời gian 昨天 của hành động 来 đã xảy ra.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên 是, vì nghĩ chỉ cần thêm 的 là đủ.</p><p><b>Mẹo ghi nhớ:</b> 是……的 luôn cần đủ cả hai từ, thiếu một từ là sai cấu trúc.</p><p><b>Ví dụ bổ sung:</b> 我是去年来越南的。</p>"
+          "explain": "<p><b>Giải thích:</b> 是……的 nhấn mạnh mốc thời gian 昨天 của hành động 来 đã xảy ra.</p><p><b>Lỗi HS Việt hay gặp:</b> Quên 是, vì nghĩ chỉ cần thêm 的 là đủ.</p><p><b>Mẹo ghi nhớ:</b> 是……的 luôn cần đủ cả hai từ, thiếu một từ là sai cấu trúc.</p><p><b>Ví dụ bổ sung:</b> 我是去年来越南的。</p>",
+          "answer": "我是昨天来北京的。"
         },
         {
           "id": "q25",
@@ -1366,7 +1511,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "Dùng \"已经……了\" để viết câu từ thông tin: (đã đá bóng được mười năm)",
           "correct": "我已经踢足球十年了。",
-          "explain": "<p><b>Giải thích:</b> 已经 + V + Tân ngữ + thời lượng + 了 — đúng cấu trúc câu mẫu trong bài khóa: 已经踢了十年了.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt thời lượng (十年) trước động từ do ảnh hưởng trật tự tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> Trật tự: Động từ + Tân ngữ + Thời lượng + 了.</p><p><b>Ví dụ bổ sung:</b> 他已经学中文两年了。</p>"
+          "explain": "<p><b>Giải thích:</b> 已经 + V + Tân ngữ + thời lượng + 了 — đúng cấu trúc câu mẫu trong bài khóa: 已经踢了十年了.</p><p><b>Lỗi HS Việt hay gặp:</b> Đặt thời lượng (十年) trước động từ do ảnh hưởng trật tự tiếng Việt.</p><p><b>Mẹo ghi nhớ:</b> Trật tự: Động từ + Tân ngữ + Thời lượng + 了.</p><p><b>Ví dụ bổ sung:</b> 他已经学中文两年了。</p>",
+          "answer": "我已经踢足球十年了。"
         },
         {
           "id": "q26",
@@ -1374,7 +1520,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "这本书是我买。",
           "correct": "这本书是我买的。",
-          "explain": "<p><b>Giải thích:</b> Lỗi: thiếu 的 cuối câu — thành phần bắt buộc của khung 是……的.</p><p><b>Vì sao đúng:</b> 的 đóng vai trò kết thúc và xác nhận cấu trúc nhấn mạnh.</p><p><b>Lỗi HS Việt hay gặp:</b> Đây là lỗi phổ biến nhất khi mới học 是……的: quên 的 cuối câu.</p><p><b>Mẹo ghi nhớ:</b> 是……的 luôn đi thành cặp — có 是 thì phải có 的.</p><p><b>Ví dụ bổ sung:</b> 这是他送的。(không phải '这是他送')</p>"
+          "explain": "<p><b>Giải thích:</b> Lỗi: thiếu 的 cuối câu — thành phần bắt buộc của khung 是……的.</p><p><b>Vì sao đúng:</b> 的 đóng vai trò kết thúc và xác nhận cấu trúc nhấn mạnh.</p><p><b>Lỗi HS Việt hay gặp:</b> Đây là lỗi phổ biến nhất khi mới học 是……的: quên 的 cuối câu.</p><p><b>Mẹo ghi nhớ:</b> 是……的 luôn đi thành cặp — có 是 thì phải có 的.</p><p><b>Ví dụ bổ sung:</b> 这是他送的。(không phải '这是他送')</p>",
+          "answer": "这本书是我买的。"
         },
         {
           "id": "q27",
@@ -1382,7 +1529,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "我的时候六点起床，妈妈已经做饭了。",
           "correct": "我六点起床的时候，妈妈已经做饭了。",
-          "explain": "<p><b>Giải thích:</b> Lỗi: 的时候 phải đứng sau cụm thời gian/động từ (六点起床), không đứng ngay sau chủ ngữ.</p><p><b>Vì sao đúng:</b> Trật tự đúng: [六点起床] + 的时候.</p><p><b>Lỗi HS Việt hay gặp:</b> Lỗi điển hình do dịch trực tiếp trật tự tiếng Việt 'khi tôi dậy lúc 6 giờ'.</p><p><b>Mẹo ghi nhớ:</b> 的时候 luôn đứng SAU toàn bộ cụm mô tả thời điểm/hành động, không đứng trước.</p><p><b>Ví dụ bổ sung:</b> 我吃饭的时候，他打电话来了。</p>"
+          "explain": "<p><b>Giải thích:</b> Lỗi: 的时候 phải đứng sau cụm thời gian/động từ (六点起床), không đứng ngay sau chủ ngữ.</p><p><b>Vì sao đúng:</b> Trật tự đúng: [六点起床] + 的时候.</p><p><b>Lỗi HS Việt hay gặp:</b> Lỗi điển hình do dịch trực tiếp trật tự tiếng Việt 'khi tôi dậy lúc 6 giờ'.</p><p><b>Mẹo ghi nhớ:</b> 的时候 luôn đứng SAU toàn bộ cụm mô tả thời điểm/hành động, không đứng trước.</p><p><b>Ví dụ bổ sung:</b> 我吃饭的时候，他打电话来了。</p>",
+          "answer": "我六点起床的时候，妈妈已经做饭了。"
         },
         {
           "id": "q28",
@@ -1390,7 +1538,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "我已经吃饭。",
           "correct": "我已经吃饭了。",
-          "explain": "<p><b>Giải thích:</b> Lỗi: 已经 cần đi kèm 了 cuối câu để khẳng định trạng thái đã hoàn thành.</p><p><b>Vì sao đúng:</b> Thêm 了 hoàn chỉnh cấu trúc 已经……了.</p><p><b>Lỗi HS Việt hay gặp:</b> HS Việt hay bỏ 了 vì 'đã' trong tiếng Việt không bắt buộc thêm trợ từ đi kèm.</p><p><b>Mẹo ghi nhớ:</b> Hễ thấy 已经 ở đầu/giữa câu, luôn kiểm tra xem cuối câu đã có 了 chưa.</p><p><b>Ví dụ bổ sung:</b> 他已经回家了。</p>"
+          "explain": "<p><b>Giải thích:</b> Lỗi: 已经 cần đi kèm 了 cuối câu để khẳng định trạng thái đã hoàn thành.</p><p><b>Vì sao đúng:</b> Thêm 了 hoàn chỉnh cấu trúc 已经……了.</p><p><b>Lỗi HS Việt hay gặp:</b> HS Việt hay bỏ 了 vì 'đã' trong tiếng Việt không bắt buộc thêm trợ từ đi kèm.</p><p><b>Mẹo ghi nhớ:</b> Hễ thấy 已经 ở đầu/giữa câu, luôn kiểm tra xem cuối câu đã có 了 chưa.</p><p><b>Ví dụ bổ sung:</b> 他已经回家了。</p>",
+          "answer": "我已经吃饭了。"
         },
         {
           "id": "q29",
@@ -1398,7 +1547,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "这个电话不是我打了。",
           "correct": "这个电话不是我打的。",
-          "explain": "<p><b>Giải thích:</b> Lỗi: câu phủ định 是……的 phải kết thúc bằng 的, không dùng 了.</p><p><b>Vì sao đúng:</b> 不是……的 là cấu trúc cố định, không thể thay 的 bằng 了.</p><p><b>Lỗi HS Việt hay gặp:</b> Nhầm lẫn giữa hai trợ từ 了 và 的 vì cả hai đều liên quan đến 'việc đã xảy ra'.</p><p><b>Mẹo ghi nhớ:</b> Nếu câu có 是 ở đầu (khẳng định hoặc phủ định 不是), cuối câu luôn là 的, không phải 了.</p><p><b>Ví dụ bổ sung:</b> 这不是我写的信。</p>"
+          "explain": "<p><b>Giải thích:</b> Lỗi: câu phủ định 是……的 phải kết thúc bằng 的, không dùng 了.</p><p><b>Vì sao đúng:</b> 不是……的 là cấu trúc cố định, không thể thay 的 bằng 了.</p><p><b>Lỗi HS Việt hay gặp:</b> Nhầm lẫn giữa hai trợ từ 了 và 的 vì cả hai đều liên quan đến 'việc đã xảy ra'.</p><p><b>Mẹo ghi nhớ:</b> Nếu câu có 是 ở đầu (khẳng định hoặc phủ định 不是), cuối câu luôn là 的, không phải 了.</p><p><b>Ví dụ bổ sung:</b> 这不是我写的信。</p>",
+          "answer": "这个电话不是我打的。"
         },
         {
           "id": "q30",
@@ -1406,7 +1556,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
           "type": "text_fill",
           "prompt": "他踢足球已经了十年。",
           "correct": "他已经踢足球十年了。",
-          "explain": "<p><b>Giải thích:</b> Lỗi: 已经 phải đứng trước động từ, và 了 phải đứng cuối câu, sau thời lượng.</p><p><b>Vì sao đúng:</b> Trật tự chuẩn: Chủ ngữ + 已经 + Động từ + Tân ngữ + Thời lượng + 了.</p><p><b>Lỗi HS Việt hay gặp:</b> Dồn 已经 và 了 sát nhau ở giữa câu thay vì tách đúng vị trí đầu và cuối.</p><p><b>Mẹo ghi nhớ:</b> Hình dung 已经 đứng 'gác cổng' trước động từ, còn 了 luôn 'đóng cửa' cuối câu.</p><p><b>Ví dụ bổ sung:</b> 我已经学汉语三年了。</p>"
+          "explain": "<p><b>Giải thích:</b> Lỗi: 已经 phải đứng trước động từ, và 了 phải đứng cuối câu, sau thời lượng.</p><p><b>Vì sao đúng:</b> Trật tự chuẩn: Chủ ngữ + 已经 + Động từ + Tân ngữ + Thời lượng + 了.</p><p><b>Lỗi HS Việt hay gặp:</b> Dồn 已经 và 了 sát nhau ở giữa câu thay vì tách đúng vị trí đầu và cuối.</p><p><b>Mẹo ghi nhớ:</b> Hình dung 已经 đứng 'gác cổng' trước động từ, còn 了 luôn 'đóng cửa' cuối câu.</p><p><b>Ví dụ bổ sung:</b> 我已经学汉语三年了。</p>",
+          "answer": "他已经踢足球十年了。"
         },
         {
           "id": "q31",
@@ -1432,7 +1583,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu rõ: '爸爸送给女儿一个礼物，是一本书。'</p><p><b>Vì sao các đáp án khác sai:</b> 蛋糕/草莓/汉堡 chỉ là món ăn trong bữa tiệc, không phải quà tặng.</p><p><b>Lỗi HS Việt hay gặp:</b> Chọn nhầm món ăn xuất hiện gần cuối đoạn (汉堡) vì đọc sót thông tin ở giữa.</p><p><b>Mẹo ghi nhớ:</b> Đọc kỹ động từ 送给 (tặng cho) để xác định đúng 'món quà' chứ không phải 'món ăn'.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu rõ: '爸爸送给女儿一个礼物，是一本书。'</p><p><b>Vì sao các đáp án khác sai:</b> 蛋糕/草莓/汉堡 chỉ là món ăn trong bữa tiệc, không phải quà tặng.</p><p><b>Lỗi HS Việt hay gặp:</b> Chọn nhầm món ăn xuất hiện gần cuối đoạn (汉堡) vì đọc sót thông tin ở giữa.</p><p><b>Mẹo ghi nhớ:</b> Đọc kỹ động từ 送给 (tặng cho) để xác định đúng 'món quà' chứ không phải 'món ăn'.</p>",
+          "answer": "B"
         },
         {
           "id": "q32",
@@ -1467,7 +1619,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "C",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '这个工作是王方帮我介绍的。' — thông tin trực tiếp từ câu đầu đoạn văn.</p><p><b>Vì sao các đáp án khác sai:</b> 同事 chỉ giúp giải quyết vấn đề, 快递员 giao hàng, 丈夫 không xuất hiện trong bài.</p><p><b>Lỗi HS Việt hay gặp:</b> Chọn 同事 vì nhân vật này xuất hiện nhiều lần trong đoạn.</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi về 'công việc do ai giới thiệu' luôn nằm ở đầu đoạn giới thiệu bối cảnh.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '这个工作是王方帮我介绍的。' — thông tin trực tiếp từ câu đầu đoạn văn.</p><p><b>Vì sao các đáp án khác sai:</b> 同事 chỉ giúp giải quyết vấn đề, 快递员 giao hàng, 丈夫 không xuất hiện trong bài.</p><p><b>Lỗi HS Việt hay gặp:</b> Chọn 同事 vì nhân vật này xuất hiện nhiều lần trong đoạn.</p><p><b>Mẹo ghi nhớ:</b> Câu hỏi về 'công việc do ai giới thiệu' luôn nằm ở đầu đoạn giới thiệu bối cảnh.</p>",
+          "answer": "C"
         },
         {
           "id": "q34",
@@ -1485,7 +1638,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "F",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn ghi rõ: '可是我在忙，没接。' — '没接' nghĩa là không nghe máy, trái với nhận định trong câu hỏi.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc lướt và nhầm giữa đoạn '没接' (buổi trưa) và '我给他回了电话' (buổi chiều gọi lại).</p><p><b>Mẹo ghi nhớ:</b> Chú ý các từ chỉ thời gian trong bài (中午/下午) để không nhầm hai hành động khác thời điểm.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn ghi rõ: '可是我在忙，没接。' — '没接' nghĩa là không nghe máy, trái với nhận định trong câu hỏi.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc lướt và nhầm giữa đoạn '没接' (buổi trưa) và '我给他回了电话' (buổi chiều gọi lại).</p><p><b>Mẹo ghi nhớ:</b> Chú ý các từ chỉ thời gian trong bài (中午/下午) để không nhầm hai hành động khác thời điểm.</p>",
+          "answer": "F"
         },
         {
           "id": "q35",
@@ -1511,7 +1665,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '医生说，按时睡觉、常常运动对健康非常好。'</p><p><b>Vì sao các đáp án khác sai:</b> Các đáp án còn lại đều là hành vi KHÔNG tốt cho sức khỏe được nhắc đến trong bài (làm việc khuya, không vận động).</p><p><b>Lỗi HS Việt hay gặp:</b> Chọn nhầm D vì từ '晚' xuất hiện gần đó, nhưng đó là mô tả việc XẤU, không phải lời khuyên của bác sĩ.</p><p><b>Mẹo ghi nhớ:</b> Tìm đúng câu có '医生说' để xác định lời khuyên, tránh nhầm với các câu mô tả khác.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '医生说，按时睡觉、常常运动对健康非常好。'</p><p><b>Vì sao các đáp án khác sai:</b> Các đáp án còn lại đều là hành vi KHÔNG tốt cho sức khỏe được nhắc đến trong bài (làm việc khuya, không vận động).</p><p><b>Lỗi HS Việt hay gặp:</b> Chọn nhầm D vì từ '晚' xuất hiện gần đó, nhưng đó là mô tả việc XẤU, không phải lời khuyên của bác sĩ.</p><p><b>Mẹo ghi nhớ:</b> Tìm đúng câu có '医生说' để xác định lời khuyên, tránh nhầm với các câu mô tả khác.</p>",
+          "answer": "B"
         },
         {
           "id": "q36",
@@ -1546,7 +1701,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '我们家的老鼠圆圆的，非常可爱。'</p><p><b>Vì sao các đáp án khác sai:</b> 红色 là màu váy của người vợ, không phải màu con chuột; A và D không có trong bài.</p><p><b>Lỗi HS Việt hay gặp:</b> Nhầm đặc điểm của 妻子 (mặc váy đỏ) sang cho 老鼠.</p><p><b>Mẹo ghi nhớ:</b> Đọc kỹ chủ ngữ của từng câu để không gán nhầm đặc điểm giữa các nhân vật/vật nuôi.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '我们家的老鼠圆圆的，非常可爱。'</p><p><b>Vì sao các đáp án khác sai:</b> 红色 là màu váy của người vợ, không phải màu con chuột; A và D không có trong bài.</p><p><b>Lỗi HS Việt hay gặp:</b> Nhầm đặc điểm của 妻子 (mặc váy đỏ) sang cho 老鼠.</p><p><b>Mẹo ghi nhớ:</b> Đọc kỹ chủ ngữ của từng câu để không gán nhầm đặc điểm giữa các nhân vật/vật nuôi.</p>",
+          "answer": "B"
         },
         {
           "id": "q38",
@@ -1564,7 +1720,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "F",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn ghi: '我妻子今天穿了一条红色的裙子' — màu đỏ, không phải đen.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc lướt và bỏ qua từ chỉ màu sắc 红色 (Bài 3 đã học).</p><p><b>Mẹo ghi nhớ:</b> Ôn lại từ vựng màu sắc ở Bài 3 (颜色, 红色, 左边...) để nhận diện nhanh trong bài đọc.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn ghi: '我妻子今天穿了一条红色的裙子' — màu đỏ, không phải đen.</p><p><b>Lỗi HS Việt hay gặp:</b> Đọc lướt và bỏ qua từ chỉ màu sắc 红色 (Bài 3 đã học).</p><p><b>Mẹo ghi nhớ:</b> Ôn lại từ vựng màu sắc ở Bài 3 (颜色, 红色, 左边...) để nhận diện nhanh trong bài đọc.</p>",
+          "answer": "F"
         },
         {
           "id": "q39",
@@ -1590,7 +1747,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             }
           ],
           "correct": "B",
-          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '妈妈已经把很多好吃的东西放进冰箱了。'</p><p><b>Vì sao các đáp án khác sai:</b> Các đáp án còn lại không xuất hiện trong bài liên quan đến việc cất đồ ăn.</p><p><b>Lỗi HS Việt hay gặp:</b> Chưa quen cấu trúc '把...放进...了' nên dễ bỏ sót vị trí chính xác.</p><p><b>Mẹo ghi nhớ:</b> 冰箱 (tủ lạnh) là nơi cất đồ ăn — liên hệ hình ảnh thực tế để nhớ nhanh.</p>"
+          "explain": "<p><b>Giải thích:</b> Đoạn văn nêu: '妈妈已经把很多好吃的东西放进冰箱了。'</p><p><b>Vì sao các đáp án khác sai:</b> Các đáp án còn lại không xuất hiện trong bài liên quan đến việc cất đồ ăn.</p><p><b>Lỗi HS Việt hay gặp:</b> Chưa quen cấu trúc '把...放进...了' nên dễ bỏ sót vị trí chính xác.</p><p><b>Mẹo ghi nhớ:</b> 冰箱 (tủ lạnh) là nơi cất đồ ăn — liên hệ hình ảnh thực tế để nhớ nhanh.</p>",
+          "answer": "B"
         },
         {
           "id": "q40",
