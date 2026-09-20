@@ -3600,8 +3600,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
       }
     ],
     "ui": {
-      "heroTitle": "",
-      "heroDescription": ""
+      "heroTitle": "Bài tập về nhà — Bài 1 · Giáo trình chuẩn HSK 2",
+      "heroDescription": "Bản mẫu vàng Bài 1: 13 từ vựng, 4 điểm ngữ pháp trọng tâm, chữ Hán, đọc hiểu, dịch, viết và giao tiếp."
     }
   },
   "exerciseSections": [
