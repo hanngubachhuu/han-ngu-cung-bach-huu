@@ -54,7 +54,7 @@ function renderReadingProfile(h){
      '<div class="reading-tabs">'+arr.map(x=>'<button type="button" class="reading-tab '+(x===r?'active':'')+'" data-reading="'+esc(x.pinyin||'')+'">'+esc(x.pinyin||'')+'</button>').join('')+'</div>'+
      '<div class="reading-detail"><div class="reading-meta"><b>'+esc(r.pos||'')+'</b>'+((r.meaning||r.meaningByReading)?' · '+esc(r.meaning||r.meaningByReading):'')+'</div>'+
      (r.when?'<div class="reading-when"><b>Khi nào dùng:</b> '+esc(r.when)+'</div>':'')+
-     (Array.isArray(r.examples)&&r.examples.length?'<div class="reading-examples">'+r.examples.map(x=>'<a class="reading-word" href="tu-vung.html?word='+encodeURIComponent(x.word||'')+'"><b>'+esc(x.word||'')+'</b><span>'+esc(x.pinyin||'')+(x.meaning?' · '+esc(x.meaning):'')+'</span></a>').join('')+'</div>':'')+
+     (Array.isArray(r.examples)&&r.examples.length?'<div class="reading-examples">'+r.examples.map(x=>'<span class="reading-word"><b>'+esc(x.word||'')+'</b><span>'+esc(x.pinyin||'')+(x.meaning?' · '+esc(x.meaning):'')+'</span></span>').join('')+'</div>':'')+
      (r.note?'<div class="reading-note">💡 '+esc(r.note)+'</div>':'')+
      '</div></div>';
    box.querySelectorAll('[data-reading]').forEach(b=>b.onclick=()=>{active=b.getAttribute('data-reading');draw()});
