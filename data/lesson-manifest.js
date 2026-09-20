@@ -65,7 +65,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai7.js"
   },
   {
-    "id": "hsk2_bai8",
+    "id": "hsk2_bai8_rangwo",
     "level": 2,
     "lessonNo": 8,
     "titleZh": "让我想想再告诉你",
@@ -74,7 +74,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai8.js"
   },
   {
-    "id": "hsk2_bai9",
+    "id": "hsk2_bai9_tidu",
     "level": 2,
     "lessonNo": 9,
     "titleZh": "题太多，我没做完",
@@ -83,7 +83,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai9.js"
   },
   {
-    "id": "hsk2_bai10",
+    "id": "hsk2_bai10_biezhao",
     "level": 2,
     "lessonNo": 10,
     "titleZh": "别找了，手机在桌子上呢",
@@ -92,7 +92,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai10.js"
   },
   {
-    "id": "hsk2_bai11",
+    "id": "hsk2_bai11_bida",
     "level": 2,
     "lessonNo": 11,
     "titleZh": "他比我大三岁",
@@ -101,7 +101,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai11.js"
   },
   {
-    "id": "hsk2_bai12",
+    "id": "hsk2_bai12_chuande",
     "level": 2,
     "lessonNo": 12,
     "titleZh": "你穿得太少了",
@@ -110,7 +110,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai12.js"
   },
   {
-    "id": "hsk2_bai13",
+    "id": "hsk2_bai13_menkai",
     "level": 2,
     "lessonNo": 13,
     "titleZh": "门开着呢",
@@ -119,7 +119,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai13.js"
   },
   {
-    "id": "hsk2_bai14",
+    "id": "hsk2_bai14_kanvou",
     "level": 2,
     "lessonNo": 14,
     "titleZh": "你看过那个电影吗",
@@ -128,7 +128,7 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai14.js"
   },
   {
-    "id": "hsk2_bai15",
+    "id": "hsk2_bai15_xinnian",
     "level": 2,
     "lessonNo": 15,
     "titleZh": "新年就要到了",
