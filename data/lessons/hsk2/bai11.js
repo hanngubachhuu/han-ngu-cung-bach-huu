@@ -1837,3 +1837,67 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "heroDescription": "Luyện tập HSK 2"
   }
 });
+
+/* Mở rộng Bài 11 theo SGK HSK 2 và SBT tương ứng. */
+(() => {
+  const lesson=window.HAN_NGU_DATA.lessons["hsk2_bai11_bida"];
+  const mcq=(id,section,prompt,choices,correct,explain)=>({id,section,type:"mcq",prompt,options:choices.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[correct],explain});
+  const fill=(id,section,prompt,answer,explain)=>({id,section,type:"text_fill",prompt,answer,explain});
+  const reorder=(id,section,prompt,tokens,answer,explain)=>({id,section,type:"reorder",prompt,tokens,answer,explain});
+  const open=(id,section,prompt,model,explain)=>({id,section,type:"self_check",prompt,model,explain});
+  const extra=[
+    mcq("B11-A09","A","“去年我开始学汉语” nghĩa là:",["Năm ngoái tôi bắt đầu học tiếng Trung","Năm nay tôi học lại","Tôi đang học năm ngoái","Tôi sẽ học năm sau"],0,"去年 = năm ngoái."),
+    mcq("B11-A10","A","Câu nào dùng 右边 đúng?",["银行在学校右边。","银行右边在学校。","右边银行学校在。","银行在右边学校。"],0,"Nơi chốn + 在 + địa điểm + 右边."),
+    mcq("B11-A11","A","“她姓李” cho biết:",["Họ của cô ấy là Lý","Tên cô ấy là Lý","Cô ấy là người họ","Cô ấy đang viết họ"],0,"姓 vừa là danh từ họ, vừa là động từ mang họ."),
+    mcq("B11-A12","A","Chọn cặp từ trái nghĩa:",["男 — 女","孩子 — 去年","右边 — 可能","唱歌 — 便宜"],0,"男 và 女 là nam/nữ."),
+    fill("B11-A13","A","Điền 比 hoặc 可能: 今天的菜___昨天便宜。","比","比 dùng để so sánh hai đối tượng."),
+    fill("B11-A14","A","Điền từ phù hợp: 那个___在唱歌。","孩子","孩子 = trẻ em/con; chủ ngữ phù hợp với hành động hát."),
+    open("B11-A15","A","Viết hai câu: một câu dùng 姓, một câu dùng 去年.","我姓阮。去年我去北京了。","Dùng 姓 trước họ; 去年 thường đặt trước động từ để nêu thời gian."),
+
+    mcq("B11-B07","B","Câu nào đúng với 比字句?",["他比我大三岁。","他大比我三岁。","他比大我三岁。","他三岁比我大。"],0,"A + 比 + B + Adj + số lượng chênh lệch."),
+    mcq("B11-B08","B","Trong “这件衣服比那件便宜十块”，十块 là:",["mức chênh lệch giá","giá của cả hai áo","số lượng áo","thời gian mua áo"],0,"Sau tính từ trong 比字句 có thể thêm mức độ chênh lệch."),
+    mcq("B11-B09","B","Câu nào đúng với định ngữ động từ?",["唱歌的女孩是我姐姐。","唱歌女孩的是我姐姐。","女孩唱歌的是我姐姐。","唱歌的是女孩我姐姐。"],0,"Cụm động từ + 的 đứng trước danh từ được bổ nghĩa."),
+    mcq("B11-B10","B","“我认识那个说汉语的老师” nghĩa là:",["Tôi quen giáo viên nói tiếng Trung kia","Tôi nói tiếng Trung với giáo viên","Giáo viên quen tôi","Tôi là giáo viên tiếng Trung"],0,"说汉语的 bổ nghĩa cho 老师."),
+    mcq("B11-B11","B","Trong “他可能不知道”，可能 biểu thị:",["phỏng đoán/chưa chắc chắn","đã biết chắc","mệnh lệnh","so sánh"],0,"可能 = có lẽ/có thể, diễn tả khả năng."),
+    fill("B11-B12","B","Điền 的: 我喜欢那个会唱歌___孩子。","的","Cụm 会唱歌 làm định ngữ, cần 的 trước danh từ 孩子."),
+    fill("B11-B13","B","Điền 比: 我___弟弟大两岁。","比","Mẫu so sánh: A 比 B + Adj + chênh lệch."),
+    fill("B11-B14","B","Điền 可能: 他今天没来，___生病了。","可能","Không chắc nguyên nhân nên dùng 可能."),
+    reorder("B11-B15","B","Sắp xếp thành câu đúng:",["我","比","这本书","那本书","贵"],["这本书","比","那本书","贵"],"Hai đối tượng phải đứng hai bên 比; không thêm 我 nếu không phải chủ thể so sánh."),
+    reorder("B11-B16","B","Sắp xếp thành câu đúng:",["的","学生","唱歌","那个","很高"],["那个","唱歌","的","学生","很高"],"Định ngữ 唱歌的 đứng trước danh từ 学生."),
+    reorder("B11-B17","B","Sắp xếp thành câu đúng:",["可能","他","今天","很忙"],["他","今天","可能","很忙"],"可能 thường đứng sau chủ ngữ/thời gian, trước vị ngữ."),
+    open("B11-B18","B","Sửa câu sai: “我比他很高。”", "我比他高。", "Trong 比字句 cơ bản không đặt 很 trước tính từ."),
+
+    mcq("B11-C05","C","Đọc: “小王二十岁，他哥哥二十四岁。” Anh trai lớn hơn Tiểu Vương bao nhiêu tuổi?",["Bốn tuổi","Hai mươi tuổi","Hai mươi bốn tuổi","Không biết"],0,"24 − 20 = 4; nói 他哥哥比他大四岁。"),
+    mcq("B11-C06","C","Đọc: “右边那个唱歌的女孩姓王。” Bạn gái nào họ Vương?",["Bạn gái bên phải đang hát","Bạn gái bên trái đang nói","Người đàn ông bên phải","Đứa trẻ đang hát"],0,"右边、唱歌的 đều là thông tin xác định danh từ 女孩."),
+    mcq("B11-C07","C","Đọc: “这件衣服比那件便宜二十块，所以我买了这件。” Vì sao người nói mua chiếc này?",["Vì rẻ hơn 20 tệ","Vì đắt hơn","Vì không vừa","Vì là quà"],0,"便宜二十块 là lý do nêu trực tiếp."),
+    fill("B11-C08","C","Đọc: “他没接电话，可能正在上课。” Người nói ___ chắc chắn anh ấy đang học.","không","可能 cho thấy đây chỉ là phỏng đoán."),
+    fill("B11-C09","C","Đọc: “去年来的学生现在都会说一点儿汉语。” Những học sinh nào được nói đến?", "những học sinh đến năm ngoái", "去年来的 là định ngữ của 学生."),
+    open("B11-C10","C","Tóm tắt tiếng Việt: “右边那个孩子比左边那个孩子小两岁。”", "Đứa trẻ bên phải nhỏ hơn đứa trẻ bên trái hai tuổi.", "Phải nêu đúng vị trí, đối tượng so sánh và mức chênh lệch."),
+
+    reorder("B11-D04","D","Sắp xếp thành câu đúng:",["便宜","这个","比","手机","那个"],["这个","手机","比","那个","便宜"],"Mẫu A + 比 + B + tính từ."),
+    reorder("B11-D05","D","Sắp xếp thành câu đúng:",["认识","我","姓王","的","老师"],["我","认识","姓王","的","老师"],"姓王的 là cụm định ngữ đứng trước 老师."),
+    reorder("B11-D06","D","Sắp xếp thành câu đúng:",["去年","他","可能","来","中国"],["他","去年","可能","来","中国"],"可能 đặt trước động từ 来; 去年 là thời gian."),
+    fill("B11-D07","D","Hoàn thành: 我___妹妹高一点儿。","比","So sánh chiều cao: 比 + người + 高."),
+    fill("B11-D08","D","Hoàn thành: 那个说话___男孩是我同学。","的","说话的 làm định ngữ cho 男孩."),
+    open("B11-D09","D","Viết lại: “Cái này rẻ hơn cái kia 5 tệ.”", "这个比那个便宜五块。", "Tính từ 便宜 sau B; chênh lệch 五块 ở cuối."),
+    open("B11-D10","D","Viết một câu phỏng đoán với 可能 về người bạn của em.", "他今天可能很忙。", "Không khẳng định chắc chắn; 可能 đứng trước vị ngữ."),
+
+    open("B11-E04","E","Dịch sang tiếng Trung: Cô gái đang hát ở bên phải là bạn tôi.", "右边那个唱歌的女孩是我朋友。", "Dùng nhiều định ngữ trước danh từ 女孩."),
+    open("B11-E05","E","Dịch sang tiếng Trung: Chiếc điện thoại này rẻ hơn chiếc kia 100 tệ.", "这个手机比那个便宜一百块。", "Không thêm 很 sau 比; mức chênh lệch ở cuối."),
+    open("B11-E06","E","Dịch sang tiếng Trung: Có lẽ anh ấy không biết tôi họ gì.", "他可能不知道我姓什么。", "可能 + vị ngữ; 姓什么 = họ gì."),
+    open("B11-E07","E","Dịch sang tiếng Việt: 我认识去年学汉语的那个男孩子。", "Tôi quen cậu bé học tiếng Trung năm ngoái.", "去年学汉语的 là định ngữ cho 男孩子."),
+    open("B11-E08","E","Dịch đoạn ngắn sang tiếng Trung: Em trai tôi nhỏ hơn tôi hai tuổi. Cậu ấy có thể hát, còn tôi không biết hát.", "我弟弟比我小两岁。他可能会唱歌，我不会唱歌。", "Dùng 比 + 小两岁 và 可能 + 会 + V."),
+
+    open("B11-F03","F","Giới thiệu hai người bạn trong 3 câu, dùng 男/女、姓 và một 比字句.", "他姓王，是男同学。她姓李，是女同学。王同学比李同学大一岁。", "Đủ giới tính, họ và trật tự so sánh."),
+    open("B11-F04","F","Viết hội thoại 3 lượt để hỏi ai là người ở bên phải, dùng 右边 và 的.", "A：右边那个说话的人是谁？B：他是我哥哥。A：他姓什么？", "Dùng cụm động từ + 的 để xác định người."),
+    open("B11-F05","F","Tình huống: chọn mua hai món đồ. Viết 2 câu dùng 比 và 便宜.", "这个手机比那个便宜五十块。我买这个吧。", "Có hai đối tượng so sánh, tính từ và quyết định."),
+    open("B11-F06","F","Nói 2–3 câu phỏng đoán về việc một bạn vắng mặt, dùng 可能.", "他今天没来，可能生病了。也可能在家学习。", "Có ít nhất một phỏng đoán, không nêu như sự thật chắc chắn."),
+    open("B11-F07","F","Kể 3 câu về một trẻ em biết hát, dùng 孩子、唱歌 và 的.", "这是一个孩子。他会唱歌。唱歌的孩子很可爱。", "Câu cuối thể hiện định ngữ động từ."),
+    open("B11-F08","F","Tự giới thiệu ngắn: họ của bạn, điều bạn làm từ năm ngoái và một điều bạn có thể làm.", "我姓陈。去年我开始学汉语。现在我可能会说一点儿汉语。", "Dùng đúng 姓、去年, 可能; ý tự nhiên."),
+    open("B11-F09","F","Tự đánh giá: viết đoạn 3–4 câu dùng ít nhất 3 từ/cấu trúc: 比、可能、的、右边、去年、便宜.", "去年我买了两个手机。右边那个比左边那个便宜。卖手机的人可能是新来的。", "Rubric: có tối thiểu 3 mục; 比字句 và định ngữ đúng trật tự.")
+  ];
+  extra.forEach(q=>Object.assign(q,{sourceRefs:["textbook_l11","workbook_l11","teacher_enriched_l11"],status:"teacher_enriched"}));
+  lesson.content.exercises.all.push(...extra);
+  const order=["A","B","C","D","E","F"]; lesson.content.exercises.all.sort((a,b)=>order.indexOf(a.section)-order.indexOf(b.section));
+  lesson.content.meta.version=2; lesson.content.meta.timeLimitMinutes=75; lesson.content.coverage.exercises="gold_template_v1";
+})();
