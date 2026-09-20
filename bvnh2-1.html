@@ -463,8 +463,8 @@ canvas{max-width:100%;}
 <script src="data/lesson-registry.js"></script><script src="data/lessons/hsk2/bai1.js"></script><script>
 "use strict";
 /* ==========================================================================================
-   1. DỮ LIỆU BÀI HỌC — tách biệt hoàn toàn khỏi logic hiển thị.
-   Muốn tái sử dụng cho bài học khác: chỉ cần thay object LESSON này.
+   1. DỮ LIỆU BÀI HỌC — đọc từ canonical lesson registry.
+   Không sửa nội dung bài trực tiếp trong file giao diện này.
 ========================================================================================== */
 const LESSON = window.HAN_NGU_DATA.prepare(window.HAN_NGU_DATA.getRaw("hsk2_bai1_jiuyue"));;;;
 
