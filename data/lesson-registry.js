@@ -1,18 +1,23 @@
 /* Hán Ngữ Cùng Bách Hữu · Lesson Registry
  * Canonical lesson data lives in data/lessons/**. UI pages consume it through this layer.
- * Do not duplicate vocabulary/grammar/exercise content in HTML pages.
+ * Data files are fetched and evaluated explicitly so the common-review page does not
+ * silently fail when a dynamically inserted <script> is cached or skipped.
  */
 (function(global){
   const R = global.HAN_NGU_DATA || {};
   R.SCHEMA_VERSION = 1;
   R.lessons = R.lessons || {};
   R.manifest = R.manifest || [];
+  R.loadErrors = [];
+
   R.register = lesson => {
     if(!lesson || !lesson.id) throw new Error("Lesson must have id");
     R.lessons[lesson.id] = lesson;
     return lesson;
   };
+
   R.getRaw = id => R.lessons[id] || null;
+
   R.prepare = lesson => {
     const c = lesson?.content || {};
     const course = c.course || {};
@@ -33,6 +38,7 @@
       content: c
     };
   };
+
   R.validate = lesson => {
     const c = lesson?.content || {};
     const errors = [];
@@ -49,17 +55,37 @@
     if(new Set(ids).size !== ids.length) errors.push("duplicate exercise ids");
     return {ok:errors.length===0, errors};
   };
-  R.loadScript = src => new Promise((resolve,reject)=>{
-    const found = [...document.scripts].find(s=>s.dataset.hnLesson===src);
-    if(found){resolve();return;}
-    const s=document.createElement("script");
-    s.src=src; s.dataset.hnLesson=src; s.onload=resolve; s.onerror=()=>reject(new Error("Cannot load "+src));
-    document.head.appendChild(s);
-  });
+
+  R.loadScript = async src => {
+    const url = new URL(src, document.baseURI).href;
+    const response = await fetch(url, {cache:"no-store"});
+    if(!response.ok) throw new Error("HTTP " + response.status + " khi tải " + src);
+    const code = await response.text();
+    const run = new Function("window", code);
+    run(global);
+    return src;
+  };
+
   R.loadAll = async () => {
     if(!Array.isArray(R.manifest)) return [];
-    await Promise.all(R.manifest.map(x=>R.loadScript(x.data)));
-    return R.manifest.map(x=>{const l=R.lessons[x.id]; return l ? {...l,__href:x.href,__data:x.data} : null;}).filter(Boolean);
+    R.loadErrors = [];
+    const results = await Promise.all(R.manifest.map(async item => {
+      try{
+        await R.loadScript(item.data);
+        const lesson = R.lessons[item.id];
+        if(!lesson) throw new Error("File đã tải nhưng không đăng ký lesson " + item.id);
+        return {...lesson,__href:item.href,__data:item.data};
+      }catch(error){
+        R.loadErrors.push({
+          id:item.id,
+          data:item.data,
+          message:error?.message || String(error)
+        });
+        return null;
+      }
+    }));
+    return results.filter(Boolean);
   };
+
   global.HAN_NGU_DATA = R;
 })(window);
