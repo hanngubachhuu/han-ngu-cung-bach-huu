@@ -1,6 +1,6 @@
 window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   "schemaVersion": 5,
-  "id": "hsk2-bai15",
+  "id": "hsk2_bai15_xinnian",
   "content": {
     "course": {
       "system": "HSK",
@@ -13,7 +13,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "meta": {
       "timeLimitMinutes": 55,
       "version": 1,
-      "lessonId": "hsk2_lesson_15",
+      "lessonId": "hsk2_bai15_xinnian",
       "detailSchemaVersion": 2
     },
     "vocabulary": [
