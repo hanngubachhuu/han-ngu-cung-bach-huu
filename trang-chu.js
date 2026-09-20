@@ -7,7 +7,8 @@
 var HSK_LEVELS = [
   {id:'phat-am', label:'Phát âm', badge:'PA', tag:'Nền tảng nghe – nói', lessons:[]},
   {id:'hsk1', label:'HSK 1', badge:'1', tag:'Nhập môn', lessons:[]},
-  {id:'hsk2', label:'HSK 2', badge:'2', tag:'Sơ cấp', reviewHref:'on-tap-hsk2.html', lessons:[
+  {id:'hsk2', label:'HSK 2', badge:'2', tag:'Sơ cấp', reviewHref:'on-tap-chung.html', lessons:[
+    {num:1, zh:'九月去北京旅游最好', vi:'Tháng 9 đi Bắc Kinh du lịch là tốt nhất', href:'bvnh2-1.html'},
     {num:2, zh:'我每天六点起床', vi:'Mỗi ngày tôi dậy lúc 6 giờ', href:'bai2_index.html'},
     {num:3, zh:'左边那个红色的是我的', vi:'Cái màu đỏ bên trái là của tôi', href:'bai3_index.html'},
     {num:4, zh:'这个工作是他帮我介绍的', vi:'Công việc này là anh ấy giới thiệu giúp tôi', href:'bai4_index.html'},
