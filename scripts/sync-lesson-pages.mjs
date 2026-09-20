@@ -125,7 +125,7 @@ function addListeningRenderer(html) {
 .q-card,.passage-card,.q-prompt,.q-body,.opt,.hint-inline,.selfcheck-area,.model-answer-box,.answer-reveal-box{overflow-wrap:break-word;word-break:break-word;}
 .q-card{padding:var(--space-xl);}
 .q-head{gap:var(--space-xs);margin-bottom:var(--space-md);}
-.q-prompt{margin:var(--space-sm) 0 var(--space-lg);line-height:1.65;}
+.q-prompt{margin:var(--space-sm) 0 var(--space-lg);line-height:1.65;white-space:pre-line;}
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
@@ -198,6 +198,7 @@ function renderMultiFill(q, body){
   if (!html.includes("if(q.readingText){")) {
     html = html.replace("  const card = el('div','q-card');", "  if(q.readingText){\n    const pc = el('div','passage-card');\n    pc.appendChild(el('div','passage-label','阅读材料'));\n    pc.appendChild(el('div','passage-text',mixText(q.readingText)));\n    area.appendChild(pc);\n  }\n\n  const card = el('div','q-card');");
   }
+  html = html.replace("  const promptDiv = el('div','q-prompt', mixText(q.prompt));", "  const promptText = String(q.prompt || '').replace(/([：:])\\s+(?=[\\u4e00-\\u9fff])/u, '$1\\n');\n  const promptDiv = el('div','q-prompt', mixText(promptText));");
   html = html.replace(/\/\* HSK-LESSON-UX-PATCH:START \*\/[\s\S]*?\/\* HSK-LESSON-UX-PATCH:END \*\/\n?/, '');
   html = html.replace(/\/\* Audio player:[\s\S]*?\.audio-speed\{[^}]*\}\n/, '');
   html = html.replace("</style>", `${css}</style>`);
