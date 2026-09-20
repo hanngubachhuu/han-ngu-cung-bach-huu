@@ -1876,6 +1876,29 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   lesson.content.coverage.exercises="gold_template_v1";
 })();
 
+/* Hiệu chỉnh chất lượng Bài 9 theo phản hồi sử dụng thực tế. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id);
+  const mc=(id,prompt,options,answer,explain)=>Object.assign(q(id),{type:"mcq",prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[answer],explain});
+  l.content.passages.find(p=>p.id==="p9").text="今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。";
+  mc("B9-A11","“从第一题开始做” nghĩa đúng là:",["bắt đầu làm từ câu thứ nhất","làm lại câu thứ nhất","làm sai câu thứ nhất","làm xong câu thứ nhất"],0,"从…开始 chỉ mốc bắt đầu; các phương án nhiễu lần lượt nhầm 开始 với 再、错、完.");
+  mc("B9-A12","Chọn từ đúng để hoàn thành câu: 这道题我做___了。",["完","错","懂","从"],0,"做完 = làm xong; 错/懂/从 là những từ cùng bài nhưng không hợp với ý hoàn thành.");
+  mc("B9-B07","小李做了很多题，最后发现两题不对。哪一句 nói đúng?",["他做错了两道题。","他两道题做错了。","他做两道错题了。","他错做了两道题。"],0,"Câu đúng giữ thứ tự động từ + kết quả + tân ngữ. Các phương án sai mô phỏng trật tự dịch từng từ từ tiếng Việt.");
+  mc("B9-B08","老师说得很清楚，小林最后明白了。请选择 đúng.",["小林听懂了。","小林听完了。","小林懂听了。","小林听了懂。"],0,"听懂 là nghe và hiểu; 听完 chỉ nghe hết, không bảo đảm đã hiểu.");
+  const listen={
+    "B9-A15":["听句子，选择正确的意思。",["题太多，所以今天没做完。","今天已经做完所有题。","今天没有作业。","明天不做作业。"]],
+    "B9-B13":["听句子，什么时候开始上班？",["昨天","明天","上个月","晚上"]],
+    "B9-B14":["听句子，今天是第几天来中国？",["第二天","第十天","第一天","明天"]],
+    "B9-B15":["听对话，B现在怎么样？",["已经听懂了","已经做完了","写错了","还没听懂"]],
+    "B9-B16":["听句子，接下来要做什么？",["马上做完","再做一遍","没有题","去上班"]],
+    "B9-B17":["听句子，说话的地点最可能是哪里？",["学校","饭店","公司","医院"]],
+    "B9-B18":["听句子，‘我希望明天能做完作业’表示什么？",["明天不上课","昨天做错了","开始上班","希望明天完成作业"]],
+    "B9-F09":["听句子，选择最合适的回答。",["好的，我明天做。","我已经上班。","欢迎你。","第一题错。"]]
+  };
+  Object.entries(listen).forEach(([id,[prompt,options]])=>Object.assign(q(id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t}))}));
+  Object.assign(q("B9-E02"),{sourceText:"小王第一天来公司工作。他认识了一个新同事。上午，同事先告诉他怎么做第一份工作，可是小王有几个地方还不懂。中午以后，同事又慢慢帮助他。下午四点，小王终于做完了第一份工作。他很高兴，也希望明天能做得更好。",readSeconds:60,prompt:"Đọc đoạn văn trong 60 giây. Khi đoạn tự ẩn, hãy kể lại bằng tiếng Trung bằng 3–4 câu."});
+})();
+
 /* Bài viết - dịch cân bằng: tránh ép một từ, tăng nhiệm vụ có ngữ cảnh. */
 (() => {
   const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id);
@@ -1936,4 +1959,41 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   Object.assign(q("B9-C08"),{prompt:"读短文后填空：听话的人从___开始来公司上班。",answer:["明天"],readingText:"欢迎你从明天开始来我们公司上班。"});
   Object.assign(q("B9-C09"),{prompt:"用中文写一句话概括短文。",model:"题太多了，我没做完，明天再做。",readingText:"题太多，我没做完，明天再做。"});
   Object.assign(q("B9-C10"),{prompt:"给短文写一个中文标题。",model:"第一次上班 / 新工作。",readingText:"小王第一天上班，很多事情还不懂。"});
+})();
+
+/* Áp dụng sau cùng để không bị ma trận cũ ghi đè prompt nghe. */
+(() => {const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id); const listen={"B9-A15":["听句子，选择正确的意思。",["题太多，所以今天没做完。","今天已经做完所有题。","今天没有作业。","明天不做作业。"]],"B9-B13":["听句子，什么时候开始上班？",["昨天","明天","上个月","晚上"]],"B9-B14":["听句子，今天是第几天来中国？",["第二天","第十天","第一天","明天"]],"B9-B15":["听对话，B现在怎么样？",["已经听懂了","已经做完了","写错了","还没听懂"]],"B9-B16":["听句子，接下来要做什么？",["马上做完","再做一遍","没有题","去上班"]],"B9-B17":["听句子，说话的地点最可能是哪里？",["学校","饭店","公司","医院"]],"B9-B18":["听句子，‘我希望明天能做完作业’表示什么？",["明天不上课","昨天做错了","开始上班","希望明天完成作业"]],"B9-F09":["听句子，选择最合适的回答。",["好的，我明天做。","我已经上班。","欢迎你。","第一题错。"]]};Object.entries(listen).forEach(([id,[prompt,options]])=>Object.assign(q(id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t}))}));})();
+
+/* Hiệu chỉnh cuối: đề bằng tiếng Việt, dữ liệu cần xử lí bằng tiếng Trung. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"], a=l.content.exercises.all, q=id=>a.find(x=>x.id===id);
+  const mc=(id,prompt,options,answer=0,extra={})=>Object.assign(q(id),{type:"mcq",prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[answer],...extra});
+  const p9="今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。";
+
+  mc("B9-A11","小李刚拿到试卷。他应该怎么做？",["从第一题开始做。","从明天开始做。","第一题做错了。","把试卷做完了。"],0,{explain:"从第一题开始做 nói về điểm bắt đầu của việc làm bài."});
+  mc("B9-A12","Chọn một từ để điền vào câu: 这道题我做___了。",["完","错","懂","从"],0,{explain:"Câu nói hành động đã hoàn thành, nên dùng 做完。"});
+  mc("B9-B01","Chọn cụm phù hợp để hoàn thành câu: 小王的作业还没___，所以他不能去玩。",["做完","完做","做了完","做到"],0,{explain:"作业还没结束 nên cần cụm diễn tả ‘chưa làm xong’. Các phương án sai mô phỏng đảo trật tự từ.",example:"小王还没做完作业。"});
+  Object.assign(q("B9-B02"),{type:"self_check",prompt:"Gộp hai câu sau thành một câu tiếng Trung: 我看这本书。 我看完了。",model:"我看完这本书了。",explain:"Viết thành một câu hoàn chỉnh, nói được hành động và kết quả.",example:"我看完这本书了。"});
+  mc("B9-B03","Chọn câu trả lời tự nhiên nhất: 你什么时候开始学汉语？",["我从九月开始学汉语。","我九月从学汉语。","我开始从九月学汉语。","从我九月学汉语。"],0,{explain:"Khi nói mốc bắt đầu, đặt thời gian sau 从.",example:"我从九月开始学汉语。"});
+  Object.assign(q("B9-B04"),{type:"self_check",prompt:"Dựa vào gợi ý, viết một câu tiếng Trung: 八点开始学习，十点结束。",model:"我从八点学习到十点。",explain:"Câu cần nêu rõ mốc đầu và mốc cuối.",example:"我从八点学习到十点。"});
+  mc("B9-B07","Chọn câu phù hợp nhất với ý sau: 小李做了很多题，最后发现两题不对。",["他做错了两道题。","他两道题做错了。","他做两道错题了。","他错做了两道题。"],0,{explain:"Chọn câu nói tự nhiên về việc làm sai hai câu; các phương án sai mô phỏng trật tự dịch từng từ từ tiếng Việt.",example:"他做错了两道题。"});
+  mc("B9-B08","Chọn câu phù hợp nhất với tình huống: 老师说得很清楚，小林最后明白了。",["小林听懂了。","小林听完了。","小林懂听了。","小林听了懂。"],0,{explain:"Nghe hết chưa chắc đã hiểu; câu cần diễn tả là cuối cùng Tiểu Lâm đã hiểu.",example:"小林听懂了。"});
+
+  ["B9-C01","B9-C02","B9-C03","B9-C04"].forEach(id=>Object.assign(q(id),{readingText:p9,passageId:"p9"}));
+  mc("B9-C01","Đọc đoạn văn và chọn đáp án đúng: 老师让大家做什么？",["做很多练习题","唱一首歌","找一部手机","去公司上班"],0,{readingText:p9,passageId:"p9",explain:"Đáp án nằm ở câu đầu của đoạn."});
+  mc("B9-C02","Đọc đoạn văn và chọn đáp án đúng: 小李为什么还没做完？",["题太多了","他没来上课","他丢了本子","他已经上班了"],0,{readingText:p9,passageId:"p9",explain:"Tìm nguyên nhân được nói trực tiếp trong đoạn."});
+  mc("B9-C03","Đọc đoạn văn và chọn đáp án đúng: 小李从哪一题开始做？",["第一题","最后一题","明天","公司"],0,{readingText:p9,passageId:"p9",explain:"Câu đầu phần làm bài nêu rõ 从第一题开始做。"});
+  mc("B9-C04","Đọc đoạn văn và chọn đáp án đúng: 做完以后，小李发现做错了几题？",["两题","一题","零题","十题"],0,{readingText:p9,passageId:"p9",explain:"Đoạn văn nêu 有两道题做错了。"});
+  const p5="小王今天拿到一张试卷，一共有十道题。他先从第一题开始做。前面几题不太难，可是第五题很难，他想了很长时间。最后，小王把十道题都做完了，可是发现第五题和第八题做错了。老师让他回家以后再做一遍。";
+  mc("B9-C05","Đọc đoạn văn và chọn đáp án đúng: 小王为什么想了很长时间？",["第五题很难。","他没有试卷。","他要去上班。","老师不让他做。"],0,{readingText:p5,explain:"Đoạn văn cho biết 第五题很难，所以他想了很长时间。"});
+  const p6="小林第一天上班，很多事情还不懂。同事先慢慢告诉他怎么做，小林认真地听。下午，他已经听懂了，也做完了第一份工作。";
+  mc("B9-C06","Đọc đoạn văn và chọn đáp án đúng: 小林最后怎么样？",["他听懂了，也做完了工作。","他第二次上班。","同事做错了。","他没去公司。"],0,{readingText:p6,explain:"Cuối đoạn có 已经听懂了，也做完了第一份工作。"});
+  mc("B9-C07","Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 我把答案___了，老师让我再做一遍。",["写错","写完","听懂","开始"],0,{readingText:"我把答案写错了，老师让我再做一遍。",explain:"Viết sai đáp án là 写错。"});
+  mc("B9-C08","Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 欢迎你从___开始来我们公司上班。",["明天","第一题","两道题","下午四点"],0,{readingText:"欢迎你从明天开始来我们公司上班。",explain:"Mốc bắt đầu đi làm trong đoạn là 明天。"});
+  Object.assign(q("B9-C09"),{type:"self_check",prompt:"Đọc đoạn văn rồi viết một câu tiếng Trung tóm tắt ý chính.",model:"题太多了，我没做完，明天再做。",readingText:"题太多，我没做完，明天再做。",explain:"Nêu nguyên nhân, kết quả hiện tại hoặc việc sẽ làm tiếp."});
+  Object.assign(q("B9-C10"),{type:"self_check",prompt:"Đọc đoạn văn rồi đặt một tiêu đề ngắn bằng tiếng Trung.",model:"第一次上班 / 新工作。",readingText:"小王第一天上班，很多事情还不懂。",explain:"Tiêu đề ngắn, đúng với ý chính là đủ."});
+
+  Object.assign(q("B9-D07"),{type:"self_check",prompt:"Đặt một câu tiếng Trung có cụm từ 做完. Em tự chọn tình huống.",model:"我晚上做完作业了。",explain:"Một câu là một ý để hệ thống và giáo viên chấm riêng."});
+  Object.assign(q("B9-D08"),{type:"self_check",prompt:"Đặt một câu tiếng Trung có cụm từ 听懂. Em tự chọn tình huống.",model:"老师说得很清楚，我听懂了。",explain:"Một câu là một ý để hệ thống và giáo viên chấm riêng."});
+  Object.assign(q("B9-E02"),{type:"retell",prompt:"Đọc đoạn văn trong 60 giây. Khi đoạn tự ẩn, kể lại bằng tiếng Trung bằng 3–4 câu.",sourceText:"小王第一天来公司工作。他早上八点到公司，先认识了一个新同事。同事告诉他怎么做第一份工作，可是小王有几个地方还不懂。中午以后，同事又慢慢帮助他一起看题。下午四点，小王终于做完了第一份工作。他很高兴，也希望明天能做得更好。",readSeconds:60,model:"小王第一天来公司工作。开始有些地方不懂，同事帮助他。下午他做完了第一份工作，希望明天做得更好。",explain:"Kể đủ: ngày đầu, điều chưa hiểu/được giúp, và kết quả cuối cùng.",error:"Không cần chép nguyên văn; hãy dùng câu của em để kể các ý chính."});
 })();

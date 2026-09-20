@@ -858,6 +858,9 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -868,6 +871,8 @@ footer.print-footer{display:none;}
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
+.q-card,.q-card *{user-select:text;}
+.opt{width:100%;text-align:left;color:var(--text);font-family:var(--font-vn);cursor:pointer;}
 .opt .opt-letter{margin-top:var(--space-2xs);}
 .hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
 .audio-player-mini{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin:0;padding:var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);}
@@ -2314,6 +2319,26 @@ const LESSON = {
     "25 câu luyện tập"
   ],
   "timeLimitMinutes": 55,
+  "skills": {
+    "tuvung": {
+      "label": "A. TỪ VỰNG"
+    },
+    "nguphap": {
+      "label": "B. NGỮ PHÁP"
+    },
+    "docHieu": {
+      "label": "C. ĐỌC HIỂU"
+    },
+    "viet": {
+      "label": "D. VIẾT"
+    },
+    "dich": {
+      "label": "E. DỊCH"
+    },
+    "giaotiep": {
+      "label": "F. GIAO TIẾP"
+    }
+  },
   "vocab": [
     {
       "id": "hsk2_l13_v01",
@@ -3515,6 +3540,9 @@ function isAnswered(q){
   if(v === undefined || v === null) return false;
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -3675,41 +3703,25 @@ function resultBanner(status){
 }
 
 function renderMcq(q, body){
-  if(state.submitted){
-    const g = gradeQuestion(q);
-    body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong'));
-  }
-  const list = el('div','opt-list');
-  q.options.forEach(opt => {
-    const row = el('div','opt');
-    row.appendChild(el('span','opt-letter', opt.k));
-    row.appendChild(el('span','', mixText(opt.t)));
-    const selected = state.answers[q.id] === opt.k;
+  if(state.submitted){ const g=gradeQuestion(q); body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong')); }
+  const list=el('div','opt-list'); list.setAttribute('role','radiogroup');
+  q.options.forEach(opt=>{
+    const row=el('button','opt'); row.type='button'; row.setAttribute('role','radio');
+    const selected=state.answers[q.id]===opt.k; row.setAttribute('aria-checked',String(selected));
+    row.appendChild(el('span','opt-letter',opt.k)); row.appendChild(el('span','',mixText(opt.t)));
     if(selected) row.classList.add('selected');
-    if(state.submitted){
-      row.classList.add('locked');
-      if(opt.k === q.answer) row.classList.add('correct-answer');
-      else if(selected && opt.k !== q.answer) row.classList.add('wrong-answer');
-    } else {
-      row.addEventListener('click', () => {
-        state.answers[q.id] = opt.k;
-        DataStore.saveInProgress();
-        // Tự động chuyển câu tiếp theo sau khi chọn (single-choice)
-        renderAll();
-        setTimeout(() => { if(state.current < TOTAL_Q-1){ state.current++; renderAll(); scrollToQuestion(); } }, 260);
-      });
-    }
+    if(state.submitted){ row.disabled=true; row.classList.add('locked'); if(opt.k===q.answer) row.classList.add('correct-answer'); else if(selected) row.classList.add('wrong-answer'); }
+    else row.addEventListener('click',()=>{ state.answers[q.id]=opt.k; DataStore.saveInProgress(); renderAll(); });
     list.appendChild(row);
-  });
-  body.appendChild(list);
+  }); body.appendChild(list);
 }
-
 function renderListening(q, body){
-  const intro = el('div','hint-inline','Nghe 2–3 lần, sau đó chọn đáp án. Không đọc lời thoại trước khi trả lời.');
+  const hasAudio = q.audioStatus === 'ready' && !!q.audioSrc;
+  const intro = el('div','hint-inline',hasAudio ? 'Nghe 2–3 lần, sau đó chọn đáp án.' : 'Audio đang được bổ sung. Hãy đọc kịch bản, sau đó chọn đáp án.');
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
-  if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
+  if(!hasAudio){
+    const status = el('div','audio-status','Chưa có audio nên kịch bản đang hiển thị để em vẫn làm bài được. Khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
     const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
     script.setAttribute('aria-label','Kịch bản câu nghe');
@@ -3809,11 +3821,9 @@ function renderReorder(q, body){
 
 function renderRetell(q, body){
   const source=el('div','retell-source',mixText(q.sourceText));
-  const actions=el('div','retell-actions'); const button=el('button','', 'Bắt đầu đọc'); button.type='button';
-  const timer=el('span','retell-timer', 'Đọc trong '+q.readSeconds+' giây rồi kể lại bằng lời của em.');
-  actions.append(button,timer); body.append(source,actions);
-  let left=q.readSeconds, interval;
-  button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
+  const actions=el('div','retell-actions'); const timer=el('span','retell-timer', 'Bắt đầu đọc ngay: còn '+q.readSeconds+' giây.');
+  actions.append(timer); body.append(source,actions);
+  let left=q.readSeconds; const tick=()=>{ timer.textContent='Còn '+Math.max(left,0)+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); const interval=setInterval(tick,1000);
   renderSelfCheck(q, body);
 }
 function renderMultiFill(q, body){
@@ -3890,6 +3900,9 @@ function gradeQuestion(q){
     const ok = (q.answer||[]).some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'reorder'){
@@ -3997,7 +4010,7 @@ function submitQuiz(auto){
   DataStore.clearInProgress();
 
   renderAll();
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);
 }
 
 /* ================================================================

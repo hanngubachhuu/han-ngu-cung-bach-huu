@@ -860,6 +860,9 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -870,6 +873,8 @@ footer.print-footer{display:none;}
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
+.q-card,.q-card *{user-select:text;}
+.opt{width:100%;text-align:left;color:var(--text);font-family:var(--font-vn);cursor:pointer;}
 .opt .opt-letter{margin-top:var(--space-2xs);}
 .hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
 .audio-player-mini{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin:0;padding:var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);}
@@ -2277,7 +2282,7 @@ const LESSON = {
           "id": "B8-A15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn ý đúng.",
+          "prompt": "听句子，说话的人现在需要什么？",
           "model": "我在学校门口等朋友。我的书不见了，我在找书。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2294,19 +2299,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người nói cần thêm thời gian suy nghĩ"
+              "t": "还需要一点儿时间想一想。"
             },
             {
               "k": "B",
-              "t": "Người nói muốn rời đi ngay"
+              "t": "马上离开。"
             },
             {
               "k": "C",
-              "t": "Người nói không biết địa chỉ"
+              "t": "找一个地址。"
             },
             {
               "k": "D",
-              "t": "Người nói đang gọi phục vụ viên"
+              "t": "叫服务员。"
             }
           ],
           "answer": "A"
@@ -2315,7 +2320,7 @@ const LESSON = {
           "id": "B8-B13",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe hội thoại. Người A muốn gì?",
+          "prompt": "听对话，A想知道什么？",
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2332,19 +2337,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Tìm một người bạn"
+              "t": "白色的东西贵不贵。"
             },
             {
               "k": "B",
-              "t": "Hỏi giá chiếc màu đen"
+              "t": "黑色的东西贵不贵。"
             },
             {
               "k": "C",
-              "t": "Gọi đồ ăn"
+              "t": "服务员在哪儿。"
             },
             {
               "k": "D",
-              "t": "Đổi sang màu trắng"
+              "t": "哪件衣服最便宜。"
             }
           ]
         },
@@ -2352,7 +2357,7 @@ const LESSON = {
           "id": "B8-B14",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và chọn câu đáp phù hợp.",
+          "prompt": "听对话，B在找谁？",
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2369,19 +2374,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người B chờ xe buýt"
+              "t": "老师。"
             },
             {
               "k": "B",
-              "t": "Người B mua sách"
+              "t": "朋友。"
             },
             {
               "k": "C",
-              "t": "Người B tìm phục vụ viên"
+              "t": "服务员。"
             },
             {
               "k": "D",
-              "t": "Người B đi học"
+              "t": "同学。"
             }
           ]
         },
@@ -2389,7 +2394,7 @@ const LESSON = {
           "id": "B8-B15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn hành động tiếp theo.",
+          "prompt": "听句子，接下来最可能做什么？",
           "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2406,19 +2411,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Mua ngay chiếc áo"
+              "t": "马上买这件衣服。"
             },
             {
               "k": "B",
-              "t": "Gọi điện cho giáo viên"
+              "t": "给老师打电话。"
             },
             {
               "k": "C",
-              "t": "Về nhà ngủ"
+              "t": "回家睡觉。"
             },
             {
               "k": "D",
-              "t": "Xem thêm món khác"
+              "t": "再看看别的衣服。"
             }
           ]
         },
@@ -2426,7 +2431,7 @@ const LESSON = {
           "id": "B8-B16",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và nhận ra lời đề nghị.",
+          "prompt": "听句子，说话的人请别人做什么？",
           "tokens": [
             "再",
             "告诉",
@@ -2451,19 +2456,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Bảo người nghe đợi"
+              "t": "等一等。"
             },
             {
               "k": "B",
-              "t": "Nhờ người nghe xem giúp"
+              "t": "帮他看看。"
             },
             {
               "k": "C",
-              "t": "Từ chối giúp đỡ"
+              "t": "不要帮助他。"
             },
             {
               "k": "D",
-              "t": "Hỏi giá"
+              "t": "说价格。"
             }
           ]
         },
@@ -2471,7 +2476,7 @@ const LESSON = {
           "id": "B8-B17",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe hai câu. Ý nào đúng?",
+          "prompt": "听句子，说话的人什么时候告诉对方？",
           "tokens": [
             "想想",
             "让我",
@@ -2494,19 +2499,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người nói đã trả lời xong"
+              "t": "现在。"
             },
             {
               "k": "B",
-              "t": "Người nói không muốn nói nữa"
+              "t": "昨天。"
             },
             {
               "k": "C",
-              "t": "Câu trả lời sẽ được nói vào ngày mai"
+              "t": "明天。"
             },
             {
               "k": "D",
-              "t": "Người nói đang tìm điện thoại"
+              "t": "上课的时候。"
             }
           ]
         },
@@ -2514,7 +2519,7 @@ const LESSON = {
           "id": "B8-B18",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn màu được nhắc đến.",
+          "prompt": "听句子，最后说的是哪一种颜色？",
           "model": "我让他帮我看一看这件衣服。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2531,19 +2536,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đỏ"
+              "t": "红色。"
             },
             {
               "k": "B",
-              "t": "Xanh"
+              "t": "蓝色。"
             },
             {
               "k": "C",
-              "t": "Vàng"
+              "t": "黄色。"
             },
             {
               "k": "D",
-              "t": "Đen"
+              "t": "黑色。"
             }
           ],
           "answer": "D"
@@ -2552,7 +2557,7 @@ const LESSON = {
           "id": "B8-F09",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe tình huống và chọn phản hồi lịch sự nhất.",
+          "prompt": "听情境，选择最自然的回答。",
           "model": "这件事情我不能马上决定。让我想想，明天再告诉你。请你等我一天。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4035,7 +4040,7 @@ const LESSON = {
           "id": "B8-A15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn ý đúng.",
+          "prompt": "听句子，说话的人现在需要什么？",
           "model": "我在学校门口等朋友。我的书不见了，我在找书。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4052,19 +4057,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người nói cần thêm thời gian suy nghĩ"
+              "t": "还需要一点儿时间想一想。"
             },
             {
               "k": "B",
-              "t": "Người nói muốn rời đi ngay"
+              "t": "马上离开。"
             },
             {
               "k": "C",
-              "t": "Người nói không biết địa chỉ"
+              "t": "找一个地址。"
             },
             {
               "k": "D",
-              "t": "Người nói đang gọi phục vụ viên"
+              "t": "叫服务员。"
             }
           ],
           "answer": "A"
@@ -4073,7 +4078,7 @@ const LESSON = {
           "id": "B8-B13",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe hội thoại. Người A muốn gì?",
+          "prompt": "听对话，A想知道什么？",
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4090,19 +4095,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Tìm một người bạn"
+              "t": "白色的东西贵不贵。"
             },
             {
               "k": "B",
-              "t": "Hỏi giá chiếc màu đen"
+              "t": "黑色的东西贵不贵。"
             },
             {
               "k": "C",
-              "t": "Gọi đồ ăn"
+              "t": "服务员在哪儿。"
             },
             {
               "k": "D",
-              "t": "Đổi sang màu trắng"
+              "t": "哪件衣服最便宜。"
             }
           ]
         },
@@ -4110,7 +4115,7 @@ const LESSON = {
           "id": "B8-B14",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và chọn câu đáp phù hợp.",
+          "prompt": "听对话，B在找谁？",
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4127,19 +4132,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người B chờ xe buýt"
+              "t": "老师。"
             },
             {
               "k": "B",
-              "t": "Người B mua sách"
+              "t": "朋友。"
             },
             {
               "k": "C",
-              "t": "Người B tìm phục vụ viên"
+              "t": "服务员。"
             },
             {
               "k": "D",
-              "t": "Người B đi học"
+              "t": "同学。"
             }
           ]
         },
@@ -4147,7 +4152,7 @@ const LESSON = {
           "id": "B8-B15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn hành động tiếp theo.",
+          "prompt": "听句子，接下来最可能做什么？",
           "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4164,19 +4169,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Mua ngay chiếc áo"
+              "t": "马上买这件衣服。"
             },
             {
               "k": "B",
-              "t": "Gọi điện cho giáo viên"
+              "t": "给老师打电话。"
             },
             {
               "k": "C",
-              "t": "Về nhà ngủ"
+              "t": "回家睡觉。"
             },
             {
               "k": "D",
-              "t": "Xem thêm món khác"
+              "t": "再看看别的衣服。"
             }
           ]
         },
@@ -4184,7 +4189,7 @@ const LESSON = {
           "id": "B8-B16",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và nhận ra lời đề nghị.",
+          "prompt": "听句子，说话的人请别人做什么？",
           "tokens": [
             "再",
             "告诉",
@@ -4209,19 +4214,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Bảo người nghe đợi"
+              "t": "等一等。"
             },
             {
               "k": "B",
-              "t": "Nhờ người nghe xem giúp"
+              "t": "帮他看看。"
             },
             {
               "k": "C",
-              "t": "Từ chối giúp đỡ"
+              "t": "不要帮助他。"
             },
             {
               "k": "D",
-              "t": "Hỏi giá"
+              "t": "说价格。"
             }
           ]
         },
@@ -4229,7 +4234,7 @@ const LESSON = {
           "id": "B8-B17",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe hai câu. Ý nào đúng?",
+          "prompt": "听句子，说话的人什么时候告诉对方？",
           "tokens": [
             "想想",
             "让我",
@@ -4252,19 +4257,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người nói đã trả lời xong"
+              "t": "现在。"
             },
             {
               "k": "B",
-              "t": "Người nói không muốn nói nữa"
+              "t": "昨天。"
             },
             {
               "k": "C",
-              "t": "Câu trả lời sẽ được nói vào ngày mai"
+              "t": "明天。"
             },
             {
               "k": "D",
-              "t": "Người nói đang tìm điện thoại"
+              "t": "上课的时候。"
             }
           ]
         },
@@ -4272,7 +4277,7 @@ const LESSON = {
           "id": "B8-B18",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn màu được nhắc đến.",
+          "prompt": "听句子，最后说的是哪一种颜色？",
           "model": "我让他帮我看一看这件衣服。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4289,19 +4294,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đỏ"
+              "t": "红色。"
             },
             {
               "k": "B",
-              "t": "Xanh"
+              "t": "蓝色。"
             },
             {
               "k": "C",
-              "t": "Vàng"
+              "t": "黄色。"
             },
             {
               "k": "D",
-              "t": "Đen"
+              "t": "黑色。"
             }
           ],
           "answer": "D"
@@ -4310,7 +4315,7 @@ const LESSON = {
           "id": "B8-F09",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe tình huống và chọn phản hồi lịch sự nhất.",
+          "prompt": "听情境，选择最自然的回答。",
           "model": "这件事情我不能马上决定。让我想想，明天再告诉你。请你等我一天。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -5241,6 +5246,29 @@ const LESSON = {
     "70 câu luyện tập"
   ],
   "timeLimitMinutes": 75,
+  "skills": {
+    "tuvung": {
+      "label": "A. TỪ VỰNG & CỤM TỪ"
+    },
+    "nguphap": {
+      "label": "B. NGỮ PHÁP TRONG NGỮ CẢNH"
+    },
+    "nghe": {
+      "label": "C. NGHE HIỂU"
+    },
+    "docHieu": {
+      "label": "D. ĐỌC HIỂU"
+    },
+    "viet": {
+      "label": "E. VIẾT CÓ KIỂM SOÁT"
+    },
+    "dich": {
+      "label": "F. CHUYỂN Ý VIỆT–TRUNG"
+    },
+    "giaotiep": {
+      "label": "G. NÓI & TƯƠNG TÁC"
+    }
+  },
   "vocab": [
     {
       "id": "hsk2_l08_v01",
@@ -6138,7 +6166,7 @@ const LESSON = {
         {
           "id": "B8-A15",
           "type": "listening",
-          "prompt": "Nghe câu và chọn ý đúng.",
+          "prompt": "听句子，说话的人现在需要什么？",
           "model": "我在学校门口等朋友。我的书不见了，我在找书。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "请你等我一下，我想想再告诉你。",
@@ -6147,19 +6175,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người nói cần thêm thời gian suy nghĩ"
+              "t": "还需要一点儿时间想一想。"
             },
             {
               "k": "B",
-              "t": "Người nói muốn rời đi ngay"
+              "t": "马上离开。"
             },
             {
               "k": "C",
-              "t": "Người nói không biết địa chỉ"
+              "t": "找一个地址。"
             },
             {
               "k": "D",
-              "t": "Người nói đang gọi phục vụ viên"
+              "t": "叫服务员。"
             }
           ],
           "answer": "A"
@@ -6167,7 +6195,7 @@ const LESSON = {
         {
           "id": "B8-B13",
           "type": "listening",
-          "prompt": "Nghe hội thoại. Người A muốn gì?",
+          "prompt": "听对话，A想知道什么？",
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：这个黑色的贵不贵？B：不贵。",
@@ -6176,26 +6204,26 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Tìm một người bạn"
+              "t": "白色的东西贵不贵。"
             },
             {
               "k": "B",
-              "t": "Hỏi giá chiếc màu đen"
+              "t": "黑色的东西贵不贵。"
             },
             {
               "k": "C",
-              "t": "Gọi đồ ăn"
+              "t": "服务员在哪儿。"
             },
             {
               "k": "D",
-              "t": "Đổi sang màu trắng"
+              "t": "哪件衣服最便宜。"
             }
           ]
         },
         {
           "id": "B8-B14",
           "type": "listening",
-          "prompt": "Nghe và chọn câu đáp phù hợp.",
+          "prompt": "听对话，B在找谁？",
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你找谁？B：我找服务员。",
@@ -6204,26 +6232,26 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người B chờ xe buýt"
+              "t": "老师。"
             },
             {
               "k": "B",
-              "t": "Người B mua sách"
+              "t": "朋友。"
             },
             {
               "k": "C",
-              "t": "Người B tìm phục vụ viên"
+              "t": "服务员。"
             },
             {
               "k": "D",
-              "t": "Người B đi học"
+              "t": "同学。"
             }
           ]
         },
         {
           "id": "B8-B15",
           "type": "listening",
-          "prompt": "Nghe câu và chọn hành động tiếp theo.",
+          "prompt": "听句子，接下来最可能做什么？",
           "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "这件衣服有点儿贵，我们再看看吧。",
@@ -6232,26 +6260,26 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Mua ngay chiếc áo"
+              "t": "马上买这件衣服。"
             },
             {
               "k": "B",
-              "t": "Gọi điện cho giáo viên"
+              "t": "给老师打电话。"
             },
             {
               "k": "C",
-              "t": "Về nhà ngủ"
+              "t": "回家睡觉。"
             },
             {
               "k": "D",
-              "t": "Xem thêm món khác"
+              "t": "再看看别的衣服。"
             }
           ]
         },
         {
           "id": "B8-B16",
           "type": "listening",
-          "prompt": "Nghe và nhận ra lời đề nghị.",
+          "prompt": "听句子，说话的人请别人做什么？",
           "tokens": [
             "再",
             "告诉",
@@ -6268,26 +6296,26 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Bảo người nghe đợi"
+              "t": "等一等。"
             },
             {
               "k": "B",
-              "t": "Nhờ người nghe xem giúp"
+              "t": "帮他看看。"
             },
             {
               "k": "C",
-              "t": "Từ chối giúp đỡ"
+              "t": "不要帮助他。"
             },
             {
               "k": "D",
-              "t": "Hỏi giá"
+              "t": "说价格。"
             }
           ]
         },
         {
           "id": "B8-B17",
           "type": "listening",
-          "prompt": "Nghe hai câu. Ý nào đúng?",
+          "prompt": "听句子，说话的人什么时候告诉对方？",
           "tokens": [
             "想想",
             "让我",
@@ -6302,26 +6330,26 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Người nói đã trả lời xong"
+              "t": "现在。"
             },
             {
               "k": "B",
-              "t": "Người nói không muốn nói nữa"
+              "t": "昨天。"
             },
             {
               "k": "C",
-              "t": "Câu trả lời sẽ được nói vào ngày mai"
+              "t": "明天。"
             },
             {
               "k": "D",
-              "t": "Người nói đang tìm điện thoại"
+              "t": "上课的时候。"
             }
           ]
         },
         {
           "id": "B8-B18",
           "type": "listening",
-          "prompt": "Nghe câu và chọn màu được nhắc đến.",
+          "prompt": "听句子，最后说的是哪一种颜色？",
           "model": "我让他帮我看一看这件衣服。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "白色的太贵，黑色的怎么样？",
@@ -6330,19 +6358,19 @@ const LESSON = {
           "options": [
             {
               "k": "A",
-              "t": "Đỏ"
+              "t": "红色。"
             },
             {
               "k": "B",
-              "t": "Xanh"
+              "t": "蓝色。"
             },
             {
               "k": "C",
-              "t": "Vàng"
+              "t": "黄色。"
             },
             {
               "k": "D",
-              "t": "Đen"
+              "t": "黑色。"
             }
           ],
           "answer": "D"
@@ -6350,7 +6378,7 @@ const LESSON = {
         {
           "id": "B8-F09",
           "type": "listening",
-          "prompt": "Nghe tình huống và chọn phản hồi lịch sự nhất.",
+          "prompt": "听情境，选择最自然的回答。",
           "model": "这件事情我不能马上决定。让我想想，明天再告诉你。请你等我一天。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "audioText": "A：你现在能告诉我吗？B：",
@@ -7176,6 +7204,9 @@ function isAnswered(q){
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -7336,41 +7367,25 @@ function resultBanner(status){
 }
 
 function renderMcq(q, body){
-  if(state.submitted){
-    const g = gradeQuestion(q);
-    body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong'));
-  }
-  const list = el('div','opt-list');
-  q.options.forEach(opt => {
-    const row = el('div','opt');
-    row.appendChild(el('span','opt-letter', opt.k));
-    row.appendChild(el('span','', mixText(opt.t)));
-    const selected = state.answers[q.id] === opt.k;
+  if(state.submitted){ const g=gradeQuestion(q); body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong')); }
+  const list=el('div','opt-list'); list.setAttribute('role','radiogroup');
+  q.options.forEach(opt=>{
+    const row=el('button','opt'); row.type='button'; row.setAttribute('role','radio');
+    const selected=state.answers[q.id]===opt.k; row.setAttribute('aria-checked',String(selected));
+    row.appendChild(el('span','opt-letter',opt.k)); row.appendChild(el('span','',mixText(opt.t)));
     if(selected) row.classList.add('selected');
-    if(state.submitted){
-      row.classList.add('locked');
-      if(opt.k === q.answer) row.classList.add('correct-answer');
-      else if(selected && opt.k !== q.answer) row.classList.add('wrong-answer');
-    } else {
-      row.addEventListener('click', () => {
-        state.answers[q.id] = opt.k;
-        DataStore.saveInProgress();
-        // Tự động chuyển câu tiếp theo sau khi chọn (single-choice)
-        renderAll();
-        setTimeout(() => { if(state.current < TOTAL_Q-1){ state.current++; renderAll(); scrollToQuestion(); } }, 260);
-      });
-    }
+    if(state.submitted){ row.disabled=true; row.classList.add('locked'); if(opt.k===q.answer) row.classList.add('correct-answer'); else if(selected) row.classList.add('wrong-answer'); }
+    else row.addEventListener('click',()=>{ state.answers[q.id]=opt.k; DataStore.saveInProgress(); renderAll(); });
     list.appendChild(row);
-  });
-  body.appendChild(list);
+  }); body.appendChild(list);
 }
-
 function renderListening(q, body){
-  const intro = el('div','hint-inline','Nghe 2–3 lần, sau đó chọn đáp án. Không đọc lời thoại trước khi trả lời.');
+  const hasAudio = q.audioStatus === 'ready' && !!q.audioSrc;
+  const intro = el('div','hint-inline',hasAudio ? 'Nghe 2–3 lần, sau đó chọn đáp án.' : 'Audio đang được bổ sung. Hãy đọc kịch bản, sau đó chọn đáp án.');
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
-  if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
+  if(!hasAudio){
+    const status = el('div','audio-status','Chưa có audio nên kịch bản đang hiển thị để em vẫn làm bài được. Khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
     const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
     script.setAttribute('aria-label','Kịch bản câu nghe');
@@ -7470,11 +7485,9 @@ function renderReorder(q, body){
 
 function renderRetell(q, body){
   const source=el('div','retell-source',mixText(q.sourceText));
-  const actions=el('div','retell-actions'); const button=el('button','', 'Bắt đầu đọc'); button.type='button';
-  const timer=el('span','retell-timer', 'Đọc trong '+q.readSeconds+' giây rồi kể lại bằng lời của em.');
-  actions.append(button,timer); body.append(source,actions);
-  let left=q.readSeconds, interval;
-  button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
+  const actions=el('div','retell-actions'); const timer=el('span','retell-timer', 'Bắt đầu đọc ngay: còn '+q.readSeconds+' giây.');
+  actions.append(timer); body.append(source,actions);
+  let left=q.readSeconds; const tick=()=>{ timer.textContent='Còn '+Math.max(left,0)+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); const interval=setInterval(tick,1000);
   renderSelfCheck(q, body);
 }
 function renderMultiFill(q, body){
@@ -7551,6 +7564,9 @@ function gradeQuestion(q){
     const ok = (q.answer||[]).some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
@@ -7659,7 +7675,7 @@ function submitQuiz(auto){
   DataStore.clearInProgress();
 
   renderAll();
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);
 }
 
 /* ================================================================

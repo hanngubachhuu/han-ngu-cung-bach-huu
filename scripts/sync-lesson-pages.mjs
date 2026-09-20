@@ -45,6 +45,7 @@ function toLegacy(lesson) {
     subtitle: content.ui?.heroDescription || `Giáo trình chuẩn HSK 2 — Bài ${no}`,
     meta: [`${content.vocabulary.length} từ mới`, `${content.grammar.length} điểm ngữ pháp`, `${all.length} câu luyện tập`],
     timeLimitMinutes: content.meta.timeLimitMinutes,
+    skills: Object.fromEntries(lesson.exerciseSections.map(({ skill, title }) => [skill, { label: title }])),
     vocab: content.vocabulary,
     grammar: content.grammar,
     sections,
@@ -73,11 +74,12 @@ function addListeningRenderer(html) {
   const labelNeedle = "self_check:'Tự luận'";
   const anchor = "function renderTextFill(q, body){";
   const renderer = `function renderListening(q, body){
-  const intro = el('div','hint-inline','Nghe 2–3 lần, sau đó chọn đáp án. Không đọc lời thoại trước khi trả lời.');
+  const hasAudio = q.audioStatus === 'ready' && !!q.audioSrc;
+  const intro = el('div','hint-inline',hasAudio ? 'Nghe 2–3 lần, sau đó chọn đáp án.' : 'Audio đang được bổ sung. Hãy đọc kịch bản, sau đó chọn đáp án.');
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
-  if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
+  if(!hasAudio){
+    const status = el('div','audio-status','Chưa có audio nên kịch bản đang hiển thị để em vẫn làm bài được. Khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
     const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
     script.setAttribute('aria-label','Kịch bản câu nghe');
@@ -102,6 +104,20 @@ function addListeningRenderer(html) {
   renderMcq(q, body);
 }
 `;
+  const mcqRenderer = `function renderMcq(q, body){
+  if(state.submitted){ const g=gradeQuestion(q); body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong')); }
+  const list=el('div','opt-list'); list.setAttribute('role','radiogroup');
+  q.options.forEach(opt=>{
+    const row=el('button','opt'); row.type='button'; row.setAttribute('role','radio');
+    const selected=state.answers[q.id]===opt.k; row.setAttribute('aria-checked',String(selected));
+    row.appendChild(el('span','opt-letter',opt.k)); row.appendChild(el('span','',mixText(opt.t)));
+    if(selected) row.classList.add('selected');
+    if(state.submitted){ row.disabled=true; row.classList.add('locked'); if(opt.k===q.answer) row.classList.add('correct-answer'); else if(selected) row.classList.add('wrong-answer'); }
+    else row.addEventListener('click',()=>{ state.answers[q.id]=opt.k; DataStore.saveInProgress(); renderAll(); });
+    list.appendChild(row);
+  }); body.appendChild(list);
+}
+`;
   const css = `
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
@@ -113,6 +129,8 @@ function addListeningRenderer(html) {
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
+.q-card,.q-card *{user-select:text;}
+.opt{width:100%;text-align:left;color:var(--text);font-family:var(--font-vn);cursor:pointer;}
 .opt .opt-letter{margin-top:var(--space-2xs);}
 .hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
 .audio-player-mini{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin:0;padding:var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);}
@@ -168,6 +186,10 @@ function renderMultiFill(q, body){
       .replace(labelNeedle, "listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'")
       .replace(retellAnchor, `${retellRenderer}${retellAnchor}`);
   }
+  const mcqStart=html.indexOf("function renderMcq(q, body){"), mcqEnd=html.indexOf("function renderListening(q, body){",mcqStart);
+  if(mcqStart>=0 && mcqEnd>mcqStart) html=html.slice(0,mcqStart)+mcqRenderer+html.slice(mcqEnd);
+  const retellStart=html.indexOf("function renderRetell(q, body){"), retellEnd=html.indexOf("function renderMultiFill(q, body){",retellStart);
+  if(retellStart>=0 && retellEnd>retellStart) html=html.slice(0,retellStart)+retellRenderer.slice(0,retellRenderer.indexOf("function renderMultiFill"))+html.slice(retellEnd);
   if (!html.includes("function renderMultiFill(q, body)")) {
     html = html.replace("function renderSelfCheck(q, body){", `${retellRenderer.split("function renderMultiFill")[1] ? "function renderMultiFill" + retellRenderer.split("function renderMultiFill")[1] : ""}function renderSelfCheck(q, body){`)
       .replace("case 'retell': renderRetell(q, body); break;", "case 'retell': renderRetell(q, body); break;\n    case 'multi_fill': renderMultiFill(q, body); break;")
@@ -183,6 +205,7 @@ function renderMultiFill(q, body){
     .replace(/else if\(q\.type === 'self_check'\)/g, "else if(q.type === 'self_check' || q.type === 'retell')");
   html = html.replace("if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token", "if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);\n  if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token")
     .replace("  if(q.type === 'reorder'){", "  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }\n  if(q.type === 'reorder'){");
+  html = html.replace(/  renderAll\(\);\r?\n  window\.scrollTo\(\{top:0, behavior:'smooth'\}\);/, "  renderAll();\n  window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);");
   return html;
 }
 

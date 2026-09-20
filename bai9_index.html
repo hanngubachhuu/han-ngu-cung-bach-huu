@@ -859,6 +859,9 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -869,6 +872,8 @@ footer.print-footer{display:none;}
 .q-body{display:grid;gap:var(--space-md);}
 .opt-list{gap:var(--space-sm);}
 .opt{align-items:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-lg);line-height:1.55;}
+.q-card,.q-card *{user-select:text;}
+.opt{width:100%;text-align:left;color:var(--text);font-family:var(--font-vn);cursor:pointer;}
 .opt .opt-letter{margin-top:var(--space-2xs);}
 .hint-inline{display:flex;align-items:flex-start;line-height:var(--lh-normal,1.5);margin-bottom:0;}
 .audio-player-mini{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;margin:0;padding:var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);}
@@ -2003,27 +2008,27 @@ const LESSON = {
           "id": "B9-A11",
           "section": "vocabulary",
           "type": "mcq",
-          "prompt": "“从第一题开始做” nghĩa đúng là:",
+          "prompt": "小李刚拿到试卷。他应该怎么做？",
           "options": [
             {
               "k": "A",
-              "t": "bắt đầu làm từ câu thứ nhất"
+              "t": "从第一题开始做。"
             },
             {
               "k": "B",
-              "t": "làm câu thứ nhất lần nữa"
+              "t": "从明天开始做。"
             },
             {
               "k": "C",
-              "t": "làm sai câu thứ nhất"
+              "t": "第一题做错了。"
             },
             {
               "k": "D",
-              "t": "làm xong câu thứ nhất"
+              "t": "把试卷做完了。"
             }
           ],
           "answer": "A",
-          "explain": "从…开始 = bắt đầu từ…; 第一题 = câu thứ nhất.",
+          "explain": "从第一题开始做 nói về điểm bắt đầu của việc làm bài.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2036,26 +2041,41 @@ const LESSON = {
         {
           "id": "B9-A12",
           "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền 完 hoặc 错: 这道题我做___了。",
-          "answer": [
-            "错",
-            "错了"
-          ],
-          "explain": "做错 = làm sai; 完 chỉ kết quả hoàn thành.",
+          "type": "mcq",
+          "prompt": "Chọn một từ để điền vào câu: 这道题我做___了。",
+          "answer": "A",
+          "explain": "Câu nói hành động đã hoàn thành, nên dùng 做完。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
+          "options": [
+            {
+              "k": "A",
+              "t": "完"
+            },
+            {
+              "k": "B",
+              "t": "错"
+            },
+            {
+              "k": "C",
+              "t": "懂"
+            },
+            {
+              "k": "D",
+              "t": "从"
+            }
+          ],
           "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
           "skill": "tuvung"
         },
         {
           "id": "B9-B01",
           "type": "mcq",
-          "prompt": "小王的作业还没___，所以他不能去玩。",
+          "prompt": "Chọn cụm phù hợp để hoàn thành câu: 小王的作业还没___，所以他不能去玩。",
           "options": [
             {
               "k": "A",
@@ -2075,10 +2095,10 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "看语境：作业还没结束，要选表示‘做完’的说法。",
+          "explain": "作业还没结束 nên cần cụm diễn tả ‘chưa làm xong’. Các phương án sai mô phỏng đảo trật tự từ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Bổ ngữ kết quả cho biết hành động đã đạt đến kết quả nào.",
+          "example": "小王还没做完作业。",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
           "skill": "nguphap"
@@ -2086,19 +2106,20 @@ const LESSON = {
         {
           "id": "B9-B02",
           "type": "self_check",
-          "prompt": "把两句话合成一句：我看这本书。我看完了。",
+          "prompt": "Gộp hai câu sau thành một câu tiếng Trung: 我看这本书。 我看完了。",
           "model": "我看完这本书了。",
-          "explain": "用完整句表达动作和结果，不需要说出术语名称。",
+          "explain": "Viết thành một câu hoàn chỉnh, nói được hành động và kết quả.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "我看完这本书了。"
         },
         {
           "id": "B9-B03",
           "type": "mcq",
-          "prompt": "你什么时候开始学汉语？请选择最自然的回答。",
+          "prompt": "Chọn câu trả lời tự nhiên nhất: 你什么时候开始学汉语？",
           "options": [
             {
               "k": "A",
@@ -2118,10 +2139,10 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "回答起点时，把时间放在 从 后面。",
+          "explain": "Khi nói mốc bắt đầu, đặt thời gian sau 从.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Chỉ điểm bắt đầu của hành động, tuyến đường hoặc khoảng thời gian.",
+          "example": "我从九月开始学汉语。",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
           "skill": "nguphap"
@@ -2129,14 +2150,15 @@ const LESSON = {
         {
           "id": "B9-B04",
           "type": "self_check",
-          "prompt": "根据提示写一句话：八点开始学习，十点结束。",
+          "prompt": "Dựa vào gợi ý, viết một câu tiếng Trung: 八点开始学习，十点结束。",
           "model": "我从八点学习到十点。",
-          "explain": "句子要说清楚开始和结束的时间。",
+          "explain": "Câu cần nêu rõ mốc đầu và mốc cuối.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "我从八点学习到十点。"
         },
         {
           "id": "B9-B05",
@@ -2192,27 +2214,27 @@ const LESSON = {
           "id": "B9-B07",
           "section": "grammar",
           "type": "mcq",
-          "prompt": "Câu nào đúng với kết quả bổ ngữ?",
+          "prompt": "Chọn câu phù hợp nhất với ý sau: 小李做了很多题，最后发现两题不对。",
           "options": [
             {
               "k": "A",
-              "t": "我做完作业了。"
+              "t": "他做错了两道题。"
             },
             {
               "k": "B",
-              "t": "我完做作业了。"
+              "t": "他两道题做错了。"
             },
             {
               "k": "C",
-              "t": "我作业做了完。"
+              "t": "他做两道错题了。"
             },
             {
               "k": "D",
-              "t": "我做作业完了。"
+              "t": "他错做了两道题。"
             }
           ],
           "answer": "A",
-          "explain": "Mẫu cơ bản: V + kết quả bổ ngữ + O; 做完作业.",
+          "explain": "Chọn câu nói tự nhiên về việc làm sai hai câu; các phương án sai mô phỏng trật tự dịch từng từ từ tiếng Việt.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2220,33 +2242,34 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "他做错了两道题。"
         },
         {
           "id": "B9-B08",
           "section": "grammar",
           "type": "mcq",
-          "prompt": "Trong “我没做完”，ý nghĩa là:",
+          "prompt": "Chọn câu phù hợp nhất với tình huống: 老师说得很清楚，小林最后明白了。",
           "options": [
             {
               "k": "A",
-              "t": "đã làm nhưng chưa hoàn thành"
+              "t": "小林听懂了。"
             },
             {
               "k": "B",
-              "t": "không bắt đầu làm"
+              "t": "小林听完了。"
             },
             {
               "k": "C",
-              "t": "đã làm sai"
+              "t": "小林懂听了。"
             },
             {
               "k": "D",
-              "t": "sẽ làm lại"
+              "t": "小林听了懂。"
             }
           ],
           "answer": "A",
-          "explain": "没 + V + 完 diễn tả chưa đạt kết quả hoàn thành.",
+          "explain": "Nghe hết chưa chắc đã hiểu; câu cần diễn tả là cuối cùng Tiểu Lâm đã hiểu.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2254,7 +2277,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "小林听懂了。"
         },
         {
           "id": "B9-B09",
@@ -2328,7 +2352,7 @@ const LESSON = {
           "id": "B9-A15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn ý đúng.",
+          "prompt": "听句子，选择正确的意思。",
           "model": "我每天八点上班。希望你明天来。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2337,27 +2361,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "题太多了，我今天没做完。",
-          "audioSrc": "audio/hsk2/bai9/b9-a15.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Bài quá nhiều nên chưa làm xong"
+              "t": "题太多，所以今天没做完。"
             },
             {
               "k": "B",
-              "t": "Đã làm xong toàn bộ"
+              "t": "今天已经做完所有题。"
             },
             {
               "k": "C",
-              "t": "Không có bài tập"
+              "t": "今天没有作业。"
             },
             {
               "k": "D",
-              "t": "Ngày mai không làm"
+              "t": "明天不做作业。"
             }
           ],
+          "audioText": "题太多了，我今天没做完。",
+          "audioSrc": "audio/hsk2/bai9/b9-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "A",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
@@ -2366,7 +2390,7 @@ const LESSON = {
           "id": "B9-B13",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và xác định mốc bắt đầu.",
+          "prompt": "听句子，什么时候开始上班？",
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2375,27 +2399,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "我从明天开始上班。",
-          "audioSrc": "audio/hsk2/bai9/b9-b13.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Hôm qua"
+              "t": "昨天"
             },
             {
               "k": "B",
-              "t": "Ngày mai"
+              "t": "明天"
             },
             {
               "k": "C",
-              "t": "Tháng trước"
+              "t": "上个月"
             },
             {
               "k": "D",
-              "t": "Buổi tối"
+              "t": "晚上"
             }
           ],
+          "audioText": "我从明天开始上班。",
+          "audioSrc": "audio/hsk2/bai9/b9-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2403,7 +2427,7 @@ const LESSON = {
           "id": "B9-B14",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và chọn nghĩa đúng.",
+          "prompt": "听句子，今天是第几天来中国？",
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2412,27 +2436,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "这是我第一天来中国。",
-          "audioSrc": "audio/hsk2/bai9/b9-b14.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Tôi đến Trung Quốc lần hai"
+              "t": "第二天"
             },
             {
               "k": "B",
-              "t": "Tôi đã ở Trung Quốc một năm"
+              "t": "第十天"
             },
             {
               "k": "C",
-              "t": "Đây là ngày đầu tôi đến Trung Quốc"
+              "t": "第一天"
             },
             {
               "k": "D",
-              "t": "Tôi muốn về nước"
+              "t": "明天"
             }
           ],
+          "audioText": "这是我第一天来中国。",
+          "audioSrc": "audio/hsk2/bai9/b9-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2440,7 +2464,7 @@ const LESSON = {
           "id": "B9-B15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe hội thoại. Người B hiểu chưa?",
+          "prompt": "听对话，B现在怎么样？",
           "tokens": [
             "作业",
             "我",
@@ -2455,27 +2479,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "A：你听懂了吗？B：我还没听懂。",
-          "audioSrc": "audio/hsk2/bai9/b9-b15.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Đã hiểu hết"
+              "t": "已经听懂了"
             },
             {
               "k": "B",
-              "t": "Đã làm xong"
+              "t": "已经做完了"
             },
             {
               "k": "C",
-              "t": "Đã viết sai"
+              "t": "写错了"
             },
             {
               "k": "D",
-              "t": "Chưa hiểu"
+              "t": "还没听懂"
             }
           ],
+          "audioText": "A：你听懂了吗？B：我还没听懂。",
+          "audioSrc": "audio/hsk2/bai9/b9-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2483,7 +2507,7 @@ const LESSON = {
           "id": "B9-B16",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và chọn kết quả đúng.",
+          "prompt": "听句子，接下来要做什么？",
           "tokens": [
             "从",
             "开始",
@@ -2499,27 +2523,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "这道题我做错了，要再做一遍。",
-          "audioSrc": "audio/hsk2/bai9/b9-b16.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Làm xong ngay"
+              "t": "马上做完"
             },
             {
               "k": "B",
-              "t": "Làm sai và cần làm lại"
+              "t": "再做一遍"
             },
             {
               "k": "C",
-              "t": "Không có câu hỏi"
+              "t": "没有题"
             },
             {
               "k": "D",
-              "t": "Đang đi làm"
+              "t": "去上班"
             }
           ],
+          "audioText": "这道题我做错了，要再做一遍。",
+          "audioSrc": "audio/hsk2/bai9/b9-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2527,7 +2551,7 @@ const LESSON = {
           "id": "B9-B17",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe lời chào và chọn nơi phù hợp.",
+          "prompt": "听句子，说话的地点最可能是哪里？",
           "tokens": [
             "欢迎",
             "我们",
@@ -2543,27 +2567,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "欢迎你来我们公司上班。",
-          "audioSrc": "audio/hsk2/bai9/b9-b17.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Trường học"
+              "t": "学校"
             },
             {
               "k": "B",
-              "t": "Nhà hàng"
+              "t": "饭店"
             },
             {
               "k": "C",
-              "t": "Công ty"
+              "t": "公司"
             },
             {
               "k": "D",
-              "t": "Bệnh viện"
+              "t": "医院"
             }
           ],
+          "audioText": "欢迎你来我们公司上班。",
+          "audioSrc": "audio/hsk2/bai9/b9-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -2571,7 +2595,7 @@ const LESSON = {
           "id": "B9-B18",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn hành động đúng.",
+          "prompt": "听句子，‘我希望明天能做完作业’表示什么？",
           "model": "我没做完这道题。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2580,27 +2604,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "我希望明天能做完作业。",
-          "audioSrc": "audio/hsk2/bai9/b9-b18.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai không đi học"
+              "t": "明天不上课"
             },
             {
               "k": "B",
-              "t": "Hôm qua làm sai"
+              "t": "昨天做错了"
             },
             {
               "k": "C",
-              "t": "Bắt đầu đi làm"
+              "t": "开始上班"
             },
             {
               "k": "D",
-              "t": "Ngày mai làm xong bài tập"
+              "t": "希望明天完成作业"
             }
           ],
+          "audioText": "我希望明天能做完作业。",
+          "audioSrc": "audio/hsk2/bai9/b9-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
@@ -2609,7 +2633,7 @@ const LESSON = {
           "id": "B9-F09",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe lời nhắn và chọn phản hồi phù hợp.",
+          "prompt": "听句子，选择最合适的回答。",
           "model": "我从第一题开始做。题很多，我还没做完。我希望明天做完，也不要做错。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -2618,9 +2642,6 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "别着急，明天再做吧。",
-          "audioSrc": "audio/hsk2/bai9/b9-f09.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -2639,6 +2660,9 @@ const LESSON = {
               "t": "第一题错。"
             }
           ],
+          "audioText": "别着急，明天再做吧。",
+          "audioSrc": "audio/hsk2/bai9/b9-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "A",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
@@ -2646,7 +2670,7 @@ const LESSON = {
         {
           "id": "B9-C01",
           "type": "mcq",
-          "prompt": "老师让大家做什么？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 老师让大家做什么？",
           "options": [
             {
               "k": "A",
@@ -2666,19 +2690,20 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Đáp án nằm ở câu đầu của đoạn.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 做完.",
           "passageId": "p9",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C02",
           "type": "mcq",
-          "prompt": "小李为什么还没做完？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小李为什么还没做完？",
           "options": [
             {
               "k": "A",
@@ -2698,19 +2723,20 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Tìm nguyên nhân được nói trực tiếp trong đoạn.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 从.",
           "passageId": "p9",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C03",
           "type": "mcq",
-          "prompt": "小李从哪一题开始做？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小李从哪一题开始做？",
           "options": [
             {
               "k": "A",
@@ -2730,20 +2756,21 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Câu đầu phần làm bài nêu rõ 从第一题开始做。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 第一.",
           "passageId": "p9",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C04",
           "section": "reading",
           "type": "mcq",
-          "prompt": "做完以后，小李发现做错了几题？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 做完以后，小李发现做错了几题？",
           "options": [
             {
               "k": "A",
@@ -2763,7 +2790,7 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Đoạn văn nêu 有两道题做错了。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2772,33 +2799,34 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "passageId": "p9"
+          "passageId": "p9",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C05",
           "section": "reading",
           "type": "mcq",
-          "prompt": "短文中，‘他从第一题开始做’表示什么？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小王为什么想了很长时间？",
           "options": [
             {
               "k": "A",
-              "t": "他先做第一题"
+              "t": "第五题很难。"
             },
             {
               "k": "B",
-              "t": "他只做最后一题"
+              "t": "他没有试卷。"
             },
             {
               "k": "C",
-              "t": "他明天才开始"
+              "t": "他要去上班。"
             },
             {
               "k": "D",
-              "t": "他在公司开始"
+              "t": "老师不让他做。"
             }
           ],
           "answer": "A",
-          "explain": "从第一题开始做 = bắt đầu từ câu thứ nhất.",
+          "explain": "Đoạn văn cho biết 第五题很难，所以他想了很长时间。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2807,33 +2835,33 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "他从第一题开始做，做错了两道题。"
+          "readingText": "小王今天拿到一张试卷，一共有十道题。他先从第一题开始做。前面几题不太难，可是第五题很难，他想了很长时间。最后，小王把十道题都做完了，可是发现第五题和第八题做错了。老师让他回家以后再做一遍。"
         },
         {
           "id": "B9-C06",
           "section": "reading",
           "type": "mcq",
-          "prompt": "小林最后怎么样？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小林最后怎么样？",
           "options": [
             {
               "k": "A",
-              "t": "他听懂了"
+              "t": "他听懂了，也做完了工作。"
             },
             {
               "k": "B",
-              "t": "他第二次上班"
+              "t": "他第二次上班。"
             },
             {
               "k": "C",
-              "t": "同事做错了"
+              "t": "同事做错了。"
             },
             {
               "k": "D",
-              "t": "他没去公司"
+              "t": "他没去公司。"
             }
           ],
           "answer": "A",
-          "explain": "终于听懂了 cho biết cuối cùng đã nghe hiểu.",
+          "explain": "Cuối đoạn có 已经听懂了，也做完了第一份工作。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2842,17 +2870,15 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "小林第一次上班，很多事情不懂。同事慢慢告诉他，他终于听懂了。"
+          "readingText": "小林第一天上班，很多事情还不懂。同事先慢慢告诉他怎么做，小林认真地听。下午，他已经听懂了，也做完了第一份工作。"
         },
         {
           "id": "B9-C07",
           "section": "reading",
-          "type": "text_fill",
-          "prompt": "读短文后填空：我把答案___了，老师让我再做一遍。",
-          "answer": [
-            "写错"
-          ],
-          "explain": "写错 = viết sai; 再做一遍 = làm lại một lần.",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 我把答案___了，老师让我再做一遍。",
+          "answer": "A",
+          "explain": "Viết sai đáp án là 写错。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2861,17 +2887,33 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "我把答案写错了，老师让我再做一遍。"
+          "readingText": "我把答案写错了，老师让我再做一遍。",
+          "options": [
+            {
+              "k": "A",
+              "t": "写错"
+            },
+            {
+              "k": "B",
+              "t": "写完"
+            },
+            {
+              "k": "C",
+              "t": "听懂"
+            },
+            {
+              "k": "D",
+              "t": "开始"
+            }
+          ]
         },
         {
           "id": "B9-C08",
           "section": "reading",
-          "type": "text_fill",
-          "prompt": "读短文后填空：听话的人从___开始来公司上班。",
-          "answer": [
-            "明天"
-          ],
-          "explain": "从明天开始 chỉ điểm bắt đầu thời gian.",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 欢迎你从___开始来我们公司上班。",
+          "answer": "A",
+          "explain": "Mốc bắt đầu đi làm trong đoạn là 明天。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2880,15 +2922,33 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "欢迎你从明天开始来我们公司上班。"
+          "readingText": "欢迎你从明天开始来我们公司上班。",
+          "options": [
+            {
+              "k": "A",
+              "t": "明天"
+            },
+            {
+              "k": "B",
+              "t": "第一题"
+            },
+            {
+              "k": "C",
+              "t": "两道题"
+            },
+            {
+              "k": "D",
+              "t": "下午四点"
+            }
+          ]
         },
         {
           "id": "B9-C09",
           "section": "reading",
           "type": "self_check",
-          "prompt": "用中文写一句话概括短文。",
+          "prompt": "Đọc đoạn văn rồi viết một câu tiếng Trung tóm tắt ý chính.",
           "model": "题太多了，我没做完，明天再做。",
-          "explain": "Phải thể hiện đủ: số lượng nhiều, chưa hoàn tất và dự định tiếp tục.",
+          "explain": "Nêu nguyên nhân, kết quả hiện tại hoặc việc sẽ làm tiếp.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -2903,9 +2963,9 @@ const LESSON = {
           "id": "B9-C10",
           "section": "reading",
           "type": "self_check",
-          "prompt": "给短文写一个中文标题。",
+          "prompt": "Đọc đoạn văn rồi đặt một tiêu đề ngắn bằng tiếng Trung.",
           "model": "第一次上班 / 新工作。",
-          "explain": "Tiêu đề mở; cần thể hiện đúng ý lần đầu/ngày đầu đi làm.",
+          "explain": "Tiêu đề ngắn, đúng với ý chính là đủ.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -3070,16 +3130,16 @@ const LESSON = {
           "id": "B9-D07",
           "section": "writing",
           "type": "self_check",
-          "prompt": "Đặt 2 câu có ngữ cảnh: một câu nói chưa làm xong việc, một câu nói đã hiểu một bài khó. Dùng 完、懂.",
+          "prompt": "Đặt một câu tiếng Trung có cụm từ 做完. Em tự chọn tình huống.",
           "answer": "做完",
-          "explain": "Mỗi câu phải có chủ ngữ và tình huống rõ, không chỉ liệt kê từ.",
+          "explain": "Một câu là một ý để hệ thống và giáo viên chấm riêng.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "model": "我作业还没做完。这个问题我听懂了。",
+          "model": "我晚上做完作业了。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -3087,16 +3147,16 @@ const LESSON = {
           "id": "B9-D08",
           "section": "writing",
           "type": "self_check",
-          "prompt": "Viết 2 câu: nhờ bạn viết lại một chữ bị sai, rồi nói bạn ấy đã làm xong chưa.",
+          "prompt": "Đặt một câu tiếng Trung có cụm từ 听懂. Em tự chọn tình huống.",
           "answer": "一遍",
-          "explain": "Kết hợp sửa lỗi với hỏi kết quả; chú ý 写错 / 写完.",
+          "explain": "Một câu là một ý để hệ thống và giáo viên chấm riêng.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "model": "这个字写错了，请你再写一下。你写完了吗？",
+          "model": "老师说得很清楚，我听懂了。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -3147,15 +3207,15 @@ const LESSON = {
         {
           "id": "B9-E02",
           "type": "retell",
-          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
-          "model": "小王第一天来公司。他有很多事情不懂，同事帮助他。下午他做完了工作。",
-          "explain": "Kể lại đủ: ngày đầu, khó khăn/giúp đỡ, kết quả.",
-          "error": "Không cần chép nguyên văn; giữ thông tin chính bằng cách nói của mình.",
+          "prompt": "Đọc đoạn văn trong 60 giây. Khi đoạn tự ẩn, kể lại bằng tiếng Trung bằng 3–4 câu.",
+          "model": "小王第一天来公司工作。开始有些地方不懂，同事帮助他。下午他做完了第一份工作，希望明天做得更好。",
+          "explain": "Kể đủ: ngày đầu, điều chưa hiểu/được giúp, và kết quả cuối cùng.",
+          "error": "Không cần chép nguyên văn; hãy dùng câu của em để kể các ý chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
-          "sourceText": "小王第一天来公司工作。他有很多事情不懂，同事帮助他。下午他做完了第一份工作。",
+          "sourceText": "小王第一天来公司工作。他早上八点到公司，先认识了一个新同事。同事告诉他怎么做第一份工作，可是小王有几个地方还不懂。中午以后，同事又慢慢帮助他一起看题。下午四点，小王终于做完了第一份工作。他很高兴，也希望明天能做得更好。",
           "readSeconds": 60
         },
         {
@@ -3772,27 +3832,27 @@ const LESSON = {
           "id": "B9-A11",
           "section": "vocabulary",
           "type": "mcq",
-          "prompt": "“从第一题开始做” nghĩa đúng là:",
+          "prompt": "小李刚拿到试卷。他应该怎么做？",
           "options": [
             {
               "k": "A",
-              "t": "bắt đầu làm từ câu thứ nhất"
+              "t": "从第一题开始做。"
             },
             {
               "k": "B",
-              "t": "làm câu thứ nhất lần nữa"
+              "t": "从明天开始做。"
             },
             {
               "k": "C",
-              "t": "làm sai câu thứ nhất"
+              "t": "第一题做错了。"
             },
             {
               "k": "D",
-              "t": "làm xong câu thứ nhất"
+              "t": "把试卷做完了。"
             }
           ],
           "answer": "A",
-          "explain": "从…开始 = bắt đầu từ…; 第一题 = câu thứ nhất.",
+          "explain": "从第一题开始做 nói về điểm bắt đầu của việc làm bài.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -3805,19 +3865,34 @@ const LESSON = {
         {
           "id": "B9-A12",
           "section": "vocabulary",
-          "type": "text_fill",
-          "prompt": "Điền 完 hoặc 错: 这道题我做___了。",
-          "answer": [
-            "错",
-            "错了"
-          ],
-          "explain": "做错 = làm sai; 完 chỉ kết quả hoàn thành.",
+          "type": "mcq",
+          "prompt": "Chọn một từ để điền vào câu: 这道题我做___了。",
+          "answer": "A",
+          "explain": "Câu nói hành động đã hoàn thành, nên dùng 做完。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
+          "options": [
+            {
+              "k": "A",
+              "t": "完"
+            },
+            {
+              "k": "B",
+              "t": "错"
+            },
+            {
+              "k": "C",
+              "t": "懂"
+            },
+            {
+              "k": "D",
+              "t": "从"
+            }
+          ],
           "sectionTitle": "A. TỪ VỰNG & CỤM TỪ",
           "skill": "tuvung"
         }
@@ -3826,7 +3901,7 @@ const LESSON = {
         {
           "id": "B9-B01",
           "type": "mcq",
-          "prompt": "小王的作业还没___，所以他不能去玩。",
+          "prompt": "Chọn cụm phù hợp để hoàn thành câu: 小王的作业还没___，所以他不能去玩。",
           "options": [
             {
               "k": "A",
@@ -3846,10 +3921,10 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "看语境：作业还没结束，要选表示‘做完’的说法。",
+          "explain": "作业还没结束 nên cần cụm diễn tả ‘chưa làm xong’. Các phương án sai mô phỏng đảo trật tự từ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Bổ ngữ kết quả cho biết hành động đã đạt đến kết quả nào.",
+          "example": "小王还没做完作业。",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
           "skill": "nguphap"
@@ -3857,19 +3932,20 @@ const LESSON = {
         {
           "id": "B9-B02",
           "type": "self_check",
-          "prompt": "把两句话合成一句：我看这本书。我看完了。",
+          "prompt": "Gộp hai câu sau thành một câu tiếng Trung: 我看这本书。 我看完了。",
           "model": "我看完这本书了。",
-          "explain": "用完整句表达动作和结果，不需要说出术语名称。",
+          "explain": "Viết thành một câu hoàn chỉnh, nói được hành động và kết quả.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "我看完这本书了。"
         },
         {
           "id": "B9-B03",
           "type": "mcq",
-          "prompt": "你什么时候开始学汉语？请选择最自然的回答。",
+          "prompt": "Chọn câu trả lời tự nhiên nhất: 你什么时候开始学汉语？",
           "options": [
             {
               "k": "A",
@@ -3889,10 +3965,10 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "回答起点时，把时间放在 从 后面。",
+          "explain": "Khi nói mốc bắt đầu, đặt thời gian sau 从.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Chỉ điểm bắt đầu của hành động, tuyến đường hoặc khoảng thời gian.",
+          "example": "我从九月开始学汉语。",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
           "skill": "nguphap"
@@ -3900,14 +3976,15 @@ const LESSON = {
         {
           "id": "B9-B04",
           "type": "self_check",
-          "prompt": "根据提示写一句话：八点开始学习，十点结束。",
+          "prompt": "Dựa vào gợi ý, viết một câu tiếng Trung: 八点开始学习，十点结束。",
           "model": "我从八点学习到十点。",
-          "explain": "句子要说清楚开始和结束的时间。",
+          "explain": "Câu cần nêu rõ mốc đầu và mốc cuối.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "我从八点学习到十点。"
         },
         {
           "id": "B9-B05",
@@ -3963,27 +4040,27 @@ const LESSON = {
           "id": "B9-B07",
           "section": "grammar",
           "type": "mcq",
-          "prompt": "Câu nào đúng với kết quả bổ ngữ?",
+          "prompt": "Chọn câu phù hợp nhất với ý sau: 小李做了很多题，最后发现两题不对。",
           "options": [
             {
               "k": "A",
-              "t": "我做完作业了。"
+              "t": "他做错了两道题。"
             },
             {
               "k": "B",
-              "t": "我完做作业了。"
+              "t": "他两道题做错了。"
             },
             {
               "k": "C",
-              "t": "我作业做了完。"
+              "t": "他做两道错题了。"
             },
             {
               "k": "D",
-              "t": "我做作业完了。"
+              "t": "他错做了两道题。"
             }
           ],
           "answer": "A",
-          "explain": "Mẫu cơ bản: V + kết quả bổ ngữ + O; 做完作业.",
+          "explain": "Chọn câu nói tự nhiên về việc làm sai hai câu; các phương án sai mô phỏng trật tự dịch từng từ từ tiếng Việt.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -3991,33 +4068,34 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "他做错了两道题。"
         },
         {
           "id": "B9-B08",
           "section": "grammar",
           "type": "mcq",
-          "prompt": "Trong “我没做完”，ý nghĩa là:",
+          "prompt": "Chọn câu phù hợp nhất với tình huống: 老师说得很清楚，小林最后明白了。",
           "options": [
             {
               "k": "A",
-              "t": "đã làm nhưng chưa hoàn thành"
+              "t": "小林听懂了。"
             },
             {
               "k": "B",
-              "t": "không bắt đầu làm"
+              "t": "小林听完了。"
             },
             {
               "k": "C",
-              "t": "đã làm sai"
+              "t": "小林懂听了。"
             },
             {
               "k": "D",
-              "t": "sẽ làm lại"
+              "t": "小林听了懂。"
             }
           ],
           "answer": "A",
-          "explain": "没 + V + 完 diễn tả chưa đạt kết quả hoàn thành.",
+          "explain": "Nghe hết chưa chắc đã hiểu; câu cần diễn tả là cuối cùng Tiểu Lâm đã hiểu.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4025,7 +4103,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "example": "小林听懂了。"
         },
         {
           "id": "B9-B09",
@@ -4101,7 +4180,7 @@ const LESSON = {
           "id": "B9-A15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn ý đúng.",
+          "prompt": "听句子，选择正确的意思。",
           "model": "我每天八点上班。希望你明天来。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4110,27 +4189,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "题太多了，我今天没做完。",
-          "audioSrc": "audio/hsk2/bai9/b9-a15.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Bài quá nhiều nên chưa làm xong"
+              "t": "题太多，所以今天没做完。"
             },
             {
               "k": "B",
-              "t": "Đã làm xong toàn bộ"
+              "t": "今天已经做完所有题。"
             },
             {
               "k": "C",
-              "t": "Không có bài tập"
+              "t": "今天没有作业。"
             },
             {
               "k": "D",
-              "t": "Ngày mai không làm"
+              "t": "明天不做作业。"
             }
           ],
+          "audioText": "题太多了，我今天没做完。",
+          "audioSrc": "audio/hsk2/bai9/b9-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "A",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
@@ -4139,7 +4218,7 @@ const LESSON = {
           "id": "B9-B13",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và xác định mốc bắt đầu.",
+          "prompt": "听句子，什么时候开始上班？",
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4148,27 +4227,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "我从明天开始上班。",
-          "audioSrc": "audio/hsk2/bai9/b9-b13.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Hôm qua"
+              "t": "昨天"
             },
             {
               "k": "B",
-              "t": "Ngày mai"
+              "t": "明天"
             },
             {
               "k": "C",
-              "t": "Tháng trước"
+              "t": "上个月"
             },
             {
               "k": "D",
-              "t": "Buổi tối"
+              "t": "晚上"
             }
           ],
+          "audioText": "我从明天开始上班。",
+          "audioSrc": "audio/hsk2/bai9/b9-b13.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4176,7 +4255,7 @@ const LESSON = {
           "id": "B9-B14",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và chọn nghĩa đúng.",
+          "prompt": "听句子，今天是第几天来中国？",
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4185,27 +4264,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "这是我第一天来中国。",
-          "audioSrc": "audio/hsk2/bai9/b9-b14.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Tôi đến Trung Quốc lần hai"
+              "t": "第二天"
             },
             {
               "k": "B",
-              "t": "Tôi đã ở Trung Quốc một năm"
+              "t": "第十天"
             },
             {
               "k": "C",
-              "t": "Đây là ngày đầu tôi đến Trung Quốc"
+              "t": "第一天"
             },
             {
               "k": "D",
-              "t": "Tôi muốn về nước"
+              "t": "明天"
             }
           ],
+          "audioText": "这是我第一天来中国。",
+          "audioSrc": "audio/hsk2/bai9/b9-b14.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4213,7 +4292,7 @@ const LESSON = {
           "id": "B9-B15",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe hội thoại. Người B hiểu chưa?",
+          "prompt": "听对话，B现在怎么样？",
           "tokens": [
             "作业",
             "我",
@@ -4228,27 +4307,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "A：你听懂了吗？B：我还没听懂。",
-          "audioSrc": "audio/hsk2/bai9/b9-b15.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Đã hiểu hết"
+              "t": "已经听懂了"
             },
             {
               "k": "B",
-              "t": "Đã làm xong"
+              "t": "已经做完了"
             },
             {
               "k": "C",
-              "t": "Đã viết sai"
+              "t": "写错了"
             },
             {
               "k": "D",
-              "t": "Chưa hiểu"
+              "t": "还没听懂"
             }
           ],
+          "audioText": "A：你听懂了吗？B：我还没听懂。",
+          "audioSrc": "audio/hsk2/bai9/b9-b15.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4256,7 +4335,7 @@ const LESSON = {
           "id": "B9-B16",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe và chọn kết quả đúng.",
+          "prompt": "听句子，接下来要做什么？",
           "tokens": [
             "从",
             "开始",
@@ -4272,27 +4351,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "这道题我做错了，要再做一遍。",
-          "audioSrc": "audio/hsk2/bai9/b9-b16.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Làm xong ngay"
+              "t": "马上做完"
             },
             {
               "k": "B",
-              "t": "Làm sai và cần làm lại"
+              "t": "再做一遍"
             },
             {
               "k": "C",
-              "t": "Không có câu hỏi"
+              "t": "没有题"
             },
             {
               "k": "D",
-              "t": "Đang đi làm"
+              "t": "去上班"
             }
           ],
+          "audioText": "这道题我做错了，要再做一遍。",
+          "audioSrc": "audio/hsk2/bai9/b9-b16.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4300,7 +4379,7 @@ const LESSON = {
           "id": "B9-B17",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe lời chào và chọn nơi phù hợp.",
+          "prompt": "听句子，说话的地点最可能是哪里？",
           "tokens": [
             "欢迎",
             "我们",
@@ -4316,27 +4395,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "欢迎你来我们公司上班。",
-          "audioSrc": "audio/hsk2/bai9/b9-b17.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Trường học"
+              "t": "学校"
             },
             {
               "k": "B",
-              "t": "Nhà hàng"
+              "t": "饭店"
             },
             {
               "k": "C",
-              "t": "Công ty"
+              "t": "公司"
             },
             {
               "k": "D",
-              "t": "Bệnh viện"
+              "t": "医院"
             }
           ],
+          "audioText": "欢迎你来我们公司上班。",
+          "audioSrc": "audio/hsk2/bai9/b9-b17.mp3",
+          "audioStatus": "awaiting_recording",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
         },
@@ -4344,7 +4423,7 @@ const LESSON = {
           "id": "B9-B18",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe câu và chọn hành động đúng.",
+          "prompt": "听句子，‘我希望明天能做完作业’表示什么？",
           "model": "我没做完这道题。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4353,27 +4432,27 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "我希望明天能做完作业。",
-          "audioSrc": "audio/hsk2/bai9/b9-b18.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai không đi học"
+              "t": "明天不上课"
             },
             {
               "k": "B",
-              "t": "Hôm qua làm sai"
+              "t": "昨天做错了"
             },
             {
               "k": "C",
-              "t": "Bắt đầu đi làm"
+              "t": "开始上班"
             },
             {
               "k": "D",
-              "t": "Ngày mai làm xong bài tập"
+              "t": "希望明天完成作业"
             }
           ],
+          "audioText": "我希望明天能做完作业。",
+          "audioSrc": "audio/hsk2/bai9/b9-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "D",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
@@ -4382,7 +4461,7 @@ const LESSON = {
           "id": "B9-F09",
           "section": "listening",
           "type": "listening",
-          "prompt": "Nghe lời nhắn và chọn phản hồi phù hợp.",
+          "prompt": "听句子，选择最合适的回答。",
           "model": "我从第一题开始做。题很多，我还没做完。我希望明天做完，也不要做错。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
           "sourceRefs": [
@@ -4391,9 +4470,6 @@ const LESSON = {
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "audioText": "别着急，明天再做吧。",
-          "audioSrc": "audio/hsk2/bai9/b9-f09.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -4412,6 +4488,9 @@ const LESSON = {
               "t": "第一题错。"
             }
           ],
+          "audioText": "别着急，明天再做吧。",
+          "audioSrc": "audio/hsk2/bai9/b9-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "A",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe"
@@ -4421,7 +4500,7 @@ const LESSON = {
         {
           "id": "B9-C01",
           "type": "mcq",
-          "prompt": "老师让大家做什么？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 老师让大家做什么？",
           "options": [
             {
               "k": "A",
@@ -4441,19 +4520,20 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Đáp án nằm ở câu đầu của đoạn.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 做完.",
           "passageId": "p9",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C02",
           "type": "mcq",
-          "prompt": "小李为什么还没做完？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小李为什么还没做完？",
           "options": [
             {
               "k": "A",
@@ -4473,19 +4553,20 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Tìm nguyên nhân được nói trực tiếp trong đoạn.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 从.",
           "passageId": "p9",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C03",
           "type": "mcq",
-          "prompt": "小李从哪一题开始做？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小李从哪一题开始做？",
           "options": [
             {
               "k": "A",
@@ -4505,20 +4586,21 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Câu đầu phần làm bài nêu rõ 从第一题开始做。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 第一.",
           "passageId": "p9",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
-          "skill": "docHieu"
+          "skill": "docHieu",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C04",
           "section": "reading",
           "type": "mcq",
-          "prompt": "做完以后，小李发现做错了几题？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 做完以后，小李发现做错了几题？",
           "options": [
             {
               "k": "A",
@@ -4538,7 +4620,7 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Đoạn văn nêu 有两道题做错了。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4547,33 +4629,34 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "passageId": "p9"
+          "passageId": "p9",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C05",
           "section": "reading",
           "type": "mcq",
-          "prompt": "短文中，‘他从第一题开始做’表示什么？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小王为什么想了很长时间？",
           "options": [
             {
               "k": "A",
-              "t": "他先做第一题"
+              "t": "第五题很难。"
             },
             {
               "k": "B",
-              "t": "他只做最后一题"
+              "t": "他没有试卷。"
             },
             {
               "k": "C",
-              "t": "他明天才开始"
+              "t": "他要去上班。"
             },
             {
               "k": "D",
-              "t": "他在公司开始"
+              "t": "老师不让他做。"
             }
           ],
           "answer": "A",
-          "explain": "从第一题开始做 = bắt đầu từ câu thứ nhất.",
+          "explain": "Đoạn văn cho biết 第五题很难，所以他想了很长时间。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4582,33 +4665,33 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "他从第一题开始做，做错了两道题。"
+          "readingText": "小王今天拿到一张试卷，一共有十道题。他先从第一题开始做。前面几题不太难，可是第五题很难，他想了很长时间。最后，小王把十道题都做完了，可是发现第五题和第八题做错了。老师让他回家以后再做一遍。"
         },
         {
           "id": "B9-C06",
           "section": "reading",
           "type": "mcq",
-          "prompt": "小林最后怎么样？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小林最后怎么样？",
           "options": [
             {
               "k": "A",
-              "t": "他听懂了"
+              "t": "他听懂了，也做完了工作。"
             },
             {
               "k": "B",
-              "t": "他第二次上班"
+              "t": "他第二次上班。"
             },
             {
               "k": "C",
-              "t": "同事做错了"
+              "t": "同事做错了。"
             },
             {
               "k": "D",
-              "t": "他没去公司"
+              "t": "他没去公司。"
             }
           ],
           "answer": "A",
-          "explain": "终于听懂了 cho biết cuối cùng đã nghe hiểu.",
+          "explain": "Cuối đoạn có 已经听懂了，也做完了第一份工作。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4617,17 +4700,15 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "小林第一次上班，很多事情不懂。同事慢慢告诉他，他终于听懂了。"
+          "readingText": "小林第一天上班，很多事情还不懂。同事先慢慢告诉他怎么做，小林认真地听。下午，他已经听懂了，也做完了第一份工作。"
         },
         {
           "id": "B9-C07",
           "section": "reading",
-          "type": "text_fill",
-          "prompt": "读短文后填空：我把答案___了，老师让我再做一遍。",
-          "answer": [
-            "写错"
-          ],
-          "explain": "写错 = viết sai; 再做一遍 = làm lại một lần.",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 我把答案___了，老师让我再做一遍。",
+          "answer": "A",
+          "explain": "Viết sai đáp án là 写错。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4636,17 +4717,33 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "我把答案写错了，老师让我再做一遍。"
+          "readingText": "我把答案写错了，老师让我再做一遍。",
+          "options": [
+            {
+              "k": "A",
+              "t": "写错"
+            },
+            {
+              "k": "B",
+              "t": "写完"
+            },
+            {
+              "k": "C",
+              "t": "听懂"
+            },
+            {
+              "k": "D",
+              "t": "开始"
+            }
+          ]
         },
         {
           "id": "B9-C08",
           "section": "reading",
-          "type": "text_fill",
-          "prompt": "读短文后填空：听话的人从___开始来公司上班。",
-          "answer": [
-            "明天"
-          ],
-          "explain": "从明天开始 chỉ điểm bắt đầu thời gian.",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 欢迎你从___开始来我们公司上班。",
+          "answer": "A",
+          "explain": "Mốc bắt đầu đi làm trong đoạn là 明天。",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4655,15 +4752,33 @@ const LESSON = {
           "status": "teacher_enriched",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
-          "readingText": "欢迎你从明天开始来我们公司上班。"
+          "readingText": "欢迎你从明天开始来我们公司上班。",
+          "options": [
+            {
+              "k": "A",
+              "t": "明天"
+            },
+            {
+              "k": "B",
+              "t": "第一题"
+            },
+            {
+              "k": "C",
+              "t": "两道题"
+            },
+            {
+              "k": "D",
+              "t": "下午四点"
+            }
+          ]
         },
         {
           "id": "B9-C09",
           "section": "reading",
           "type": "self_check",
-          "prompt": "用中文写一句话概括短文。",
+          "prompt": "Đọc đoạn văn rồi viết một câu tiếng Trung tóm tắt ý chính.",
           "model": "题太多了，我没做完，明天再做。",
-          "explain": "Phải thể hiện đủ: số lượng nhiều, chưa hoàn tất và dự định tiếp tục.",
+          "explain": "Nêu nguyên nhân, kết quả hiện tại hoặc việc sẽ làm tiếp.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4678,9 +4793,9 @@ const LESSON = {
           "id": "B9-C10",
           "section": "reading",
           "type": "self_check",
-          "prompt": "给短文写一个中文标题。",
+          "prompt": "Đọc đoạn văn rồi đặt một tiêu đề ngắn bằng tiếng Trung.",
           "model": "第一次上班 / 新工作。",
-          "explain": "Tiêu đề mở; cần thể hiện đúng ý lần đầu/ngày đầu đi làm.",
+          "explain": "Tiêu đề ngắn, đúng với ý chính là đủ.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -4847,16 +4962,16 @@ const LESSON = {
           "id": "B9-D07",
           "section": "writing",
           "type": "self_check",
-          "prompt": "Đặt 2 câu có ngữ cảnh: một câu nói chưa làm xong việc, một câu nói đã hiểu một bài khó. Dùng 完、懂.",
+          "prompt": "Đặt một câu tiếng Trung có cụm từ 做完. Em tự chọn tình huống.",
           "answer": "做完",
-          "explain": "Mỗi câu phải có chủ ngữ và tình huống rõ, không chỉ liệt kê từ.",
+          "explain": "Một câu là một ý để hệ thống và giáo viên chấm riêng.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "model": "我作业还没做完。这个问题我听懂了。",
+          "model": "我晚上做完作业了。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -4864,16 +4979,16 @@ const LESSON = {
           "id": "B9-D08",
           "section": "writing",
           "type": "self_check",
-          "prompt": "Viết 2 câu: nhờ bạn viết lại một chữ bị sai, rồi nói bạn ấy đã làm xong chưa.",
+          "prompt": "Đặt một câu tiếng Trung có cụm từ 听懂. Em tự chọn tình huống.",
           "answer": "一遍",
-          "explain": "Kết hợp sửa lỗi với hỏi kết quả; chú ý 写错 / 写完.",
+          "explain": "Một câu là một ý để hệ thống và giáo viên chấm riêng.",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
             "teacher_enriched_l09"
           ],
           "status": "teacher_enriched",
-          "model": "这个字写错了，请你再写一下。你写完了吗？",
+          "model": "老师说得很清楚，我听懂了。",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet"
         },
@@ -4924,15 +5039,15 @@ const LESSON = {
         {
           "id": "B9-E02",
           "type": "retell",
-          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
-          "model": "小王第一天来公司。他有很多事情不懂，同事帮助他。下午他做完了工作。",
-          "explain": "Kể lại đủ: ngày đầu, khó khăn/giúp đỡ, kết quả.",
-          "error": "Không cần chép nguyên văn; giữ thông tin chính bằng cách nói của mình.",
+          "prompt": "Đọc đoạn văn trong 60 giây. Khi đoạn tự ẩn, kể lại bằng tiếng Trung bằng 3–4 câu.",
+          "model": "小王第一天来公司工作。开始有些地方不懂，同事帮助他。下午他做完了第一份工作，希望明天做得更好。",
+          "explain": "Kể đủ: ngày đầu, điều chưa hiểu/được giúp, và kết quả cuối cùng.",
+          "error": "Không cần chép nguyên văn; hãy dùng câu của em để kể các ý chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
-          "sourceText": "小王第一天来公司工作。他有很多事情不懂，同事帮助他。下午他做完了第一份工作。",
+          "sourceText": "小王第一天来公司工作。他早上八点到公司，先认识了一个新同事。同事告诉他怎么做第一份工作，可是小王有几个地方还不懂。中午以后，同事又慢慢帮助他一起看题。下午四点，小王终于做完了第一份工作。他很高兴，也希望明天能做得更好。",
           "readSeconds": 60
         },
         {
@@ -5237,7 +5352,7 @@ const LESSON = {
     "passages": [
       {
         "id": "p9",
-        "text": "今天老师给我们很多题。小李说：“题太多了，我还没做完。”他从第一题开始做，后来终于做完了全部的问题，也发现了两个错题。",
+        "text": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。",
         "source": "original_extension"
       }
     ],
@@ -5294,6 +5409,29 @@ const LESSON = {
     "70 câu luyện tập"
   ],
   "timeLimitMinutes": 75,
+  "skills": {
+    "tuvung": {
+      "label": "A. TỪ VỰNG & CỤM TỪ"
+    },
+    "nguphap": {
+      "label": "B. NGỮ PHÁP TRONG NGỮ CẢNH"
+    },
+    "nghe": {
+      "label": "C. NGHE HIỂU"
+    },
+    "docHieu": {
+      "label": "D. ĐỌC HIỂU"
+    },
+    "viet": {
+      "label": "E. VIẾT CÓ KIỂM SOÁT"
+    },
+    "dich": {
+      "label": "F. CHUYỂN Ý VIỆT–TRUNG"
+    },
+    "giaotiep": {
+      "label": "G. NÓI & TƯƠNG TÁC"
+    }
+  },
   "vocab": [
     {
       "id": "hsk2_l09_v01",
@@ -5949,37 +6087,52 @@ const LESSON = {
         {
           "id": "B9-A11",
           "type": "mcq",
-          "prompt": "“从第一题开始做” nghĩa đúng là:",
+          "prompt": "小李刚拿到试卷。他应该怎么做？",
           "options": [
             {
               "k": "A",
-              "t": "bắt đầu làm từ câu thứ nhất"
+              "t": "从第一题开始做。"
             },
             {
               "k": "B",
-              "t": "làm câu thứ nhất lần nữa"
+              "t": "从明天开始做。"
             },
             {
               "k": "C",
-              "t": "làm sai câu thứ nhất"
+              "t": "第一题做错了。"
             },
             {
               "k": "D",
-              "t": "làm xong câu thứ nhất"
+              "t": "把试卷做完了。"
             }
           ],
           "answer": "A",
-          "explain": "从…开始 = bắt đầu từ…; 第一题 = câu thứ nhất."
+          "explain": "从第一题开始做 nói về điểm bắt đầu của việc làm bài."
         },
         {
           "id": "B9-A12",
-          "type": "text_fill",
-          "prompt": "Điền 完 hoặc 错: 这道题我做___了。",
-          "answer": [
-            "错",
-            "错了"
-          ],
-          "explain": "做错 = làm sai; 完 chỉ kết quả hoàn thành."
+          "type": "mcq",
+          "prompt": "Chọn một từ để điền vào câu: 这道题我做___了。",
+          "answer": "A",
+          "explain": "Câu nói hành động đã hoàn thành, nên dùng 做完。",
+          "options": [
+            {
+              "k": "A",
+              "t": "完"
+            },
+            {
+              "k": "B",
+              "t": "错"
+            },
+            {
+              "k": "C",
+              "t": "懂"
+            },
+            {
+              "k": "D",
+              "t": "从"
+            }
+          ]
         }
       ]
     },
@@ -5993,7 +6146,7 @@ const LESSON = {
         {
           "id": "B9-B01",
           "type": "mcq",
-          "prompt": "小王的作业还没___，所以他不能去玩。",
+          "prompt": "Chọn cụm phù hợp để hoàn thành câu: 小王的作业还没___，所以他不能去玩。",
           "options": [
             {
               "k": "A",
@@ -6013,24 +6166,25 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "看语境：作业还没结束，要选表示‘做完’的说法。",
+          "explain": "作业还没结束 nên cần cụm diễn tả ‘chưa làm xong’. Các phương án sai mô phỏng đảo trật tự từ.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Bổ ngữ kết quả cho biết hành động đã đạt đến kết quả nào."
+          "example": "小王还没做完作业。"
         },
         {
           "id": "B9-B02",
           "type": "self_check",
-          "prompt": "把两句话合成一句：我看这本书。我看完了。",
+          "prompt": "Gộp hai câu sau thành một câu tiếng Trung: 我看这本书。 我看完了。",
           "model": "我看完这本书了。",
-          "explain": "用完整句表达动作和结果，不需要说出术语名称。",
+          "explain": "Viết thành một câu hoàn chỉnh, nói được hành động và kết quả.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "example": "我看完这本书了。"
         },
         {
           "id": "B9-B03",
           "type": "mcq",
-          "prompt": "你什么时候开始学汉语？请选择最自然的回答。",
+          "prompt": "Chọn câu trả lời tự nhiên nhất: 你什么时候开始学汉语？",
           "options": [
             {
               "k": "A",
@@ -6050,19 +6204,20 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "回答起点时，把时间放在 从 后面。",
+          "explain": "Khi nói mốc bắt đầu, đặt thời gian sau 从.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Chỉ điểm bắt đầu của hành động, tuyến đường hoặc khoảng thời gian."
+          "example": "我从九月开始学汉语。"
         },
         {
           "id": "B9-B04",
           "type": "self_check",
-          "prompt": "根据提示写一句话：八点开始学习，十点结束。",
+          "prompt": "Dựa vào gợi ý, viết một câu tiếng Trung: 八点开始学习，十点结束。",
           "model": "我从八点学习到十点。",
-          "explain": "句子要说清楚开始和结束的时间。",
+          "explain": "Câu cần nêu rõ mốc đầu và mốc cuối.",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
-          "tip": "Đối chiếu mẫu câu sau khi tự làm."
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "example": "我从八点学习到十点。"
         },
         {
           "id": "B9-B05",
@@ -6111,52 +6266,54 @@ const LESSON = {
         {
           "id": "B9-B07",
           "type": "mcq",
-          "prompt": "Câu nào đúng với kết quả bổ ngữ?",
+          "prompt": "Chọn câu phù hợp nhất với ý sau: 小李做了很多题，最后发现两题不对。",
           "options": [
             {
               "k": "A",
-              "t": "我做完作业了。"
+              "t": "他做错了两道题。"
             },
             {
               "k": "B",
-              "t": "我完做作业了。"
+              "t": "他两道题做错了。"
             },
             {
               "k": "C",
-              "t": "我作业做了完。"
+              "t": "他做两道错题了。"
             },
             {
               "k": "D",
-              "t": "我做作业完了。"
+              "t": "他错做了两道题。"
             }
           ],
           "answer": "A",
-          "explain": "Mẫu cơ bản: V + kết quả bổ ngữ + O; 做完作业."
+          "explain": "Chọn câu nói tự nhiên về việc làm sai hai câu; các phương án sai mô phỏng trật tự dịch từng từ từ tiếng Việt.",
+          "example": "他做错了两道题。"
         },
         {
           "id": "B9-B08",
           "type": "mcq",
-          "prompt": "Trong “我没做完”，ý nghĩa là:",
+          "prompt": "Chọn câu phù hợp nhất với tình huống: 老师说得很清楚，小林最后明白了。",
           "options": [
             {
               "k": "A",
-              "t": "đã làm nhưng chưa hoàn thành"
+              "t": "小林听懂了。"
             },
             {
               "k": "B",
-              "t": "không bắt đầu làm"
+              "t": "小林听完了。"
             },
             {
               "k": "C",
-              "t": "đã làm sai"
+              "t": "小林懂听了。"
             },
             {
               "k": "D",
-              "t": "sẽ làm lại"
+              "t": "小林听了懂。"
             }
           ],
           "answer": "A",
-          "explain": "没 + V + 完 diễn tả chưa đạt kết quả hoàn thành."
+          "explain": "Nghe hết chưa chắc đã hiểu; câu cần diễn tả là cuối cùng Tiểu Lâm đã hiểu.",
+          "example": "小林听懂了。"
         },
         {
           "id": "B9-B09",
@@ -6220,92 +6377,92 @@ const LESSON = {
         {
           "id": "B9-A15",
           "type": "listening",
-          "prompt": "Nghe câu và chọn ý đúng.",
+          "prompt": "听句子，选择正确的意思。",
           "model": "我每天八点上班。希望你明天来。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "题太多了，我今天没做完。",
-          "audioSrc": "audio/hsk2/bai9/b9-a15.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Bài quá nhiều nên chưa làm xong"
+              "t": "题太多，所以今天没做完。"
             },
             {
               "k": "B",
-              "t": "Đã làm xong toàn bộ"
+              "t": "今天已经做完所有题。"
             },
             {
               "k": "C",
-              "t": "Không có bài tập"
+              "t": "今天没有作业。"
             },
             {
               "k": "D",
-              "t": "Ngày mai không làm"
+              "t": "明天不做作业。"
             }
           ],
+          "audioText": "题太多了，我今天没做完。",
+          "audioSrc": "audio/hsk2/bai9/b9-a15.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "A"
         },
         {
           "id": "B9-B13",
           "type": "listening",
-          "prompt": "Nghe và xác định mốc bắt đầu.",
+          "prompt": "听句子，什么时候开始上班？",
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "我从明天开始上班。",
-          "audioSrc": "audio/hsk2/bai9/b9-b13.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Hôm qua"
+              "t": "昨天"
             },
             {
               "k": "B",
-              "t": "Ngày mai"
+              "t": "明天"
             },
             {
               "k": "C",
-              "t": "Tháng trước"
+              "t": "上个月"
             },
             {
               "k": "D",
-              "t": "Buổi tối"
+              "t": "晚上"
             }
-          ]
+          ],
+          "audioText": "我从明天开始上班。",
+          "audioSrc": "audio/hsk2/bai9/b9-b13.mp3",
+          "audioStatus": "awaiting_recording"
         },
         {
           "id": "B9-B14",
           "type": "listening",
-          "prompt": "Nghe và chọn nghĩa đúng.",
+          "prompt": "听句子，今天是第几天来中国？",
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "这是我第一天来中国。",
-          "audioSrc": "audio/hsk2/bai9/b9-b14.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Tôi đến Trung Quốc lần hai"
+              "t": "第二天"
             },
             {
               "k": "B",
-              "t": "Tôi đã ở Trung Quốc một năm"
+              "t": "第十天"
             },
             {
               "k": "C",
-              "t": "Đây là ngày đầu tôi đến Trung Quốc"
+              "t": "第一天"
             },
             {
               "k": "D",
-              "t": "Tôi muốn về nước"
+              "t": "明天"
             }
-          ]
+          ],
+          "audioText": "这是我第一天来中国。",
+          "audioSrc": "audio/hsk2/bai9/b9-b14.mp3",
+          "audioStatus": "awaiting_recording"
         },
         {
           "id": "B9-B15",
           "type": "listening",
-          "prompt": "Nghe hội thoại. Người B hiểu chưa?",
+          "prompt": "听对话，B现在怎么样？",
           "tokens": [
             "作业",
             "我",
@@ -6314,32 +6471,32 @@ const LESSON = {
           ],
           "answer": "D",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "A：你听懂了吗？B：我还没听懂。",
-          "audioSrc": "audio/hsk2/bai9/b9-b15.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Đã hiểu hết"
+              "t": "已经听懂了"
             },
             {
               "k": "B",
-              "t": "Đã làm xong"
+              "t": "已经做完了"
             },
             {
               "k": "C",
-              "t": "Đã viết sai"
+              "t": "写错了"
             },
             {
               "k": "D",
-              "t": "Chưa hiểu"
+              "t": "还没听懂"
             }
-          ]
+          ],
+          "audioText": "A：你听懂了吗？B：我还没听懂。",
+          "audioSrc": "audio/hsk2/bai9/b9-b15.mp3",
+          "audioStatus": "awaiting_recording"
         },
         {
           "id": "B9-B16",
           "type": "listening",
-          "prompt": "Nghe và chọn kết quả đúng.",
+          "prompt": "听句子，接下来要做什么？",
           "tokens": [
             "从",
             "开始",
@@ -6349,32 +6506,32 @@ const LESSON = {
           ],
           "answer": "B",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "这道题我做错了，要再做一遍。",
-          "audioSrc": "audio/hsk2/bai9/b9-b16.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Làm xong ngay"
+              "t": "马上做完"
             },
             {
               "k": "B",
-              "t": "Làm sai và cần làm lại"
+              "t": "再做一遍"
             },
             {
               "k": "C",
-              "t": "Không có câu hỏi"
+              "t": "没有题"
             },
             {
               "k": "D",
-              "t": "Đang đi làm"
+              "t": "去上班"
             }
-          ]
+          ],
+          "audioText": "这道题我做错了，要再做一遍。",
+          "audioSrc": "audio/hsk2/bai9/b9-b16.mp3",
+          "audioStatus": "awaiting_recording"
         },
         {
           "id": "B9-B17",
           "type": "listening",
-          "prompt": "Nghe lời chào và chọn nơi phù hợp.",
+          "prompt": "听句子，说话的地点最可能是哪里？",
           "tokens": [
             "欢迎",
             "我们",
@@ -6384,66 +6541,63 @@ const LESSON = {
           ],
           "answer": "C",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "欢迎你来我们公司上班。",
-          "audioSrc": "audio/hsk2/bai9/b9-b17.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Trường học"
+              "t": "学校"
             },
             {
               "k": "B",
-              "t": "Nhà hàng"
+              "t": "饭店"
             },
             {
               "k": "C",
-              "t": "Công ty"
+              "t": "公司"
             },
             {
               "k": "D",
-              "t": "Bệnh viện"
+              "t": "医院"
             }
-          ]
+          ],
+          "audioText": "欢迎你来我们公司上班。",
+          "audioSrc": "audio/hsk2/bai9/b9-b17.mp3",
+          "audioStatus": "awaiting_recording"
         },
         {
           "id": "B9-B18",
           "type": "listening",
-          "prompt": "Nghe câu và chọn hành động đúng.",
+          "prompt": "听句子，‘我希望明天能做完作业’表示什么？",
           "model": "我没做完这道题。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "我希望明天能做完作业。",
-          "audioSrc": "audio/hsk2/bai9/b9-b18.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
-              "t": "Ngày mai không đi học"
+              "t": "明天不上课"
             },
             {
               "k": "B",
-              "t": "Hôm qua làm sai"
+              "t": "昨天做错了"
             },
             {
               "k": "C",
-              "t": "Bắt đầu đi làm"
+              "t": "开始上班"
             },
             {
               "k": "D",
-              "t": "Ngày mai làm xong bài tập"
+              "t": "希望明天完成作业"
             }
           ],
+          "audioText": "我希望明天能做完作业。",
+          "audioSrc": "audio/hsk2/bai9/b9-b18.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "D"
         },
         {
           "id": "B9-F09",
           "type": "listening",
-          "prompt": "Nghe lời nhắn và chọn phản hồi phù hợp.",
+          "prompt": "听句子，选择最合适的回答。",
           "model": "我从第一题开始做。题很多，我还没做完。我希望明天做完，也不要做错。",
           "explain": "Nghe đủ thông tin trọng tâm rồi mới chọn đáp án; có thể nghe lại.",
-          "audioText": "别着急，明天再做吧。",
-          "audioSrc": "audio/hsk2/bai9/b9-f09.mp3",
-          "audioStatus": "awaiting_recording",
           "options": [
             {
               "k": "A",
@@ -6462,6 +6616,9 @@ const LESSON = {
               "t": "第一题错。"
             }
           ],
+          "audioText": "别着急，明天再做吧。",
+          "audioSrc": "audio/hsk2/bai9/b9-f09.mp3",
+          "audioStatus": "awaiting_recording",
           "answer": "A"
         }
       ]
@@ -6474,7 +6631,7 @@ const LESSON = {
       "passages": [
         {
           "id": "p9",
-          "text": "今天老师给我们很多题。小李说：“题太多了，我还没做完。”他从第一题开始做，后来终于做完了全部的问题，也发现了两个错题。",
+          "text": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。",
           "source": "original_extension"
         }
       ],
@@ -6482,7 +6639,7 @@ const LESSON = {
         {
           "id": "B9-C01",
           "type": "mcq",
-          "prompt": "老师让大家做什么？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 老师让大家做什么？",
           "options": [
             {
               "k": "A",
@@ -6502,16 +6659,17 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Đáp án nằm ở câu đầu của đoạn.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 做完.",
-          "passageId": "p9"
+          "passageId": "p9",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C02",
           "type": "mcq",
-          "prompt": "小李为什么还没做完？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小李为什么还没做完？",
           "options": [
             {
               "k": "A",
@@ -6531,16 +6689,17 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Tìm nguyên nhân được nói trực tiếp trong đoạn.",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 从.",
-          "passageId": "p9"
+          "passageId": "p9",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C03",
           "type": "mcq",
-          "prompt": "小李从哪一题开始做？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小李从哪一题开始做？",
           "options": [
             {
               "k": "A",
@@ -6560,16 +6719,17 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
+          "explain": "Câu đầu phần làm bài nêu rõ 从第一题开始做。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Câu trên có liên quan trực tiếp đến 第一.",
-          "passageId": "p9"
+          "passageId": "p9",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C04",
           "type": "mcq",
-          "prompt": "做完以后，小李发现做错了几题？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 做完以后，小李发现做错了几题？",
           "options": [
             {
               "k": "A",
@@ -6589,95 +6749,128 @@ const LESSON = {
             }
           ],
           "answer": "A",
-          "explain": "Trả lời dựa vào thông tin cụ thể trong đoạn đọc.",
-          "passageId": "p9"
+          "explain": "Đoạn văn nêu 有两道题做错了。",
+          "passageId": "p9",
+          "readingText": "今天老师给我们很多题。小李从第一题开始做，可是题太多，他做了很长时间还没做完。后来，同学帮助他一起看题。下午，小李终于做完了所有的题，可是发现有两道题做错了。他说明天要再做一遍。"
         },
         {
           "id": "B9-C05",
           "type": "mcq",
-          "prompt": "短文中，‘他从第一题开始做’表示什么？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小王为什么想了很长时间？",
           "options": [
             {
               "k": "A",
-              "t": "他先做第一题"
+              "t": "第五题很难。"
             },
             {
               "k": "B",
-              "t": "他只做最后一题"
+              "t": "他没有试卷。"
             },
             {
               "k": "C",
-              "t": "他明天才开始"
+              "t": "他要去上班。"
             },
             {
               "k": "D",
-              "t": "他在公司开始"
+              "t": "老师不让他做。"
             }
           ],
           "answer": "A",
-          "explain": "从第一题开始做 = bắt đầu từ câu thứ nhất.",
-          "readingText": "他从第一题开始做，做错了两道题。"
+          "explain": "Đoạn văn cho biết 第五题很难，所以他想了很长时间。",
+          "readingText": "小王今天拿到一张试卷，一共有十道题。他先从第一题开始做。前面几题不太难，可是第五题很难，他想了很长时间。最后，小王把十道题都做完了，可是发现第五题和第八题做错了。老师让他回家以后再做一遍。"
         },
         {
           "id": "B9-C06",
           "type": "mcq",
-          "prompt": "小林最后怎么样？",
+          "prompt": "Đọc đoạn văn và chọn đáp án đúng: 小林最后怎么样？",
           "options": [
             {
               "k": "A",
-              "t": "他听懂了"
+              "t": "他听懂了，也做完了工作。"
             },
             {
               "k": "B",
-              "t": "他第二次上班"
+              "t": "他第二次上班。"
             },
             {
               "k": "C",
-              "t": "同事做错了"
+              "t": "同事做错了。"
             },
             {
               "k": "D",
-              "t": "他没去公司"
+              "t": "他没去公司。"
             }
           ],
           "answer": "A",
-          "explain": "终于听懂了 cho biết cuối cùng đã nghe hiểu.",
-          "readingText": "小林第一次上班，很多事情不懂。同事慢慢告诉他，他终于听懂了。"
+          "explain": "Cuối đoạn có 已经听懂了，也做完了第一份工作。",
+          "readingText": "小林第一天上班，很多事情还不懂。同事先慢慢告诉他怎么做，小林认真地听。下午，他已经听懂了，也做完了第一份工作。"
         },
         {
           "id": "B9-C07",
-          "type": "text_fill",
-          "prompt": "读短文后填空：我把答案___了，老师让我再做一遍。",
-          "answer": [
-            "写错"
-          ],
-          "explain": "写错 = viết sai; 再做一遍 = làm lại một lần.",
-          "readingText": "我把答案写错了，老师让我再做一遍。"
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 我把答案___了，老师让我再做一遍。",
+          "answer": "A",
+          "explain": "Viết sai đáp án là 写错。",
+          "readingText": "我把答案写错了，老师让我再做一遍。",
+          "options": [
+            {
+              "k": "A",
+              "t": "写错"
+            },
+            {
+              "k": "B",
+              "t": "写完"
+            },
+            {
+              "k": "C",
+              "t": "听懂"
+            },
+            {
+              "k": "D",
+              "t": "开始"
+            }
+          ]
         },
         {
           "id": "B9-C08",
-          "type": "text_fill",
-          "prompt": "读短文后填空：听话的人从___开始来公司上班。",
-          "answer": [
-            "明天"
-          ],
-          "explain": "从明天开始 chỉ điểm bắt đầu thời gian.",
-          "readingText": "欢迎你从明天开始来我们公司上班。"
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn rồi chọn từ để điền vào chỗ trống: 欢迎你从___开始来我们公司上班。",
+          "answer": "A",
+          "explain": "Mốc bắt đầu đi làm trong đoạn là 明天。",
+          "readingText": "欢迎你从明天开始来我们公司上班。",
+          "options": [
+            {
+              "k": "A",
+              "t": "明天"
+            },
+            {
+              "k": "B",
+              "t": "第一题"
+            },
+            {
+              "k": "C",
+              "t": "两道题"
+            },
+            {
+              "k": "D",
+              "t": "下午四点"
+            }
+          ]
         },
         {
           "id": "B9-C09",
           "type": "self_check",
-          "prompt": "用中文写一句话概括短文。",
+          "prompt": "Đọc đoạn văn rồi viết một câu tiếng Trung tóm tắt ý chính.",
           "model": "题太多了，我没做完，明天再做。",
-          "explain": "Phải thể hiện đủ: số lượng nhiều, chưa hoàn tất và dự định tiếp tục.",
+          "explain": "Nêu nguyên nhân, kết quả hiện tại hoặc việc sẽ làm tiếp.",
           "readingText": "题太多，我没做完，明天再做。"
         },
         {
           "id": "B9-C10",
           "type": "self_check",
-          "prompt": "给短文写一个中文标题。",
+          "prompt": "Đọc đoạn văn rồi đặt một tiêu đề ngắn bằng tiếng Trung.",
           "model": "第一次上班 / 新工作。",
-          "explain": "Tiêu đề mở; cần thể hiện đúng ý lần đầu/ngày đầu đi làm.",
+          "explain": "Tiêu đề ngắn, đúng với ý chính là đủ.",
           "readingText": "小王第一天上班，很多事情还不懂。"
         },
         {
@@ -6806,18 +6999,18 @@ const LESSON = {
         {
           "id": "B9-D07",
           "type": "self_check",
-          "prompt": "Đặt 2 câu có ngữ cảnh: một câu nói chưa làm xong việc, một câu nói đã hiểu một bài khó. Dùng 完、懂.",
+          "prompt": "Đặt một câu tiếng Trung có cụm từ 做完. Em tự chọn tình huống.",
           "answer": "做完",
-          "explain": "Mỗi câu phải có chủ ngữ và tình huống rõ, không chỉ liệt kê từ.",
-          "model": "我作业还没做完。这个问题我听懂了。"
+          "explain": "Một câu là một ý để hệ thống và giáo viên chấm riêng.",
+          "model": "我晚上做完作业了。"
         },
         {
           "id": "B9-D08",
           "type": "self_check",
-          "prompt": "Viết 2 câu: nhờ bạn viết lại một chữ bị sai, rồi nói bạn ấy đã làm xong chưa.",
+          "prompt": "Đặt một câu tiếng Trung có cụm từ 听懂. Em tự chọn tình huống.",
           "answer": "一遍",
-          "explain": "Kết hợp sửa lỗi với hỏi kết quả; chú ý 写错 / 写完.",
-          "model": "这个字写错了，请你再写一下。你写完了吗？"
+          "explain": "Một câu là một ý để hệ thống và giáo viên chấm riêng.",
+          "model": "老师说得很清楚，我听懂了。"
         },
         {
           "id": "B9-D09",
@@ -6845,12 +7038,12 @@ const LESSON = {
         {
           "id": "B9-E02",
           "type": "retell",
-          "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
-          "model": "小王第一天来公司。他有很多事情不懂，同事帮助他。下午他做完了工作。",
-          "explain": "Kể lại đủ: ngày đầu, khó khăn/giúp đỡ, kết quả.",
-          "error": "Không cần chép nguyên văn; giữ thông tin chính bằng cách nói của mình.",
+          "prompt": "Đọc đoạn văn trong 60 giây. Khi đoạn tự ẩn, kể lại bằng tiếng Trung bằng 3–4 câu.",
+          "model": "小王第一天来公司工作。开始有些地方不懂，同事帮助他。下午他做完了第一份工作，希望明天做得更好。",
+          "explain": "Kể đủ: ngày đầu, điều chưa hiểu/được giúp, và kết quả cuối cùng.",
+          "error": "Không cần chép nguyên văn; hãy dùng câu của em để kể các ý chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
-          "sourceText": "小王第一天来公司工作。他有很多事情不懂，同事帮助他。下午他做完了第一份工作。",
+          "sourceText": "小王第一天来公司工作。他早上八点到公司，先认识了一个新同事。同事告诉他怎么做第一份工作，可是小王有几个地方还不懂。中午以后，同事又慢慢帮助他一起看题。下午四点，小王终于做完了第一份工作。他很高兴，也希望明天能做得更好。",
           "readSeconds": 60
         },
         {
@@ -7245,6 +7438,9 @@ function isAnswered(q){
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -7405,41 +7601,25 @@ function resultBanner(status){
 }
 
 function renderMcq(q, body){
-  if(state.submitted){
-    const g = gradeQuestion(q);
-    body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong'));
-  }
-  const list = el('div','opt-list');
-  q.options.forEach(opt => {
-    const row = el('div','opt');
-    row.appendChild(el('span','opt-letter', opt.k));
-    row.appendChild(el('span','', mixText(opt.t)));
-    const selected = state.answers[q.id] === opt.k;
+  if(state.submitted){ const g=gradeQuestion(q); body.appendChild(resultBanner(g.score>=g.max ? 'correct' : 'wrong')); }
+  const list=el('div','opt-list'); list.setAttribute('role','radiogroup');
+  q.options.forEach(opt=>{
+    const row=el('button','opt'); row.type='button'; row.setAttribute('role','radio');
+    const selected=state.answers[q.id]===opt.k; row.setAttribute('aria-checked',String(selected));
+    row.appendChild(el('span','opt-letter',opt.k)); row.appendChild(el('span','',mixText(opt.t)));
     if(selected) row.classList.add('selected');
-    if(state.submitted){
-      row.classList.add('locked');
-      if(opt.k === q.answer) row.classList.add('correct-answer');
-      else if(selected && opt.k !== q.answer) row.classList.add('wrong-answer');
-    } else {
-      row.addEventListener('click', () => {
-        state.answers[q.id] = opt.k;
-        DataStore.saveInProgress();
-        // Tự động chuyển câu tiếp theo sau khi chọn (single-choice)
-        renderAll();
-        setTimeout(() => { if(state.current < TOTAL_Q-1){ state.current++; renderAll(); scrollToQuestion(); } }, 260);
-      });
-    }
+    if(state.submitted){ row.disabled=true; row.classList.add('locked'); if(opt.k===q.answer) row.classList.add('correct-answer'); else if(selected) row.classList.add('wrong-answer'); }
+    else row.addEventListener('click',()=>{ state.answers[q.id]=opt.k; DataStore.saveInProgress(); renderAll(); });
     list.appendChild(row);
-  });
-  body.appendChild(list);
+  }); body.appendChild(list);
 }
-
 function renderListening(q, body){
-  const intro = el('div','hint-inline','Nghe 2–3 lần, sau đó chọn đáp án. Không đọc lời thoại trước khi trả lời.');
+  const hasAudio = q.audioStatus === 'ready' && !!q.audioSrc;
+  const intro = el('div','hint-inline',hasAudio ? 'Nghe 2–3 lần, sau đó chọn đáp án.' : 'Audio đang được bổ sung. Hãy đọc kịch bản, sau đó chọn đáp án.');
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
-  if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
+  if(!hasAudio){
+    const status = el('div','audio-status','Chưa có audio nên kịch bản đang hiển thị để em vẫn làm bài được. Khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
     const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
     script.setAttribute('aria-label','Kịch bản câu nghe');
@@ -7539,11 +7719,9 @@ function renderReorder(q, body){
 
 function renderRetell(q, body){
   const source=el('div','retell-source',mixText(q.sourceText));
-  const actions=el('div','retell-actions'); const button=el('button','', 'Bắt đầu đọc'); button.type='button';
-  const timer=el('span','retell-timer', 'Đọc trong '+q.readSeconds+' giây rồi kể lại bằng lời của em.');
-  actions.append(button,timer); body.append(source,actions);
-  let left=q.readSeconds, interval;
-  button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
+  const actions=el('div','retell-actions'); const timer=el('span','retell-timer', 'Bắt đầu đọc ngay: còn '+q.readSeconds+' giây.');
+  actions.append(timer); body.append(source,actions);
+  let left=q.readSeconds; const tick=()=>{ timer.textContent='Còn '+Math.max(left,0)+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); const interval=setInterval(tick,1000);
   renderSelfCheck(q, body);
 }
 function renderMultiFill(q, body){
@@ -7620,6 +7798,9 @@ function gradeQuestion(q){
     const ok = (q.answer||[]).some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
@@ -7728,7 +7909,7 @@ function submitQuiz(auto){
   DataStore.clearInProgress();
 
   renderAll();
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);
 }
 
 /* ================================================================
