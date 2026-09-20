@@ -1942,3 +1942,10 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   for(const [id,[prompt,options,answer]] of Object.entries(read)) Object.assign(all.find(q=>q.id===id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,passageId:"p11",explain:"Dựa vào thông tin cụ thể trong đoạn đọc."});
   ["A","B","C","D","B","C","D","A"].forEach((key,i)=>{const item=all.filter(x=>x.type==="listening")[i],correct=item.options.find(o=>o.k===item.answer).t,others=item.options.filter(o=>o.k!==item.answer).map(o=>o.t);others.splice("ABCD".indexOf(key),0,correct);item.options=others.map((t,j)=>({k:"ABCD"[j],t}));item.answer=key;});
 })();
+
+/* Revision sư phạm: dùng tình huống nhận diện người, so sánh và phỏng đoán. */
+(() => {const l=window.HAN_NGU_DATA.lessons["hsk2_bai11_bida"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id),mc=(id,p,o,k,e)=>Object.assign(q(id),{type:"mcq",prompt:p,options:o.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[k],explain:e});
+mc("B11-B01","你要说‘正在唱歌的那个女孩是我姐姐’，哪一句正确？",["唱歌的女孩是我姐姐。","唱歌女孩的是我姐姐。","女孩唱歌的是我姐姐。","唱歌的是女孩我姐姐。"],0,"用一段动作来说明‘哪一个人’时，选能自然指认人的句子。"); Object.assign(q("B11-B02"),{type:"self_check",prompt:"介绍右边正在说话的一位朋友，写一句话。",model:"右边那个说话的人是我朋友。",explain:"句子要能让听者认出是哪一个人。"});
+mc("B11-B03","两部手机价格不同。哪一句说得自然？",["这个手机比那个便宜。","这个手机便宜比那个。","这个比手机那个便宜。","手机这个那个比便宜。"],0,"比较两样东西时，要让两件物品和结果都清楚。"); Object.assign(q("B11-B04"),{type:"self_check",prompt:"比较你和一个朋友的年龄，写一句话。",model:"他比我大两岁。",explain:"写清楚比较的两个人和差多少。"});
+mc("B11-B05","朋友今天没来，你不确定原因。哪一句合适？",["他可能生病了。","他一定生病了。","他生病可能。","可能他了生病。"],0,"不确定时，应选择带有猜测语气的说法。"); Object.assign(q("B11-B06"),{type:"self_check",prompt:"对一位没接电话的朋友作一个不确定的猜测。",model:"他没接电话，可能正在上课。",explain:"要表达这是猜测，不是已确定的事实。"});
+Object.assign(q("B11-B09"),{type:"multi_fill",prompt:"从词语中选择合适的词，完成这段介绍。",parts:["右边那个","___","的女孩姓王。她","___","我小两岁。她今天没来，","___","在家学习。去年她","___","学汉语。"],options:["唱歌","比","可能","开始","便宜","孩子"],answers:["唱歌","比","可能","开始"],explain:"根据人物介绍的意思选择四个词。"});})();

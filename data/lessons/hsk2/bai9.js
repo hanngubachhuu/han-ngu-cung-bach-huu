@@ -1916,3 +1916,24 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   for(const [id,[prompt,options,answer]] of Object.entries(read)) Object.assign(all.find(q=>q.id===id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,passageId:"p9",explain:"Trả lời dựa vào thông tin cụ thể trong đoạn đọc."});
   ["A","B","C","D","B","C","D","A"].forEach((key,i)=>{const item=all.filter(x=>x.type==="listening")[i],correct=item.options.find(o=>o.k===item.answer).t,others=item.options.filter(o=>o.k!==item.answer).map(o=>o.t);others.splice("ABCD".indexOf(key),0,correct);item.options=others.map((t,j)=>({k:"ABCD"[j],t}));item.answer=key;});
 })();
+
+/* Revision sư phạm: kiểm tra cách dùng trong ngữ cảnh, không hỏi tên thuật ngữ. */
+(() => {
+  const l=window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id),mc=(id,prompt,opts,answer,extra={})=>Object.assign(q(id),{type:"mcq",prompt,options:opts.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[answer],...extra});
+  mc("B9-B01","小王的作业还没___，所以他不能去玩。",["做完","完做","做了完","做到"],0,{explain:"看语境：作业还没结束，要选表示‘做完’的说法。"});
+  Object.assign(q("B9-B02"),{type:"self_check",prompt:"把两句话合成一句：我看这本书。我看完了。",model:"我看完这本书了。",explain:"用完整句表达动作和结果，不需要说出术语名称。"});
+  mc("B9-B03","你什么时候开始学汉语？请选择最自然的回答。",["我从九月开始学汉语。","我九月从学汉语。","我开始从九月学汉语。","从我九月学汉语。"],0,{explain:"回答起点时，把时间放在 从 后面。"});
+  Object.assign(q("B9-B04"),{type:"self_check",prompt:"根据提示写一句话：八点开始学习，十点结束。",model:"我从八点学习到十点。",explain:"句子要说清楚开始和结束的时间。"});
+  Object.assign(q("B9-B05"),{type:"multi_fill",prompt:"从词语中选择合适的词，完成这段话。",parts:["小林","___","九月","___","学习汉语。这是他","___","次上课。他有很多题没","___","。"],options:["从","开始","第一","做完","写错","欢迎"],answers:["从","开始","第一","做完"],explain:"按意思和句子位置选择四个词；每个空只放一个最合适的词。"});
+  Object.assign(q("B9-B06"),{type:"self_check",prompt:"你第一次做什么事时觉得难？写2句：说出事情，再说你最后懂了还是没懂。",model:"我第一次学汉语时觉得很难。老师说得很清楚，我后来听懂了。",explain:"先交代第一次做的事，再写结果；内容可按自己的经历改变。"});
+  const read={
+    "B9-C01":["老师让大家做什么？",["做很多练习题","唱一首歌","找一部手机","去公司上班"]],"B9-C02":["小李为什么还没做完？",["题太多了","他没来上课","他丢了本子","他已经上班了"]],"B9-C03":["小李从哪一题开始做？",["第一题","最后一题","明天","公司"]],"B9-C04":["做完以后，小李发现做错了几题？",["两题","一题","零题","十题"]],
+    "B9-C05":["短文中，‘他从第一题开始做’表示什么？",["他先做第一题","他只做最后一题","他明天才开始","他在公司开始"]],"B9-C06":["小林最后怎么样？",["他听懂了","他第二次上班","同事做错了","他没去公司"]]
+  };
+  Object.entries(read).forEach(([id,[prompt,opts]])=>Object.assign(q(id),{prompt,options:opts.map((t,i)=>({k:"ABCD"[i],t}))}));
+  Object.assign(q("B9-C05"),{readingText:"他从第一题开始做，做错了两道题。"}); Object.assign(q("B9-C06"),{readingText:"小林第一次上班，很多事情不懂。同事慢慢告诉他，他终于听懂了。"});
+  Object.assign(q("B9-C07"),{prompt:"读短文后填空：我把答案___了，老师让我再做一遍。",answer:["写错"],readingText:"我把答案写错了，老师让我再做一遍。"});
+  Object.assign(q("B9-C08"),{prompt:"读短文后填空：听话的人从___开始来公司上班。",answer:["明天"],readingText:"欢迎你从明天开始来我们公司上班。"});
+  Object.assign(q("B9-C09"),{prompt:"用中文写一句话概括短文。",model:"题太多了，我没做完，明天再做。",readingText:"题太多，我没做完，明天再做。"});
+  Object.assign(q("B9-C10"),{prompt:"给短文写一个中文标题。",model:"第一次上班 / 新工作。",readingText:"小王第一天上班，很多事情还不懂。"});
+})();

@@ -77,9 +77,11 @@ function addListeningRenderer(html) {
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
   if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Bản ghi đang chuẩn bị. Giáo viên sẽ bổ sung tệp nghe cho câu này.');
+    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
-    player.appendChild(status); body.appendChild(player);
+    const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
+    script.setAttribute('aria-label','Kịch bản câu nghe');
+    player.append(status,script); body.appendChild(player);
   } else {
     const audio = document.createElement('audio'); audio.preload='metadata'; audio.src=q.audioSrc;
     const play = el('button','audio-play','Phát audio'); play.type='button';
@@ -119,12 +121,17 @@ function addListeningRenderer(html) {
 .audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
 .audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 .audio-status{flex:1 1 100%;font-size:var(--fs-sm,14px);line-height:var(--lh-normal,1.5);color:var(--color-text-secondary);}
+.audio-script{flex:1 1 100%;padding:var(--space-md);border-left:4px solid var(--color-accent);border-radius:var(--radius-sm);background:var(--color-surface);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-primary);}
 .audio-player-mini audio{display:none;}
 .retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);}
 .retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
 .retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
 .retell-timer{color:var(--color-text-secondary);font-weight:700;}
-@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-md);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}}
+.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-lg,20px);line-height:var(--lh-relaxed,1.75);}
+.multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
+.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
+.q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
+@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}}
 /* HSK-LESSON-UX-PATCH:END */
 `;
   if (!html.includes(switchNeedle) || !html.includes(labelNeedle) || !html.includes(anchor)) {
@@ -143,24 +150,39 @@ function addListeningRenderer(html) {
   const retellAnchor = "function renderSelfCheck(q, body){";
   const retellRenderer = `function renderRetell(q, body){
   const source=el('div','retell-source',mixText(q.sourceText));
-  const actions=el('div','retell-actions'); const button=el('button','', 'Bắt đầu đọc'); button.type='button';
-  const timer=el('span','retell-timer', 'Đọc trong '+q.readSeconds+' giây rồi kể lại bằng lời của em.');
-  actions.append(button,timer); body.append(source,actions);
-  let left=q.readSeconds, interval;
-  button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
+  const actions=el('div','retell-actions'); const timer=el('span','retell-timer', 'Bắt đầu đọc ngay: còn '+q.readSeconds+' giây.');
+  actions.append(timer); body.append(source,actions);
+  let left=q.readSeconds; const tick=()=>{ timer.textContent='Còn '+Math.max(left,0)+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); const interval=setInterval(tick,1000);
   renderSelfCheck(q, body);
+}
+function renderMultiFill(q, body){
+  const values=Array.isArray(state.answers[q.id]) ? state.answers[q.id].slice() : Array(q.answers.length).fill('');
+  const text=el('div','multi-fill-text'); let blank=0;
+  q.parts.forEach(part=>{ if(part!=='___'){ text.appendChild(el('span','',mixText(part))); return; } const index=blank++; const select=document.createElement('select'); select.className='multi-fill-select'; select.setAttribute('aria-label','Chọn từ cho chỗ trống '+(index+1)); select.appendChild(new Option('— chọn từ —','')); q.options.forEach(word=>select.appendChild(new Option(word,word))); select.value=values[index]||''; if(state.submitted) select.disabled=true; else select.addEventListener('change',()=>{ values[index]=select.value; state.answers[q.id]=values; DataStore.saveInProgress(); updateProgress(); renderNavGrid(); }); text.appendChild(select); });
+  body.appendChild(text); body.appendChild(el('div','multi-fill-bank','Từ cho sẵn: '+q.options.join(' · ')));
+  if(state.submitted){ const g=gradeQuestion(q); body.insertBefore(resultBanner(g.score>=g.max?'correct':'wrong'),text); if(g.score<g.max) body.appendChild(el('div','answer-reveal-box','<div class="label">Đáp án</div><div class="content">'+mixText(q.answers.join(' · '))+'</div>')); }
 }
 `;
   if (!html.includes("function renderRetell(q, body)")) {
-    html = html.replace(switchNeedle, `${switchNeedle}\n    case 'retell': renderRetell(q, body); break;`)
-      .replace(labelNeedle, "listening:'Nghe hiểu', retell:'Đọc - kể lại', self_check:'Tự luận'")
+    html = html.replace(switchNeedle, `${switchNeedle}\n    case 'retell': renderRetell(q, body); break;\n    case 'multi_fill': renderMultiFill(q, body); break;`)
+      .replace(labelNeedle, "listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'")
       .replace(retellAnchor, `${retellRenderer}${retellAnchor}`);
+  }
+  if (!html.includes("function renderMultiFill(q, body)")) {
+    html = html.replace("function renderSelfCheck(q, body){", `${retellRenderer.split("function renderMultiFill")[1] ? "function renderMultiFill" + retellRenderer.split("function renderMultiFill")[1] : ""}function renderSelfCheck(q, body){`)
+      .replace("case 'retell': renderRetell(q, body); break;", "case 'retell': renderRetell(q, body); break;\n    case 'multi_fill': renderMultiFill(q, body); break;")
+      .replace("retell:'Đọc - kể lại', self_check:'Tự luận'", "retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'");
+  }
+  if (!html.includes("if(q.readingText){")) {
+    html = html.replace("  const card = el('div','q-card');", "  if(q.readingText){\n    const pc = el('div','passage-card');\n    pc.appendChild(el('div','passage-label','阅读材料'));\n    pc.appendChild(el('div','passage-text',mixText(q.readingText)));\n    area.appendChild(pc);\n  }\n\n  const card = el('div','q-card');");
   }
   html = html.replace(/\/\* HSK-LESSON-UX-PATCH:START \*\/[\s\S]*?\/\* HSK-LESSON-UX-PATCH:END \*\/\n?/, '');
   html = html.replace(/\/\* Audio player:[\s\S]*?\.audio-speed\{[^}]*\}\n/, '');
   html = html.replace("</style>", `${css}</style>`);
   html = html.replace(/if\(q\.type === 'self_check'\)/g, "if(q.type === 'self_check' || q.type === 'retell')")
     .replace(/else if\(q\.type === 'self_check'\)/g, "else if(q.type === 'self_check' || q.type === 'retell')");
+  html = html.replace("if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token", "if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);\n  if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token")
+    .replace("  if(q.type === 'reorder'){", "  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }\n  if(q.type === 'reorder'){");
   return html;
 }
 

@@ -1750,3 +1750,9 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   for(const [id,[prompt,options,answer]] of Object.entries(read)) Object.assign(all.find(q=>q.id===id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,passageId:"p10",explain:"Dựa vào diễn biến của cả đoạn để trả lời."});
   ["A","B","C","D","B","C","D","A"].forEach((key,i)=>{const item=all.filter(x=>x.type==="listening")[i],correct=item.options.find(o=>o.k===item.answer).t,others=item.options.filter(o=>o.k!==item.answer).map(o=>o.t);others.splice("ABCD".indexOf(key),0,correct);item.options=others.map((t,j)=>({k:"ABCD"[j],t}));item.answer=key;});
 })();
+
+/* Revision sư phạm: ngữ pháp xuất hiện trong lời nói và hành động cụ thể. */
+(() => {const l=window.HAN_NGU_DATA.lessons["hsk2_bai10_biezhao"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id),mc=(id,p,o,k,e)=>Object.assign(q(id),{type:"mcq",prompt:p,options:o.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[k],explain:e});
+mc("B10-B01","朋友一直找手机，可是手机在桌子上。你会怎么说？",["别找了，手机在桌子上呢。","别手机找了在桌子上。","不要找手机在桌子。","手机别找了桌子。"],0,"在劝对方停止不必要的动作时，选自然的表达。"); Object.assign(q("B10-B02"),{type:"self_check",prompt:"同学上课还在玩手机。写一句提醒他停止的礼貌话。",model:"别玩手机了，快上课吧。",explain:"要有需要停止的动作和合适的课堂语境。"});
+mc("B10-B03","老师对学生很好。这句话说的是什么关系？",["老师对学生的态度很好","学生在老师后面","老师正在找学生","学生对老师说话"],0,"通过人物关系理解句子的意思。"); Object.assign(q("B10-B04"),{type:"self_check",prompt:"用一句话告诉朋友：妈妈对你很好。",model:"妈妈对我很好。",explain:"句子要清楚说明谁对谁的态度。"});
+Object.assign(q("B10-B09"),{type:"multi_fill",prompt:"从词语中选择合适的词，完成这段话。",parts:["哥哥","___","洗衣服呢。我在","___","手机。妈妈对我说：‘","___","找了，手机在桌子上呢。’我说：‘谢谢你","___","我。’"],options:["正在","找","别","帮助","课","鸡蛋"],answers:["正在","找","别","帮助"],explain:"根据家庭场景和前后意思选择四个词。"});})();

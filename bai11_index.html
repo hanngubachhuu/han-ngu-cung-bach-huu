@@ -856,6 +856,8 @@ footer.print-footer{display:none;}
 
 
 
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -874,12 +876,17 @@ footer.print-footer{display:none;}
 .audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
 .audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 .audio-status{flex:1 1 100%;font-size:var(--fs-sm,14px);line-height:var(--lh-normal,1.5);color:var(--color-text-secondary);}
+.audio-script{flex:1 1 100%;padding:var(--space-md);border-left:4px solid var(--color-accent);border-radius:var(--radius-sm);background:var(--color-surface);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-primary);}
 .audio-player-mini audio{display:none;}
 .retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);}
 .retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
 .retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
 .retell-timer{color:var(--color-text-secondary);font-weight:700;}
-@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-md);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}}
+.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-lg,20px);line-height:var(--lh-relaxed,1.75);}
+.multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
+.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
+.q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
+@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}}
 /* HSK-LESSON-UX-PATCH:END */
 </style>
 <link rel="stylesheet" href="navigation.css">
@@ -2018,27 +2025,27 @@ const LESSON = {
         {
           "id": "B11-B01",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词短语作定语”?",
+          "prompt": "你要说‘正在唱歌的那个女孩是我姐姐’，哪一句正确？",
           "options": [
             {
               "k": "A",
-              "t": "[V + O + 的] + N"
+              "t": "唱歌的女孩是我姐姐。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "唱歌女孩的是我姐姐。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "女孩唱歌的是我姐姐。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "唱歌的是女孩我姐姐。"
             }
           ],
           "answer": "A",
-          "explain": "Cụm động từ đứng trước 的 để bổ nghĩa cho danh từ.",
+          "explain": "用一段动作来说明‘哪一个人’时，选能自然指认人的句子。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Cụm động từ đứng trước 的 để bổ nghĩa cho danh từ.",
@@ -2049,9 +2056,9 @@ const LESSON = {
         {
           "id": "B11-B02",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 动词短语作定语.",
-          "model": "Ví dụ: 那个学中文的学生",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 动词短语作定语.",
+          "prompt": "介绍右边正在说话的一位朋友，写一句话。",
+          "model": "右边那个说话的人是我朋友。",
+          "explain": "句子要能让听者认出是哪一个人。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -2061,27 +2068,27 @@ const LESSON = {
         {
           "id": "B11-B03",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “比字句”?",
+          "prompt": "两部手机价格不同。哪一句说得自然？",
           "options": [
             {
               "k": "A",
-              "t": "A + 比 + B + Adj"
+              "t": "这个手机比那个便宜。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "这个手机便宜比那个。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "这个比手机那个便宜。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "手机这个那个比便宜。"
             }
           ],
           "answer": "A",
-          "explain": "So sánh A với B về một đặc điểm.",
+          "explain": "比较两样东西时，要让两件物品和结果都清楚。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "So sánh A với B về một đặc điểm.",
@@ -2092,9 +2099,9 @@ const LESSON = {
         {
           "id": "B11-B04",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 比字句.",
-          "model": "Ví dụ: 他比我大三岁。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 比字句.",
+          "prompt": "比较你和一个朋友的年龄，写一句话。",
+          "model": "他比我大两岁。",
+          "explain": "写清楚比较的两个人和差多少。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -2104,27 +2111,27 @@ const LESSON = {
         {
           "id": "B11-B05",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “可能”?",
+          "prompt": "朋友今天没来，你不确定原因。哪一句合适？",
           "options": [
             {
               "k": "A",
-              "t": "可能 + V/Adj"
+              "t": "他可能生病了。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "他一定生病了。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "他生病可能。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "可能他了生病。"
             }
           ],
           "answer": "A",
-          "explain": "Diễn tả khả năng, phỏng đoán.",
+          "explain": "不确定时，应选择带有猜测语气的说法。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Diễn tả khả năng, phỏng đoán.",
@@ -2135,9 +2142,9 @@ const LESSON = {
         {
           "id": "B11-B06",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 可能.",
-          "model": "Ví dụ: 他可能明天来。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 可能.",
+          "prompt": "对一位没接电话的朋友作一个不确定的猜测。",
+          "model": "他没接电话，可能正在上课。",
+          "explain": "要表达这是猜测，不是已确定的事实。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -2215,28 +2222,18 @@ const LESSON = {
         {
           "id": "B11-B09",
           "section": "grammar",
-          "type": "mcq",
-          "prompt": "Câu nào đúng với định ngữ động từ?",
+          "type": "multi_fill",
+          "prompt": "从词语中选择合适的词，完成这段介绍。",
           "options": [
-            {
-              "k": "A",
-              "t": "唱歌的女孩是我姐姐。"
-            },
-            {
-              "k": "B",
-              "t": "唱歌女孩的是我姐姐。"
-            },
-            {
-              "k": "C",
-              "t": "女孩唱歌的是我姐姐。"
-            },
-            {
-              "k": "D",
-              "t": "唱歌的是女孩我姐姐。"
-            }
+            "唱歌",
+            "比",
+            "可能",
+            "开始",
+            "便宜",
+            "孩子"
           ],
           "answer": "A",
-          "explain": "Cụm động từ + 的 đứng trước danh từ được bổ nghĩa.",
+          "explain": "根据人物介绍的意思选择四个词。",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
@@ -2244,7 +2241,24 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "parts": [
+            "右边那个",
+            "___",
+            "的女孩姓王。她",
+            "___",
+            "我小两岁。她今天没来，",
+            "___",
+            "在家学习。去年她",
+            "___",
+            "学汉语。"
+          ],
+          "answers": [
+            "唱歌",
+            "比",
+            "可能",
+            "开始"
+          ]
         },
         {
           "id": "B11-B10",
@@ -3818,27 +3832,27 @@ const LESSON = {
         {
           "id": "B11-B01",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词短语作定语”?",
+          "prompt": "你要说‘正在唱歌的那个女孩是我姐姐’，哪一句正确？",
           "options": [
             {
               "k": "A",
-              "t": "[V + O + 的] + N"
+              "t": "唱歌的女孩是我姐姐。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "唱歌女孩的是我姐姐。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "女孩唱歌的是我姐姐。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "唱歌的是女孩我姐姐。"
             }
           ],
           "answer": "A",
-          "explain": "Cụm động từ đứng trước 的 để bổ nghĩa cho danh từ.",
+          "explain": "用一段动作来说明‘哪一个人’时，选能自然指认人的句子。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Cụm động từ đứng trước 的 để bổ nghĩa cho danh từ.",
@@ -3849,9 +3863,9 @@ const LESSON = {
         {
           "id": "B11-B02",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 动词短语作定语.",
-          "model": "Ví dụ: 那个学中文的学生",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 动词短语作定语.",
+          "prompt": "介绍右边正在说话的一位朋友，写一句话。",
+          "model": "右边那个说话的人是我朋友。",
+          "explain": "句子要能让听者认出是哪一个人。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -3861,27 +3875,27 @@ const LESSON = {
         {
           "id": "B11-B03",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “比字句”?",
+          "prompt": "两部手机价格不同。哪一句说得自然？",
           "options": [
             {
               "k": "A",
-              "t": "A + 比 + B + Adj"
+              "t": "这个手机比那个便宜。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "这个手机便宜比那个。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "这个比手机那个便宜。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "手机这个那个比便宜。"
             }
           ],
           "answer": "A",
-          "explain": "So sánh A với B về một đặc điểm.",
+          "explain": "比较两样东西时，要让两件物品和结果都清楚。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "So sánh A với B về một đặc điểm.",
@@ -3892,9 +3906,9 @@ const LESSON = {
         {
           "id": "B11-B04",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 比字句.",
-          "model": "Ví dụ: 他比我大三岁。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 比字句.",
+          "prompt": "比较你和一个朋友的年龄，写一句话。",
+          "model": "他比我大两岁。",
+          "explain": "写清楚比较的两个人和差多少。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -3904,27 +3918,27 @@ const LESSON = {
         {
           "id": "B11-B05",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “可能”?",
+          "prompt": "朋友今天没来，你不确定原因。哪一句合适？",
           "options": [
             {
               "k": "A",
-              "t": "可能 + V/Adj"
+              "t": "他可能生病了。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "他一定生病了。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "他生病可能。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "可能他了生病。"
             }
           ],
           "answer": "A",
-          "explain": "Diễn tả khả năng, phỏng đoán.",
+          "explain": "不确定时，应选择带有猜测语气的说法。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Diễn tả khả năng, phỏng đoán.",
@@ -3935,9 +3949,9 @@ const LESSON = {
         {
           "id": "B11-B06",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 可能.",
-          "model": "Ví dụ: 他可能明天来。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 可能.",
+          "prompt": "对一位没接电话的朋友作一个不确定的猜测。",
+          "model": "他没接电话，可能正在上课。",
+          "explain": "要表达这是猜测，不是已确定的事实。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -4015,28 +4029,18 @@ const LESSON = {
         {
           "id": "B11-B09",
           "section": "grammar",
-          "type": "mcq",
-          "prompt": "Câu nào đúng với định ngữ động từ?",
+          "type": "multi_fill",
+          "prompt": "从词语中选择合适的词，完成这段介绍。",
           "options": [
-            {
-              "k": "A",
-              "t": "唱歌的女孩是我姐姐。"
-            },
-            {
-              "k": "B",
-              "t": "唱歌女孩的是我姐姐。"
-            },
-            {
-              "k": "C",
-              "t": "女孩唱歌的是我姐姐。"
-            },
-            {
-              "k": "D",
-              "t": "唱歌的是女孩我姐姐。"
-            }
+            "唱歌",
+            "比",
+            "可能",
+            "开始",
+            "便宜",
+            "孩子"
           ],
           "answer": "A",
-          "explain": "Cụm động từ + 的 đứng trước danh từ được bổ nghĩa.",
+          "explain": "根据人物介绍的意思选择四个词。",
           "sourceRefs": [
             "textbook_l11",
             "workbook_l11",
@@ -4044,7 +4048,24 @@ const LESSON = {
           ],
           "status": "teacher_enriched",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "parts": [
+            "右边那个",
+            "___",
+            "的女孩姓王。她",
+            "___",
+            "我小两岁。她今天没来，",
+            "___",
+            "在家学习。去年她",
+            "___",
+            "学汉语。"
+          ],
+          "answers": [
+            "唱歌",
+            "比",
+            "可能",
+            "开始"
+          ]
         },
         {
           "id": "B11-B10",
@@ -6010,27 +6031,27 @@ const LESSON = {
         {
           "id": "B11-B01",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词短语作定语”?",
+          "prompt": "你要说‘正在唱歌的那个女孩是我姐姐’，哪一句正确？",
           "options": [
             {
               "k": "A",
-              "t": "[V + O + 的] + N"
+              "t": "唱歌的女孩是我姐姐。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "唱歌女孩的是我姐姐。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "女孩唱歌的是我姐姐。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "唱歌的是女孩我姐姐。"
             }
           ],
           "answer": "A",
-          "explain": "Cụm động từ đứng trước 的 để bổ nghĩa cho danh từ.",
+          "explain": "用一段动作来说明‘哪一个人’时，选能自然指认人的句子。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Cụm động từ đứng trước 的 để bổ nghĩa cho danh từ."
@@ -6038,36 +6059,36 @@ const LESSON = {
         {
           "id": "B11-B02",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 动词短语作定语.",
-          "model": "Ví dụ: 那个学中文的学生",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 动词短语作定语.",
+          "prompt": "介绍右边正在说话的一位朋友，写一句话。",
+          "model": "右边那个说话的人是我朋友。",
+          "explain": "句子要能让听者认出是哪一个人。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
         },
         {
           "id": "B11-B03",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “比字句”?",
+          "prompt": "两部手机价格不同。哪一句说得自然？",
           "options": [
             {
               "k": "A",
-              "t": "A + 比 + B + Adj"
+              "t": "这个手机比那个便宜。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "这个手机便宜比那个。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "这个比手机那个便宜。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "手机这个那个比便宜。"
             }
           ],
           "answer": "A",
-          "explain": "So sánh A với B về một đặc điểm.",
+          "explain": "比较两样东西时，要让两件物品和结果都清楚。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "So sánh A với B về một đặc điểm."
@@ -6075,36 +6096,36 @@ const LESSON = {
         {
           "id": "B11-B04",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 比字句.",
-          "model": "Ví dụ: 他比我大三岁。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 比字句.",
+          "prompt": "比较你和一个朋友的年龄，写一句话。",
+          "model": "他比我大两岁。",
+          "explain": "写清楚比较的两个人和差多少。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
         },
         {
           "id": "B11-B05",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “可能”?",
+          "prompt": "朋友今天没来，你不确定原因。哪一句合适？",
           "options": [
             {
               "k": "A",
-              "t": "可能 + V/Adj"
+              "t": "他可能生病了。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "他一定生病了。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "他生病可能。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "可能他了生病。"
             }
           ],
           "answer": "A",
-          "explain": "Diễn tả khả năng, phỏng đoán.",
+          "explain": "不确定时，应选择带有猜测语气的说法。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Diễn tả khả năng, phỏng đoán."
@@ -6112,9 +6133,9 @@ const LESSON = {
         {
           "id": "B11-B06",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 可能.",
-          "model": "Ví dụ: 他可能明天来。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 可能.",
+          "prompt": "对一位没接电话的朋友作一个不确定的猜测。",
+          "model": "他没接电话，可能正在上课。",
+          "explain": "要表达这是猜测，不是已确定的事实。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
         },
@@ -6170,28 +6191,35 @@ const LESSON = {
         },
         {
           "id": "B11-B09",
-          "type": "mcq",
-          "prompt": "Câu nào đúng với định ngữ động từ?",
+          "type": "multi_fill",
+          "prompt": "从词语中选择合适的词，完成这段介绍。",
           "options": [
-            {
-              "k": "A",
-              "t": "唱歌的女孩是我姐姐。"
-            },
-            {
-              "k": "B",
-              "t": "唱歌女孩的是我姐姐。"
-            },
-            {
-              "k": "C",
-              "t": "女孩唱歌的是我姐姐。"
-            },
-            {
-              "k": "D",
-              "t": "唱歌的是女孩我姐姐。"
-            }
+            "唱歌",
+            "比",
+            "可能",
+            "开始",
+            "便宜",
+            "孩子"
           ],
           "answer": "A",
-          "explain": "Cụm động từ + 的 đứng trước danh từ được bổ nghĩa."
+          "explain": "根据人物介绍的意思选择四个词。",
+          "parts": [
+            "右边那个",
+            "___",
+            "的女孩姓王。她",
+            "___",
+            "我小两岁。她今天没来，",
+            "___",
+            "在家学习。去年她",
+            "___",
+            "学汉语。"
+          ],
+          "answers": [
+            "唱歌",
+            "比",
+            "可能",
+            "开始"
+          ]
         },
         {
           "id": "B11-B10",
@@ -7279,6 +7307,8 @@ function countAnswered(){
 function isAnswered(q){
   const v = state.answers[q.id];
   if(v === undefined || v === null) return false;
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -7387,6 +7417,13 @@ function renderQuestion(){
     area.appendChild(pc);
   }
 
+  if(q.readingText){
+    const pc = el('div','passage-card');
+    pc.appendChild(el('div','passage-label','阅读材料'));
+    pc.appendChild(el('div','passage-text',mixText(q.readingText)));
+    area.appendChild(pc);
+  }
+
   const card = el('div','q-card');
   const head = el('div','q-head');
   head.appendChild(el('span','q-badge', `Câu ${q._index+1}/${TOTAL_Q}`));
@@ -7407,6 +7444,7 @@ function renderQuestion(){
     case 'reorder': renderReorder(q, body); break;
     case 'self_check': renderSelfCheck(q, body); break;
     case 'retell': renderRetell(q, body); break;
+    case 'multi_fill': renderMultiFill(q, body); break;
     case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
@@ -7416,7 +7454,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -7465,9 +7503,11 @@ function renderListening(q, body){
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
   if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Bản ghi đang chuẩn bị. Giáo viên sẽ bổ sung tệp nghe cho câu này.');
+    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
-    player.appendChild(status); body.appendChild(player);
+    const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
+    script.setAttribute('aria-label','Kịch bản câu nghe');
+    player.append(status,script); body.appendChild(player);
   } else {
     const audio = document.createElement('audio'); audio.preload='metadata'; audio.src=q.audioSrc;
     const play = el('button','audio-play','Phát audio'); play.type='button';
@@ -7570,6 +7610,13 @@ function renderRetell(q, body){
   button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
   renderSelfCheck(q, body);
 }
+function renderMultiFill(q, body){
+  const values=Array.isArray(state.answers[q.id]) ? state.answers[q.id].slice() : Array(q.answers.length).fill('');
+  const text=el('div','multi-fill-text'); let blank=0;
+  q.parts.forEach(part=>{ if(part!=='___'){ text.appendChild(el('span','',mixText(part))); return; } const index=blank++; const select=document.createElement('select'); select.className='multi-fill-select'; select.setAttribute('aria-label','Chọn từ cho chỗ trống '+(index+1)); select.appendChild(new Option('— chọn từ —','')); q.options.forEach(word=>select.appendChild(new Option(word,word))); select.value=values[index]||''; if(state.submitted) select.disabled=true; else select.addEventListener('change',()=>{ values[index]=select.value; state.answers[q.id]=values; DataStore.saveInProgress(); updateProgress(); renderNavGrid(); }); text.appendChild(select); });
+  body.appendChild(text); body.appendChild(el('div','multi-fill-bank','Từ cho sẵn: '+q.options.join(' · ')));
+  if(state.submitted){ const g=gradeQuestion(q); body.insertBefore(resultBanner(g.score>=g.max?'correct':'wrong'),text); if(g.score<g.max) body.appendChild(el('div','answer-reveal-box','<div class="label">Đáp án</div><div class="content">'+mixText(q.answers.join(' · '))+'</div>')); }
+}
 function renderSelfCheck(q, body){
   const wrap = el('div','selfcheck-area');
   const ta = el('textarea');
@@ -7637,6 +7684,8 @@ function gradeQuestion(q){
     const ok = (q.answer||[]).some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'reorder'){
     const arr = v || [];
     const ok = arr.length === q.answer.length && arr.every((t,i) => t === q.answer[i]);

@@ -1970,3 +1970,10 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   for(const [id,[prompt,options,answer]] of Object.entries(read)) Object.assign(all.find(q=>q.id===id),{prompt,options:options.map((t,i)=>({k:"ABCD"[i],t})),answer,passageId:"p8",explain:"Trả lời dựa trên thông tin nêu trực tiếp trong đoạn, không chỉ dựa vào một từ riêng lẻ."});
   ["A","B","C","D","B","C","D","A"].forEach((key,i)=>{const q=all.find(x=>x.type==="listening"); const list=all.filter(x=>x.type==="listening"); const item=list[i],correct=item.options.find(o=>o.k===item.answer).t,others=item.options.filter(o=>o.k!==item.answer).map(o=>o.t); const p="ABCD".indexOf(key); others.splice(p,0,correct); item.options=others.map((t,j)=>({k:"ABCD"[j],t})); item.answer=key;});
 })();
+
+/* Revision sư phạm: dùng tình huống để học sinh suy ra cách nói. */
+(() => {const l=window.HAN_NGU_DATA.lessons["hsk2_bai8_rangwo"],a=l.content.exercises.all,q=id=>a.find(x=>x.id===id),mc=(id,p,o,k,e)=>Object.assign(q(id),{type:"mcq",prompt:p,options:o.map((t,i)=>({k:"ABCD"[i],t})),answer:"ABCD"[k],explain:e});
+mc("B8-B01","你想邀请朋友明天一起看电影，哪一句最自然？",["我们明天一起去看电影，好吗？","我们明天好看电影吗？","好吗我们去电影？","我们昨天看电影好吗。"],0,"在邀请或征求同意的情境中选自然说法。"); Object.assign(q("B8-B02"),{type:"self_check",prompt:"给朋友发一句邀请信息：明天一起吃饭，并礼貌地问对方是否同意。",model:"我们明天一起吃饭，好吗？",explain:"信息要有活动、时间和礼貌的征求。"});
+mc("B8-B03","你今天不能决定，想说明天再回答。请选择正确的话。",["我明天再告诉你。","我明天告诉再你。","我再明天你告诉。","我告诉你再明天。"],0,"动作在以后再做时，把 再 放在动词前。"); Object.assign(q("B8-B04"),{type:"self_check",prompt:"把两句话连成一句：你先看这件衣服。然后告诉我。",model:"你先看这件衣服，再告诉我。",explain:"先后发生的两个动作要说清顺序。"});
+mc("B8-B05","老师希望同学明天带书来，哪一句合适？",["老师让我们明天带书来。","老师我们让明天带书来。","老师让明天我们书来。","老师明天带我们书来。"],0,"看谁要求谁做什么，选择能表达完整关系的句子。"); Object.assign(q("B8-B06"),{type:"self_check",prompt:"请朋友帮你看一下白色的衣服，写一句礼貌的话。",model:"请你帮我看一看那件白的。",explain:"句子要有请求对象、动作和物品。"});
+Object.assign(q("B8-B07"),{type:"multi_fill",prompt:"从词语中选择合适的词，完成对话。",parts:["A：这件衣服有点儿贵。B：你先","___","，明天","___","告诉我。A：好，请你","___","我一下，","___","？"],options:["想想","再","等","好吗","白","服务员"],answers:["想想","再","等","好吗"],explain:"根据购物情境选择四个词，注意动作发生的顺序。"});})();

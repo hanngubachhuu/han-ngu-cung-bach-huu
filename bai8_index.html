@@ -857,6 +857,9 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -875,12 +878,17 @@ footer.print-footer{display:none;}
 .audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
 .audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 .audio-status{flex:1 1 100%;font-size:var(--fs-sm,14px);line-height:var(--lh-normal,1.5);color:var(--color-text-secondary);}
+.audio-script{flex:1 1 100%;padding:var(--space-md);border-left:4px solid var(--color-accent);border-radius:var(--radius-sm);background:var(--color-surface);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-primary);}
 .audio-player-mini audio{display:none;}
 .retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);}
 .retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
 .retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
 .retell-timer{color:var(--color-text-secondary);font-weight:700;}
-@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-md);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}}
+.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-lg,20px);line-height:var(--lh-relaxed,1.75);}
+.multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
+.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
+.q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
+@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}}
 /* HSK-LESSON-UX-PATCH:END */
 </style>
 <link rel="stylesheet" href="navigation.css">
@@ -2021,27 +2029,27 @@ const LESSON = {
         {
           "id": "B8-B01",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp ““……，好吗””?",
+          "prompt": "你想邀请朋友明天一起看电影，哪一句最自然？",
           "options": [
             {
               "k": "A",
-              "t": "[câu đề nghị/ý định] + ，好吗？"
+              "t": "我们明天一起去看电影，好吗？"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "我们明天好看电影吗？"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "好吗我们去电影？"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "我们昨天看电影好吗。"
             }
           ],
           "answer": "A",
-          "explain": "Dùng để hỏi ý kiến hoặc xin sự đồng ý một cách nhẹ nhàng.",
+          "explain": "在邀请或征求同意的情境中选自然说法。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Dùng để hỏi ý kiến hoặc xin sự đồng ý một cách nhẹ nhàng.",
@@ -2052,9 +2060,9 @@ const LESSON = {
         {
           "id": "B8-B02",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng “……，好吗”.",
-          "model": "Ví dụ: 明天再说，好吗？",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của “……，好吗”.",
+          "prompt": "给朋友发一句邀请信息：明天一起吃饭，并礼貌地问对方是否同意。",
+          "model": "我们明天一起吃饭，好吗？",
+          "explain": "信息要有活动、时间和礼貌的征求。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -2064,27 +2072,27 @@ const LESSON = {
         {
           "id": "B8-B03",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “再”?",
+          "prompt": "你今天不能决定，想说明天再回答。请选择正确的话。",
           "options": [
             {
               "k": "A",
-              "t": "再 + V"
+              "t": "我明天再告诉你。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "我明天告诉再你。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "我再明天你告诉。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "我告诉你再明天。"
             }
           ],
           "answer": "A",
-          "explain": "Diễn tả hành động sẽ làm lại hoặc làm sau một hành động khác.",
+          "explain": "动作在以后再做时，把 再 放在动词前。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Diễn tả hành động sẽ làm lại hoặc làm sau một hành động khác.",
@@ -2095,9 +2103,9 @@ const LESSON = {
         {
           "id": "B8-B04",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 再.",
-          "model": "Ví dụ: 我们明天再去吧。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 再.",
+          "prompt": "把两句话连成一句：你先看这件衣服。然后告诉我。",
+          "model": "你先看这件衣服，再告诉我。",
+          "explain": "先后发生的两个动作要说清顺序。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -2107,27 +2115,27 @@ const LESSON = {
         {
           "id": "B8-B05",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “兼语句”?",
+          "prompt": "老师希望同学明天带书来，哪一句合适？",
           "options": [
             {
               "k": "A",
-              "t": "S + 让/叫 + O + V"
+              "t": "老师让我们明天带书来。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "老师我们让明天带书来。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "老师让明天我们书来。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "老师明天带我们书来。"
             }
           ],
           "answer": "A",
-          "explain": "Tân ngữ của động từ thứ nhất đồng thời là chủ thể của động từ thứ hai.",
+          "explain": "看谁要求谁做什么，选择能表达完整关系的句子。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Tân ngữ của động từ thứ nhất đồng thời là chủ thể của động từ thứ hai.",
@@ -2138,9 +2146,9 @@ const LESSON = {
         {
           "id": "B8-B06",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 兼语句.",
-          "model": "Ví dụ: 让我想想。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 兼语句.",
+          "prompt": "请朋友帮你看一下白色的衣服，写一句礼貌的话。",
+          "model": "请你帮我看一看那件白的。",
+          "explain": "句子要有请求对象、动作和物品。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -2149,34 +2157,41 @@ const LESSON = {
         },
         {
           "id": "B8-B07",
-          "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词重叠”?",
+          "type": "multi_fill",
+          "prompt": "从词语中选择合适的词，完成对话。",
           "options": [
-            {
-              "k": "A",
-              "t": "V + V / V + 一下"
-            },
-            {
-              "k": "B",
-              "t": "A + 了 + B"
-            },
-            {
-              "k": "C",
-              "t": "只用在过去时"
-            },
-            {
-              "k": "D",
-              "t": "只能放在句末"
-            }
+            "想想",
+            "再",
+            "等",
+            "好吗",
+            "白",
+            "服务员"
           ],
           "answer": "A",
-          "explain": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn.",
+          "explain": "根据购物情境选择四个词，注意动作发生的顺序。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn.",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "parts": [
+            "A：这件衣服有点儿贵。B：你先",
+            "___",
+            "，明天",
+            "___",
+            "告诉我。A：好，请你",
+            "___",
+            "我一下，",
+            "___",
+            "？"
+          ],
+          "answers": [
+            "想想",
+            "再",
+            "等",
+            "好吗"
+          ]
         },
         {
           "id": "B8-B08",
@@ -3770,27 +3785,27 @@ const LESSON = {
         {
           "id": "B8-B01",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp ““……，好吗””?",
+          "prompt": "你想邀请朋友明天一起看电影，哪一句最自然？",
           "options": [
             {
               "k": "A",
-              "t": "[câu đề nghị/ý định] + ，好吗？"
+              "t": "我们明天一起去看电影，好吗？"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "我们明天好看电影吗？"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "好吗我们去电影？"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "我们昨天看电影好吗。"
             }
           ],
           "answer": "A",
-          "explain": "Dùng để hỏi ý kiến hoặc xin sự đồng ý một cách nhẹ nhàng.",
+          "explain": "在邀请或征求同意的情境中选自然说法。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Dùng để hỏi ý kiến hoặc xin sự đồng ý một cách nhẹ nhàng.",
@@ -3801,9 +3816,9 @@ const LESSON = {
         {
           "id": "B8-B02",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng “……，好吗”.",
-          "model": "Ví dụ: 明天再说，好吗？",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của “……，好吗”.",
+          "prompt": "给朋友发一句邀请信息：明天一起吃饭，并礼貌地问对方是否同意。",
+          "model": "我们明天一起吃饭，好吗？",
+          "explain": "信息要有活动、时间和礼貌的征求。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -3813,27 +3828,27 @@ const LESSON = {
         {
           "id": "B8-B03",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “再”?",
+          "prompt": "你今天不能决定，想说明天再回答。请选择正确的话。",
           "options": [
             {
               "k": "A",
-              "t": "再 + V"
+              "t": "我明天再告诉你。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "我明天告诉再你。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "我再明天你告诉。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "我告诉你再明天。"
             }
           ],
           "answer": "A",
-          "explain": "Diễn tả hành động sẽ làm lại hoặc làm sau một hành động khác.",
+          "explain": "动作在以后再做时，把 再 放在动词前。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Diễn tả hành động sẽ làm lại hoặc làm sau một hành động khác.",
@@ -3844,9 +3859,9 @@ const LESSON = {
         {
           "id": "B8-B04",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 再.",
-          "model": "Ví dụ: 我们明天再去吧。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 再.",
+          "prompt": "把两句话连成一句：你先看这件衣服。然后告诉我。",
+          "model": "你先看这件衣服，再告诉我。",
+          "explain": "先后发生的两个动作要说清顺序。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -3856,27 +3871,27 @@ const LESSON = {
         {
           "id": "B8-B05",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “兼语句”?",
+          "prompt": "老师希望同学明天带书来，哪一句合适？",
           "options": [
             {
               "k": "A",
-              "t": "S + 让/叫 + O + V"
+              "t": "老师让我们明天带书来。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "老师我们让明天带书来。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "老师让明天我们书来。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "老师明天带我们书来。"
             }
           ],
           "answer": "A",
-          "explain": "Tân ngữ của động từ thứ nhất đồng thời là chủ thể của động từ thứ hai.",
+          "explain": "看谁要求谁做什么，选择能表达完整关系的句子。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Tân ngữ của động từ thứ nhất đồng thời là chủ thể của động từ thứ hai.",
@@ -3887,9 +3902,9 @@ const LESSON = {
         {
           "id": "B8-B06",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 兼语句.",
-          "model": "Ví dụ: 让我想想。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 兼语句.",
+          "prompt": "请朋友帮你看一下白色的衣服，写一句礼貌的话。",
+          "model": "请你帮我看一看那件白的。",
+          "explain": "句子要有请求对象、动作和物品。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm.",
           "section": "grammar",
@@ -3898,34 +3913,41 @@ const LESSON = {
         },
         {
           "id": "B8-B07",
-          "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词重叠”?",
+          "type": "multi_fill",
+          "prompt": "从词语中选择合适的词，完成对话。",
           "options": [
-            {
-              "k": "A",
-              "t": "V + V / V + 一下"
-            },
-            {
-              "k": "B",
-              "t": "A + 了 + B"
-            },
-            {
-              "k": "C",
-              "t": "只用在过去时"
-            },
-            {
-              "k": "D",
-              "t": "只能放在句末"
-            }
+            "想想",
+            "再",
+            "等",
+            "好吗",
+            "白",
+            "服务员"
           ],
           "answer": "A",
-          "explain": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn.",
+          "explain": "根据购物情境选择四个词，注意动作发生的顺序。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn.",
           "section": "grammar",
           "sectionTitle": "B. NGỮ PHÁP TRONG NGỮ CẢNH",
-          "skill": "nguphap"
+          "skill": "nguphap",
+          "parts": [
+            "A：这件衣服有点儿贵。B：你先",
+            "___",
+            "，明天",
+            "___",
+            "告诉我。A：好，请你",
+            "___",
+            "我一下，",
+            "___",
+            "？"
+          ],
+          "answers": [
+            "想想",
+            "再",
+            "等",
+            "好吗"
+          ]
         },
         {
           "id": "B8-B08",
@@ -5902,27 +5924,27 @@ const LESSON = {
         {
           "id": "B8-B01",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp ““……，好吗””?",
+          "prompt": "你想邀请朋友明天一起看电影，哪一句最自然？",
           "options": [
             {
               "k": "A",
-              "t": "[câu đề nghị/ý định] + ，好吗？"
+              "t": "我们明天一起去看电影，好吗？"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "我们明天好看电影吗？"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "好吗我们去电影？"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "我们昨天看电影好吗。"
             }
           ],
           "answer": "A",
-          "explain": "Dùng để hỏi ý kiến hoặc xin sự đồng ý một cách nhẹ nhàng.",
+          "explain": "在邀请或征求同意的情境中选自然说法。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Dùng để hỏi ý kiến hoặc xin sự đồng ý một cách nhẹ nhàng."
@@ -5930,36 +5952,36 @@ const LESSON = {
         {
           "id": "B8-B02",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng “……，好吗”.",
-          "model": "Ví dụ: 明天再说，好吗？",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của “……，好吗”.",
+          "prompt": "给朋友发一句邀请信息：明天一起吃饭，并礼貌地问对方是否同意。",
+          "model": "我们明天一起吃饭，好吗？",
+          "explain": "信息要有活动、时间和礼貌的征求。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
         },
         {
           "id": "B8-B03",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “再”?",
+          "prompt": "你今天不能决定，想说明天再回答。请选择正确的话。",
           "options": [
             {
               "k": "A",
-              "t": "再 + V"
+              "t": "我明天再告诉你。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "我明天告诉再你。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "我再明天你告诉。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "我告诉你再明天。"
             }
           ],
           "answer": "A",
-          "explain": "Diễn tả hành động sẽ làm lại hoặc làm sau một hành động khác.",
+          "explain": "动作在以后再做时，把 再 放在动词前。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Diễn tả hành động sẽ làm lại hoặc làm sau một hành động khác."
@@ -5967,36 +5989,36 @@ const LESSON = {
         {
           "id": "B8-B04",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 再.",
-          "model": "Ví dụ: 我们明天再去吧。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 再.",
+          "prompt": "把两句话连成一句：你先看这件衣服。然后告诉我。",
+          "model": "你先看这件衣服，再告诉我。",
+          "explain": "先后发生的两个动作要说清顺序。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
         },
         {
           "id": "B8-B05",
           "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “兼语句”?",
+          "prompt": "老师希望同学明天带书来，哪一句合适？",
           "options": [
             {
               "k": "A",
-              "t": "S + 让/叫 + O + V"
+              "t": "老师让我们明天带书来。"
             },
             {
               "k": "B",
-              "t": "A + 了 + B"
+              "t": "老师我们让明天带书来。"
             },
             {
               "k": "C",
-              "t": "只用在过去时"
+              "t": "老师让明天我们书来。"
             },
             {
               "k": "D",
-              "t": "只能放在句末"
+              "t": "老师明天带我们书来。"
             }
           ],
           "answer": "A",
-          "explain": "Tân ngữ của động từ thứ nhất đồng thời là chủ thể của động từ thứ hai.",
+          "explain": "看谁要求谁做什么，选择能表达完整关系的句子。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
           "example": "Tân ngữ của động từ thứ nhất đồng thời là chủ thể của động từ thứ hai."
@@ -6004,39 +6026,46 @@ const LESSON = {
         {
           "id": "B8-B06",
           "type": "self_check",
-          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 兼语句.",
-          "model": "Ví dụ: 让我想想。",
-          "explain": "Câu mẫu phải thể hiện đúng chức năng của 兼语句.",
+          "prompt": "请朋友帮你看一下白色的衣服，写一句礼貌的话。",
+          "model": "请你帮我看一看那件白的。",
+          "explain": "句子要有请求对象、动作和物品。",
           "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
           "tip": "Đối chiếu mẫu câu sau khi tự làm."
         },
         {
           "id": "B8-B07",
-          "type": "mcq",
-          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “动词重叠”?",
+          "type": "multi_fill",
+          "prompt": "从词语中选择合适的词，完成对话。",
           "options": [
-            {
-              "k": "A",
-              "t": "V + V / V + 一下"
-            },
-            {
-              "k": "B",
-              "t": "A + 了 + B"
-            },
-            {
-              "k": "C",
-              "t": "只用在过去时"
-            },
-            {
-              "k": "D",
-              "t": "只能放在句末"
-            }
+            "想想",
+            "再",
+            "等",
+            "好吗",
+            "白",
+            "服务员"
           ],
           "answer": "A",
-          "explain": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn.",
+          "explain": "根据购物情境选择四个词，注意动作发生的顺序。",
           "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
           "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
-          "example": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn."
+          "example": "Làm nhẹ sắc thái hoặc biểu thị thử/làm trong thời gian ngắn.",
+          "parts": [
+            "A：这件衣服有点儿贵。B：你先",
+            "___",
+            "，明天",
+            "___",
+            "告诉我。A：好，请你",
+            "___",
+            "我一下，",
+            "___",
+            "？"
+          ],
+          "answers": [
+            "想想",
+            "再",
+            "等",
+            "好吗"
+          ]
         },
         {
           "id": "B8-B08",
@@ -7144,6 +7173,9 @@ function countAnswered(){
 function isAnswered(q){
   const v = state.answers[q.id];
   if(v === undefined || v === null) return false;
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -7252,6 +7284,13 @@ function renderQuestion(){
     area.appendChild(pc);
   }
 
+  if(q.readingText){
+    const pc = el('div','passage-card');
+    pc.appendChild(el('div','passage-label','阅读材料'));
+    pc.appendChild(el('div','passage-text',mixText(q.readingText)));
+    area.appendChild(pc);
+  }
+
   const card = el('div','q-card');
   const head = el('div','q-head');
   head.appendChild(el('span','q-badge', `Câu ${q._index+1}/${TOTAL_Q}`));
@@ -7272,6 +7311,7 @@ function renderQuestion(){
     case 'reorder': renderReorder(q, body); break;
     case 'self_check': renderSelfCheck(q, body); break;
     case 'retell': renderRetell(q, body); break;
+    case 'multi_fill': renderMultiFill(q, body); break;
     case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
@@ -7281,7 +7321,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -7330,9 +7370,11 @@ function renderListening(q, body){
   body.appendChild(intro);
   const player = el('div','audio-player-mini');
   if(q.audioStatus !== 'ready' || !q.audioSrc){
-    const status = el('div','audio-status','Bản ghi đang chuẩn bị. Giáo viên sẽ bổ sung tệp nghe cho câu này.');
+    const status = el('div','audio-status','Chưa có audio. Em có thể đọc kịch bản dưới đây trước; khi giáo viên bổ sung file, kịch bản sẽ tự ẩn.');
     status.setAttribute('role','status');
-    player.appendChild(status); body.appendChild(player);
+    const script = el('div','audio-script',mixText(q.audioText || 'Kịch bản đang được chuẩn bị.'));
+    script.setAttribute('aria-label','Kịch bản câu nghe');
+    player.append(status,script); body.appendChild(player);
   } else {
     const audio = document.createElement('audio'); audio.preload='metadata'; audio.src=q.audioSrc;
     const play = el('button','audio-play','Phát audio'); play.type='button';
@@ -7435,6 +7477,13 @@ function renderRetell(q, body){
   button.addEventListener('click',()=>{ if(interval) return; button.disabled=true; const tick=()=>{ timer.textContent='Còn '+left+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); interval=setInterval(tick,1000); });
   renderSelfCheck(q, body);
 }
+function renderMultiFill(q, body){
+  const values=Array.isArray(state.answers[q.id]) ? state.answers[q.id].slice() : Array(q.answers.length).fill('');
+  const text=el('div','multi-fill-text'); let blank=0;
+  q.parts.forEach(part=>{ if(part!=='___'){ text.appendChild(el('span','',mixText(part))); return; } const index=blank++; const select=document.createElement('select'); select.className='multi-fill-select'; select.setAttribute('aria-label','Chọn từ cho chỗ trống '+(index+1)); select.appendChild(new Option('— chọn từ —','')); q.options.forEach(word=>select.appendChild(new Option(word,word))); select.value=values[index]||''; if(state.submitted) select.disabled=true; else select.addEventListener('change',()=>{ values[index]=select.value; state.answers[q.id]=values; DataStore.saveInProgress(); updateProgress(); renderNavGrid(); }); text.appendChild(select); });
+  body.appendChild(text); body.appendChild(el('div','multi-fill-bank','Từ cho sẵn: '+q.options.join(' · ')));
+  if(state.submitted){ const g=gradeQuestion(q); body.insertBefore(resultBanner(g.score>=g.max?'correct':'wrong'),text); if(g.score<g.max) body.appendChild(el('div','answer-reveal-box','<div class="label">Đáp án</div><div class="content">'+mixText(q.answers.join(' · '))+'</div>')); }
+}
 function renderSelfCheck(q, body){
   const wrap = el('div','selfcheck-area');
   const ta = el('textarea');
@@ -7502,6 +7551,9 @@ function gradeQuestion(q){
     const ok = (q.answer||[]).some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'reorder'){
     const arr = v || [];
     const ok = arr.length === q.answer.length && arr.every((t,i) => t === q.answer[i]);
