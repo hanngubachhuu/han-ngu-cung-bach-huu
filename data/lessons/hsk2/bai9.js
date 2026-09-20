@@ -1806,3 +1806,72 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "heroDescription": "Luyện tập HSK 2"
   }
 });
+
+/* Mở rộng Bài 9 theo SGK HSK 2 (tr. 79–86) và SBT tương ứng. */
+(() => {
+  const lesson = window.HAN_NGU_DATA.lessons["hsk2_bai9_tidu"];
+  const mcq = (id, section, prompt, choices, correct, explain) => ({ id, section, type:"mcq", prompt, options:choices.map((t,i)=>({k:"ABCD"[i],t})), answer:"ABCD"[correct], explain });
+  const fill = (id, section, prompt, answer, explain) => ({ id, section, type:"text_fill", prompt, answer, explain });
+  const reorder = (id, section, prompt, tokens, answer, explain) => ({ id, section, type:"reorder", prompt, tokens, answer, explain });
+  const open = (id, section, prompt, model, explain) => ({ id, section, type:"self_check", prompt, model, explain });
+  const extra = [
+    mcq("B9-A09","A","Trong “我听懂了”，懂 cho biết điều gì?",["đã hiểu được kết quả","đang nghe","không muốn nghe","nghe lại"],0,"懂 là kết quả bổ ngữ sau 听: nghe rồi hiểu được."),
+    mcq("B9-A10","A","Chọn kết hợp đúng:",["做完作业","完作业做","题希望","欢迎上班"],0,"做完 + tân ngữ: làm xong bài tập."),
+    mcq("B9-A11","A","“从第一题开始做” nghĩa đúng là:",["bắt đầu làm từ câu thứ nhất","làm câu thứ nhất lần nữa","làm sai câu thứ nhất","làm xong câu thứ nhất"],0,"从…开始 = bắt đầu từ…; 第一题 = câu thứ nhất."),
+    fill("B9-A12","A","Điền 完 hoặc 错: 这道题我做___了。",["错","错了"],"做错 = làm sai; 完 chỉ kết quả hoàn thành."),
+    fill("B9-A13","A","Điền 完 hoặc 懂: 老师说得很清楚，我都听___了。",["懂","懂了"],"听懂 = nghe hiểu; không dùng 听完 khi muốn nói đã hiểu nội dung."),
+    fill("B9-A14","A","Điền từ phù hợp: 欢迎你___我们公司工作。",["来","到"],"欢迎你来/到我们公司工作 đều tự nhiên; trọng tâm là lời chào đón."),
+    open("B9-A15","A","Viết 2 câu: một câu dùng 上班, một câu dùng 希望.","我每天八点上班。希望你明天来。","Tự kiểm: 上班 chỉ đi/làm việc; 希望 + mệnh đề/động từ, không dùng như mệnh lệnh."),
+
+    mcq("B9-B07","B","Câu nào đúng với kết quả bổ ngữ?",["我做完作业了。","我完做作业了。","我作业做了完。","我做作业完了。"],0,"Mẫu cơ bản: V + kết quả bổ ngữ + O; 做完作业."),
+    mcq("B9-B08","B","Trong “我没做完”，ý nghĩa là:",["đã làm nhưng chưa hoàn thành","không bắt đầu làm","đã làm sai","sẽ làm lại"],0,"没 + V + 完 diễn tả chưa đạt kết quả hoàn thành."),
+    mcq("B9-B09","B","Chọn câu đúng với 从 chỉ điểm bắt đầu thời gian:",["我从八点学习到十点。","我八点从学习到十点。","我学习从八点十点。","从我学习八点到十点。"],0,"从 + mốc đầu + V + 到 + mốc cuối."),
+    mcq("B9-B10","B","Chọn câu dùng 第 đúng:",["这是我第一次来中国。","这是我一第次来中国。","这是我第一个来中国。","这是第我一次来中国。"],0,"第 đứng trước số + lượng từ: 第一次."),
+    fill("B9-B11","B","Điền 到 hoặc 完: 我看___这本书了。",["完","完了"],"看完书 = đọc/xem xong sách; 到 không hợp với 看 trong ngữ cảnh này."),
+    fill("B9-B12","B","Điền 到 hoặc 错: 你写___我的名字了。",["错","错了"],"写错名字 = viết sai tên."),
+    fill("B9-B13","B","Điền 从: 我___家走到学校，要二十分钟。", "从", "从 + địa điểm xuất phát + động từ + 到 + điểm đến."),
+    fill("B9-B14","B","Điền 第: 今天是我___一天上班。", "第一", "第一天 = ngày đầu tiên; 第 + số + lượng từ."),
+    reorder("B9-B15","B","Sắp xếp thành câu đúng:",["作业","我","还没","做完"],["我","还没","做完","作业"],"Chủ ngữ + phó từ phủ định + V + kết quả + tân ngữ."),
+    reorder("B9-B16","B","Sắp xếp thành câu đúng:",["从","开始","第一题","他","做"],["他","从","第一题","开始","做"],"从 + 第一题 + 开始 đứng trước động từ 做."),
+    reorder("B9-B17","B","Sắp xếp thành câu đúng:",["欢迎","我们","来","你","学校"],["欢迎","你","来","我们","学校"],"欢迎 + người + 来 + nơi chốn."),
+    open("B9-B18","B","Sửa câu sai: “我没完做这道题。”", "我没做完这道题。", "Kết quả bổ ngữ đứng sau động từ: 做完, không đảo thành 完做."),
+
+    mcq("B9-C04","C","Đọc: “老师给了我们二十道题。我从第一题开始做，可是题太多，晚上十点还没做完。” Vì sao người nói chưa làm xong?",["Vì có quá nhiều câu","Vì không hiểu giáo viên","Vì không có vở","Vì không đi học"],0,"题太多 nêu trực tiếp nguyên nhân."),
+    mcq("B9-C05","C","Theo đoạn trên, người nói bắt đầu làm từ đâu?",["Câu thứ nhất","Câu thứ hai mươi","Buổi tối lúc mười giờ","Ở trường"],0,"从第一题开始做 = bắt đầu từ câu thứ nhất."),
+    mcq("B9-C06","C","Đọc: “小林第一次上班，很多事情不懂。同事慢慢告诉他，他终于听懂了。” Kết quả cuối cùng là gì?",["Tiểu Lâm đã hiểu","Tiểu Lâm đi làm lần hai","Đồng nghiệp làm sai","Tiểu Lâm chưa đến công ty"],0,"终于听懂了 cho biết cuối cùng đã nghe hiểu."),
+    fill("B9-C07","C","Đọc: “我把答案写错了，老师让我再做一遍。” Điền: Người nói phải làm lại vì đã ___ đáp án.","viết sai", "写错 = viết sai; 再做一遍 = làm lại một lần."),
+    fill("B9-C08","C","Đọc: “欢迎你从明天开始来我们公司上班。” Điền: Người nghe bắt đầu đi làm vào ___.", "ngày mai", "从明天开始 chỉ điểm bắt đầu thời gian."),
+    open("B9-C09","C","Viết 1 câu tiếng Việt tóm tắt: “题太多，我没做完，明天再做。”", "Bài quá nhiều, tôi chưa làm xong; ngày mai tôi sẽ làm tiếp.", "Phải thể hiện đủ: số lượng nhiều, chưa hoàn tất và dự định tiếp tục."),
+    open("B9-C10","C","Đặt một tiêu đề tiếng Trung ngắn cho tình huống: ngày đầu tiên đi làm, chưa hiểu nhiều việc.", "第一天上班 / 第一次上班。", "Tiêu đề mở; cần thể hiện đúng ý lần đầu/ngày đầu đi làm."),
+
+    reorder("B9-D04","D","Sắp xếp thành câu đúng:",["懂","我","没","这个问题"],["我","没","懂","这个问题"],"没 đứng trước động từ; 懂 có thể mang tân ngữ trực tiếp."),
+    reorder("B9-D05","D","Sắp xếp thành câu đúng:",["第一天","上班","今天","我"],["今天","我","第一天","上班"],"Thời gian đầu câu, rồi chủ ngữ; 第一天 bổ nghĩa cho 上班."),
+    reorder("B9-D06","D","Sắp xếp thành câu đúng:",["希望","做完","今天","我","作业"],["我","希望","今天","做完","作业"],"希望 + thời gian + V + kết quả + O."),
+    fill("B9-D07","D","Hoàn thành: 这道题太难了，我还没___。", "做完", "还没做完 = vẫn chưa làm xong."),
+    fill("B9-D08","D","Hoàn thành: 请你把这个字再写___。", "一遍", "再 + V + 一遍 = làm lại một lần."),
+    open("B9-D09","D","Viết lại bằng 从…开始: “Tôi học tiếng Trung vào tháng 9.”", "我从九月开始学汉语。", "Dùng 从 + mốc thời gian + 开始 + V."),
+    open("B9-D10","D","Viết câu nói về lần đầu bạn làm một việc, bắt buộc dùng 第一次.", "这是我第一次做中国菜。", "Tự kiểm: 第一次 đứng trước động từ/cụm động từ thích hợp."),
+
+    open("B9-E04","E","Dịch sang tiếng Trung: Tôi đã làm xong bài tập rồi.", "我做完作业了。", "做完 là kết quả bổ ngữ, 了 báo sự việc đã hoàn thành."),
+    open("B9-E05","E","Dịch sang tiếng Trung: Tôi nghe không hiểu câu này.", "这句话我听不懂。", "Kết quả bổ ngữ phủ định: 听不懂, không nói 不听懂."),
+    open("B9-E06","E","Dịch sang tiếng Việt: 他从第一题开始做，做错了两道题。", "Anh ấy bắt đầu làm từ câu thứ nhất và làm sai hai câu.", "做错 + số lượng + lượng từ + danh từ: làm sai bao nhiêu câu."),
+    open("B9-E07","E","Dịch sang tiếng Việt: 欢迎你来我们公司上班。", "Chào mừng bạn đến công ty chúng tôi làm việc.", "欢迎 dùng để chào đón; 上班 = đi/làm việc."),
+    open("B9-E08","E","Dịch đoạn ngắn sang tiếng Trung: Đây là ngày đầu tiên tôi đi làm. Có nhiều việc tôi chưa hiểu, mong mọi người chỉ bảo.", "今天是我第一天上班，很多事情我还不懂，希望大家告诉我。", "Dùng 第一 + 天; 希望 + người + động từ/câu. Có thể dùng 请大家帮助我."),
+
+    open("B9-F03","F","Tình huống: bạn chưa làm xong bài vì bài quá nhiều. Viết 2 câu giải thích, dùng 题太多 và 没做完.", "题太多了，我还没做完。明天我再做。", "Tự kiểm: nguyên nhân và kết quả phải logic."),
+    open("B9-F04","F","Viết hội thoại 3 lượt: một bạn không hiểu bài, bạn kia đề nghị giải thích. Dùng 懂 và 告诉.", "A：我不懂这个问题。B：我告诉你吧。A：谢谢。", "Đáp án cần dùng đúng 不懂 và 告诉 + người."),
+    open("B9-F05","F","Tình huống: ngày đầu đi làm. Viết lời chào/giới thiệu 2–3 câu dùng 第一天 và 希望.", "今天是我第一天上班，希望大家帮助我。", "Câu lịch sự, phù hợp môi trường công sở; có đủ hai từ bắt buộc."),
+    open("B9-F06","F","Viết 3 câu kể việc bạn làm sai một bài tập rồi sửa lại, dùng 错 và 再.", "我把这道题做错了。老师让我再做一遍。我现在做对了。", "Cần có diễn biến sai → làm lại → kết quả; 再 đứng trước động từ."),
+    open("B9-F07","F","Bạn mời một người bạn mới tới lớp. Viết lời mời/chào đón dùng 欢迎 và 来.", "欢迎你来我们班学习。", "欢迎 + người + 来 + nơi chốn/hoạt động."),
+    open("B9-F08","F","Tự nói 3–4 câu: bạn học tiếng Trung từ khi nào và hiện đã hiểu được điều gì. Dùng 从 và 听懂/看懂.", "我从去年开始学汉语。现在我能听懂一点儿汉语，也能看懂一些简单的句子。", "Rubric 4 điểm: có mốc bắt đầu; dùng đúng 从; dùng đúng một kết quả bổ ngữ; ý mạch lạc."),
+    open("B9-F09","F","Tự đánh giá: viết đoạn 3–4 câu về cách bạn làm một bài nhiều câu. Dùng ít nhất 2 từ: 从、题、完、错、希望.", "我从第一题开始做。题很多，我还没做完。我希望明天做完，也不要做错。", "Rubric: đủ độ dài; dùng đúng tối thiểu 2 từ; có ít nhất một kết quả bổ ngữ/cấu trúc từ bài."
+    )
+  ];
+  extra.forEach((q) => Object.assign(q,{sourceRefs:["textbook_l09","workbook_l09","teacher_enriched_l09"],status:"teacher_enriched"}));
+  lesson.content.exercises.all.push(...extra);
+  const order=["A","B","C","D","E","F"];
+  lesson.content.exercises.all.sort((a,b)=>order.indexOf(a.section)-order.indexOf(b.section));
+  lesson.content.meta.version=2;
+  lesson.content.meta.timeLimitMinutes=75;
+  lesson.content.coverage.exercises="gold_template_v1";
+})();
