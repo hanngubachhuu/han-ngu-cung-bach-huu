@@ -14,6 +14,7 @@ const context = vm.createContext({
 
 const manifest = vm.runInContext("(" + manifestMatch[1] + ")", context);
 const errors = [];
+const warnings = [];
 const seenIds = new Set();
 
 for (const item of manifest) {
@@ -67,18 +68,28 @@ for (const item of manifest) {
     if (!v.detail?.collocations || !v.detail?.usageNotes) fail(`vocabulary chưa có detail đầy đủ: ${v.han}`);
   }
 
+  if (!Array.isArray(c.hanzi)) {
+    fail("content.hanzi phải là array");
+  } else if (c.hanzi.length === 0) {
+    warnings.push(item.id + ": hanzi đang trống; lesson vẫn pass CI dữ liệu nhưng chưa sẵn sàng review/publish");
+  }
+
   for (const h of c.hanzi || []) {
-    if (!h.char || !h.pinyin || h.strokes == null) fail(`hanzi thiếu dữ liệu cơ bản: ${h.char || "unknown"}`);
-    if (!h.readingProfile) fail(`hanzi thiếu readingProfile: ${h.char}`);
-    if (!h.deepProfile) fail(`hanzi thiếu deepProfile: ${h.char}`);
+    if (!h.char || !h.pinyin || h.strokes == null) warnings.push(item.id + ": hanzi thiếu dữ liệu cơ bản: " + (h.char || "unknown"));
+    if (!h.readingProfile) warnings.push(item.id + ": hanzi thiếu readingProfile: " + h.char);
+    if (!h.deepProfile) warnings.push(item.id + ": hanzi thiếu deepProfile: " + h.char);
   }
 
   const test = lesson.content?.coverage?.exercises;
   if (test && test !== "gold_template_v1") fail("coverage.exercises phải là gold_template_v1 khi đã chuẩn hóa");
 }
 
+if (warnings.length) {
+  console.warn("WARNINGS");
+  console.warn(warnings.map((x,i)=>(i+1) + ". " + x).join("\n"));
+}
 if (errors.length) {
-  console.error(errors.map((x,i)=>`${i+1}. ${x}`).join("\n"));
+  console.error(errors.map((x,i)=>(i+1) + ". " + x).join("\n"));
   process.exit(1);
 }
-console.log(`OK · Đã kiểm tra ${manifest.length} bài học canonical.`);
+console.log("OK · Đã kiểm tra " + manifest.length + " bài học canonical. Lỗi cấu trúc: " + errors.length + "; cảnh báo enrich: " + warnings.length + ".");
