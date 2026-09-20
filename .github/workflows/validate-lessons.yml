@@ -1,0 +1,20 @@
+name: Validate lesson data
+on:
+  push:
+    paths:
+      - "data/**"
+      - "scripts/validate-lessons.mjs"
+  pull_request:
+    paths:
+      - "data/**"
+      - "scripts/validate-lessons.mjs"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/validate-lessons.mjs
