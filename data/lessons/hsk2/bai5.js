@@ -36,7 +36,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v2",
@@ -57,7 +64,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v3",
@@ -78,7 +92,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v4",
@@ -99,7 +120,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v5",
@@ -120,7 +148,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v6",
@@ -141,7 +176,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v7",
@@ -162,7 +204,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v8",
@@ -183,7 +232,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v9",
@@ -204,7 +260,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v10",
@@ -225,7 +288,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v11",
@@ -246,7 +316,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v12",
@@ -267,7 +344,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v13",
@@ -288,7 +372,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v14",
@@ -309,7 +400,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v15",
@@ -330,7 +428,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v16",
@@ -351,7 +456,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v17",
@@ -372,7 +484,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v18",
@@ -393,7 +512,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v19",
@@ -414,7 +540,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v20",
@@ -435,7 +568,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v21",
@@ -456,7 +596,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v22",
@@ -477,7 +624,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "bai5_v23",
@@ -498,7 +652,14 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
             "is_primary": true
           }
         ],
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       }
     ],
     "grammar": [
