@@ -18,3 +18,4 @@ jobs:
         with:
           node-version: 24
       - run: node scripts/validate-lessons.mjs
+      - run: node scripts/validate-publish-readiness.mjs
