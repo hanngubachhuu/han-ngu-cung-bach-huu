@@ -3,8 +3,9 @@ const S={d:{lessons:[],vocab:[],grammar:[],hanzi:[],questions:[]},tab:'overview'
 const $=x=>document.getElementById(x), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])), uniq=(a,k)=>{let z=new Set(),o=[];for(const x of a){let v=k(x);if(!z.has(v)){z.add(v);o.push(x)}}return o};
 const chars=s=>Array.from(String(s||'')).filter(c=>/[\u3400-\u9fff]/.test(c));
 function stat(t,ok=false){let e=$('syncStatus');if(e){e.textContent=t;e.style.color=ok?'var(--green)':'var(--muted)'}}
-function lvl(l){let s=[l.title,l.zhTitle,l.titleVi,l.viSubtitle,l.subtitle,l.heroTitle,...(l.meta||[])].filter(Boolean).join(' '),m=s.match(/HSK\s*([1-9]\d?)/i);return m?'HSK '+m[1]:'Khác'}
-function bn(l,u){let s=[l.id,l.title,l.zhTitle,l.viSubtitle,l.subtitle,...(l.meta||[]),u].filter(Boolean).join(' '),m=s.match(/(?:Bài|bai|hsk\d+_bai)[\s_-]?(\d+)/i);return m?+m[1]:(+(u.match(/bai(\d+)/i)||[])[1]||1)}
+function metaText(l){const m=l?.meta;return m&&typeof m==='object'&&!Array.isArray(m)?Object.values(m):Array.isArray(m)?m:[m]}
+function lvl(l){let s=[l?.title,l?.zhTitle,l?.titleVi,l?.viSubtitle,l?.subtitle,l?.heroTitle,...metaText(l)].filter(Boolean).join(' '),m=s.match(/HSK\s*([1-9]\d?)/i);return m?'HSK '+m[1]:'Khác'}
+function bn(l,u){let s=[l?.id,l?.title,l?.zhTitle,l?.viSubtitle,l?.subtitle,...metaText(l),u].filter(Boolean).join(' '),m=s.match(/(?:Bài|bai|hsk\d+_bai)[\s_-]?(\d+)/i);return m?+m[1]:(+(String(u||'').match(/bai(\d+)/i)||[])[1]||1)}
 function qs(l,b,lv){
  let ss=Array.isArray(l.sections)?l.sections:[],map=Object.fromEntries(ss.map(x=>[x.id,x])),raw=[];
  if(Array.isArray(l.questions))raw.push(...l.questions.map(x=>({...x})));
@@ -92,7 +93,7 @@ function bind(){
 async function load(){
  stat('Đang đọc kho dữ liệu bài học…');
  const raw=await window.HAN_NGU_DATA.loadAll();
- const ls=raw.map(window.HAN_NGU_DATA.prepare).sort((a,b)=>{
+ const ls=raw.map(item=>norm(item,item.__href||item.__data||'')).sort((a,b)=>{
    const av=a.content?.course?.level||99,bv=b.content?.course?.level||99;
    const an=a.content?.course?.lessonNo||99,bn=b.content?.course?.lessonNo||99;
    return av-bv||an-bn;
