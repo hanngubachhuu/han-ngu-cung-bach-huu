@@ -1622,3 +1622,90 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "heroDescription": "Luyện tập HSK 2"
   }
 });
+
+/* Mở rộng Bài 10 theo SGK HSK 2 (tr. 87–94) và SBT tương ứng. */
+(() => {
+  const lesson = window.HAN_NGU_DATA.lessons["hsk2_bai10_biezhao"];
+  const mcq = (id, section, prompt, choices, correct, explain) => ({ id, section, type:"mcq", prompt, options:choices.map((t,i)=>({k:"ABCD"[i],t})), answer:"ABCD"[correct], explain });
+  const fill = (id, section, prompt, answer, explain) => ({ id, section, type:"text_fill", prompt, answer, explain });
+  const reorder = (id, section, prompt, tokens, answer, explain) => ({ id, section, type:"reorder", prompt, tokens, answer, explain });
+  const open = (id, section, prompt, model, explain) => ({ id, section, type:"self_check", prompt, model, explain });
+  const extra = [
+    mcq("B10-A09","A","Trong câu “哥哥正在洗衣服”，正在 cho biết điều gì?",["hành động đang diễn ra","hành động đã xong","một mệnh lệnh","một lần trong quá khứ"],0,"正在 đặt trước động từ, nhấn mạnh hành động đang diễn ra."),
+    mcq("B10-A10","A","Chọn kết hợp tự nhiên nhất:",["洗衣服","洗手机","吃课","上鸡蛋"],0,"洗衣服 là kết hợp thông dụng; 洗 cũng có thể đi với 水果."),
+    mcq("B10-A11","A","“请你帮助我找手机” có nghĩa là:",["Hãy giúp tôi tìm điện thoại","Đừng tìm điện thoại","Điện thoại đang giúp tôi","Anh trai đang gọi điện"],0,"帮助 + người + động từ: giúp ai làm việc gì."),
+    mcq("B10-A12","A","Lượng từ phù hợp: 我买了两个___。",["鸡蛋","西瓜","课","手机"],0,"鸡蛋 thường dùng lượng từ 个: 一个鸡蛋、两个鸡蛋."),
+    fill("B10-A13","A","Điền từ phù hợp: 哥哥___洗衣服呢。",["正在","正"],"正在 + động từ diễn tả hành động đang diễn ra."),
+    fill("B10-A14","A","Điền từ phù hợp: 请___我一下，好吗？",["帮助","帮"],"帮助/帮 đều có thể dùng trong lời nhờ; câu này luyện từ mới 帮助."),
+    open("B10-A15","A","Viết hai câu ngắn: một câu dùng 鸡蛋, một câu dùng 西瓜.","我早上吃了一个鸡蛋。这个西瓜很甜。","Tự kiểm: dùng đúng lượng từ và ý nghĩa từ mới."),
+
+    mcq("B10-B05","B","Câu nào là lời ngăn đúng, tự nhiên?",["别找了，手机在桌子上。","别找手机了在桌子上。","不找了别手机。","找别了手机。"],0,"别 + V + 了: yêu cầu dừng hành động vì không cần tiếp tục."),
+    mcq("B10-B06","B","Trong “不要看电视了，快上课吧”，người nói muốn:",["ngừng xem TV để đi học","đã xem TV xong","không bao giờ xem TV","bật TV lên"],0,"不要…了 trong ngữ cảnh này yêu cầu dừng việc đang làm/chưa nên tiếp tục."),
+    mcq("B10-B07","B","Câu nào đúng với 对 + đối tượng?",["老师对我们很好。","老师我们对很好。","老师很对我们好。","对老师我们很好。"],0,"Mẫu: chủ ngữ + 对 + đối tượng + tính từ/động từ."),
+    mcq("B10-B08","B","“我对他说：‘谢谢。’” nghĩa là:",["Tôi nói với anh ấy: cảm ơn.","Anh ấy nói với tôi: cảm ơn.","Tôi cảm ơn anh ấy.","Anh ấy rất tốt với tôi."],0,"对 + người + 说 = nói với ai."),
+    fill("B10-B09","B","Điền 别 hoặc 正在: 哥哥___洗衣服，你晚一点儿再找他。","正在","正在 dùng để nêu hành động đang diễn ra, không phải lời ngăn."),
+    fill("B10-B10","B","Điền 别 hoặc 不: ___找了，手机在桌子上呢。","别","别 + V + 了 là lời yêu cầu đừng tiếp tục làm việc đó."),
+    fill("B10-B11","B","Điền 对: 妈妈___我说：‘快吃饭吧。’","对","Đối tượng của hành động nói đứng sau 对."),
+    fill("B10-B12","B","Điền từ phù hợp: 他___老师很尊敬。", "对", "对 + người + tính từ/động từ: tôn trọng đối với giáo viên."),
+    reorder("B10-B13","B","Sắp xếp thành câu đúng:",["别","了","看","手机"],["别","看","手机","了"],"别 đứng đầu câu; 了 đặt sau động từ/tân ngữ để nhắc dừng."),
+    reorder("B10-B14","B","Sắp xếp thành câu đúng:",["我","对","很","你","好"],["我","对","你","很","好"],"Đối tượng đi ngay sau 对."),
+    reorder("B10-B15","B","Sắp xếp thành câu đúng:",["正在","哥哥","西瓜","洗"],["哥哥","正在","洗","西瓜"],"正在 đứng trước động từ 洗."),
+    open("B10-B16","B","Sửa câu sai: “我正在了洗衣服。”", "我正在洗衣服。", "正在 không dùng cùng 了 để chỉ một hành động đang diễn ra."),
+    open("B10-B17","B","Viết một câu dùng 对 + người + 说 và một câu dùng 对 + người + 好.","我对老师说：谢谢。老师对我们很好。","Hai cách dùng 对 khác nhau: với động từ nói và với tính từ đánh giá."),
+    open("B10-B18","B","Hãy viết một lời nhắc lịch sự dùng 不要……了.", "不要等我了，你先回家吧。", "Câu cần có 不要 + động từ + 了 và ngữ cảnh hợp lý."),
+
+    mcq("B10-C05","C","Đọc: “小李找手机找了半天。哥哥说：‘别找了，手机在桌子上呢。’” Điện thoại ở đâu?",["Trên bàn","Trong phòng của anh trai","Ở trường","Không tìm thấy"],0,"桌子上 = trên bàn."),
+    mcq("B10-C06","C","Theo đoạn trên, vì sao anh trai bảo Tiểu Lý đừng tìm nữa?",["Vì điện thoại đã ở trên bàn","Vì Tiểu Lý đang đi học","Vì anh trai không có điện thoại","Vì trời tối"],0,"Khi đã biết vị trí điện thoại, không cần tiếp tục tìm."),
+    mcq("B10-C07","C","Đọc: “哥哥正在洗西瓜，妈妈对我说：‘你去买鸡蛋吧。’” Ai đang rửa dưa hấu?",["Anh trai","Mẹ","Người nói","Không ai"],0,"哥哥正在洗西瓜 nêu rõ chủ thể và hành động."),
+    fill("B10-C08","C","Đọc: “我对老师说：‘这个问题我不懂，请您帮助我。’” Người nói nhờ giáo viên ___ mình.","giúp đỡ","请您帮助我 = xin thầy/cô giúp tôi."),
+    fill("B10-C09","C","Đọc: “现在正在上课，别玩手机了。” Điền: Người nghe không nên ___ điện thoại nữa.","chơi","别玩手机了 = đừng chơi điện thoại nữa."),
+    open("B10-C10","C","Tóm tắt bằng tiếng Việt: “哥哥正在洗衣服，所以我没有叫他帮助我找手机。”", "Anh trai đang giặt quần áo nên tôi không gọi anh ấy giúp tìm điện thoại.", "Cần nêu đủ hành động đang diễn ra và hệ quả hợp lý."),
+
+    reorder("B10-D03","D","Sắp xếp thành câu đúng:",["帮助","请","我","你"],["请","你","帮助","我"],"请 + người + động từ: lời nhờ lịch sự."),
+    reorder("B10-D04","D","Sắp xếp thành câu đúng:",["对","妈妈","我","很好"],["妈妈","对","我","很好"],"Chủ ngữ trước, rồi 对 + đối tượng + tính từ."),
+    reorder("B10-D05","D","Sắp xếp thành câu đúng:",["呢","手机","桌子上","在"],["手机","在","桌子上","呢"],"在 + nơi chốn; 呢 ở cuối câu tạo sắc thái đang/đấy."),
+    reorder("B10-D06","D","Sắp xếp thành câu đúng:",["不要","了","西瓜","吃"],["不要","吃","西瓜","了"],"不要 + V + O + 了: bảo dừng hành động."),
+    fill("B10-D07","D","Hoàn thành: 现在___上课，别说话。","正在","正在上课 = đang trong giờ học."),
+    fill("B10-D08","D","Hoàn thành: 这个西瓜很大，你___我一起吃吧。","和","和 + người + 一起 + V diễn tả cùng làm một việc."),
+    open("B10-D09","D","Viết lại bằng 别……了: “Bạn không cần tìm nữa.”", "别找了。", "Dùng 别 trước động từ và 了 sau động từ để nhắc dừng."),
+    open("B10-D10","D","Viết một câu hỏi vị trí điện thoại, rồi trả lời bằng 在……呢.", "手机在哪儿？手机在桌子上呢。", "Câu trả lời cần có 在 + nơi chốn + 呢."),
+
+    open("B10-E04","E","Dịch sang tiếng Trung: Anh trai tôi đang rửa dưa hấu.", "我哥哥正在洗西瓜。", "正在 đứng trước động từ 洗."),
+    open("B10-E05","E","Dịch sang tiếng Trung: Đừng chơi điện thoại nữa, đang vào học.", "别玩手机了，正在上课呢。", "Kết hợp lời ngăn 别……了 với trạng thái đang diễn ra 正在……呢."),
+    open("B10-E06","E","Dịch sang tiếng Trung: Mẹ rất tốt với tôi.", "妈妈对我很好。", "Đối tượng đứng sau 对, tính từ 好 ở sau cùng."),
+    open("B10-E07","E","Dịch sang tiếng Việt: 请你帮助我找一下手机。", "Xin bạn hãy giúp tôi tìm điện thoại một chút.", "帮助 + người + động từ; 一下 làm lời đề nghị nhẹ hơn."),
+    open("B10-E08","E","Dịch đoạn ngắn sang tiếng Trung: Tôi đang tìm điện thoại. Anh trai nói với tôi: Đừng tìm nữa, điện thoại ở trên bàn.", "我正在找手机。哥哥对我说：‘别找了，手机在桌子上呢。’", "Cần dùng đúng 正在、对……说 và 别……了."),
+
+    open("B10-F03","F","Tình huống: bạn đang trong giờ học, bạn cùng bàn chơi điện thoại. Hãy nhắc bạn ấy bằng 2 câu lịch sự, dùng 别……了 và 正在.", "别玩手机了，正在上课呢。我们认真听老师说吧。", "Có lời nhắc và lý do; giọng điệu phù hợp lớp học."),
+    open("B10-F04","F","Viết hội thoại 3 lượt: một người tìm điện thoại, người kia chỉ vị trí. Dùng 找、别……了、桌子上.", "A：我的手机在哪儿？B：别找了，在桌子上呢。A：谢谢！", "Cần có đủ ba ý bắt buộc và phản hồi tự nhiên."),
+    open("B10-F05","F","Bạn cần người khác giúp. Viết 2–3 câu dùng 请、帮助 và 对……说.", "我对同学说：‘请你帮助我一下，好吗？’同学说：‘好。’", "Luyện lời nhờ lịch sự và đối tượng của hành động nói."),
+    open("B10-F06","F","Tự kể 3 câu về việc một người trong nhà đang làm gì, dùng 哥哥/妈妈、正在 và một từ trong 洗、鸡蛋、西瓜.", "哥哥正在洗西瓜。妈妈正在做饭。我去买鸡蛋。", "Có ít nhất một hành động đang diễn ra và dùng đúng từ mới."),
+    open("B10-F07","F","Đóng vai: bạn không đồng ý vì bạn của mình tiếp tục làm một việc không phù hợp. Viết một lời khuyên với 不要……了 và nêu lý do.", "不要看电视了，明天还要上课。", "Đủ cấu trúc và lý do hợp lý; có thể dùng 别 thay 不要."),
+    open("B10-F08","F","Viết lời giới thiệu ngắn về một người đối xử tốt với bạn, bắt buộc dùng 对 + người + 好.", "我的老师对我很好。她常常帮助我学习汉语。", "Đánh giá đúng trật tự của 对 và liên kết ý tự nhiên."),
+    open("B10-F09","F","Tự đánh giá: viết đoạn 3–4 câu về một buổi học; dùng ít nhất 3 từ/cấu trúc: 课、正在、别……了、帮助、手机、对.", "现在正在上课。老师对我们很好，也常常帮助我们。别玩手机了，要认真学习。", "Rubric: đủ 3 yếu tố; trật tự 正在 và 对 đúng; ý mạch lạc.")
+  ];
+  extra.forEach((q) => Object.assign(q,{sourceRefs:["textbook_l10","workbook_l10","teacher_enriched_l10"],status:"teacher_enriched"}));
+  lesson.content.exercises.all.push(...extra);
+  const order=["A","B","C","D","E","F"];
+  lesson.content.exercises.all.sort((a,b)=>order.indexOf(a.section)-order.indexOf(b.section));
+  lesson.content.meta.version=2;
+  lesson.content.meta.timeLimitMinutes=75;
+  lesson.content.coverage.exercises="gold_template_v1";
+
+  const vocabDetail = {
+    "课": {collocations:["上课 (vào học)","一节课 (một tiết học)"],usageNotes:["上课 là vào/đang học; 课 là danh từ, thường cần lượng từ 节."],commonConfusions:["上课 (vào học) khác 上班 (đi làm)."]},
+    "帮助": {collocations:["帮助别人 (giúp người khác)","请你帮助我 (xin bạn giúp tôi)"],usageNotes:["Có thể là động từ hoặc danh từ; khẩu ngữ thường dùng 帮."],commonConfusions:["帮助 không đi trực tiếp trước đồ vật khi muốn nói 'giúp ai làm gì'; nêu người rồi đến hành động."]},
+    "别": {collocations:["别找了 (đừng tìm nữa)","别说话 (đừng nói chuyện)"],usageNotes:["Dùng cho mệnh lệnh phủ định; thêm 了 khi bảo dừng hành động đang/định tiếp tục."],commonConfusions:["Đừng nhầm 别 với 不: 不 thường phủ định sự thật/thói quen, 别 dùng để khuyên/ngăn."]},
+    "哥哥": {collocations:["我哥哥 (anh trai tôi)","哥哥正在… (anh trai đang…)"],usageNotes:["Trong cách gọi thân mật có thể lặp 哥哥; khi nêu quan hệ, thường nói 我哥哥."],commonConfusions:["哥哥 là anh trai, 弟弟 là em trai."]},
+    "鸡蛋": {collocations:["一个鸡蛋 (một quả trứng)","吃鸡蛋 (ăn trứng)"],usageNotes:["Thường dùng lượng từ 个."],commonConfusions:["鸡蛋 là trứng gà; 蛋 không tự động chỉ riêng trứng gà trong mọi ngữ cảnh."]},
+    "西瓜": {collocations:["吃西瓜 (ăn dưa hấu)","洗西瓜 (rửa dưa hấu)"],usageNotes:["Thường dùng 个 khi đếm cả quả: 一个西瓜."],commonConfusions:["西瓜 là dưa hấu, không phải 苹果 (táo)."]},
+    "正在": {collocations:["正在上课 (đang học)","正在洗衣服 (đang giặt quần áo)"],usageNotes:["Đặt trước động từ, nhấn mạnh hành động đang diễn ra; có thể dùng 呢 cuối câu."],commonConfusions:["Không dùng 正在了 + V trong cùng một trạng thái đang diễn ra."]},
+    "手机": {collocations:["玩手机 (chơi điện thoại)","找手机 (tìm điện thoại)"],usageNotes:["手机 là điện thoại di động; lượng từ thông dụng là 部."],commonConfusions:["手机 khác 电话: 电话 có thể là cuộc gọi hoặc điện thoại nói chung."]},
+    "洗": {collocations:["洗衣服 (giặt quần áo)","洗水果 (rửa hoa quả)"],usageNotes:["洗 dùng cho giặt/rửa bằng nước; cần nêu tân ngữ sau động từ."],commonConfusions:["洗衣服 là giặt, không dùng 吃/做 thay cho 洗."]}
+  };
+  lesson.content.vocabulary.forEach((v) => {
+    if (!vocabDetail[v.han]) return;
+    Object.assign(v.detail, vocabDetail[v.han], {status:"teacher_enriched"});
+    v.sourceRefs = ["textbook_l10","teacher_enriched_l10"];
+  });
+})();
