@@ -1,6 +1,6 @@
 window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   "schemaVersion": 5,
-  "id": "bai6",
+  "id": "hsk2_bai6_zenme",
   "content": {
     "course": {
       "system": "HSK",
@@ -13,7 +13,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "meta": {
       "timeLimitMinutes": 90,
       "version": 1,
-      "lessonId": "bai6",
+      "lessonId": "hsk2_bai6_zenme",
       "detailSchemaVersion": 2
     },
     "vocabulary": [
