@@ -1836,3 +1836,84 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "heroDescription": "Luyện tập HSK 2"
   }
 });
+
+/* Bài 8 được mở rộng theo SGK HSK 2 (tr. 71–78) và SBT tương ứng.
+   Canonical data là nguồn duy nhất; scripts/sync-lesson-pages.mjs tạo dữ liệu cho giao diện. */
+(() => {
+  const lesson = window.HAN_NGU_DATA.lessons["hsk2_bai8_rangwo"];
+  const mcq = (id, section, prompt, choices, correct, explain, extra = {}) => ({
+    id, section, type: "mcq", prompt,
+    options: choices.map((t, i) => ({ k: "ABCD"[i], t })), answer: "ABCD"[correct],
+    explain, ...extra
+  });
+  const fill = (id, section, prompt, answer, explain, extra = {}) => ({
+    id, section, type: "text_fill", prompt, answer, explain, ...extra
+  });
+  const reorder = (id, section, prompt, tokens, answer, explain, extra = {}) => ({
+    id, section, type: "reorder", prompt, tokens, answer, explain, ...extra
+  });
+  const open = (id, section, prompt, model, explain, extra = {}) => ({
+    id, section, type: "self_check", prompt, model, explain, ...extra
+  });
+  const extra = [
+    mcq("B8-A09", "A", "Trong câu “你等我一下”，等 nghĩa là gì?", ["đợi", "tìm", "bảo", "nói cho"], 0, "等 + người/sự việc = chờ, đợi."),
+    mcq("B8-A10", "A", "Chọn cụm dùng đúng với 服务员:", ["问服务员", "服务员一件衣服", "服务员告诉一本书", "白服务员"], 0, "服务员 là nhân viên phục vụ; có thể hỏi hoặc gọi nhân viên phục vụ."),
+    mcq("B8-A11", "A", "“白等了” gần nghĩa nhất với:", ["đợi vô ích", "đợi lại", "đợi rất lâu", "đợi ở bên ngoài"], 0, "白 trong 白等了 nhấn mạnh công sức/thời gian bỏ ra mà không có kết quả."),
+    fill("B8-A12", "A", "Điền 再 hoặc 还: 这个问题让我想想，明天___告诉你。", "再", "再 đứng trước động từ, diễn tả làm việc đó sau một thời điểm khác."),
+    fill("B8-A13", "A", "Điền từ phù hợp: 你在___什么？我找不到我的手机了。", "找", "找 + đồ vật/người = tìm."),
+    fill("B8-A14", "A", "Điền từ phù hợp: 服务员，请___我一杯水。", "给", "给 + người + vật: đưa/cho ai cái gì. Đây là từ đã học trước, dùng để đặt từ mới 服务员 vào ngữ cảnh."),
+    open("B8-A15", "A", "Viết 2 câu ngắn: một câu dùng 等, một câu dùng 找. Mỗi câu có ngữ cảnh rõ.", "我在学校门口等朋友。我的书不见了，我在找书。", "Tự kiểm: (1) 等 phải có đối tượng/hoàn cảnh chờ; (2) 找 phải có người/vật cần tìm; (3) câu tự nhiên."),
+
+    mcq("B8-B09", "B", "Câu nào dùng “……，好吗？” phù hợp nhất?", ["我们明天一起去看电影，好吗？", "我昨天去看电影，好吗。", "他很好吗。", "好吗我们一起去。"], 0, "Mẫu đề nghị mềm: mệnh đề đề xuất + 好吗？"),
+    mcq("B8-B10", "B", "Khi cần xin người nghe chờ một chút để suy nghĩ, cách nói tự nhiên là:", ["让我想想，好吗？", "我想想让。", "好吗让我想。", "让我好吗想想？"], 0, "让 + người + V tạo câu kiêm ngữ: để/nhờ ai làm gì."),
+    mcq("B8-B11", "B", "Chọn câu đúng về trật tự của 再:", ["我想想再回答你。", "我再想想回答你。", "我想再想你回答。", "我回答你再想想。"], 0, "Khi diễn tả hai hành động nối tiếp, V1 + 再 + V2: nghĩ xong rồi mới trả lời."),
+    mcq("B8-B12", "B", "Trong “你看一看这个”，看一看 có tác dụng gì?", ["Làm lời đề nghị/động tác nghe nhẹ nhàng hơn", "Chỉ hành động đã hoàn thành", "Biểu thị phủ định", "Thay cho quá khứ"], 0, "Động từ đơn âm có thể lặp AA để thử/làm một chút, tạo sắc thái nhẹ."),
+    fill("B8-B13", "B", "Điền 让 hoặc 叫: 老师___我们明天带书来。", ["让", "叫"], "让/叫 đều có thể dùng theo mẫu người 1 + 让/叫 + người 2 + V. Ở đây cả hai đều tự nhiên."),
+    fill("B8-B14", "B", "Điền 再: 你先看，我___去问服务员。", "再", "再 đặt trước 去问: sau khi bạn xem, tôi mới đi hỏi nhân viên."),
+    fill("B8-B15", "B", "Điền 好吗: 这件衣服有点儿贵，我们___看看别的？", "好吗", "Đề nghị cùng làm việc khác: 我们……，好吗？"),
+    reorder("B8-B16", "B", "Sắp xếp thành câu đúng:", ["再", "告诉", "我", "明天", "你", "吧"], ["你", "明天", "再", "告诉", "我", "吧"], "Chủ ngữ + thời gian + 再 + động từ + tân ngữ + 吧."),
+    reorder("B8-B17", "B", "Sắp xếp thành câu đúng:", ["想想", "让我", "一下", "这件事情"], ["让我", "想想", "这件事情", "一下"], "让 + người + động từ; 一下 đặt sau động từ/cụm động từ để làm nhẹ sắc thái."),
+    open("B8-B18", "B", "Sửa câu sai: “我让他帮我看看一看这件衣服。”", "我让他帮我看一看这件衣服。", "Không chồng hai hình thức lặp. Chọn 看看 hoặc 看一看; ở đây 看一看 tự nhiên hơn."),
+
+    mcq("B8-C03", "C", "Đọc: “小王想买一件衣服，可是觉得有点儿贵。他说：‘让我想想，明天再来吧。’” Vì sao Tiểu Vương chưa mua?", ["Vì thấy hơi đắt", "Vì không có cửa hàng", "Vì không tìm thấy nhân viên", "Vì đã mua rồi"], 0, "Cụm 可是觉得有点儿贵 nêu trực tiếp nguyên nhân."),
+    mcq("B8-C04", "C", "Theo đoạn trên, 小王 có thể làm gì vào ngày mai?", ["Quay lại cửa hàng", "Đi đến trường", "Gọi điện cho mẹ", "Đợi bạn ở nhà"], 0, "明天再来 = ngày mai lại/quay lại."),
+    mcq("B8-C05", "C", "Đọc: “A：你什么时候告诉我？B：让我想想，晚上给你打电话，好吗？” B sẽ làm gì?", ["Buổi tối gọi điện cho A", "Ngay bây giờ trả lời A", "Bảo A đi mua điện thoại", "Đợi A ở cửa hàng"], 0, "晚上给你打电话 là hành động B đề xuất sau khi suy nghĩ."),
+    mcq("B8-C06", "C", "Trong hội thoại trên, 好吗 thể hiện thái độ nào?", ["Hỏi ý/đề nghị lịch sự", "Mệnh lệnh mạnh", "Kể chuyện quá khứ", "Phủ định"], 0, "好吗 ở cuối đề nghị xin sự đồng ý của người nghe."),
+    fill("B8-C07", "C", "Đọc: “服务员说这件白的很好看。小王看了看，还是想再看看。” Điền: 小王 muốn xem ___ món/chiếc khác nữa.", ["别的", "别的衣服"], "再看看 biểu thị vẫn muốn xem thêm; có thể diễn đạt là xem đồ khác."),
+    fill("B8-C08", "C", "Đọc: “我找了半天，原来手机在桌子上。我白找了。” Điền: Người nói đã tìm điện thoại ___ .", ["vô ích", "uổng công", "mất công"], "白找了 = tìm uổng công/vô ích vì điện thoại vốn ở ngay trên bàn."),
+    open("B8-C09", "C", "Đọc đoạn: “朋友请小李明天一起吃饭。小李说：‘让我想想，晚上再告诉你。’” Hãy viết 1 câu tiếng Việt nêu đúng quyết định hiện tại của Tiểu Lý.", "Tiểu Lý chưa quyết định; tối nay anh ấy sẽ trả lời bạn.", "Cần có đủ hai ý: chưa quyết ngay và hẹn trả lời sau."),
+    open("B8-C10", "C", "Đặt tiêu đề ngắn bằng tiếng Trung cho tình huống: một người chưa quyết định mua quần áo vì thấy đắt.", "让我想想再买吧 / 这件衣服有点儿贵。", "Tiêu đề mở; tự kiểm xem có nêu được ý suy nghĩ/chưa quyết hoặc giá đắt."),
+
+    reorder("B8-D05", "D", "Sắp xếp thành câu đúng:", ["好吗", "我们", "再", "看看", "别的"], ["我们", "再", "看看", "别的", "好吗"], "我们 + 再 + V + tân ngữ + 好吗？"),
+    reorder("B8-D06", "D", "Sắp xếp thành câu đúng:", ["服务员", "我", "叫", "来", "一下"], ["我", "叫", "服务员", "来", "一下"], "叫 + người + 来 + 一下: gọi ai đó đến một chút."),
+    fill("B8-D07", "D", "Hoàn thành câu theo mẫu V一V: 你先___这个问题___，再回答。", ["想一想", "想想"], "Có thể dùng 想一想 hoặc 想想; không dùng đồng thời cả hai."),
+    fill("B8-D08", "D", "Hoàn thành hội thoại: A：这件白的怎么样？B：我觉得很好看，___买这件吧。", "就", "就 trong ngữ cảnh này nêu quyết định: vậy thì/cứ mua chiếc này."),
+    open("B8-D09", "D", "Viết lại bằng 再: “你先看这件衣服，然后告诉我。”", "你先看这件衣服，再告诉我。", "再 nối hành động thứ hai sau khi hành động thứ nhất hoàn thành."),
+    open("B8-D10", "D", "Viết một câu đề nghị bạn cùng xem một món đồ, bắt buộc dùng 看一看 và 好吗。", "我们看一看这件衣服，好吗？", "Tự kiểm: đủ 看一看, có đối tượng và 好吗 ở cuối câu."),
+
+    open("B8-E04", "E", "Dịch sang tiếng Trung: Để tôi suy nghĩ rồi tối nay nói cho bạn biết.", "让我想想，今天晚上再告诉你。", "让 + 我 + 想想; thời gian + 再 + 告诉 + người."),
+    open("B8-E05", "E", "Dịch sang tiếng Trung: Bạn đợi tôi một lát được không?", "你等我一下，好吗？", "Đề nghị lịch sự dùng 等 + người + 一下 + 好吗。"),
+    open("B8-E06", "E", "Dịch sang tiếng Việt: 服务员，请让我们看一看那件白的。", "Nhân viên ơi, xin hãy cho/chúng tôi xem thử chiếc màu trắng kia.", "那件白的 = chiếc màu trắng kia; 看一看 mang sắc thái xem thử."),
+    open("B8-E07", "E", "Dịch sang tiếng Việt: 这件太贵了，我们再看看吧。", "Chiếc này đắt quá, chúng ta xem thêm/ xem cái khác nhé.", "再看看 không phải 'xem lại quá khứ' mà là xem thêm rồi mới quyết."),
+    open("B8-E08", "E", "Dịch đoạn ngắn sang tiếng Trung: A: ‘Bạn quyết định chưa?’ B: ‘Chưa, để tôi suy nghĩ một chút, ngày mai trả lời bạn nhé.’", "A：你决定了吗？B：还没有，让我想想，明天再告诉你，好吗？", "Có thể dùng 还没. Đáp án phải có ý chưa quyết và hẹn trả lời ngày mai."),
+
+    open("B8-F03", "F", "Tình huống: Bạn đang thử quần áo và muốn nhân viên đưa chiếc màu trắng. Viết 2 lượt lời ngắn, dùng 服务员 và 白的。", "A：服务员，请给我看看那件白的。B：好的，请看。", "Tự kiểm: gọi đúng 服务员; 白的 thay cho danh từ đã rõ trong ngữ cảnh."),
+    open("B8-F04", "F", "Tình huống: Bạn chưa thể trả lời lời mời ăn tối. Viết phản hồi lịch sự dùng 让我想想 và 再。", "让我想想，晚上再告诉你，好吗？", "Đáp án cần giữ được phép lịch sự: chưa từ chối/đồng ý ngay, hẹn trả lời sau."),
+    open("B8-F05", "F", "Viết hội thoại 3 lượt lời: bạn A tìm điện thoại, bạn B gợi ý tìm ở đâu. Bắt buộc dùng 找 và 再。", "A：我在找手机。B：你再看看桌子上。A：啊，找到了！", "Tự kiểm: 找 có đối tượng; 再 đặt trước động từ hành động tiếp theo."),
+    open("B8-F06", "F", "Nói/viết 2 câu để đề nghị một người bạn chờ bạn suy nghĩ về một việc. Bắt buộc có 等 và 好吗。", "你等我一下，让我想想这件事情，好吗？", "Câu cần vừa có lời nhờ chờ, vừa có đề nghị lịch sự."),
+    open("B8-F07", "F", "Viết 3 câu kể việc bạn tìm một đồ vật rồi tìm thấy nó. Dùng 找 và có thể dùng 白找了 nếu hợp lý.", "我找我的书找了半天。原来书在桌子上。我白找了。", "Tự kiểm: sự việc có diễn biến tìm → phát hiện; 白找了 chỉ dùng khi đã tìm uổng công."),
+    open("B8-F08", "F", "Bạn thấy món đồ hơi đắt. Hãy đưa ra một phản hồi lịch sự để chưa mua ngay, dùng 有点儿贵 và 再。", "这件有点儿贵，我再看看吧。", "Có thể nói 再看看; không cần phủ định trực tiếp người bán."),
+    open("B8-F09", "F", "Tự đánh giá: viết 3–4 câu về một lần bạn phải suy nghĩ trước khi quyết định. Dùng ít nhất 2 từ: 让、再、等、告诉、事情。", "这件事情我不能马上决定。让我想想，明天再告诉你。请你等我一天。", "Rubric 4 điểm: đủ 3–4 câu; dùng đúng 2 từ bắt buộc; trật tự 再 đúng; nội dung mạch lạc."
+    )
+  ];
+  extra.forEach((question) => Object.assign(question, {
+    sourceRefs: ["textbook_l08", "workbook_l08", "teacher_enriched_l08"],
+    status: "teacher_enriched"
+  }));
+  lesson.content.exercises.all.push(...extra);
+  const sectionOrder = ["A", "B", "C", "D", "E", "F"];
+  lesson.content.exercises.all.sort((left, right) => sectionOrder.indexOf(left.section) - sectionOrder.indexOf(right.section));
+  lesson.content.meta.version = 2;
+  lesson.content.meta.timeLimitMinutes = 75;
+  lesson.content.coverage.exercises = "gold_template_v1";
+})();

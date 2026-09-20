@@ -1081,7 +1081,8 @@ const LESSON = {
     "meta": {
       "timeLimitMinutes": 50,
       "version": 1,
-      "lessonId": "hsk2_lesson_10"
+      "lessonId": "hsk2_bai10_biezhao",
+      "detailSchemaVersion": 2
     },
     "vocabulary": [
       {
@@ -1103,7 +1104,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v02",
@@ -1124,7 +1132,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v03",
@@ -1145,7 +1160,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v04",
@@ -1166,7 +1188,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v05",
@@ -1187,7 +1216,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v06",
@@ -1208,7 +1244,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v07",
@@ -1229,7 +1272,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v08",
@@ -1250,7 +1300,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       },
       {
         "id": "hsk2_l10_v09",
@@ -1271,7 +1328,14 @@ const LESSON = {
           "textbook_l10"
         ],
         "status": "explicit",
-        "core": true
+        "core": true,
+        "detail": {
+          "collocations": [],
+          "usageNotes": [],
+          "commonConfusions": [],
+          "relatedWords": [],
+          "status": "pending_enrichment"
+        }
       }
     ],
     "grammar": [
@@ -1408,29 +1472,576 @@ const LESSON = {
     },
     "exercises": {
       "all": [
-        "B10-A01",
-        "B10-A02",
-        "B10-A03",
-        "B10-A04",
-        "B10-A05",
-        "B10-A06",
-        "B10-A07",
-        "B10-A08",
-        "B10-B01",
-        "B10-B02",
-        "B10-B03",
-        "B10-B04",
-        "B10-C01",
-        "B10-C02",
-        "B10-C03",
-        "B10-C04",
-        "B10-D01",
-        "B10-D02",
-        "B10-E01",
-        "B10-E02",
-        "B10-E03",
-        "B10-F01",
-        "B10-F02"
+        {
+          "id": "B10-A01",
+          "type": "mcq",
+          "prompt": "课 (kè) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "B",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "C",
+              "t": "đừng"
+            },
+            {
+              "k": "D",
+              "t": "anh trai"
+            }
+          ],
+          "answer": "A",
+          "explain": "课 nghĩa là “bài học; tiết học”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "课 nghĩa là “bài học; tiết học”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A02",
+          "type": "mcq",
+          "prompt": "帮助 (bāngzhù) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "đừng"
+            },
+            {
+              "k": "D",
+              "t": "anh trai"
+            }
+          ],
+          "answer": "A",
+          "explain": "帮助 nghĩa là “giúp đỡ”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "帮助 nghĩa là “giúp đỡ”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A03",
+          "type": "mcq",
+          "prompt": "别 (bié) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "đừng"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "D",
+              "t": "anh trai"
+            }
+          ],
+          "answer": "A",
+          "explain": "别 nghĩa là “đừng”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "别 nghĩa là “đừng”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A04",
+          "type": "mcq",
+          "prompt": "哥哥 (gēge) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "anh trai"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "D",
+              "t": "đừng"
+            }
+          ],
+          "answer": "A",
+          "explain": "哥哥 nghĩa là “anh trai”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "哥哥 nghĩa là “anh trai”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A05",
+          "type": "mcq",
+          "prompt": "鸡蛋 (jīdàn) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "trứng gà"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "D",
+              "t": "đừng"
+            }
+          ],
+          "answer": "A",
+          "explain": "鸡蛋 nghĩa là “trứng gà”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "鸡蛋 nghĩa là “trứng gà”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A06",
+          "type": "mcq",
+          "prompt": "西瓜 (xīguā) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "dưa hấu"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "D",
+              "t": "đừng"
+            }
+          ],
+          "answer": "A",
+          "explain": "西瓜 nghĩa là “dưa hấu”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "西瓜 nghĩa là “dưa hấu”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A07",
+          "type": "mcq",
+          "prompt": "正在 (zhèngzài) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "đang"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "D",
+              "t": "đừng"
+            }
+          ],
+          "answer": "A",
+          "explain": "正在 nghĩa là “đang”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "正在 nghĩa là “đang”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-A08",
+          "type": "mcq",
+          "prompt": "手机 (shǒujī) có nghĩa là gì?",
+          "options": [
+            {
+              "k": "A",
+              "t": "điện thoại di động"
+            },
+            {
+              "k": "B",
+              "t": "bài học; tiết học"
+            },
+            {
+              "k": "C",
+              "t": "giúp đỡ"
+            },
+            {
+              "k": "D",
+              "t": "đừng"
+            }
+          ],
+          "answer": "A",
+          "explain": "手机 nghĩa là “điện thoại di động”.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "手机 nghĩa là “điện thoại di động”.",
+          "section": "A",
+          "sectionTitle": "A. TỪ VỰNG",
+          "skill": "tuvung"
+        },
+        {
+          "id": "B10-B01",
+          "type": "mcq",
+          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “别/不要……了”?",
+          "options": [
+            {
+              "k": "A",
+              "t": "别/不要 + V + 了"
+            },
+            {
+              "k": "B",
+              "t": "A + 了 + B"
+            },
+            {
+              "k": "C",
+              "t": "只用在过去时"
+            },
+            {
+              "k": "D",
+              "t": "只能放在句末"
+            }
+          ],
+          "answer": "A",
+          "explain": "Dùng để khuyên hoặc yêu cầu ngừng một hành động.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "Dùng để khuyên hoặc yêu cầu ngừng một hành động.",
+          "section": "B",
+          "sectionTitle": "B. NGỮ PHÁP",
+          "skill": "nguphap"
+        },
+        {
+          "id": "B10-B02",
+          "type": "self_check",
+          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 别/不要……了.",
+          "model": "Ví dụ: 别找了。",
+          "explain": "Câu mẫu phải thể hiện đúng chức năng của 别/不要……了.",
+          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "B",
+          "sectionTitle": "B. NGỮ PHÁP",
+          "skill": "nguphap"
+        },
+        {
+          "id": "B10-B03",
+          "type": "mcq",
+          "prompt": "Mẫu câu nào đúng với điểm ngữ pháp “对 + đối tượng”?",
+          "options": [
+            {
+              "k": "A",
+              "t": "S + 对 + O + Adj/V"
+            },
+            {
+              "k": "B",
+              "t": "A + 了 + B"
+            },
+            {
+              "k": "C",
+              "t": "只用在过去时"
+            },
+            {
+              "k": "D",
+              "t": "只能放在句末"
+            }
+          ],
+          "answer": "A",
+          "explain": "Nêu đối tượng mà một thái độ, tác động hoặc đánh giá hướng tới.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "Nêu đối tượng mà một thái độ, tác động hoặc đánh giá hướng tới.",
+          "section": "B",
+          "sectionTitle": "B. NGỮ PHÁP",
+          "skill": "nguphap"
+        },
+        {
+          "id": "B10-B04",
+          "type": "self_check",
+          "prompt": "Hãy tự đặt hoặc hoàn thành một câu áp dụng 对 + đối tượng.",
+          "model": "Ví dụ: 老师对学生很友好。",
+          "explain": "Câu mẫu phải thể hiện đúng chức năng của 对 + đối tượng.",
+          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "B",
+          "sectionTitle": "B. NGỮ PHÁP",
+          "skill": "nguphap"
+        },
+        {
+          "id": "B10-C01",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “小王找不到手机，一直在房间里找”。",
+          "options": [
+            {
+              "k": "A",
+              "t": "别...了"
+            },
+            {
+              "k": "B",
+              "t": "对"
+            },
+            {
+              "k": "C",
+              "t": "正在"
+            },
+            {
+              "k": "D",
+              "t": "手机"
+            }
+          ],
+          "answer": "A",
+          "explain": "Câu trên có liên quan trực tiếp đến 别...了.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "Câu trên có liên quan trực tiếp đến 别...了.",
+          "passageId": "p10",
+          "section": "C",
+          "sectionTitle": "C. ĐỌC HIỂU",
+          "skill": "docHieu"
+        },
+        {
+          "id": "B10-C02",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “哥哥告诉他：“别找了，手机在桌子上呢”。",
+          "options": [
+            {
+              "k": "A",
+              "t": "对"
+            },
+            {
+              "k": "B",
+              "t": "别...了"
+            },
+            {
+              "k": "C",
+              "t": "正在"
+            },
+            {
+              "k": "D",
+              "t": "手机"
+            }
+          ],
+          "answer": "A",
+          "explain": "Câu trên có liên quan trực tiếp đến 对.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "Câu trên có liên quan trực tiếp đến 对.",
+          "passageId": "p10",
+          "section": "C",
+          "sectionTitle": "C. ĐỌC HIỂU",
+          "skill": "docHieu"
+        },
+        {
+          "id": "B10-C03",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “”小王看见以后发现哥哥说得对”。",
+          "options": [
+            {
+              "k": "A",
+              "t": "正在"
+            },
+            {
+              "k": "B",
+              "t": "别...了"
+            },
+            {
+              "k": "C",
+              "t": "对"
+            },
+            {
+              "k": "D",
+              "t": "手机"
+            }
+          ],
+          "answer": "A",
+          "explain": "Câu trên có liên quan trực tiếp đến 正在.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "Câu trên có liên quan trực tiếp đến 正在.",
+          "passageId": "p10",
+          "section": "C",
+          "sectionTitle": "C. ĐỌC HIỂU",
+          "skill": "docHieu"
+        },
+        {
+          "id": "B10-C04",
+          "type": "mcq",
+          "prompt": "Đọc đoạn văn và chọn từ/cấu trúc xuất hiện phù hợp nhất với nội dung câu: “晚上他们一起洗水果、吃西瓜”。",
+          "options": [
+            {
+              "k": "A",
+              "t": "手机"
+            },
+            {
+              "k": "B",
+              "t": "别...了"
+            },
+            {
+              "k": "C",
+              "t": "对"
+            },
+            {
+              "k": "D",
+              "t": "正在"
+            }
+          ],
+          "answer": "A",
+          "explain": "Câu trên có liên quan trực tiếp đến 手机.",
+          "error": "Không đọc kỹ chức năng của từ/cấu trúc trong ngữ cảnh.",
+          "tip": "Xác định từ khóa trong câu rồi mới chọn đáp án.",
+          "example": "Câu trên có liên quan trực tiếp đến 手机.",
+          "passageId": "p10",
+          "section": "C",
+          "sectionTitle": "C. ĐỌC HIỂU",
+          "skill": "docHieu"
+        },
+        {
+          "id": "B10-D01",
+          "type": "reorder",
+          "prompt": "Sắp xếp thành câu đúng:",
+          "tokens": [
+            "别找了",
+            "手机",
+            "在",
+            "桌子上",
+            "呢"
+          ],
+          "answer": [
+            "别找了",
+            "手机",
+            "在",
+            "桌子上",
+            "呢"
+          ],
+          "explain": "别找了 là lời ngăn; 呢 đứng cuối câu trần thuật.",
+          "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
+          "tip": "Nhớ trật tự của mẫu câu đang luyện.",
+          "section": "D",
+          "sectionTitle": "D. VIẾT",
+          "skill": "viet"
+        },
+        {
+          "id": "B10-D02",
+          "type": "reorder",
+          "prompt": "Sắp xếp thành câu đúng:",
+          "tokens": [
+            "我",
+            "正在",
+            "洗",
+            "衣服"
+          ],
+          "answer": [
+            "我",
+            "正在",
+            "洗",
+            "衣服"
+          ],
+          "explain": "正在 đứng trước động từ để biểu thị hành động đang diễn ra.",
+          "error": "Dễ bị ảnh hưởng bởi trật tự tiếng Việt.",
+          "tip": "Nhớ trật tự của mẫu câu đang luyện.",
+          "section": "D",
+          "sectionTitle": "D. VIẾT",
+          "skill": "viet"
+        },
+        {
+          "id": "B10-E01",
+          "type": "self_check",
+          "prompt": "Dịch sang tiếng Trung: Đừng tìm nữa.",
+          "model": "别找了。",
+          "explain": "别 + V + 了 dùng để ngăn hoặc yêu cầu dừng một hành động.",
+          "error": "Dịch sát từng chữ dễ làm câu thiếu tự nhiên.",
+          "tip": "Nhận diện cấu trúc trọng tâm trước khi dịch.",
+          "section": "E",
+          "sectionTitle": "E. DỊCH",
+          "skill": "dich"
+        },
+        {
+          "id": "B10-E02",
+          "type": "self_check",
+          "prompt": "Viết một câu ngắn dùng từ “课”.",
+          "model": "课 + câu của em",
+          "explain": "Cần dùng đúng nghĩa và đúng từ loại của 课.",
+          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "E",
+          "sectionTitle": "E. DỊCH",
+          "skill": "dich"
+        },
+        {
+          "id": "B10-E03",
+          "type": "self_check",
+          "prompt": "Viết một câu có từ “洗”.",
+          "model": "洗 + câu của em",
+          "explain": "Cần đặt từ đúng vị trí trong câu.",
+          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "E",
+          "sectionTitle": "E. DỊCH",
+          "skill": "dich"
+        },
+        {
+          "id": "B10-F01",
+          "type": "self_check",
+          "prompt": "Tạo một đoạn hội thoại 2–3 lượt lời xoay quanh chủ đề bài 10, sử dụng ít nhất 2 từ mới.",
+          "model": "Câu trả lời mở.",
+          "explain": "Ưu tiên câu ngắn, đúng mẫu và liên kết tự nhiên.",
+          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "F",
+          "sectionTitle": "F. GIAO TIẾP",
+          "skill": "giaotiep"
+        },
+        {
+          "id": "B10-F02",
+          "type": "self_check",
+          "prompt": "Nói/viết 2 câu phản hồi trong tình huống thực tế phù hợp với tiêu đề bài.",
+          "model": "Câu trả lời mở.",
+          "explain": "Đánh giá theo độ đúng cấu trúc và mức độ tự nhiên.",
+          "error": "Không áp dụng đúng cấu trúc hoặc thiếu thành phần chính.",
+          "tip": "Đối chiếu mẫu câu sau khi tự làm.",
+          "section": "F",
+          "sectionTitle": "F. GIAO TIẾP",
+          "skill": "giaotiep"
+        }
       ],
       "vocabulary": [
         "B10-A01",
@@ -1519,70 +2130,304 @@ const LESSON = {
   "id": "hsk2-bai10",
   "title": "别找了，手机在桌子上呢",
   "titleVi": "Đừng tìm nữa, điện thoại ở trên bàn kia",
-  "subtitle": "Luyện tập HSK 2",
+  "subtitle": "Giáo trình chuẩn HSK 2 — Bài 10",
   "meta": [
-    "HSK 2 · Bài 10",
-    "9 từ vựng",
-    "2 điểm ngữ pháp"
+    "9 từ mới",
+    "2 điểm ngữ pháp",
+    "23 câu luyện tập"
   ],
   "timeLimitMinutes": 50,
   "vocab": [
     {
+      "id": "hsk2_l10_v01",
       "han": "课",
       "pinyin": "kè",
-      "nghia": "bài học; tiết học"
+      "meaning": "bài học; tiết học",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "bài học; tiết học",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v02",
       "han": "帮助",
       "pinyin": "bāngzhù",
-      "nghia": "giúp đỡ"
+      "meaning": "giúp đỡ",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "giúp đỡ",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "verb_noun",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v03",
       "han": "别",
       "pinyin": "bié",
-      "nghia": "đừng"
+      "meaning": "đừng",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "đừng",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "adverb",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v04",
       "han": "哥哥",
       "pinyin": "gēge",
-      "nghia": "anh trai"
+      "meaning": "anh trai",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "anh trai",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v05",
       "han": "鸡蛋",
       "pinyin": "jīdàn",
-      "nghia": "trứng gà"
+      "meaning": "trứng gà",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "trứng gà",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v06",
       "han": "西瓜",
       "pinyin": "xīguā",
-      "nghia": "dưa hấu"
+      "meaning": "dưa hấu",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "dưa hấu",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v07",
       "han": "正在",
       "pinyin": "zhèngzài",
-      "nghia": "đang"
+      "meaning": "đang",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "đang",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "adverb",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v08",
       "han": "手机",
       "pinyin": "shǒujī",
-      "nghia": "điện thoại di động"
+      "meaning": "điện thoại di động",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "điện thoại di động",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     },
     {
+      "id": "hsk2_l10_v09",
       "han": "洗",
       "pinyin": "xǐ",
-      "nghia": "rửa; giặt"
+      "meaning": "rửa; giặt",
+      "meanings": [
+        {
+          "sense_id": "1",
+          "vi": "rửa; giặt",
+          "is_primary": true
+        }
+      ],
+      "partOfSpeech": "verb",
+      "notes": null,
+      "exampleSentenceIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit",
+      "core": true,
+      "detail": {
+        "collocations": [],
+        "usageNotes": [],
+        "commonConfusions": [],
+        "relatedWords": [],
+        "status": "pending_enrichment"
+      }
     }
   ],
   "grammar": [
     {
+      "id": "hsk2_l10_g01",
       "title": "别/不要……了",
-      "desc": "Dùng để khuyên hoặc yêu cầu ngừng một hành động.",
-      "example": "别找了。"
+      "category": "g_bie",
+      "pattern": "别/不要 + V + 了",
+      "explanation": "Dùng để khuyên hoặc yêu cầu ngừng một hành động.",
+      "functions": [
+        "Câu cấm/ngăn"
+      ],
+      "examples": [
+        "别找了。",
+        "不要看电视了。"
+      ],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit"
     },
     {
+      "id": "hsk2_l10_g02",
       "title": "对 + đối tượng",
-      "desc": "Nêu đối tượng mà một thái độ, tác động hoặc đánh giá hướng tới.",
-      "example": "老师对学生很友好。"
+      "category": "g_dui",
+      "pattern": "S + 对 + O + Adj/V",
+      "explanation": "Nêu đối tượng mà một thái độ, tác động hoặc đánh giá hướng tới.",
+      "functions": [
+        "Giới từ 对"
+      ],
+      "examples": [
+        "老师对学生很友好。"
+      ],
+      "commonErrorIds": [],
+      "sourceRefs": [
+        "textbook_l10"
+      ],
+      "status": "explicit"
     }
   ],
   "sections": [
@@ -1591,6 +2436,7 @@ const LESSON = {
       "title": "A. TỪ VỰNG",
       "skill": "tuvung",
       "instruction": "Nắm nghĩa và cách dùng từ mới.",
+      "passages": [],
       "questions": [
         {
           "id": "B10-A01",
@@ -1823,6 +2669,7 @@ const LESSON = {
       "title": "B. NGỮ PHÁP",
       "skill": "nguphap",
       "instruction": "Nhận diện và vận dụng cấu trúc trọng tâm.",
+      "passages": [],
       "questions": [
         {
           "id": "B10-B01",
@@ -2036,6 +2883,7 @@ const LESSON = {
       "title": "D. VIẾT",
       "skill": "viet",
       "instruction": "Sắp xếp và tạo câu đúng.",
+      "passages": [],
       "questions": [
         {
           "id": "B10-D01",
@@ -2086,6 +2934,7 @@ const LESSON = {
       "title": "E. DỊCH",
       "skill": "dich",
       "instruction": "Chuyển ý Việt–Trung theo cấu trúc bài.",
+      "passages": [],
       "questions": [
         {
           "id": "B10-E01",
@@ -2121,6 +2970,7 @@ const LESSON = {
       "title": "F. GIAO TIẾP",
       "skill": "giaotiep",
       "instruction": "Ứng dụng trong tình huống giao tiếp.",
+      "passages": [],
       "questions": [
         {
           "id": "B10-F01",
@@ -2142,7 +2992,8 @@ const LESSON = {
         }
       ]
     }
-  ]
+  ],
+  "ui": {}
 }
 
 /* ================================================================
