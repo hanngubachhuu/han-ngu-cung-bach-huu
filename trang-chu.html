@@ -574,7 +574,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
       <a href="#lien-he" class="btn btn-ghost btn-lg">💬 Liên hệ ngay</a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><b id="heroLessonCount">7</b><span>Bài học</span></div>
+      <div class="hero-stat"><b id="heroLessonCount">15</b><span>Bài học</span></div>
       <div class="hero-stat"><b>10+</b><span>năm kinh nghiệm</span></div>
       <div class="hero-stat"><b>HSK 1–6</b><span>&amp; HSKK</span></div>
     </div>
@@ -865,9 +865,11 @@ function renderLevelGrid(){
   renderHskDropdown();
   renderLevelGrid();
   // Thống kê tổng của toàn website, không gắn với riêng một cấp HSK.
-  // Hiện tại website đang hiển thị 7 bài học; khi mở thêm kho bài mới chỉ cần cập nhật con số này.
   var heroLessonCount = document.getElementById('heroLessonCount');
-  if(heroLessonCount) heroLessonCount.textContent = '7';
+  if(heroLessonCount){
+    var totalLessons = HSK_LEVELS.reduce(function(total, level){ return total + level.lessons.length; }, 0);
+    heroLessonCount.textContent = totalLessons;
+  }
 
   // FAQ accordion — bấm câu hỏi để mở/thu câu trả lời tương ứng.
   document.querySelectorAll('.faq-item .faq-q').forEach(function(btn){
