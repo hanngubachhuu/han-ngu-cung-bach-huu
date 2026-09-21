@@ -869,9 +869,10 @@ footer.print-footer{display:none;}
 
 
 
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
-:root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
+:root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--exam-nav-safe-space:96px;--exam-nav-max-width:960px;}
 .q-card,.passage-card,.q-prompt,.q-body,.opt,.hint-inline,.selfcheck-area,.model-answer-box,.answer-reveal-box{overflow-wrap:break-word;word-break:break-word;}
 .q-card{padding:var(--space-xl);}
 .q-head{gap:var(--space-xs);margin-bottom:var(--space-md);}
@@ -890,9 +891,9 @@ footer.print-footer{display:none;}
 .audio-player-mini button:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px;}
 .audio-speed{min-width:64px;color:var(--color-text-secondary)!important;}
 .audio-status{flex:1 1 100%;font-size:var(--fs-sm,14px);line-height:var(--lh-normal,1.5);color:var(--color-text-secondary);}
-.audio-script{flex:1 1 100%;padding:var(--space-md);border-left:4px solid var(--color-accent);border-radius:var(--radius-sm);background:var(--color-surface);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-primary);}
+.audio-script{flex:1 1 100%;padding:var(--space-md);border-left:4px solid var(--color-accent);border-radius:var(--radius-sm);background:var(--color-surface);font-family:var(--font-cn);font-size:var(--fs-xl,24px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-primary);}
 .audio-player-mini audio{display:none;}
-.retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);}
+.retell-source{padding:var(--space-md);border-left:4px solid var(--color-primary);background:var(--color-surface-subtle);border-radius:var(--radius-sm);font-family:var(--font-cn);font-size:var(--fs-2xl,30px);line-height:var(--lh-relaxed,1.75);}
 .retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
 .retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
 .retell-timer{color:var(--color-text-secondary);font-weight:700;}
@@ -901,11 +902,15 @@ footer.print-footer{display:none;}
 .multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);padding:var(--space-sm) var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-subtle);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-secondary);}
 @media(max-width:640px){.multi-fill-text{padding:var(--space-md);font-size:var(--fs-lg,20px);line-height:2.05;}.multi-fill-select{min-width:8ch;margin:var(--space-2xs) 0;}.multi-fill-bank{font-size:var(--fs-base,16px);}}
 .q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
+/* Một thanh điều hướng cố định, luôn cùng vị trí và không che câu cuối. */
+#questionArea{padding-bottom:calc(var(--exam-nav-safe-space) + var(--space-xl));}
+.q-nav-buttons{position:fixed;left:50%;bottom:var(--space-md);z-index:60;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:var(--space-sm);flex-wrap:nowrap;width:min(calc(100% - var(--space-xl)),var(--exam-nav-max-width));min-height:var(--exam-nav-safe-space);margin:0;padding:var(--space-sm) var(--space-md);transform:translateX(-50%);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow-lg);background:var(--color-surface);}
+.q-nav-buttons .side{display:flex;min-width:0;gap:var(--space-sm);}.q-nav-buttons button{min-height:48px;}
 /* Chống sao chép khi đang làm: chỉ khóa nội dung đề; vùng tự nhập vẫn được sửa để không cản trở việc làm bài. */
 #appShell.is-taking,#appShell.is-taking *{user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none;}
 #appShell.is-taking input,#appShell.is-taking textarea,#appShell.is-taking select,#appShell.is-taking option{user-select:text!important;-webkit-user-select:text!important;}
 @media print{#appShell.is-taking{display:none!important;}}
-@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}}
+@media (max-width:640px){:root{--exam-nav-safe-space:132px;}.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.audio-script{font-size:var(--fs-lg,20px);}.retell-source{font-size:var(--fs-xl,24px);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}.q-nav-buttons{bottom:var(--space-xs);width:calc(100% - var(--space-md));padding:var(--space-xs);gap:var(--space-xs);}.q-nav-buttons .side{flex:1;gap:var(--space-xs);}.q-nav-buttons button{padding:var(--space-xs);font-size:var(--fs-sm,14px);}}
 /* HSK-LESSON-UX-PATCH:END */
 </style>
 <link rel="stylesheet" href="navigation.css">
@@ -4906,13 +4911,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết 2 câu kể bạn làm bài từ đâu và cuối cùng có làm xong không.",
-          "model": "我从第一题开始做。最后我做完了。",
-          "explain": "Có điểm bắt đầu và kết quả cuối cùng.",
+          "prompt": "Sau giờ tự học, em nhắn cho bạn cùng lớp. Viết đúng 2 câu tiếng Trung. Câu 1 nói em bắt đầu làm từ câu thứ nhất. Câu 2 nói vì bài quá nhiều nên em vẫn chưa làm xong.",
+          "model": "我从第一题开始做。题太多了，我还没做完。",
+          "explain": "Viết đủ hai ý đã cho; không cần thêm tình tiết khác.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我从第一题开始做。最后我做完了。",
+          "example": "我从第一题开始做。题太多了，我还没做完。",
           "id": "B9-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4924,7 +4929,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Tường thuật tiến trình",
+            "target": "Tường thuật tiến trình theo dữ kiện",
             "level": 3,
             "checked": [
               "grammar",
@@ -4966,13 +4971,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết 2–3 câu nhắn cho bạn về một việc bạn làm sai và cách bạn sẽ sửa.",
-          "model": "我做错了两道题。我想再做一遍。你能帮助我吗？",
-          "explain": "Có lỗi, kế hoạch sửa và lời nhờ nếu cần.",
-          "rubric": "准确 40%: nêu được lỗi và kế hoạch.\n连贯 25%: trình tự trước–sau rõ.\n得体 20%: lời nhờ lịch sự.\n自然 15%: dùng 做错、再做 tự nhiên.",
+          "prompt": "Hôm qua em làm sai hai câu. Viết một tin nhắn đúng 3 câu tiếng Trung cho bạn. Câu 1 nêu số câu làm sai. Câu 2 nói ngày mai em sẽ làm lại. Câu 3 nhờ bạn giúp.",
+          "model": "我做错了两道题。明天我想再做一遍。你能帮助我吗？",
+          "explain": "Ba câu lần lượt nêu lỗi, kế hoạch và lời nhờ.",
+          "rubric": "准确 40%: đủ số câu làm sai và kế hoạch.\n连贯 25%: ba ý theo trình tự rõ.\n得体 20%: lời nhờ lịch sự.\n自然 15%: dùng 做错、再做 tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我做错了两道题。我想再做一遍。你能帮助我吗？",
+          "example": "我做错了两道题。明天我想再做一遍。你能帮助我吗？",
           "id": "B9-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4984,7 +4989,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Giải quyết một vấn đề học tập",
+            "target": "Nhắn tin giải quyết lỗi học tập theo dữ kiện",
             "level": 3,
             "checked": [
               "grammar",
@@ -5026,9 +5031,9 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết 2–3 câu kể em đã bắt đầu làm việc gì và kết quả ra sao.",
+          "prompt": "Sau giờ tự học, em kể lại cho bạn. Viết đúng 2 câu tiếng Trung. Câu 1 nói em bắt đầu từ câu thứ nhất. Câu 2 nói em đã làm xong nhưng có một câu sai.",
           "model": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
-          "explain": "Có điểm bắt đầu, quá trình hoặc kết quả.",
+          "explain": "Viết đủ điểm bắt đầu, kết quả và một lỗi cụ thể.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
@@ -5044,7 +5049,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kể lại tiến trình",
+            "target": "Kể lại tiến trình theo dữ kiện",
             "level": 3,
             "checked": [
               "grammar",
@@ -8629,16 +8634,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết 2 câu kể bạn làm bài từ đâu và cuối cùng có làm xong không.",
-          "model": "我从第一题开始做。最后我做完了。",
-          "explain": "Có điểm bắt đầu và kết quả cuối cùng.",
+          "prompt": "Sau giờ tự học, em nhắn cho bạn cùng lớp. Viết đúng 2 câu tiếng Trung. Câu 1 nói em bắt đầu làm từ câu thứ nhất. Câu 2 nói vì bài quá nhiều nên em vẫn chưa làm xong.",
+          "model": "我从第一题开始做。题太多了，我还没做完。",
+          "explain": "Viết đủ hai ý đã cho; không cần thêm tình tiết khác.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我从第一题开始做。最后我做完了。",
+          "example": "我从第一题开始做。题太多了，我还没做完。",
           "id": "B9-55",
           "quality": {
-            "target": "Tường thuật tiến trình",
+            "target": "Tường thuật tiến trình theo dữ kiện",
             "level": 3,
             "checked": [
               "grammar",
@@ -8671,16 +8676,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết 2–3 câu nhắn cho bạn về một việc bạn làm sai và cách bạn sẽ sửa.",
-          "model": "我做错了两道题。我想再做一遍。你能帮助我吗？",
-          "explain": "Có lỗi, kế hoạch sửa và lời nhờ nếu cần.",
-          "rubric": "准确 40%: nêu được lỗi và kế hoạch.\n连贯 25%: trình tự trước–sau rõ.\n得体 20%: lời nhờ lịch sự.\n自然 15%: dùng 做错、再做 tự nhiên.",
+          "prompt": "Hôm qua em làm sai hai câu. Viết một tin nhắn đúng 3 câu tiếng Trung cho bạn. Câu 1 nêu số câu làm sai. Câu 2 nói ngày mai em sẽ làm lại. Câu 3 nhờ bạn giúp.",
+          "model": "我做错了两道题。明天我想再做一遍。你能帮助我吗？",
+          "explain": "Ba câu lần lượt nêu lỗi, kế hoạch và lời nhờ.",
+          "rubric": "准确 40%: đủ số câu làm sai và kế hoạch.\n连贯 25%: ba ý theo trình tự rõ.\n得体 20%: lời nhờ lịch sự.\n自然 15%: dùng 做错、再做 tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我做错了两道题。我想再做一遍。你能帮助我吗？",
+          "example": "我做错了两道题。明天我想再做一遍。你能帮助我吗？",
           "id": "B9-57",
           "quality": {
-            "target": "Giải quyết một vấn đề học tập",
+            "target": "Nhắn tin giải quyết lỗi học tập theo dữ kiện",
             "level": 3,
             "checked": [
               "grammar",
@@ -8713,16 +8718,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết 2–3 câu kể em đã bắt đầu làm việc gì và kết quả ra sao.",
+          "prompt": "Sau giờ tự học, em kể lại cho bạn. Viết đúng 2 câu tiếng Trung. Câu 1 nói em bắt đầu từ câu thứ nhất. Câu 2 nói em đã làm xong nhưng có một câu sai.",
           "model": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
-          "explain": "Có điểm bắt đầu, quá trình hoặc kết quả.",
+          "explain": "Viết đủ điểm bắt đầu, kết quả và một lỗi cụ thể.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
           "id": "B9-59",
           "quality": {
-            "target": "Kể lại tiến trình",
+            "target": "Kể lại tiến trình theo dữ kiện",
             "level": 3,
             "checked": [
               "grammar",
@@ -9324,7 +9329,10 @@ function renderQuestion(){
 
   // Chữ Hán trong câu hỏi hiển thị font KaiTi, phần tiếng Việt xen kẽ (nếu có)
   // vẫn giữ font Times New Roman mặc định nhờ mixText tách theo từng đoạn ký tự.
-  const promptText = String(q.prompt || '').replace(/([：:])\s+(?=[\u4e00-\u9fff])/u, '$1\n');
+  const rawPrompt = String(q.prompt || '');
+  const promptText = rawPrompt
+    .replace(/^(Dịch sang tiếng (?:Việt|Trung))\s*/u, '$1:\n')
+    .replace(/([：:])\s+(?=[\u4e00-\u9fff])/u, '$1\n');
   const promptDiv = el('div','q-prompt', mixText(promptText));
   card.appendChild(promptDiv);
   if(q.hint){ card.appendChild(el('div','', `<span class="hint-inline">${mixText(q.hint)}</span>`)); }
