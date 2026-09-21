@@ -496,7 +496,7 @@
           ["Viết một câu nói bạn chưa làm xong bài tập vì bài quá nhiều.","题太多了，我还没做完作业。","Nêu lý do và trạng thái chưa hoàn thành","Câu cần có nguyên nhân và kết quả chưa xong.",null],
           ["Viết một câu cho biết bạn bắt đầu học tiếng Trung từ khi nào.","我从九月开始学汉语。","Nói mốc bắt đầu","Có 从 + thời gian + 开始 + động từ.",null],
           ["Viết một câu xin thầy/cô nhắc lại vì bạn chưa hiểu.","老师，我没听懂，请您再说一遍。","Yêu cầu hỗ trợ trong lớp","Cần nêu không hiểu và lời đề nghị phù hợp.",null],
-          ["Nhắn tin cho bạn học:\nEm có một câu trong bài tập chưa hiểu. Hãy viết một tin nhắn ngắn bằng tiếng Trung: hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.","你做完作业了吗？我有一道题不懂。你能帮助我吗？","Hỏi bạn hỗ trợ học tập","Có lời hỏi, nêu điểm chưa hiểu và lời nhờ tự nhiên.",null],
+          ["Nhắn tin cho bạn học:\nEm có một câu trong bài tập chưa hiểu. Hãy viết một tin nhắn ngắn bằng tiếng Trung, hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.","你做完作业了吗？我有一道题不懂。你能帮助我吗？","Hỏi bạn hỗ trợ học tập","Có lời hỏi, nêu điểm chưa hiểu và lời nhờ tự nhiên.",null],
           ["Viết một lời chào mừng ngắn cho một bạn mới vào lớp.","欢迎你来我们班！","Chào đón người mới","Dùng 欢迎 đúng đối tượng.",null],
           ["Nhắn tin cho thầy/cô:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ. Viết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.","老师，刚才有一个地方我没听懂。您能再说一遍吗？谢谢您！","Xin hỗ trợ sau giờ học","Nêu rõ điểm chưa hiểu, lời đề nghị và cách nói lịch sự.","准确 40%: nêu được việc chưa hiểu và lời đề nghị.\n连贯 25%: các ý nối tự nhiên.\n得体 20%: dùng cách xưng hô lịch sự với thầy/cô.\n自然 15%: dùng 听不懂、再说一遍 tự nhiên."]
         ],
