@@ -1661,3 +1661,7 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
     "heroDescription": "Luyện tập HSK 2"
   }
 });
+
+if (window.HAN_NGU_DATA.applyHsk2QuestionRevision) {
+  window.HAN_NGU_DATA.applyHsk2QuestionRevision("hsk2_bai12_chuande");
+}

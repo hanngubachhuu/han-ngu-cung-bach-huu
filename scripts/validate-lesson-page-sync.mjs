@@ -1,10 +1,13 @@
 import fs from "node:fs";
 import vm from "node:vm";
 
+const revision = fs.readFileSync("data/lessons/hsk2/exercise-revision-v2.js", "utf8");
+
 function readCanonical(lessonNo) {
   const context = vm.createContext({
     window: { HAN_NGU_DATA: { lessons: {}, register(lesson) { this.lessons[lesson.id] = lesson; } } }
   });
+  vm.runInContext(revision, context, { filename:"exercise-revision-v2.js" });
   vm.runInContext(fs.readFileSync(`data/lessons/hsk2/bai${lessonNo}.js`, "utf8"), context);
   return Object.values(context.window.HAN_NGU_DATA.lessons)[0];
 }

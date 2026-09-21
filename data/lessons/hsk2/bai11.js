@@ -1963,3 +1963,7 @@ Object.assign(q("B11-B09"),{type:"multi_fill",prompt:"从词语中选择合适�
   set("B11-B18","听句子，那个孩子正在做什么？",["上班。","洗衣服。","做作业。","唱歌。"]);
   set("B11-F09","听情境，选择最自然的回答。",["右边的比左边的便宜。","我姓王。","别找了。","我没做完。"]);
 })();
+
+if (window.HAN_NGU_DATA.applyHsk2QuestionRevision) {
+  window.HAN_NGU_DATA.applyHsk2QuestionRevision("hsk2_bai11_bida");
+}

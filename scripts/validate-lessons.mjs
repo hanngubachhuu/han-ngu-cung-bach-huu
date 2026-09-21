@@ -4,6 +4,7 @@ import vm from "node:vm";
 
 const ROOT = process.cwd();
 const MANIFEST = path.join(ROOT, "data", "lesson-manifest.js");
+const QUESTION_REVISION = path.join(ROOT, "data", "lessons", "hsk2", "exercise-revision-v2.js");
 const manifests = fs.readFileSync(MANIFEST, "utf8");
 const manifestMatch = manifests.match(/manifest\s*=\s*(\[[\s\S]*?\]);/);
 if (!manifestMatch) throw new Error("Không đọc được lesson manifest.");
@@ -11,6 +12,7 @@ if (!manifestMatch) throw new Error("Không đọc được lesson manifest.");
 const context = vm.createContext({
   window: { HAN_NGU_DATA: { lessons: {}, register(lesson){ this.lessons[lesson.id] = lesson; } } }
 });
+vm.runInContext(fs.readFileSync(QUESTION_REVISION, "utf8"), context, { filename: QUESTION_REVISION });
 
 const manifest = vm.runInContext("(" + manifestMatch[1] + ")", context);
 const errors = [];
@@ -74,7 +76,7 @@ for (const item of manifest) {
   }
 
   const test = lesson.content?.coverage?.exercises;
-  if (test && test !== "gold_template_v1") fail("coverage.exercises phải là gold_template_v1 khi đã chuẩn hóa");
+  if (test && test !== "gold_template_v1" && test !== "gold_template_v2") fail("coverage.exercises phải là gold_template_v1 hoặc gold_template_v2 khi đã chuẩn hóa");
 }
 
 if (errors.length) {

@@ -5,12 +5,14 @@ import vm from "node:vm";
 const ROOT = process.cwd();
 const LEVEL = "hsk2";
 const FIRST_SYNCED_LESSON = 8;
+const QUESTION_REVISION = path.join(ROOT, "data", "lessons", LEVEL, "exercise-revision-v2.js");
 
 function loadLesson(lessonNo) {
   const filename = path.join(ROOT, "data", "lessons", LEVEL, `bai${lessonNo}.js`);
   const context = vm.createContext({
     window: { HAN_NGU_DATA: { lessons: {}, register(lesson) { this.lessons[lesson.id] = lesson; } } }
   });
+  vm.runInContext(fs.readFileSync(QUESTION_REVISION, "utf8"), context, { filename: QUESTION_REVISION });
   vm.runInContext(fs.readFileSync(filename, "utf8"), context, { filename });
   const lesson = Object.values(context.window.HAN_NGU_DATA.lessons)[0];
   if (!lesson) throw new Error(`Không đọc được dữ liệu canonical của Bài ${lessonNo}.`);
@@ -222,8 +224,22 @@ function renderMultiFill(q, body){
   html = html.replace("</style>", `${css}</style>`);
   html = html.replace(/if\(q\.type === 'self_check'\)/g, "if(q.type === 'self_check' || q.type === 'retell')")
     .replace(/else if\(q\.type === 'self_check'\)/g, "else if(q.type === 'self_check' || q.type === 'retell')");
-  html = html.replace("if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token", "if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);\n  if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token")
-    .replace("  if(q.type === 'reorder'){", "  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }\n  if(q.type === 'reorder'){");
+  html = html.replace(/  if\(q\.type === 'multi_fill'\) return Array\.isArray\(v\) && v\.length === q\.answers\.length && v\.every\(Boolean\);\r?\n/g, "");
+  html = html.replace("if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token", "if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);\n  if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token");
+  // Đồng bộ nhiều lần không được nhân bản nhánh chấm multi_fill trong gradeQuestion.
+  html = html.replace(/  if\(q\.type === 'multi_fill'\)\{ const ok=Array\.isArray\(v\) && v\.length===q\.answers\.length && v\.every\(\(item,index\)=>item===q\.answers\[index\]\); return \{ score:ok\?1:0, max \}; \}\r?\n/g, "");
+  html = html.replace("  if(q.type === 'reorder'){", "  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }\n  if(q.type === 'reorder'){");
+  if (!html.includes("Rubric tự chấm")) {
+    html = html.replace(/    wrap\.appendChild\(box\);\r?\n\r?\n    const markRow/, `    wrap.appendChild(box);
+    if(q.rubric){
+      const rubric = el('div','answer-reveal-box');
+      rubric.appendChild(el('div','label','Rubric tự chấm'));
+      rubric.appendChild(el('div','content',mixText(q.rubric)));
+      wrap.appendChild(rubric);
+    }
+
+    const markRow`);
+  }
   html = html.replace(/  renderAll\(\);\r?\n  window\.scrollTo\(\{top:0, behavior:'smooth'\}\);/, "  renderAll();\n  window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);");
   html = html.replace(/  reviewFilter: 'all'(?:,\r?\n  reviewMode: false)?\r?\n};/, "  reviewFilter: 'all',\n  reviewMode: false\n};");
   html = html.replace(/timeLeftSec: LESSON\.timeLimitMinutes\*60, timerHandle:null, reviewFilter:'all'(?:, reviewMode:false)? };/g, "timeLeftSec: LESSON.timeLimitMinutes*60, timerHandle:null, reviewFilter:'all', reviewMode:false };");

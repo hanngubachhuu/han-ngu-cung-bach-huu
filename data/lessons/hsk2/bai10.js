@@ -1770,3 +1770,7 @@ Object.assign(q("B10-B09"),{type:"multi_fill",prompt:"从词语中选择合适�
   set("B10-B18","听句子，什么时候再找他？",["现在。","去年。","第一天。","晚一点儿。"]);
   set("B10-F09","听情境，选择最自然的回答。",["在桌子上呢。","我比你大。","欢迎你来。","我没做完。"]);
 })();
+
+if (window.HAN_NGU_DATA.applyHsk2QuestionRevision) {
+  window.HAN_NGU_DATA.applyHsk2QuestionRevision("hsk2_bai10_biezhao");
+}

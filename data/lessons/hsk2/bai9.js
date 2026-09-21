@@ -2005,3 +2005,8 @@ window.HAN_NGU_DATA = window.HAN_NGU_DATA || {}; window.HAN_NGU_DATA.register({
   mc("B9-A09","Chọn cụm phù hợp để hoàn thành câu: 老师说得很清楚，我___了。",["听懂","听完","做完","写错"],0,{explain:"Người nói đã hiểu điều giáo viên nói, nên dùng 听懂。听完 chỉ nghe hết, còn 做完 / 写错 không hợp với ngữ cảnh.",example:"老师说得很清楚，我听懂了。"});
   mc("B9-A11","Chọn câu tiếng Trung phù hợp với ý: Bắt đầu làm từ câu thứ nhất.",["从第一题开始做。","从明天开始做。","第一题做错了。","我做完第一题了。"],0,{explain:"从第一题开始做 = bắt đầu làm từ câu thứ nhất. Các đáp án còn lại lần lượt nhầm mốc thời gian, làm sai và làm xong.",example:"请从第一题开始做。"});
 })();
+
+/* Ngân hàng câu hỏi v2 được nạp trước bởi lesson-registry/sync để mọi nơi dùng cùng dữ liệu. */
+if (window.HAN_NGU_DATA.applyHsk2QuestionRevision) {
+  window.HAN_NGU_DATA.applyHsk2QuestionRevision("hsk2_bai9_tidu");
+}

@@ -1991,3 +1991,8 @@ Object.assign(q("B8-B07"),{type:"multi_fill",prompt:"从词语中选择合适的
   set("B8-B18","听句子，最后说的是哪一种颜色？",["红色。","蓝色。","黄色。","黑色。"]);
   set("B8-F09","听情境，选择最自然的回答。",["让我想想再告诉你，好吗？","我是服务员。","这件很黑。","我找不到白。"]);
 })();
+
+/* Ngân hàng câu hỏi v2 được nạp trước bởi lesson-registry/sync để mọi nơi dùng cùng dữ liệu. */
+if (window.HAN_NGU_DATA.applyHsk2QuestionRevision) {
+  window.HAN_NGU_DATA.applyHsk2QuestionRevision("hsk2_bai8_rangwo");
+}

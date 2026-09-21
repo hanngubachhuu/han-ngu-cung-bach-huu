@@ -69,6 +69,16 @@
   R.loadAll = async () => {
     if(!Array.isArray(R.manifest)) return [];
     R.loadErrors = [];
+    // Nạp bộ tái cấu trúc Bài 8–15 trước. Bài 1–7 không bị tác động.
+    try{
+      await R.loadScript("data/lessons/hsk2/exercise-revision-v2.js");
+    }catch(error){
+      R.loadErrors.push({
+        id:"hsk2_exercise_revision_v2",
+        data:"data/lessons/hsk2/exercise-revision-v2.js",
+        message:error?.message || String(error)
+      });
+    }
     const results = await Promise.all(R.manifest.map(async item => {
       try{
         await R.loadScript(item.data);

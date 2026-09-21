@@ -2,10 +2,12 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const expected = { vocabulary:12, grammar:10, listening:8, reading:12, writing:12, translation:8, speaking:8, mixed:0 };
+const revision = fs.readFileSync("data/lessons/hsk2/exercise-revision-v2.js", "utf8");
 const errors = [];
 for (const no of [8, 9, 10, 11]) {
   const source = fs.readFileSync(`data/lessons/hsk2/bai${no}.js`, "utf8");
   const window = { HAN_NGU_DATA: { lessons:{}, register(lesson){ this.lessons[lesson.id] = lesson; } } };
+  vm.runInNewContext(revision, { window }, { filename:"exercise-revision-v2.js" });
   vm.runInNewContext(source, { window }, { filename:`bai${no}.js` });
   const lesson = Object.values(window.HAN_NGU_DATA.lessons)[0];
   const c = lesson.content;
