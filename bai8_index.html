@@ -871,9 +871,14 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
-:root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--exam-nav-safe-space:96px;--exam-nav-max-width:960px;}
+:root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
 .q-card,.passage-card,.q-prompt,.q-body,.opt,.hint-inline,.selfcheck-area,.model-answer-box,.answer-reveal-box{overflow-wrap:break-word;word-break:break-word;}
 .q-card{padding:var(--space-xl);}
 .q-head{gap:var(--space-xs);margin-bottom:var(--space-md);}
@@ -903,15 +908,15 @@ footer.print-footer{display:none;}
 .multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);padding:var(--space-sm) var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-subtle);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-secondary);}
 @media(max-width:640px){.multi-fill-text{padding:var(--space-md);font-size:var(--fs-lg,20px);line-height:2.05;}.multi-fill-select{min-width:8ch;margin:var(--space-2xs) 0;}.multi-fill-bank{font-size:var(--fs-base,16px);}}
 .q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
-/* Một thanh điều hướng cố định, luôn cùng vị trí và không che câu cuối. */
-#questionArea{padding-bottom:calc(var(--exam-nav-safe-space) + var(--space-xl));}
-.q-nav-buttons{position:fixed;left:50%;bottom:var(--space-md);z-index:60;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:var(--space-sm);flex-wrap:nowrap;width:min(calc(100% - var(--space-xl)),var(--exam-nav-max-width));min-height:var(--exam-nav-safe-space);margin:0;padding:var(--space-sm) var(--space-md);transform:translateX(-50%);border:1px solid var(--color-border);border-radius:var(--radius);box-shadow:var(--shadow-lg);background:var(--color-surface);}
-.q-nav-buttons .side{display:flex;min-width:0;gap:var(--space-sm);}.q-nav-buttons button{min-height:48px;}
+/* Cụm điều hướng giữ nhịp làm bài nhưng nhường toàn bộ footer khi người học kéo xuống cuối trang. */
+#questionArea{padding-bottom:calc(var(--space-3xl) + var(--space-lg));}
+.q-nav-buttons{position:fixed;left:50%;bottom:var(--space-lg);z-index:60;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:var(--space-xs);flex-wrap:nowrap;width:fit-content;max-width:calc(100% - var(--space-xl));margin:0;padding:var(--space-xs);transform:translateX(-50%);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);background:var(--color-surface);transition:opacity var(--transition-normal),transform var(--transition-normal);}
+.q-nav-buttons.footer-clear{opacity:0;pointer-events:none;transform:translate(-50%,calc(100% + var(--space-lg)));}.q-nav-buttons .side{display:flex;min-width:0;gap:var(--space-xs);}.q-nav-buttons button{min-height:48px;white-space:nowrap;}
 /* Chống sao chép khi đang làm: chỉ khóa nội dung đề; vùng tự nhập vẫn được sửa để không cản trở việc làm bài. */
 #appShell.is-taking,#appShell.is-taking *{user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none;}
 #appShell.is-taking input,#appShell.is-taking textarea,#appShell.is-taking select,#appShell.is-taking option{user-select:text!important;-webkit-user-select:text!important;}
 @media print{#appShell.is-taking{display:none!important;}}
-@media (max-width:640px){:root{--exam-nav-safe-space:132px;}.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.audio-script{font-size:var(--fs-lg,20px);}.retell-source{font-size:var(--fs-xl,24px);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}.q-nav-buttons{bottom:var(--space-xs);width:calc(100% - var(--space-md));padding:var(--space-xs);gap:var(--space-xs);}.q-nav-buttons .side{flex:1;gap:var(--space-xs);}.q-nav-buttons button{padding:var(--space-xs);font-size:var(--fs-sm,14px);}}
+@media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.audio-script{font-size:var(--fs-lg,20px);}.retell-source{font-size:var(--fs-xl,24px);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}.q-nav-buttons{bottom:var(--space-sm);width:calc(100% - var(--space-md));max-width:none;padding:var(--space-xs);gap:var(--space-xs);}.q-nav-buttons .side{flex:1;gap:var(--space-xs);}.q-nav-buttons .side .btn{flex:1;}.q-nav-buttons button{padding:var(--space-xs);font-size:var(--fs-sm,14px);}}
 /* HSK-LESSON-UX-PATCH:END */
 </style>
 <link rel="stylesheet" href="navigation.css">
@@ -8983,7 +8988,8 @@ let state = {
   timeLeftSec: LESSON.timeLimitMinutes * 60,
   timerHandle: null,
   reviewFilter: 'all',
-  reviewMode: false
+  reviewMode: false,
+  retellWindows: {}
 };
 
 const $ = sel => document.querySelector(sel);
@@ -9119,7 +9125,8 @@ const DataStore = {
       localStorage.setItem(STORAGE_INPROGRESS_KEY, JSON.stringify({
         answers: state.answers, selfMarks: state.selfMarks,
         current: state.current, startTime: state.startTime,
-        timeLeftSec: state.timeLeftSec
+        timeLeftSec: state.timeLeftSec,
+        retellWindows: state.retellWindows
       }));
     }catch(e){ /* bỏ qua lỗi lưu tạm */ }
   },
@@ -9265,6 +9272,7 @@ function scrollToQuestion(){
    8) HIỂN THỊ CÂU HỎI THEO TỪNG LOẠI
    ================================================================ */
 function renderQuestion(){
+  clearAllRetellTimers();
   const area = $('#questionArea'); area.innerHTML = '';
   const q = ALL_QUESTIONS[state.current];
   if(!q) return;
@@ -9293,9 +9301,13 @@ function renderQuestion(){
 
   // Chữ Hán trong câu hỏi hiển thị font KaiTi, phần tiếng Việt xen kẽ (nếu có)
   // vẫn giữ font Times New Roman mặc định nhờ mixText tách theo từng đoạn ký tự.
-  const rawPrompt = String(q.prompt || '');
+  const rawPrompt = String(q.prompt || '').trim();
   const promptText = rawPrompt
     .replace(/^(Dịch sang tiếng (?:Việt|Trung))\s*/u, '$1:\n')
+    .replace(/^(Chọn từ phù hợp để hoàn thành câu)\s+([“‘"][\s\S]+)$/u, '$1:\n$2')
+    .replace(/^(Đặt một câu tiếng Trung có từ)\s+([“‘"][\s\S]+)$/u, '$1:\n$2')
+    .replace(/^((?:Dựa vào|Viết)[^.:\n]+)\.\s+((?:[“‘"]\s*)?[\u4e00-\u9fff][\s\S]*)$/u, '$1:\n$2')
+    .replace(/^(.+?)\.\s+(Chọn (?:câu|lời nhắc)[^.]+)\.?$/u, 'Tình huống:\n$1.\n\n$2.')
     .replace(/([：:])\s+(?=[\u4e00-\u9fff])/u, '$1\n');
   const promptDiv = el('div','q-prompt', mixText(promptText));
   card.appendChild(promptDiv);
@@ -9458,11 +9470,36 @@ function renderReorder(q, body){
   }
 }
 
+const retellTimerHandles = {};
+function clearRetellTimer(qId){
+  if(retellTimerHandles[qId]){ clearInterval(retellTimerHandles[qId]); delete retellTimerHandles[qId]; }
+}
+function clearAllRetellTimers(){ Object.keys(retellTimerHandles).forEach(clearRetellTimer); }
 function renderRetell(q, body){
+  state.retellWindows = state.retellWindows || {};
+  let readingWindow = state.retellWindows[q.id];
+  if(!readingWindow){
+    readingWindow = { endsAt: Date.now() + q.readSeconds * 1000, expired:false };
+    state.retellWindows[q.id] = readingWindow;
+    DataStore.saveInProgress();
+  }
   const source=el('div','retell-source',mixText(q.sourceText));
-  const actions=el('div','retell-actions'); const timer=el('span','retell-timer', 'Bắt đầu đọc ngay: còn '+q.readSeconds+' giây.');
+  const actions=el('div','retell-actions'); const timer=el('span','retell-timer');
   actions.append(timer); body.append(source,actions);
-  let left=q.readSeconds; const tick=()=>{ timer.textContent='Còn '+Math.max(left,0)+' giây để đọc.'; if(left--<=0){ clearInterval(interval); source.hidden=true; timer.textContent='Hết giờ. Hãy kể lại bằng lời của em, không mở lại đoạn đọc.'; } }; tick(); const interval=setInterval(tick,1000);
+  const expire=()=>{
+    readingWindow.expired=true;
+    source.hidden=true;
+    timer.textContent='Hết 60 giây. Hãy kể lại bằng lời của em; không mở lại đoạn đọc.';
+    clearRetellTimer(q.id);
+    DataStore.saveInProgress();
+  };
+  const tick=()=>{
+    const left=Math.max(0,Math.ceil((readingWindow.endsAt-Date.now())/1000));
+    if(readingWindow.expired || left<=0){ expire(); return; }
+    timer.textContent='Còn '+left+' giây để đọc.';
+  };
+  clearRetellTimer(q.id); tick();
+  if(!readingWindow.expired){ retellTimerHandles[q.id]=setInterval(tick,250); }
   renderSelfCheck(q, body);
 }
 function renderMultiFill(q, body){
@@ -9616,6 +9653,9 @@ function tryOpenSubmitModal(){
 function submitQuiz(auto){
   if(state.submitted) return;
   state.submitted = true;
+  state.reviewMode = false;
+  closeMiniNav();
+  clearAllRetellTimers();
   clearInterval(state.timerHandle);
 
   // Với self_check chưa tự chấm, mặc định 0 điểm cho tới khi học sinh tự đánh giá
@@ -9867,8 +9907,9 @@ function retakeQuiz(){
   btnOk.addEventListener('click', () => {
     modal.remove();
     DataStore.clearInProgress();
+    clearAllRetellTimers();
     state = { current:0, answers:{}, selfMarks:{}, submitted:false, startTime:Date.now(),
-      timeLeftSec: LESSON.timeLimitMinutes*60, timerHandle:null, reviewFilter:'all', reviewMode:false };
+      timeLeftSec: LESSON.timeLimitMinutes*60, timerHandle:null, reviewFilter:'all', reviewMode:false, retellWindows:{} };
     clearInterval(state.timerHandle);
     startTimer();
     renderAll();
@@ -10114,7 +10155,7 @@ function renderIntroScreen(){
     secondaryRow.style.display = 'none';
   }
 
-  if(inprog && inprog.startTime && Object.keys(inprog.answers||{}).length > 0){
+  if(inprog && inprog.startTime && (Object.keys(inprog.answers||{}).length > 0 || Object.keys(inprog.retellWindows||{}).length > 0)){
     const answeredCount = ALL_QUESTIONS.filter(q => {
       const v = (inprog.answers||{})[q.id];
       if(v === undefined || v === null) return false;
@@ -10133,12 +10174,13 @@ function renderIntroScreen(){
 
 function enterQuiz(){
   const inprog = DataStore.loadInProgress();
-  if(inprog && inprog.startTime && Object.keys(inprog.answers||{}).length > 0){
+  if(inprog && inprog.startTime && (Object.keys(inprog.answers||{}).length > 0 || Object.keys(inprog.retellWindows||{}).length > 0)){
     state.answers = inprog.answers || {};
     state.selfMarks = inprog.selfMarks || {};
     state.current = inprog.current || 0;
     state.startTime = inprog.startTime;
     state.timeLeftSec = (typeof inprog.timeLeftSec === 'number') ? inprog.timeLeftSec : LESSON.timeLimitMinutes*60;
+    state.retellWindows = inprog.retellWindows || {};
   } else {
     state.startTime = Date.now();
     state.timeLeftSec = LESSON.timeLimitMinutes*60;
@@ -10239,6 +10281,7 @@ function renderAll(){
     renderNavGrid();
     renderQuestion();
   } else {
+    clearAllRetellTimers();
     const navGrid = $('#navGridContainer'), miniGrid = $('#miniNavGridContainer');
     if(navGrid) navGrid.innerHTML = '';
     if(miniGrid) miniGrid.innerHTML = '';
@@ -10256,8 +10299,22 @@ function renderAll(){
    #appShell (thanh công cụ + câu hỏi) chỉ hiển thị và đồng hồ chỉ
    bắt đầu chạy sau khi người học bấm "Bắt đầu làm bài".
    ================================================================ */
+function initQuestionNavFooterObserver(){
+  const attach=()=>{
+    const nav=$('#qNavButtons'), footer=$('#siteFooter');
+    if(!nav || !footer || !('IntersectionObserver' in window)) return;
+    const observer=new IntersectionObserver(entries=>{
+      nav.classList.toggle('footer-clear', entries.some(entry=>entry.isIntersecting));
+    }, {threshold:0.05});
+    observer.observe(footer);
+  };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',attach,{once:true});
+  else attach();
+}
+
 function init(){
   initTheme();
+  initQuestionNavFooterObserver();
   renderHeaderFromLesson();
   renderIntroScreen();
 }

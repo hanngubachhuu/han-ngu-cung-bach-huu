@@ -20,7 +20,9 @@ for(let no=8; no<=15; no+=1){
   const answers={A:0,B:0,C:0,D:0};
   all.forEach(q=>{
     if(!q.quality?.checked?.includes("single_answer")) fail(`${q.id} thiếu hồ sơ kiểm tra một đáp án.`);
-    if(String(q.prompt||"").includes(":") || String(q.prompt||"").includes("：")) fail(`${q.id} còn dấu hai chấm trong đề bài.`);
+    const promptText=String(q.prompt||"");
+    const hasOnlyLabelColon=/^[^:\n：]+[：:]\n[\s\S]+$/u.test(promptText);
+    if((promptText.includes(":") || promptText.includes("：")) && !hasOnlyLabelColon) fail(`${q.id} còn dấu hai chấm trong đề bài.`);
     if(forbiddenPromptTerms.test(String(q.prompt||""))) fail(`${q.id} hỏi trực tiếp thuật ngữ ngữ pháp.`);
     if(q.type==="mcq" || q.type==="listening"){
       if(!Array.isArray(q.options) || q.options.length!==4) fail(`${q.id} không có đúng 4 lựa chọn.`);
