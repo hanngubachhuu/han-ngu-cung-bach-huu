@@ -879,6 +879,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4806,7 +4811,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Bạn chưa quyết định có mua chiếc áo đắt. Viết một tin nhắn ngắn cho nhân viên bán hàng.",
+          "prompt": "Tình huống:\nBạn chưa quyết định có mua chiếc áo đắt.\n\nYêu cầu:\nViết một tin nhắn ngắn cho nhân viên bán hàng.",
           "model": "这件衣服有点儿贵，让我想想，明天再告诉你。",
           "explain": "Câu cần có lý do ngắn và kế hoạch trả lời sau.",
           "rubric": "准确 40%: có 贵、想想 hoặc 再告诉。\n连贯 25%: lý do trước, kế hoạch sau.\n得体 20%: lịch sự với nhân viên.\n自然 15%: trật tự câu tự nhiên.",
@@ -4836,7 +4841,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu mời bạn đi ăn tối và hỏi ý kiến của bạn ấy.",
+          "prompt": "Yêu cầu:\nViết một câu mời bạn đi ăn tối và hỏi ý kiến của bạn ấy.",
           "model": "我们今天晚上一起吃饭，好吗？",
           "explain": "Có thời gian, hoạt động và lời hỏi ý kiến.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4866,7 +4871,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể bằng tiếng Trung bạn đã xem quần áo màu gì và chưa quyết định điều gì.",
+          "prompt": "Yêu cầu:\nKể bằng tiếng Trung bạn đã xem quần áo màu gì và chưa quyết định điều gì.",
           "model": "我看了一件白色的衣服。可是有点儿贵，我还没决定。",
           "explain": "Có ít nhất hai ý liên quan đến màu sắc và quyết định.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4896,7 +4901,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu nhờ bạn đợi bạn năm phút.",
+          "prompt": "Yêu cầu:\nViết một câu nhờ bạn đợi bạn năm phút.",
           "model": "请等我五分钟。",
           "explain": "Nêu rõ người nghe cần chờ và khoảng thời gian.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4926,7 +4931,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu cho biết bạn sẽ làm lại việc gì vào ngày mai.",
+          "prompt": "Yêu cầu:\nViết một câu cho biết bạn sẽ làm lại việc gì vào ngày mai.",
           "model": "我明天再看这本书。",
           "explain": "再 đứng trước động từ; em có thể đổi hoạt động.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4956,7 +4961,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn hỏi một người bạn có rảnh đi ăn không. Nếu bạn ấy bận, hãy đề nghị ngày khác.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn hỏi một người bạn có rảnh đi ăn không. Nếu bạn ấy bận, hãy đề nghị ngày khác.",
           "model": "你明天晚上有时间吗？我们一起吃饭，好吗？如果你有事，我们明天再说。",
           "explain": "Đánh giá ý mời, hỏi ý kiến và cách phản hồi mềm mại.",
           "rubric": "准确 40%: đủ lời hỏi và lời đề nghị.\n连贯 25%: trình tự rõ.\n得体 20%: lịch sự với bạn.\n自然 15%: không dịch từng chữ từ tiếng Việt.",
@@ -4986,7 +4991,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “再”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “再”。",
           "model": "我明天再告诉你。",
           "explain": "Câu cần có một việc sẽ làm lại hoặc sẽ làm sau.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -5016,7 +5021,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn ngắn cho bạn về việc em muốn mua một món đồ nhưng còn đang suy nghĩ.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn ngắn cho bạn về việc em muốn mua một món đồ nhưng còn đang suy nghĩ.",
           "model": "我想买一件黑色的衣服，可是有点儿贵。让我想想，明天再告诉服务员。",
           "explain": "Có lí do, lựa chọn hoặc dự định tiếp theo.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8543,7 +8548,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Bạn chưa quyết định có mua chiếc áo đắt. Viết một tin nhắn ngắn cho nhân viên bán hàng.",
+          "prompt": "Tình huống:\nBạn chưa quyết định có mua chiếc áo đắt.\n\nYêu cầu:\nViết một tin nhắn ngắn cho nhân viên bán hàng.",
           "model": "这件衣服有点儿贵，让我想想，明天再告诉你。",
           "explain": "Câu cần có lý do ngắn và kế hoạch trả lời sau.",
           "rubric": "准确 40%: có 贵、想想 hoặc 再告诉。\n连贯 25%: lý do trước, kế hoạch sau.\n得体 20%: lịch sự với nhân viên.\n自然 15%: trật tự câu tự nhiên.",
@@ -8564,7 +8569,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu mời bạn đi ăn tối và hỏi ý kiến của bạn ấy.",
+          "prompt": "Yêu cầu:\nViết một câu mời bạn đi ăn tối và hỏi ý kiến của bạn ấy.",
           "model": "我们今天晚上一起吃饭，好吗？",
           "explain": "Có thời gian, hoạt động và lời hỏi ý kiến.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8585,7 +8590,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể bằng tiếng Trung bạn đã xem quần áo màu gì và chưa quyết định điều gì.",
+          "prompt": "Yêu cầu:\nKể bằng tiếng Trung bạn đã xem quần áo màu gì và chưa quyết định điều gì.",
           "model": "我看了一件白色的衣服。可是有点儿贵，我还没决定。",
           "explain": "Có ít nhất hai ý liên quan đến màu sắc và quyết định.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8606,7 +8611,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu nhờ bạn đợi bạn năm phút.",
+          "prompt": "Yêu cầu:\nViết một câu nhờ bạn đợi bạn năm phút.",
           "model": "请等我五分钟。",
           "explain": "Nêu rõ người nghe cần chờ và khoảng thời gian.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8627,7 +8632,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu cho biết bạn sẽ làm lại việc gì vào ngày mai.",
+          "prompt": "Yêu cầu:\nViết một câu cho biết bạn sẽ làm lại việc gì vào ngày mai.",
           "model": "我明天再看这本书。",
           "explain": "再 đứng trước động từ; em có thể đổi hoạt động.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8648,7 +8653,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn hỏi một người bạn có rảnh đi ăn không. Nếu bạn ấy bận, hãy đề nghị ngày khác.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn hỏi một người bạn có rảnh đi ăn không. Nếu bạn ấy bận, hãy đề nghị ngày khác.",
           "model": "你明天晚上有时间吗？我们一起吃饭，好吗？如果你有事，我们明天再说。",
           "explain": "Đánh giá ý mời, hỏi ý kiến và cách phản hồi mềm mại.",
           "rubric": "准确 40%: đủ lời hỏi và lời đề nghị.\n连贯 25%: trình tự rõ.\n得体 20%: lịch sự với bạn.\n自然 15%: không dịch từng chữ từ tiếng Việt.",
@@ -8669,7 +8674,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “再”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “再”。",
           "model": "我明天再告诉你。",
           "explain": "Câu cần có một việc sẽ làm lại hoặc sẽ làm sau.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8690,7 +8695,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn ngắn cho bạn về việc em muốn mua một món đồ nhưng còn đang suy nghĩ.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn ngắn cho bạn về việc em muốn mua một món đồ nhưng còn đang suy nghĩ.",
           "model": "我想买一件黑色的衣服，可是有点儿贵。让我想想，明天再告诉服务员。",
           "explain": "Có lí do, lựa chọn hoặc dự định tiếp theo.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

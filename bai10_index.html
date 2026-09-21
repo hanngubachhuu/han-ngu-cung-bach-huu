@@ -878,6 +878,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4803,7 +4808,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Đừng tìm nữa, điện thoại ở trên bàn kia.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Đừng tìm nữa, điện thoại ở trên bàn kia.",
           "model": "别找了，手机在桌子上呢。",
           "explain": "别…了 phù hợp khi khuyên dừng một hành động đang tiếp diễn.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4833,7 +4838,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Đừng xem tivi nữa, mau làm bài đi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Đừng xem tivi nữa, mau làm bài đi.",
           "model": "不要看电视了，快做作业吧。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4863,7 +4868,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Mẹ đối xử với tôi rất tốt.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Mẹ đối xử với tôi rất tốt.",
           "model": "妈妈对我很好。",
           "explain": "对 đứng trước người nhận thái độ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4893,13 +4898,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小王找到了手机。",
-          "model": "老师对学生很友好。 我正在洗衣服。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nBạn nói giáo viên thân thiện với học sinh.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "老师对学生很友好。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "老师对学生很友好。 我正在洗衣服。",
+          "example": "老师对学生很友好。",
           "id": "B10-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4911,7 +4916,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4923,13 +4928,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 一家人一起做家务。",
-          "model": "哥哥正在吃西瓜。 别玩手机了，快上课吧。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn đang giặt quần áo.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "我正在洗衣服。",
+          "explain": "正在 đứng trước động từ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "哥哥正在吃西瓜。 别玩手机了，快上课吧。",
+          "example": "我正在洗衣服。",
           "id": "B10-56",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4941,7 +4946,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Nói hành động đang diễn ra",
             "level": 3,
             "checked": [
               "grammar",
@@ -4953,13 +4958,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 新同学后来认真看书。",
-          "model": "请你帮助我一下。 手机在桌子上呢。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nAnh trai đang ăn dưa hấu.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "哥哥正在吃西瓜。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "请你帮助我一下。 手机在桌子上呢。",
+          "example": "哥哥正在吃西瓜。",
           "id": "B10-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4971,7 +4976,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4983,7 +4988,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “正在”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “正在”。",
           "model": "哥哥正在洗衣服。",
           "explain": "正在 đứng trước hành động đang diễn ra.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -5013,7 +5018,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn nhắc người thân dừng việc không cần thiết và giúp em một việc.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn nhắc người thân dừng việc không cần thiết và giúp em một việc.",
           "model": "别玩手机了，请你帮助我找手机吧。",
           "explain": "Có lời nhắc và một lời đề nghị lịch sự.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8576,7 +8581,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Đừng tìm nữa, điện thoại ở trên bàn kia.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Đừng tìm nữa, điện thoại ở trên bàn kia.",
           "model": "别找了，手机在桌子上呢。",
           "explain": "别…了 phù hợp khi khuyên dừng một hành động đang tiếp diễn.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8597,7 +8602,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Đừng xem tivi nữa, mau làm bài đi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Đừng xem tivi nữa, mau làm bài đi.",
           "model": "不要看电视了，快做作业吧。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8618,7 +8623,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Mẹ đối xử với tôi rất tốt.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Mẹ đối xử với tôi rất tốt.",
           "model": "妈妈对我很好。",
           "explain": "对 đứng trước người nhận thái độ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8639,16 +8644,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小王找到了手机。",
-          "model": "老师对学生很友好。 我正在洗衣服。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nBạn nói giáo viên thân thiện với học sinh.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "老师对学生很友好。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "老师对学生很友好。 我正在洗衣服。",
+          "example": "老师对学生很友好。",
           "id": "B10-55",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8660,16 +8665,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 一家人一起做家务。",
-          "model": "哥哥正在吃西瓜。 别玩手机了，快上课吧。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn đang giặt quần áo.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "我正在洗衣服。",
+          "explain": "正在 đứng trước động từ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "哥哥正在吃西瓜。 别玩手机了，快上课吧。",
+          "example": "我正在洗衣服。",
           "id": "B10-56",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Nói hành động đang diễn ra",
             "level": 3,
             "checked": [
               "grammar",
@@ -8681,16 +8686,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 新同学后来认真看书。",
-          "model": "请你帮助我一下。 手机在桌子上呢。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nAnh trai đang ăn dưa hấu.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "哥哥正在吃西瓜。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "请你帮助我一下。 手机在桌子上呢。",
+          "example": "哥哥正在吃西瓜。",
           "id": "B10-57",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8702,7 +8707,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “正在”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “正在”。",
           "model": "哥哥正在洗衣服。",
           "explain": "正在 đứng trước hành động đang diễn ra.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8723,7 +8728,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn nhắc người thân dừng việc không cần thiết và giúp em một việc.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn nhắc người thân dừng việc không cần thiết và giúp em một việc.",
           "model": "别玩手机了，请你帮助我找手机吧。",
           "explain": "Có lời nhắc và một lời đề nghị lịch sự.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

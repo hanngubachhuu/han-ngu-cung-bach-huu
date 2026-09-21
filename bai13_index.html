@@ -877,6 +877,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4810,7 +4815,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Cửa đang mở đấy.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Cửa đang mở đấy.",
           "model": "门开着呢。",
           "explain": "V + 着 diễn tả trạng thái còn giữ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4840,7 +4845,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Trên bàn có đặt mấy quyển sách.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Trên bàn có đặt mấy quyển sách.",
           "model": "桌子上放着几本书。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4870,7 +4875,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Dương Tiếu Tiếu đang cầm một chiếc bút chì.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Dương Tiếu Tiếu đang cầm một chiếc bút chì.",
           "model": "杨笑笑拿着一支铅笔。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4900,13 +4905,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 教室里有人在写字。",
-          "model": "你不是知道路吗？ 一直往前走。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nBạn nhắc bạn rằng bạn ấy đã biết đường.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "你不是知道路吗？",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "你不是知道路吗？ 一直往前走。",
+          "example": "你不是知道路吗？",
           "id": "B13-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4918,7 +4923,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4930,13 +4935,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 大家往宾馆走。",
-          "model": "到路口左转。 这条路一直往宾馆走。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn bảo bạn cứ đi thẳng về phía trước.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "一直往前走。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "到路口左转。 这条路一直往宾馆走。",
+          "example": "一直往前走。",
           "id": "B13-56",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4948,7 +4953,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4960,13 +4965,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 小李知道朋友住在哪里。",
-          "model": "她笑着说话。 你不是拿着铅笔吗？",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nBạn bảo bạn đến ngã tư rẽ trái.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "到路口左转。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "她笑着说话。 你不是拿着铅笔吗？",
+          "example": "到路口左转。",
           "id": "B13-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4978,7 +4983,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4990,7 +4995,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “一直”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “一直”。",
           "model": "请一直往前走。",
           "explain": "一直 diễn tả hành động kéo dài hoặc đi thẳng liên tục.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -5020,7 +5025,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Chỉ đường từ lớp học đến một nơi gần đó.",
+          "prompt": "Yêu cầu:\nChỉ đường từ lớp học đến một nơi gần đó.",
           "model": "一直往前走，到路口左转。再走五分钟就到宾馆了。",
           "explain": "Có hướng đi và ít nhất một mốc đường.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8581,7 +8586,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Cửa đang mở đấy.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Cửa đang mở đấy.",
           "model": "门开着呢。",
           "explain": "V + 着 diễn tả trạng thái còn giữ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8602,7 +8607,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Trên bàn có đặt mấy quyển sách.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Trên bàn có đặt mấy quyển sách.",
           "model": "桌子上放着几本书。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8623,7 +8628,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Dương Tiếu Tiếu đang cầm một chiếc bút chì.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Dương Tiếu Tiếu đang cầm một chiếc bút chì.",
           "model": "杨笑笑拿着一支铅笔。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8644,16 +8649,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 教室里有人在写字。",
-          "model": "你不是知道路吗？ 一直往前走。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nBạn nhắc bạn rằng bạn ấy đã biết đường.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "你不是知道路吗？",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "你不是知道路吗？ 一直往前走。",
+          "example": "你不是知道路吗？",
           "id": "B13-55",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8665,16 +8670,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 大家往宾馆走。",
-          "model": "到路口左转。 这条路一直往宾馆走。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn bảo bạn cứ đi thẳng về phía trước.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "一直往前走。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "到路口左转。 这条路一直往宾馆走。",
+          "example": "一直往前走。",
           "id": "B13-56",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8686,16 +8691,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 小李知道朋友住在哪里。",
-          "model": "她笑着说话。 你不是拿着铅笔吗？",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nBạn bảo bạn đến ngã tư rẽ trái.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "到路口左转。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "她笑着说话。 你不是拿着铅笔吗？",
+          "example": "到路口左转。",
           "id": "B13-57",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8707,7 +8712,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “一直”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “一直”。",
           "model": "请一直往前走。",
           "explain": "一直 diễn tả hành động kéo dài hoặc đi thẳng liên tục.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8728,7 +8733,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Chỉ đường từ lớp học đến một nơi gần đó.",
+          "prompt": "Yêu cầu:\nChỉ đường từ lớp học đến một nơi gần đó.",
           "model": "一直往前走，到路口左转。再走五分钟就到宾馆了。",
           "explain": "Có hướng đi và ít nhất một mốc đường.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

@@ -877,6 +877,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4678,7 +4683,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã từng xem bộ phim đó chưa?",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã từng xem bộ phim đó chưa?",
           "model": "你看过那个电影吗？",
           "explain": "V + 过 hỏi/tả trải nghiệm đã từng có.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4708,7 +4713,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Tôi đã từng xem bộ phim đó hai lần.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Tôi đã từng xem bộ phim đó hai lần.",
           "model": "我看过那个电影两次。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4738,7 +4743,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Mặc dù rất nóng nhưng công viên rất thú vị.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Mặc dù rất nóng nhưng công viên rất thú vị.",
           "model": "虽然很热，但是公园很有意思。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4768,13 +4773,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小王和朋友去公园玩儿。",
-          "model": "周末天气很晴，我们想出去玩儿。 我去过中国一次。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nCuối tuần trời quang, bạn muốn đi chơi.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "周末天气很晴，我们想出去玩儿。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "周末天气很晴，我们想出去玩儿。 我去过中国一次。",
+          "example": "周末天气很晴，我们想出去玩儿。",
           "id": "B14-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4786,7 +4791,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4798,13 +4803,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 小李想再看电影。",
-          "model": "我还想再看一次。 这个电影很有意思。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn muốn nói đã đi Trung Quốc một lần.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "我去过中国一次。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我还想再看一次。 这个电影很有意思。",
+          "example": "我去过中国一次。",
           "id": "B14-56",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4816,7 +4821,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4828,13 +4833,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 大家在家看电影。",
-          "model": "我去过公园三次。 虽然很累，但是我还想玩儿。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nBạn muốn xem lại bộ phim một lần nữa.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "我还想再看一次。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我去过公园三次。 虽然很累，但是我还想玩儿。",
+          "example": "我还想再看一次。",
           "id": "B14-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4846,7 +4851,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4858,7 +4863,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “过”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “过”。",
           "model": "我去过北京一次。",
           "explain": "Câu nói một trải nghiệm đã có.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4888,7 +4893,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể về một buổi cuối tuần, nêu thời tiết và một hoạt động em đã làm.",
+          "prompt": "Yêu cầu:\nKể về một buổi cuối tuần, nêu thời tiết và một hoạt động em đã làm.",
           "model": "周末天气很晴，我和朋友去公园玩儿。虽然有点儿热，但是很有意思。",
           "explain": "Có thời gian, hoạt động và cảm nhận.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8317,7 +8322,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã từng xem bộ phim đó chưa?",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã từng xem bộ phim đó chưa?",
           "model": "你看过那个电影吗？",
           "explain": "V + 过 hỏi/tả trải nghiệm đã từng có.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8338,7 +8343,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Tôi đã từng xem bộ phim đó hai lần.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Tôi đã từng xem bộ phim đó hai lần.",
           "model": "我看过那个电影两次。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8359,7 +8364,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Mặc dù rất nóng nhưng công viên rất thú vị.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Mặc dù rất nóng nhưng công viên rất thú vị.",
           "model": "虽然很热，但是公园很有意思。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8380,16 +8385,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小王和朋友去公园玩儿。",
-          "model": "周末天气很晴，我们想出去玩儿。 我去过中国一次。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nCuối tuần trời quang, bạn muốn đi chơi.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "周末天气很晴，我们想出去玩儿。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "周末天气很晴，我们想出去玩儿。 我去过中国一次。",
+          "example": "周末天气很晴，我们想出去玩儿。",
           "id": "B14-55",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8401,16 +8406,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 小李想再看电影。",
-          "model": "我还想再看一次。 这个电影很有意思。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn muốn nói đã đi Trung Quốc một lần.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "我去过中国一次。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我还想再看一次。 这个电影很有意思。",
+          "example": "我去过中国一次。",
           "id": "B14-56",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8422,16 +8427,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 大家在家看电影。",
-          "model": "我去过公园三次。 虽然很累，但是我还想玩儿。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nBạn muốn xem lại bộ phim một lần nữa.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "我还想再看一次。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我去过公园三次。 虽然很累，但是我还想玩儿。",
+          "example": "我还想再看一次。",
           "id": "B14-57",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8443,7 +8448,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “过”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “过”。",
           "model": "我去过北京一次。",
           "explain": "Câu nói một trải nghiệm đã có.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8464,7 +8469,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể về một buổi cuối tuần, nêu thời tiết và một hoạt động em đã làm.",
+          "prompt": "Yêu cầu:\nKể về một buổi cuối tuần, nêu thời tiết và một hoạt động em đã làm.",
           "model": "周末天气很晴，我和朋友去公园玩儿。虽然有点儿热，但是很有意思。",
           "explain": "Có thời gian, hoạt động và cảm nhận.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

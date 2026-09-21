@@ -877,6 +877,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4680,7 +4685,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Năm mới sắp đến rồi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Năm mới sắp đến rồi.",
           "model": "新年就要到了。",
           "explain": "就要…了 nói một việc gần xảy ra.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4710,7 +4715,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Bộ phim sắp bắt đầu rồi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Bộ phim sắp bắt đầu rồi.",
           "model": "电影就要开始了。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4740,7 +4745,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã hai mươi tuổi rồi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã hai mươi tuổi rồi.",
           "model": "你都二十岁了。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4770,13 +4775,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小王准备回家过新年。",
-          "model": "大家都开始准备回家。 小王已经买好火车票了。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nMọi người đều bắt đầu chuẩn bị về nhà.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "大家都开始准备回家。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "大家都开始准备回家。 小王已经买好火车票了。",
+          "example": "大家都开始准备回家。",
           "id": "B15-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4788,7 +4793,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4800,13 +4805,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 哥哥想等晴天去公园。",
-          "model": "妹妹觉得晴天更好。 天气一直阴。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nTiểu Vương đã mua xong vé tàu.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "小王已经买好火车票了。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "妹妹觉得晴天更好。 天气一直阴。",
+          "example": "小王已经买好火车票了。",
           "id": "B15-56",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4818,7 +4823,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4830,13 +4835,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 朋友先进去看电影。",
-          "model": "火车票在火车站买。 都很晚了，我们回家吧。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nEm gái thích trời quang hơn.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "妹妹觉得晴天更好。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "火车票在火车站买。 都很晚了，我们回家吧。",
+          "example": "妹妹觉得晴天更好。",
           "id": "B15-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4848,7 +4853,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4860,7 +4865,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “更”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “更”。",
           "model": "我觉得晴天更好。",
           "explain": "Câu cần cho thấy lựa chọn hoặc so sánh rõ ràng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4890,7 +4895,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn về kế hoạch về nhà vào dịp năm mới.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn về kế hoạch về nhà vào dịp năm mới.",
           "model": "新年就要到了，我已经买好火车票了。明天我去火车站。",
           "explain": "Có thời điểm, kế hoạch và ít nhất một thông tin cụ thể.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8330,7 +8335,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Năm mới sắp đến rồi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Năm mới sắp đến rồi.",
           "model": "新年就要到了。",
           "explain": "就要…了 nói một việc gần xảy ra.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8351,7 +8356,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Bộ phim sắp bắt đầu rồi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Bộ phim sắp bắt đầu rồi.",
           "model": "电影就要开始了。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8372,7 +8377,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã hai mươi tuổi rồi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Bạn đã hai mươi tuổi rồi.",
           "model": "你都二十岁了。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8393,16 +8398,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小王准备回家过新年。",
-          "model": "大家都开始准备回家。 小王已经买好火车票了。",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nMọi người đều bắt đầu chuẩn bị về nhà.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "大家都开始准备回家。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "大家都开始准备回家。 小王已经买好火车票了。",
+          "example": "大家都开始准备回家。",
           "id": "B15-55",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8414,16 +8419,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 哥哥想等晴天去公园。",
-          "model": "妹妹觉得晴天更好。 天气一直阴。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nTiểu Vương đã mua xong vé tàu.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "小王已经买好火车票了。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "妹妹觉得晴天更好。 天气一直阴。",
+          "example": "小王已经买好火车票了。",
           "id": "B15-56",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8435,16 +8440,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 朋友先进去看电影。",
-          "model": "火车票在火车站买。 都很晚了，我们回家吧。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nEm gái thích trời quang hơn.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "妹妹觉得晴天更好。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "火车票在火车站买。 都很晚了，我们回家吧。",
+          "example": "妹妹觉得晴天更好。",
           "id": "B15-57",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8456,7 +8461,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “更”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “更”。",
           "model": "我觉得晴天更好。",
           "explain": "Câu cần cho thấy lựa chọn hoặc so sánh rõ ràng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8477,7 +8482,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn về kế hoạch về nhà vào dịp năm mới.",
+          "prompt": "Yêu cầu:\nViết một tin nhắn về kế hoạch về nhà vào dịp năm mới.",
           "model": "新年就要到了，我已经买好火车票了。明天我去火车站。",
           "explain": "Có thời điểm, kế hoạch và ít nhất một thông tin cụ thể.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

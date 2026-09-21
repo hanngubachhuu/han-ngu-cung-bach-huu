@@ -877,6 +877,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4804,7 +4809,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Anh ấy lớn hơn tôi ba tuổi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Anh ấy lớn hơn tôi ba tuổi.",
           "model": "他比我大三岁。",
           "explain": "比 nối hai người; 三岁 nêu mức chênh.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4834,7 +4839,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Cô gái đang hát ở bên phải là chị gái tôi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Cô gái đang hát ở bên phải là chị gái tôi.",
           "model": "右边那个唱歌的女孩是我姐姐。",
           "explain": "Cụm hành động đứng trước 的女孩 để nhận diện người.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4864,7 +4869,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Chiếc áo này rẻ hơn chiếc kia.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Chiếc áo này rẻ hơn chiếc kia.",
           "model": "这件衣服比那件便宜。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4894,13 +4899,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小李比小王大三岁。",
-          "model": "她可能是新同学。 你姓什么？",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nBạn chưa chắc cô gái ấy là ai.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "她可能是新同学。",
+          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "她可能是新同学。 你姓什么？",
+          "example": "她可能是新同学。",
           "id": "B11-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4912,7 +4917,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Nói khả năng",
             "level": 3,
             "checked": [
               "grammar",
@@ -4924,13 +4929,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 今年衣服比去年便宜。",
-          "model": "那个唱歌的男孩子是我朋友。 右边有一个女孩子。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn muốn hỏi họ của một người.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "你姓什么？",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "那个唱歌的男孩子是我朋友。 右边有一个女孩子。",
+          "example": "你姓什么？",
           "id": "B11-56",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4942,7 +4947,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4954,13 +4959,13 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 有人在帮助新同学找教室。",
-          "model": "今年的东西比去年便宜。 他可能明天来。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nBạn muốn nói một cậu bé đang hát.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "那个唱歌的男孩子是我朋友。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "今年的东西比去年便宜。 他可能明天来。",
+          "example": "那个唱歌的男孩子是我朋友。",
           "id": "B11-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
@@ -4972,7 +4977,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -4984,7 +4989,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “比”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “比”。",
           "model": "这件衣服比那件便宜。",
           "explain": "Nêu hai đối tượng và một điểm so sánh rõ ràng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -5014,7 +5019,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Giới thiệu một người trong lớp, có một chi tiết để người đọc nhận ra người đó.",
+          "prompt": "Yêu cầu:\nGiới thiệu một người trong lớp, có một chi tiết để người đọc nhận ra người đó.",
           "model": "右边那个唱歌的女孩是我朋友。她可能是新同学。",
           "explain": "Có vị trí hoặc hoạt động và một thông tin phù hợp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8570,7 +8575,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Anh ấy lớn hơn tôi ba tuổi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Anh ấy lớn hơn tôi ba tuổi.",
           "model": "他比我大三岁。",
           "explain": "比 nối hai người; 三岁 nêu mức chênh.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8591,7 +8596,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Cô gái đang hát ở bên phải là chị gái tôi.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Cô gái đang hát ở bên phải là chị gái tôi.",
           "model": "右边那个唱歌的女孩是我姐姐。",
           "explain": "Cụm hành động đứng trước 的女孩 để nhận diện người.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8612,7 +8617,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Dựa vào tình huống sau, viết một câu tiếng Trung. Chiếc áo này rẻ hơn chiếc kia.",
+          "prompt": "Yêu cầu:\nDựa vào tình huống sau, viết một câu tiếng Trung. Chiếc áo này rẻ hơn chiếc kia.",
           "model": "这件衣服比那件便宜。",
           "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8633,16 +8638,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Kể lại ngắn gọn tình huống. 小李比小王大三岁。",
-          "model": "她可能是新同学。 你姓什么？",
-          "explain": "Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác.",
+          "prompt": "Tình huống:\nBạn chưa chắc cô gái ấy là ai.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "她可能是新同学。",
+          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "她可能是新同学。 你姓什么？",
+          "example": "她可能是新同学。",
           "id": "B11-55",
           "quality": {
-            "target": "Kể lại theo tình huống",
+            "target": "Nói khả năng",
             "level": 3,
             "checked": [
               "grammar",
@@ -8654,16 +8659,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một tin nhắn phù hợp với tình huống. 今年衣服比去年便宜。",
-          "model": "那个唱歌的男孩子是我朋友。 右边有一个女孩子。",
-          "explain": "Tin nhắn phải có ý chính và phản hồi phù hợp.",
+          "prompt": "Tình huống:\nBạn muốn hỏi họ của một người.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "你姓什么？",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "那个唱歌的男孩子是我朋友。 右边有一个女孩子。",
+          "example": "你姓什么？",
           "id": "B11-56",
           "quality": {
-            "target": "Viết có mục đích giao tiếp",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8675,16 +8680,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một đoạn 3 câu theo chủ đề bài học. 有人在帮助新同学找教室。",
-          "model": "今年的东西比去年便宜。 他可能明天来。",
-          "explain": "Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.",
-          "rubric": "准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ.",
+          "prompt": "Tình huống:\nBạn muốn nói một cậu bé đang hát.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "model": "那个唱歌的男孩子是我朋友。",
+          "explain": "Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "今年的东西比去年便宜。 他可能明天来。",
+          "example": "那个唱歌的男孩子是我朋友。",
           "id": "B11-57",
           "quality": {
-            "target": "Viết đoạn ngắn",
+            "target": "Dùng câu phù hợp tình huống",
             "level": 3,
             "checked": [
               "grammar",
@@ -8696,7 +8701,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “比”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “比”。",
           "model": "这件衣服比那件便宜。",
           "explain": "Nêu hai đối tượng và một điểm so sánh rõ ràng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8717,7 +8722,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Giới thiệu một người trong lớp, có một chi tiết để người đọc nhận ra người đó.",
+          "prompt": "Yêu cầu:\nGiới thiệu một người trong lớp, có một chi tiết để người đọc nhận ra người đó.",
           "model": "右边那个唱歌的女孩是我朋友。她可能是新同学。",
           "explain": "Có vị trí hoặc hoạt động và một thông tin phù hợp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

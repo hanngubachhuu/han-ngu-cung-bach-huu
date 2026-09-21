@@ -878,6 +878,11 @@ footer.print-footer{display:none;}
 
 
 
+
+
+
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -4829,7 +4834,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu nói bạn chưa làm xong bài tập vì bài quá nhiều.",
+          "prompt": "Yêu cầu:\nViết một câu nói bạn chưa làm xong bài tập vì bài quá nhiều.",
           "model": "题太多了，我还没做完作业。",
           "explain": "Câu cần có nguyên nhân và kết quả chưa xong.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4859,7 +4864,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu cho biết bạn bắt đầu học tiếng Trung từ khi nào.",
+          "prompt": "Yêu cầu:\nViết một câu cho biết bạn bắt đầu học tiếng Trung từ khi nào.",
           "model": "我从九月开始学汉语。",
           "explain": "Có 从 + thời gian + 开始 + động từ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4889,7 +4894,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu xin thầy/cô nhắc lại vì bạn chưa hiểu.",
+          "prompt": "Yêu cầu:\nViết một câu xin thầy/cô nhắc lại vì bạn chưa hiểu.",
           "model": "老师，我没听懂，请您再说一遍。",
           "explain": "Cần nêu không hiểu và lời đề nghị phù hợp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4919,7 +4924,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Nhắn tin cho bạn học:\nEm có một câu trong bài tập chưa hiểu. Hãy viết một tin nhắn ngắn bằng tiếng Trung, hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.",
+          "prompt": "Tình huống:\nEm có một câu trong bài tập chưa hiểu.\n\nYêu cầu:\nViết một tin nhắn ngắn bằng tiếng Trung. Hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.",
           "model": "你做完作业了吗？我有一道题不懂。你能帮助我吗？",
           "explain": "Có lời hỏi, nêu điểm chưa hiểu và lời nhờ tự nhiên.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4949,7 +4954,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một lời chào mừng ngắn cho một bạn mới vào lớp.",
+          "prompt": "Yêu cầu:\nViết một lời chào mừng ngắn cho một bạn mới vào lớp.",
           "model": "欢迎你来我们班！",
           "explain": "Dùng 欢迎 đúng đối tượng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -4979,7 +4984,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Nhắn tin cho thầy/cô:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ. Viết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.",
+          "prompt": "Tình huống:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ.\n\nYêu cầu:\nViết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.",
           "model": "老师，刚才有一个地方我没听懂。您能再说一遍吗？谢谢您！",
           "explain": "Nêu rõ điểm chưa hiểu, lời đề nghị và cách nói lịch sự.",
           "rubric": "准确 40%: nêu được việc chưa hiểu và lời đề nghị.\n连贯 25%: các ý nối tự nhiên.\n得体 20%: dùng cách xưng hô lịch sự với thầy/cô.\n自然 15%: dùng 听不懂、再说一遍 tự nhiên.",
@@ -5009,7 +5014,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “希望”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “希望”。",
           "model": "我希望明天能做完作业。",
           "explain": "希望 cần dẫn nội dung em mong muốn.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -5039,7 +5044,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Giới thiệu việc học của em:\nMột bạn mới quen hỏi em bắt đầu học tiếng Trung từ khi nào và gần đây em đang học thế nào. Hãy trả lời tự nhiên bằng tiếng Trung.",
+          "prompt": "Tình huống:\nMột bạn mới quen hỏi em bắt đầu học tiếng Trung từ khi nào và gần đây em đang học thế nào.\n\nYêu cầu:\nTrả lời tự nhiên bằng tiếng Trung.",
           "model": "我从九月开始学汉语。现在我正在做作业，有的时候题太多。我希望明天能做完。",
           "explain": "Nêu mốc bắt đầu và một trải nghiệm học gần đây; em có thể dùng ý riêng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8579,7 +8584,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu nói bạn chưa làm xong bài tập vì bài quá nhiều.",
+          "prompt": "Yêu cầu:\nViết một câu nói bạn chưa làm xong bài tập vì bài quá nhiều.",
           "model": "题太多了，我还没做完作业。",
           "explain": "Câu cần có nguyên nhân và kết quả chưa xong.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8600,7 +8605,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu cho biết bạn bắt đầu học tiếng Trung từ khi nào.",
+          "prompt": "Yêu cầu:\nViết một câu cho biết bạn bắt đầu học tiếng Trung từ khi nào.",
           "model": "我从九月开始学汉语。",
           "explain": "Có 从 + thời gian + 开始 + động từ.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8621,7 +8626,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một câu xin thầy/cô nhắc lại vì bạn chưa hiểu.",
+          "prompt": "Yêu cầu:\nViết một câu xin thầy/cô nhắc lại vì bạn chưa hiểu.",
           "model": "老师，我没听懂，请您再说一遍。",
           "explain": "Cần nêu không hiểu và lời đề nghị phù hợp.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8642,7 +8647,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Nhắn tin cho bạn học:\nEm có một câu trong bài tập chưa hiểu. Hãy viết một tin nhắn ngắn bằng tiếng Trung, hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.",
+          "prompt": "Tình huống:\nEm có một câu trong bài tập chưa hiểu.\n\nYêu cầu:\nViết một tin nhắn ngắn bằng tiếng Trung. Hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.",
           "model": "你做完作业了吗？我有一道题不懂。你能帮助我吗？",
           "explain": "Có lời hỏi, nêu điểm chưa hiểu và lời nhờ tự nhiên.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8663,7 +8668,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Viết một lời chào mừng ngắn cho một bạn mới vào lớp.",
+          "prompt": "Yêu cầu:\nViết một lời chào mừng ngắn cho một bạn mới vào lớp.",
           "model": "欢迎你来我们班！",
           "explain": "Dùng 欢迎 đúng đối tượng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8684,7 +8689,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Nhắn tin cho thầy/cô:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ. Viết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.",
+          "prompt": "Tình huống:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ.\n\nYêu cầu:\nViết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.",
           "model": "老师，刚才有一个地方我没听懂。您能再说一遍吗？谢谢您！",
           "explain": "Nêu rõ điểm chưa hiểu, lời đề nghị và cách nói lịch sự.",
           "rubric": "准确 40%: nêu được việc chưa hiểu và lời đề nghị.\n连贯 25%: các ý nối tự nhiên.\n得体 20%: dùng cách xưng hô lịch sự với thầy/cô.\n自然 15%: dùng 听不懂、再说一遍 tự nhiên.",
@@ -8705,7 +8710,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đặt một câu tiếng Trung có từ “希望”。",
+          "prompt": "Yêu cầu:\nĐặt một câu tiếng Trung có từ “希望”。",
           "model": "我希望明天能做完作业。",
           "explain": "希望 cần dẫn nội dung em mong muốn.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
@@ -8726,7 +8731,7 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Giới thiệu việc học của em:\nMột bạn mới quen hỏi em bắt đầu học tiếng Trung từ khi nào và gần đây em đang học thế nào. Hãy trả lời tự nhiên bằng tiếng Trung.",
+          "prompt": "Tình huống:\nMột bạn mới quen hỏi em bắt đầu học tiếng Trung từ khi nào và gần đây em đang học thế nào.\n\nYêu cầu:\nTrả lời tự nhiên bằng tiếng Trung.",
           "model": "我从九月开始学汉语。现在我正在做作业，有的时候题太多。我希望明天能做完。",
           "explain": "Nêu mốc bắt đầu và một trải nghiệm học gần đây; em có thể dùng ý riêng.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",

@@ -178,7 +178,7 @@
 
   const writingExtensions = {
     8:[["Đặt một câu tiếng Trung có từ “再”。","我明天再告诉你。","Đặt câu với từ trọng tâm","Câu cần có một việc sẽ làm lại hoặc sẽ làm sau."],["Viết một tin nhắn ngắn cho bạn về việc em muốn mua một món đồ nhưng còn đang suy nghĩ.","我想买一件黑色的衣服，可是有点儿贵。让我想想，明天再告诉服务员。","Viết tin nhắn theo tình huống","Có lí do, lựa chọn hoặc dự định tiếp theo."]],
-    9:[["Đặt một câu tiếng Trung có từ “希望”。","我希望明天能做完作业。","Đặt câu với từ trọng tâm","希望 cần dẫn nội dung em mong muốn."],["Giới thiệu việc học của em:\nMột bạn mới quen hỏi em bắt đầu học tiếng Trung từ khi nào và gần đây em đang học thế nào. Hãy trả lời tự nhiên bằng tiếng Trung.","我从九月开始学汉语。现在我正在做作业，有的时候题太多。我希望明天能做完。","Chia sẻ việc học với người mới quen","Nêu mốc bắt đầu và một trải nghiệm học gần đây; em có thể dùng ý riêng."]],
+    9:[["Đặt một câu tiếng Trung có từ “希望”。","我希望明天能做完作业。","Đặt câu với từ trọng tâm","希望 cần dẫn nội dung em mong muốn."],["Tình huống:\nMột bạn mới quen hỏi em bắt đầu học tiếng Trung từ khi nào và gần đây em đang học thế nào.\n\nYêu cầu:\nTrả lời tự nhiên bằng tiếng Trung.","我从九月开始学汉语。现在我正在做作业，有的时候题太多。我希望明天能做完。","Chia sẻ việc học với người mới quen","Nêu mốc bắt đầu và một trải nghiệm học gần đây; em có thể dùng ý riêng."]],
     10:[["Đặt một câu tiếng Trung có từ “正在”。","哥哥正在洗衣服。","Đặt câu với từ trọng tâm","正在 đứng trước hành động đang diễn ra."],["Viết một tin nhắn nhắc người thân dừng việc không cần thiết và giúp em một việc.","别玩手机了，请你帮助我找手机吧。","Nhắn tin theo mục đích","Có lời nhắc và một lời đề nghị lịch sự."]],
     11:[["Đặt một câu tiếng Trung có từ “比”。","这件衣服比那件便宜。","Đặt câu so sánh đơn giản","Nêu hai đối tượng và một điểm so sánh rõ ràng."],["Giới thiệu một người trong lớp, có một chi tiết để người đọc nhận ra người đó.","右边那个唱歌的女孩是我朋友。她可能是新同学。","Miêu tả người trong ngữ cảnh","Có vị trí hoặc hoạt động và một thông tin phù hợp."]],
     12:[["Đặt một câu tiếng Trung có từ “近”。","学校离我家很近。","Đặt câu với từ trọng tâm","Nêu được hai nơi chốn và khoảng cách."],["Nhắn cho người thân về thời tiết hôm nay và lời khuyên mặc quần áo.","今天很冷，外面下着雪。你穿得太少了，多穿一点儿吧。","Viết lời khuyên theo tình huống","Có thời tiết và một lời khuyên tự nhiên."]],
@@ -247,8 +247,15 @@
       error:"Mỗi ô cần được quyết định bằng nghĩa của cả câu, không chọn riêng từng từ.",
       tip:"Đọc hết đoạn, thử từng lựa chọn rồi kiểm tra lại ý chung.", example:answers.join(" · ")
     },section,target,2);
+    const standardWritingPrompt = (prompt) => {
+      const text=String(prompt||"").trim();
+      if(/^Tình huống:\n[\s\S]+\n\nYêu cầu:\n/u.test(text) || /^Yêu cầu:\n/u.test(text)) return text;
+      const split=text.match(/^(.+?)\.\s+((?:Hãy\s+)?Viết\s+.+)$/u);
+      if(split) return `Tình huống:\n${split[1]}.\n\nYêu cầu:\n${split[2]}`;
+      return `Yêu cầu:\n${text}`;
+    };
     const open = (section, prompt, model, target, explain, rubric, type="self_check", extra={}) => decorate({
-      type, prompt, model, explain, rubric:rubric || "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+      type, prompt:section==="writing" && type==="self_check" ? standardWritingPrompt(prompt) : prompt, model, explain, rubric:rubric || "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
       error:"Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
       tip:"Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.", example:model,
       ...extra
@@ -318,15 +325,16 @@
         ["后来怎么样？",story.result,wrong("result"),"Theo dõi kết quả","Chọn kết quả có bằng chứng trực tiếp trong đoạn."]
       ]};
     });
+    const taskSituation=(row)=>String(row.prompt||row.vi||"").replace(/\s*Chọn [^.]+\.?$/u,"").trim();
     const writing={
       orders:profile.orders.slice(0,5).map(tokens=>["Sắp xếp các từ thành câu hoàn chỉnh.",tokens,tokens,"Sắp xếp từ theo ý", "Chỉ khi các cụm đứng đúng vị trí, câu mới tự nhiên."]),
       tasks:[
         [`Dựa vào tình huống sau, viết một câu tiếng Trung. ${profile.phrases[0].vi}`,profile.phrases[0].zh,profile.phrases[0].target,profile.phrases[0].explain],
         [`Dựa vào tình huống sau, viết một câu tiếng Trung. ${profile.phrases[1].vi}`,profile.phrases[1].zh,profile.phrases[1].target,profile.phrases[1].explain],
         [`Dựa vào tình huống sau, viết một câu tiếng Trung. ${profile.phrases[2].vi}`,profile.phrases[2].zh,profile.phrases[2].target,profile.phrases[2].explain],
-        [`Kể lại ngắn gọn tình huống. ${profile.stories[0].summary}`,profile.phrases[3].zh+" "+profile.phrases[4].zh,"Kể lại theo tình huống","Có người, sự việc chính và kết quả; được phép dùng cách diễn đạt khác."],
-        [`Viết một tin nhắn phù hợp với tình huống. ${profile.stories[1].summary}`,profile.phrases[5].zh+" "+profile.phrases[6].zh,"Viết có mục đích giao tiếp","Tin nhắn phải có ý chính và phản hồi phù hợp."],
-        [`Viết một đoạn 3 câu theo chủ đề bài học. ${profile.stories[2].summary}`,profile.phrases[7].zh+" "+profile.phrases[8].zh,"Viết đoạn ngắn","Có trình tự, ít nhất hai thông tin cụ thể và cách nối ý rõ.","准确 40%: đúng ý và câu.\n连贯 25%: ba câu có trình tự.\n得体 20%: phù hợp tình huống.\n自然 15%: không dịch từng chữ."]
+        [`Tình huống:\n${taskSituation(profile.phrases[3])}\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.`,profile.phrases[3].zh,profile.phrases[3].target,profile.phrases[3].explain],
+        [`Tình huống:\n${taskSituation(profile.phrases[4])}\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.`,profile.phrases[4].zh,profile.phrases[4].target,profile.phrases[4].explain],
+        [`Tình huống:\n${taskSituation(profile.phrases[5])}\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.`,profile.phrases[5].zh,profile.phrases[5].target,profile.phrases[5].explain]
       ],
       retell:{prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:profile.stories[2].text,model:profile.stories[2].retell,explain:"Kể lại bằng lời của em: người nào, việc gì, kết quả ra sao.",rubric:"准确 40%: đủ thông tin chính.\n连贯 25%: theo trật tự đoạn.\n得体 20%: 2–3 câu phù hợp.\n自然 15%: dùng câu tự nhiên."}
     };
@@ -496,9 +504,9 @@
           ["Viết một câu nói bạn chưa làm xong bài tập vì bài quá nhiều.","题太多了，我还没做完作业。","Nêu lý do và trạng thái chưa hoàn thành","Câu cần có nguyên nhân và kết quả chưa xong.",null],
           ["Viết một câu cho biết bạn bắt đầu học tiếng Trung từ khi nào.","我从九月开始学汉语。","Nói mốc bắt đầu","Có 从 + thời gian + 开始 + động từ.",null],
           ["Viết một câu xin thầy/cô nhắc lại vì bạn chưa hiểu.","老师，我没听懂，请您再说一遍。","Yêu cầu hỗ trợ trong lớp","Cần nêu không hiểu và lời đề nghị phù hợp.",null],
-          ["Nhắn tin cho bạn học:\nEm có một câu trong bài tập chưa hiểu. Hãy viết một tin nhắn ngắn bằng tiếng Trung, hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.","你做完作业了吗？我有一道题不懂。你能帮助我吗？","Hỏi bạn hỗ trợ học tập","Có lời hỏi, nêu điểm chưa hiểu và lời nhờ tự nhiên.",null],
+          ["Tình huống:\nEm có một câu trong bài tập chưa hiểu.\n\nYêu cầu:\nViết một tin nhắn ngắn bằng tiếng Trung. Hỏi bạn đã làm xong chưa và nhờ bạn giải thích câu đó.","你做完作业了吗？我有一道题不懂。你能帮助我吗？","Hỏi bạn hỗ trợ học tập","Có lời hỏi, nêu điểm chưa hiểu và lời nhờ tự nhiên.",null],
           ["Viết một lời chào mừng ngắn cho một bạn mới vào lớp.","欢迎你来我们班！","Chào đón người mới","Dùng 欢迎 đúng đối tượng.",null],
-          ["Nhắn tin cho thầy/cô:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ. Viết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.","老师，刚才有一个地方我没听懂。您能再说一遍吗？谢谢您！","Xin hỗ trợ sau giờ học","Nêu rõ điểm chưa hiểu, lời đề nghị và cách nói lịch sự.","准确 40%: nêu được việc chưa hiểu và lời đề nghị.\n连贯 25%: các ý nối tự nhiên.\n得体 20%: dùng cách xưng hô lịch sự với thầy/cô.\n自然 15%: dùng 听不懂、再说一遍 tự nhiên."]
+          ["Tình huống:\nSau giờ học, em vẫn chưa nghe hiểu một chỗ.\n\nYêu cầu:\nViết một tin nhắn lịch sự bằng tiếng Trung để nói em chưa hiểu và xin thầy/cô nói lại.","老师，刚才有一个地方我没听懂。您能再说一遍吗？谢谢您！","Xin hỗ trợ sau giờ học","Nêu rõ điểm chưa hiểu, lời đề nghị và cách nói lịch sự.","准确 40%: nêu được việc chưa hiểu và lời đề nghị.\n连贯 25%: các ý nối tự nhiên.\n得体 20%: dùng cách xưng hô lịch sự với thầy/cô.\n自然 15%: dùng 听不懂、再说一遍 tự nhiên."]
         ],
         retell:{prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:"小李今天有很多作业。他从第一题开始做，但是题太多，还没做完。同学帮助他以后，他终于做完了，可是做错了两道题。",model:"小李今天有很多作业。他开始做了很久，后来同学帮助他做完了。他发现自己做错了两道题。",explain:"Kể theo thứ tự bắt đầu, quá trình và kết quả; có thể dùng câu của em.",rubric:"准确 40%: có bài nhiều, sự giúp đỡ và kết quả.\n连贯 25%: theo trình tự thời gian.\n得体 20%: 2–3 câu vừa đủ.\n自然 15%: dùng 做完、做错 tự nhiên."}
       },
