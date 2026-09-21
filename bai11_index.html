@@ -882,6 +882,7 @@ footer.print-footer{display:none;}
 
 
 
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;--space-2xl:48px;--space-3xl:64px;--motion-normal:200ms;--transition-normal:var(--motion-normal) ease;}
@@ -2890,7 +2891,7 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Bạn chưa chắc cô gái ấy là ai. Chọn câu phù hợp.",
+          "prompt": "Bạn thấy một cô gái mới trong lớp. Em đoán cô ấy là học sinh mới, nhưng chưa chắc chắn. Em muốn dùng 可能 để diễn đạt dự đoán này. Chọn câu phù hợp.",
           "options": [
             {
               "k": "A",
@@ -2910,7 +2911,7 @@ const LESSON = {
             }
           ],
           "answer": "D",
-          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
+          "explain": "Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
           "example": "她可能是新同学。",
@@ -2942,7 +2943,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói khả năng",
+            "target": "Dùng 可能 để dự đoán",
             "level": 2,
             "checked": [
               "grammar",
@@ -4899,10 +4900,10 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Tình huống:\nBạn chưa chắc cô gái ấy là ai.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "prompt": "Tình huống:\nBạn thấy một cô gái mới trong lớp. Em đoán cô ấy là học sinh mới, nhưng chưa chắc chắn. Em muốn dùng 可能 để diễn đạt dự đoán này.\n\nYêu cầu:\nDùng 可能 để diễn đạt dự đoán trên.",
           "model": "她可能是新同学。",
-          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
-          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+          "explain": "Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.",
+          "rubric": "准确 40%: có 可能 và ý cô ấy là học sinh mới.\n连贯 25%: câu đủ chủ ngữ, động từ và bổ ngữ.\n得体 20%: thể hiện đây là dự đoán, không khẳng định chắc chắn.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "她可能是新同学。",
@@ -4917,7 +4918,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói khả năng",
+            "target": "Dùng 可能 để dự đoán",
             "level": 3,
             "checked": [
               "grammar",
@@ -5173,7 +5174,7 @@ const LESSON = {
           "type": "self_check",
           "prompt": "Dịch sang tiếng Việt ‘她可能是新同学。’",
           "model": "Cô ấy có thể là học sinh mới.",
-          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
+          "explain": "Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
@@ -6901,7 +6902,7 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Bạn chưa chắc cô gái ấy là ai. Chọn câu phù hợp.",
+          "prompt": "Bạn thấy một cô gái mới trong lớp. Em đoán cô ấy là học sinh mới, nhưng chưa chắc chắn. Em muốn dùng 可能 để diễn đạt dự đoán này. Chọn câu phù hợp.",
           "options": [
             {
               "k": "A",
@@ -6921,7 +6922,7 @@ const LESSON = {
             }
           ],
           "answer": "D",
-          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
+          "explain": "Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
           "example": "她可能是新同学。",
@@ -6944,7 +6945,7 @@ const LESSON = {
           ],
           "id": "B11-20",
           "quality": {
-            "target": "Nói khả năng",
+            "target": "Dùng 可能 để dự đoán",
             "level": 2,
             "checked": [
               "grammar",
@@ -8638,16 +8639,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Tình huống:\nBạn chưa chắc cô gái ấy là ai.\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.",
+          "prompt": "Tình huống:\nBạn thấy một cô gái mới trong lớp. Em đoán cô ấy là học sinh mới, nhưng chưa chắc chắn. Em muốn dùng 可能 để diễn đạt dự đoán này.\n\nYêu cầu:\nDùng 可能 để diễn đạt dự đoán trên.",
           "model": "她可能是新同学。",
-          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
-          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+          "explain": "Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.",
+          "rubric": "准确 40%: có 可能 và ý cô ấy là học sinh mới.\n连贯 25%: câu đủ chủ ngữ, động từ và bổ ngữ.\n得体 20%: thể hiện đây là dự đoán, không khẳng định chắc chắn.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "她可能是新同学。",
           "id": "B11-55",
           "quality": {
-            "target": "Nói khả năng",
+            "target": "Dùng 可能 để dự đoán",
             "level": 3,
             "checked": [
               "grammar",
@@ -8840,7 +8841,7 @@ const LESSON = {
           "type": "self_check",
           "prompt": "Dịch sang tiếng Việt ‘她可能是新同学。’",
           "model": "Cô ấy có thể là học sinh mới.",
-          "explain": "可能 cho biết đây là phỏng đoán, không phải khẳng định.",
+          "explain": "Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.",
           "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",

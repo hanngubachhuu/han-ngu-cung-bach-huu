@@ -25,6 +25,7 @@ for(let no=8; no<=15; no+=1){
     if(hasInlineColon) fail(`${q.id} còn dấu hai chấm chen giữa câu đề bài.`);
     if(/^(Kể lại ngắn gọn tình huống|Viết một tin nhắn phù hợp với tình huống)/u.test(promptText)) fail(`${q.id} dùng yêu cầu viết mơ hồ, không nêu rõ đầu ra.`);
     if(q.section==="writing" && q.type==="self_check" && !/^(?:Tình huống|Yêu cầu):\n/u.test(promptText)) fail(`${q.id} chưa có nhãn tình huống hoặc yêu cầu theo form đề.`);
+    if(q.section==="writing" && q.type==="self_check" && q.quality?.target==="Dùng 可能 để dự đoán" && (!promptText.includes("可能") || !String(q.model||"").includes("可能") || !String(q.model||"").includes("新同学"))) fail(`${q.id} chưa nêu đủ từ trọng tâm và ý dự đoán cần đánh giá.`);
     if(forbiddenPromptTerms.test(String(q.prompt||""))) fail(`${q.id} hỏi trực tiếp thuật ngữ ngữ pháp.`);
     if(q.type==="mcq" || q.type==="listening"){
       if(!Array.isArray(q.options) || q.options.length!==4) fail(`${q.id} không có đúng 4 lựa chọn.`);

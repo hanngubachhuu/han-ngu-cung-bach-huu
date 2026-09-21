@@ -332,9 +332,9 @@
         [`Dựa vào tình huống sau, viết một câu tiếng Trung. ${profile.phrases[0].vi}`,profile.phrases[0].zh,profile.phrases[0].target,profile.phrases[0].explain],
         [`Dựa vào tình huống sau, viết một câu tiếng Trung. ${profile.phrases[1].vi}`,profile.phrases[1].zh,profile.phrases[1].target,profile.phrases[1].explain],
         [`Dựa vào tình huống sau, viết một câu tiếng Trung. ${profile.phrases[2].vi}`,profile.phrases[2].zh,profile.phrases[2].target,profile.phrases[2].explain],
-        [`Tình huống:\n${taskSituation(profile.phrases[3])}\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.`,profile.phrases[3].zh,profile.phrases[3].target,profile.phrases[3].explain],
-        [`Tình huống:\n${taskSituation(profile.phrases[4])}\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.`,profile.phrases[4].zh,profile.phrases[4].target,profile.phrases[4].explain],
-        [`Tình huống:\n${taskSituation(profile.phrases[5])}\n\nYêu cầu:\nViết một câu tiếng Trung phù hợp.`,profile.phrases[5].zh,profile.phrases[5].target,profile.phrases[5].explain]
+        [`Tình huống:\n${taskSituation(profile.phrases[3])}\n\nYêu cầu:\n${profile.phrases[3].writingRequirement || "Viết một câu tiếng Trung phù hợp."}`,profile.phrases[3].zh,profile.phrases[3].target,profile.phrases[3].explain,profile.phrases[3].writingRubric],
+        [`Tình huống:\n${taskSituation(profile.phrases[4])}\n\nYêu cầu:\n${profile.phrases[4].writingRequirement || "Viết một câu tiếng Trung phù hợp."}`,profile.phrases[4].zh,profile.phrases[4].target,profile.phrases[4].explain,profile.phrases[4].writingRubric],
+        [`Tình huống:\n${taskSituation(profile.phrases[5])}\n\nYêu cầu:\n${profile.phrases[5].writingRequirement || "Viết một câu tiếng Trung phù hợp."}`,profile.phrases[5].zh,profile.phrases[5].target,profile.phrases[5].explain,profile.phrases[5].writingRubric]
       ],
       retell:{prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:profile.stories[2].text,model:profile.stories[2].retell,explain:"Kể lại bằng lời của em: người nào, việc gì, kết quả ra sao.",rubric:"准确 40%: đủ thông tin chính.\n连贯 25%: theo trật tự đoạn.\n得体 20%: 2–3 câu phù hợp.\n自然 15%: dùng câu tự nhiên."}
     };
@@ -533,7 +533,7 @@
     }
   };
 
-  const p=(prompt,zh,vi,target="Dùng câu phù hợp tình huống",explain="Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.")=>({prompt,zh,vi,target,explain});
+  const p=(prompt,zh,vi,target="Dùng câu phù hợp tình huống",explain="Đáp án khớp cả ý, trật tự câu và hoàn cảnh giao tiếp.",writingRequirement="",writingRubric=null)=>({prompt,zh,vi,target,explain,writingRequirement,writingRubric});
   const s=(id,text,summary,who,place,result,retell)=>({id,text,summary,who,place,result,retell});
   const scenarioLessons={
     hsk2_bai10_biezhao:{no:10,lessonId:"hsk2_bai10_biezhao",phrases:[
@@ -556,7 +556,7 @@
       p("Hai người chênh ba tuổi. Chọn câu phù hợp.","他比我大三岁。","Anh ấy lớn hơn tôi ba tuổi.","So sánh người và chênh lệch","比 nối hai người; 三岁 nêu mức chênh."),
       p("Bạn muốn chỉ ‘cô gái đang hát ở bên phải’. Chọn câu phù hợp.","右边那个唱歌的女孩是我姐姐。","Cô gái đang hát ở bên phải là chị gái tôi.","Chỉ đúng người trong một nhóm","Cụm hành động đứng trước 的女孩 để nhận diện người."),
       p("Bạn muốn nói chiếc áo này rẻ hơn chiếc kia. Chọn câu phù hợp.","这件衣服比那件便宜。","Chiếc áo này rẻ hơn chiếc kia."),
-      p("Bạn chưa chắc cô gái ấy là ai. Chọn câu phù hợp.","她可能是新同学。","Cô ấy có thể là học sinh mới.","Nói khả năng","可能 cho biết đây là phỏng đoán, không phải khẳng định."),
+      p("Bạn thấy một cô gái mới trong lớp. Em đoán cô ấy là học sinh mới, nhưng chưa chắc chắn. Em muốn dùng 可能 để diễn đạt dự đoán này. Chọn câu phù hợp.","她可能是新同学。","Cô ấy có thể là học sinh mới.","Dùng 可能 để dự đoán","Câu cần nêu dự đoán cụ thể ‘cô ấy là học sinh mới’; câu chỉ nói chưa biết cô ấy là ai chưa đủ ý.","Dùng 可能 để diễn đạt dự đoán trên.","准确 40%: có 可能 và ý cô ấy là học sinh mới.\n连贯 25%: câu đủ chủ ngữ, động từ và bổ ngữ.\n得体 20%: thể hiện đây là dự đoán, không khẳng định chắc chắn.\n自然 15%: trật tự câu tự nhiên."),
       p("Bạn muốn hỏi họ của một người. Chọn câu phù hợp.","你姓什么？","Bạn họ gì?"),
       p("Bạn muốn nói một cậu bé đang hát. Chọn câu phù hợp.","那个唱歌的男孩子是我朋友。","Cậu bé đang hát kia là bạn tôi."),
       p("Bạn muốn nói bên phải có một cô gái. Chọn câu phù hợp.","右边有一个女孩子。","Bên phải có một cô gái."),
