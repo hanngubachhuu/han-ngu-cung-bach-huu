@@ -863,6 +863,7 @@ footer.print-footer{display:none;}
 
 
 
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -894,6 +895,10 @@ footer.print-footer{display:none;}
 .multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
 .multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
 .q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
+/* Chống sao chép khi đang làm: chỉ khóa nội dung đề; vùng tự nhập vẫn được sửa để không cản trở việc làm bài. */
+#appShell.is-taking,#appShell.is-taking *{user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none;}
+#appShell.is-taking input,#appShell.is-taking textarea,#appShell.is-taking select,#appShell.is-taking option{user-select:text!important;-webkit-user-select:text!important;}
+@media print{#appShell.is-taking{display:none!important;}}
 @media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}}
 /* HSK-LESSON-UX-PATCH:END */
 </style>
@@ -3220,6 +3225,7 @@ function isAnswered(q){
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
+  if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
   return true;
@@ -3588,6 +3594,7 @@ function gradeQuestion(q){
     const ok = (q.answer||[]).some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
+  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
   if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
@@ -4236,10 +4243,39 @@ document.addEventListener('click', (e) => {
   }
 });
 
+/* HSK-QUIZ-INTEGRITY:START */
+/* Lớp rào cản trong trình duyệt: ngăn chọn/copy/in nội dung đề trong phiên đang làm. */
+function isQuizTaking(){
+  const shell = $('#appShell');
+  return !!shell && shell.style.display !== 'none' && !state.submitted;
+}
+function isAnswerEditor(node){
+  return !!(node && node.closest && node.closest('input, textarea, select'));
+}
+function blockQuizCopy(event){
+  if(isQuizTaking() && !isAnswerEditor(event.target) && !isAnswerEditor(document.activeElement)) event.preventDefault();
+}
+document.addEventListener('copy', blockQuizCopy);
+document.addEventListener('cut', blockQuizCopy);
+document.addEventListener('dragstart', event => {
+  if(isQuizTaking() && event.target.closest && event.target.closest('#appShell')) event.preventDefault();
+});
+document.addEventListener('contextmenu', event => {
+  if(isQuizTaking() && event.target.closest && event.target.closest('#appShell') && !isAnswerEditor(event.target)) event.preventDefault();
+});
+document.addEventListener('keydown', event => {
+  if(!isQuizTaking()) return;
+  const key = event.key.toLowerCase();
+  if((event.ctrlKey || event.metaKey) && ['p','s','u'].includes(key)){ event.preventDefault(); return; }
+  if((event.ctrlKey || event.metaKey) && ['c','x'].includes(key) && !isAnswerEditor(document.activeElement)) event.preventDefault();
+});
+/* HSK-QUIZ-INTEGRITY:END */
 /* ================================================================
    17) RENDER TỔNG (GỌI LẠI MỖI KHI STATE THAY ĐỔI)
    ================================================================ */
 function renderAll(){
+  const appShell = $('#appShell');
+  if(appShell) appShell.classList.toggle('is-taking', !state.submitted);
   updateProgress();
   const visibleIndexes = ALL_QUESTIONS.map((q, index) => ({q, index}))
     .filter(({q}) => !state.submitted || !state.reviewMode || questionMatchesFilter(q))

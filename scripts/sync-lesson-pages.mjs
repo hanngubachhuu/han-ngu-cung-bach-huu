@@ -159,6 +159,10 @@ function addListeningRenderer(html) {
 .multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
 .multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
 .q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
+/* Chống sao chép khi đang làm: chỉ khóa nội dung đề; vùng tự nhập vẫn được sửa để không cản trở việc làm bài. */
+#appShell.is-taking,#appShell.is-taking *{user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none;}
+#appShell.is-taking input,#appShell.is-taking textarea,#appShell.is-taking select,#appShell.is-taking option{user-select:text!important;-webkit-user-select:text!important;}
+@media print{#appShell.is-taking{display:none!important;}}
 @media (max-width:640px){.q-card{padding:var(--space-lg) var(--space-md);}.q-prompt{margin-bottom:var(--space-xl);}.q-body{gap:var(--space-lg);}.opt{padding:var(--space-md);}.audio-player-mini{padding:var(--space-sm);}.mini-nav-grid{gap:var(--space-xs);padding:var(--space-sm);}}
 /* HSK-LESSON-UX-PATCH:END */
 `;
@@ -214,6 +218,7 @@ function renderMultiFill(q, body){
   html = html.replace("  const promptDiv = el('div','q-prompt', mixText(q.prompt));", "  const promptText = String(q.prompt || '').replace(/([：:])\\s+(?=[\\u4e00-\\u9fff])/u, '$1\\n');\n  const promptDiv = el('div','q-prompt', mixText(promptText));");
   html = html.replace(/\/\* HSK-LESSON-UX-PATCH:START \*\/[\s\S]*?\/\* HSK-LESSON-UX-PATCH:END \*\/\n?/, '');
   html = html.replace(/\/\* Audio player:[\s\S]*?\.audio-speed\{[^}]*\}\n/, '');
+  html = html.replace(/\/\* HSK-QUIZ-INTEGRITY:START \*\/[\s\S]*?\/\* HSK-QUIZ-INTEGRITY:END \*\/\r?\n?/, '');
   html = html.replace("</style>", `${css}</style>`);
   html = html.replace(/if\(q\.type === 'self_check'\)/g, "if(q.type === 'self_check' || q.type === 'retell')")
     .replace(/else if\(q\.type === 'self_check'\)/g, "else if(q.type === 'self_check' || q.type === 'retell')");
@@ -241,11 +246,42 @@ function renderMultiFill(q, body){
 }
 $('#btnPrev').addEventListener('click', () => moveQuestion(-1));
 $('#btnNext').addEventListener('click', () => moveQuestion(1));`);
+  const integrityScript = `/* HSK-QUIZ-INTEGRITY:START */
+/* Lớp rào cản trong trình duyệt: ngăn chọn/copy/in nội dung đề trong phiên đang làm. */
+function isQuizTaking(){
+  const shell = $('#appShell');
+  return !!shell && shell.style.display !== 'none' && !state.submitted;
+}
+function isAnswerEditor(node){
+  return !!(node && node.closest && node.closest('input, textarea, select'));
+}
+function blockQuizCopy(event){
+  if(isQuizTaking() && !isAnswerEditor(event.target) && !isAnswerEditor(document.activeElement)) event.preventDefault();
+}
+document.addEventListener('copy', blockQuizCopy);
+document.addEventListener('cut', blockQuizCopy);
+document.addEventListener('dragstart', event => {
+  if(isQuizTaking() && event.target.closest && event.target.closest('#appShell')) event.preventDefault();
+});
+document.addEventListener('contextmenu', event => {
+  if(isQuizTaking() && event.target.closest && event.target.closest('#appShell') && !isAnswerEditor(event.target)) event.preventDefault();
+});
+document.addEventListener('keydown', event => {
+  if(!isQuizTaking()) return;
+  const key = event.key.toLowerCase();
+  if((event.ctrlKey || event.metaKey) && ['p','s','u'].includes(key)){ event.preventDefault(); return; }
+  if((event.ctrlKey || event.metaKey) && ['c','x'].includes(key) && !isAnswerEditor(document.activeElement)) event.preventDefault();
+});
+/* HSK-QUIZ-INTEGRITY:END */
+`;
+  html = html.replace(/\/\* ================================================================\r?\n   17\) RENDER TỔNG/, `${integrityScript}/* ================================================================\n   17) RENDER TỔNG`);
   const renderAllStart = html.indexOf("function renderAll(){");
   const nextSection = html.indexOf("   18) KHỞI TẠO", renderAllStart);
   const renderAllEnd = nextSection < 0 ? -1 : html.lastIndexOf("/* ================================================================", nextSection);
   if(renderAllStart < 0 || renderAllEnd < 0) throw new Error("Không tìm thấy renderAll để cập nhật luồng xem kết quả.");
   const renderAll = `function renderAll(){
+  const appShell = $('#appShell');
+  if(appShell) appShell.classList.toggle('is-taking', !state.submitted);
   updateProgress();
   const visibleIndexes = ALL_QUESTIONS.map((q, index) => ({q, index}))
     .filter(({q}) => !state.submitted || !state.reviewMode || questionMatchesFilter(q))
