@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import vm from "node:vm";
 
-const expected = { vocabulary:12, grammar:10, listening:8, reading:12, writing:12, translation:8, speaking:8, mixed:0 };
+const expected = { vocabulary:16, grammar:10, listening:8, reading:12, writing:14, translation:10, mixed:0 };
 const revision = fs.readFileSync("data/lessons/hsk2/exercise-revision-v2.js", "utf8");
 const errors = [];
-for (const no of [8, 9, 10, 11]) {
+for (const no of [8, 9, 10, 11, 12, 13, 14, 15]) {
   const source = fs.readFileSync(`data/lessons/hsk2/bai${no}.js`, "utf8");
   const window = { HAN_NGU_DATA: { lessons:{}, register(lesson){ this.lessons[lesson.id] = lesson; } } };
   vm.runInNewContext(revision, { window }, { filename:"exercise-revision-v2.js" });
@@ -27,4 +27,4 @@ for (const no of [8, 9, 10, 11]) {
   if (!lesson.exerciseSections.some(s => s.id === "listening" && s.passages !== undefined)) errors.push(`Bài ${no}: thiếu section nghe hoặc metadata đoạn đọc.`);
 }
 if (errors.length) { console.error(errors.join("\n")); process.exit(1); }
-console.log("OK · Ma trận Bài 8–11 đạt tiêu chí nghe, đọc, viết đa dạng, dịch hai chiều và giao tiếp.");
+console.log("OK · Ma trận Bài 8–15 đạt tiêu chí ôn từ xoắn ốc, nghe, đọc, viết đa dạng và dịch hai chiều.");

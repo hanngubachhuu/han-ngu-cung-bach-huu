@@ -157,9 +157,10 @@ function addListeningRenderer(html) {
 .retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
 .retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
 .retell-timer{color:var(--color-text-secondary);font-weight:700;}
-.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-lg,20px);line-height:var(--lh-relaxed,1.75);}
-.multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
-.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
+.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-xl,24px);line-height:2.15;overflow-wrap:anywhere;}
+.multi-fill-select{min-height:48px;min-width:9ch;margin:var(--space-2xs);padding:var(--space-xs) var(--space-sm);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;vertical-align:middle;}
+.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);padding:var(--space-sm) var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-subtle);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-secondary);}
+@media(max-width:640px){.multi-fill-text{padding:var(--space-md);font-size:var(--fs-lg,20px);line-height:2.05;}.multi-fill-select{min-width:8ch;margin:var(--space-2xs) 0;}.multi-fill-bank{font-size:var(--fs-base,16px);}}
 .q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
 /* Chống sao chép khi đang làm: chỉ khóa nội dung đề; vùng tự nhập vẫn được sửa để không cản trở việc làm bài. */
 #appShell.is-taking,#appShell.is-taking *{user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none;}

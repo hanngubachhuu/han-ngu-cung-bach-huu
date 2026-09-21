@@ -76,7 +76,7 @@ for (const item of manifest) {
   }
 
   const test = lesson.content?.coverage?.exercises;
-  if (test && test !== "gold_template_v1" && test !== "gold_template_v2") fail("coverage.exercises phải là gold_template_v1 hoặc gold_template_v2 khi đã chuẩn hóa");
+  if (test && !["gold_template_v1","gold_template_v2","gold_template_v3"].includes(test)) fail("coverage.exercises phải là gold_template_v1, gold_template_v2 hoặc gold_template_v3 khi đã chuẩn hóa");
 }
 
 if (errors.length) {

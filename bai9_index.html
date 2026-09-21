@@ -867,6 +867,8 @@ footer.print-footer{display:none;}
 
 
 
+
+
 /* HSK-LESSON-UX-PATCH:START */
 /* Audio and exercise spacing patch: keeps bilingual text legible at every width. */
 :root{--space-2xs:4px;--space-xs:8px;--space-sm:12px;--space-md:16px;--space-lg:24px;--space-xl:32px;}
@@ -894,9 +896,10 @@ footer.print-footer{display:none;}
 .retell-actions{display:flex;flex-wrap:wrap;gap:var(--space-sm);align-items:center;}
 .retell-actions button{min-height:48px;border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--space-xs) var(--space-md);font:inherit;font-weight:700;background:var(--color-surface);color:var(--color-primary);}
 .retell-timer{color:var(--color-text-secondary);font-weight:700;}
-.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-lg,20px);line-height:var(--lh-relaxed,1.75);}
-.multi-fill-select{min-height:48px;margin:var(--space-2xs);padding:var(--space-xs);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;}
-.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);font-size:var(--fs-sm,14px);color:var(--color-text-secondary);}
+.multi-fill-text{padding:var(--space-lg);border:1px solid var(--color-border);border-radius:var(--radius);background:var(--color-surface-subtle);font-family:var(--font-cn);font-size:var(--fs-xl,24px);line-height:2.15;overflow-wrap:anywhere;}
+.multi-fill-select{min-height:48px;min-width:9ch;margin:var(--space-2xs);padding:var(--space-xs) var(--space-sm);border:1px solid var(--color-border-strong);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-text-primary);font:inherit;vertical-align:middle;}
+.multi-fill-bank{display:flex;flex-wrap:wrap;gap:var(--space-xs);padding:var(--space-sm) var(--space-md);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-subtle);font-size:var(--fs-md,18px);line-height:var(--lh-relaxed,1.75);color:var(--color-text-secondary);}
+@media(max-width:640px){.multi-fill-text{padding:var(--space-md);font-size:var(--fs-lg,20px);line-height:2.05;}.multi-fill-select{min-width:8ch;margin:var(--space-2xs) 0;}.multi-fill-bank{font-size:var(--fs-base,16px);}}
 .q-prompt{margin-bottom:var(--space-2xl);}.q-body{gap:var(--space-xl);}.mini-nav-grid{grid-template-columns:repeat(5,1fr);gap:var(--space-sm);padding:var(--space-md);}.mini-nav-grid .nav-cell{min-height:48px;aspect-ratio:auto;}.mini-nav-popover{padding-bottom:var(--space-xs);}
 /* Chống sao chép khi đang làm: chỉ khóa nội dung đề; vùng tự nhập vẫn được sửa để không cản trở việc làm bài. */
 #appShell.is-taking,#appShell.is-taking *{user-select:none!important;-webkit-user-select:none!important;-webkit-touch-callout:none;}
@@ -1622,35 +1625,35 @@ const LESSON = {
         "B9-09",
         "B9-10",
         "B9-11",
-        "B9-12"
-      ],
-      "grammar": [
+        "B9-12",
         "B9-13",
         "B9-14",
         "B9-15",
-        "B9-16",
+        "B9-16"
+      ],
+      "grammar": [
         "B9-17",
         "B9-18",
         "B9-19",
         "B9-20",
         "B9-21",
-        "B9-22"
-      ],
-      "listening": [
+        "B9-22",
         "B9-23",
         "B9-24",
         "B9-25",
-        "B9-26",
+        "B9-26"
+      ],
+      "listening": [
         "B9-27",
         "B9-28",
         "B9-29",
-        "B9-30"
-      ],
-      "reading": [
+        "B9-30",
         "B9-31",
         "B9-32",
         "B9-33",
-        "B9-34",
+        "B9-34"
+      ],
+      "reading": [
         "B9-35",
         "B9-36",
         "B9-37",
@@ -1658,13 +1661,13 @@ const LESSON = {
         "B9-39",
         "B9-40",
         "B9-41",
-        "B9-42"
-      ],
-      "writing": [
+        "B9-42",
         "B9-43",
         "B9-44",
         "B9-45",
-        "B9-46",
+        "B9-46"
+      ],
+      "writing": [
         "B9-47",
         "B9-48",
         "B9-49",
@@ -1672,19 +1675,17 @@ const LESSON = {
         "B9-51",
         "B9-52",
         "B9-53",
-        "B9-54"
-      ],
-      "translation": [
+        "B9-54",
         "B9-55",
         "B9-56",
         "B9-57",
         "B9-58",
         "B9-59",
-        "B9-60",
-        "B9-61",
-        "B9-62"
+        "B9-60"
       ],
-      "speaking": [
+      "translation": [
+        "B9-61",
+        "B9-62",
         "B9-63",
         "B9-64",
         "B9-65",
@@ -1700,45 +1701,45 @@ const LESSON = {
       "all": [
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 这道题我做___了。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “这___题不难。”",
           "options": [
             {
               "k": "A",
-              "t": "错"
+              "t": "题"
             },
             {
               "k": "B",
-              "t": "完"
+              "t": "课"
             },
             {
               "k": "C",
-              "t": "懂"
+              "t": "票"
             },
             {
               "k": "D",
-              "t": "从"
+              "t": "电影"
             }
           ],
           "answer": "A",
-          "explain": "做错 表 thị làm và có kết quả là sai.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “这题题不难。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "错",
+          "example": "题",
           "distractorProfiles": [
             {
-              "option": "完",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "课",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "懂",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "票",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "电影",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-01",
@@ -1752,8 +1753,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kết quả làm sai",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -1764,45 +1765,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn câu phù hợp với ý ‘Tôi đi từ nhà đến trường’. ",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “我___星期一开始上班。”",
           "options": [
             {
               "k": "A",
-              "t": "我从学校到家。"
+              "t": "对"
             },
             {
               "k": "B",
-              "t": "我从家到学校。"
+              "t": "从"
             },
             {
               "k": "C",
-              "t": "我家从到学校。"
+              "t": "比"
             },
             {
               "k": "D",
-              "t": "我到从家学校。"
+              "t": "往"
             }
           ],
           "answer": "B",
-          "explain": "从 đặt trước điểm bắt đầu.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “我从星期一开始上班。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "我从家到学校。",
+          "example": "从",
           "distractorProfiles": [
             {
-              "option": "我从学校到家。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "对",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "我家从到学校。",
-              "code": "N05",
-              "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
+              "option": "比",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "我到从家学校。",
-              "code": "N05",
-              "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
+              "option": "往",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-02",
@@ -1816,8 +1817,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói điểm bắt đầu",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -1828,45 +1829,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 小王喜欢___，每个星期都去跳。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “我___明天能见到你。”",
           "options": [
             {
               "k": "A",
-              "t": "上班"
+              "t": "已经"
             },
             {
               "k": "B",
-              "t": "欢迎"
+              "t": "正在"
             },
             {
               "k": "C",
-              "t": "跳舞"
+              "t": "希望"
             },
             {
               "k": "D",
-              "t": "问题"
+              "t": "一直"
             }
           ],
           "answer": "C",
-          "explain": "Những gì diễn ra mỗi tuần là hoạt động nhảy múa.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “我希望明天能见到你。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "跳舞",
+          "example": "希望",
           "distractorProfiles": [
             {
-              "option": "上班",
+              "option": "已经",
               "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "欢迎",
-              "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "option": "正在",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "问题",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
+              "option": "一直",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-03",
@@ -1880,8 +1881,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Hoạt động sở thích",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -1892,45 +1893,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn câu phù hợp với ý ‘Hãy làm câu thứ hai’. ",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “我们___新同学来班里。”",
           "options": [
             {
               "k": "A",
-              "t": "第二题做错了。"
+              "t": "帮助"
             },
             {
               "k": "B",
-              "t": "从第二天做。"
+              "t": "等"
             },
             {
               "k": "C",
-              "t": "做完第二个人。"
+              "t": "找"
             },
             {
               "k": "D",
-              "t": "做第二题吧。"
+              "t": "欢迎"
             }
           ],
           "answer": "D",
-          "explain": "第二题 chỉ câu thứ hai.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “我们欢迎新同学来班里。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "做第二题吧。",
+          "example": "欢迎",
           "distractorProfiles": [
             {
-              "option": "第二题做错了。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
-            },
-            {
-              "option": "从第二天做。",
+              "option": "帮助",
               "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "做完第二个人。",
-              "code": "N10",
-              "reason": "Chọn lượng từ theo thói quen tiếng Việt."
+              "option": "等",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "找",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-04",
@@ -1944,8 +1945,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Số thứ tự",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -1956,45 +1957,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 我___明天能做完作业。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “老师说得很清楚，我都听___了。”",
           "options": [
             {
               "k": "A",
-              "t": "希望"
+              "t": "懂"
             },
             {
               "k": "B",
-              "t": "欢迎"
+              "t": "完"
             },
             {
               "k": "C",
-              "t": "可能"
+              "t": "错"
             },
             {
               "k": "D",
-              "t": "问题"
+              "t": "过"
             }
           ],
           "answer": "A",
-          "explain": "希望 dùng trước nội dung mình mong muốn.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “老师说得很清楚，我都听懂了。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "希望",
+          "example": "懂",
           "distractorProfiles": [
             {
-              "option": "欢迎",
+              "option": "完",
               "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "可能",
-              "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "option": "错",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "问题",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
+              "option": "过",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-05",
@@ -2008,8 +2009,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói mong muốn",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2020,45 +2021,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 这个___我不懂，老师能帮我吗？",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “作业太多，我还没做___。”",
           "options": [
             {
               "k": "A",
-              "t": "欢迎"
+              "t": "错"
             },
             {
               "k": "B",
-              "t": "问题"
+              "t": "完"
             },
             {
               "k": "C",
-              "t": "第一"
+              "t": "懂"
             },
             {
               "k": "D",
-              "t": "跳舞"
+              "t": "过"
             }
           ],
           "answer": "B",
-          "explain": "不懂 的对象 là 问题.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “作业太多，我还没做完。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "问题",
+          "example": "完",
           "distractorProfiles": [
             {
-              "option": "欢迎",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
+              "option": "错",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "第一",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
+              "option": "懂",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "跳舞",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
+              "option": "过",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-06",
@@ -2072,8 +2073,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Danh từ chỉ vấn đề",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2084,45 +2085,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Khi có bạn mới vào lớp, em nên nói gì?",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “他是我的___，我们一起上课。”",
           "options": [
             {
               "k": "A",
-              "t": "希望你！"
+              "t": "朋友"
             },
             {
               "k": "B",
-              "t": "做完你！"
+              "t": "老师"
             },
             {
               "k": "C",
-              "t": "欢迎你！"
+              "t": "同学"
             },
             {
               "k": "D",
-              "t": "从你！"
+              "t": "服务员"
             }
           ],
           "answer": "C",
-          "explain": "欢迎 + người là lời chào đón tự nhiên.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “他是我的同学，我们一起上课。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "欢迎你！",
+          "example": "同学",
           "distractorProfiles": [
             {
-              "option": "希望你！",
-              "code": "N02",
-              "reason": "Biết nghĩa từng từ nhưng ghép từ không tự nhiên."
+              "option": "朋友",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "做完你！",
+              "option": "老师",
               "code": "N22",
-              "reason": "Động từ không đi tự nhiên với tân ngữ này."
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从你！",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "服务员",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-07",
@@ -2136,8 +2137,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Chào đón",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2148,45 +2149,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 我爸爸每天八点___。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “___没有课，我们去公园吧。”",
           "options": [
             {
               "k": "A",
-              "t": "跳舞"
+              "t": "今天"
             },
             {
               "k": "B",
-              "t": "欢迎"
+              "t": "昨天"
             },
             {
               "k": "C",
-              "t": "做错"
+              "t": "去年"
             },
             {
               "k": "D",
-              "t": "上班"
+              "t": "明天"
             }
           ],
           "answer": "D",
-          "explain": "八点上班 nói giờ bắt đầu làm việc.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “明天没有课，我们去公园吧。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "上班",
+          "example": "明天",
           "distractorProfiles": [
             {
-              "option": "跳舞",
+              "option": "今天",
               "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "欢迎",
+              "option": "昨天",
               "code": "N22",
-              "reason": "Động từ không đi tự nhiên với tân ngữ này."
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "做错",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "去年",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-08",
@@ -2200,8 +2201,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Hoạt động đi làm",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2212,45 +2213,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 老师说得很清楚，我都___了。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “请你明天___告诉我。”",
           "options": [
             {
               "k": "A",
-              "t": "懂"
+              "t": "再"
             },
             {
               "k": "B",
-              "t": "错"
+              "t": "已经"
             },
             {
               "k": "C",
-              "t": "完"
+              "t": "正在"
             },
             {
               "k": "D",
-              "t": "从"
+              "t": "一直"
             }
           ],
           "answer": "A",
-          "explain": "听懂 mới phù hợp với việc nghe giáo viên nói.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “请你明天再告诉我。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "懂",
+          "example": "再",
           "distractorProfiles": [
             {
-              "option": "错",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "已经",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "完",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "正在",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "一直",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-09",
@@ -2264,8 +2265,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Hiểu lời nói",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2276,45 +2277,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 作业很多，我还没做___。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “老师___我们先看题。”",
           "options": [
             {
               "k": "A",
-              "t": "错"
+              "t": "从"
             },
             {
               "k": "B",
-              "t": "完"
+              "t": "让"
             },
             {
               "k": "C",
-              "t": "懂"
+              "t": "对"
             },
             {
               "k": "D",
-              "t": "从"
+              "t": "比"
             }
           ],
           "answer": "B",
-          "explain": "还没做完 nghĩa là chưa làm xong.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “老师让我们先看题。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "完",
+          "example": "让",
           "distractorProfiles": [
             {
-              "option": "错",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
-            },
-            {
-              "option": "懂",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
-            },
-            {
               "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "对",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "比",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-10",
@@ -2328,8 +2329,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kết quả hoàn thành",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2340,45 +2341,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn câu tiếng Trung diễn đạt ý ‘Bắt đầu làm từ câu thứ nhất’. ",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “请___我五分钟。”",
           "options": [
             {
               "k": "A",
-              "t": "从明天开始做。"
+              "t": "找"
             },
             {
               "k": "B",
-              "t": "第一题做错了。"
+              "t": "告诉"
             },
             {
               "k": "C",
-              "t": "从第一题开始做。"
+              "t": "等"
             },
             {
               "k": "D",
-              "t": "我做完第一题了。"
+              "t": "帮助"
             }
           ],
           "answer": "C",
-          "explain": "Câu đúng giữ được cả điểm bắt đầu và câu thứ nhất.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “请等我五分钟。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "从第一题开始做。",
+          "example": "等",
           "distractorProfiles": [
             {
-              "option": "从明天开始做。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "找",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "第一题做错了。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "告诉",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "我做完第一题了。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "帮助",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-11",
@@ -2392,8 +2393,8 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói thứ tự bắt đầu",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -2404,45 +2405,45 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn cụm phù hợp trong câu 这本书我已经看___了。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “在饭店里，我们请___拿菜单。”",
           "options": [
             {
               "k": "A",
-              "t": "错"
+              "t": "老师"
             },
             {
               "k": "B",
-              "t": "懂"
+              "t": "同学"
             },
             {
               "k": "C",
-              "t": "从"
+              "t": "朋友"
             },
             {
               "k": "D",
-              "t": "完"
+              "t": "服务员"
             }
           ],
           "answer": "D",
-          "explain": "看完 表示 đọc/xem hết quyển sách.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “在饭店里，我们请服务员拿菜单。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "完",
+          "example": "服务员",
           "distractorProfiles": [
             {
-              "option": "错",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "老师",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "懂",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "同学",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "朋友",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-12",
@@ -2456,7 +2457,263 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Kết quả hoàn thành",
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “她不想买黑色的，所以选了___色的衣服。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "白"
+            },
+            {
+              "k": "B",
+              "t": "黑"
+            },
+            {
+              "k": "C",
+              "t": "贵"
+            },
+            {
+              "k": "D",
+              "t": "便宜"
+            }
+          ],
+          "answer": "A",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “她不想买黑色的，所以选了白色的衣服。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "白",
+          "distractorProfiles": [
+            {
+              "option": "黑",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "贵",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "便宜",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-13",
+          "section": "vocabulary",
+          "sectionTitle": "A. TỪ VỰNG TRONG TÌNH HUỐNG",
+          "skill": "tuvung",
+          "sourceRefs": [
+            "textbook_l09",
+            "workbook_l09",
+            "teacher_enriched_v2"
+          ],
+          "status": "teacher_enriched_v2",
+          "quality": {
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “银行在学校的___，不在左边。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "左边"
+            },
+            {
+              "k": "B",
+              "t": "右边"
+            },
+            {
+              "k": "C",
+              "t": "前面"
+            },
+            {
+              "k": "D",
+              "t": "里面"
+            }
+          ],
+          "answer": "B",
+          "explain": "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời. Câu hoàn chỉnh là “银行在学校的右边，不在左边。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "右边",
+          "distractorProfiles": [
+            {
+              "option": "左边",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "前面",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "里面",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-14",
+          "section": "vocabulary",
+          "sectionTitle": "A. TỪ VỰNG TRONG TÌNH HUỐNG",
+          "skill": "tuvung",
+          "sourceRefs": [
+            "textbook_l09",
+            "workbook_l09",
+            "teacher_enriched_v2"
+          ],
+          "status": "teacher_enriched_v2",
+          "quality": {
+            "target": "Làm quen từ sẽ gặp trong 1–3 bài tới",
+            "level": 2,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “他___王，叫王小明。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "叫"
+            },
+            {
+              "k": "B",
+              "t": "是"
+            },
+            {
+              "k": "C",
+              "t": "姓"
+            },
+            {
+              "k": "D",
+              "t": "有"
+            }
+          ],
+          "answer": "C",
+          "explain": "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời. Câu hoàn chỉnh là “他姓王，叫王小明。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "姓",
+          "distractorProfiles": [
+            {
+              "option": "叫",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "是",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "有",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-15",
+          "section": "vocabulary",
+          "sectionTitle": "A. TỪ VỰNG TRONG TÌNH HUỐNG",
+          "skill": "tuvung",
+          "sourceRefs": [
+            "textbook_l09",
+            "workbook_l09",
+            "teacher_enriched_v2"
+          ],
+          "status": "teacher_enriched_v2",
+          "quality": {
+            "target": "Làm quen từ sẽ gặp trong 1–3 bài tới",
+            "level": 2,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “那个女孩在台上___，声音很好听。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "跳舞"
+            },
+            {
+              "k": "B",
+              "t": "看电影"
+            },
+            {
+              "k": "C",
+              "t": "洗衣服"
+            },
+            {
+              "k": "D",
+              "t": "唱歌"
+            }
+          ],
+          "answer": "D",
+          "explain": "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời. Câu hoàn chỉnh là “那个女孩在台上唱歌，声音很好听。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "唱歌",
+          "distractorProfiles": [
+            {
+              "option": "跳舞",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "看电影",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "洗衣服",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-16",
+          "section": "vocabulary",
+          "sectionTitle": "A. TỪ VỰNG TRONG TÌNH HUỐNG",
+          "skill": "tuvung",
+          "sourceRefs": [
+            "textbook_l09",
+            "workbook_l09",
+            "teacher_enriched_v2"
+          ],
+          "status": "teacher_enriched_v2",
+          "quality": {
+            "target": "Làm quen từ sẽ gặp trong 1–3 bài tới",
             "level": 2,
             "checked": [
               "grammar",
@@ -2509,7 +2766,7 @@ const LESSON = {
               "reason": "Nhầm kết quả của hành động."
             }
           ],
-          "id": "B9-13",
+          "id": "B9-17",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2534,10 +2791,10 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
             "看完",
-            "这本书",
-            "了"
+            "了",
+            "我",
+            "这本书"
           ],
           "answer": [
             "我",
@@ -2549,7 +2806,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我看完这本书了",
-          "id": "B9-14",
+          "id": "B9-18",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2613,7 +2870,7 @@ const LESSON = {
               "reason": "Ghép từng cụm Việt–Trung nhưng sai trật tự câu."
             }
           ],
-          "id": "B9-15",
+          "id": "B9-19",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2677,7 +2934,7 @@ const LESSON = {
               "reason": "Câu gần đúng nhưng sai một chi tiết trọng tâm."
             }
           ],
-          "id": "B9-16",
+          "id": "B9-20",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2702,11 +2959,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "他",
             "从",
-            "第一题",
             "开始",
-            "做"
+            "做",
+            "他",
+            "第一题"
           ],
           "answer": [
             "他",
@@ -2719,7 +2976,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "他从第一题开始做",
-          "id": "B9-17",
+          "id": "B9-21",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2783,7 +3040,7 @@ const LESSON = {
               "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
             }
           ],
-          "id": "B9-18",
+          "id": "B9-22",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2847,7 +3104,7 @@ const LESSON = {
               "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
             }
           ],
-          "id": "B9-19",
+          "id": "B9-23",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2872,11 +3129,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
-            "希望",
-            "明天",
+            "作业",
             "做完",
-            "作业"
+            "明天",
+            "我",
+            "希望"
           ],
           "answer": [
             "我",
@@ -2889,7 +3146,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我希望明天做完作业",
-          "id": "B9-20",
+          "id": "B9-24",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -2953,7 +3210,7 @@ const LESSON = {
               "reason": "Dịch từng chữ từ tiếng Việt sang tiếng Trung."
             }
           ],
-          "id": "B9-21",
+          "id": "B9-25",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -3012,7 +3269,7 @@ const LESSON = {
           "error": "Mỗi ô cần được quyết định bằng nghĩa của cả câu, không chọn riêng từng từ.",
           "tip": "Đọc hết đoạn, thử từng lựa chọn rồi kiểm tra lại ý chung.",
           "example": "从 · 完 · 完 · 错",
-          "id": "B9-22",
+          "id": "B9-26",
           "section": "grammar",
           "sectionTitle": "B. DÙNG CÂU TRONG NGỮ CẢNH",
           "skill": "nguphap",
@@ -3076,7 +3333,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-23",
+          "id": "B9-27",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3097,7 +3354,7 @@ const LESSON = {
             ]
           },
           "audioText": "题太多了，我今天还没做完。",
-          "audioSrc": "audio/hsk2/bai9/23.mp3",
+          "audioSrc": "audio/hsk2/bai9/27.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3143,7 +3400,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-24",
+          "id": "B9-28",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3164,7 +3421,7 @@ const LESSON = {
             ]
           },
           "audioText": "我从第一题开始做，最后做错了两道题。",
-          "audioSrc": "audio/hsk2/bai9/24.mp3",
+          "audioSrc": "audio/hsk2/bai9/28.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3210,7 +3467,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-25",
+          "id": "B9-29",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3231,7 +3488,7 @@ const LESSON = {
             ]
           },
           "audioText": "A：你什么时候开始上班？B：我从下个月开始上班。",
-          "audioSrc": "audio/hsk2/bai9/25.mp3",
+          "audioSrc": "audio/hsk2/bai9/29.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3277,7 +3534,7 @@ const LESSON = {
               "reason": "Câu gần đúng nhưng sai một chi tiết trọng tâm."
             }
           ],
-          "id": "B9-26",
+          "id": "B9-30",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3298,7 +3555,7 @@ const LESSON = {
             ]
           },
           "audioText": "老师说得很清楚，我都听懂了。",
-          "audioSrc": "audio/hsk2/bai9/26.mp3",
+          "audioSrc": "audio/hsk2/bai9/30.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3344,7 +3601,7 @@ const LESSON = {
               "reason": "Phương án không khớp mục tiêu cần kiểm tra."
             }
           ],
-          "id": "B9-27",
+          "id": "B9-31",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3365,7 +3622,7 @@ const LESSON = {
             ]
           },
           "audioText": "今天是我来中国的第一天，大家都欢迎我。",
-          "audioSrc": "audio/hsk2/bai9/27.mp3",
+          "audioSrc": "audio/hsk2/bai9/31.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3411,7 +3668,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-28",
+          "id": "B9-32",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3432,7 +3689,7 @@ const LESSON = {
             ]
           },
           "audioText": "我希望明天能做完作业。",
-          "audioSrc": "audio/hsk2/bai9/28.mp3",
+          "audioSrc": "audio/hsk2/bai9/32.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3478,7 +3735,7 @@ const LESSON = {
               "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
             }
           ],
-          "id": "B9-29",
+          "id": "B9-33",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3499,7 +3756,7 @@ const LESSON = {
             ]
           },
           "audioText": "这道题我没听懂，你能再说一遍吗？",
-          "audioSrc": "audio/hsk2/bai9/29.mp3",
+          "audioSrc": "audio/hsk2/bai9/33.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3545,7 +3802,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-30",
+          "id": "B9-34",
           "section": "listening",
           "sectionTitle": "C. NGHE HIỂU",
           "skill": "nghe",
@@ -3566,7 +3823,7 @@ const LESSON = {
             ]
           },
           "audioText": "A：你做完了吗？B：还没有，我从第二题开始再做一遍。",
-          "audioSrc": "audio/hsk2/bai9/30.mp3",
+          "audioSrc": "audio/hsk2/bai9/34.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -3612,7 +3869,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-31",
+          "id": "B9-35",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -3677,7 +3934,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-32",
+          "id": "B9-36",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -3742,7 +3999,7 @@ const LESSON = {
               "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
             }
           ],
-          "id": "B9-33",
+          "id": "B9-37",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -3807,7 +4064,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-34",
+          "id": "B9-38",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -3872,7 +4129,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-35",
+          "id": "B9-39",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -3937,7 +4194,7 @@ const LESSON = {
               "reason": "Câu gần đúng nhưng sai một chi tiết trọng tâm."
             }
           ],
-          "id": "B9-36",
+          "id": "B9-40",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4002,7 +4259,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-37",
+          "id": "B9-41",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4067,7 +4324,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-38",
+          "id": "B9-42",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4132,7 +4389,7 @@ const LESSON = {
               "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
             }
           ],
-          "id": "B9-39",
+          "id": "B9-43",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4197,7 +4454,7 @@ const LESSON = {
               "reason": "Phương án không khớp mục tiêu cần kiểm tra."
             }
           ],
-          "id": "B9-40",
+          "id": "B9-44",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4262,7 +4519,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-41",
+          "id": "B9-45",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4327,7 +4584,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-42",
+          "id": "B9-46",
           "section": "reading",
           "sectionTitle": "D. ĐỌC HIỂU",
           "skill": "docHieu",
@@ -4353,12 +4610,12 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
             "从",
-            "九月",
-            "开始",
             "学",
-            "汉语"
+            "汉语",
+            "我",
+            "开始",
+            "九月"
           ],
           "answer": [
             "我",
@@ -4372,7 +4629,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我从九月开始学汉语",
-          "id": "B9-43",
+          "id": "B9-47",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4397,10 +4654,10 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "这道题",
-            "我",
+            "了",
             "做错",
-            "了"
+            "这道题",
+            "我"
           ],
           "answer": [
             "这道题",
@@ -4412,7 +4669,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "这道题我做错了",
-          "id": "B9-44",
+          "id": "B9-48",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4437,10 +4694,10 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "老师",
             "说得",
-            "很",
-            "清楚"
+            "老师",
+            "清楚",
+            "很"
           ],
           "answer": [
             "老师",
@@ -4452,7 +4709,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "老师说得很清楚",
-          "id": "B9-45",
+          "id": "B9-49",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4477,11 +4734,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "今天",
-            "是",
+            "上班",
             "我",
             "第一天",
-            "上班"
+            "今天",
+            "是"
           ],
           "answer": [
             "今天",
@@ -4494,7 +4751,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "今天是我第一天上班",
-          "id": "B9-46",
+          "id": "B9-50",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4519,11 +4776,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
-            "希望",
-            "明天",
+            "作业",
             "做完",
-            "作业"
+            "明天",
+            "我",
+            "希望"
           ],
           "answer": [
             "我",
@@ -4536,7 +4793,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我希望明天做完作业",
-          "id": "B9-47",
+          "id": "B9-51",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4566,7 +4823,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "题太多了，我还没做完作业。",
-          "id": "B9-48",
+          "id": "B9-52",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4596,7 +4853,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从九月开始学汉语。",
-          "id": "B9-49",
+          "id": "B9-53",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4626,7 +4883,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "老师，我没听懂，请您再说一遍。",
-          "id": "B9-50",
+          "id": "B9-54",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4656,7 +4913,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从第一题开始做。最后我做完了。",
-          "id": "B9-51",
+          "id": "B9-55",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4686,7 +4943,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "欢迎你来我们班！",
-          "id": "B9-52",
+          "id": "B9-56",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4716,7 +4973,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我做错了两道题。我想再做一遍。你能帮助我吗？",
-          "id": "B9-53",
+          "id": "B9-57",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4738,6 +4995,66 @@ const LESSON = {
           }
         },
         {
+          "type": "self_check",
+          "prompt": "Đặt một câu tiếng Trung có từ “希望”。",
+          "model": "我希望明天能做完作业。",
+          "explain": "希望 cần dẫn nội dung em mong muốn.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
+          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
+          "example": "我希望明天能做完作业。",
+          "id": "B9-58",
+          "section": "writing",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet",
+          "sourceRefs": [
+            "textbook_l09",
+            "workbook_l09",
+            "teacher_enriched_v2"
+          ],
+          "status": "teacher_enriched_v2",
+          "quality": {
+            "target": "Đặt câu với từ trọng tâm",
+            "level": 3,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "self_check",
+          "prompt": "Viết 2–3 câu kể em đã bắt đầu làm việc gì và kết quả ra sao.",
+          "model": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
+          "explain": "Có điểm bắt đầu, quá trình hoặc kết quả.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
+          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
+          "example": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
+          "id": "B9-59",
+          "section": "writing",
+          "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
+          "skill": "viet",
+          "sourceRefs": [
+            "textbook_l09",
+            "workbook_l09",
+            "teacher_enriched_v2"
+          ],
+          "status": "teacher_enriched_v2",
+          "quality": {
+            "target": "Kể lại tiến trình",
+            "level": 3,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
           "type": "retell",
           "prompt": "Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",
           "model": "小李今天有很多作业。他开始做了很久，后来同学帮助他做完了。他发现自己做错了两道题。",
@@ -4748,7 +5065,7 @@ const LESSON = {
           "example": "小李今天有很多作业。他开始做了很久，后来同学帮助他做完了。他发现自己做错了两道题。",
           "sourceText": "小李今天有很多作业。他从第一题开始做，但是题太多，还没做完。同学帮助他以后，他终于做完了，可是做错了两道题。",
           "readSeconds": 60,
-          "id": "B9-54",
+          "id": "B9-60",
           "section": "writing",
           "sectionTitle": "E. VIẾT CÓ KIỂM SOÁT",
           "skill": "viet",
@@ -4778,7 +5095,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从第一题开始做。",
-          "id": "B9-55",
+          "id": "B9-61",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4808,7 +5125,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Bài quá nhiều, tôi vẫn chưa làm xong.",
-          "id": "B9-56",
+          "id": "B9-62",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4838,7 +5155,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "老师说得很清楚，我听懂了。",
-          "id": "B9-57",
+          "id": "B9-63",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4868,7 +5185,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Tôi làm sai hai câu.",
-          "id": "B9-58",
+          "id": "B9-64",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4898,7 +5215,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我希望明天做完作业。",
-          "id": "B9-59",
+          "id": "B9-65",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4928,7 +5245,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Hôm nay là ngày đầu tiên tôi đi làm.",
-          "id": "B9-60",
+          "id": "B9-66",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4958,7 +5275,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "欢迎你来我们班。",
-          "id": "B9-61",
+          "id": "B9-67",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -4988,7 +5305,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Vấn đề này tôi không hiểu.",
-          "id": "B9-62",
+          "id": "B9-68",
           "section": "translation",
           "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
           "skill": "dich",
@@ -5011,197 +5328,17 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Đọc to ‘我从九月开始学汉语。’ hai lần và tự đánh dấu chỗ ngắt.",
-          "model": "我从九月 / 开始学汉语。",
-          "explain": "Đọc cụm thời gian",
-          "rubric": "Không tách 从 và 九月.",
+          "prompt": "Dịch sang tiếng Trung ‘Bạn hy vọng điều gì?’",
+          "model": "你希望什么？",
+          "explain": "希望 đứng trước nội dung mong muốn.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我从九月 / 开始学汉语。",
-          "id": "B9-63",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
-          "sourceRefs": [
-            "textbook_l09",
-            "workbook_l09",
-            "teacher_enriched_v2"
-          ],
-          "status": "teacher_enriched_v2",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Đóng vai giáo viên. Hỏi học sinh đã làm xong bài chưa.",
-          "model": "你做完作业了吗？",
-          "explain": "Hỏi kết quả",
-          "rubric": "Dùng 做完 để hỏi đã hoàn tất hay chưa.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "你做完作业了吗？",
-          "id": "B9-64",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
-          "sourceRefs": [
-            "textbook_l09",
-            "workbook_l09",
-            "teacher_enriched_v2"
-          ],
-          "status": "teacher_enriched_v2",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Đóng vai học sinh. Trả lời rằng bạn chưa làm xong vì bài nhiều.",
-          "model": "题太多了，我还没做完。",
-          "explain": "Trả lời theo nguyên nhân",
-          "rubric": "Có cả lý do và tình trạng.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "题太多了，我还没做完。",
-          "id": "B9-65",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
-          "sourceRefs": [
-            "textbook_l09",
-            "workbook_l09",
-            "teacher_enriched_v2"
-          ],
-          "status": "teacher_enriched_v2",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Nói 2 câu chào đón một đồng nghiệp mới.",
-          "model": "欢迎你！我是小王。",
-          "explain": "Chào đón trong bối cảnh quen thuộc",
-          "rubric": "Có lời chào và giới thiệu ngắn.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "欢迎你！我是小王。",
-          "id": "B9-66",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
-          "sourceRefs": [
-            "textbook_l09",
-            "workbook_l09",
-            "teacher_enriched_v2"
-          ],
-          "status": "teacher_enriched_v2",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Nói một câu nhờ bạn giảng lại vì bạn chưa nghe hiểu.",
-          "model": "我没听懂，请你再说一遍。",
-          "explain": "Yêu cầu nhắc lại",
-          "rubric": "Nêu rõ điều em cần hỗ trợ.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我没听懂，请你再说一遍。",
-          "id": "B9-67",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
-          "sourceRefs": [
-            "textbook_l09",
-            "workbook_l09",
-            "teacher_enriched_v2"
-          ],
-          "status": "teacher_enriched_v2",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Nói 2 câu kể một câu bạn làm sai và bạn sẽ làm gì sau đó.",
-          "model": "我做错了一道题。我再做一遍。",
-          "explain": "Tường thuật và sửa lỗi",
-          "rubric": "Dùng kết quả làm sai rồi kế hoạch làm lại.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我做错了一道题。我再做一遍。",
-          "id": "B9-68",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
-          "sourceRefs": [
-            "textbook_l09",
-            "workbook_l09",
-            "teacher_enriched_v2"
-          ],
-          "status": "teacher_enriched_v2",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Đọc cặp từ ‘第一题 / 第一天’ và đặt mỗi cụm vào một câu ngắn.",
-          "model": "我做第一题。今天是第一天。",
-          "explain": "Phân biệt thứ tự của sự vật và thời gian",
-          "rubric": "Cả hai dùng 第 nhưng danh từ theo sau khác nhau.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我做第一题。今天是第一天。",
+          "example": "你希望什么？",
           "id": "B9-69",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
+          "section": "translation",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -5209,7 +5346,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói theo tình huống",
+            "target": "Chuyển ý hai chiều",
             "level": 3,
             "checked": [
               "grammar",
@@ -5221,17 +5358,17 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Nói một câu về điều bạn hy vọng làm được ngày mai.",
-          "model": "我希望明天做完作业。",
-          "explain": "Nói mong muốn",
-          "rubric": "Dùng 希望 + nội dung mong muốn.",
+          "prompt": "Dịch sang tiếng Việt ‘欢迎你来我们班。’",
+          "model": "Chào mừng bạn đến lớp chúng tôi.",
+          "explain": "欢迎 dùng khi chào đón người đến.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我希望明天做完作业。",
+          "example": "Chào mừng bạn đến lớp chúng tôi.",
           "id": "B9-70",
-          "section": "speaking",
-          "sectionTitle": "G. NÓI & TƯƠNG TÁC",
-          "skill": "giaotiep",
+          "section": "translation",
+          "sectionTitle": "F. CHUYỂN Ý VIỆT–TRUNG",
+          "skill": "dich",
           "sourceRefs": [
             "textbook_l09",
             "workbook_l09",
@@ -5239,7 +5376,7 @@ const LESSON = {
           ],
           "status": "teacher_enriched_v2",
           "quality": {
-            "target": "Nói theo tình huống",
+            "target": "Chuyển ý hai chiều",
             "level": 3,
             "checked": [
               "grammar",
@@ -5287,7 +5424,6 @@ const LESSON = {
       "vocabulary": 2,
       "grammar": 3,
       "listening": 2,
-      "speaking": 3,
       "reading": 3,
       "writing": 3
     },
@@ -5305,11 +5441,10 @@ const LESSON = {
       "commonErrors": "pending_enrichment",
       "translation": "present",
       "writing": "present",
-      "speaking": "present",
       "reading": "present",
-      "exercises": "gold_template_v2",
+      "exercises": "gold_template_v3",
       "listening": "present",
-      "skillMatrix": "balanced_4skills_v2",
+      "skillMatrix": "spiral_review_4skills_v3",
       "questionStandard": "N01-N25_E01-E35"
     }
   },
@@ -5341,9 +5476,6 @@ const LESSON = {
     },
     "dich": {
       "label": "F. CHUYỂN Ý VIỆT–TRUNG"
-    },
-    "giaotiep": {
-      "label": "G. NÓI & TƯƠNG TÁC"
     }
   },
   "vocab": [
@@ -5726,51 +5858,51 @@ const LESSON = {
       "questions": [
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 这道题我做___了。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “这___题不难。”",
           "options": [
             {
               "k": "A",
-              "t": "错"
+              "t": "题"
             },
             {
               "k": "B",
-              "t": "完"
+              "t": "课"
             },
             {
               "k": "C",
-              "t": "懂"
+              "t": "票"
             },
             {
               "k": "D",
-              "t": "从"
+              "t": "电影"
             }
           ],
           "answer": "A",
-          "explain": "做错 表 thị làm và có kết quả là sai.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “这题题不难。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "错",
+          "example": "题",
           "distractorProfiles": [
             {
-              "option": "完",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "课",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "懂",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "票",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "电影",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-01",
           "quality": {
-            "target": "Kết quả làm sai",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -5781,51 +5913,51 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn câu phù hợp với ý ‘Tôi đi từ nhà đến trường’. ",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “我___星期一开始上班。”",
           "options": [
             {
               "k": "A",
-              "t": "我从学校到家。"
+              "t": "对"
             },
             {
               "k": "B",
-              "t": "我从家到学校。"
+              "t": "从"
             },
             {
               "k": "C",
-              "t": "我家从到学校。"
+              "t": "比"
             },
             {
               "k": "D",
-              "t": "我到从家学校。"
+              "t": "往"
             }
           ],
           "answer": "B",
-          "explain": "从 đặt trước điểm bắt đầu.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “我从星期一开始上班。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "我从家到学校。",
+          "example": "从",
           "distractorProfiles": [
             {
-              "option": "我从学校到家。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "对",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "我家从到学校。",
-              "code": "N05",
-              "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
+              "option": "比",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "我到从家学校。",
-              "code": "N05",
-              "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
+              "option": "往",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-02",
           "quality": {
-            "target": "Nói điểm bắt đầu",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -5836,271 +5968,51 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 小王喜欢___，每个星期都去跳。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “我___明天能见到你。”",
           "options": [
             {
               "k": "A",
-              "t": "上班"
+              "t": "已经"
             },
             {
               "k": "B",
-              "t": "欢迎"
+              "t": "正在"
             },
             {
               "k": "C",
-              "t": "跳舞"
-            },
-            {
-              "k": "D",
-              "t": "问题"
-            }
-          ],
-          "answer": "C",
-          "explain": "Những gì diễn ra mỗi tuần là hoạt động nhảy múa.",
-          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
-          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "跳舞",
-          "distractorProfiles": [
-            {
-              "option": "上班",
-              "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
-            },
-            {
-              "option": "欢迎",
-              "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
-            },
-            {
-              "option": "问题",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
-            }
-          ],
-          "id": "B9-03",
-          "quality": {
-            "target": "Hoạt động sở thích",
-            "level": 2,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "mcq",
-          "prompt": "Chọn câu phù hợp với ý ‘Hãy làm câu thứ hai’. ",
-          "options": [
-            {
-              "k": "A",
-              "t": "第二题做错了。"
-            },
-            {
-              "k": "B",
-              "t": "从第二天做。"
-            },
-            {
-              "k": "C",
-              "t": "做完第二个人。"
-            },
-            {
-              "k": "D",
-              "t": "做第二题吧。"
-            }
-          ],
-          "answer": "D",
-          "explain": "第二题 chỉ câu thứ hai.",
-          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
-          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "做第二题吧。",
-          "distractorProfiles": [
-            {
-              "option": "第二题做错了。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
-            },
-            {
-              "option": "从第二天做。",
-              "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
-            },
-            {
-              "option": "做完第二个人。",
-              "code": "N10",
-              "reason": "Chọn lượng từ theo thói quen tiếng Việt."
-            }
-          ],
-          "id": "B9-04",
-          "quality": {
-            "target": "Số thứ tự",
-            "level": 2,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 我___明天能做完作业。",
-          "options": [
-            {
-              "k": "A",
               "t": "希望"
             },
             {
-              "k": "B",
-              "t": "欢迎"
-            },
-            {
-              "k": "C",
-              "t": "可能"
-            },
-            {
               "k": "D",
-              "t": "问题"
+              "t": "一直"
             }
           ],
-          "answer": "A",
-          "explain": "希望 dùng trước nội dung mình mong muốn.",
+          "answer": "C",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “我希望明天能见到你。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
           "example": "希望",
           "distractorProfiles": [
             {
-              "option": "欢迎",
+              "option": "已经",
               "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "可能",
-              "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
-            },
-            {
-              "option": "问题",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
-            }
-          ],
-          "id": "B9-05",
-          "quality": {
-            "target": "Nói mong muốn",
-            "level": 2,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 这个___我不懂，老师能帮我吗？",
-          "options": [
-            {
-              "k": "A",
-              "t": "欢迎"
-            },
-            {
-              "k": "B",
-              "t": "问题"
-            },
-            {
-              "k": "C",
-              "t": "第一"
-            },
-            {
-              "k": "D",
-              "t": "跳舞"
-            }
-          ],
-          "answer": "B",
-          "explain": "不懂 的对象 là 问题.",
-          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
-          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "问题",
-          "distractorProfiles": [
-            {
-              "option": "欢迎",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
-            },
-            {
-              "option": "第一",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
-            },
-            {
-              "option": "跳舞",
-              "code": "N03",
-              "reason": "Phương án không khớp mục tiêu cần kiểm tra."
-            }
-          ],
-          "id": "B9-06",
-          "quality": {
-            "target": "Danh từ chỉ vấn đề",
-            "level": 2,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "mcq",
-          "prompt": "Khi có bạn mới vào lớp, em nên nói gì?",
-          "options": [
-            {
-              "k": "A",
-              "t": "希望你！"
-            },
-            {
-              "k": "B",
-              "t": "做完你！"
-            },
-            {
-              "k": "C",
-              "t": "欢迎你！"
-            },
-            {
-              "k": "D",
-              "t": "从你！"
-            }
-          ],
-          "answer": "C",
-          "explain": "欢迎 + người là lời chào đón tự nhiên.",
-          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
-          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "欢迎你！",
-          "distractorProfiles": [
-            {
-              "option": "希望你！",
-              "code": "N02",
-              "reason": "Biết nghĩa từng từ nhưng ghép từ không tự nhiên."
-            },
-            {
-              "option": "做完你！",
+              "option": "正在",
               "code": "N22",
-              "reason": "Động từ không đi tự nhiên với tân ngữ này."
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从你！",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "一直",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
-          "id": "B9-07",
+          "id": "B9-03",
           "quality": {
-            "target": "Chào đón",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -6111,51 +6023,51 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 我爸爸每天八点___。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “我们___新同学来班里。”",
           "options": [
             {
               "k": "A",
-              "t": "跳舞"
+              "t": "帮助"
             },
             {
               "k": "B",
-              "t": "欢迎"
+              "t": "等"
             },
             {
               "k": "C",
-              "t": "做错"
+              "t": "找"
             },
             {
               "k": "D",
-              "t": "上班"
+              "t": "欢迎"
             }
           ],
           "answer": "D",
-          "explain": "八点上班 nói giờ bắt đầu làm việc.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “我们欢迎新同学来班里。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "上班",
+          "example": "欢迎",
           "distractorProfiles": [
             {
-              "option": "跳舞",
+              "option": "帮助",
               "code": "N15",
-              "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "欢迎",
+              "option": "等",
               "code": "N22",
-              "reason": "Động từ không đi tự nhiên với tân ngữ này."
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "做错",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "找",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
-          "id": "B9-08",
+          "id": "B9-04",
           "quality": {
-            "target": "Hoạt động đi làm",
-            "level": 2,
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -6166,7 +6078,7 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 老师说得很清楚，我都___了。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “老师说得很清楚，我都听___了。”",
           "options": [
             {
               "k": "A",
@@ -6174,43 +6086,263 @@ const LESSON = {
             },
             {
               "k": "B",
-              "t": "错"
-            },
-            {
-              "k": "C",
               "t": "完"
             },
             {
+              "k": "C",
+              "t": "错"
+            },
+            {
               "k": "D",
-              "t": "从"
+              "t": "过"
             }
           ],
           "answer": "A",
-          "explain": "听懂 mới phù hợp với việc nghe giáo viên nói.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “老师说得很清楚，我都听懂了。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
           "example": "懂",
           "distractorProfiles": [
             {
-              "option": "错",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
-            },
-            {
               "option": "完",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "错",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "过",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-05",
+          "quality": {
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “作业太多，我还没做___。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "错"
+            },
+            {
+              "k": "B",
+              "t": "完"
+            },
+            {
+              "k": "C",
+              "t": "懂"
+            },
+            {
+              "k": "D",
+              "t": "过"
+            }
+          ],
+          "answer": "B",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “作业太多，我还没做完。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "完",
+          "distractorProfiles": [
+            {
+              "option": "错",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "懂",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "过",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-06",
+          "quality": {
+            "target": "Dùng từ mới trong ngữ cảnh",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “他是我的___，我们一起上课。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "朋友"
+            },
+            {
+              "k": "B",
+              "t": "老师"
+            },
+            {
+              "k": "C",
+              "t": "同学"
+            },
+            {
+              "k": "D",
+              "t": "服务员"
+            }
+          ],
+          "answer": "C",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “他是我的同学，我们一起上课。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "同学",
+          "distractorProfiles": [
+            {
+              "option": "朋友",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "老师",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "服务员",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-07",
+          "quality": {
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “___没有课，我们去公园吧。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "今天"
+            },
+            {
+              "k": "B",
+              "t": "昨天"
+            },
+            {
+              "k": "C",
+              "t": "去年"
+            },
+            {
+              "k": "D",
+              "t": "明天"
+            }
+          ],
+          "answer": "D",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “明天没有课，我们去公园吧。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "明天",
+          "distractorProfiles": [
+            {
+              "option": "今天",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "昨天",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "去年",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-08",
+          "quality": {
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “请你明天___告诉我。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "再"
+            },
+            {
+              "k": "B",
+              "t": "已经"
+            },
+            {
+              "k": "C",
+              "t": "正在"
+            },
+            {
+              "k": "D",
+              "t": "一直"
+            }
+          ],
+          "answer": "A",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “请你明天再告诉我。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "再",
+          "distractorProfiles": [
+            {
+              "option": "已经",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "正在",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "一直",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-09",
           "quality": {
-            "target": "Hiểu lời nói",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -6221,51 +6353,51 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn từ phù hợp trong câu 作业很多，我还没做___。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “老师___我们先看题。”",
           "options": [
             {
               "k": "A",
-              "t": "错"
+              "t": "从"
             },
             {
               "k": "B",
-              "t": "完"
+              "t": "让"
             },
             {
               "k": "C",
-              "t": "懂"
+              "t": "对"
             },
             {
               "k": "D",
-              "t": "从"
+              "t": "比"
             }
           ],
           "answer": "B",
-          "explain": "还没做完 nghĩa là chưa làm xong.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “老师让我们先看题。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "完",
+          "example": "让",
           "distractorProfiles": [
             {
-              "option": "错",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
-            },
-            {
-              "option": "懂",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
-            },
-            {
               "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "对",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "比",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-10",
           "quality": {
-            "target": "Kết quả hoàn thành",
-            "level": 2,
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
             "checked": [
               "grammar",
               "meaning",
@@ -6276,50 +6408,215 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn câu tiếng Trung diễn đạt ý ‘Bắt đầu làm từ câu thứ nhất’. ",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “请___我五分钟。”",
           "options": [
             {
               "k": "A",
-              "t": "从明天开始做。"
+              "t": "找"
             },
             {
               "k": "B",
-              "t": "第一题做错了。"
+              "t": "告诉"
             },
             {
               "k": "C",
-              "t": "从第一题开始做。"
+              "t": "等"
             },
             {
               "k": "D",
-              "t": "我做完第一题了。"
+              "t": "帮助"
             }
           ],
           "answer": "C",
-          "explain": "Câu đúng giữ được cả điểm bắt đầu và câu thứ nhất.",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “请等我五分钟。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "从第一题开始做。",
+          "example": "等",
           "distractorProfiles": [
             {
-              "option": "从明天开始做。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "找",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "第一题做错了。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "告诉",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "我做完第一题了。",
-              "code": "N20",
-              "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
+              "option": "帮助",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
           "id": "B9-11",
           "quality": {
-            "target": "Nói thứ tự bắt đầu",
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “在饭店里，我们请___拿菜单。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "老师"
+            },
+            {
+              "k": "B",
+              "t": "同学"
+            },
+            {
+              "k": "C",
+              "t": "朋友"
+            },
+            {
+              "k": "D",
+              "t": "服务员"
+            }
+          ],
+          "answer": "D",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “在饭店里，我们请服务员拿菜单。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "服务员",
+          "distractorProfiles": [
+            {
+              "option": "老师",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "同学",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "朋友",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-12",
+          "quality": {
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “她不想买黑色的，所以选了___色的衣服。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "白"
+            },
+            {
+              "k": "B",
+              "t": "黑"
+            },
+            {
+              "k": "C",
+              "t": "贵"
+            },
+            {
+              "k": "D",
+              "t": "便宜"
+            }
+          ],
+          "answer": "A",
+          "explain": "Đáp án khớp nghĩa, vị trí và tình huống của cả câu. Câu hoàn chỉnh là “她不想买黑色的，所以选了白色的衣服。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "白",
+          "distractorProfiles": [
+            {
+              "option": "黑",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "贵",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "便宜",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-13",
+          "quality": {
+            "target": "Ôn từ đã học trong ngữ cảnh mới",
+            "level": 1,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “银行在学校的___，不在左边。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "左边"
+            },
+            {
+              "k": "B",
+              "t": "右边"
+            },
+            {
+              "k": "C",
+              "t": "前面"
+            },
+            {
+              "k": "D",
+              "t": "里面"
+            }
+          ],
+          "answer": "B",
+          "explain": "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời. Câu hoàn chỉnh là “银行在学校的右边，不在左边。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "右边",
+          "distractorProfiles": [
+            {
+              "option": "左边",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "前面",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "里面",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-14",
+          "quality": {
+            "target": "Làm quen từ sẽ gặp trong 1–3 bài tới",
             "level": 2,
             "checked": [
               "grammar",
@@ -6331,50 +6628,105 @@ const LESSON = {
         },
         {
           "type": "mcq",
-          "prompt": "Chọn cụm phù hợp trong câu 这本书我已经看___了。",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “他___王，叫王小明。”",
           "options": [
             {
               "k": "A",
-              "t": "错"
+              "t": "叫"
             },
             {
               "k": "B",
-              "t": "懂"
+              "t": "是"
             },
             {
               "k": "C",
-              "t": "从"
+              "t": "姓"
             },
             {
               "k": "D",
-              "t": "完"
+              "t": "有"
+            }
+          ],
+          "answer": "C",
+          "explain": "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời. Câu hoàn chỉnh là “他姓王，叫王小明。”.",
+          "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
+          "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
+          "example": "姓",
+          "distractorProfiles": [
+            {
+              "option": "叫",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
+            },
+            {
+              "option": "是",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
+            },
+            {
+              "option": "有",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
+            }
+          ],
+          "id": "B9-15",
+          "quality": {
+            "target": "Làm quen từ sẽ gặp trong 1–3 bài tới",
+            "level": 2,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "mcq",
+          "prompt": "Chọn từ phù hợp để hoàn thành câu “那个女孩在台上___，声音很好听。”",
+          "options": [
+            {
+              "k": "A",
+              "t": "跳舞"
+            },
+            {
+              "k": "B",
+              "t": "看电影"
+            },
+            {
+              "k": "C",
+              "t": "洗衣服"
+            },
+            {
+              "k": "D",
+              "t": "唱歌"
             }
           ],
           "answer": "D",
-          "explain": "看完 表示 đọc/xem hết quyển sách.",
+          "explain": "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời. Câu hoàn chỉnh là “那个女孩在台上唱歌，声音很好听。”.",
           "error": "Ba lựa chọn sai được tạo từ lỗi người Việt hay gặp, không phải đáp án ngẫu nhiên.",
           "tip": "Đọc cả tình huống trước, rồi mới so sánh từng lựa chọn.",
-          "example": "完",
+          "example": "唱歌",
           "distractorProfiles": [
             {
-              "option": "错",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "跳舞",
+              "code": "N15",
+              "reason": "Từ này cùng trường nghĩa nhưng không khớp tình huống."
             },
             {
-              "option": "懂",
-              "code": "N09",
-              "reason": "Nhầm kết quả của hành động."
+              "option": "看电影",
+              "code": "N22",
+              "reason": "Từ này không kết hợp tự nhiên với các từ xung quanh."
             },
             {
-              "option": "从",
-              "code": "N11",
-              "reason": "Nhầm giới từ hoặc điểm bắt đầu/hướng."
+              "option": "洗衣服",
+              "code": "N19",
+              "reason": "Từ này làm sai một chi tiết trọng tâm của câu."
             }
           ],
-          "id": "B9-12",
+          "id": "B9-16",
           "quality": {
-            "target": "Kết quả hoàn thành",
+            "target": "Làm quen từ sẽ gặp trong 1–3 bài tới",
             "level": 2,
             "checked": [
               "grammar",
@@ -6436,7 +6788,7 @@ const LESSON = {
               "reason": "Nhầm kết quả của hành động."
             }
           ],
-          "id": "B9-13",
+          "id": "B9-17",
           "quality": {
             "target": "Diễn đạt chưa làm xong",
             "level": 2,
@@ -6452,10 +6804,10 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
             "看完",
-            "这本书",
-            "了"
+            "了",
+            "我",
+            "这本书"
           ],
           "answer": [
             "我",
@@ -6467,7 +6819,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我看完这本书了",
-          "id": "B9-14",
+          "id": "B9-18",
           "quality": {
             "target": "Câu có kết quả hoàn thành",
             "level": 2,
@@ -6522,7 +6874,7 @@ const LESSON = {
               "reason": "Ghép từng cụm Việt–Trung nhưng sai trật tự câu."
             }
           ],
-          "id": "B9-15",
+          "id": "B9-19",
           "quality": {
             "target": "Nói mốc bắt đầu",
             "level": 2,
@@ -6577,7 +6929,7 @@ const LESSON = {
               "reason": "Câu gần đúng nhưng sai một chi tiết trọng tâm."
             }
           ],
-          "id": "B9-16",
+          "id": "B9-20",
           "quality": {
             "target": "Số thứ tự với 次",
             "level": 2,
@@ -6593,11 +6945,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "他",
             "从",
-            "第一题",
             "开始",
-            "做"
+            "做",
+            "他",
+            "第一题"
           ],
           "answer": [
             "他",
@@ -6610,7 +6962,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "他从第一题开始做",
-          "id": "B9-17",
+          "id": "B9-21",
           "quality": {
             "target": "Điểm bắt đầu của hành động",
             "level": 2,
@@ -6665,7 +7017,7 @@ const LESSON = {
               "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
             }
           ],
-          "id": "B9-18",
+          "id": "B9-22",
           "quality": {
             "target": "Kết quả hiểu",
             "level": 2,
@@ -6720,7 +7072,7 @@ const LESSON = {
               "reason": "Đảo trật tự thành phần theo cách người học Việt thường nói."
             }
           ],
-          "id": "B9-19",
+          "id": "B9-23",
           "quality": {
             "target": "Kết quả làm sai",
             "level": 2,
@@ -6736,11 +7088,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
-            "希望",
-            "明天",
+            "作业",
             "做完",
-            "作业"
+            "明天",
+            "我",
+            "希望"
           ],
           "answer": [
             "我",
@@ -6753,7 +7105,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我希望明天做完作业",
-          "id": "B9-20",
+          "id": "B9-24",
           "quality": {
             "target": "Nói mong muốn",
             "level": 2,
@@ -6808,7 +7160,7 @@ const LESSON = {
               "reason": "Dịch từng chữ từ tiếng Việt sang tiếng Trung."
             }
           ],
-          "id": "B9-21",
+          "id": "B9-25",
           "quality": {
             "target": "Nói nơi xuất phát",
             "level": 2,
@@ -6858,7 +7210,7 @@ const LESSON = {
           "error": "Mỗi ô cần được quyết định bằng nghĩa của cả câu, không chọn riêng từng từ.",
           "tip": "Đọc hết đoạn, thử từng lựa chọn rồi kiểm tra lại ý chung.",
           "example": "从 · 完 · 完 · 错",
-          "id": "B9-22",
+          "id": "B9-26",
           "quality": {
             "target": "Theo dõi kết quả trong đoạn",
             "level": 2,
@@ -6922,7 +7274,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-23",
+          "id": "B9-27",
           "quality": {
             "target": "Lý do",
             "level": 2,
@@ -6934,7 +7286,7 @@ const LESSON = {
             ]
           },
           "audioText": "题太多了，我今天还没做完。",
-          "audioSrc": "audio/hsk2/bai9/23.mp3",
+          "audioSrc": "audio/hsk2/bai9/27.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -6980,7 +7332,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-24",
+          "id": "B9-28",
           "quality": {
             "target": "Số lượng",
             "level": 2,
@@ -6992,7 +7344,7 @@ const LESSON = {
             ]
           },
           "audioText": "我从第一题开始做，最后做错了两道题。",
-          "audioSrc": "audio/hsk2/bai9/24.mp3",
+          "audioSrc": "audio/hsk2/bai9/28.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -7038,7 +7390,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-25",
+          "id": "B9-29",
           "quality": {
             "target": "Mốc thời gian",
             "level": 2,
@@ -7050,7 +7402,7 @@ const LESSON = {
             ]
           },
           "audioText": "A：你什么时候开始上班？B：我从下个月开始上班。",
-          "audioSrc": "audio/hsk2/bai9/25.mp3",
+          "audioSrc": "audio/hsk2/bai9/29.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -7096,7 +7448,7 @@ const LESSON = {
               "reason": "Câu gần đúng nhưng sai một chi tiết trọng tâm."
             }
           ],
-          "id": "B9-26",
+          "id": "B9-30",
           "quality": {
             "target": "Kết quả nghe",
             "level": 2,
@@ -7108,7 +7460,7 @@ const LESSON = {
             ]
           },
           "audioText": "老师说得很清楚，我都听懂了。",
-          "audioSrc": "audio/hsk2/bai9/26.mp3",
+          "audioSrc": "audio/hsk2/bai9/30.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -7154,7 +7506,7 @@ const LESSON = {
               "reason": "Phương án không khớp mục tiêu cần kiểm tra."
             }
           ],
-          "id": "B9-27",
+          "id": "B9-31",
           "quality": {
             "target": "Số thứ tự",
             "level": 2,
@@ -7166,7 +7518,7 @@ const LESSON = {
             ]
           },
           "audioText": "今天是我来中国的第一天，大家都欢迎我。",
-          "audioSrc": "audio/hsk2/bai9/27.mp3",
+          "audioSrc": "audio/hsk2/bai9/31.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -7212,7 +7564,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-28",
+          "id": "B9-32",
           "quality": {
             "target": "Mong muốn",
             "level": 2,
@@ -7224,7 +7576,7 @@ const LESSON = {
             ]
           },
           "audioText": "我希望明天能做完作业。",
-          "audioSrc": "audio/hsk2/bai9/28.mp3",
+          "audioSrc": "audio/hsk2/bai9/32.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -7270,7 +7622,7 @@ const LESSON = {
               "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
             }
           ],
-          "id": "B9-29",
+          "id": "B9-33",
           "quality": {
             "target": "Yêu cầu nhắc lại",
             "level": 2,
@@ -7282,7 +7634,7 @@ const LESSON = {
             ]
           },
           "audioText": "这道题我没听懂，你能再说一遍吗？",
-          "audioSrc": "audio/hsk2/bai9/29.mp3",
+          "audioSrc": "audio/hsk2/bai9/33.mp3",
           "audioStatus": "awaiting_recording"
         },
         {
@@ -7328,7 +7680,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-30",
+          "id": "B9-34",
           "quality": {
             "target": "Hành động tiếp theo",
             "level": 2,
@@ -7340,7 +7692,7 @@ const LESSON = {
             ]
           },
           "audioText": "A：你做完了吗？B：还没有，我从第二题开始再做一遍。",
-          "audioSrc": "audio/hsk2/bai9/30.mp3",
+          "audioSrc": "audio/hsk2/bai9/34.mp3",
           "audioStatus": "awaiting_recording"
         }
       ]
@@ -7411,7 +7763,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-31",
+          "id": "B9-35",
           "quality": {
             "target": "定位起点",
             "level": 2,
@@ -7467,7 +7819,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-32",
+          "id": "B9-36",
           "quality": {
             "target": "理解原因",
             "level": 2,
@@ -7523,7 +7875,7 @@ const LESSON = {
               "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
             }
           ],
-          "id": "B9-33",
+          "id": "B9-37",
           "quality": {
             "target": "定位人物",
             "level": 2,
@@ -7579,7 +7931,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-34",
+          "id": "B9-38",
           "quality": {
             "target": "理解结果",
             "level": 2,
@@ -7635,7 +7987,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-35",
+          "id": "B9-39",
           "quality": {
             "target": "读取时间",
             "level": 2,
@@ -7691,7 +8043,7 @@ const LESSON = {
               "reason": "Câu gần đúng nhưng sai một chi tiết trọng tâm."
             }
           ],
-          "id": "B9-36",
+          "id": "B9-40",
           "quality": {
             "target": "理解数量顺序",
             "level": 2,
@@ -7747,7 +8099,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-37",
+          "id": "B9-41",
           "quality": {
             "target": "理解结果",
             "level": 2,
@@ -7803,7 +8155,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-38",
+          "id": "B9-42",
           "quality": {
             "target": "理解交际目的",
             "level": 2,
@@ -7859,7 +8211,7 @@ const LESSON = {
               "reason": "Chọn từ cùng chủ đề nhưng không khớp tình huống."
             }
           ],
-          "id": "B9-39",
+          "id": "B9-43",
           "quality": {
             "target": "理解希望",
             "level": 2,
@@ -7915,7 +8267,7 @@ const LESSON = {
               "reason": "Phương án không khớp mục tiêu cần kiểm tra."
             }
           ],
-          "id": "B9-40",
+          "id": "B9-44",
           "quality": {
             "target": "读取数量",
             "level": 2,
@@ -7971,7 +8323,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-41",
+          "id": "B9-45",
           "quality": {
             "target": "理解因果",
             "level": 2,
@@ -8027,7 +8379,7 @@ const LESSON = {
               "reason": "Hình thức có thể đúng nhưng ý không khớp dữ kiện."
             }
           ],
-          "id": "B9-42",
+          "id": "B9-46",
           "quality": {
             "target": "理解结果",
             "level": 2,
@@ -8053,12 +8405,12 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
             "从",
-            "九月",
-            "开始",
             "学",
-            "汉语"
+            "汉语",
+            "我",
+            "开始",
+            "九月"
           ],
           "answer": [
             "我",
@@ -8072,7 +8424,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我从九月开始学汉语",
-          "id": "B9-43",
+          "id": "B9-47",
           "quality": {
             "target": "Mốc bắt đầu",
             "level": 2,
@@ -8088,10 +8440,10 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "这道题",
-            "我",
+            "了",
             "做错",
-            "了"
+            "这道题",
+            "我"
           ],
           "answer": [
             "这道题",
@@ -8103,7 +8455,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "这道题我做错了",
-          "id": "B9-44",
+          "id": "B9-48",
           "quality": {
             "target": "Kết quả làm sai",
             "level": 2,
@@ -8119,10 +8471,10 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "老师",
             "说得",
-            "很",
-            "清楚"
+            "老师",
+            "清楚",
+            "很"
           ],
           "answer": [
             "老师",
@@ -8134,7 +8486,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "老师说得很清楚",
-          "id": "B9-45",
+          "id": "B9-49",
           "quality": {
             "target": "Miêu tả cách nói",
             "level": 2,
@@ -8150,11 +8502,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "今天",
-            "是",
+            "上班",
             "我",
             "第一天",
-            "上班"
+            "今天",
+            "是"
           ],
           "answer": [
             "今天",
@@ -8167,7 +8519,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "今天是我第一天上班",
-          "id": "B9-46",
+          "id": "B9-50",
           "quality": {
             "target": "Số thứ tự",
             "level": 2,
@@ -8183,11 +8535,11 @@ const LESSON = {
           "type": "reorder",
           "prompt": "Sắp xếp các từ thành câu hoàn chỉnh.",
           "tokens": [
-            "我",
-            "希望",
-            "明天",
+            "作业",
             "做完",
-            "作业"
+            "明天",
+            "我",
+            "希望"
           ],
           "answer": [
             "我",
@@ -8200,7 +8552,7 @@ const LESSON = {
           "error": "Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
           "tip": "Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.",
           "example": "我希望明天做完作业",
-          "id": "B9-47",
+          "id": "B9-51",
           "quality": {
             "target": "Diễn đạt mong muốn",
             "level": 2,
@@ -8221,7 +8573,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "题太多了，我还没做完作业。",
-          "id": "B9-48",
+          "id": "B9-52",
           "quality": {
             "target": "Nêu lý do và trạng thái chưa hoàn thành",
             "level": 3,
@@ -8242,7 +8594,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从九月开始学汉语。",
-          "id": "B9-49",
+          "id": "B9-53",
           "quality": {
             "target": "Nói mốc bắt đầu",
             "level": 3,
@@ -8263,7 +8615,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "老师，我没听懂，请您再说一遍。",
-          "id": "B9-50",
+          "id": "B9-54",
           "quality": {
             "target": "Yêu cầu hỗ trợ trong lớp",
             "level": 3,
@@ -8284,7 +8636,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从第一题开始做。最后我做完了。",
-          "id": "B9-51",
+          "id": "B9-55",
           "quality": {
             "target": "Tường thuật tiến trình",
             "level": 3,
@@ -8305,7 +8657,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "欢迎你来我们班！",
-          "id": "B9-52",
+          "id": "B9-56",
           "quality": {
             "target": "Chào đón người mới",
             "level": 3,
@@ -8326,9 +8678,51 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我做错了两道题。我想再做一遍。你能帮助我吗？",
-          "id": "B9-53",
+          "id": "B9-57",
           "quality": {
             "target": "Giải quyết một vấn đề học tập",
+            "level": 3,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "self_check",
+          "prompt": "Đặt một câu tiếng Trung có từ “希望”。",
+          "model": "我希望明天能做完作业。",
+          "explain": "希望 cần dẫn nội dung em mong muốn.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
+          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
+          "example": "我希望明天能做完作业。",
+          "id": "B9-58",
+          "quality": {
+            "target": "Đặt câu với từ trọng tâm",
+            "level": 3,
+            "checked": [
+              "grammar",
+              "meaning",
+              "pragmatics",
+              "single_answer"
+            ]
+          }
+        },
+        {
+          "type": "self_check",
+          "prompt": "Viết 2–3 câu kể em đã bắt đầu làm việc gì và kết quả ra sao.",
+          "model": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
+          "explain": "Có điểm bắt đầu, quá trình hoặc kết quả.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
+          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
+          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
+          "example": "我从第一题开始做。后来我做完了，但是有一道题做错了。",
+          "id": "B9-59",
+          "quality": {
+            "target": "Kể lại tiến trình",
             "level": 3,
             "checked": [
               "grammar",
@@ -8349,7 +8743,7 @@ const LESSON = {
           "example": "小李今天有很多作业。他开始做了很久，后来同学帮助他做完了。他发现自己做错了两道题。",
           "sourceText": "小李今天有很多作业。他从第一题开始做，但是题太多，还没做完。同学帮助他以后，他终于做完了，可是做错了两道题。",
           "readSeconds": 60,
-          "id": "B9-54",
+          "id": "B9-60",
           "quality": {
             "target": "Tường thuật lại một đoạn ngắn",
             "level": 3,
@@ -8379,7 +8773,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我从第一题开始做。",
-          "id": "B9-55",
+          "id": "B9-61",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8400,7 +8794,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Bài quá nhiều, tôi vẫn chưa làm xong.",
-          "id": "B9-56",
+          "id": "B9-62",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8421,7 +8815,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "老师说得很清楚，我听懂了。",
-          "id": "B9-57",
+          "id": "B9-63",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8442,7 +8836,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Tôi làm sai hai câu.",
-          "id": "B9-58",
+          "id": "B9-64",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8463,7 +8857,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "我希望明天做完作业。",
-          "id": "B9-59",
+          "id": "B9-65",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8484,7 +8878,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Hôm nay là ngày đầu tiên tôi đi làm.",
-          "id": "B9-60",
+          "id": "B9-66",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8505,7 +8899,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "欢迎你来我们班。",
-          "id": "B9-61",
+          "id": "B9-67",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8526,7 +8920,7 @@ const LESSON = {
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
           "example": "Vấn đề này tôi không hiểu.",
-          "id": "B9-62",
+          "id": "B9-68",
           "quality": {
             "target": "Chuyển ý hai chiều",
             "level": 3,
@@ -8537,154 +8931,19 @@ const LESSON = {
               "single_answer"
             ]
           }
-        }
-      ]
-    },
-    {
-      "id": "speaking",
-      "title": "G. NÓI & TƯƠNG TÁC",
-      "skill": "giaotiep",
-      "instruction": "Đọc thành tiếng hoặc nói theo vai. Em có thể ghi âm để tự nghe lại.",
-      "passages": [],
-      "questions": [
-        {
-          "type": "self_check",
-          "prompt": "Đọc to ‘我从九月开始学汉语。’ hai lần và tự đánh dấu chỗ ngắt.",
-          "model": "我从九月 / 开始学汉语。",
-          "explain": "Đọc cụm thời gian",
-          "rubric": "Không tách 从 và 九月.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我从九月 / 开始学汉语。",
-          "id": "B9-63",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
         },
         {
           "type": "self_check",
-          "prompt": "Đóng vai giáo viên. Hỏi học sinh đã làm xong bài chưa.",
-          "model": "你做完作业了吗？",
-          "explain": "Hỏi kết quả",
-          "rubric": "Dùng 做完 để hỏi đã hoàn tất hay chưa.",
+          "prompt": "Dịch sang tiếng Trung ‘Bạn hy vọng điều gì?’",
+          "model": "你希望什么？",
+          "explain": "希望 đứng trước nội dung mong muốn.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "你做完作业了吗？",
-          "id": "B9-64",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Đóng vai học sinh. Trả lời rằng bạn chưa làm xong vì bài nhiều.",
-          "model": "题太多了，我还没做完。",
-          "explain": "Trả lời theo nguyên nhân",
-          "rubric": "Có cả lý do và tình trạng.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "题太多了，我还没做完。",
-          "id": "B9-65",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Nói 2 câu chào đón một đồng nghiệp mới.",
-          "model": "欢迎你！我是小王。",
-          "explain": "Chào đón trong bối cảnh quen thuộc",
-          "rubric": "Có lời chào và giới thiệu ngắn.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "欢迎你！我是小王。",
-          "id": "B9-66",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Nói một câu nhờ bạn giảng lại vì bạn chưa nghe hiểu.",
-          "model": "我没听懂，请你再说一遍。",
-          "explain": "Yêu cầu nhắc lại",
-          "rubric": "Nêu rõ điều em cần hỗ trợ.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我没听懂，请你再说一遍。",
-          "id": "B9-67",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Nói 2 câu kể một câu bạn làm sai và bạn sẽ làm gì sau đó.",
-          "model": "我做错了一道题。我再做一遍。",
-          "explain": "Tường thuật và sửa lỗi",
-          "rubric": "Dùng kết quả làm sai rồi kế hoạch làm lại.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我做错了一道题。我再做一遍。",
-          "id": "B9-68",
-          "quality": {
-            "target": "Nói theo tình huống",
-            "level": 3,
-            "checked": [
-              "grammar",
-              "meaning",
-              "pragmatics",
-              "single_answer"
-            ]
-          }
-        },
-        {
-          "type": "self_check",
-          "prompt": "Đọc cặp từ ‘第一题 / 第一天’ và đặt mỗi cụm vào một câu ngắn.",
-          "model": "我做第一题。今天是第一天。",
-          "explain": "Phân biệt thứ tự của sự vật và thời gian",
-          "rubric": "Cả hai dùng 第 nhưng danh từ theo sau khác nhau.",
-          "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
-          "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我做第一题。今天是第一天。",
+          "example": "你希望什么？",
           "id": "B9-69",
           "quality": {
-            "target": "Nói theo tình huống",
+            "target": "Chuyển ý hai chiều",
             "level": 3,
             "checked": [
               "grammar",
@@ -8696,16 +8955,16 @@ const LESSON = {
         },
         {
           "type": "self_check",
-          "prompt": "Nói một câu về điều bạn hy vọng làm được ngày mai.",
-          "model": "我希望明天做完作业。",
-          "explain": "Nói mong muốn",
-          "rubric": "Dùng 希望 + nội dung mong muốn.",
+          "prompt": "Dịch sang tiếng Việt ‘欢迎你来我们班。’",
+          "model": "Chào mừng bạn đến lớp chúng tôi.",
+          "explain": "欢迎 dùng khi chào đón người đến.",
+          "rubric": "准确 40%: đủ ý và đúng từ/câu.\n连贯 25%: các ý nối được với nhau.\n得体 20%: hợp tình huống.\n自然 15%: trật tự câu tự nhiên.",
           "error": "Khi tự sửa, ưu tiên lỗi làm thay đổi ý hoặc lỗi lặp lại.",
           "tip": "Không cần chép y hệt đáp án mẫu; câu khác vẫn đạt nếu đúng, rõ và tự nhiên.",
-          "example": "我希望明天做完作业。",
+          "example": "Chào mừng bạn đến lớp chúng tôi.",
           "id": "B9-70",
           "quality": {
-            "target": "Nói theo tình huống",
+            "target": "Chuyển ý hai chiều",
             "level": 3,
             "checked": [
               "grammar",

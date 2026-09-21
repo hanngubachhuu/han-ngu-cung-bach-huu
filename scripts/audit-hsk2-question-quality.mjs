@@ -3,7 +3,7 @@ import vm from "node:vm";
 
 const root = process.cwd();
 const revision = fs.readFileSync("data/lessons/hsk2/exercise-revision-v2.js", "utf8");
-const expected = { vocabulary:12, grammar:10, listening:8, reading:12, writing:12, translation:8, speaking:8, mixed:0 };
+const expected = { vocabulary:16, grammar:10, listening:8, reading:12, writing:14, translation:10, mixed:0 };
 const forbiddenPromptTerms = /结果补语|补语|语法|定语|介词|连词|量词|词类|结构/;
 const errors = [];
 
@@ -16,7 +16,7 @@ for(let no=8; no<=15; no+=1){
   const fail=message=>errors.push(`Bài ${no}: ${message}`);
   if(all.length!==70) fail(`cần 70 câu, đang có ${all.length}.`);
   for(const [section,count] of Object.entries(expected)) if(c.skills?.[section]?.length!==count) fail(`${section} cần ${count} câu.`);
-  if(c.coverage?.exercises!=="gold_template_v2") fail("chưa dùng ngân hàng câu hỏi v2.");
+  if(c.coverage?.exercises!=="gold_template_v3") fail("chưa dùng ngân hàng câu hỏi v3.");
   const answers={A:0,B:0,C:0,D:0};
   all.forEach(q=>{
     if(!q.quality?.checked?.includes("single_answer")) fail(`${q.id} thiếu hồ sơ kiểm tra một đáp án.`);
@@ -41,4 +41,4 @@ for(let no=8; no<=15; no+=1){
 }
 
 if(errors.length){ console.error(errors.join("\n")); process.exit(1); }
-console.log("OK · Bài 8–15 đạt ma trận 70 câu, một đáp án, nhiễu N01–N25, đoạn đọc không lặp, nghe có kịch bản và rubric viết.");
+console.log("OK · Bài 8–15 đạt ma trận 70 câu, ôn từ xoắn ốc, một đáp án, nhiễu N01–N25, đoạn đọc không lặp, nghe có kịch bản và rubric viết.");

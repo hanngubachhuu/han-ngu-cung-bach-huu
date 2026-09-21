@@ -38,7 +38,163 @@
     reading:["D. ĐỌC HIỂU","docHieu","Đọc đoạn văn rồi trả lời câu hỏi bằng tiếng Trung."],
     writing:["E. VIẾT CÓ KIỂM SOÁT","viet","Mỗi ô chỉ làm một nhiệm vụ để tiện tự chấm và sửa."],
     translation:["F. CHUYỂN Ý VIỆT–TRUNG","dich","Dịch theo ý và tình huống, không ghép từng từ."],
-    speaking:["G. NÓI & TƯƠNG TÁC","giaotiep","Đọc thành tiếng hoặc nói theo vai. Em có thể ghi âm để tự nghe lại."],
+  };
+
+  /* Vòng ôn từ: 6 từ/cụm của bài hiện tại + từ đã học + tối đa 3 từ sẽ gặp
+     trong ba bài gần nhất. Đây là dữ liệu nội dung; UI chỉ hiển thị câu hỏi. */
+  const v = (lesson,word,stem,group) => ({lesson,word,stem,group});
+  const foundationVocab = [
+    v(1,"学校","明天我们在___见。","place"),
+    v(1,"老师","___已经来了，大家快坐好。","people"),
+    v(2,"朋友","周末我想和___去看电影。","people"),
+    v(2,"医院","他不舒服，今天去___看医生。","place"),
+    v(3,"商店","妈妈在___买衣服。","place"),
+    v(3,"买","我想___一杯水。","action"),
+    v(4,"吃","中午我们在学校___饭。","action"),
+    v(4,"喝","天气热，我想___水。","action"),
+    v(5,"电影","这个___很有意思。","thing"),
+    v(5,"家","下课以后我回___。","place"),
+    v(6,"同学","他是我的___，我们一起上课。","people"),
+    v(7,"明天","___没有课，我们去公园吧。","time")
+  ];
+  const curriculumVocab = {
+    8:[
+      v(8,"再","请你明天___告诉我。","time"),
+      v(8,"让","老师___我们先看题。","action"),
+      v(8,"等","请___我五分钟。","action"),
+      v(8,"服务员","在饭店里，我们请___拿菜单。","people"),
+      v(8,"白","她不想买黑色的，所以选了___色的衣服。","color"),
+      v(8,"贵","这件衣服要一千块，太___了。","quality")
+    ],
+    9:[
+      v(9,"题","这___题不难。","thing"),
+      v(9,"从","我___星期一开始上班。","time"),
+      v(9,"希望","我___明天能见到你。","time"),
+      v(9,"欢迎","我们___新同学来班里。","action"),
+      v(9,"懂","老师说得很清楚，我都听___了。","result"),
+      v(9,"完","作业太多，我还没做___。","result")
+    ],
+    10:[
+      v(10,"别","___玩手机了，快上课吧。","time"),
+      v(10,"帮助","你能___我找手机吗？","action"),
+      v(10,"鸡蛋","妈妈买了两个___。","thing"),
+      v(10,"正在","哥哥___洗衣服。","time"),
+      v(10,"手机","我的___在桌子上。","thing"),
+      v(10,"洗","妈妈___衣服。","action")
+    ],
+    11:[
+      v(11,"比","小李___我大三岁。","compare"),
+      v(11,"便宜","这件衣服八十块，很___。","quality"),
+      v(11,"可能","他今天没来，___生病了。","compare"),
+      v(11,"右边","银行在学校的___，不在左边。","place"),
+      v(11,"姓","他___王，叫王小明。","people"),
+      v(11,"唱歌","那个女孩在台上___，声音很好听。","action")
+    ],
+    12:[
+      v(12,"穿","今天很冷，你要多___一点儿。","action"),
+      v(12,"雪","外面下着___。","thing"),
+      v(12,"近","学校离我家很___。","quality"),
+      v(12,"进","上课了，我们快___教室。","action"),
+      v(12,"妻子","这是我___，我们已经结婚十年了。","people"),
+      v(12,"度","今天零下五___。","thing")
+    ],
+    13:[
+      v(13,"着","门开___呢。","result"),
+      v(13,"铅笔","请用___写名字。","thing"),
+      v(13,"一直","请___往前走。","time"),
+      v(13,"往","从学校___右走。","compare"),
+      v(13,"路口","到___左转。","place"),
+      v(13,"宾馆","我们晚上住在___。","place")
+    ],
+    14:[
+      v(14,"有意思","这个电影很___，我想再看一次。","quality"),
+      v(14,"虽然","___下雨，但是我们还想去看电影。","compare"),
+      v(14,"次","我去过北京两___。","thing"),
+      v(14,"晴","今天是___天，想去公园。","quality"),
+      v(14,"玩儿","周末我们去公园___。","action"),
+      v(14,"过","你看___这个电影吗？","result")
+    ],
+    15:[
+      v(15,"新年","___快到了，大家准备回家。","time"),
+      v(15,"火车站","我明天去___买票。","place"),
+      v(15,"票","小王已经买好火车___了。","thing"),
+      v(15,"大家","___都开始准备回家了。","people"),
+      v(15,"更","我觉得晴天___好。","compare"),
+      v(15,"阴","今天一直___，没有太阳。","quality")
+    ]
+  };
+  /* Nhiễu được viết theo loại lỗi học sinh thật, không bốc ngẫu nhiên từ một
+     danh sách từ. Mỗi bộ ba cùng trường nghĩa, cùng dạng từ hoặc là một cách
+     ghép từ theo tiếng Việt dễ gặp nhưng không đúng trong câu đang hỏi. */
+  const contextualDistractors = {
+    "学校":["医院","商店","宾馆"],"老师":["同学","朋友","服务员"],"朋友":["同学","老师","哥哥"],"医院":["学校","商店","宾馆"],"商店":["学校","医院","火车站"],"买":["找","等","帮助"],"吃":["喝","买","洗"],"喝":["吃","买","洗"],"电影":["题","手机","票"],"家":["学校","宾馆","医院"],"同学":["朋友","老师","服务员"],"明天":["今天","昨天","去年"],
+    "再":["已经","正在","一直"],"让":["从","对","比"],"等":["找","告诉","帮助"],"服务员":["老师","同学","朋友"],"白":["黑","贵","便宜"],"贵":["便宜","近","有意思"],
+    "题":["课","票","电影"],"从":["对","比","往"],"希望":["已经","正在","一直"],"欢迎":["帮助","等","找"],"懂":["完","错","过"],"完":["错","懂","过"],
+    "别":["再","正在","已经"],"帮助":["告诉","等","找"],"鸡蛋":["西瓜","票","题"],"正在":["已经","再","从"],"手机":["铅笔","票","电影"],"洗":["买","吃","穿"],
+    "比":["从","对","往"],"便宜":["贵","近","有意思"],"可能":["已经","正在","希望"],"右边":["左边","前面","里面"],"姓":["叫","是","有"],"唱歌":["跳舞","看电影","洗衣服"],
+    "穿":["洗","买","拿"],"雪":["雨","风","票"],"近":["远","贵","便宜"],"进":["出","来","往"],"妻子":["妹妹","同学","老师"],"度":["个","本","张"],
+    "着":["了","过","得"],"铅笔":["手机","票","书"],"一直":["已经","正在","再"],"往":["从","对","比"],"路口":["学校","商店","宾馆"],"宾馆":["医院","学校","火车站"],
+    "有意思":["贵","阴","近"],"虽然":["因为","所以","但是"],"次":["个","张","本"],"晴":["阴","冷","白"],"玩儿":["上班","工作","唱歌"],"过":["着","了","得"],
+    "新年":["明天","去年","周末"],"火车站":["宾馆","学校","公司"],"票":["书","衣服","作业"],"大家":["我","他","她"],"更":["很","太","都"],"阴":["晴","白","近"]
+  };
+  const fillStem = entry => entry.stem.replace("___",entry.word);
+  const chooseSpaced = (items,count,salt) => {
+    const selected=[];
+    if(!items.length) return selected;
+    for(let step=0; selected.length<count && step<items.length; step+=1){
+      const item=items[(salt+step)%items.length];
+      if(!selected.includes(item)) selected.push(item);
+    }
+    return selected;
+  };
+  const lexicalRows = no => {
+    const current=curriculumVocab[no] || [];
+    const older=foundationVocab.concat(Object.keys(curriculumVocab).flatMap(key=>Number(key)<no ? curriculumVocab[key] : []));
+    const upcoming=Object.keys(curriculumVocab).flatMap(key=>{
+      const lesson=Number(key);
+      return lesson>no && lesson<=no+3 ? curriculumVocab[key] : [];
+    });
+    const preview=chooseSpaced(upcoming,Math.min(3,upcoming.length),no);
+    const review=chooseSpaced(older,16-current.length-preview.length,no*5+1);
+    const bank=foundationVocab.concat(Object.values(curriculumVocab).flat());
+    return current.concat(review,preview).map((entry,index)=>{
+      const near=bank.filter(item=>item!==entry && item.group===entry.group);
+      const fallback=bank.filter(item=>item!==entry && !near.includes(item));
+      const wrongWords=(contextualDistractors[entry.word] || chooseSpaced(near.concat(fallback),3,no*11+index*7).map(item=>item.word)).slice(0,3);
+      const isPreview=entry.lesson>no;
+      const target=isPreview ? "Làm quen từ sẽ gặp trong 1–3 bài tới" : entry.lesson<no ? "Ôn từ đã học trong ngữ cảnh mới" : "Dùng từ mới trong ngữ cảnh";
+      const scope=isPreview ? "Đây là từ sẽ gặp sớm; ghi nhớ qua cả câu, chưa cần học tách rời." : "Đáp án khớp nghĩa, vị trí và tình huống của cả câu.";
+      return [
+        `Chọn từ phù hợp để hoàn thành câu “${entry.stem}”`,entry.word,
+        wrongWords.map((word,wrongIndex)=>d(word,["N15","N22","N19"][wrongIndex],[
+          "Từ này cùng trường nghĩa nhưng không khớp tình huống.",
+          "Từ này không kết hợp tự nhiên với các từ xung quanh.",
+          "Từ này làm sai một chi tiết trọng tâm của câu."
+        ][wrongIndex])),
+        target,`${scope} Câu hoàn chỉnh là “${fillStem(entry)}”.`,isPreview ? 2 : 1
+      ];
+    });
+  };
+
+  const writingExtensions = {
+    8:[["Đặt một câu tiếng Trung có từ “再”。","我明天再告诉你。","Đặt câu với từ trọng tâm","Câu cần có một việc sẽ làm lại hoặc sẽ làm sau."],["Viết một tin nhắn 2–3 câu cho bạn về việc em muốn mua một món đồ nhưng còn đang suy nghĩ.","我想买一件黑色的衣服，可是有点儿贵。让我想想，明天再告诉服务员。","Viết tin nhắn theo tình huống","Có lí do, lựa chọn hoặc dự định tiếp theo."]],
+    9:[["Đặt một câu tiếng Trung có từ “希望”。","我希望明天能做完作业。","Đặt câu với từ trọng tâm","希望 cần dẫn nội dung em mong muốn."],["Viết 2–3 câu kể em đã bắt đầu làm việc gì và kết quả ra sao.","我从第一题开始做。后来我做完了，但是有一道题做错了。","Kể lại tiến trình","Có điểm bắt đầu, quá trình hoặc kết quả."]],
+    10:[["Đặt một câu tiếng Trung có từ “正在”。","哥哥正在洗衣服。","Đặt câu với từ trọng tâm","正在 đứng trước hành động đang diễn ra."],["Viết một tin nhắn 2 câu nhắc người thân dừng việc không cần thiết và giúp em một việc.","别玩手机了，请你帮助我找手机吧。","Nhắn tin theo mục đích","Có lời nhắc và một lời đề nghị lịch sự."]],
+    11:[["Đặt một câu tiếng Trung có từ “比”。","这件衣服比那件便宜。","Đặt câu so sánh đơn giản","Nêu hai đối tượng và một điểm so sánh rõ ràng."],["Viết 2–3 câu giới thiệu một người trong lớp, có một chi tiết để người đọc nhận ra người đó.","右边那个唱歌的女孩是我朋友。她可能是新同学。","Miêu tả người trong ngữ cảnh","Có vị trí hoặc hoạt động và một thông tin phù hợp."]],
+    12:[["Đặt một câu tiếng Trung có từ “近”。","学校离我家很近。","Đặt câu với từ trọng tâm","Nêu được hai nơi chốn và khoảng cách."],["Viết 2–3 câu nhắn cho người thân về thời tiết hôm nay và lời khuyên mặc quần áo.","今天很冷，外面下着雪。你穿得太少了，多穿一点儿吧。","Viết lời khuyên theo tình huống","Có thời tiết và một lời khuyên tự nhiên."]],
+    13:[["Đặt một câu tiếng Trung có từ “一直”。","请一直往前走。","Đặt câu với từ trọng tâm","一直 diễn tả hành động kéo dài hoặc đi thẳng liên tục."],["Viết 2–3 câu chỉ đường từ lớp học đến một nơi gần đó.","一直往前走，到路口左转。再走五分钟就到宾馆了。","Chỉ đường theo trình tự","Có hướng đi và ít nhất một mốc đường."]],
+    14:[["Đặt một câu tiếng Trung có từ “过”。","我去过北京一次。","Đặt câu về trải nghiệm","Câu nói một trải nghiệm đã có."],["Viết 2–3 câu kể về một buổi cuối tuần, nêu thời tiết và một hoạt động em đã làm.","周末天气很晴，我和朋友去公园玩儿。虽然有点儿热，但是很有意思。","Kể lại trải nghiệm","Có thời gian, hoạt động và cảm nhận."]],
+    15:[["Đặt một câu tiếng Trung có từ “更”。","我觉得晴天更好。","Đặt câu so sánh mức độ","Câu cần cho thấy lựa chọn hoặc so sánh rõ ràng."],["Viết một tin nhắn 2–3 câu về kế hoạch về nhà vào dịp năm mới.","新年就要到了，我已经买好火车票了。明天我去火车站。","Viết tin nhắn theo kế hoạch","Có thời điểm, kế hoạch và ít nhất một thông tin cụ thể."]]
+  };
+  const translationExtensions = {
+    8:[["Dịch sang tiếng Trung ‘Hãy đợi tôi năm phút.’","请等我五分钟。","Giữ đúng lời đề nghị và khoảng thời gian.",null],["Dịch sang tiếng Việt ‘服务员，请给我菜单。’","Nhân viên phục vụ ơi, xin hãy đưa tôi thực đơn.","Giữ đúng vai giao tiếp ở nhà hàng.",null]],
+    9:[["Dịch sang tiếng Trung ‘Bạn hy vọng điều gì?’","你希望什么？","希望 đứng trước nội dung mong muốn.",null],["Dịch sang tiếng Việt ‘欢迎你来我们班。’","Chào mừng bạn đến lớp chúng tôi.","欢迎 dùng khi chào đón người đến.",null]],
+    10:[["Dịch sang tiếng Trung ‘Đừng tìm nữa, điện thoại ở trên bàn.’","别找了，手机在桌子上呢。","Giữ cả lời nhắc và vị trí đồ vật.",null],["Dịch sang tiếng Việt ‘哥哥正在洗衣服。’","Anh trai đang giặt quần áo.","正在 cho biết hành động đang diễn ra.",null]],
+    11:[["Dịch sang tiếng Trung ‘Chiếc áo này rẻ hơn chiếc kia.’","这件衣服比那件便宜。","Không đổi thứ tự hai đối tượng khi so sánh.",null],["Dịch sang tiếng Việt ‘她可能是新同学。’","Cô ấy có thể là học sinh mới.","可能 diễn tả phỏng đoán.",null]],
+    12:[["Dịch sang tiếng Trung ‘Trường học rất gần nhà tôi.’","学校离我家很近。","Giữ đúng hai nơi chốn và khoảng cách.",null],["Dịch sang tiếng Việt ‘外面下着雪。’","Bên ngoài đang có tuyết rơi.","Câu nói về thời tiết đang diễn ra.",null]],
+    13:[["Dịch sang tiếng Trung ‘Đến ngã tư thì rẽ trái.’","到路口左转。","Giữ đúng mốc đường và hướng rẽ.",null],["Dịch sang tiếng Việt ‘桌子上放着几本书。’","Trên bàn có đặt mấy quyển sách.","Nêu trạng thái đang có trên bàn.",null]],
+    14:[["Dịch sang tiếng Trung ‘Tôi đã từng xem bộ phim đó hai lần.’","我看过那个电影两次。","Giữ trải nghiệm và số lần.",null],["Dịch sang tiếng Việt ‘虽然很累，但是我还想玩儿。’","Mặc dù rất mệt nhưng tôi vẫn muốn chơi.","Giữ đủ hai ý đối lập.",null]],
+    15:[["Dịch sang tiếng Trung ‘Năm mới sắp đến rồi.’","新年就要到了。","Diễn tả sự việc sắp xảy ra.",null],["Dịch sang tiếng Việt ‘小王已经买好火车票了。’","Tiểu Vương đã mua xong vé tàu rồi.","已经 và 买好 cho biết việc mua đã hoàn tất.",null]]
   };
 
   function makeLesson(cfg){
@@ -66,11 +222,26 @@
         distractorProfiles:entries.filter(entry=>!entry.correct).map(entry=>({option:entry.t, code:entry.code, reason:entry.reason}))
       },section,target,level,extra);
     };
-    const reorder = (section, prompt, tokens, answer, target, explain, level=2) => decorate({
-      type:"reorder", prompt, tokens, answer, explain,
-      error:"Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
-      tip:"Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.", example:answer.join("")
-    },section,target,level);
+    const shuffledTokens = (tokens, questionId, answer) => {
+      const shuffled=tokens.slice();
+      let seed=Array.from(questionId).reduce((total,char)=>total+char.charCodeAt(0),0);
+      for(let index=shuffled.length-1; index>0; index-=1){
+        seed=(seed*1103515245+12345)>>>0;
+        const target=seed%(index+1);
+        [shuffled[index],shuffled[target]]=[shuffled[target],shuffled[index]];
+      }
+      if(shuffled.every((token,index)=>token===answer[index]) && shuffled.length>1) [shuffled[0],shuffled[1]]=[shuffled[1],shuffled[0]];
+      return shuffled;
+    };
+    const reorder = (section, prompt, tokens, answer, target, explain, level=2) => {
+      const question=decorate({
+        type:"reorder", prompt, tokens:tokens.slice(), answer, explain,
+        error:"Lỗi thường gặp là đặt thời gian, giới từ hoặc kết quả theo trật tự tiếng Việt.",
+        tip:"Tìm chủ ngữ và động từ chính trước, sau đó đặt thời gian hay kết quả vào đúng vị trí.", example:answer.join("")
+      },section,target,level);
+      question.tokens=shuffledTokens(tokens,question.id,answer);
+      return question;
+    };
     const multi = (section, prompt, parts, options, answers, target, explain) => decorate({
       type:"multi_fill", prompt, parts, options, answers, answer:answers, explain,
       error:"Mỗi ô cần được quyết định bằng nghĩa của cả câu, không chọn riêng từng từ.",
@@ -83,7 +254,7 @@
       ...extra
     },section,target,3);
 
-    cfg.vocabulary.forEach(row => all.push(mcq("vocabulary", row[0], row[1], row[2], row[3], row[4], row[5] || 2)));
+    lexicalRows(cfg.no).forEach(row => all.push(mcq("vocabulary", row[0], row[1], row[2], row[3], row[4], row[5] || 2)));
     cfg.grammar.forEach(row => {
       if(row.kind === "reorder") all.push(reorder("grammar",row.prompt,row.tokens,row.answer,row.target,row.explain,row.level));
       else if(row.kind === "multi") all.push(multi("grammar",row.prompt,row.parts,row.options,row.answers,row.target,row.explain));
@@ -97,9 +268,9 @@
     });
     cfg.writing.orders.forEach(row => all.push(reorder("writing",row[0],row[1],row[2],row[3],row[4],row[5] || 2)));
     cfg.writing.tasks.forEach(row => all.push(open("writing",row[0],row[1],row[2],row[3],row[4])));
+    (writingExtensions[cfg.no] || []).forEach(row => all.push(open("writing",row[0],row[1],row[2],row[3],row[4])));
     all.push(open("writing",cfg.writing.retell.prompt,cfg.writing.retell.model,"Tường thuật lại một đoạn ngắn",cfg.writing.retell.explain,cfg.writing.retell.rubric,"retell",{sourceText:cfg.writing.retell.sourceText,readSeconds:60}));
-    cfg.translation.forEach(row => all.push(open("translation",row[0],row[1],"Chuyển ý hai chiều",row[2],row[3])));
-    cfg.speaking.forEach(row => all.push(open("speaking",row[0],row[1],"Nói theo tình huống",row[2],row[3])));
+    cfg.translation.concat(translationExtensions[cfg.no] || []).forEach(row => all.push(open("translation",row[0],row[1],"Chuyển ý hai chiều",row[2],row[3])));
     if(all.length !== 70) throw new Error(`Bài ${cfg.no} cần đúng 70 câu nhưng có ${all.length}.`);
 
     c.passages = cfg.passages.map(({id,text,source})=>({id,text,source:source || "teacher_enriched_v2"}));
@@ -108,7 +279,9 @@
     c.skills.mixed = [];
     c.meta.version = Math.max(Number(c.meta.version)||1,3);
     c.meta.timeLimitMinutes = 75;
-    c.coverage = Object.assign({},c.coverage,{exercises:"gold_template_v2",skillMatrix:"balanced_4skills_v2",questionStandard:"N01-N25_E01-E35"});
+    if(c.difficulty) delete c.difficulty.speaking;
+    c.coverage = Object.assign({},c.coverage,{exercises:"gold_template_v3",skillMatrix:"spiral_review_4skills_v3",questionStandard:"N01-N25_E01-E35"});
+    delete c.coverage.speaking;
     lesson.exerciseSections = Object.entries(sectionInfo).map(([section,[title,skill,instruction]])=>({id:section,title,skill,instruction,passages:section==="reading" ? c.passages : []}));
   }
 
@@ -118,12 +291,9 @@
   function makeScenarioBank(profile){
     const lesson = R.lessons[profile.lessonId];
     if(!lesson) return;
-    const words = lesson.content.vocabulary.map(v=>v.han);
-    const vocab = Array.from({length:12},(_,i)=>{
-      const word=words[i%words.length], meaning=lesson.content.vocabulary[i%words.length].meaning;
-      const wrongs=[1,2,3].map(offset=>d(words[(i+offset)%words.length], offset===1?"N15":offset===2?"N03":"N20"));
-      return [`Chọn từ mới có nghĩa hoặc cách dùng phù hợp với ‘${meaning}’.`,word,wrongs,`Nhận diện từ ${word}`,`Đáp án là ${word}; ba từ còn lại thuộc bài nhưng không mang nghĩa/cách dùng này.`,1];
-    });
+    /* lexicalRows() mới là nguồn duy nhất của phần Từ vựng.  Nó dùng vòng ôn
+       cũ–hiện tại–sắp học thay vì câu hỏi “từ này nghĩa là gì” tách ngữ cảnh. */
+    const vocab = [];
     const grammar=profile.phrases.map((row,i)=>({prompt:row.prompt,correct:row.zh,wrongs:[
       d(profile.phrases[(i+1)%profile.phrases.length].zh,"N20","Câu đúng hình thức nhưng trả lời một tình huống khác."),
       d(profile.phrases[(i+2)%profile.phrases.length].zh,"N15","Câu cùng chủ đề nhưng chọn sai thông tin trọng tâm."),
@@ -161,11 +331,7 @@
       retell:{prompt:"Đọc đoạn trong 60 giây. Khi hết giờ, kể lại bằng tiếng Trung bằng 2–3 câu.",sourceText:profile.stories[2].text,model:profile.stories[2].retell,explain:"Kể lại bằng lời của em: người nào, việc gì, kết quả ra sao.",rubric:"准确 40%: đủ thông tin chính.\n连贯 25%: theo trật tự đoạn.\n得体 20%: 2–3 câu phù hợp.\n自然 15%: dùng câu tự nhiên."}
     };
     const translation=profile.phrases.slice(0,8).flatMap((row,i)=> i%2===0 ? [[`Dịch sang tiếng Trung ‘${row.vi}’`,row.zh,row.explain,null]] : [[`Dịch sang tiếng Việt ‘${row.zh}’`,row.vi,row.explain,null]]);
-    const speaking=profile.phrases.slice(0,8).map((row,i)=>[
-      i<4 ? `Đọc to ‘${row.zh}’ hai lần, sau đó đổi một chi tiết phù hợp với bản thân.` : `Đóng vai theo tình huống và nói 1–2 câu. ${row.vi}`,
-      row.zh,row.target,row.explain
-    ]);
-    makeLesson({no:profile.no,lessonId:profile.lessonId,vocabulary:vocab,grammar,listening,passages,writing,translation,speaking});
+    makeLesson({no:profile.no,lessonId:profile.lessonId,vocabulary:vocab,grammar,listening,passages,writing,translation});
   }
 
   const lessons = {
