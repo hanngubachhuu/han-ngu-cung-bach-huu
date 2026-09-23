@@ -294,6 +294,7 @@ function setupMobileNav(){
   if(!burger||!navLinks)return;
   burger.setAttribute('aria-haspopup','true');
   burger.addEventListener('click',e=>{
+    e.stopImmediatePropagation();
     e.stopPropagation();
     const open=navLinks.classList.toggle('open');
     burger.textContent=open?'✕':'☰';
@@ -604,7 +605,7 @@ function initHskMegaMenu(){
   panel.style.maxHeight='calc(100dvh - 92px)';
   makeMegaMenu();
   dropdownBtn?.addEventListener('click',e=>{
-    e.stopPropagation();
+    e.stopImmediatePropagation();
     dropdown.classList.contains('open')?closeDropdown():openDropdown();
     if(dropdown.classList.contains('open')){
       const active=panel.querySelector('.dd-level.active .dd-level-head')||panel.querySelector('.dd-level-head');
@@ -622,7 +623,9 @@ function initHskMegaMenu(){
     if(link&&link.closest('.hsk-mega-detail-list'))closeDropdown();
   });
 }
+readLearningState();
 markCurrentNav();
 setupMobileNav();
 initHskMegaMenu();
+injectBreadcrumb();
 })();
