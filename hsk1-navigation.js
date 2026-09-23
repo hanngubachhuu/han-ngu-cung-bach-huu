@@ -158,7 +158,7 @@ const FOOTER_CSS = `
 @media (max-width:700px){
   .site-footer-v2::after{right:8px;font-size:30px;top:22px;}
   .site-footer-v2 .site-footer-inner{
-    width:min(100% - 28px,620px);
+    width:min(calc(100% - 28px),620px);
     padding:48px 0 24px !important;
     grid-template-columns:1fr 1fr !important;
     gap:26px 20px !important;
@@ -166,7 +166,7 @@ const FOOTER_CSS = `
   .site-footer-v2 .footer-v2-brand{grid-column:1 / -1;}
   .site-footer-v2 .footer-v2-feature{grid-column:1 / -1;}
   .site-footer-v2 .site-footer-bottom{
-    width:min(100% - 28px,620px);
+    width:min(calc(100% - 28px),620px);
     padding:14px 0 18px !important;
     flex-direction:column;align-items:flex-start;
   }
@@ -209,7 +209,7 @@ function enhanceSiteFooter(){
       <div class="footer-v2-brand">
         <div class="footer-v2-seal" aria-hidden="true">汉</div>
         <div>
-          <p class="footer-v2-kicker">漢語 · HỌC CÓ NGỮ CẢNH</p>
+          <p class="footer-v2-kicker">汉语 · HỌC CÓ NGỮ CẢNH</p>
           <h2 class="footer-v2-title">Hán Ngữ Cùng Bách Hữu</h2>
           <p class="footer-v2-quote">学而时习之，不亦说乎。</p>
           <p class="footer-v2-desc">Học tiếng Trung bằng ngữ cảnh, cấu trúc câu, thực hành và ôn tập có hệ thống. Học để dùng được, hiểu được và nhớ lâu.</p>
