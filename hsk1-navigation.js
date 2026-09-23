@@ -611,8 +611,14 @@ function makeMegaMenu(){
         const row=document.createElement('div');
         row.className='hsk-mega-lesson-row';
         row.dataset.hnhLessonSeq=String(sequence);
+        row.dataset.hnhHskLevel=String(number);
         row.setAttribute('data-learning-status',current?'current':(seen?'seen':'new'));
         if(current)row.classList.add('is-current');
+
+        // Mỗi cấp độ có một "ngôn ngữ hiệu ứng" riêng. Trong cùng một cấp,
+        // cường độ tăng dần theo số bài để tạo cảm giác bài sau khó hơn.
+        const power=Math.min(1,0.18+(sequence-1)*0.058);
+        row.style.setProperty('--hnh-power',power.toFixed(2));
         row.style.setProperty('--hnh-crack-alpha',pressure.toFixed(2));
         row.style.setProperty('--hnh-crack-inset',crackInset);
         row.style.setProperty('--hnh-crack-blur',crackBlur);
