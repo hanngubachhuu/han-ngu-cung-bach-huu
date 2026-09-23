@@ -648,6 +648,8 @@ function makeMegaMenu(){
     });
   };
 
+  let hoveredLevel=null;
+
   for(let number=1;number<=6;number++){
     const level=document.createElement('div');
     level.className='dd-level';
@@ -688,9 +690,9 @@ function makeMegaMenu(){
       updateStatus();
     };
 
-    // Cả hover và click đều chuyển cấp độ. Không phụ thuộc matchMedia.
-    head.addEventListener('pointerenter',activate);
-    head.addEventListener('mouseenter',activate);
+    // Hover và click đều chuyển cấp độ.
+    // Hover được xử lý ở container để ổn định khi di chuyển qua tên,
+    // trạng thái hoặc mũi tên bên trong cùng một cấp.
     head.addEventListener('focus',activate);
     head.addEventListener('click',e=>{
       e.preventDefault();
@@ -714,6 +716,19 @@ function makeMegaMenu(){
       }
     });
   }
+
+  levelCol.addEventListener('pointerover',e=>{
+    const level=e.target.closest?.('.dd-level');
+    if(!level || level.parentElement!==levelCol)return;
+    if(level===hoveredLevel)return;
+    hoveredLevel=level;
+    const number=Number(level.dataset.hnhLevel);
+    if(number>=1&&number<=6)renderDetail(number);
+  });
+
+  levelCol.addEventListener('pointerleave',()=>{
+    hoveredLevel=null;
+  });
 
   const review=document.createElement('a');
   review.className='dd-static-link dd-review-link hsk-mega-review';
