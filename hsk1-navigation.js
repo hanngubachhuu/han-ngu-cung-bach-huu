@@ -357,9 +357,10 @@ function makeMegaMenu(){
       detail.appendChild(empty);
     }
     levelCol.querySelectorAll('.dd-level').forEach(x=>x.classList.remove('active'));
-    level.classList.add('active');
     levelCol.querySelectorAll('.dd-level-head').forEach(x=>x.setAttribute('aria-expanded','false'));
-    level.querySelector('.dd-level-head')?.setAttribute('aria-expanded','true');
+    const visibleLevel=levelCol.querySelector('[data-level-index="'+index+'"]');
+    visibleLevel?.classList.add('active');
+    visibleLevel?.querySelector('.dd-level-head')?.setAttribute('aria-expanded','true');
   };
 
   levels.forEach((level,index)=>{
