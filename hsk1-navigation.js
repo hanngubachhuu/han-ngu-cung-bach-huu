@@ -580,25 +580,8 @@ function makeMegaMenu(){
     detail.appendChild(resumeWrap);
     renderResume();
 
-    const head=document.createElement('div');
-    head.className='hsk-mega-detail-head';
+    // Tiêu đề Lộ trình/HSK/số bài đã được bỏ khỏi vùng chi tiết để panel chỉ tập trung vào danh sách bài học.
 
-    const kicker=document.createElement('div');
-    kicker.className='hsk-mega-detail-kicker';
-    kicker.textContent='LỘ TRÌNH HSK';
-
-    const title=document.createElement('h3');
-    title.className='hsk-mega-detail-title';
-    title.textContent='HSK '+number;
-
-    const sub=document.createElement('p');
-    sub.className='hsk-mega-detail-sub';
-    sub.textContent=lessons.length
-      ? lessons.length+' bài học · Chọn một bài để bắt đầu.'
-      : 'Nội dung đang được xây dựng cho cấp độ này.';
-
-    head.append(kicker,title,sub);
-    detail.appendChild(head);
 
     if(!lessons.length){
       const empty=document.createElement('div');
