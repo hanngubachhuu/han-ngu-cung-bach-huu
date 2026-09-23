@@ -2252,3 +2252,329 @@ body{
     font-size:13.5px !important;
   }
 }
+
+/* ============================================================
+   NAV HOTFIX v2 — 2026-09-24
+   Mục tiêu:
+   - Desktop giữ nguyên navigation, không ép chữ chồng nhau.
+   - Desktop-site trên điện thoại vẫn là desktop, nhưng co hợp lý.
+   - Mega menu gọn, không có khoảng trắng phải quá lớn.
+   - Mobile mở menu dạng overlay, không làm phình bố cục trang.
+   - Nút hamburger luôn tương phản.
+   ============================================================ */
+
+/* Mega menu: bỏ hoàn toàn vùng tiêu đề phụ cũ nếu còn trong DOM/cache. */
+.hnh-mega-v12 .hsk-mega-detail > .hsk-mega-detail-head{
+  display:none !important;
+}
+.hnh-mega-v12 .hsk-mega-detail{
+  min-width:0 !important;
+  overflow:hidden !important;
+}
+.hnh-mega-v12 .hsk-mega-detail-list{
+  min-width:0 !important;
+}
+
+/* Desktop default: panel gọn lại, không kéo quá rộng. */
+@media (min-width:1101px){
+  .hnh-mega-v12.site-nav-dropdown-panel{
+    width:min(720px,calc(100vw - 28px)) !important;
+    max-width:720px !important;
+    max-height:min(500px,calc(100dvh - 96px)) !important;
+    overflow:hidden !important;
+  }
+  .hnh-mega-v12 .hsk-mega-levels{
+    min-width:0 !important;
+    width:170px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail{
+    min-width:0 !important;
+    padding:14px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail-list{
+    max-height:330px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+}
+
+/* Tablet / Android "Desktop site": vẫn giữ navigation desktop, không đổi hamburger. */
+@media (min-width:761px) and (max-width:1100px){
+  .site-nav{
+    overflow:visible !important;
+  }
+  .site-nav-inner{
+    width:100% !important;
+    max-width:none !important;
+    height:64px !important;
+    padding:0 12px !important;
+    gap:10px !important;
+  }
+  .site-nav-brand{
+    flex:0 1 205px !important;
+    width:auto !important;
+    max-width:205px !important;
+    min-width:0 !important;
+    gap:7px !important;
+    overflow:visible !important;
+  }
+  .site-nav-logo-img{
+    width:auto !important;
+    height:42px !important;
+    max-width:48px !important;
+    flex:0 0 auto !important;
+    object-fit:contain !important;
+  }
+  .site-nav-brand > span{
+    display:block !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    max-width:none !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    white-space:nowrap !important;
+    font-size:13px !important;
+    line-height:1.1 !important;
+  }
+  .site-nav-links{
+    position:static !important;
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    width:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    gap:9px !important;
+  }
+  .site-nav-links > a,
+  .site-nav-dropdown > .site-nav-dropdown-btn{
+    width:auto !important;
+    min-height:38px !important;
+    padding:4px 0 !important;
+    border:0 !important;
+    font-size:13px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+  }
+  .site-nav-dropdown{
+    width:auto !important;
+  }
+  .site-nav-dropdown-panel{
+    top:calc(100% + 8px) !important;
+  }
+  .hnh-mega-v12.site-nav-dropdown-panel{
+    width:min(700px,calc(100vw - 24px)) !important;
+    max-width:700px !important;
+    max-height:min(470px,calc(100dvh - 84px)) !important;
+  }
+  .hnh-mega-v12 .hsk-mega-levels{
+    width:150px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail{
+    padding:12px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail-list{
+    max-height:310px !important;
+    overflow-y:auto !important;
+  }
+  .site-nav-burger{
+    display:none !important;
+  }
+}
+
+/* True mobile: menu overlay, KHÔNG đẩy nội dung trang xuống. */
+@media (max-width:760px){
+  .site-nav{
+    position:sticky !important;
+    top:0 !important;
+    z-index:2000 !important;
+    overflow:visible !important;
+  }
+  .site-nav-inner{
+    height:64px !important;
+    min-height:64px !important;
+    width:100% !important;
+    padding:0 14px !important;
+    gap:10px !important;
+  }
+  .site-nav-brand{
+    min-width:0 !important;
+    max-width:calc(100% - 54px) !important;
+    flex:1 1 auto !important;
+    gap:8px !important;
+  }
+  .site-nav-logo-img{
+    height:46px !important;
+    width:auto !important;
+    max-width:170px !important;
+  }
+  .site-nav-brand > span{
+    display:none !important;
+  }
+  .site-nav-burger{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:44px !important;
+    height:44px !important;
+    flex:0 0 44px !important;
+    margin:0 !important;
+    padding:0 !important;
+    color:#493A34 !important;
+    background:#FFFDF9 !important;
+    border:1px solid #D8CFC2 !important;
+    border-radius:10px !important;
+    box-shadow:0 2px 8px rgba(76,57,48,.10) !important;
+    font-size:20px !important;
+    line-height:1 !important;
+    opacity:1 !important;
+    visibility:visible !important;
+  }
+  .site-nav-burger:hover,
+  .site-nav-burger:focus-visible,
+  .site-nav-burger[aria-expanded="true"]{
+    color:#C0392B !important;
+    background:#F8E7E3 !important;
+    border-color:#C0392B !important;
+  }
+  .site-nav-links{
+    position:absolute !important;
+    top:64px !important;
+    left:0 !important;
+    right:0 !important;
+    width:100% !important;
+    max-height:0 !important;
+    overflow:visible !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:0 !important;
+    background:#F8F3EA !important;
+    border-bottom:1px solid #DED4C8 !important;
+    box-shadow:0 10px 25px rgba(76,57,48,.13) !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+  .site-nav-links.open{
+    max-height:none !important;
+    height:auto !important;
+    overflow:visible !important;
+    visibility:visible !important;
+    pointer-events:auto !important;
+  }
+  .site-nav-links > a,
+  .site-nav-dropdown > .site-nav-dropdown-btn{
+    width:100% !important;
+    min-height:49px !important;
+    padding:13px 18px !important;
+    box-sizing:border-box !important;
+    border-bottom:1px solid #E5DCD2 !important;
+    color:#4B3A33 !important;
+    font-size:15px !important;
+    line-height:1.2 !important;
+    text-align:left !important;
+    white-space:nowrap !important;
+  }
+  .site-nav-links .site-nav-cta{
+    color:#fff !important;
+    background:#C0392B !important;
+    text-align:center !important;
+    border-radius:0 !important;
+  }
+  .site-nav-dropdown{
+    width:100% !important;
+  }
+  .site-nav-dropdown > .site-nav-dropdown-btn{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+  }
+
+  /* Overlay độc lập để mega menu không làm trang phía dưới phình cao. */
+  .hnh-mega-v12.site-nav-dropdown-panel,
+  .site-nav-dropdown-panel{
+    position:fixed !important;
+    top:74px !important;
+    left:10px !important;
+    right:10px !important;
+    width:auto !important;
+    max-width:none !important;
+    max-height:calc(100dvh - 86px) !important;
+    height:auto !important;
+    overflow:auto !important;
+    display:none !important;
+    padding:8px !important;
+    border:1px solid #DED4C8 !important;
+    border-radius:15px !important;
+    background:#FFFDF9 !important;
+    box-shadow:0 18px 42px rgba(54,45,39,.20) !important;
+    z-index:2200 !important;
+  }
+  .site-nav-dropdown.open .hnh-mega-v12.site-nav-dropdown-panel,
+  .site-nav-dropdown.open .site-nav-dropdown-panel{
+    display:block !important;
+    visibility:visible !important;
+  }
+  .hnh-mega-v12 .hsk-mega-levels{
+    width:100% !important;
+    min-width:0 !important;
+    border-right:0 !important;
+    border-bottom:1px solid #E5DCD2 !important;
+    border-radius:10px !important;
+    margin-bottom:8px !important;
+    padding:5px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-levels .dd-level-head{
+    min-height:44px !important;
+    padding:8px 10px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail{
+    width:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    max-height:none !important;
+    padding:10px !important;
+    border-radius:10px !important;
+    overflow:hidden !important;
+  }
+  .hnh-mega-v12 .hsk-mega-resume{
+    margin-bottom:8px !important;
+    padding:8px 10px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail-list{
+    width:100% !important;
+    height:min(34vh,260px) !important;
+    max-height:min(34vh,260px) !important;
+    min-height:150px !important;
+    gap:6px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    padding:3px 4px 6px 2px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-lesson-row{
+    width:100% !important;
+    min-height:44px !important;
+    height:44px !important;
+    flex:0 0 44px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-lesson-link{
+    font-size:12px !important;
+  }
+  .hnh-mega-v12 .hsk-mega-lesson-action{
+    min-width:88px !important;
+    font-size:10px !important;
+  }
+}
+
+/* Hậu thuẫn cho header cũ/cached: các tiêu đề phụ vẫn bị ẩn. */
+.hnh-mega-v12 .hsk-mega-detail-kicker,
+.hnh-mega-v12 .hsk-mega-detail-title,
+.hnh-mega-v12 .hsk-mega-detail-sub{
+  display:none !important;
+}
