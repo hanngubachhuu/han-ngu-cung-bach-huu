@@ -290,6 +290,21 @@ function markCurrentNav(){
     if(same&&!href.includes('#'))a.setAttribute('aria-current','page');
   });
 }
+function ensurePronunciationNav(){
+  if(!navLinks)return;
+  if(navLinks.querySelector('.site-nav-pronunciation'))return;
+  const item=document.createElement('a');
+  item.className='site-nav-pronunciation';
+  item.href='phat-am.html';
+  item.textContent='Phát âm';
+  item.setAttribute('aria-label','Phát âm tiếng Trung');
+  const firstLink=navLinks.querySelector(':scope > a');
+  const hsk=navLinks.querySelector('#hskDropdown');
+  if(firstLink)firstLink.insertAdjacentElement('afterend',item);
+  else if(hsk)hsk.insertAdjacentElement('beforebegin',item);
+  else navLinks.prepend(item);
+}
+
 function setupMobileNav(){
   if(!burger||!navLinks)return;
   burger.setAttribute('aria-haspopup','true');
@@ -644,6 +659,7 @@ function makeMegaMenu(){
       });
 
       detail.appendChild(list);
+      requestAnimationFrame(()=>{list.scrollTop=0;});
     }else{
       const empty=document.createElement('div');
       empty.className='hsk-mega-detail-empty';
@@ -773,6 +789,7 @@ async function initHskMegaMenu(){
   });
 }
 readLearningState();
+ensurePronunciationNav();
 markCurrentNav();
 setupMobileNav();
 initHskMegaMenu().finally(injectBreadcrumb);
