@@ -3812,3 +3812,37 @@ body{
     max-height:52vh !important;
   }
 }
+\n
+/* ============================================================
+   NAV v15.2 — MOBILE FIX
+   Trên nền LỤA NGÀ, nút hamburger phải tương phản rõ.
+   Không để breakpoint 1080px làm người dùng tưởng navigation đã mất.
+   ============================================================ */
+@media(max-width:1080px){
+  .site-nav-burger{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    width:44px !important;
+    height:44px !important;
+    flex:0 0 44px !important;
+    color:#493A34 !important;
+    background:#FFFDF9 !important;
+    border:1px solid #D8CFC2 !important;
+    border-radius:10px !important;
+    box-shadow:0 3px 10px rgba(76,57,48,.10) !important;
+    font-size:20px !important;
+    line-height:1 !important;
+    opacity:1 !important;
+    visibility:visible !important;
+  }
+  .site-nav-burger:hover,
+  .site-nav-burger:focus-visible{
+    color:#C0392B !important;
+    border-color:#C0392B !important;
+    background:#F8E7E3 !important;
+  }
+  .site-nav-brand{
+    max-width:calc(100% - 64px) !important;
+  }
+}
