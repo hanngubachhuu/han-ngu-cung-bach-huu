@@ -478,13 +478,30 @@ function injectBreadcrumb(){
   nav.appendChild(list);
   document.getElementById('siteNav').insertAdjacentElement('afterend',nav);
 }
+function extractLevelNumber(level){
+  const fromData=String(level?.getAttribute('data-level')||'').match(/(?:hsk)?(\\d+)/i);
+  if(fromData)return Number(fromData[1]);
+  const badge=level?.querySelector('.dd-level-badge')?.textContent?.trim()||'';
+  const fromBadge=badge.match(/\\d+/);
+  if(fromBadge)return Number(fromBadge[0]);
+  const text=level?.querySelector('.dd-level-name')?.textContent||'';
+  const fromText=text.match(/HSK\\s*(\\d+)/i);
+  return fromText?Number(fromText[1]):0;
+}
+
+function cleanLevelTitle(level,number){
+  // Menu chỉ hiển thị tên cấp độ thuần túy, không kéo theo "Sơ cấp",
+  // "Trung cấp", "Cao cấp" hay tên giáo trình cũ từ HTML nguồn.
+  return number?('HSK '+number):'HSK';
+}
+
 function makeMegaMenu(){
   if(!panel||panel.dataset.megaReady==='1')return;
   const originalLevels=[...panel.querySelectorAll('.dd-level')];
   const review=panel.querySelector('.dd-review-link');
   const levels=originalLevels.filter(level=>{
-    const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
-    return /^[1-6]$/.test(badge);
+    const number=extractLevelNumber(level);
+    return number>=1&&number<=6;
   });
   if(!levels.length)return;
 
@@ -499,7 +516,7 @@ function makeMegaMenu(){
   const detail=document.createElement('section');
   detail.className='hsk-mega-detail';
   detail.setAttribute('aria-live','polite');
-  detail.setAttribute('aria-label','Chương trình cấp HSK đang chọn');
+  detail.setAttribute('aria-label','Chương trình HSK đang chọn');
 
   const resumeWrap=document.createElement('div');
   resumeWrap.className='hsk-mega-resume-wrap';
@@ -509,28 +526,32 @@ function makeMegaMenu(){
     const last=getLastLearningMeta();
     resumeWrap.innerHTML='';
     if(!last){
-      resumeWrap.innerHTML='<div class="hsk-mega-resume-empty"><strong>Chưa có bài đang học.</strong> Chọn một cấp độ để bắt đầu lộ trình.</div>';
+      resumeWrap.innerHTML='<div class="hsk-mega-resume-empty"><strong>Chưa có bài đang học.</strong> Chọn một bài để bắt đầu lộ trình.</div>';
       return;
     }
     const box=document.createElement('div');
     box.className='hsk-mega-resume';
     const copy=document.createElement('div');
     copy.className='hsk-mega-resume-copy';
+
     const kicker=document.createElement('div');
     kicker.className='hsk-mega-resume-kicker';
     kicker.textContent='HỌC TIẾP';
+
     const title=document.createElement('p');
     title.className='hsk-mega-resume-title';
     title.textContent=last.title;
+
     const meta=document.createElement('p');
     meta.className='hsk-mega-resume-meta';
     meta.textContent='HSK '+last.level+' · bài gần nhất đã mở';
+
     copy.append(kicker,title,meta);
 
     const link=document.createElement('a');
     link.className='hsk-mega-resume-link';
     link.href=last.href;
-    link.textContent='Học tiếp →';
+    link.textContent='Tiếp tục học →';
     link.addEventListener('click',()=>closeDropdown());
 
     box.append(copy,link);
@@ -538,10 +559,13 @@ function makeMegaMenu(){
   };
 
   const makeDetail=(sourceLevel,index)=>{
-    const badge=sourceLevel.querySelector('.dd-level-badge')?.textContent?.trim()||'';
-    const title=sourceLevel.querySelector('.dd-level-name')?.textContent?.trim()||('HSK '+badge);
-    const lessons=lessonsForLevel(Number(badge));
-    const soon=!!sourceLevel.querySelector('.dd-level-soon');
+    const number=extractLevelNumber(sourceLevel);
+    const title=cleanLevelTitle(sourceLevel,number);
+    const lessons=lessonsForLevel(number);
+
+    detail.classList.remove('is-switching');
+    void detail.offsetWidth;
+    detail.classList.add('is-switching');
 
     renderResume();
     [...detail.querySelectorAll('.hsk-mega-detail-head,.hsk-mega-detail-list,.hsk-mega-detail-empty')].forEach(x=>x.remove());
@@ -549,15 +573,11 @@ function makeMegaMenu(){
     const head=document.createElement('div');
     head.className='hsk-mega-detail-head';
 
-    const badgeEl=document.createElement('div');
-    badgeEl.className='hsk-mega-detail-badge';
-    badgeEl.textContent=badge;
-    badgeEl.setAttribute('aria-hidden','true');
-
     const headText=document.createElement('div');
     const kicker=document.createElement('div');
     kicker.className='hsk-mega-detail-kicker';
     kicker.textContent='LỘ TRÌNH HSK';
+
     const titleEl=document.createElement('h3');
     titleEl.className='hsk-mega-detail-title';
     titleEl.textContent=title;
@@ -565,36 +585,51 @@ function makeMegaMenu(){
     const sub=document.createElement('p');
     sub.className='hsk-mega-detail-sub';
     sub.textContent=lessons.length
-      ? lessons.length+' bài học hiện có · Chọn bài để mở trực tiếp chương trình cấp này.'
-      : (soon?'Chương trình đang được chuẩn bị.':'Chưa có bài học được công bố.');
+      ? lessons.length+' bài học · Chọn một bài để bắt đầu.'
+      : 'Nội dung đang được bổ sung cho cấp độ này.';
+
     headText.append(kicker,titleEl,sub);
-    head.append(badgeEl,headText);
+    head.appendChild(headText);
     detail.appendChild(head);
 
     if(lessons.length){
       const list=document.createElement('div');
       list.className='hsk-mega-detail-list';
+
       lessons.forEach(lesson=>{
-        const clone=document.createElement('a');
-        clone.href=lesson.href;
-        clone.textContent=lesson.title;
         const lessonKey=lesson.href.split('#')[0].split('?')[0].split('/').pop().toLowerCase();
-        if(learningState.visited.includes(lessonKey)){
-          clone.classList.add('lesson-seen');
-          clone.setAttribute('data-learning-status','seen');
-        }
-        if(learningState.last?.path===lessonKey){
-          clone.classList.add('lesson-current');
-          clone.setAttribute('data-learning-status','current');
-        }
-        clone.addEventListener('click',()=>closeDropdown());
-        list.appendChild(clone);
+        const seen=learningState.visited.includes(lessonKey);
+        const current=learningState.last?.path===lessonKey;
+
+        const row=document.createElement('div');
+        row.className='hsk-mega-lesson-row';
+        row.setAttribute('data-learning-status',current?'current':(seen?'seen':'new'));
+        if(current)row.classList.add('is-current');
+
+        const main=document.createElement('a');
+        main.className='hsk-mega-lesson-link';
+        main.href=lesson.href;
+        main.textContent=lesson.title;
+        main.setAttribute('aria-label',lesson.title+(current?' · Tiếp tục học':(seen?' · Xem lại':' · Bắt đầu học')));
+
+        const action=document.createElement('a');
+        action.className='hsk-mega-lesson-action';
+        action.href=lesson.href;
+        action.textContent=current?'Tiếp tục học':(seen?'Xem lại':'Bắt đầu học');
+        action.setAttribute('aria-label',action.textContent+' · '+lesson.title);
+
+        main.addEventListener('click',()=>closeDropdown());
+        action.addEventListener('click',()=>closeDropdown());
+
+        row.append(main,action);
+        list.appendChild(row);
       });
+
       detail.appendChild(list);
     }else{
       const empty=document.createElement('div');
       empty.className='hsk-mega-detail-empty';
-      empty.innerHTML='<div><strong>HSK '+badge+'</strong>Chương trình sẽ được bổ sung vào lộ trình chung.</div>';
+      empty.innerHTML='<div><strong>'+title+'</strong>Nội dung đang được chuẩn bị.</div>';
       detail.appendChild(empty);
     }
 
@@ -602,23 +637,34 @@ function makeMegaMenu(){
     levelCol.querySelectorAll('.dd-level-head').forEach(x=>x.setAttribute('aria-expanded','false'));
     const visibleLevel=levelCol.querySelector('[data-level-index="'+index+'"]');
     visibleLevel?.classList.add('active');
-    visibleLevel?.setAttribute('data-learning-status',buildLevelStatus(Number(badge)).kind);
+    visibleLevel?.setAttribute('data-learning-status',buildLevelStatus(number).kind);
     visibleLevel?.querySelector('.dd-level-head')?.setAttribute('aria-expanded','true');
   };
 
   levels.forEach((sourceLevel,index)=>{
     const copy=sourceLevel.cloneNode(true);
     copy.querySelector('.dd-level-lessons')?.remove();
+
+    // Xóa các mảnh giao diện cũ khỏi menu mới: badge số, nhãn
+    // trình độ/giáo trình và "Sắp ra mắt" nguồn. Trạng thái chỉ
+    // được hiển thị một lần bởi hệ thống học tập.
+    copy.querySelector('.dd-level-badge')?.remove();
+    copy.querySelector('.dd-level-tag')?.remove();
+    copy.querySelector('.dd-level-soon')?.remove();
+
     copy.classList.add('dd-level');
 
     const head=copy.querySelector('.dd-level-head');
     if(!head)return;
+
+    const number=extractLevelNumber(sourceLevel);
+    const name=head.querySelector('.dd-level-name');
+    if(name)name.textContent=cleanLevelTitle(sourceLevel,number);
+
     head.setAttribute('role','button');
     head.setAttribute('tabindex','0');
     head.setAttribute('aria-expanded','false');
-
-    const badge=copy.querySelector('.dd-level-badge')?.textContent?.trim()||'';
-    head.setAttribute('aria-label','Xem chương trình HSK '+badge);
+    head.setAttribute('aria-label','Xem chương trình HSK '+number);
 
     levelCol.appendChild(copy);
     addLevelStatus(copy,index);
@@ -627,16 +673,21 @@ function makeMegaMenu(){
       makeDetail(sourceLevel,index);
       addLevelStatus(copy,index);
     };
+
     copy.addEventListener('mouseenter',()=>{
       if(window.matchMedia('(hover: hover)').matches)activate();
     });
     copy.addEventListener('focusin',activate);
+
     head.addEventListener('click',e=>{
       e.preventDefault();
       if(!window.matchMedia('(hover: hover)').matches)activate();
     });
     head.addEventListener('keydown',e=>{
-      if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}
+      if(e.key==='Enter'||e.key===' '){
+        e.preventDefault();
+        activate();
+      }
       if(e.key==='ArrowDown'){
         e.preventDefault();
         levelCol.children[Math.min(index+1,levels.length-1)]?.querySelector('.dd-level-head')?.focus();
@@ -657,7 +708,13 @@ function makeMegaMenu(){
   }
 
   panel.dataset.megaReady='1';
-  const initialIndex=Math.max(0,levels.findIndex(x=>x.querySelector('.dd-level-badge')?.textContent?.trim()==String(learningState.last?.level||1)));
+
+  const wanted=Number(learningState.last?.level||1);
+  const initialIndex=Math.max(
+    0,
+    levels.findIndex(x=>extractLevelNumber(x)===wanted)
+  );
+
   makeDetail(levels[initialIndex]||levels[0],initialIndex);
   renderResume();
 }
