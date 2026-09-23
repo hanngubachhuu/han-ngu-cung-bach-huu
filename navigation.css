@@ -680,3 +680,349 @@ body{
   .site-footer-links{justify-content:flex-start;}
   .site-back-top{right:12px;bottom:12px;}
 }
+
+
+/* ============================================================
+   NAV v4 — THIẾT KẾ MỰC THAN / CHU SA
+   - Thanh điều hướng xanh than
+   - Mega menu gọn, bỏ badge số + nhãn giáo trình thừa
+   - Danh sách bài 1 cột
+   - Hover từng bài → làm rõ + nút hành động
+   ============================================================ */
+.site-nav{
+  background:#26343F !important;
+  border-bottom:3px solid #C0392B !important;
+  box-shadow:0 5px 22px rgba(24,34,42,.18) !important;
+}
+.site-nav-inner{
+  max-width:1200px !important;
+  height:76px !important;
+  padding:0 22px !important;
+}
+.site-nav-brand,
+.site-nav-links>a,
+.site-nav-dropdown-btn{
+  color:#F8F5EE !important;
+}
+.site-nav-brand:hover,
+.site-nav-links>a:hover,
+.site-nav-dropdown-btn:hover,
+.site-nav-dropdown.open .site-nav-dropdown-btn,
+.site-nav-links>a[aria-current="page"]{
+  color:#F4C56E !important;
+}
+.site-nav-brand{
+  gap:12px !important;
+}
+.site-nav-logo-img{
+  height:56px !important;
+  max-width:250px !important;
+  filter:none !important;
+}
+.site-nav-links{
+  gap:26px !important;
+}
+.site-nav-links>a,
+.site-nav-dropdown-btn{
+  min-height:46px !important;
+  font-size:15px !important;
+  font-weight:700 !important;
+}
+.site-nav-dropdown-btn{
+  letter-spacing:.01em;
+}
+.dd-caret{
+  color:#F4C56E;
+}
+.site-nav-dropdown-panel{
+  width:min(860px,calc(100vw - 30px)) !important;
+  top:calc(100% + 13px) !important;
+  padding:12px !important;
+  border:1px solid #D9D1C4 !important;
+  border-radius:18px !important;
+  background:#FFFCF6 !important;
+  box-shadow:0 22px 60px rgba(26,36,43,.24) !important;
+}
+.site-nav-dropdown.open .site-nav-dropdown-panel{
+  grid-template-columns:190px minmax(0,1fr) !important;
+  gap:10px !important;
+}
+.hsk-mega-levels{
+  padding:7px !important;
+  border-right:1px solid #E5E0D8 !important;
+}
+.hsk-mega-levels .dd-level{
+  margin:0 0 5px !important;
+}
+.hsk-mega-levels .dd-level-head{
+  min-height:48px !important;
+  padding:9px 11px !important;
+  border:1px solid transparent !important;
+  border-radius:12px !important;
+  transition:background 260ms ease,border-color 260ms ease,transform 260ms ease,box-shadow 260ms ease !important;
+}
+.hsk-mega-levels .dd-level-head:hover,
+.hsk-mega-levels .dd-level.active .dd-level-head,
+.hsk-mega-levels .dd-level-head:focus-visible{
+  background:#FADBD8 !important;
+  border-color:rgba(192,57,43,.22) !important;
+  box-shadow:inset 3px 0 0 #C0392B !important;
+  transform:translateX(2px) !important;
+}
+.hsk-mega-levels .dd-level-name{
+  font-size:14px !important;
+  gap:0 !important;
+}
+.hsk-mega-levels .dd-level-badge,
+.hsk-mega-levels .dd-level-tag,
+.hsk-mega-levels .dd-level-soon{
+  display:none !important;
+}
+.hsk-mega-levels .dd-level-name::before{
+  content:"";
+  width:6px;height:6px;
+  flex:0 0 6px;
+  margin-right:9px;
+  border-radius:50%;
+  background:#D68910;
+  transition:transform 260ms ease,background 260ms ease;
+}
+.hsk-mega-levels .dd-level.active .dd-level-name::before,
+.hsk-mega-levels .dd-level-head:hover .dd-level-name::before{
+  background:#C0392B;
+  transform:scale(1.35);
+}
+.hsk-level-status{
+  margin-left:auto !important;
+  background:#F3EFE6 !important;
+  color:#6F756F !important;
+  border:1px solid #E5E0D8 !important;
+  min-height:21px !important;
+  padding:2px 7px !important;
+  font-size:9.5px !important;
+}
+.dd-level[data-learning-status="current"] .hsk-level-status{
+  background:#FADBD8 !important;
+  color:#C0392B !important;
+  border-color:#F0B7AF !important;
+}
+.dd-level[data-learning-status="seen"] .hsk-level-status{
+  background:#E8F5EC !important;
+  color:#247A49 !important;
+  border-color:#C7E4D1 !important;
+}
+.dd-level[data-learning-status="empty"] .hsk-level-status{
+  background:#F3EFE6 !important;
+  color:#777C77 !important;
+}
+.hsk-mega-detail{
+  min-height:360px !important;
+  padding:18px !important;
+  border-radius:15px !important;
+  background:linear-gradient(180deg,#FBF7EF 0%,#FFFDF8 100%) !important;
+  overflow:hidden;
+}
+.hsk-mega-detail-head{
+  align-items:center !important;
+  gap:0 !important;
+  padding:2px 2px 14px !important;
+  margin-bottom:10px !important;
+  border-bottom:1px solid #E5E0D8 !important;
+}
+.hsk-mega-detail-badge{
+  display:none !important;
+}
+.hsk-mega-detail-title{
+  font-size:20px !important;
+  color:#26343F !important;
+}
+.hsk-mega-detail-kicker{
+  color:#C0392B !important;
+  font-size:9.5px !important;
+  letter-spacing:.15em !important;
+}
+.hsk-mega-detail-sub{
+  margin-top:4px !important;
+  color:#68716D !important;
+  font-size:11.5px !important;
+}
+.hsk-mega-detail-sub strong{
+  color:#26343F;
+}
+.hsk-mega-detail-list{
+  display:flex !important;
+  flex-direction:column !important;
+  grid-template-columns:none !important;
+  gap:6px !important;
+  max-height:280px !important;
+  overflow:auto !important;
+  padding:2px 3px 4px 1px !important;
+}
+.hsk-mega-lesson-row{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-width:0;
+  padding:6px;
+  border:1px solid transparent;
+  border-radius:12px;
+  background:rgba(255,255,255,.35);
+  transition:background 280ms ease,border-color 280ms ease,box-shadow 280ms ease,transform 280ms ease;
+}
+.hsk-mega-lesson-row:hover,
+.hsk-mega-lesson-row:focus-within{
+  background:#FFF4ED;
+  border-color:#EFD6CA;
+  box-shadow:0 7px 20px rgba(192,57,43,.08);
+  transform:translateY(-1px);
+}
+.hsk-mega-lesson-link{
+  display:flex !important;
+  align-items:center !important;
+  gap:9px !important;
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  min-height:40px !important;
+  padding:7px 9px !important;
+  border:0 !important;
+  border-radius:8px !important;
+  color:#2C3E50 !important;
+  text-decoration:none !important;
+  font-size:12.5px !important;
+  line-height:1.45 !important;
+  background:transparent !important;
+  transform:none !important;
+  transition:color 280ms ease !important;
+}
+.hsk-mega-lesson-link::before{
+  content:"";
+  width:6px;height:6px;flex:0 0 6px;
+  margin-top:0;
+  border-radius:50%;
+  background:#D68910;
+  transition:transform 280ms ease,background 280ms ease;
+}
+.hsk-mega-lesson-row:hover .hsk-mega-lesson-link,
+.hsk-mega-lesson-row:focus-within .hsk-mega-lesson-link,
+.hsk-mega-lesson-row.is-current .hsk-mega-lesson-link{
+  color:#C0392B !important;
+}
+.hsk-mega-lesson-row:hover .hsk-mega-lesson-link::before,
+.hsk-mega-lesson-row:focus-within .hsk-mega-lesson-link::before,
+.hsk-mega-lesson-row.is-current .hsk-mega-lesson-link::before{
+  background:#C0392B;
+  transform:scale(1.35);
+}
+.hsk-mega-lesson-row.is-current{
+  background:#FBEDEA;
+  border-color:#EFC7C0;
+}
+.hsk-mega-lesson-action{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:34px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#26343F;
+  color:#FFFDF8 !important;
+  text-decoration:none;
+  font-size:10.5px;
+  font-weight:800;
+  letter-spacing:.01em;
+  opacity:0;
+  transform:translateX(5px);
+  pointer-events:none;
+  transition:opacity 280ms ease,transform 280ms ease,background 220ms ease,box-shadow 220ms ease;
+}
+.hsk-mega-lesson-row:hover .hsk-mega-lesson-action,
+.hsk-mega-lesson-row:focus-within .hsk-mega-lesson-action,
+.hsk-mega-lesson-row.is-current .hsk-mega-lesson-action{
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:auto;
+}
+.hsk-mega-lesson-action:hover{
+  background:#C0392B;
+  box-shadow:0 6px 14px rgba(192,57,43,.18);
+}
+.hsk-mega-lesson-row[data-learning-status="seen"] .hsk-mega-lesson-action{
+  background:#3D5D4D;
+}
+.hsk-mega-lesson-row[data-learning-status="seen"] .hsk-mega-lesson-action:hover{
+  background:#247A49;
+}
+.hsk-mega-review{
+  grid-column:1 / -1 !important;
+  margin:5px 4px 1px !important;
+  padding:10px 12px !important;
+  border-top:1px solid #E5E0D8 !important;
+  color:#C0392B !important;
+  background:transparent !important;
+}
+.hsk-mega-detail.is-switching .hsk-mega-detail-head,
+.hsk-mega-detail.is-switching .hsk-mega-detail-list,
+.hsk-mega-detail.is-switching .hsk-mega-detail-empty{
+  animation:hnhMegaDetailIn 220ms ease both;
+}
+@keyframes hnhMegaDetailIn{
+  from{opacity:0;transform:translateY(4px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hsk-mega-resume{
+  margin-bottom:12px !important;
+  padding:10px 11px !important;
+  border-color:#E7DDD1 !important;
+  background:#FFFDF8 !important;
+  box-shadow:none !important;
+}
+.hsk-mega-resume-kicker{color:#D68910 !important;}
+.hsk-mega-resume-link{
+  background:#C0392B !important;
+}
+.hsk-mega-resume-link:hover{background:#A93226 !important;}
+@media(max-width:760px){
+  .site-nav-inner{height:68px !important;padding:0 14px !important;}
+  .site-nav-logo-img{height:50px !important;max-width:205px !important;}
+  .site-nav-links{top:68px !important;}
+  .site-nav-dropdown.open .site-nav-dropdown-panel{
+    display:block !important;
+    width:100% !important;
+    padding:8px !important;
+    background:#FFFCF6 !important;
+  }
+  .hsk-mega-levels{
+    border-right:0 !important;
+    padding:2px 0 7px !important;
+  }
+  .hsk-mega-levels .dd-level-head{min-height:46px !important;}
+  .hsk-mega-detail{
+    min-height:0 !important;
+    padding:13px !important;
+  }
+  .hsk-mega-detail-list{max-height:46vh !important;}
+  .hsk-mega-lesson-action{
+    opacity:1 !important;
+    transform:none !important;
+    pointer-events:auto !important;
+    min-height:34px;
+    padding:6px 9px;
+  }
+}
+@media(max-width:460px){
+  .site-nav-logo-img{height:46px !important;max-width:180px !important;}
+  .hsk-mega-detail-list{max-height:50vh !important;}
+  .hsk-mega-lesson-row{padding:5px;}
+  .hsk-mega-lesson-link{font-size:12px !important;padding:7px 7px !important;}
+  .hsk-mega-lesson-action{font-size:9.5px;min-width:78px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .hsk-mega-lesson-row,
+  .hsk-mega-lesson-link,
+  .hsk-mega-lesson-action,
+  .hsk-mega-levels .dd-level-head{transition:none !important;}
+  .hsk-mega-detail.is-switching .hsk-mega-detail-head,
+  .hsk-mega-detail.is-switching .hsk-mega-detail-list,
+  .hsk-mega-detail.is-switching .hsk-mega-detail-empty{animation:none !important;}
+}
