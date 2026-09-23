@@ -423,12 +423,16 @@ function trackCurrentLesson(){
   saveLearningState();
 }
 function lessonsForLevel(level){
-  if(Array.isArray(CANONICAL_BY_LEVEL[level])&&CANONICAL_BY_LEVEL[level].length){
-    return CANONICAL_BY_LEVEL[level];
-  }
-  return Object.values(LESSON_INDEX)
+  const canonical=Array.isArray(CANONICAL_BY_LEVEL[level])?CANONICAL_BY_LEVEL[level]:[];
+  if(canonical.length)return canonical.sort((a,b)=>(a.lessonNo||0)-(b.lessonNo||0));
+
+  const fallback=Object.values(LESSON_INDEX)
     .filter(x=>x.level===level)
     .sort((a,b)=>(a.lessonNo||0)-(b.lessonNo||0));
+
+  // HSK 1/2 hiện có manifest đầy đủ. Với các cấp chưa có dữ liệu,
+  // trả về mảng rỗng để UI hiển thị đúng "đang xây dựng", không bịa bài.
+  return fallback;
 }
 function buildLevelStatus(level){
   const list=lessonsForLevel(level);
