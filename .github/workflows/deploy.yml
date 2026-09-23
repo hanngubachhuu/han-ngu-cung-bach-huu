@@ -59,11 +59,10 @@ jobs:
 
           # Cache-bust shared navigation assets so GitHub Pages/browsers never
           # serve an older navigation.css or hsk1-navigation.js after deploy.
+          export HNH_ASSET_VERSION="$GITHUB_SHA"
           find dist -type f -name "*.html" -print0 | xargs -0 sed -i \
-            -e "s#navigation\\.css\\"#navigation.css?v=\${GITHUB_SHA}\\"#g" \
-            -e "s#navigation\\.css'#navigation.css?v=\${GITHUB_SHA}'#g" \
-            -e "s#hsk1-navigation\\.js\\"#hsk1-navigation.js?v=\${GITHUB_SHA}\\"#g" \
-            -e "s#hsk1-navigation\\.js'#hsk1-navigation.js?v=\${GITHUB_SHA}'#g"
+            -e "s#navigation\\.css#navigation.css?v=\${HNH_ASSET_VERSION}#g" \
+            -e "s#hsk1-navigation\\.js#hsk1-navigation.js?v=\${HNH_ASSET_VERSION}#g"
 
           touch dist/.nojekyll
 
