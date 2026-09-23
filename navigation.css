@@ -362,6 +362,215 @@
   .site-nav-links>a,.site-nav-dropdown-btn{padding-left:16px;padding-right:16px;}
 }
 
+
+/* ============================================================
+   NAV v3 — TRẠNG THÁI HỌC TẬP / HỌC TIẾP / BREADCRUMB
+   ============================================================ */
+.site-nav-links>a[aria-current="page"]{
+  color:var(--color-primary) !important;
+  font-weight:800;
+}
+.hsk-level-status{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:22px;
+  padding:3px 8px;
+  margin-left:auto;
+  border-radius:999px;
+  background:var(--bg-soft);
+  color:var(--text-faint);
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.dd-level[data-learning-status="current"] .hsk-level-status{
+  background:var(--color-primary-subtle);
+  color:var(--color-primary);
+}
+.dd-level[data-learning-status="seen"] .hsk-level-status{
+  background:var(--color-secondary-subtle);
+  color:var(--color-secondary);
+}
+.dd-level[data-learning-status="empty"] .hsk-level-status{
+  background:var(--bg-soft);
+  color:var(--text-faint);
+}
+.hsk-mega-resume{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin:0 0 13px;
+  padding:12px 13px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--bg-card);
+  box-shadow:var(--shadow-sm);
+}
+.hsk-mega-resume-copy{
+  min-width:0;
+}
+.hsk-mega-resume-kicker{
+  margin:0 0 2px;
+  color:var(--color-accent);
+  font-size:9.5px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.hsk-mega-resume-title{
+  margin:0;
+  color:var(--text);
+  font-size:12.5px;
+  font-weight:800;
+  line-height:1.45;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.hsk-mega-resume-meta{
+  margin:2px 0 0;
+  color:var(--text-soft);
+  font-size:10.5px;
+}
+.hsk-mega-resume-link{
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:36px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:var(--color-primary);
+  color:#fff !important;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:800;
+  transition:transform .16s ease,background .16s ease,box-shadow .16s ease;
+}
+.hsk-mega-resume-link:hover{
+  background:var(--color-primary-hover);
+  transform:translateY(-1px);
+  box-shadow:0 7px 16px rgba(192,57,43,.2);
+}
+.hsk-mega-resume-empty{
+  display:block;
+  margin-bottom:13px;
+  padding:11px 13px;
+  border:1px dashed var(--border-strong);
+  border-radius:13px;
+  color:var(--text-soft);
+  background:var(--bg-soft);
+  font-size:11.5px;
+  line-height:1.55;
+}
+.hsk-mega-resume-empty strong{
+  color:var(--text);
+}
+.hsk-mega-progress{
+  height:4px;
+  margin-top:7px;
+  overflow:hidden;
+  border-radius:999px;
+  background:var(--bg-soft);
+}
+.hsk-mega-progress span{
+  display:block;
+  height:100%;
+  width:0;
+  border-radius:inherit;
+  background:var(--color-secondary);
+}
+.breadcrumb-nav{
+  position:relative;
+  z-index:1;
+  width:min(1100px,calc(100% - 40px));
+  margin:0 auto;
+  padding:12px 0 4px;
+}
+.breadcrumb-list{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  overflow-x:auto;
+  padding:0 1px 4px;
+  margin:0;
+  list-style:none;
+  scrollbar-width:none;
+}
+.breadcrumb-list::-webkit-scrollbar{display:none;}
+.breadcrumb-item{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  flex:0 0 auto;
+  min-height:28px;
+  color:var(--text-faint);
+  font-size:11.5px;
+}
+.breadcrumb-item:not(:last-child)::after{
+  content:"›";
+  color:var(--text-faint);
+  opacity:.7;
+}
+.breadcrumb-item a{
+  color:var(--text-soft);
+  text-decoration:none;
+  border-radius:7px;
+  padding:4px 6px;
+}
+.breadcrumb-item a:hover{
+  color:var(--color-primary);
+  background:var(--color-primary-subtle);
+}
+.breadcrumb-item[aria-current="page"]{
+  max-width:min(520px,70vw);
+  color:var(--text);
+  font-weight:800;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.breadcrumb-level{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:28px;
+  height:22px;
+  padding:0 7px;
+  border-radius:999px;
+  background:var(--color-primary-subtle);
+  color:var(--color-primary);
+  font-size:10px;
+  font-weight:900;
+}
+@media(max-width:760px){
+  .breadcrumb-nav{
+    width:calc(100% - 28px);
+    padding-top:9px;
+  }
+  .hsk-mega-resume{
+    align-items:flex-start;
+  }
+  .hsk-mega-resume-link{
+    min-height:40px;
+  }
+}
+@media(max-width:460px){
+  .hsk-mega-resume{
+    flex-direction:column;
+    gap:9px;
+  }
+  .hsk-mega-resume-link{
+    width:100%;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hsk-mega-resume-link{transition:none !important;}
+}
+
 /* ===== Footer: luôn nằm cuối viewport với trang ngắn, bình thường với trang dài ===== */
 html{min-height:100%;}
 body{
