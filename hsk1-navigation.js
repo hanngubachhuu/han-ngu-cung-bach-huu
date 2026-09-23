@@ -710,14 +710,19 @@ function makeMegaMenu(){
       addLevelStatus(copy,index);
     };
 
-    copy.addEventListener('mouseenter',()=>{
-      if(window.matchMedia('(hover: hover)').matches)activate();
+    // Desktop: rê chuột qua cấp độ là đổi nội dung ngay.
+    // Thiết bị lai cảm ứng + chuột cũng được hỗ trợ bằng pointerenter.
+    copy.addEventListener('pointerenter',e=>{
+      if(e.pointerType==='mouse' || window.matchMedia('(hover: hover)').matches)activate();
     });
     copy.addEventListener('focusin',activate);
 
+    // Click luôn đổi cấp độ. Bản trước chỉ click trên thiết bị không-hover,
+    // khiến laptop/PC có hover nhưng người dùng bấm HSK 2 lại vẫn đứng ở HSK 1.
     head.addEventListener('click',e=>{
       e.preventDefault();
-      if(!window.matchMedia('(hover: hover)').matches)activate();
+      e.stopPropagation();
+      activate();
     });
     head.addEventListener('keydown',e=>{
       if(e.key==='Enter'||e.key===' '){
