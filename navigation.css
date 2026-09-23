@@ -2390,3 +2390,177 @@ body{
     animation:none !important;
   }
 }
+
+
+/* ============================================================
+   NAV v10 — HIỆU ỨNG LAN MẠNH Ở VIỀN BÀI
+   Hiệu ứng phải thoát khỏi khung bài, lan ra vùng xung quanh.
+   ============================================================ */
+.hsk-mega-detail-list{
+  overflow:visible !important;
+}
+.hsk-mega-detail-list > .hsk-mega-lesson-row{
+  overflow:visible !important;
+}
+.hsk-mega-lesson-row::before,
+.hsk-mega-lesson-row::after{
+  pointer-events:none !important;
+}
+
+/* HSK 1 · Mực lan */
+.hsk-mega-lesson-row[data-hnh-hsk-level="1"]:hover::before,
+.hsk-mega-lesson-row[data-hnh-hsk-level="1"]:focus-within::before{
+  inset:-15px !important;
+  opacity:calc(.46 + var(--hnh-power)*.42) !important;
+  filter:blur(calc(7px + var(--hnh-power)*5px)) !important;
+  animation:hnhInkSpillStrong 1.9s ease-in-out infinite alternate !important;
+}
+@keyframes hnhInkSpillStrong{
+  0%{transform:scale(.91);filter:blur(12px);}
+  100%{transform:scale(1.11);filter:blur(5px);}
+}
+
+/* HSK 2 · Lửa lan khỏi bốn cạnh */
+.hsk-mega-lesson-row[data-hnh-hsk-level="2"]::before{
+  inset:-16px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="2"]::after{
+  inset:-10px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="2"]:hover::before,
+.hsk-mega-lesson-row[data-hnh-hsk-level="2"]:focus-within::before{
+  opacity:calc(.58 + var(--hnh-power)*.42) !important;
+  animation:hnhFireBorderStrong 950ms ease-in-out infinite alternate !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="2"]:hover::after,
+.hsk-mega-lesson-row[data-hnh-hsk-level="2"]:focus-within::after{
+  opacity:calc(.42 + var(--hnh-power)*.58) !important;
+  animation:hnhFireEdgeStrong 680ms ease-in-out infinite alternate !important;
+}
+@keyframes hnhFireBorderStrong{
+  0%{transform:scale(.90) translateY(4px);filter:blur(3px) saturate(1);}
+  55%{transform:scale(1.05) translateY(-2px);filter:blur(1px) saturate(1.12);}
+  100%{transform:scale(1.13) translateY(-8px);filter:blur(3px) saturate(1.18);}
+}
+@keyframes hnhFireEdgeStrong{
+  from{transform:scale(.94) skewX(-2deg);filter:blur(1.8px) brightness(1);}
+  to{transform:scale(1.08) skewX(2deg);filter:blur(.35px) brightness(1.36);}
+}
+
+/* HSK 3 · Sét bùng quanh mép */
+.hsk-mega-lesson-row[data-hnh-hsk-level="3"]::before{
+  inset:-15px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="3"]::after{
+  inset:-9px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="3"]:hover::before,
+.hsk-mega-lesson-row[data-hnh-hsk-level="3"]:focus-within::before{
+  opacity:calc(.46 + var(--hnh-power)*.54) !important;
+  filter:drop-shadow(0 0 calc(6px + var(--hnh-power)*10px) rgba(72,170,235,.82)) !important;
+  animation:hnhLightningSpreadStrong .68s steps(2,end) infinite !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="3"]:hover::after,
+.hsk-mega-lesson-row[data-hnh-hsk-level="3"]:focus-within::after{
+  opacity:calc(.40 + var(--hnh-power)*.60) !important;
+  filter:drop-shadow(0 0 calc(5px + var(--hnh-power)*9px) rgba(126,212,255,.76)) !important;
+  animation:hnhLightningFlashStrong2 1.05s linear infinite !important;
+}
+@keyframes hnhLightningSpreadStrong{
+  0%,100%{transform:scale(.96);}
+  10%{transform:scale(1.03) translate(-2px,1px);}
+  11%{opacity:.22;}
+  42%{transform:scale(1.08) translate(2px,-1px);}
+  43%{opacity:1;}
+  44%{opacity:.26;}
+  73%{transform:scale(1.12) translate(-2px,0);}
+  74%{opacity:.92;}
+}
+@keyframes hnhLightningFlashStrong2{
+  0%,83%,100%{opacity:.12;}
+  85%{opacity:1;filter:brightness(2) drop-shadow(0 0 14px rgba(126,212,255,.88));}
+  87%{opacity:.18;}
+  89%{opacity:.92;}
+}
+
+/* HSK 4 · Đại triều */
+.hsk-mega-lesson-row[data-hnh-hsk-level="4"]::before{
+  inset:-20px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="4"]::after{
+  inset:-12px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="4"]:hover::before,
+.hsk-mega-lesson-row[data-hnh-hsk-level="4"]:focus-within::before{
+  opacity:calc(.42 + var(--hnh-power)*.58) !important;
+  animation:hnhWaveBorderStrong 1.55s ease-out infinite !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="4"]:hover::after,
+.hsk-mega-lesson-row[data-hnh-hsk-level="4"]:focus-within::after{
+  opacity:calc(.30 + var(--hnh-power)*.62) !important;
+  animation:hnhWaveBorderStrong2 1.22s ease-out infinite !important;
+}
+@keyframes hnhWaveBorderStrong{
+  0%{transform:scale(.36);opacity:.08;}
+  42%{transform:scale(calc(.76 + var(--hnh-power)*.24));opacity:.92;}
+  100%{transform:scale(calc(1.28 + var(--hnh-power)*.76));opacity:0;}
+}
+@keyframes hnhWaveBorderStrong2{
+  0%{transform:scale(.44);opacity:.06;}
+  48%{transform:scale(calc(.86 + var(--hnh-power)*.20));opacity:.78;}
+  100%{transform:scale(calc(1.34 + var(--hnh-power)*.66));opacity:0;}
+}
+
+/* HSK 5 · Kim giáp phủ ngoài */
+.hsk-mega-lesson-row[data-hnh-hsk-level="5"]::before{
+  inset:-8px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="5"]::after{
+  inset:-13px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="5"]:hover::before,
+.hsk-mega-lesson-row[data-hnh-hsk-level="5"]:focus-within::before{
+  opacity:calc(.40 + var(--hnh-power)*.60) !important;
+  animation:hnhArmorForgeStrong 820ms cubic-bezier(.15,.75,.25,1) both !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="5"]:hover::after,
+.hsk-mega-lesson-row[data-hnh-hsk-level="5"]:focus-within::after{
+  opacity:calc(.22 + var(--hnh-power)*.60) !important;
+  animation:hnhArmorSheenStrong2 1.2s linear infinite !important;
+}
+@keyframes hnhArmorForgeStrong{
+  0%{transform:scale(.95);filter:brightness(.76) drop-shadow(0 0 2px rgba(139,150,158,.25));}
+  55%{transform:scale(1.045);filter:brightness(1.22) drop-shadow(0 0 9px rgba(139,150,158,.42));}
+  100%{transform:scale(calc(1 + var(--hnh-power)*.045));filter:brightness(1) drop-shadow(0 0 5px rgba(139,150,158,.28));}
+}
+@keyframes hnhArmorSheenStrong2{
+  from{transform:translateX(35%);opacity:.10;}
+  to{transform:translateX(-35%);opacity:.85;}
+}
+
+/* HSK 6 · Thiên tượng */
+.hsk-mega-lesson-row[data-hnh-hsk-level="6"]::before{
+  inset:-21px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="6"]::after{
+  inset:-11px !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="6"]:hover::before,
+.hsk-mega-lesson-row[data-hnh-hsk-level="6"]:focus-within::before{
+  opacity:calc(.42 + var(--hnh-power)*.58) !important;
+  filter:blur(calc(1px + (1 - var(--hnh-power))*1.5px)) drop-shadow(0 0 calc(6px + var(--hnh-power)*14px) rgba(214,137,16,.46)) !important;
+  animation:hnhCosmicBorderStrong2 1.6s ease-in-out infinite alternate !important;
+}
+.hsk-mega-lesson-row[data-hnh-hsk-level="6"]:hover::after,
+.hsk-mega-lesson-row[data-hnh-hsk-level="6"]:focus-within::after{
+  opacity:calc(.32 + var(--hnh-power)*.60) !important;
+  animation:hnhCosmicRingStrong2 1.25s ease-in-out infinite alternate !important;
+}
+@keyframes hnhCosmicBorderStrong2{
+  from{transform:rotate(-1deg) scale(.89);}
+  to{transform:rotate(5deg) scale(calc(1.03 + var(--hnh-power)*.12));}
+}
+@keyframes hnhCosmicRingStrong2{
+  from{transform:scale(.93);}
+  to{transform:scale(calc(1.07 + var(--hnh-power)*.07));}
+}
