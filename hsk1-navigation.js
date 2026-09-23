@@ -301,12 +301,12 @@ function setupMobileNav(){
     burger.setAttribute('aria-expanded',open?'true':'false');
     if(!open)closeDropdown();
   });
-  navLinks.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('click',()=>{
-      navLinks.classList.remove('open');
-      burger.textContent='☰';
-      burger.setAttribute('aria-expanded','false');
-    });
+  navLinks.addEventListener('click',e=>{
+    const link=e.target.closest?.('a');
+    if(!link)return;
+    navLinks.classList.remove('open');
+    burger.textContent='☰';
+    burger.setAttribute('aria-expanded','false');
   });
 }
 const LEARNING_KEY='hnh_learning_state_v1';
@@ -605,13 +605,14 @@ function initHskMegaMenu(){
   panel.style.maxHeight='calc(100dvh - 92px)';
   makeMegaMenu();
   dropdownBtn?.addEventListener('click',e=>{
+    e.preventDefault();
     e.stopImmediatePropagation();
     dropdown.classList.contains('open')?closeDropdown():openDropdown();
     if(dropdown.classList.contains('open')){
       const active=panel.querySelector('.dd-level.active .dd-level-head')||panel.querySelector('.dd-level-head');
       active?.focus({preventScroll:true});
     }
-  });
+  },true);
   document.addEventListener('click',e=>{
     if(dropdown.classList.contains('open')&&!dropdown.contains(e.target))closeDropdown();
   },true);
