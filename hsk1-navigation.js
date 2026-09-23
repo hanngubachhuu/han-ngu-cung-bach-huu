@@ -308,6 +308,115 @@ function setupMobileNav(){
     });
   });
 }
+const LEARNING_KEY='hnh_learning_state_v1';
+const LESSON_INDEX=Object.create(null);
+let learningState={last:null,visited:[]};
+
+function readLearningState(){
+  try{
+    const raw=localStorage.getItem(LEARNING_KEY);
+    if(!raw)return;
+    const parsed=JSON.parse(raw);
+    if(parsed&&Array.isArray(parsed.visited)){
+      learningState={
+        last:parsed.last&&typeof parsed.last==='object'?parsed.last:null,
+        visited:[...new Set(parsed.visited.filter(x=>typeof x==='string'))]
+      };
+    }
+  }catch(_e){}
+}
+function saveLearningState(){
+  try{localStorage.setItem(LEARNING_KEY,JSON.stringify(learningState));}catch(_e){}
+}
+function pathnameKey(){
+  return (location.pathname.split('/').pop()||'trang-chu.html').toLowerCase();
+}
+function collectLessonIndex(levels){
+  levels.forEach(level=>{
+    const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
+    if(!/^[1-6]$/.test(badge))return;
+    const links=[...level.querySelectorAll('.dd-level-lessons a')];
+    links.forEach(a=>{
+      const href=(a.getAttribute('href')||'').split('#')[0].split('?')[0];
+      if(!href)return;
+      const key=href.split('/').pop().toLowerCase();
+      if(!/^([a-z0-9_-]+)\.html$/.test(key))return;
+      LESSON_INDEX[key]={level:Number(badge),title:a.textContent.trim(),href};
+    });
+  });
+}
+function trackCurrentLesson(){
+  const key=pathnameKey();
+  const meta=LESSON_INDEX[key];
+  if(!meta)return;
+  learningState.visited=[...new Set([...learningState.visited,key])].slice(-200);
+  learningState.last={path:key,level:meta.level,title:meta.title,href:meta.href,updatedAt:Date.now()};
+  saveLearningState();
+}
+function lessonsForLevel(level){
+  return Object.values(LESSON_INDEX).filter(x=>x.level===level);
+}
+function buildLevelStatus(level){
+  const list=lessonsForLevel(level);
+  if(!list.length)return {kind:'empty',label:'Sắp ra mắt',ratio:0};
+  const seen=list.filter(x=>learningState.visited.includes(x.href.split('/').pop().toLowerCase())).length;
+  const current=learningState.last?.level===level;
+  if(current)return {kind:'current',label:seen+' / '+list.length+' · Đang học',ratio:seen/list.length};
+  if(seen>0)return {kind:'seen',label:seen+' / '+list.length+' · Đã xem',ratio:seen/list.length};
+  return {kind:'empty',label:'Chưa học',ratio:0};
+}
+function addLevelStatus(level,index){
+  const head=level.querySelector('.dd-level-head');
+  const name=head?.querySelector('.dd-level-name');
+  if(!head||!name)return;
+  level.dataset.levelIndex=String(index);
+  const status=buildLevelStatus(Number(level.querySelector('.dd-level-badge')?.textContent?.trim()||0));
+  level.dataset.learningStatus=status.kind;
+  let el=head.querySelector('.hsk-level-status');
+  if(!el){
+    el=document.createElement('span');
+    el.className='hsk-level-status';
+    head.insertBefore(el,head.querySelector('.dd-level-caret')||null);
+  }
+  el.textContent=status.label;
+}
+function getLastLearningMeta(){
+  if(!learningState.last)return null;
+  const key=(learningState.last.path||'').toLowerCase();
+  return LESSON_INDEX[key]?{...LESSON_INDEX[key],path:key}:null;
+}
+function injectBreadcrumb(){
+  const key=pathnameKey();
+  const meta=LESSON_INDEX[key];
+  if(!meta||!document.getElementById('siteNav'))return;
+  const old=document.getElementById('siteBreadcrumb');
+  if(old)old.remove();
+  const nav=document.createElement('nav');
+  nav.id='siteBreadcrumb';
+  nav.className='breadcrumb-nav no-print';
+  nav.setAttribute('aria-label','Đường dẫn trang');
+  const list=document.createElement('ol');
+  list.className='breadcrumb-list';
+  const add=(label,href,extraClass,current=false)=>{
+    const li=document.createElement('li');
+    li.className='breadcrumb-item'+(extraClass?' '+extraClass:'');
+    if(current){
+      li.setAttribute('aria-current','page');
+      li.textContent=label;
+    }else{
+      const a=document.createElement('a');
+      a.href=href;a.textContent=label;
+      li.appendChild(a);
+    }
+    list.appendChild(li);
+  };
+  add('Trang chủ','trang-chu.html');
+  add('Lộ trình HSK','trang-chu.html#bai-hoc');
+  add('HSK '+meta.level,'trang-chu.html#bai-hoc','breadcrumb-level');
+  add(meta.title,'', '', true);
+  nav.appendChild(list);
+  document.getElementById('siteNav').insertAdjacentElement('afterend',nav);
+}
 function makeMegaMenu(){
   if(!panel||panel.dataset.megaReady==='1')return;
   const originalLevels=[...panel.querySelectorAll('.dd-level')];
@@ -318,27 +427,72 @@ function makeMegaMenu(){
   });
   if(!levels.length)return;
 
+  collectLessonIndex(levels);
+  trackCurrentLesson();
   panel.innerHTML='';
   panel.classList.add('hsk-mega-panel');
+
   const levelCol=document.createElement('div');
   levelCol.className='hsk-mega-levels';
+
   const detail=document.createElement('section');
   detail.className='hsk-mega-detail';
   detail.setAttribute('aria-live','polite');
   detail.setAttribute('aria-label','Chương trình cấp HSK đang chọn');
 
-  const makeDetail=(level,index)=>{
-    const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
-    const title=level.querySelector('.dd-level-name')?.textContent?.trim()||('HSK '+badge);
-    const lessons=[...level.querySelectorAll('.dd-level-lessons a')];
-    const soon=!!level.querySelector('.dd-level-soon');
-    detail.innerHTML='';
+  const resumeWrap=document.createElement('div');
+  resumeWrap.className='hsk-mega-resume-wrap';
+  detail.appendChild(resumeWrap);
+
+  const renderResume=()=>{
+    const last=getLastLearningMeta();
+    resumeWrap.innerHTML='';
+    if(!last){
+      resumeWrap.innerHTML='<div class="hsk-mega-resume-empty"><strong>Chưa có bài đang học.</strong> Chọn một cấp độ để bắt đầu lộ trình.</div>';
+      return;
+    }
+    const box=document.createElement('div');
+    box.className='hsk-mega-resume';
+    const copy=document.createElement('div');
+    copy.className='hsk-mega-resume-copy';
+    const kicker=document.createElement('div');
+    kicker.className='hsk-mega-resume-kicker';
+    kicker.textContent='HỌC TIẾP';
+    const title=document.createElement('p');
+    title.className='hsk-mega-resume-title';
+    title.textContent=last.title;
+    const meta=document.createElement('p');
+    meta.className='hsk-mega-resume-meta';
+    meta.textContent='HSK '+last.level+' · bài gần nhất đã mở';
+    copy.append(kicker,title,meta);
+
+    const link=document.createElement('a');
+    link.className='hsk-mega-resume-link';
+    link.href=last.href;
+    link.textContent='Học tiếp →';
+    link.addEventListener('click',()=>closeDropdown());
+
+    box.append(copy,link);
+    resumeWrap.appendChild(box);
+  };
+
+  const makeDetail=(sourceLevel,index)=>{
+    const badge=sourceLevel.querySelector('.dd-level-badge')?.textContent?.trim()||'';
+    const title=sourceLevel.querySelector('.dd-level-name')?.textContent?.trim()||('HSK '+badge);
+    const lessons=[...sourceLevel.querySelectorAll('.dd-level-lessons a')];
+    const soon=!!sourceLevel.querySelector('.dd-level-soon');
+
+    renderResume();
+    [...detail.querySelectorAll('.hsk-mega-detail-head,.hsk-mega-detail-list,.hsk-mega-detail-empty')].forEach(x=>x.remove());
+
     const head=document.createElement('div');
     head.className='hsk-mega-detail-head';
+
     const badgeEl=document.createElement('div');
     badgeEl.className='hsk-mega-detail-badge';
     badgeEl.textContent=badge;
     badgeEl.setAttribute('aria-hidden','true');
+
     const headText=document.createElement('div');
     const kicker=document.createElement('div');
     kicker.className='hsk-mega-detail-kicker';
@@ -346,10 +500,11 @@ function makeMegaMenu(){
     const titleEl=document.createElement('h3');
     titleEl.className='hsk-mega-detail-title';
     titleEl.textContent=title;
+
     const sub=document.createElement('p');
     sub.className='hsk-mega-detail-sub';
     sub.textContent=lessons.length
-      ? 'Chọn bài học để mở trực tiếp chương trình cấp này.'
+      ? lessons.length+' bài học hiện có · Chọn bài để mở trực tiếp chương trình cấp này.'
       : (soon?'Chương trình đang được chuẩn bị.':'Chưa có bài học được công bố.');
     headText.append(kicker,titleEl,sub);
     head.append(badgeEl,headText);
@@ -360,6 +515,16 @@ function makeMegaMenu(){
       list.className='hsk-mega-detail-list';
       lessons.forEach(a=>{
         const clone=a.cloneNode(true);
+        const lessonKey=(a.getAttribute('href')||'').split('#')[0].split('?')[0].split('/').pop().toLowerCase();
+        if(learningState.visited.includes(lessonKey)){
+          clone.classList.add('lesson-seen');
+          clone.setAttribute('data-learning-status','seen');
+        }
+        if(learningState.last?.path===lessonKey){
+          clone.classList.add('lesson-current');
+          clone.setAttribute('data-learning-status','current');
+        }
+        clone.addEventListener('click',()=>closeDropdown());
         list.appendChild(clone);
       });
       detail.appendChild(list);
@@ -369,28 +534,36 @@ function makeMegaMenu(){
       empty.innerHTML='<div><strong>HSK '+badge+'</strong>Chương trình sẽ được bổ sung vào lộ trình chung.</div>';
       detail.appendChild(empty);
     }
+
     levelCol.querySelectorAll('.dd-level').forEach(x=>x.classList.remove('active'));
     levelCol.querySelectorAll('.dd-level-head').forEach(x=>x.setAttribute('aria-expanded','false'));
     const visibleLevel=levelCol.querySelector('[data-level-index="'+index+'"]');
     visibleLevel?.classList.add('active');
+    visibleLevel?.setAttribute('data-learning-status',buildLevelStatus(Number(badge)).kind);
     visibleLevel?.querySelector('.dd-level-head')?.setAttribute('aria-expanded','true');
   };
 
-  levels.forEach((level,index)=>{
-    const copy=level.cloneNode(true);
+  levels.forEach((sourceLevel,index)=>{
+    const copy=sourceLevel.cloneNode(true);
     copy.querySelector('.dd-level-lessons')?.remove();
     copy.classList.add('dd-level');
-    copy.setAttribute('data-level-index',String(index));
+
     const head=copy.querySelector('.dd-level-head');
     if(!head)return;
     head.setAttribute('role','button');
     head.setAttribute('tabindex','0');
     head.setAttribute('aria-expanded','false');
+
     const badge=copy.querySelector('.dd-level-badge')?.textContent?.trim()||'';
     head.setAttribute('aria-label','Xem chương trình HSK '+badge);
-    levelCol.appendChild(copy);
 
-    const activate=()=>makeDetail(level,index);
+    levelCol.appendChild(copy);
+    addLevelStatus(copy,index);
+
+    const activate=()=>{
+      makeDetail(sourceLevel,index);
+      addLevelStatus(copy,index);
+    };
     copy.addEventListener('mouseenter',()=>{
       if(window.matchMedia('(hover: hover)').matches)activate();
     });
@@ -403,11 +576,11 @@ function makeMegaMenu(){
       if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}
       if(e.key==='ArrowDown'){
         e.preventDefault();
-        levels[Math.min(index+1,levels.length-1)].querySelector('.dd-level-head')?.focus();
+        levelCol.children[Math.min(index+1,levels.length-1)]?.querySelector('.dd-level-head')?.focus();
       }
       if(e.key==='ArrowUp'){
         e.preventDefault();
-        levels[Math.max(index-1,0)].querySelector('.dd-level-head')?.focus();
+        levelCol.children[Math.max(index-1,0)]?.querySelector('.dd-level-head')?.focus();
       }
     });
   });
@@ -419,9 +592,13 @@ function makeMegaMenu(){
   }else{
     panel.append(levelCol,detail);
   }
+
   panel.dataset.megaReady='1';
-  makeDetail(levels[0],0);
+  const initialIndex=Math.max(0,levels.findIndex(x=>x.querySelector('.dd-level-badge')?.textContent?.trim()==String(learningState.last?.level||1)));
+  makeDetail(levels[initialIndex]||levels[0],initialIndex);
+  renderResume();
 }
+
 function initHskMegaMenu(){
   if(!panel||!dropdown)return;
   panel.style.maxHeight='calc(100dvh - 92px)';
