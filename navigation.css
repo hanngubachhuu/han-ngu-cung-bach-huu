@@ -1059,3 +1059,300 @@ body{
     color:#fff !important;
   }
 }
+
+
+/* ============================================================
+   NAV v5 — CẤP ĐỘ LỘNG LẪY / SỨC ÉP
+   HSK càng cao → hover càng nhiều lớp ánh, viền, quang sắc.
+   Bài càng về sau → hiệu ứng "nứt" càng mạnh.
+   ============================================================ */
+.hsk-mega-levels .dd-level-head{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+.hsk-mega-levels .dd-level-head::before,
+.hsk-mega-levels .dd-level-head::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 360ms ease,transform 520ms ease,background-position 900ms ease;
+}
+.hsk-mega-levels .dd-level-head::before{
+  inset:0;
+  background:radial-gradient(circle at 15% 50%,rgba(244,197,110,.22),transparent 48%);
+}
+.hsk-mega-levels .dd-level-head::after{
+  inset:1px;
+  border-radius:11px;
+  border:1px solid rgba(244,197,110,.15);
+}
+.hsk-mega-levels .dd-level-name,
+.hsk-mega-levels .hsk-level-status,
+.hsk-mega-levels .dd-level-caret{
+  position:relative;
+  z-index:2;
+}
+
+/* HSK 1 — chỉ một lớp ánh nhẹ */
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="1"] .dd-level-head:hover,
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="1"] .dd-level-head:focus-visible{
+  background:#F9F2E7 !important;
+  box-shadow:inset 3px 0 0 #D68910,0 5px 12px rgba(214,137,16,.07) !important;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="1"] .dd-level-head:hover::before{
+  opacity:.55;
+}
+
+/* HSK 2 — thêm quầng kim */
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="2"] .dd-level-head:hover,
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="2"] .dd-level-head:focus-visible{
+  background:linear-gradient(100deg,#F9F1E1,#FFF7EA) !important;
+  box-shadow:inset 3px 0 0 #D68910,0 7px 17px rgba(214,137,16,.10),0 0 0 1px rgba(214,137,16,.09) !important;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="2"] .dd-level-head:hover::before{
+  opacity:.72;
+  transform:translateX(4px);
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="2"] .dd-level-head:hover::after{
+  opacity:.75;
+}
+
+/* HSK 3 — ánh chuyển động */
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="3"] .dd-level-head:hover,
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="3"] .dd-level-head:focus-visible{
+  background:linear-gradient(105deg,#FFF9EA 0%,#F7EAC8 42%,#FFFDF8 70%,#F8E8C7 100%) !important;
+  background-size:220% 100% !important;
+  animation:hnhLevelSheen3 1.6s ease-in-out both;
+  box-shadow:inset 3px 0 0 #D68910,0 9px 21px rgba(214,137,16,.13),0 0 0 1px rgba(214,137,16,.13) !important;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="3"] .dd-level-head:hover::before{
+  opacity:.88;
+  transform:translateX(8px);
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="3"] .dd-level-head:hover::after{
+  opacity:1;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.62),transparent);
+  border:0;
+  transform:translateX(110%);
+}
+@keyframes hnhLevelSheen3{
+  0%{background-position:130% 0;}
+  100%{background-position:0 0;}
+}
+
+/* HSK 4 — quang sắc rõ, có cảm giác "mở khóa" */
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="4"] .dd-level-head:hover,
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="4"] .dd-level-head:focus-visible{
+  background:
+    radial-gradient(circle at 85% 20%,rgba(244,197,110,.36),transparent 32%),
+    linear-gradient(105deg,#FCEFD0,#FFF9EC 56%,#F6E4B7) !important;
+  box-shadow:
+    inset 3px 0 0 #C0392B,
+    0 10px 25px rgba(192,57,43,.10),
+    0 0 0 1px rgba(214,137,16,.18),
+    0 0 18px rgba(214,137,16,.13) !important;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="4"] .dd-level-head:hover::before{
+  opacity:1;
+  transform:scale(1.12);
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="4"] .dd-level-head:hover::after{
+  opacity:1;
+  border-color:rgba(214,137,16,.38);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.34);
+}
+
+/* HSK 5 — huy hiệu kim tuyến, ánh vàng bắt mắt hơn */
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="5"] .dd-level-head:hover,
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="5"] .dd-level-head:focus-visible{
+  background:
+    radial-gradient(circle at 12% 50%,rgba(192,57,43,.12),transparent 28%),
+    radial-gradient(circle at 88% 30%,rgba(244,197,110,.48),transparent 34%),
+    linear-gradient(100deg,#FAEBCB,#FFF9EB 50%,#F1D89E) !important;
+  box-shadow:
+    inset 4px 0 0 #C0392B,
+    0 12px 30px rgba(192,57,43,.13),
+    0 0 0 1px rgba(214,137,16,.22),
+    0 0 26px rgba(214,137,16,.18) !important;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="5"] .dd-level-head:hover::before{
+  opacity:1;
+  transform:translateX(10px) scale(1.15);
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="5"] .dd-level-head:hover::after{
+  opacity:1;
+  border-color:rgba(214,137,16,.54);
+  animation:hnhGoldPulse5 1.4s ease-in-out infinite alternate;
+}
+@keyframes hnhGoldPulse5{
+  from{box-shadow:inset 0 0 0 rgba(214,137,16,0);}
+  to{box-shadow:inset 0 0 14px rgba(214,137,16,.13);}
+}
+
+/* HSK 6 — tầng cao nhất: kim quang + Chu Sa + hiệu ứng lụa */
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover,
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="6"] .dd-level-head:focus-visible{
+  background:
+    radial-gradient(circle at 83% 20%,rgba(244,197,110,.60),transparent 34%),
+    radial-gradient(circle at 15% 80%,rgba(192,57,43,.14),transparent 31%),
+    linear-gradient(105deg,#F6D99E,#FFF5D9 48%,#EBCB86 100%) !important;
+  box-shadow:
+    inset 4px 0 0 #C0392B,
+    0 14px 34px rgba(192,57,43,.17),
+    0 0 0 1px rgba(192,57,43,.16),
+    0 0 0 2px rgba(214,137,16,.12),
+    0 0 34px rgba(214,137,16,.25) !important;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover::before{
+  opacity:1;
+  transform:translateX(14px) scale(1.22);
+  background:
+    radial-gradient(circle at 20% 50%,rgba(255,255,255,.70),transparent 24%),
+    radial-gradient(circle at 80% 35%,rgba(244,197,110,.54),transparent 42%),
+    linear-gradient(115deg,transparent 20%,rgba(255,255,255,.42) 45%,transparent 70%);
+  background-size:auto,auto,210% 100%;
+  animation:hnhSilk6 1.9s ease-in-out both;
+}
+.hsk-mega-levels .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover::after{
+  opacity:1;
+  border-color:rgba(192,57,43,.30);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.48),0 0 16px rgba(214,137,16,.12);
+}
+@keyframes hnhSilk6{
+  0%{background-position:0 0,0 0,120% 0;}
+  100%{background-position:0 0,0 0,-20% 0;}
+}
+
+/* ============================================================
+   BÀI HỌC — áp lực tăng dần, hiệu ứng nứt quanh khung
+   ============================================================ */
+.hsk-mega-lesson-row{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+}
+.hsk-mega-lesson-row::before,
+.hsk-mega-lesson-row::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 320ms ease,filter 320ms ease,transform 320ms ease;
+}
+
+/* Vành nứt ngoài: các nhánh phân bố ở bốn góc */
+.hsk-mega-lesson-row::before{
+  inset:var(--hnh-crack-inset);
+  border-radius:14px;
+  background:
+    linear-gradient(118deg,transparent 0 45%,rgba(192,57,43,var(--hnh-crack-alpha)) 46% 48%,transparent 49% 100%) left top/58px 30px no-repeat,
+    linear-gradient(214deg,transparent 0 45%,rgba(192,57,43,var(--hnh-crack-alpha)) 46% 48%,transparent 49% 100%) right top/58px 30px no-repeat,
+    linear-gradient(62deg,transparent 0 46%,rgba(192,57,43,var(--hnh-crack-alpha)) 47% 49%,transparent 50% 100%) left bottom/58px 30px no-repeat,
+    linear-gradient(298deg,transparent 0 46%,rgba(192,57,43,var(--hnh-crack-alpha)) 47% 49%,transparent 50% 100%) right bottom/58px 30px no-repeat;
+  filter:blur(.15px);
+}
+
+/* Vết rạn bên trong: càng về sau càng rõ */
+.hsk-mega-lesson-row::after{
+  inset:-1px;
+  border-radius:12px;
+  background:
+    linear-gradient(124deg,transparent 0 17%,rgba(192,57,43,.55) 17.5% 18%,transparent 18.5% 100%) left top/74px 46px no-repeat,
+    linear-gradient(238deg,transparent 0 15%,rgba(192,57,43,.48) 15.5% 16%,transparent 16.5% 100%) right top/76px 44px no-repeat,
+    linear-gradient(58deg,transparent 0 78%,rgba(192,57,43,.42) 78.5% 79%,transparent 79.5% 100%) right bottom/80px 42px no-repeat,
+    linear-gradient(312deg,transparent 0 80%,rgba(192,57,43,.40) 80.5% 81%,transparent 81.5% 100%) left bottom/76px 44px no-repeat;
+  mix-blend-mode:multiply;
+}
+
+/* Chữ và nút nằm trên các lớp nứt */
+.hsk-mega-lesson-row > *{
+  position:relative;
+  z-index:2;
+}
+
+.hsk-mega-lesson-row:hover,
+.hsk-mega-lesson-row:focus-within{
+  transform:translateY(-1px) scale(1.002);
+}
+.hsk-mega-lesson-row:hover::before,
+.hsk-mega-lesson-row:focus-within::before{
+  opacity:1;
+  animation:hnhCrackPulse var(--hnh-crack-duration) ease-out 1;
+}
+.hsk-mega-lesson-row:hover::after,
+.hsk-mega-lesson-row:focus-within::after{
+  opacity:clamp(.25,var(--hnh-crack-alpha),.92);
+  transform:scale(1.006);
+  filter:drop-shadow(0 0 var(--hnh-crack-blur) rgba(192,57,43,.10));
+}
+@keyframes hnhCrackPulse{
+  0%{transform:scale(.985);filter:blur(.7px);}
+  42%{transform:scale(1.012);filter:blur(0);}
+  100%{transform:scale(1);filter:blur(.1px);}
+}
+
+/* Áp lực theo chặng: 1-5 nhẹ, 6-10 rõ, 11-15 mạnh */
+.hsk-mega-lesson-row[data-hnh-lesson-seq="1"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="2"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="3"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="4"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="5"]:hover{
+  background:#FFF8F4 !important;
+}
+.hsk-mega-lesson-row[data-hnh-lesson-seq="6"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="7"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="8"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="9"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="10"]:hover{
+  background:#FFF2EE !important;
+  box-shadow:0 8px 22px rgba(192,57,43,.09);
+}
+.hsk-mega-lesson-row[data-hnh-lesson-seq="11"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="12"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="13"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="14"]:hover,
+.hsk-mega-lesson-row[data-hnh-lesson-seq="15"]:hover{
+  background:#FDEDE9 !important;
+  box-shadow:0 10px 28px rgba(192,57,43,.14),0 0 0 1px rgba(192,57,43,.10);
+}
+.hsk-mega-lesson-row[data-hnh-lesson-seq="15"]:hover::before{
+  filter:blur(0);
+  animation-duration:.68s;
+}
+
+/* Bài hiện tại giữ "áp lực" nhẹ kể cả khi không hover, nhưng không quá ồn. */
+.hsk-mega-lesson-row.is-current{
+  background:#FBEDEA;
+  border-color:#EFC7C0;
+}
+.hsk-mega-lesson-row.is-current::after{
+  opacity:.16;
+}
+@media(max-width:760px){
+  .hsk-mega-levels .dd-level-head:active::before,
+  .hsk-mega-levels .dd-level-head:focus-visible::before{
+    opacity:1;
+  }
+  .hsk-mega-lesson-row:active::before,
+  .hsk-mega-lesson-row:active::after{
+    opacity:1;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hsk-mega-levels .dd-level-head::before,
+  .hsk-mega-levels .dd-level-head::after,
+  .hsk-mega-lesson-row::before,
+  .hsk-mega-lesson-row::after{
+    transition:none !important;
+  }
+  .hsk-mega-levels .dd-level[data-hnh-hsk-level="3"] .dd-level-head:hover,
+  .hsk-mega-levels .dd-level[data-hnh-hsk-level="5"] .dd-level-head:hover,
+  .hsk-mega-levels .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover,
+  .hsk-mega-lesson-row:hover::before{
+    animation:none !important;
+  }
+}
