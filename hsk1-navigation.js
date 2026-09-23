@@ -277,6 +277,19 @@ function openDropdown(){
   dropdown.classList.add('open');
   dropdownBtn?.setAttribute('aria-expanded','true');
 }
+function markCurrentNav(){
+  const current=(location.pathname.split('/').pop()||'trang-chu.html').toLowerCase();
+  navLinks?.querySelectorAll('a').forEach(a=>{
+    const href=(a.getAttribute('href')||'').toLowerCase();
+    if(!href||href.startsWith('#')||href.includes('://')||href.startsWith('mailto:'))return;
+    const target=href.split('#')[0].split('?')[0];
+    if(!target)return;
+    const same=(current==='index.html'&&target==='trang-chu.html')||
+      (current==='trang-chu.html'&&target==='index.html')||
+      target===current;
+    if(same&&!href.includes('#'))a.setAttribute('aria-current','page');
+  });
+}
 function setupMobileNav(){
   if(!burger||!navLinks)return;
   burger.setAttribute('aria-haspopup','true');
@@ -432,6 +445,7 @@ function initHskMegaMenu(){
     if(link&&link.closest('.hsk-mega-detail-list'))closeDropdown();
   });
 }
+markCurrentNav();
 setupMobileNav();
 initHskMegaMenu();
 })();
