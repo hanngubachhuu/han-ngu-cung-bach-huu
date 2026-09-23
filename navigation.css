@@ -3357,63 +3357,49 @@ body{
 }
 
 
-/* NAV v13 — sửa dứt điểm chiều cao list: header + resume + list cùng nằm
-   trong một flex column, list nhận phần không gian còn lại và scroll đủ 15 bài. */
+/* ============================================================
+   NAV v14 — KHÓA BỀ RỘNG / SCROLL 15 BÀI
+   ============================================================ */
 .hnh-mega-v12 .hsk-mega-detail{
-  display:flex !important;
-  flex-direction:column !important;
-  min-height:0 !important;
-  height:min(720px,calc(100dvh - 140px)) !important;
-  max-height:min(720px,calc(100dvh - 140px)) !important;
-}
-.hnh-mega-v12 .hsk-mega-resume-wrap{
-  flex:0 0 auto !important;
-  min-height:0 !important;
-}
-.hnh-mega-v12 .hsk-mega-detail-head{
-  flex:0 0 auto !important;
+  width:100% !important;
+  min-width:0 !important;
 }
 .hnh-mega-v12 .hsk-mega-detail-list{
-  flex:1 1 auto !important;
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-height:300px !important;
   height:auto !important;
-  max-height:none !important;
-  min-height:0 !important;
+  max-height:390px !important;
   overflow-y:auto !important;
   overflow-x:hidden !important;
+  scrollbar-gutter:stable !important;
 }
 .hnh-mega-v12 .hsk-mega-detail-list > .hsk-mega-lesson-row{
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-width:0 !important;
+  min-height:58px !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-link{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  font-size:15px !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-action{
   flex:0 0 auto !important;
 }
 
-/* Cấp HSK luôn chiếm toàn bộ vùng click, tránh click vào khoảng trống. */
-.hnh-mega-v12 .hsk-mega-levels .dd-level-head{
-  user-select:none;
-  -webkit-user-select:none;
+/* Mobile */
+@media(max-width:760px){
+  .hnh-mega-v12 .hsk-mega-detail-list{
+    height:52vh !important;
+    max-height:52vh !important;
+    min-height:280px !important;
+  }
 }
-.hnh-mega-v12 .hsk-mega-levels .dd-level-head:hover{
-  cursor:pointer !important;
-}
-
-/* Hiệu ứng cấp HSK rõ hơn khi active do hover, không đợi thêm class khác. */
-.hnh-mega-v12 .hsk-mega-levels .dd-level[data-hnh-hsk-level="1"]:hover .dd-level-head{
-  box-shadow:inset 3px 0 0 #D68910,0 6px 18px rgba(214,137,16,.10) !important;
-}
-.hnh-mega-v12 .hsk-mega-levels .dd-level[data-hnh-hsk-level="2"]:hover .dd-level-head{
-  box-shadow:inset 3px 0 0 #D68910,0 8px 21px rgba(214,137,16,.18),0 0 24px rgba(244,197,110,.16) !important;
-}
-.hnh-mega-v12 .hsk-mega-levels .dd-level[data-hnh-hsk-level="3"]:hover .dd-level-head{
-  box-shadow:inset 3px 0 0 #D68910,0 9px 23px rgba(214,137,16,.18),0 0 28px rgba(244,197,110,.20) !important;
-}
-.hnh-mega-v12 .hsk-mega-levels .dd-level[data-hnh-hsk-level="4"]:hover .dd-level-head{
-  box-shadow:inset 4px 0 0 #C0392B,0 11px 27px rgba(192,57,43,.13),0 0 34px rgba(214,137,16,.23) !important;
-}
-.hnh-mega-v12 .hsk-mega-levels .dd-level[data-hnh-hsk-level="5"]:hover .dd-level-head{
-  box-shadow:inset 4px 0 0 #C0392B,0 13px 31px rgba(192,57,43,.16),0 0 42px rgba(214,137,16,.30) !important;
-}
-.hnh-mega-v12 .hsk-mega-levels .dd-level[data-hnh-hsk-level="6"]:hover .dd-level-head{
-  box-shadow:inset 5px 0 0 #C0392B,0 15px 36px rgba(192,57,43,.20),0 0 52px rgba(214,137,16,.40) !important;
-}
-
 @media(max-width:760px){
   .hnh-mega-v12 .hsk-mega-detail{
     display:block !important;
