@@ -108,6 +108,260 @@
   margin-bottom:4px;
 }
 
+/* ============================================================
+   NAV v2 — MEGA MENU LỘ TRÌNH HSK
+   Desktop: cột trái = cấp độ, cột phải = chương trình cấp đang rê vào.
+   Mobile: cấp độ → chạm → chương trình mở ngay bên dưới.
+   ============================================================ */
+.site-nav{
+  min-height:72px;
+  background:var(--bg-card);
+  border-bottom:2px solid var(--color-primary);
+  box-shadow:0 4px 18px rgba(44,62,80,.08);
+}
+.site-nav-inner{
+  max-width:1180px;
+  height:72px;
+  padding:0 20px;
+}
+.site-nav-brand{
+  gap:12px;
+  font-size:16px;
+  letter-spacing:.01em;
+}
+.site-nav-logo-img{
+  height:52px !important;
+  width:auto;
+  max-width:240px;
+  object-fit:contain;
+  display:block;
+  transition:transform .2s ease;
+}
+.site-nav-brand:hover .site-nav-logo-img{transform:translateY(-1px);}
+.site-nav-links{gap:24px;}
+.site-nav-links>a,.site-nav-dropdown-btn{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  font-size:15px;
+}
+.site-nav-dropdown-btn{gap:8px;}
+.dd-caret{font-size:9px;}
+.site-nav-dropdown-panel{
+  width:min(820px,calc(100vw - 36px));
+  max-height:none;
+  overflow:visible;
+  padding:10px;
+  border-radius:18px;
+  box-shadow:0 20px 55px rgba(44,62,80,.18);
+  background:var(--bg-card);
+  border:1px solid var(--border);
+}
+.site-nav-dropdown.open .site-nav-dropdown-panel{
+  display:grid;
+  grid-template-columns:210px minmax(0,1fr);
+  gap:8px;
+}
+.site-nav-dropdown-panel::before{
+  content:"";
+  position:absolute;
+  top:-7px;
+  left:50%;
+  width:14px;
+  height:14px;
+  background:var(--bg-card);
+  border-left:1px solid var(--border);
+  border-top:1px solid var(--border);
+  transform:translateX(-50%) rotate(45deg);
+}
+.hsk-mega-levels{
+  padding:6px;
+  border-right:1px solid var(--border);
+}
+.hsk-mega-levels .dd-level{
+  margin:0 0 4px;
+  overflow:visible;
+}
+.hsk-mega-levels .dd-level:last-child{margin-bottom:0;}
+.hsk-mega-levels .dd-level-head{
+  min-height:50px;
+  padding:8px 10px;
+  border:1px solid transparent;
+  border-radius:12px;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease;
+}
+.hsk-mega-levels .dd-level-head:hover,
+.hsk-mega-levels .dd-level.active .dd-level-head,
+.hsk-mega-levels .dd-level-head:focus-visible{
+  background:var(--color-primary-subtle);
+  border-color:rgba(192,57,43,.18);
+  transform:translateX(2px);
+}
+.hsk-mega-levels .dd-level-name{
+  flex:1;
+  font-size:14px;
+}
+.hsk-mega-levels .dd-level-caret{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:22px;height:22px;
+  border-radius:50%;
+  color:var(--color-primary);
+  font-size:12px;
+}
+.hsk-mega-levels .dd-level.active .dd-level-caret{transform:translateX(1px);}
+.hsk-mega-levels .dd-level-soon{margin-left:auto;}
+.hsk-mega-levels .dd-level-lessons{display:none !important;}
+.hsk-mega-detail{
+  min-width:0;
+  min-height:310px;
+  padding:18px 18px 16px;
+  border-radius:14px;
+  background:linear-gradient(180deg,var(--bg-soft),var(--bg-card));
+}
+.hsk-mega-detail-head{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding-bottom:14px;
+  margin-bottom:10px;
+  border-bottom:1px solid var(--border);
+}
+.hsk-mega-detail-badge{
+  width:42px;height:42px;flex:0 0 42px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:13px;
+  background:var(--color-primary);
+  color:#fff;
+  font-size:14px;font-weight:900;
+  box-shadow:0 6px 16px rgba(192,57,43,.22);
+}
+.hsk-mega-detail-kicker{
+  margin:1px 0 2px;
+  color:var(--color-primary);
+  font-size:10px;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.hsk-mega-detail-title{
+  margin:0;
+  color:var(--text);
+  font-size:18px;font-weight:800;
+}
+.hsk-mega-detail-sub{
+  margin:3px 0 0;
+  color:var(--text-soft);
+  font-size:12px;
+  line-height:1.55;
+}
+.hsk-mega-detail-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+  max-height:235px;
+  overflow:auto;
+  padding-right:3px;
+}
+.hsk-mega-detail-list a{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  min-height:44px;
+  padding:9px 10px;
+  border:1px solid transparent;
+  border-radius:10px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:12.5px;
+  line-height:1.45;
+  transition:background .16s ease,border-color .16s ease,transform .16s ease,color .16s ease;
+}
+.hsk-mega-detail-list a::before{
+  content:"";
+  width:6px;height:6px;flex:0 0 6px;
+  margin-top:6px;
+  border-radius:50%;
+  background:var(--color-accent);
+}
+.hsk-mega-detail-list a:hover{
+  background:var(--bg-card);
+  border-color:var(--border);
+  color:var(--color-primary);
+  transform:translateY(-1px);
+}
+.hsk-mega-detail-empty{
+  display:flex;
+  min-height:240px;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  color:var(--text-soft);
+  font-size:13px;
+  line-height:1.7;
+}
+.hsk-mega-detail-empty strong{
+  display:block;
+  color:var(--text);
+  font-size:15px;
+  margin-bottom:5px;
+}
+.hsk-mega-review{
+  grid-column:1 / -1;
+  margin:4px 6px 2px;
+  padding:10px 12px;
+  border-top:1px solid var(--border);
+  color:var(--color-primary) !important;
+  font-weight:800 !important;
+}
+.hsk-mega-review::before{content:"↗";margin-right:6px;}
+@media(max-width:900px){
+  .site-nav-inner{padding:0 16px;}
+  .site-nav-logo-img{height:48px !important;}
+  .site-nav-links{gap:14px;}
+  .site-nav-links>a,.site-nav-dropdown-btn{font-size:14px;}
+  .site-nav-dropdown-panel{width:min(760px,calc(100vw - 28px));}
+}
+@media(max-width:760px){
+  .site-nav{min-height:64px;}
+  .site-nav-inner{height:64px;}
+  .site-nav-logo-img{height:48px !important;max-width:190px;}
+  .site-nav-brand span{display:none;}
+  .site-nav-burger{width:44px;height:44px;}
+  .site-nav-links{
+    top:64px;
+  }
+  .site-nav-dropdown.open .site-nav-dropdown-panel{
+    display:block;
+    width:100%;
+    padding:8px;
+    border-radius:0;
+    box-shadow:none;
+    border-left:0;border-right:0;
+  }
+  .site-nav-dropdown-panel::before{display:none;}
+  .hsk-mega-levels{
+    border-right:0;
+    padding:2px 0 6px;
+  }
+  .hsk-mega-levels .dd-level-head{
+    min-height:48px;
+  }
+  .hsk-mega-detail{
+    min-height:0;
+    padding:14px;
+  }
+  .hsk-mega-detail-list{
+    grid-template-columns:1fr;
+    max-height:42vh;
+  }
+  .hsk-mega-review{margin-left:0;margin-right:0;}
+}
+@media(max-width:460px){
+  .site-nav-logo-img{height:44px !important;max-width:165px;}
+  .site-nav-links>a,.site-nav-dropdown-btn{padding-left:16px;padding-right:16px;}
+}
+
 /* ===== Footer: luôn nằm cuối viewport với trang ngắn, bình thường với trang dài ===== */
 html{min-height:100%;}
 body{
