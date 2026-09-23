@@ -596,15 +596,27 @@ function makeMegaMenu(){
       const list=document.createElement('div');
       list.className='hsk-mega-detail-list';
 
-      lessons.forEach(lesson=>{
+      lessons.forEach((lesson,lessonIndex)=>{
         const lessonKey=lesson.href.split('#')[0].split('?')[0].split('/').pop().toLowerCase();
         const seen=learningState.visited.includes(lessonKey);
         const current=learningState.last?.path===lessonKey;
+        const sequence=Math.max(1,Number(lesson.lessonNo)||lessonIndex+1);
+        // Áp lực thị giác tăng dần theo tiến trình bài: đầu lộ trình chỉ là
+        // một vết rạn nhẹ, về cuối tạo cảm giác "sức ép" rõ hơn.
+        const pressure=Math.min(0.92,0.16+(sequence-1)*0.055);
+        const crackInset=(-4-Math.min(5,(sequence-1)*0.35)).toFixed(1)+'px';
+        const crackBlur=Math.round(7+(sequence-1)*1.3)+'px';
+        const crackDuration=Math.max(0.72,1.55-(sequence-1)*0.045).toFixed(2)+'s';
 
         const row=document.createElement('div');
         row.className='hsk-mega-lesson-row';
+        row.dataset.hnhLessonSeq=String(sequence);
         row.setAttribute('data-learning-status',current?'current':(seen?'seen':'new'));
         if(current)row.classList.add('is-current');
+        row.style.setProperty('--hnh-crack-alpha',pressure.toFixed(2));
+        row.style.setProperty('--hnh-crack-inset',crackInset);
+        row.style.setProperty('--hnh-crack-blur',crackBlur);
+        row.style.setProperty('--hnh-crack-duration',crackDuration);
 
         const main=document.createElement('a');
         main.className='hsk-mega-lesson-link';
@@ -660,6 +672,8 @@ function makeMegaMenu(){
     const number=extractLevelNumber(sourceLevel);
     const name=head.querySelector('.dd-level-name');
     if(name)name.textContent=cleanLevelTitle(sourceLevel,number);
+    copy.dataset.hnhHskLevel=String(number);
+    head.dataset.hnhHskLevel=String(number);
 
     head.setAttribute('role','button');
     head.setAttribute('tabindex','0');
