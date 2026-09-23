@@ -571,6 +571,36 @@
   .hsk-mega-resume-link{transition:none !important;}
 }
 
+
+.hsk-mega-detail-list a.lesson-seen::after{
+  content:"Đã xem";
+  flex:0 0 auto;
+  margin-left:auto;
+  padding:2px 6px;
+  border-radius:999px;
+  background:var(--color-secondary-subtle);
+  color:var(--color-secondary);
+  font-size:9px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.hsk-mega-detail-list a.lesson-current{
+  border-color:rgba(192,57,43,.28);
+  background:var(--color-primary-subtle);
+}
+.hsk-mega-detail-list a.lesson-current::after{
+  content:"Đang học";
+  flex:0 0 auto;
+  margin-left:auto;
+  padding:2px 6px;
+  border-radius:999px;
+  background:var(--color-primary);
+  color:#fff;
+  font-size:9px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
 /* ===== Footer: luôn nằm cuối viewport với trang ngắn, bình thường với trang dài ===== */
 html{min-height:100%;}
 body{
