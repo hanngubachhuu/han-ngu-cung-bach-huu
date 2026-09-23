@@ -741,9 +741,17 @@ function makeMegaMenu(){
 
 async function initHskMegaMenu(){
   if(!panel||!dropdown)return;
+
+  // Không cho menu nguồn "sổ" ra trước khi mega menu mới được dựng xong.
+  // Điều này loại bỏ khoảng nhấp nháy khiến giao diện cũ lộ ra.
+  panel.setAttribute('aria-busy','true');
+  panel.style.visibility='hidden';
   panel.style.maxHeight='calc(100dvh - 92px)';
+
   await loadCanonicalManifest();
   makeMegaMenu();
+  panel.style.visibility='visible';
+  panel.setAttribute('aria-busy','false');
   dropdownBtn?.addEventListener('click',e=>{
     e.preventDefault();
     e.stopImmediatePropagation();
