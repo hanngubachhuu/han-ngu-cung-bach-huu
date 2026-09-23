@@ -1922,3 +1922,219 @@ body{
   .hsk-mega-detail{padding:12px !important;}
   .hsk-mega-detail-list{max-height:48vh !important;}
 }
+
+
+/* ============================================================
+   NAV v8 — LỤA NGÀ / MEGA MENU SẠCH
+   ============================================================ */
+.site-nav{
+  background:#F8F3EA !important;
+  border-bottom:3px solid #C0392B !important;
+  box-shadow:0 4px 18px rgba(87,61,50,.10) !important;
+}
+.site-nav-inner{
+  height:72px !important;
+  max-width:1200px !important;
+  padding:0 22px !important;
+}
+.site-nav-brand,
+.site-nav-links>a,
+.site-nav-dropdown-btn{
+  color:#4B3A33 !important;
+}
+.site-nav-brand:hover,
+.site-nav-links>a:hover,
+.site-nav-dropdown-btn:hover,
+.site-nav-dropdown.open .site-nav-dropdown-btn,
+.site-nav-links>a[aria-current="page"]{
+  color:#C0392B !important;
+}
+.site-nav-logo-img{
+  height:54px !important;
+  max-width:250px !important;
+}
+.site-nav-links{
+  gap:24px !important;
+}
+.site-nav-links>a,
+.site-nav-dropdown-btn{
+  min-height:44px !important;
+  font-size:15px !important;
+  font-weight:700 !important;
+}
+.dd-caret{color:#C0392B !important;}
+
+.site-nav-dropdown-panel{
+  visibility:hidden;
+  width:min(900px,calc(100vw - 28px)) !important;
+  top:calc(100% + 9px) !important;
+  padding:9px !important;
+  border:1px solid #DDD2C5 !important;
+  border-radius:18px !important;
+  background:#FFFDF9 !important;
+  box-shadow:0 20px 52px rgba(76,57,48,.18) !important;
+  overflow:hidden !important;
+}
+.site-nav-dropdown.open .site-nav-dropdown-panel{
+  display:grid !important;
+  grid-template-columns:200px minmax(0,1fr) !important;
+  gap:8px !important;
+  visibility:visible;
+  animation:hnhMegaOpen 180ms ease both !important;
+  transform-origin:top center !important;
+}
+@keyframes hnhMegaOpen{
+  from{opacity:0;transform:translateX(-50%) translateY(-4px) scale(.985);}
+  to{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}
+}
+.site-nav-dropdown-panel[aria-busy="true"]{
+  visibility:hidden !important;
+}
+
+.hsk-mega-levels{
+  padding:6px !important;
+  background:#FAF5EC !important;
+  border-right:1px solid #E6DDD2 !important;
+  border-radius:13px !important;
+}
+.hsk-mega-levels .dd-level-head{
+  min-height:47px !important;
+  padding:9px 11px !important;
+  border-radius:11px !important;
+}
+.hsk-mega-levels .dd-level-head:hover,
+.hsk-mega-levels .dd-level.active .dd-level-head,
+.hsk-mega-levels .dd-level-head:focus-visible{
+  background:#F8E7E3 !important;
+  border-color:#EECAC3 !important;
+  box-shadow:inset 3px 0 0 #C0392B !important;
+  transform:none !important;
+}
+.hsk-mega-levels .dd-level-name{
+  color:#493A34 !important;
+  font-size:14px !important;
+}
+.hsk-level-status{
+  background:#F1ECE4 !important;
+  border-color:#E2D8CC !important;
+  color:#77706A !important;
+}
+.dd-level[data-learning-status="current"] .hsk-level-status{
+  background:#F8E2DE !important;
+  color:#C0392B !important;
+  border-color:#EBC2BB !important;
+}
+.dd-level[data-learning-status="seen"] .hsk-level-status{
+  background:#EAF3EC !important;
+  color:#34734F !important;
+  border-color:#CCE2D2 !important;
+}
+
+.hsk-mega-detail{
+  min-height:355px !important;
+  padding:16px !important;
+  background:#FFFDF9 !important;
+  border-radius:13px !important;
+  overflow:hidden !important;
+}
+.hsk-mega-detail-head{
+  padding:2px 2px 11px !important;
+  margin-bottom:7px !important;
+}
+.hsk-mega-detail-kicker{color:#C0392B !important;}
+.hsk-mega-detail-title{
+  color:#493A34 !important;
+  font-size:19px !important;
+}
+.hsk-mega-detail-sub{
+  color:#756C65 !important;
+  font-size:11px !important;
+}
+
+/* Một cột ổn định. Không cho phép CSS đời cũ biến list thành grid. */
+.hsk-mega-detail-list{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  width:100% !important;
+  height:274px !important;
+  max-height:274px !important;
+  min-height:0 !important;
+  gap:5px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:2px 4px 4px 1px !important;
+}
+.hsk-mega-detail-list > .hsk-mega-lesson-row{
+  flex:0 0 auto !important;
+  width:100% !important;
+  min-height:40px !important;
+  margin:0 !important;
+}
+
+/* Hàng bài gọn, không "sổ" theo chiều ngang. */
+.hsk-mega-lesson-row{
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:center !important;
+  width:100% !important;
+  min-width:0 !important;
+  padding:4px 5px !important;
+  border-radius:10px !important;
+  background:#FFFEFC !important;
+}
+.hsk-mega-lesson-link{
+  min-width:0 !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  color:#433831 !important;
+  font-size:12.25px !important;
+}
+.hsk-mega-lesson-action{
+  flex:0 0 94px !important;
+  min-width:94px !important;
+}
+
+/* Hover chỉ tác động lên đúng một bài, không làm thay đổi kích thước cả panel. */
+.hsk-mega-lesson-row:hover,
+.hsk-mega-lesson-row:focus-within{
+  transform:none !important;
+  background:#FFF4EE !important;
+  border-color:#E9CFC5 !important;
+  box-shadow:0 5px 15px rgba(192,57,43,.07) !important;
+}
+
+@media(max-width:760px){
+  .site-nav{
+    background:#F8F3EA !important;
+  }
+  .site-nav-inner{height:64px !important;padding:0 14px !important;}
+  .site-nav-logo-img{height:47px !important;max-width:195px !important;}
+  .site-nav-links{
+    top:64px !important;
+    background:#F8F3EA !important;
+  }
+  .site-nav-links>a,
+  .site-nav-dropdown-btn{
+    color:#4B3A33 !important;
+  }
+  .site-nav-dropdown.open .site-nav-dropdown-panel{
+    display:block !important;
+    width:100% !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    padding:7px !important;
+  }
+  .hsk-mega-levels{
+    border-right:0 !important;
+    margin-bottom:7px !important;
+  }
+  .hsk-mega-detail-list{
+    height:48vh !important;
+    max-height:48vh !important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .site-nav-dropdown.open .site-nav-dropdown-panel{animation:none !important;}
+}
