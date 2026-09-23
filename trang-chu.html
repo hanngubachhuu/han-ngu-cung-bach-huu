@@ -386,52 +386,349 @@ button{font-family:var(--font-vn); cursor:pointer;}
    LỘ TRÌNH HSK — danh sách dọc theo cấp độ, mặc định thu gọn,
    bấm vào để mở ra xem danh sách bài học bên trong.
    ============================================================ */
-.level-grid{display:flex; flex-direction:column; gap:14px; max-width:720px; margin:0 auto;}
+/* ============================================================
+   LỘ TRÌNH HSK — THIẾT KẾ MỚI
+   Chỉ hiển thị cấp độ; không badge số, không "giáo trình cũ",
+   không tag sơ cấp/trung cấp. Bấm một cấp → mở bài bên trong.
+   ============================================================ */
+.level-grid{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-width:860px;
+  margin:0 auto;
+}
 .level-card{
-  background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-sm); transition:box-shadow var(--motion-normal), border-color var(--motion-normal), transform var(--motion-normal);
+  position:relative;
+  isolation:isolate;
+  background:#FFFDF9;
+  border:1px solid #E2D8CC;
+  border-radius:18px;
+  box-shadow:0 3px 12px rgba(73,58,52,.06);
   overflow:hidden;
+  transition:box-shadow 360ms ease,border-color 360ms ease,transform 360ms ease;
 }
 .level-card.has-lessons{cursor:pointer;}
-.level-card.has-lessons:hover{box-shadow:var(--shadow); border-color:var(--color-primary); transform:translateY(-1px);}
-.level-card-head{display:flex; align-items:center; gap:16px; padding:18px 22px;}
-.level-card-badge{
-  width:46px; height:46px; border-radius:var(--radius-full); background:var(--color-primary-subtle); color:var(--color-primary);
-  font-weight:800; font-size:15px; display:flex; align-items:center; justify-content:center; flex:0 0 auto;
-  transition:background var(--motion-normal), color var(--motion-normal);
+.level-card.has-lessons:hover{
+  border-color:#D8BEB3;
+  box-shadow:0 10px 26px rgba(73,58,52,.10);
+  transform:translateY(-2px);
 }
-.level-card.open .level-card-badge{background:var(--color-primary); color:#fff;}
-.level-card-info{flex:1 1 auto; min-width:0;}
-.level-card-info h3{margin:0 0 2px; font-size:16.5px; color:var(--text);}
-.level-card-info p{margin:0; font-size:12.5px; color:var(--text-soft);}
-.level-card-meta{flex:0 0 auto; text-align:right;}
-.level-card-count{display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:var(--color-primary);}
-.level-card-soon{font-size:11.5px; color:var(--text-faint); background:var(--bg-soft); padding:5px 13px; border-radius:var(--radius-full);}
-.level-card-caret{font-size:11px; color:var(--color-primary); transition:transform var(--motion-normal);}
+.level-card-head{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  min-height:66px;
+  padding:13px 18px;
+}
+.level-card-badge{display:none !important;}
+.level-card-info{
+  flex:1 1 auto;
+  min-width:0;
+}
+.level-card-info h3{
+  margin:0;
+  font-size:18px;
+  color:#493A34;
+  letter-spacing:.01em;
+}
+.level-card-info p{display:none !important;}
+.level-card-meta{
+  flex:0 0 auto;
+  text-align:right;
+}
+.level-card-count{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:32px;
+  padding:6px 11px;
+  border:1px solid #E6D6CC;
+  border-radius:999px;
+  background:#FAF3EC;
+  color:#A84A39;
+  font-size:11px;
+  font-weight:800;
+}
+.level-card-soon{
+  font-size:10.5px;
+  color:#8B827B;
+  background:#F3EEE7;
+  padding:6px 11px;
+  border-radius:999px;
+}
+.level-card-caret{
+  font-size:10px;
+  color:#C0392B;
+  transition:transform 360ms ease;
+}
 .level-card.open .level-card-caret{transform:rotate(180deg);}
 .level-card-lessons{
-  max-height:0; overflow:hidden; border-top:0 solid var(--border-soft); background:var(--bg-soft);
-  transition:max-height var(--motion-normal) var(--ease-standard);
+  max-height:0;
+  overflow:hidden;
+  border-top:0 solid #E7DED5;
+  background:#FCF8F2;
+  transition:max-height 420ms cubic-bezier(.4,0,.2,1),border-top-width 220ms ease;
 }
-.level-card.open .level-card-lessons{max-height:10000px; border-top-width:1px;}
+.level-card.open .level-card-lessons{
+  max-height:9000px;
+  border-top-width:1px;
+}
 .lesson-row{
-  display:flex; flex-direction:column; gap:4px; padding:14px 22px; text-decoration:none; color:inherit;
-  border-bottom:1px solid var(--border-soft); transition:background var(--motion-fast);
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:10px 16px;
+  text-decoration:none;
+  color:inherit;
+  border-bottom:1px solid #EAE2DA;
+  transition:background 320ms ease,border-color 320ms ease,box-shadow 320ms ease,transform 320ms ease;
 }
 .lesson-row:last-child{border-bottom:none;}
-.lesson-row:hover{background:var(--bg-card);}
-.lesson-row-top{display:flex; align-items:center; gap:10px;}
-.lesson-row-num{
-  width:26px; height:26px; border-radius:var(--radius-full); background:var(--bg-card); border:1px solid var(--border);
-  color:var(--text-soft); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+.lesson-row-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
-.lesson-row-zh{font-family:var(--font-cn); font-size:14pt; color:var(--text); flex:1 1 auto; min-width:0;}
-.lesson-row-cta{font-size:11.5px; font-weight:700; color:var(--color-primary); flex:0 0 auto; white-space:nowrap;}
-.lesson-row-vi{font-size:12px; color:var(--text-soft); padding-left:36px;}
-.review-row{background:var(--color-primary-subtle);}
-.review-row:hover{background:var(--color-primary-subtle); filter:brightness(0.97);}
-.review-row .lesson-row-num{background:var(--color-primary); border-color:var(--color-primary); color:#fff;}
-.review-row .lesson-row-cta{color:var(--color-primary);}
+.lesson-row-num{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  background:#FFFDF9;
+  border:1px solid #DDD1C5;
+  color:#756C65;
+  font-size:10.5px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 30px;
+}
+.lesson-row-zh{
+  font-family:var(--font-cn);
+  font-size:14pt;
+  color:#433831;
+  flex:1 1 auto;
+  min-width:0;
+}
+.lesson-row-cta{
+  font-size:10.5px;
+  font-weight:800;
+  color:#A84A39;
+  opacity:.35;
+  transform:translateX(4px);
+  transition:opacity 280ms ease,transform 280ms ease,color 280ms ease;
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+.lesson-row:hover,
+.lesson-row:focus-visible{
+  background:#FFF4EE;
+  border-color:#EACFC5;
+  box-shadow:0 5px 16px rgba(192,57,43,.06);
+  transform:translateX(2px);
+  outline:none;
+}
+.lesson-row:hover .lesson-row-cta,
+.lesson-row:focus-visible .lesson-row-cta{
+  opacity:1;
+  transform:translateX(0);
+}
+.lesson-row-vi{
+  font-size:11.5px;
+  color:#756C65;
+  padding-left:40px;
+}
+.review-row{
+  background:#F8E7E3;
+}
+.review-row:hover{
+  background:#F5DDD8;
+  filter:none;
+}
+.review-row .lesson-row-num{
+  background:#C0392B;
+  border-color:#C0392B;
+  color:#fff;
+}
+.review-row .lesson-row-cta{
+  color:#C0392B;
+}
+
+/* ============================================================
+   HIỆU ỨNG NỘI BỘ THEO CẤP ĐỘ HSK
+   ============================================================ */
+.level-card[data-home-hsk-level="1"] .lesson-row:hover{
+  box-shadow:0 7px 17px rgba(73,58,52,.07);
+}
+
+/* HSK 2 — lửa */
+.level-card[data-home-hsk-level="2"] .lesson-row::before,
+.level-card[data-home-hsk-level="2"] .lesson-row::after,
+.level-card[data-home-hsk-level="3"] .lesson-row::before,
+.level-card[data-home-hsk-level="3"] .lesson-row::after,
+.level-card[data-home-hsk-level="4"] .lesson-row::before,
+.level-card[data-home-hsk-level="4"] .lesson-row::after,
+.level-card[data-home-hsk-level="5"] .lesson-row::before,
+.level-card[data-home-hsk-level="5"] .lesson-row::after,
+.level-card[data-home-hsk-level="6"] .lesson-row::before,
+.level-card[data-home-hsk-level="6"] .lesson-row::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 360ms ease,transform 360ms ease,filter 360ms ease;
+}
+.level-card[data-home-hsk-level="2"] .lesson-row::before{
+  inset:-4px;
+  border-radius:12px;
+  background:
+    radial-gradient(ellipse at 14% 100%,rgba(232,93,31,.68),transparent 28%),
+    radial-gradient(ellipse at 50% 105%,rgba(244,169,54,.62),transparent 29%),
+    radial-gradient(ellipse at 86% 100%,rgba(192,57,43,.68),transparent 28%);
+  filter:blur(calc(1px + (1 - var(--home-power, .18))*2px));
+}
+.level-card[data-home-hsk-level="2"] .lesson-row::after{
+  inset:-3px;
+  background:
+    linear-gradient(76deg,transparent 40%,rgba(244,197,110,.72) 43% 46%,transparent 49%) left bottom/44px 25px no-repeat,
+    linear-gradient(104deg,transparent 40%,rgba(255,152,61,.62) 43% 46%,transparent 49%) center bottom/50px 27px no-repeat,
+    linear-gradient(284deg,transparent 41%,rgba(192,57,43,.58) 44% 47%,transparent 50%) right bottom/46px 25px no-repeat;
+}
+.level-card[data-home-hsk-level="2"] .lesson-row:hover::before,
+.level-card[data-home-hsk-level="2"] .lesson-row:focus-visible::before{
+  opacity:calc(.18 + var(--home-power, .18)*.72);
+  animation:homeFlameRise calc(1.45s - var(--home-power, .18)*.55s) ease-in-out infinite alternate;
+}
+.level-card[data-home-hsk-level="2"] .lesson-row:hover::after,
+.level-card[data-home-hsk-level="2"] .lesson-row:focus-visible::after{
+  opacity:calc(.16 + var(--home-power, .18)*.64);
+  animation:homeFlameFlicker 1s ease-in-out infinite alternate;
+}
+@keyframes homeFlameRise{
+  from{transform:translateY(2px) scale(.98);}
+  to{transform:translateY(-5px) scale(1.035);}
+}
+@keyframes homeFlameFlicker{
+  from{transform:skewX(-1deg);filter:blur(.7px);}
+  to{transform:skewX(1deg);filter:blur(.1px);}
+}
+
+/* HSK 3 — sét */
+.level-card[data-home-hsk-level="3"] .lesson-row{
+  background:#FBFDFF;
+}
+.level-card[data-home-hsk-level="3"] .lesson-row:hover{
+  background:#EEF7FC;
+  box-shadow:0 7px 20px rgba(41,128,185,.10);
+}
+.level-card[data-home-hsk-level="3"] .lesson-row::before{
+  inset:-5px;
+  background:
+    linear-gradient(118deg,transparent 27%,rgba(41,128,185,.72) 29% 30.4%,transparent 32%) left top/66px 46px no-repeat,
+    linear-gradient(238deg,transparent 29%,rgba(82,168,230,.76) 31% 32.4%,transparent 34%) right top/68px 48px no-repeat,
+    linear-gradient(64deg,transparent 73%,rgba(41,128,185,.62) 75% 76.3%,transparent 78%) left bottom/68px 44px no-repeat,
+    linear-gradient(296deg,transparent 71%,rgba(82,168,230,.66) 73% 74.3%,transparent 76%) right bottom/70px 46px no-repeat;
+  filter:drop-shadow(0 0 calc(2px + var(--home-power,.18)*5px) rgba(41,128,185,.30));
+}
+.level-card[data-home-hsk-level="3"] .lesson-row:hover::before{
+  opacity:calc(.18 + var(--home-power,.18)*.76);
+  animation:homeLightning 1s steps(2,end) infinite;
+}
+@keyframes homeLightning{
+  0%,100%{transform:translate(0,0);}
+  18%{transform:translate(-1px,1px);opacity:.95;}
+  19%{opacity:.2;}
+  48%{transform:translate(1px,-1px);opacity:.82;}
+  49%{opacity:.2;}
+  78%{transform:translate(-1px,0);opacity:.92;}
+}
+
+/* HSK 4 — sóng */
+.level-card[data-home-hsk-level="4"] .lesson-row:hover{
+  background:#EEF9F8;
+  box-shadow:0 7px 21px rgba(39,128,128,.10);
+}
+.level-card[data-home-hsk-level="4"] .lesson-row::before{
+  inset:-9px;
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at center,transparent 32%,rgba(39,128,128,.15) 33% 34%,transparent 35% 48%,rgba(39,128,128,.12) 49% 50%,transparent 51% 63%,rgba(39,128,128,.10) 64% 65%,transparent 66%);
+  transform:scale(.58);
+}
+.level-card[data-home-hsk-level="4"] .lesson-row:hover::before{
+  opacity:calc(.16 + var(--home-power,.18)*.76);
+  animation:homeWave 2.1s ease-out infinite;
+}
+@keyframes homeWave{
+  0%{transform:scale(.45);}
+  55%{transform:scale(calc(.78 + var(--home-power,.18)*.30));opacity:.72;}
+  100%{transform:scale(calc(1.05 + var(--home-power,.18)*.48));opacity:.02;}
+}
+
+/* HSK 5 — kim giáp */
+.level-card[data-home-hsk-level="5"] .lesson-row:hover{
+  background:#F1F1EF;
+  box-shadow:0 7px 20px rgba(70,78,84,.12);
+}
+.level-card[data-home-hsk-level="5"] .lesson-row::before{
+  inset:-4px;
+  border-radius:10px;
+  border:calc(1px + var(--home-power,.18)*3px) solid transparent;
+  background:
+    linear-gradient(#F1F1EF,#F1F1EF) padding-box,
+    linear-gradient(135deg,#626A70 0%,#E9ECEE 32%,#8C959B 58%,#F4F6F7 78%,#575F65 100%) border-box;
+}
+.level-card[data-home-hsk-level="5"] .lesson-row:hover::before{
+  opacity:calc(.20 + var(--home-power,.18)*.78);
+  animation:homeMetalLock 820ms ease-out both;
+}
+@keyframes homeMetalLock{
+  0%{transform:scale(.975);filter:brightness(.9);}
+  55%{transform:scale(1.015);filter:brightness(1.12);}
+  100%{transform:scale(calc(1 + var(--home-power,.18)*.02));filter:brightness(1);}
+}
+
+/* HSK 6 — thiên quang */
+.level-card[data-home-hsk-level="6"] .lesson-row:hover{
+  background:#F5F1FB;
+  box-shadow:0 7px 23px rgba(92,72,130,.13);
+}
+.level-card[data-home-hsk-level="6"] .lesson-row::before{
+  inset:-9px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 18% 28%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 76% 18%,rgba(244,197,110,.78) 0 1px,transparent 2px),
+    radial-gradient(circle at 68% 78%,rgba(103,84,153,.70) 0 1px,transparent 2px),
+    radial-gradient(circle at 24% 72%,rgba(192,57,43,.58) 0 1px,transparent 2px),
+    radial-gradient(ellipse at center,transparent 22%,rgba(103,84,153,.14) 43%,transparent 66%);
+  filter:blur(calc(.4px + (1 - var(--home-power,.18))*1.2px));
+}
+.level-card[data-home-hsk-level="6"] .lesson-row:hover::before{
+  opacity:calc(.18 + var(--home-power,.18)*.78);
+  animation:homeCosmic 2.15s ease-in-out infinite;
+}
+@keyframes homeCosmic{
+  0%,100%{transform:rotate(0) scale(.94);}
+  50%{transform:rotate(4deg) scale(calc(1 + var(--home-power,.18)*.08));}
+}
+
+@media(max-width:700px){
+  .level-card-head{padding:12px 14px;min-height:60px;}
+  .level-card-info h3{font-size:16px;}
+  .level-card-count{font-size:10px;min-height:30px;padding:5px 9px;}
+  .lesson-row{padding:9px 11px;}
+  .lesson-row-top{gap:8px;}
+  .lesson-row-zh{font-size:13pt;}
+  .lesson-row-vi{padding-left:38px;font-size:11px;}
+  .lesson-row-cta{font-size:9.5px;}
+}
 
 /* ============================================================
    GIỚI THIỆU
@@ -824,45 +1121,67 @@ function renderLevelGrid(){
   var grid = document.getElementById('levelGrid');
   if(!grid) return;
   grid.innerHTML = '';
+
   HSK_LEVELS.forEach(function(level){
     var hasLessons = level.lessons.length > 0;
     var card = document.createElement('div');
     card.className = 'level-card' + (hasLessons ? ' has-lessons' : '');
+    card.setAttribute('data-home-hsk-level', level.badge);
+
     var head = document.createElement('div');
     head.className = 'level-card-head';
+
+    var countOrState = hasLessons
+      ? '<span class="level-card-count">' + level.lessons.length + ' bài<span class="level-card-caret">▾</span></span>'
+      : '<span class="level-card-soon">Đang xây dựng</span>';
+
     head.innerHTML =
-      '<span class="level-card-badge">' + level.badge + '</span>' +
-      '<span class="level-card-info"><h3>' + level.label + '</h3><p>' + level.tag + '</p></span>' +
-      '<span class="level-card-meta">' + (hasLessons
-        ? '<span class="level-card-count">' + level.lessons.length + ' bài<span class="level-card-caret">▾</span></span>'
-        : '<span class="level-card-soon">Sắp ra mắt</span>') + '</span>';
+      '<span class="level-card-info"><h3>' + level.label + '</h3></span>' +
+      '<span class="level-card-meta">' + countOrState + '</span>';
+
     card.appendChild(head);
+
     if(hasLessons){
       var lessonsWrap = document.createElement('div');
       lessonsWrap.className = 'level-card-lessons';
-      level.lessons.forEach(function(l){
+
+      level.lessons.forEach(function(l, lessonIndex){
         var a = document.createElement('a');
         a.className = 'lesson-row';
         a.href = l.href;
+
+        var power = Math.min(1, 0.18 + lessonIndex * 0.058);
+        a.style.setProperty('--home-power', power.toFixed(2));
+        a.setAttribute('data-home-lesson-seq', String(lessonIndex + 1));
+
         a.innerHTML =
           '<span class="lesson-row-top"><span class="lesson-row-num">' + l.num + '</span>' +
           '<span class="lesson-row-zh">' + l.zh + '</span>' +
-          '<span class="lesson-row-cta">Vào học →</span></span>' +
+          '<span class="lesson-row-cta">' + (lessonIndex === 0 ? 'Bắt đầu học →' : 'Vào học →') + '</span></span>' +
           '<span class="lesson-row-vi">' + l.vi + '</span>';
+
         lessonsWrap.appendChild(a);
       });
+
       card.appendChild(lessonsWrap);
-      head.addEventListener('click', function(){ card.classList.toggle('open'); });
+
+      head.addEventListener('click', function(){
+        // Chỉ một cấp mở tại một thời điểm để trang không biến thành
+        // một bức tường dài các bài học.
+        grid.querySelectorAll('.level-card.open').forEach(function(other){
+          if(other !== card) other.classList.remove('open');
+        });
+        card.classList.toggle('open');
+      });
     }
+
     grid.appendChild(card);
   });
-  // Mặc định TẤT CẢ các cấp độ đều thu gọn — người dùng bấm vào mới xem
-  // được danh sách bài học bên trong (không tự động mở sẵn cấp nào).
 }
 
 (function(){
   mergeLessonManifest();
-  renderHskDropdown();
+  // hsk1-navigation.js là nguồn duy nhất dựng mega menu trên navbar.
   renderLevelGrid();
   // Thống kê tổng của toàn website, không gắn với riêng một cấp HSK.
   var heroLessonCount = document.getElementById('heroLessonCount');
