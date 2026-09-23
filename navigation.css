@@ -1026,3 +1026,36 @@ body{
   .hsk-mega-detail.is-switching .hsk-mega-detail-list,
   .hsk-mega-detail.is-switching .hsk-mega-detail-empty{animation:none !important;}
 }
+
+
+/* NAV v4.1 — các chi tiết cuối */
+.site-nav-burger{
+  color:#F8F5EE !important;
+  border-color:rgba(255,255,255,.24) !important;
+  background:rgba(255,255,255,.04) !important;
+}
+.hsk-mega-lesson-action::before{
+  content:none !important;
+  display:none !important;
+}
+.hsk-mega-lesson-action::after{
+  content:none !important;
+  display:none !important;
+}
+@media(max-width:760px){
+  .site-nav-links{
+    background:#26343F !important;
+  }
+  .site-nav-links>a,
+  .site-nav-dropdown-btn{
+    color:#F8F5EE !important;
+  }
+  .site-nav-links>a:hover,
+  .site-nav-dropdown-btn:hover,
+  .site-nav-dropdown.open .site-nav-dropdown-btn{
+    color:#F4C56E !important;
+  }
+  .site-nav-links .site-nav-cta{
+    color:#fff !important;
+  }
+}
