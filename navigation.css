@@ -2828,3 +2828,530 @@ body{
     animation:none !important;
   }
 }
+
+
+/* ============================================================
+   NAV v12 — ỔN ĐỊNH THỰC SỰ + HIỆU ỨNG HSK RÕ RỆT
+   ============================================================ */
+
+/* ---------- Cột cấp độ: hover/focus không phụ thuộc trạng thái active ---------- */
+.hnh-mega-v12 .hsk-mega-levels{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:5px !important;
+  overflow:visible !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .dd-level{
+  width:100% !important;
+  overflow:visible !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .dd-level-head{
+  width:100% !important;
+  box-sizing:border-box !important;
+  position:relative !important;
+  min-height:52px !important;
+  padding:10px 12px !important;
+  cursor:pointer !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .dd-level-name{
+  position:relative !important;
+  z-index:4 !important;
+  color:#493A34 !important;
+  font-size:14.5px !important;
+  font-weight:800 !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .hsk-level-status{
+  position:relative !important;
+  z-index:4 !important;
+  margin-left:auto !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .dd-level-caret{
+  position:relative !important;
+  z-index:4 !important;
+  color:#C0392B !important;
+  font-size:17px !important;
+  font-weight:700 !important;
+  transition:transform 300ms ease,color 300ms ease !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .dd-level.active .dd-level-caret{
+  transform:translateX(2px) !important;
+}
+.hnh-mega-v12 .hsk-mega-levels .dd-level-lessons{
+  display:none !important;
+}
+
+/* HSK 1: ánh vàng rất mảnh */
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="1"] .dd-level-head:hover,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="1"] .dd-level-head:focus-visible,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="1"].active .dd-level-head{
+  background:linear-gradient(90deg,#FBF4E7,#FFFDF8) !important;
+  border-color:rgba(214,137,16,.20) !important;
+  box-shadow:inset 3px 0 0 #D68910,0 5px 13px rgba(214,137,16,.08) !important;
+}
+
+/* HSK 2: quầng sáng + viền kim */
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="2"] .dd-level-head:hover,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="2"] .dd-level-head:focus-visible,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="2"].active .dd-level-head{
+  background:
+    radial-gradient(circle at 86% 25%,rgba(244,197,110,.30),transparent 34%),
+    linear-gradient(90deg,#F8EACB,#FFF8E9) !important;
+  border-color:rgba(214,137,16,.34) !important;
+  box-shadow:
+    inset 3px 0 0 #D68910,
+    0 7px 18px rgba(214,137,16,.13),
+    0 0 0 1px rgba(214,137,16,.14),
+    0 0 22px rgba(244,197,110,.13) !important;
+}
+
+/* HSK 3: dải ánh chạy */
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="3"] .dd-level-head:hover,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="3"] .dd-level-head:focus-visible,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="3"].active .dd-level-head{
+  background:
+    linear-gradient(105deg,#FBF2DA 0%,#FFFDF9 36%,#EBD49A 49%,#FFFDF9 62%,#FBF2DA 100%) !important;
+  background-size:240% 100% !important;
+  border-color:rgba(214,137,16,.32) !important;
+  box-shadow:
+    inset 3px 0 0 #D68910,
+    0 8px 20px rgba(214,137,16,.13),
+    0 0 0 1px rgba(214,137,16,.14) !important;
+  animation:hnhLevelFlow3 1.35s linear infinite !important;
+}
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="3"] .dd-level-head::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:1px 3px !important;
+  border-radius:10px !important;
+  pointer-events:none !important;
+  opacity:0 !important;
+}
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="3"] .dd-level-head:hover::after{
+  opacity:1 !important;
+  background:linear-gradient(105deg,transparent 15%,rgba(255,255,255,.72) 46%,transparent 58%) !important;
+  background-size:220% 100% !important;
+  animation:hnhLevelRail3 1.15s linear infinite !important;
+}
+@keyframes hnhLevelFlow3{
+  from{background-position:120% 0;}
+  to{background-position:-20% 0;}
+}
+@keyframes hnhLevelRail3{
+  from{background-position:140% 0;}
+  to{background-position:-20% 0;}
+}
+
+/* HSK 4: quang sắc + halo mở rộng */
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="4"] .dd-level-head:hover,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="4"] .dd-level-head:focus-visible,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="4"].active .dd-level-head{
+  background:
+    radial-gradient(circle at 85% 20%,rgba(244,197,110,.46),transparent 34%),
+    radial-gradient(circle at 16% 78%,rgba(214,137,16,.14),transparent 35%),
+    linear-gradient(105deg,#F5E2B4,#FFF8E4 54%,#EBC983) !important;
+  border-color:rgba(214,137,16,.42) !important;
+  box-shadow:
+    inset 4px 0 0 #C0392B,
+    0 10px 24px rgba(192,57,43,.09),
+    0 0 0 1px rgba(214,137,16,.22),
+    0 0 28px rgba(214,137,16,.20) !important;
+}
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="4"] .dd-level-head:hover::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:-6px !important;
+  border:1px solid rgba(214,137,16,.40) !important;
+  border-radius:15px !important;
+  opacity:1 !important;
+  box-shadow:0 0 17px rgba(214,137,16,.22) !important;
+}
+
+/* HSK 5: kim quang rõ + nhịp */
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="5"] .dd-level-head:hover,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="5"] .dd-level-head:focus-visible,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="5"].active .dd-level-head{
+  background:
+    radial-gradient(circle at 84% 24%,rgba(244,197,110,.64),transparent 36%),
+    linear-gradient(100deg,#EED18E,#FFF1C7 48%,#E4BB67) !important;
+  border-color:rgba(214,137,16,.52) !important;
+  box-shadow:
+    inset 4px 0 0 #C0392B,
+    0 12px 29px rgba(192,57,43,.14),
+    0 0 0 1px rgba(214,137,16,.36),
+    0 0 36px rgba(214,137,16,.27) !important;
+  animation:hnhLevelPulse5 1.55s ease-in-out infinite alternate !important;
+}
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="5"] .dd-level-head:hover::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:-8px !important;
+  border:1px solid rgba(214,137,16,.54) !important;
+  border-radius:16px !important;
+  opacity:1 !important;
+  box-shadow:0 0 20px rgba(214,137,16,.30),inset 0 0 10px rgba(255,255,255,.28) !important;
+}
+@keyframes hnhLevelPulse5{
+  from{filter:brightness(1);}
+  to{filter:brightness(1.10);}
+}
+
+/* HSK 6: tầng cao nhất */
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="6"] .dd-level-head:focus-visible,
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="6"].active .dd-level-head{
+  background:
+    radial-gradient(circle at 84% 20%,rgba(244,197,110,.76),transparent 36%),
+    radial-gradient(circle at 15% 82%,rgba(192,57,43,.28),transparent 33%),
+    linear-gradient(108deg,#EAC271,#FFF0C4 42%,#E0B35C 100%) !important;
+  border-color:rgba(192,57,43,.34) !important;
+  box-shadow:
+    inset 5px 0 0 #C0392B,
+    0 15px 36px rgba(192,57,43,.20),
+    0 0 0 1px rgba(192,57,43,.22),
+    0 0 0 3px rgba(214,137,16,.20),
+    0 0 46px rgba(214,137,16,.34) !important;
+}
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:-10px !important;
+  border:1px solid rgba(214,137,16,.62) !important;
+  border-radius:17px !important;
+  opacity:1 !important;
+  background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.56) 48%,transparent 65%) !important;
+  background-size:230% 100% !important;
+  box-shadow:
+    0 0 21px rgba(214,137,16,.34),
+    0 0 40px rgba(192,57,43,.12),
+    inset 0 0 11px rgba(255,255,255,.34) !important;
+  animation:hnhSilkLevel6 1.45s linear infinite !important;
+}
+.hnh-mega-v12 .dd-level[data-hnh-hsk-level="6"] .dd-level-head:hover::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-4px !important;
+  border:1px solid rgba(192,57,43,.32) !important;
+  border-radius:14px !important;
+  opacity:1 !important;
+  box-shadow:0 0 17px rgba(192,57,43,.18) !important;
+}
+@keyframes hnhSilkLevel6{
+  from{background-position:145% 0;}
+  to{background-position:-30% 0;}
+}
+
+/* ---------- Khung danh sách bài: đủ 15 bài qua scrollbar ---------- */
+.hnh-mega-v12 .hsk-mega-detail{
+  min-height:0 !important;
+  height:min(700px,calc(100dvh - 150px)) !important;
+  max-height:min(700px,calc(100dvh - 150px)) !important;
+  overflow:hidden !important;
+}
+.hnh-mega-v12 .hsk-mega-detail-list{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:6px !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:4px 8px 18px 3px !important;
+  scrollbar-width:thin;
+  scrollbar-color:#C8B5A7 #F5EFE8;
+}
+.hnh-mega-v12 .hsk-mega-detail-list::-webkit-scrollbar{width:9px;}
+.hnh-mega-v12 .hsk-mega-detail-list::-webkit-scrollbar-track{
+  background:#F5EFE8;
+  border-radius:999px;
+}
+.hnh-mega-v12 .hsk-mega-detail-list::-webkit-scrollbar-thumb{
+  background:#C8B5A7;
+  border-radius:999px;
+  border:2px solid #F5EFE8;
+}
+.hnh-mega-v12 .hsk-mega-detail-list > .hsk-mega-lesson-row{
+  flex:0 0 auto !important;
+  width:100% !important;
+  min-height:60px !important;
+}
+
+/* ---------- Bài học: hiệu ứng thật sự nhìn thấy ---------- */
+.hnh-mega-v12 .hsk-mega-lesson-row{
+  position:relative !important;
+  overflow:visible !important;
+  border:1px solid #E8DED5 !important;
+  box-sizing:border-box !important;
+  background:#FFFEFC !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row > *{
+  position:relative !important;
+  z-index:5 !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row::before,
+.hnh-mega-v12 .hsk-mega-lesson-row::after{
+  content:"" !important;
+  pointer-events:none !important;
+  position:absolute !important;
+  display:block !important;
+  z-index:1 !important;
+  opacity:0 !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row:focus-within{
+  transform:none !important;
+}
+
+/* HSK 1 · mực */
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="1"]:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="1"]:focus-within{
+  background:
+    radial-gradient(circle at 12% 50%,rgba(55,69,84,.14),transparent 32%),
+    #F5F1EA !important;
+  border-color:#CBC0B2 !important;
+  box-shadow:0 8px 22px rgba(73,58,52,.12),0 0 calc(8px + var(--hnh-power)*12px) rgba(73,58,52,.06) !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="1"]:hover::before{
+  inset:-10px !important;
+  border-radius:15px !important;
+  background:radial-gradient(ellipse,rgba(73,58,52,.20),transparent 68%) !important;
+  opacity:calc(.18 + var(--hnh-power)*.55) !important;
+  filter:blur(7px) !important;
+  animation:hnhInkAura12 1.8s ease-in-out infinite alternate !important;
+}
+@keyframes hnhInkAura12{
+  from{transform:scale(.92);}
+  to{transform:scale(1.08);}
+}
+
+/* HSK 2 · lửa */
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="2"]:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="2"]:focus-within{
+  background:
+    linear-gradient(180deg,#FFF9F1 0%,#FFE3C8 100%) !important;
+  border-color:rgba(220,83,34,calc(.28 + var(--hnh-power)*.38)) !important;
+  box-shadow:
+    0 9px 25px rgba(221,83,31,calc(.07 + var(--hnh-power)*.16)),
+    0 0 calc(13px + var(--hnh-power)*25px) rgba(235,92,28,calc(.08 + var(--hnh-power)*.18)),
+    inset 0 -8px 14px rgba(239,86,29,calc(.04 + var(--hnh-power)*.10)) !important;
+  transform:scale(calc(1 + var(--hnh-power)*.006)) !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="2"]:hover::before{
+  inset:-15px !important;
+  border-radius:16px !important;
+  background:
+    radial-gradient(ellipse at 8% 100%,rgba(232,70,19,.95),transparent 25%),
+    radial-gradient(ellipse at 32% 105%,rgba(255,159,35,.94),transparent 28%),
+    radial-gradient(ellipse at 58% 106%,rgba(244,84,20,.92),transparent 28%),
+    radial-gradient(ellipse at 90% 100%,rgba(192,57,43,.92),transparent 25%) !important;
+  opacity:calc(.34 + var(--hnh-power)*.66) !important;
+  filter:blur(calc(1.2px + (1 - var(--hnh-power))*1.5px)) !important;
+  animation:hnhFireAura12 calc(1.05s - var(--hnh-power)*.25s) ease-in-out infinite alternate !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="2"]:hover::after{
+  inset:-8px !important;
+  border:2px solid rgba(237,102,34,.72) !important;
+  border-radius:14px !important;
+  opacity:calc(.28 + var(--hnh-power)*.64) !important;
+  box-shadow:0 0 calc(5px + var(--hnh-power)*12px) rgba(238,91,26,.66) !important;
+  animation:hnhFireEdge12 .65s ease-in-out infinite alternate !important;
+}
+@keyframes hnhFireAura12{
+  from{transform:translateY(3px) scale(.92);}
+  to{transform:translateY(-7px) scale(1.10);}
+}
+@keyframes hnhFireEdge12{
+  from{transform:scale(.97);}
+  to{transform:scale(1.055);}
+}
+
+/* HSK 3 · sét */
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="3"]:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="3"]:focus-within{
+  background:#EAF6FD !important;
+  border-color:rgba(41,128,185,calc(.25 + var(--hnh-power)*.42)) !important;
+  box-shadow:
+    0 8px 25px rgba(41,128,185,calc(.08 + var(--hnh-power)*.16)),
+    0 0 calc(12px + var(--hnh-power)*25px) rgba(72,170,235,calc(.08 + var(--hnh-power)*.17)) !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="3"]:hover::before{
+  inset:-14px !important;
+  border-radius:15px !important;
+  background:
+    linear-gradient(118deg,transparent 0 26%,rgba(45,147,210,.95) 28% 30%,transparent 32%) left top/80px 54px no-repeat,
+    linear-gradient(242deg,transparent 0 29%,rgba(116,207,255,.98) 31% 33%,transparent 35%) right top/84px 54px no-repeat,
+    linear-gradient(62deg,transparent 0 73%,rgba(45,147,210,.90) 75% 77%,transparent 79%) left bottom/82px 52px no-repeat,
+    linear-gradient(298deg,transparent 0 71%,rgba(116,207,255,.92) 73% 75%,transparent 77%) right bottom/84px 52px no-repeat !important;
+  opacity:calc(.34 + var(--hnh-power)*.66) !important;
+  filter:drop-shadow(0 0 calc(4px + var(--hnh-power)*10px) rgba(72,170,235,.75)) !important;
+  animation:hnhLightning12 .7s steps(2,end) infinite !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="3"]:hover::after{
+  inset:-7px !important;
+  border:1px solid rgba(126,212,255,.76) !important;
+  border-radius:13px !important;
+  opacity:calc(.25 + var(--hnh-power)*.70) !important;
+  box-shadow:0 0 calc(7px + var(--hnh-power)*14px) rgba(85,186,238,.66) !important;
+  animation:hnhLightningFlash12 1.05s linear infinite !important;
+}
+@keyframes hnhLightning12{
+  0%,100%{transform:translate(0,0) scale(.96);}
+  14%{transform:translate(-2px,1px) scale(1.02);}
+  15%{opacity:.25;}
+  46%{transform:translate(2px,-1px) scale(1.07);}
+  47%{opacity:1;}
+  48%{opacity:.22;}
+  76%{transform:translate(-1px,0) scale(1.11);}
+}
+@keyframes hnhLightningFlash12{
+  0%,83%,100%{opacity:.10;}
+  85%{opacity:1;filter:brightness(1.8);}
+  87%{opacity:.22;}
+  90%{opacity:.9;}
+}
+
+/* HSK 4 · sóng */
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="4"]:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="4"]:focus-within{
+  background:#EAF9F8 !important;
+  border-color:rgba(39,128,128,calc(.24 + var(--hnh-power)*.40)) !important;
+  box-shadow:
+    0 8px 25px rgba(39,128,128,calc(.07 + var(--hnh-power)*.14)),
+    0 0 calc(12px + var(--hnh-power)*26px) rgba(39,128,128,calc(.06 + var(--hnh-power)*.16)) !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="4"]:hover::before{
+  inset:-22px !important;
+  border-radius:50% !important;
+  background:
+    radial-gradient(ellipse,transparent 28%,rgba(39,128,128,.22) 30% 32%,transparent 34% 46%,rgba(39,128,128,.17) 48% 50%,transparent 52% 64%,rgba(39,128,128,.13) 66% 68%,transparent 70%) !important;
+  opacity:calc(.30 + var(--hnh-power)*.70) !important;
+  animation:hnhWave12 1.45s ease-out infinite !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="4"]:hover::after{
+  inset:-13px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(53,162,162,.50) !important;
+  opacity:calc(.24 + var(--hnh-power)*.64) !important;
+  animation:hnhWaveRing12 1.15s ease-out infinite !important;
+}
+@keyframes hnhWave12{
+  0%{transform:scale(.36);opacity:.08;}
+  52%{transform:scale(calc(.82 + var(--hnh-power)*.30));opacity:.84;}
+  100%{transform:scale(calc(1.25 + var(--hnh-power)*.82));opacity:0;}
+}
+@keyframes hnhWaveRing12{
+  0%{transform:scale(.52);opacity:.08;}
+  50%{transform:scale(calc(.92 + var(--hnh-power)*.23));opacity:.76;}
+  100%{transform:scale(calc(1.28 + var(--hnh-power)*.66));opacity:0;}
+}
+
+/* HSK 5 · kim giáp */
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="5"]:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="5"]:focus-within{
+  background:
+    linear-gradient(#F0F2F3,#F0F2F3) padding-box,
+    linear-gradient(135deg,#505A60 0%,#EDF1F3 22%,#818B91 42%,#FAFBFC 61%,#59636A 81%,#C6CDD1 100%) border-box !important;
+  border:calc(2px + var(--hnh-power)*2px) solid transparent !important;
+  box-shadow:
+    0 10px 26px rgba(71,81,88,calc(.07 + var(--hnh-power)*.14)),
+    0 0 calc(7px + var(--hnh-power)*15px) rgba(143,153,160,.18),
+    inset 0 0 calc(3px + var(--hnh-power)*7px) rgba(255,255,255,.35) !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="5"]:hover::before{
+  inset:-9px !important;
+  border:calc(1px + var(--hnh-power)*2px) solid rgba(126,137,144,.82) !important;
+  border-radius:13px !important;
+  opacity:calc(.28 + var(--hnh-power)*.72) !important;
+  box-shadow:0 0 calc(5px + var(--hnh-power)*11px) rgba(158,170,177,.66) !important;
+  animation:hnhArmor12 .8s cubic-bezier(.2,.75,.3,1) both !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="5"]:hover::after{
+  inset:-5px !important;
+  background:linear-gradient(100deg,transparent 10%,rgba(255,255,255,.66) 48%,transparent 72%) !important;
+  background-size:210% 100% !important;
+  opacity:calc(.18 + var(--hnh-power)*.62) !important;
+  animation:hnhArmorSheen12 1.15s linear infinite !important;
+}
+@keyframes hnhArmor12{
+  from{transform:scale(.95);filter:brightness(.82);}
+  to{transform:scale(calc(1 + var(--hnh-power)*.045));filter:brightness(1.08);}
+}
+@keyframes hnhArmorSheen12{
+  from{background-position:150% 0;}
+  to{background-position:-30% 0;}
+}
+
+/* HSK 6 · thiên tượng */
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="6"]:hover,
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="6"]:focus-within{
+  background:
+    radial-gradient(circle at 15% 25%,rgba(255,255,255,.32) 0 1px,transparent 2px),
+    radial-gradient(circle at 78% 18%,rgba(244,197,110,.44) 0 1px,transparent 2px),
+    radial-gradient(circle at 68% 80%,rgba(113,91,164,.32) 0 1px,transparent 2px),
+    linear-gradient(115deg,#F0EAF8,#EEE6F8 54%,#FAF0D8) !important;
+  border-color:rgba(103,84,153,calc(.24 + var(--hnh-power)*.40)) !important;
+  box-shadow:
+    0 10px 29px rgba(74,62,111,calc(.07 + var(--hnh-power)*.15)),
+    0 0 calc(13px + var(--hnh-power)*28px) rgba(214,137,16,calc(.07 + var(--hnh-power)*.18)),
+    inset 0 0 calc(8px + var(--hnh-power)*12px) rgba(255,255,255,.28) !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="6"]:hover::before{
+  inset:-22px !important;
+  border-radius:50% !important;
+  background:
+    radial-gradient(circle at 18% 27%,rgba(255,255,255,.96) 0 1px,transparent 2px),
+    radial-gradient(circle at 75% 18%,rgba(244,197,110,.88) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 67% 77%,rgba(116,94,170,.78) 0 1px,transparent 2px),
+    radial-gradient(ellipse at center,transparent 20%,rgba(103,84,153,.18) 43%,transparent 69%) !important;
+  opacity:calc(.34 + var(--hnh-power)*.66) !important;
+  filter:drop-shadow(0 0 calc(5px + var(--hnh-power)*12px) rgba(214,137,16,.42)) !important;
+  animation:hnhCosmos12 1.7s ease-in-out infinite alternate !important;
+}
+.hnh-mega-v12 .hsk-mega-lesson-row[data-hnh-hsk-level="6"]:hover::after{
+  inset:-10px !important;
+  border:1px solid rgba(214,137,16,.54) !important;
+  border-radius:15px !important;
+  opacity:calc(.25 + var(--hnh-power)*.63) !important;
+  box-shadow:0 0 calc(8px + var(--hnh-power)*16px) rgba(214,137,16,.38) !important;
+  animation:hnhCosmicRing12 1.25s ease-in-out infinite alternate !important;
+}
+@keyframes hnhCosmos12{
+  from{transform:rotate(-1deg) scale(.91);}
+  to{transform:rotate(5deg) scale(calc(1.02 + var(--hnh-power)*.12));}
+}
+@keyframes hnhCosmicRing12{
+  from{transform:scale(.94);}
+  to{transform:scale(calc(1.06 + var(--hnh-power)*.07));}
+}
+
+/* Nút hành động không nằm ngoài vùng nhìn, nhưng vẫn hiện khi hover. */
+.hnh-mega-v12 .hsk-mega-lesson-action{
+  position:relative !important;
+  z-index:8 !important;
+  min-width:110px !important;
+  min-height:38px !important;
+  font-size:10.5px !important;
+}
+
+/* Mobile: danh sách vẫn cuộn đủ 15 bài. */
+@media(max-width:760px){
+  .hnh-mega-v12 .hsk-mega-detail{
+    height:auto !important;
+    max-height:none !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail-list{
+    height:52vh !important;
+    max-height:52vh !important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hnh-mega-v12 .dd-level[data-hnh-hsk-level="3"] .dd-level-head,
+  .hnh-mega-v12 .dd-level[data-hnh-hsk-level="5"] .dd-level-head,
+  .hnh-mega-v12 .dd-level[data-hnh-hsk-level="6"] .dd-level-head,
+  .hnh-mega-v12 .hsk-mega-lesson-row:hover::before,
+  .hnh-mega-v12 .hsk-mega-lesson-row:hover::after{
+    animation:none !important;
+  }
+}
