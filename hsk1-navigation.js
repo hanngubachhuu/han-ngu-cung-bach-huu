@@ -262,40 +262,175 @@ function enhanceSiteFooter(){
 }
 enhanceSiteFooter();
 const panel=document.getElementById('hskDropdownPanel');
-if(!panel)return;
-panel.style.maxHeight='calc(100dvh - 92px)';panel.style.overflowY='auto';
-function enhance(){
-  panel.querySelectorAll('.dd-level').forEach(level=>{
-    const head=level.querySelector('.dd-level-head'),badge=level.querySelector('.dd-level-badge');
-    if(!head||!level.querySelector('.dd-level-lessons'))return;
-    head.setAttribute('role','button');head.tabIndex=0;head.setAttribute('aria-expanded',String(level.classList.contains('open')));
-    if(badge?.textContent.trim()==='1'){
-      level.dataset.level='hsk1';
-      const list=level.querySelector('.dd-level-lessons');
-      if(!list.querySelector('a[href="on-tap-hsk1.html"]')){const a=document.createElement('a');a.href='on-tap-hsk1.html';a.textContent='Ôn tập HSK 1 →';list.prepend(a);}
-    }
+const dropdown=document.getElementById('hskDropdown');
+const dropdownBtn=document.getElementById('hskDropdownBtn');
+const navLinks=document.getElementById('siteNavLinks');
+const burger=document.getElementById('siteNavBurger');
+
+function closeDropdown(){
+  if(!dropdown)return;
+  dropdown.classList.remove('open');
+  dropdownBtn?.setAttribute('aria-expanded','false');
+}
+function openDropdown(){
+  if(!dropdown)return;
+  dropdown.classList.add('open');
+  dropdownBtn?.setAttribute('aria-expanded','true');
+}
+function setupMobileNav(){
+  if(!burger||!navLinks)return;
+  burger.setAttribute('aria-haspopup','true');
+  burger.addEventListener('click',e=>{
+    e.stopPropagation();
+    const open=navLinks.classList.toggle('open');
+    burger.textContent=open?'✕':'☰';
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    if(!open)closeDropdown();
+  });
+  navLinks.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      navLinks.classList.remove('open');
+      burger.textContent='☰';
+      burger.setAttribute('aria-expanded','false');
+    });
   });
 }
-enhance();
-function toggle(button,container){if(!container)return;const open=container.classList.toggle('open');button.setAttribute('aria-expanded',String(open));if(button.id==='siteNavBurger')button.textContent=open?'✕':'☰';}
-// Capture avoids double toggles on pages with their own navigation listeners.
-document.addEventListener('click',e=>{
-  const button=e.target.closest?.('#hskDropdownBtn,#siteNavBurger,#hskDropdownPanel .dd-level-head');
-  if(!button)return;
-  if(button.classList.contains('dd-level-head')&&!button.parentElement.querySelector('.dd-level-lessons'))return;
-  e.preventDefault();e.stopImmediatePropagation();
-  toggle(button,button.id==='hskDropdownBtn'?document.getElementById('hskDropdown'):button.id==='siteNavBurger'?document.getElementById('siteNavLinks'):button.parentElement);
-},true);
-document.addEventListener('keydown',e=>{
-  const head=e.target.closest?.('#hskDropdownPanel .dd-level-head');
-  if(head&&['Enter',' '].includes(e.key)){e.preventDefault();head.click();}
-  if(e.key==='Escape'){
-    document.getElementById('hskDropdown')?.classList.remove('open');document.getElementById('hskDropdownBtn')?.setAttribute('aria-expanded','false');
-    document.getElementById('siteNavLinks')?.classList.remove('open');const burger=document.getElementById('siteNavBurger');if(burger){burger.textContent='☰';burger.setAttribute('aria-expanded','false');}
+function makeMegaMenu(){
+  if(!panel||panel.dataset.megaReady==='1')return;
+  const originalLevels=[...panel.querySelectorAll('.dd-level')];
+  const review=panel.querySelector('.dd-review-link');
+  const levels=originalLevels.filter(level=>{
+    const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
+    return /^[1-6]$/.test(badge);
+  });
+  if(!levels.length)return;
+
+  panel.innerHTML='';
+  panel.classList.add('hsk-mega-panel');
+  const levelCol=document.createElement('div');
+  levelCol.className='hsk-mega-levels';
+  const detail=document.createElement('section');
+  detail.className='hsk-mega-detail';
+  detail.setAttribute('aria-live','polite');
+  detail.setAttribute('aria-label','Chương trình cấp HSK đang chọn');
+
+  const makeDetail=(level,index)=>{
+    const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
+    const title=level.querySelector('.dd-level-name')?.textContent?.trim()||('HSK '+badge);
+    const lessons=[...level.querySelectorAll('.dd-level-lessons a')];
+    const soon=!!level.querySelector('.dd-level-soon');
+    detail.innerHTML='';
+    const head=document.createElement('div');
+    head.className='hsk-mega-detail-head';
+    const badgeEl=document.createElement('div');
+    badgeEl.className='hsk-mega-detail-badge';
+    badgeEl.textContent=badge;
+    badgeEl.setAttribute('aria-hidden','true');
+    const headText=document.createElement('div');
+    const kicker=document.createElement('div');
+    kicker.className='hsk-mega-detail-kicker';
+    kicker.textContent='LỘ TRÌNH HSK';
+    const titleEl=document.createElement('h3');
+    titleEl.className='hsk-mega-detail-title';
+    titleEl.textContent=title;
+    const sub=document.createElement('p');
+    sub.className='hsk-mega-detail-sub';
+    sub.textContent=lessons.length
+      ? 'Chọn bài học để mở trực tiếp chương trình cấp này.'
+      : (soon?'Chương trình đang được chuẩn bị.':'Chưa có bài học được công bố.');
+    headText.append(kicker,titleEl,sub);
+    head.append(badgeEl,headText);
+    detail.appendChild(head);
+
+    if(lessons.length){
+      const list=document.createElement('div');
+      list.className='hsk-mega-detail-list';
+      lessons.forEach(a=>{
+        const clone=a.cloneNode(true);
+        list.appendChild(clone);
+      });
+      detail.appendChild(list);
+    }else{
+      const empty=document.createElement('div');
+      empty.className='hsk-mega-detail-empty';
+      empty.innerHTML='<div><strong>HSK '+badge+'</strong>Chương trình sẽ được bổ sung vào lộ trình chung.</div>';
+      detail.appendChild(empty);
+    }
+    levelCol.querySelectorAll('.dd-level').forEach(x=>x.classList.remove('active'));
+    level.classList.add('active');
+    levelCol.querySelectorAll('.dd-level-head').forEach(x=>x.setAttribute('aria-expanded','false'));
+    level.querySelector('.dd-level-head')?.setAttribute('aria-expanded','true');
+  };
+
+  levels.forEach((level,index)=>{
+    const copy=level.cloneNode(true);
+    copy.querySelector('.dd-level-lessons')?.remove();
+    copy.classList.add('dd-level');
+    copy.setAttribute('data-level-index',String(index));
+    const head=copy.querySelector('.dd-level-head');
+    if(!head)return;
+    head.setAttribute('role','button');
+    head.setAttribute('tabindex','0');
+    head.setAttribute('aria-expanded','false');
+    const badge=copy.querySelector('.dd-level-badge')?.textContent?.trim()||'';
+    head.setAttribute('aria-label','Xem chương trình HSK '+badge);
+    levelCol.appendChild(copy);
+
+    const activate=()=>makeDetail(level,index);
+    copy.addEventListener('mouseenter',()=>{
+      if(window.matchMedia('(hover: hover)').matches)activate();
+    });
+    copy.addEventListener('focusin',activate);
+    head.addEventListener('click',e=>{
+      e.preventDefault();
+      if(!window.matchMedia('(hover: hover)').matches)activate();
+    });
+    head.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();activate();}
+      if(e.key==='ArrowDown'){
+        e.preventDefault();
+        levels[Math.min(index+1,levels.length-1)].querySelector('.dd-level-head')?.focus();
+      }
+      if(e.key==='ArrowUp'){
+        e.preventDefault();
+        levels[Math.max(index-1,0)].querySelector('.dd-level-head')?.focus();
+      }
+    });
+  });
+
+  if(review){
+    const reviewClone=review.cloneNode(true);
+    reviewClone.className='dd-review-link hsk-mega-review';
+    panel.append(levelCol,detail,reviewClone);
+  }else{
+    panel.append(levelCol,detail);
   }
-});
-document.addEventListener('click',e=>{
-  const dd=document.getElementById('hskDropdown');
-  if(dd&&!dd.contains(e.target)){dd.classList.remove('open');document.getElementById('hskDropdownBtn')?.setAttribute('aria-expanded','false');}
-});
+  panel.dataset.megaReady='1';
+  makeDetail(levels[0],0);
+}
+function initHskMegaMenu(){
+  if(!panel||!dropdown)return;
+  panel.style.maxHeight='calc(100dvh - 92px)';
+  makeMegaMenu();
+  dropdownBtn?.addEventListener('click',e=>{
+    e.stopPropagation();
+    dropdown.classList.contains('open')?closeDropdown():openDropdown();
+    if(dropdown.classList.contains('open')){
+      const active=panel.querySelector('.dd-level.active .dd-level-head')||panel.querySelector('.dd-level-head');
+      active?.focus({preventScroll:true});
+    }
+  });
+  document.addEventListener('click',e=>{
+    if(dropdown.classList.contains('open')&&!dropdown.contains(e.target))closeDropdown();
+  },true);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape')closeDropdown();
+  });
+  panel.addEventListener('click',e=>{
+    const link=e.target.closest('a');
+    if(link&&link.closest('.hsk-mega-detail-list'))closeDropdown();
+  });
+}
+setupMobileNav();
+initHskMegaMenu();
 })();
