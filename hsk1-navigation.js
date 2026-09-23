@@ -300,7 +300,7 @@ function setupMobileNav(){
     burger.textContent=open?'✕':'☰';
     burger.setAttribute('aria-expanded',open?'true':'false');
     if(!open)closeDropdown();
-  });
+  },true);
   navLinks.addEventListener('click',e=>{
     const link=e.target.closest?.('a');
     if(!link)return;
