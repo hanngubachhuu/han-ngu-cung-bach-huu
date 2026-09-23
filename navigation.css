@@ -3779,3 +3779,36 @@ body{
     transition:none !important;
   }
 }
+
+
+/* ============================================================
+   NAV v15.1 — FLEX FLOW CHO CỘT CHI TIẾT
+   Không dùng height calc theo giả định. Header giữ kích thước,
+   danh sách bài tự nhận phần còn lại và cuộn độc lập.
+   ============================================================ */
+.hnh-mega-v12 .hsk-mega-detail{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+}
+.hnh-mega-v12 .hsk-mega-resume-wrap{
+  flex:0 0 auto !important;
+}
+.hnh-mega-v12 .hsk-mega-detail-head{
+  flex:0 0 auto !important;
+}
+.hnh-mega-v12 .hsk-mega-detail-list{
+  flex:1 1 auto !important;
+  height:auto !important;
+  max-height:none !important;
+  min-height:0 !important;
+}
+@media(max-width:1080px){
+  .hnh-mega-v12 .hsk-mega-detail{
+    display:block !important;
+  }
+  .hnh-mega-v12 .hsk-mega-detail-list{
+    height:52vh !important;
+    max-height:52vh !important;
+  }
+}
