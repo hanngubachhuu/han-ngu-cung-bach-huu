@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 13: 他在学做中国菜呢。 — Bài tập HSK 1</title>
+<link rel="stylesheet" href="hsk1-lesson.css">
+<link rel="stylesheet" href="navigation.css">
+</head>
+<body data-lesson-id="hsk1_bai13">
+
+<!-- ============================================================
+     THANH ĐIỀU HƯỚNG THƯƠNG HIỆU (SITE NAV) — hiển thị xuyên suốt,
+     liên kết về trang chủ và các mục quảng bá thương hiệu.
+     ⚠️ Sửa lại đường link cho khớp với cấu trúc file thật khi triển khai.
+     ============================================================ -->
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
+            <div class="dd-level-lessons">
+              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a>
+              <a href="bai2_index.html">Bài 2 · 我每天六点起床</a>
+              <a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a>
+              <a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a>
+              <a href="bai5_index.html">Bài 5 · 就买这件吧</a>
+              <a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a>
+              <a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+              <a href="bai8_index.html">Bài 8 · 让我想想再告诉你</a>
+              <a href="bai9_index.html">Bài 9 · 题太多，我没做完</a>
+              <a href="bai10_index.html">Bài 10 · 别找了，手机在桌子上呢</a>
+              <a href="bai11_index.html">Bài 11 · 他比我大三岁</a>
+              <a href="bai12_index.html">Bài 12 · 你穿得太少了</a>
+              <a href="bai13_index.html">Bài 13 · 门开着呢</a>
+              <a href="bai14_index.html">Bài 14 · 你看过那个电影吗</a>
+              <a href="bai15_index.html">Bài 15 · 新年就要到了</a>
+            </div>
+          </div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MÀN HÌNH MỞ ĐẦU — hiển thị trước khi vào bài làm
+     ============================================================ -->
+<div id="introScreen">
+  <div class="bg-blobs" aria-hidden="true">
+    <span class="bg-blob b1"></span><span class="bg-blob b2"></span>
+    <span class="bg-blob b3"></span><span class="bg-blob b4"></span>
+  </div>
+  <div class="intro-card">
+    <div class="intro-card-top">
+      <img src="img/hsk1-seal.webp" alt="" class="seal-badge" aria-hidden="true">
+      <div class="intro-eyebrow" id="introEyebrow">📚 HSK 1</div>
+      <h1 class="intro-title" id="introZh">—</h1>
+      <div class="intro-sub" id="introSub">—</div>
+    </div>
+    <div class="intro-card-body">
+    <div class="intro-stats" id="introStats"></div>
+
+    <!-- Accordion Từ vựng / Ngữ pháp — bấm vào ô nào thì ô đó mở rộng ra,
+         ô còn lại thu gọn nhường chỗ (chỉ mở 1 ô tại một thời điểm). -->
+    <div class="preview-toggle-row" id="previewToggleRow">
+      <button class="preview-toggle-btn" id="btnToggleVocab" type="button" data-panel="vocab" aria-expanded="false" aria-controls="previewPanelVocab">
+        <span class="ic">📚</span><span class="lb">Từ vựng</span><span class="ct" id="vocabCount">0 từ</span>
+      </button>
+      <button class="preview-toggle-btn" id="btnToggleGrammar" type="button" data-panel="grammar" aria-expanded="false" aria-controls="previewPanelGrammar">
+        <span class="ic">✍️</span><span class="lb">Ngữ pháp</span><span class="ct" id="grammarCount">0 điểm</span>
+      </button>
+    </div>
+    <div class="preview-panel" id="previewPanelVocab">
+      <div class="preview-panel-inner" id="vocabTableWrap"></div>
+    </div>
+    <div class="preview-panel" id="previewPanelGrammar">
+      <div class="preview-panel-inner" id="grammarListWrap"></div>
+    </div>
+
+    <div class="intro-history-box" id="introHistoryBox" style="display:none;"></div>
+    <div class="intro-progress-box" id="introProgressBox" style="display:none;"></div>
+
+    <nav class="lesson-route" aria-label="Chuyển bài HSK 1"><a href="hsk1_bai12_index.html">← Bài 12</a><a href="on-tap-hsk1.html">Ôn tập HSK 1</a><a href="hsk1_bai14_index.html">Bài 14 →</a></nav><div class="intro-actions">
+      <button class="btn btn-primary btn-lg btn-block" id="btnStart">🚀 Bắt đầu làm bài</button>
+      <div class="row" id="introSecondaryRow" style="display:none;">
+        <button class="btn btn-secondary btn-block" id="btnViewHistoryIntro">📊 Xem lịch sử làm bài</button>
+      </div>
+    </div>
+    <div class="intro-note" id="storageNote">💾 Bài làm lưu trên trình duyệt này. Viết và nói dùng tiêu chí tự chấm; phần mở rộng không cộng vào điểm cốt lõi.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     KHUNG ỨNG DỤNG CHÍNH (ẩn cho tới khi bấm Bắt đầu)
+     ============================================================ -->
+<div id="appShell" style="display:none;">
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <button type="button" class="brand" id="brandHome" title="Về màn hình đầu">📚 HSK 1</button>
+      <span class="lesson-name" id="topbarLessonName">—</span>
+      <span class="timer" id="timerDisplay">⏱ --:--</span>
+      <button class="icon-btn" id="themeToggle" title="Đổi giao diện sáng/tối">🌙</button>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-meta">
+      <span id="progressText">0/0 câu đã làm</span>
+      <span id="progressPercent">0%</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-left">
+        <h1 class="zh-title" id="heroZh">—</h1>
+        <div class="sub" id="heroSub">—</div>
+        <div class="meta-row" id="heroMeta"></div>
+      </div>
+      <div class="hero-ring">
+        <div class="ring-wrap">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <circle class="ring-bg" cx="42" cy="42" r="36"></circle>
+            <circle class="ring-fg" id="ringFg" cx="42" cy="42" r="36" stroke-dasharray="226" stroke-dashoffset="226"></circle>
+          </svg>
+          <div class="ring-txt" id="ringTxt">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY BANNER -->
+    <div class="history-banner" id="historyBanner" style="display:none;"></div>
+
+    <!-- NAV PANEL (MENU CÂU HỎI — có thể thu gọn) -->
+    <div class="nav-panel" id="navPanel">
+      <div class="nav-panel-head">
+        <h3>Điều hướng câu hỏi</h3>
+        <button class="nav-collapse-btn" id="btnCollapseNav" type="button" aria-expanded="false" aria-controls="navGridContainer">
+          <span id="navCollapseIcon">▸</span> <span id="navCollapseLabel">Mở rộng</span>
+        </button>
+      </div>
+      <div class="nav-compact-strip" id="navCompactStrip"></div>
+      <div class="nav-legend" id="navLegend">
+        <span><i class="legend-dot" style="background:var(--gray-soft); border:1px solid var(--border);"></i>Chưa làm</span>
+        <span><i class="legend-dot" style="background:var(--brand-soft); border:1px solid var(--brand);"></i>Đã làm</span>
+        <span><i class="legend-dot" style="background:var(--brand); border:1px solid var(--brand);"></i>Đang làm</span>
+        <span id="legendGraded" style="display:none;">
+          <i class="legend-dot" style="background:var(--green-soft); border:1px solid var(--green-bd);"></i>Đúng
+          &nbsp;&nbsp;<i class="legend-dot" style="background:var(--red-soft); border:1px solid var(--red-bd);"></i>Sai
+          &nbsp;&nbsp;<i class="legend-dot" style="background:var(--amber-soft); border:1px solid var(--amber-bd);"></i>Một phần
+        </span>
+      </div>
+      <div id="navGridContainer"></div>
+    </div>
+
+    <!-- QUESTION AREA -->
+    <div id="questionArea"></div>
+
+    <!-- NAV BUTTONS -->
+    <div class="q-nav-buttons" id="qNavButtons">
+      <div class="side">
+        <button class="btn btn-secondary" id="btnPrev">← Câu trước</button>
+        <button class="btn btn-secondary" id="btnNext">Câu sau →</button>
+      </div>
+      <button class="btn btn-primary" id="btnSubmit">✅ Nộp bài</button>
+    </div>
+
+    <!-- RESULT AREA -->
+    <div id="resultArea"></div>
+
+  </div>
+
+  <div class="floating-controls no-print">
+    <button class="icon-btn" id="btnMiniNav" title="Menu câu hỏi" aria-expanded="false" aria-controls="miniNavPopover">🔢</button>
+    <button class="icon-btn" id="btnScrollTop" title="Lên đầu trang">⬆️</button>
+    <button class="icon-btn" id="btnScrollBottom" title="Xuống cuối trang">⬇️</button>
+  </div>
+
+  <div class="mini-nav-popover no-print" id="miniNavPopover">
+    <div class="mini-nav-popover-head">
+      <span>Câu hỏi</span>
+      <button class="mini-nav-close" id="btnMiniNavClose" type="button" aria-label="Đóng">✕</button>
+    </div>
+    <div class="mini-nav-grid" id="miniNavGridContainer"></div>
+  </div>
+
+</div>
+
+<div id="modalRoot"></div>
+<canvas id="confettiCanvas" class="no-print"></canvas>
+
+<script src="data/lesson-registry.js"></script>
+<script src="data/lessons/hsk1/bai13.js"></script>
+<script src="hsk1-lesson-engine.js"></script>
+<nav class="lesson-route" aria-label="Chuyển bài HSK 1"><a href="hsk1_bai12_index.html">← Bài 12</a><a href="on-tap-hsk1.html">Ôn tập HSK 1</a><a href="hsk1_bai14_index.html">Bài 14 →</a></nav><footer class="site-footer no-print" id="siteFooter">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he">Liên hệ</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Quay về đầu trang" title="Quay về đầu trang">↑</button>
+<script>
+(function(){
+  var y=document.getElementById('footerYear');
+  if(y) y.textContent=new Date().getFullYear();
+  var b=document.getElementById('siteBackTop');
+  if(b){
+    window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>420);},{passive:true});
+    b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+})();
+</script>
+
+<script src="hsk1-navigation.js" defer></script>
+</body>
+</html>

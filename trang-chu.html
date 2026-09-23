@@ -528,7 +528,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
         <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
         <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
           <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
           <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
             <div class="dd-level-lessons">
               <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a>
@@ -757,7 +757,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
 // ============================================================
 var HSK_LEVELS = [
   {id:'phat-am', label:'Phát âm', badge:'PA', tag:'Nền tảng nghe – nói', lessons:[]},
-  {id:'hsk1', label:'HSK 1', badge:'1', tag:'Nhập môn', lessons:[]},
+  {id:'hsk1', label:'HSK 1', badge:'1', tag:'Giáo trình chuẩn cũ', reviewHref:'on-tap-hsk1.html', lessons:[]},
   {id:'hsk2', label:'HSK 2', badge:'2', tag:'Sơ cấp', lessons:[
     {num:2, zh:'我每天六点起床', vi:'Mỗi ngày tôi dậy lúc 6 giờ', href:'bai2_index.html'},
     {num:3, zh:'左边那个红色的是我的', vi:'Cái màu đỏ bên trái là của tôi', href:'bai3_index.html'},
@@ -919,5 +919,6 @@ function renderLevelGrid(){
 (function(){var y=document.getElementById('footerYear');if(y)y.textContent=new Date().getFullYear();var b=document.getElementById('siteBackTop');if(b){window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>420);},{passive:true});b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}})();
 </script>
 
+<script src="hsk1-navigation.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,234 @@
+[
+  {
+    "id": "S01",
+    "path": "材料汉语水平考试\\hsk1.1.pdf",
+    "units": 22,
+    "textChars": 0,
+    "ocrUnits": 22,
+    "sha256": "cafd14830033c25e654cd11abc226d1a4ff62e77be6f2c6d755a2cc02ea423db"
+  },
+  {
+    "id": "S02",
+    "path": "材料汉语水平考试\\hsk1.2.pdf",
+    "units": 4,
+    "textChars": 0,
+    "ocrUnits": 4,
+    "sha256": "7519fbf3503976b94200fb2d0f0e0e6e735a3e09229d164a5b764a0c2862f92d"
+  },
+  {
+    "id": "S03",
+    "path": "材料汉语水平考试\\MigiiHSK_Ngữ pháp - HSK 1.pdf",
+    "units": 48,
+    "textChars": 38155,
+    "ocrUnits": 0,
+    "sha256": "5656a80fc067d0c3c7a9c31aaaeb6dc076f9c2ca8ebde3f4d377b049c9c007e3"
+  },
+  {
+    "id": "S04",
+    "path": "材料汉语水平考试\\NGỮ PHÁP HSK 1 - 2- 3- 4.pdf",
+    "units": 53,
+    "textChars": 24420,
+    "ocrUnits": 0,
+    "sha256": "f09827ebb318bfd2f3dba660239b10e9befb6a511ac07899f8f829d10a58e6c3"
+  },
+  {
+    "id": "S05",
+    "path": "材料汉语水平考试\\tracnghiemonhsk1.1.docx",
+    "units": 1,
+    "textChars": 0,
+    "ocrUnits": 35,
+    "sha256": "e97eb6b4399aed7144b31f62de3c9dc7f45e345e34ce7a9e6ddbcf953cf687e7"
+  },
+  {
+    "id": "S06",
+    "path": "材料汉语水平考试\\tuvunghsk1.pdf",
+    "units": 15,
+    "textChars": 0,
+    "ocrUnits": 15,
+    "sha256": "a5c77af51f1de715325877df95ae3dfbe304bae0d34df7f988baa87cfafc5075"
+  },
+  {
+    "id": "S07",
+    "path": "HSK 讲课\\File sách giáo khoa + sách bài tập\\HSK1\\HSK1\\Hsk 1 tập viết bản.pdf",
+    "units": 34,
+    "textChars": 6665,
+    "ocrUnits": 0,
+    "sha256": "27628cca7a1ac61c8315178eec3bb2034874a8ed49515f81b3d54192933f2a67"
+  },
+  {
+    "id": "S08",
+    "path": "HSK 讲课\\File sách giáo khoa + sách bài tập\\HSK1\\HSK1\\HSK-1-BH.pdf",
+    "units": 6,
+    "textChars": 0,
+    "ocrUnits": 6,
+    "sha256": "afddfc342ed9c775a04cdb680ecad4da7f5852483696eae95f326528e496920f"
+  },
+  {
+    "id": "S09",
+    "path": "HSK 讲课\\File sách giáo khoa + sách bài tập\\HSK1\\HSK1\\HSK-1-BT.pdf",
+    "units": 34,
+    "textChars": 0,
+    "ocrUnits": 34,
+    "sha256": "d554b6975c8c9d08232d7317bf889dc6a5138e317079f2f451e4a4cdc6fe6a22"
+  },
+  {
+    "id": "S10",
+    "path": "HSK 讲课\\File sách giáo khoa + sách bài tập\\HSK1\\HSK1\\HSK1 Sách bài tập.pdf",
+    "units": 137,
+    "textChars": 0,
+    "ocrUnits": 137,
+    "sha256": "7b257a2409d8f50342644097e74140abec2718241acb1b7c0b98342f8660e192"
+  },
+  {
+    "id": "S11",
+    "path": "HSK 讲课\\File sách giáo khoa + sách bài tập\\HSK1\\HSK1\\HSK1 Sách giáo khoa.pdf",
+    "units": 143,
+    "textChars": 0,
+    "ocrUnits": 143,
+    "sha256": "68c1d4bbdc5cf653a708e2582795638946101eaf43eddf81731de9384c87ccb6"
+  },
+  {
+    "id": "S12",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\01 你好!.pptx",
+    "units": 29,
+    "textChars": 2386,
+    "ocrUnits": 0,
+    "sha256": "aef5d6054b639f1174203a41dc73692919ca187dd90df727f404aa78b7bebf24"
+  },
+  {
+    "id": "S13",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\02 谢谢你!.pptx",
+    "units": 27,
+    "textChars": 1782,
+    "ocrUnits": 0,
+    "sha256": "2db3e11e4dda063f91fbfb99beda8068f8ea14bf9e5fd6ec0b41e40a36bf1e46"
+  },
+  {
+    "id": "S14",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\03 你叫什么名字.pptx",
+    "units": 40,
+    "textChars": 3757,
+    "ocrUnits": 0,
+    "sha256": "96f434124be5130a785f9b9f2dea2326fd52b5babd3b9ecdae75bd0f0bf7caab"
+  },
+  {
+    "id": "S15",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\04 她是我的汉语老师.pptx",
+    "units": 40,
+    "textChars": 4023,
+    "ocrUnits": 0,
+    "sha256": "0783612c3022e4b79feec3e5382392900dbc65bbb5de3679bab849dbaa1fa892"
+  },
+  {
+    "id": "S16",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\05 她女儿今年二十岁.pptx",
+    "units": 43,
+    "textChars": 4574,
+    "ocrUnits": 0,
+    "sha256": "e375d717491433645c41ed2012ff0c9a1677aa05c7cc425ce1ae8f600b533ea2"
+  },
+  {
+    "id": "S17",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\06 我会说汉语.pptx",
+    "units": 37,
+    "textChars": 3432,
+    "ocrUnits": 0,
+    "sha256": "00a497daab6f91e30cae97c3e31f41be64b8572446c360960ac9d93cc864726a"
+  },
+  {
+    "id": "S18",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\07 今天几号.pptx",
+    "units": 40,
+    "textChars": 4589,
+    "ocrUnits": 0,
+    "sha256": "af9c9298920bd548fcd7a1fde4e2ad0ce0d216d76365eb86c991a024e2522dd6"
+  },
+  {
+    "id": "S19",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\08 我想喝茶.pptx",
+    "units": 42,
+    "textChars": 4273,
+    "ocrUnits": 0,
+    "sha256": "e13418171efabbc889429995f9a0ef5f63e67f33ca96b7fb56749882405a77a9"
+  },
+  {
+    "id": "S20",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\09 你儿子在哪儿工作.pptx",
+    "units": 40,
+    "textChars": 4040,
+    "ocrUnits": 0,
+    "sha256": "75db97a69a7784d95c33655d86474fca78675f44934657a75c84f9b650368bc1"
+  },
+  {
+    "id": "S21",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\10 我能坐这儿吗.pptx",
+    "units": 43,
+    "textChars": 4636,
+    "ocrUnits": 0,
+    "sha256": "26adfd9fcd1562dab9dea2033b7a15db603b18e83eb0bbf1857256dad0b1de85"
+  },
+  {
+    "id": "S22",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\11 现在几点.pptx",
+    "units": 36,
+    "textChars": 4022,
+    "ocrUnits": 0,
+    "sha256": "36bc4ac30b739449df85ca549619925e28f4aae86baf3b0905966f29a2f24d0f"
+  },
+  {
+    "id": "S23",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\12 明天天气怎么样.pptx",
+    "units": 38,
+    "textChars": 4608,
+    "ocrUnits": 0,
+    "sha256": "d3ba39eaaac34e21f04237d2b9f6ba32de9c45a78b3e6c742b249e2954b9a7b2"
+  },
+  {
+    "id": "S24",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\13 他在学做中国菜呢.pptx",
+    "units": 36,
+    "textChars": 4363,
+    "ocrUnits": 0,
+    "sha256": "f69478f02d5de7b30fcd21a568be1773afee5c0e00b0c95ede9747b0b9cc019c"
+  },
+  {
+    "id": "S25",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\14 他买了不少衣服.pptx",
+    "units": 43,
+    "textChars": 5631,
+    "ocrUnits": 0,
+    "sha256": "5698d7d3b588b9d27480bbc1ad0dc67d9084df075e3214a5f84299b505529dff"
+  },
+  {
+    "id": "S26",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\15 我是坐飞机来的.pptx",
+    "units": 33,
+    "textChars": 4159,
+    "ocrUnits": 0,
+    "sha256": "c48e81e33c566f81d6e9bf67c17c57c920e8060e7bf86747bc6daf217311a46d"
+  },
+  {
+    "id": "S27",
+    "path": "HSK 讲课\\PPT HSK1\\HSK1\\PHIÊN ÂM NHẬP MÔN.pptx",
+    "units": 96,
+    "textChars": 17709,
+    "ocrUnits": 0,
+    "sha256": "5a6c43fcb41dde4ec1848aff7bc0bcc2f57b760e8fa3397154545a4a0022b094"
+  },
+  {
+    "id": "S28",
+    "path": "soan bai\\hsk\\tai lieu tham chieu\\NGỮ PHÁP HSK 1.docx",
+    "units": 1,
+    "textChars": 9986,
+    "ocrUnits": 0,
+    "sha256": "ef0d3755b9c41686e4601c42d878e9b65ba9138116999722f4cd774cead6b0b3"
+  },
+  {
+    "id": "S29",
+    "path": "soan bai\\hsk\\tai lieu tham chieu\\NGỮ PHÁP HSK 1.pdf",
+    "units": 8,
+    "textChars": 8365,
+    "ocrUnits": 0,
+    "sha256": "7816d3a5f3decb2a2345d7f691653ab5176a2133d87a499e78031d0b86fc43d8"
+  }
+]

@@ -1,0 +1,259 @@
+{
+  "base": "http://127.0.0.1:8765/",
+  "checks": [
+    {
+      "name": "all_15_lesson_pages"
+    },
+    {
+      "name": "45_audio_metadata",
+      "detail": "1590.1 seconds"
+    },
+    {
+      "name": "correct_wrong_previous_refresh"
+    },
+    {
+      "name": "HSK2_storage_isolation"
+    },
+    {
+      "name": "audio_play_pause_speed_stop_on_navigation"
+    },
+    {
+      "name": "reorder_alternative_entered"
+    },
+    {
+      "name": "automatic_scoring_listening_reorder",
+      "detail": 19
+    },
+    {
+      "name": "selfmark_updates_same_history_record"
+    },
+    {
+      "name": "submitted_refresh_preserves_selfmark"
+    },
+    {
+      "name": "extension_score_separate"
+    },
+    {
+      "name": "history_detail_keyboard_close"
+    },
+    {
+      "name": "print_all_question_results"
+    },
+    {
+      "name": "retake_preserves_history"
+    },
+    {
+      "name": "blank_submission_no_double_count"
+    },
+    {
+      "name": "responsive_four_viewports_no_overflow"
+    },
+    {
+      "name": "review_level_filter_counts"
+    },
+    {
+      "name": "flashcards_meaning_and_known"
+    },
+    {
+      "name": "bank_options_passages_explanations"
+    },
+    {
+      "name": "quick_quiz_with_feedback"
+    },
+    {
+      "name": "review_HSK2_filter_regression"
+    },
+    {
+      "name": "homepage_HSK1_menu"
+    },
+    {
+      "name": "HSK2_five_pages_and_cross_level_navigation"
+    },
+    {
+      "name": "no_page_errors"
+    }
+  ],
+  "errors": [],
+  "audio": [
+    {
+      "src": "audio/hsk1/bai1/dialog-1.mp3",
+      "duration": 26.344558
+    },
+    {
+      "src": "audio/hsk1/bai1/dialog-2.mp3",
+      "duration": 17.87322
+    },
+    {
+      "src": "audio/hsk1/bai1/dialog-3.mp3",
+      "duration": 18.959819
+    },
+    {
+      "src": "audio/hsk1/bai2/dialog-1.mp3",
+      "duration": 27.465578
+    },
+    {
+      "src": "audio/hsk1/bai2/dialog-2.mp3",
+      "duration": 17.474739
+    },
+    {
+      "src": "audio/hsk1/bai2/dialog-3.mp3",
+      "duration": 16.76542
+    },
+    {
+      "src": "audio/hsk1/bai3/dialog-1.mp3",
+      "duration": 39.564807
+    },
+    {
+      "src": "audio/hsk1/bai3/dialog-2.mp3",
+      "duration": 26.603787
+    },
+    {
+      "src": "audio/hsk1/bai3/dialog-3.mp3",
+      "duration": 30.485692
+    },
+    {
+      "src": "audio/hsk1/bai4/dialog-1.mp3",
+      "duration": 39.869683
+    },
+    {
+      "src": "audio/hsk1/bai4/dialog-2.mp3",
+      "duration": 26.706757
+    },
+    {
+      "src": "audio/hsk1/bai4/dialog-3.mp3",
+      "duration": 33.124807
+    },
+    {
+      "src": "audio/hsk1/bai5/dialog-1.mp3",
+      "duration": 36.323787
+    },
+    {
+      "src": "audio/hsk1/bai5/dialog-2.mp3",
+      "duration": 27.914127
+    },
+    {
+      "src": "audio/hsk1/bai5/dialog-3.mp3",
+      "duration": 26.918662
+    },
+    {
+      "src": "audio/hsk1/bai6/dialog-1.mp3",
+      "duration": 40.464853
+    },
+    {
+      "src": "audio/hsk1/bai6/dialog-2.mp3",
+      "duration": 32.086304
+    },
+    {
+      "src": "audio/hsk1/bai6/dialog-3.mp3",
+      "duration": 37.544785
+    },
+    {
+      "src": "audio/hsk1/bai7/dialog-1.mp3",
+      "duration": 47.289184
+    },
+    {
+      "src": "audio/hsk1/bai7/dialog-2.mp3",
+      "duration": 31.486576
+    },
+    {
+      "src": "audio/hsk1/bai7/dialog-3.mp3",
+      "duration": 33.559161
+    },
+    {
+      "src": "audio/hsk1/bai8/dialog-1.mp3",
+      "duration": 43.058299
+    },
+    {
+      "src": "audio/hsk1/bai8/dialog-2.mp3",
+      "duration": 32.491361
+    },
+    {
+      "src": "audio/hsk1/bai8/dialog-3.mp3",
+      "duration": 34.40771
+    },
+    {
+      "src": "audio/hsk1/bai9/dialog-1.mp3",
+      "duration": 53.068277
+    },
+    {
+      "src": "audio/hsk1/bai9/dialog-2.mp3",
+      "duration": 37.630476
+    },
+    {
+      "src": "audio/hsk1/bai9/dialog-3.mp3",
+      "duration": 21.840295
+    },
+    {
+      "src": "audio/hsk1/bai10/dialog-1.mp3",
+      "duration": 48.299796
+    },
+    {
+      "src": "audio/hsk1/bai10/dialog-2.mp3",
+      "duration": 42.037982
+    },
+    {
+      "src": "audio/hsk1/bai10/dialog-3.mp3",
+      "duration": 30.393696
+    },
+    {
+      "src": "audio/hsk1/bai11/dialog-1.mp3",
+      "duration": 43.11059
+    },
+    {
+      "src": "audio/hsk1/bai11/dialog-2.mp3",
+      "duration": 32.798685
+    },
+    {
+      "src": "audio/hsk1/bai11/dialog-3.mp3",
+      "duration": 34.113084
+    },
+    {
+      "src": "audio/hsk1/bai12/dialog-1.mp3",
+      "duration": 51.894331
+    },
+    {
+      "src": "audio/hsk1/bai12/dialog-2.mp3",
+      "duration": 36.375601
+    },
+    {
+      "src": "audio/hsk1/bai12/dialog-3.mp3",
+      "duration": 37.387211
+    },
+    {
+      "src": "audio/hsk1/bai13/dialog-1.mp3",
+      "duration": 52.08932
+    },
+    {
+      "src": "audio/hsk1/bai13/dialog-2.mp3",
+      "duration": 40.878685
+    },
+    {
+      "src": "audio/hsk1/bai13/dialog-3.mp3",
+      "duration": 40.37619
+    },
+    {
+      "src": "audio/hsk1/bai14/dialog-1.mp3",
+      "duration": 43.983379
+    },
+    {
+      "src": "audio/hsk1/bai14/dialog-2.mp3",
+      "duration": 44.946213
+    },
+    {
+      "src": "audio/hsk1/bai14/dialog-3.mp3",
+      "duration": 42.490249
+    },
+    {
+      "src": "audio/hsk1/bai15/dialog-1.mp3",
+      "duration": 46.922902
+    },
+    {
+      "src": "audio/hsk1/bai15/dialog-2.mp3",
+      "duration": 32.608435
+    },
+    {
+      "src": "audio/hsk1/bai15/dialog-3.mp3",
+      "duration": 32.079184
+    }
+  ]
+}

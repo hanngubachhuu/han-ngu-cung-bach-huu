@@ -25,6 +25,8 @@ h1{font-size:35px;line-height:1.2;margin:14px 0 10px}.head p{font-size:16px;line
 .quiz{max-width:760px;margin:0 auto}.quiz-opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--soft);padding:11px 13px;border-radius:9px;margin:8px 0}.quiz-opt.selected{border-color:var(--primary);background:var(--primary-soft)}.quiz-input{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;font-size:15px}.result{text-align:center;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:14px}.result b{font-size:44px;color:var(--primary)}
 .empty{text-align:center;color:var(--muted);padding:32px}
 @media(max-width:800px){.stats{grid-template-columns:repeat(3,1fr)}.tabs{grid-template-columns:repeat(3,1fr)}.toolbar{grid-template-columns:1fr}.hanzi-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:520px){.wrap{padding:28px 12px 70px}h1{font-size:29px}.head p{font-size:14px}.stats{grid-template-columns:repeat(2,1fr)}.tabs{grid-template-columns:repeat(2,1fr)}.vocab-grid{grid-template-columns:1fr}.hanzi-grid{grid-template-columns:repeat(3,1fr)}}
+
+.exercise .prompt,.exercise .answer,#panel-quiz h2{white-space:pre-line}.review-options p{margin:6px 0}.exercise audio{width:100%;max-width:420px}
 </style>
 <link rel="stylesheet" href="navigation.css">
 </head>
@@ -42,7 +44,7 @@ h1{font-size:35px;line-height:1.2;margin:14px 0 10px}.head p{font-size:16px;line
         <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
         <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
           <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
           <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
             <div class="dd-level-lessons">
               <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a><a href="bai2_index.html">Bài 2 · 我每天六点起床</a><a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a><a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a><a href="bai5_index.html">Bài 5 · 就买这件吧</a><a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a><a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
@@ -89,5 +91,6 @@ h1{font-size:35px;line-height:1.2;margin:14px 0 10px}.head p{font-size:16px;line
 <button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Lên đầu trang" title="Lên đầu trang">↑</button>
 <script src="data/lesson-registry.js?v=20260920-4"></script><script src="data/lesson-manifest.js?v=20260920-4"></script><script src="on-tap-chung.js?v=20260920-3"></script>
 <script src="hanzi-practice.js"></script>
+<script src="hsk1-navigation.js" defer></script>
 </body>
 </html>

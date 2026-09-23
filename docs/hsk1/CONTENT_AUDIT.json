@@ -1,0 +1,54 @@
+{
+  "lessons": 15,
+  "questions": 369,
+  "vocabularyEntries": 166,
+  "grammarPoints": 54,
+  "counts": {
+    "skill": {
+      "tuvung": 90,
+      "phatam": 30,
+      "nguphap": 54,
+      "dochieu": 45,
+      "nghe": 45,
+      "viet": 45,
+      "dich": 30,
+      "giaotiep": 30
+    },
+    "type": {
+      "mcq": 204,
+      "text_fill": 15,
+      "listening": 45,
+      "reorder": 15,
+      "self_check": 90
+    },
+    "difficulty": {
+      "1": 90,
+      "2": 235,
+      "3": 44
+    },
+    "scope": {
+      "core": 356,
+      "extension": 12,
+      "review": 1
+    }
+  },
+  "answerDistribution": {
+    "B": 73,
+    "D": 59,
+    "A": 64,
+    "C": 53
+  },
+  "extensionQuestions": 19,
+  "optionalExtensionTasks": 12,
+  "changedQuestionsInFinalPass": 21,
+  "discardedWholeQuestions": 0,
+  "structuralErrors": 0,
+  "exactDuplicates": 0,
+  "unresolvedKnownAmbiguities": 0,
+  "scopeFlags": {
+    "source_scaffold_这个": 7,
+    "taught_grammar_日_元": 2,
+    "glossed_extensions": 10
+  },
+  "reviewLimitation": "Soát nội dung do tác giả thực hiện; không thay thế một vòng duyệt độc lập của giáo viên. Không có ASR/kiểm âm độc lập toàn bộ audio."
+}

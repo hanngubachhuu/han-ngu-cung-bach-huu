@@ -1,0 +1,452 @@
+[
+  {
+    "lesson": 1,
+    "track": 1,
+    "path": "audio/hsk1/bai1/dialog-1.mp3",
+    "slide": 11,
+    "source": "S12",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 422973,
+    "sha256": "524d9f1faac6ed0055a305a00dff80c42ca455c655d8b0bcfc332baea638bfe1"
+  },
+  {
+    "lesson": 1,
+    "track": 2,
+    "path": "audio/hsk1/bai1/dialog-2.mp3",
+    "slide": 12,
+    "source": "S12",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 287137,
+    "sha256": "95a2308641cb33f515272f2c123e3987c18a99948a525ebfcdaa6dc3d28afbb9"
+  },
+  {
+    "lesson": 1,
+    "track": 3,
+    "path": "audio/hsk1/bai1/dialog-3.mp3",
+    "slide": 13,
+    "source": "S12",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 304691,
+    "sha256": "c63cce4e3283da1e627d6b6c7f6d67b187bc55b3577506e281afd913ad7c19e3"
+  },
+  {
+    "lesson": 2,
+    "track": 1,
+    "path": "audio/hsk1/bai2/dialog-1.mp3",
+    "slide": 9,
+    "source": "S13",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 440528,
+    "sha256": "bbb0f69b62a506af19b6f44941d58569eaa67e19957dff9a7fcf42857cf53e3d"
+  },
+  {
+    "lesson": 2,
+    "track": 2,
+    "path": "audio/hsk1/bai2/dialog-2.mp3",
+    "slide": 10,
+    "source": "S13",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 280867,
+    "sha256": "187ca4fe28532421a0227993775080e380c884fa0324c0e98776db82d1f70b38"
+  },
+  {
+    "lesson": 2,
+    "track": 3,
+    "path": "audio/hsk1/bai2/dialog-3.mp3",
+    "slide": 11,
+    "source": "S13",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 269582,
+    "sha256": "7ac06d56ee6f12aff47a309fe3cc6119d6061fa7fd82ced1942b994ccec0cf55"
+  },
+  {
+    "lesson": 3,
+    "track": 1,
+    "path": "audio/hsk1/bai3/dialog-1.mp3",
+    "slide": 15,
+    "source": "S14",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 634461,
+    "sha256": "f2a0f8937de936419407b6865584838cae6f7912cabb1a5157099fd9ccd8744e"
+  },
+  {
+    "lesson": 3,
+    "track": 2,
+    "path": "audio/hsk1/bai3/dialog-2.mp3",
+    "slide": 16,
+    "source": "S14",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 426735,
+    "sha256": "f8dde8f54083f3d0fc9d9c337af98b2f4d1e5e60ad5a7f1de471cee8d04fbe2f"
+  },
+  {
+    "lesson": 3,
+    "track": 3,
+    "path": "audio/hsk1/bai3/dialog-3.mp3",
+    "slide": 17,
+    "source": "S14",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 489011,
+    "sha256": "a54571cdd775c6e4127912b65315fb5668ba9058b994ad8fcf2f424a246d471c"
+  },
+  {
+    "lesson": 4,
+    "track": 1,
+    "path": "audio/hsk1/bai4/dialog-1.mp3",
+    "slide": 15,
+    "source": "S15",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 639058,
+    "sha256": "c693649411835a603c2a73f44ee6f12477b05fe776b16d4a5a8c7b2d9ea60beb"
+  },
+  {
+    "lesson": 4,
+    "track": 2,
+    "path": "audio/hsk1/bai4/dialog-2.mp3",
+    "slide": 16,
+    "source": "S15",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 428407,
+    "sha256": "28282905cf8ed572a1fc6e76058a3dfc0ea46a47c0108553b111a8a4c9927fa8"
+  },
+  {
+    "lesson": 4,
+    "track": 3,
+    "path": "audio/hsk1/bai4/dialog-3.mp3",
+    "slide": 17,
+    "source": "S15",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 531225,
+    "sha256": "b84114ccd751a4063b42d949a286e82f50a60fb2b237c6231f05b4db8d748de8"
+  },
+  {
+    "lesson": 5,
+    "track": 1,
+    "path": "audio/hsk1/bai5/dialog-1.mp3",
+    "slide": 15,
+    "source": "S16",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 582634,
+    "sha256": "f5459e06720a3f83ea7236d86f5bf51859dc6896a00c043d79d7473b430b2f64"
+  },
+  {
+    "lesson": 5,
+    "track": 2,
+    "path": "audio/hsk1/bai5/dialog-2.mp3",
+    "slide": 16,
+    "source": "S16",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 448051,
+    "sha256": "30fda93527b9021a8d6cb3585d46f1e02259c06c040d285a6016d8cccadc0565"
+  },
+  {
+    "lesson": 5,
+    "track": 3,
+    "path": "audio/hsk1/bai5/dialog-3.mp3",
+    "slide": 17,
+    "source": "S16",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 431750,
+    "sha256": "c89885d722b0d9a0c5ee05f78c739a24646487b4a569b6b75791f4b0be18dce9"
+  },
+  {
+    "lesson": 6,
+    "track": 1,
+    "path": "audio/hsk1/bai6/dialog-1.mp3",
+    "slide": 16,
+    "source": "S17",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 648671,
+    "sha256": "cc0a60056cecbb6e27a74a41aea45e640e9615a59a8e1dfc171b1fc8d0728df3"
+  },
+  {
+    "lesson": 6,
+    "track": 2,
+    "path": "audio/hsk1/bai6/dialog-2.mp3",
+    "slide": 17,
+    "source": "S17",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 514506,
+    "sha256": "0f0dbde63ca767826af55db722c111eb15e80c3203f6720c55d29782029c9035"
+  },
+  {
+    "lesson": 6,
+    "track": 3,
+    "path": "audio/hsk1/bai6/dialog-3.mp3",
+    "slide": 18,
+    "source": "S17",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 601860,
+    "sha256": "c06c7679be68d747466330462837fc0d28e9239c4276a6eca267425463c678c7"
+  },
+  {
+    "lesson": 7,
+    "track": 1,
+    "path": "audio/hsk1/bai7/dialog-1.mp3",
+    "slide": 17,
+    "source": "S18",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 757759,
+    "sha256": "f6d0f5aecde6aee03ec28cf2fe7dd57a47913f3d8901c672f1e4fe39978930f7"
+  },
+  {
+    "lesson": 7,
+    "track": 2,
+    "path": "audio/hsk1/bai7/dialog-2.mp3",
+    "slide": 18,
+    "source": "S18",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 504893,
+    "sha256": "c780f4a16fa515a6dca9d00c4701aa2c777bc1a799b1a0e30ad3e13614d5a438"
+  },
+  {
+    "lesson": 7,
+    "track": 3,
+    "path": "audio/hsk1/bai7/dialog-3.mp3",
+    "slide": 19,
+    "source": "S18",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 538330,
+    "sha256": "f642e152b4332d78f9404b1ce14c5e7907ceeb38ba53e564f3fae6a59a8f7f32"
+  },
+  {
+    "lesson": 8,
+    "track": 1,
+    "path": "audio/hsk1/bai8/dialog-1.mp3",
+    "slide": 20,
+    "source": "S19",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 690049,
+    "sha256": "4340660d4f623c441e2b53cbd1a6e84860899006813acf56940b0fa9a3a2ee9d"
+  },
+  {
+    "lesson": 8,
+    "track": 2,
+    "path": "audio/hsk1/bai8/dialog-2.mp3",
+    "slide": 21,
+    "source": "S19",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 521194,
+    "sha256": "f3c557de3f81d28604f8038fc77d2d346ed4cddfa1c15da1294c9058d8e7fbc2"
+  },
+  {
+    "lesson": 8,
+    "track": 3,
+    "path": "audio/hsk1/bai8/dialog-3.mp3",
+    "slide": 22,
+    "source": "S19",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 551705,
+    "sha256": "05f078822c6e5d5a592cb162304c1e5cd65f9edcad8b032f511054f53c7a51db"
+  },
+  {
+    "lesson": 9,
+    "track": 1,
+    "path": "audio/hsk1/bai9/dialog-1.mp3",
+    "slide": 18,
+    "source": "S20",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 850546,
+    "sha256": "15e5bc64467a962c8db2b978cd69d6917c93a2991a4f86c13a41461992f50971"
+  },
+  {
+    "lesson": 9,
+    "track": 2,
+    "path": "audio/hsk1/bai9/dialog-2.mp3",
+    "slide": 19,
+    "source": "S20",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 603532,
+    "sha256": "f8faa12bc2e4f8c5fbc8c7916257fd151c9b0b10d1d5d36ba5289a316304a565"
+  },
+  {
+    "lesson": 9,
+    "track": 3,
+    "path": "audio/hsk1/bai9/dialog-3.mp3",
+    "slide": 20,
+    "source": "S20",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 350666,
+    "sha256": "67a80f77add9caa4ec73f37d13852377d13c6f08f77e66c228026d7eb468d4b4"
+  },
+  {
+    "lesson": 10,
+    "track": 1,
+    "path": "audio/hsk1/bai10/dialog-1.mp3",
+    "slide": 17,
+    "source": "S21",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 774059,
+    "sha256": "3a5f23feb0f03167810f31573775502801660875d767eb00c458c1c0e3eebab3"
+  },
+  {
+    "lesson": 10,
+    "track": 2,
+    "path": "audio/hsk1/bai10/dialog-2.mp3",
+    "slide": 18,
+    "source": "S21",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 673749,
+    "sha256": "0b38cee777a87358265efa01005f18e759b10f6c26c5a088c45e822537cc7fb4"
+  },
+  {
+    "lesson": 10,
+    "track": 3,
+    "path": "audio/hsk1/bai10/dialog-3.mp3",
+    "slide": 19,
+    "source": "S21",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 487757,
+    "sha256": "ddfd3a2e90156551bdfc1e1d94432d7d1a6db7d48d2f993af47b14ff20ba44ae"
+  },
+  {
+    "lesson": 11,
+    "track": 1,
+    "path": "audio/hsk1/bai11/dialog-1.mp3",
+    "slide": 15,
+    "source": "S22",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 690885,
+    "sha256": "871ec7f4d499fea574ebf7eac7d69e9d8e0effa2a6d5dd4a2b6caaabb980a7b8"
+  },
+  {
+    "lesson": 11,
+    "track": 2,
+    "path": "audio/hsk1/bai11/dialog-2.mp3",
+    "slide": 16,
+    "source": "S22",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 526209,
+    "sha256": "dd005a994e885258e9a850ffb7d2119d569139c76859c0580b1f77913ae16527"
+  },
+  {
+    "lesson": 11,
+    "track": 3,
+    "path": "audio/hsk1/bai11/dialog-3.mp3",
+    "slide": 17,
+    "source": "S22",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 547107,
+    "sha256": "62b9deac61b793604129a786d5b842c92728ebc3d7cb2c10f2731c2b033e79b7"
+  },
+  {
+    "lesson": 12,
+    "track": 1,
+    "path": "audio/hsk1/bai12/dialog-1.mp3",
+    "slide": 18,
+    "source": "S23",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 831737,
+    "sha256": "2f369da7d8da10e71886ccf7d1849eb7483e175310f4af54edb902ab7dfa0080"
+  },
+  {
+    "lesson": 12,
+    "track": 2,
+    "path": "audio/hsk1/bai12/dialog-2.mp3",
+    "slide": 19,
+    "source": "S23",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 583470,
+    "sha256": "3ec394fb9ea2fa5a9b1350ebf816a8d95d210d7d08a3cf3b4a867885e8a5a16e"
+  },
+  {
+    "lesson": 12,
+    "track": 3,
+    "path": "audio/hsk1/bai12/dialog-3.mp3",
+    "slide": 20,
+    "source": "S23",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 599352,
+    "sha256": "6408544cb9652b062331a5b1f53f9d27b83dc3d503c509dcf7932bc2a1706a16"
+  },
+  {
+    "lesson": 13,
+    "track": 1,
+    "path": "audio/hsk1/bai13/dialog-1.mp3",
+    "slide": 15,
+    "source": "S24",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 834663,
+    "sha256": "42dbdc50471b681e0398608ac8bbb6124f8e4d0c80544fbba2a80c35f2450c5f"
+  },
+  {
+    "lesson": 13,
+    "track": 2,
+    "path": "audio/hsk1/bai13/dialog-2.mp3",
+    "slide": 16,
+    "source": "S24",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 655359,
+    "sha256": "9a2e21d3cca47a7b87ae320c3bfbd28fea23772e4bd7b5bf8350ef99658e3959"
+  },
+  {
+    "lesson": 13,
+    "track": 3,
+    "path": "audio/hsk1/bai13/dialog-3.mp3",
+    "slide": 17,
+    "source": "S24",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 647417,
+    "sha256": "3e71e3a775602722bd3753ebfc65e994260ae8abf4a6c6305fa56a977a771401"
+  },
+  {
+    "lesson": 14,
+    "track": 1,
+    "path": "audio/hsk1/bai14/dialog-1.mp3",
+    "slide": 20,
+    "source": "S25",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 705096,
+    "sha256": "75666bf587ac615a43a3c8abf89a8ff2528ba292e16dba18039b31374c9f44ab"
+  },
+  {
+    "lesson": 14,
+    "track": 2,
+    "path": "audio/hsk1/bai14/dialog-2.mp3",
+    "slide": 21,
+    "source": "S25",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 720560,
+    "sha256": "37db8aa07c998f25051cacc244dc9d78b30cbee9664caf8f933ca96e2f05f59e"
+  },
+  {
+    "lesson": 14,
+    "track": 3,
+    "path": "audio/hsk1/bai14/dialog-3.mp3",
+    "slide": 22,
+    "source": "S25",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 681272,
+    "sha256": "09726fec64a8143bfa209479451e060eafbd0fb93cbd3f93790688d3bd1bc149"
+  },
+  {
+    "lesson": 15,
+    "track": 1,
+    "path": "audio/hsk1/bai15/dialog-1.mp3",
+    "slide": 14,
+    "source": "S26",
+    "member": "ppt/media/media1.mp3",
+    "bytes": 751907,
+    "sha256": "eb1c484748d154f6ccef605fee3d1cc9f0a2501b9eec7482b429497027e16079"
+  },
+  {
+    "lesson": 15,
+    "track": 2,
+    "path": "audio/hsk1/bai15/dialog-2.mp3",
+    "slide": 15,
+    "source": "S26",
+    "member": "ppt/media/media2.mp3",
+    "bytes": 522866,
+    "sha256": "974822548ca315868e9c6b73fbe5d3748e9cbea6d04ffd17b699bccc2dce006c"
+  },
+  {
+    "lesson": 15,
+    "track": 3,
+    "path": "audio/hsk1/bai15/dialog-3.mp3",
+    "slide": 16,
+    "source": "S26",
+    "member": "ppt/media/media3.mp3",
+    "bytes": 514506,
+    "sha256": "62b1c5dc59d8a3f46d2605138ec23f26f82c456110a9260c1d9fddf013fbd6b3"
+  }
+]

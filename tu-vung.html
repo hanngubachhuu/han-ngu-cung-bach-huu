@@ -31,7 +31,7 @@ ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.8}.confusion{padd
         <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
         <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
           <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
           <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
             <div class="dd-level-lessons">
               <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a><a href="bai2_index.html">Bài 2 · 我每天六点起床</a><a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a><a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a><a href="bai5_index.html">Bài 5 · 就买这件吧</a><a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a><a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
@@ -66,7 +66,7 @@ ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.8}.confusion{padd
 <script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const wanted=new URLSearchParams(location.search).get('word')||'';
+const wordParams=new URLSearchParams(location.search),wanted=wordParams.get('word')||'',wantedLesson=wordParams.get('lesson')||'';
 
 function chars(s){return Array.from(String(s||'')).filter(c=>/[\u3400-\u9fff]/.test(c))}
 function charLinks(word){return chars(word).map(c=>'<a class="char-link" href="chu-han.html?char='+encodeURIComponent(c)+'">'+esc(c)+' · chữ Hán</a>').join('')}
@@ -78,10 +78,10 @@ function render(hit,v){
  const conf=Array.isArray(detail.commonConfusions)?detail.commonConfusions:[];
  const related=Array.isArray(detail.relatedWords)?detail.relatedWords:[];
  $('#app').innerHTML=
- '<section class="hero"><span class="eyebrow">'+esc(hit.l.content?.course?.system||'HSK')+' · BÀI '+esc(hit.l.content?.course?.lessonNo||hit.u)+'</span>'+
+ '<section class="hero"><span class="eyebrow">'+esc((hit.l.content?.course?.system||'HSK')+' '+(hit.l.content?.course?.level||''))+' · BÀI '+esc(hit.l.content?.course?.lessonNo||hit.u)+'</span>'+
  '<div class="han">'+esc(v.han)+'</div><div class="pinyin">'+esc(v.pinyin||'Chưa có pinyin')+'</div><div class="meaning">'+esc(v.meaning||'Chưa có nghĩa chuẩn hóa')+'</div>'+
  '<div class="meta">'+esc(v.partOfSpeech||'')+' · '+esc(hit.l.content?.course?.titleZh||'')+'</div><div class="char-links">'+charLinks(v.han)+'</div>'+
- (detail.status?'<div class="source-badge">Nội dung mở rộng · '+esc(detail.status)+'</div>':'')+'</section>'+
+ (detail.status?'<div class="source-badge">'+(c.course?.level===1?'Từ vựng và cách dùng trong bài':'Nội dung mở rộng · '+esc(detail.status))+'</div>':'')+'</section>'+
  '<div class="grid">'+
  '<section class="card"><h2>🧩 Cách kết hợp thường gặp</h2>'+(coll.length?coll.map(x=>'<div class="item"><div class="pattern">'+esc(x.pattern||'')+'</div><div class="desc">'+esc(x.meaning||'')+'</div>'+(x.note?'<div class="note">'+esc(x.note)+'</div>':'')+(Array.isArray(x.examples)&&x.examples.length?'<div class="examples">'+x.examples.map(e=>'<div class="ex-zh">'+esc(e)+'</div>').join('')+'</div>':'')+'</div>').join(''):'<p>Chưa có dữ liệu mở rộng.</p>')+'</section>'+
  '<section class="card"><h2>⚠️ Lưu ý khi sử dụng</h2>'+(notes.length?'<ul>'+notes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Chưa có lưu ý mở rộng.</p>')+
@@ -93,6 +93,8 @@ function render(hit,v){
 async function load(){
  if(!wanted){$('#app').innerHTML='<div class="empty">Hãy mở hồ sơ từ vựng từ Ôn tập chung.</div>';return}
  const lessons=(await window.HAN_NGU_DATA.loadAll()).map(window.HAN_NGU_DATA.prepare);
+ // Keep older word-only links on their original HSK 2 profile; new links carry lesson context.
+ lessons.sort((a,b)=>{const rank=l=>wantedLesson&&l.id===wantedLesson?0:l.content?.course?.level===2?1:2;return rank(a)-rank(b)});
  for(const l of lessons){const v=(l.content?.vocabulary||[]).find(x=>x.han===wanted);if(v){render({u:l.__href||l.href||'',l},v);return}}
  $('#app').innerHTML='<div class="empty">Chưa có hồ sơ mở rộng cho từ '+esc(wanted)+'.</div>';
 }
@@ -112,5 +114,6 @@ load().catch(()=>$('#app').innerHTML='<div class="empty">Không tải được d
   d.querySelectorAll('.dd-level-head').forEach(function(h){h.addEventListener('click',function(){var x=h.closest('.dd-level');if(x&&x.querySelector('.dd-level-lessons'))x.classList.toggle('open');});});
 })();
 </script>
+<script src="hsk1-navigation.js" defer></script>
 </body>
 </html>

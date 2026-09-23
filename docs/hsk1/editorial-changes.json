@@ -1,0 +1,198 @@
+[
+  {
+    "id": "H1-B01-015",
+    "field": "option",
+    "before": "再见",
+    "after": "您好",
+    "reason": "Đây là chào kính trọng; tệp này hai người nói 你好."
+  },
+  {
+    "id": "H1-B03-003",
+    "field": "prompt",
+    "reason": "Tránh dùng 的 trước bài 4.",
+    "before": "Trong cụm “你的名字”, “名字” có nghĩa nào?",
+    "after": "Trong cụm “什么名字”, “名字” có nghĩa nào?"
+  },
+  {
+    "id": "H1-B03-003",
+    "field": "explain",
+    "reason": "Cụm minh họa nằm trong bài 3.",
+    "before": "名字 (míngzi) nghĩa là tên. Cụm minh họa: 你的名字.\nA. quốc tịch: Phương án này mang nghĩa “quốc tịch”; trong cụm “你的名字”, 名字 chỉ “tên”. Hai ý không tương đương.\nC. trường học: Phương án này mang nghĩa “trường học”; trong cụm “你的名字”, 名字 chỉ “tên”. Hai ý không tương đương.\nD. nghề nghiệp: Phương án này mang nghĩa “nghề nghiệp”; trong cụm “你的名字”, 名字 chỉ “tên”. Hai ý không tương đương.",
+    "after": "名字 (míngzi) nghĩa là tên. Cụm minh họa: 什么名字.\nA. quốc tịch: Phương án này mang nghĩa “quốc tịch”; trong cụm “什么名字”, 名字 chỉ “tên”. Hai ý không tương đương.\nC. trường học: Phương án này mang nghĩa “trường học”; trong cụm “什么名字”, 名字 chỉ “tên”. Hai ý không tương đương.\nD. nghề nghiệp: Phương án này mang nghĩa “nghề nghiệp”; trong cụm “什么名字”, 名字 chỉ “tên”. Hai ý không tương đương."
+  },
+  {
+    "id": "H1-B03-012",
+    "field": "prompt",
+    "reason": "Kiểm tra quy tắc chữ Latin mà không đòi biết chữ 女 trước bài 5.",
+    "before": "Vì sao “女” viết nǚ, còn âm ü sau j/q/x thường viết u?",
+    "after": "Vì sao âm nǚ giữ hai chấm, còn âm ü sau j/q/x thường viết u?"
+  },
+  {
+    "id": "H1-B04-024",
+    "field": "prompt",
+    "reason": "Làm rõ người mà câu hỏi tiếp tham chiếu.",
+    "before": "Giới thiệu một người bạn (thật hoặc giả định), nói quan hệ và quốc tịch; sau đó hỏi lại người đối thoại bằng 呢.",
+    "after": "Giới thiệu một người bạn và quốc tịch của người ấy; sau đó hỏi tiếp về bạn của người đối thoại bằng 呢."
+  },
+  {
+    "id": "H1-B04-024",
+    "field": "model",
+    "reason": "Câu hỏi 呢 tiếp nối cùng một chủ đề người bạn và quốc tịch.",
+    "before": "他是我的朋友。他是中国人。你呢？",
+    "after": "她是我的朋友，她是中国人。你的朋友呢？"
+  },
+  {
+    "id": "H1-B05-009",
+    "field": "option",
+    "before": "我家是四口人。",
+    "after": "我有家四口人。",
+    "reason": "Đặt 有 vào giữa 我家 làm sai cấu trúc “gia đình tôi có…”."
+  },
+  {
+    "id": "H1-B05-009",
+    "field": "option",
+    "before": "我家有四本人。",
+    "after": "我家有三口人。",
+    "reason": "Cấu trúc đúng nhưng nói ba người, khác bốn người của đề."
+  },
+  {
+    "id": "H1-B05-011",
+    "field": "option",
+    "before": "你今年几口？",
+    "after": "你家有几口人？",
+    "reason": "Hỏi số người trong gia đình, không hỏi tuổi."
+  },
+  {
+    "id": "H1-B05-011",
+    "field": "option",
+    "before": "你今年几号？",
+    "after": "你叫什么名字？",
+    "reason": "Hỏi tên, không hỏi tuổi."
+  },
+  {
+    "id": "H1-B05-011",
+    "field": "option",
+    "before": "你今年几个人？",
+    "after": "你是老师吗？",
+    "reason": "Hỏi nghề nghiệp, không hỏi tuổi."
+  },
+  {
+    "id": "H1-B05-020",
+    "field": "prompt",
+    "reason": "Dùng 岁 đã học làm nhiễu lượng từ thay 本 chưa học.",
+    "before": "Sửa lượng từ: 我家有三本人。",
+    "after": "Sửa lượng từ: 我家有三岁人。"
+  },
+  {
+    "id": "H1-B06-005",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B06-009",
+    "field": "option",
+    "before": "我不想写汉字。",
+    "after": "我会写汉字。",
+    "reason": "Khẳng định biết viết, trái với thông tin chưa có kỹ năng."
+  },
+  {
+    "id": "H1-B06-009",
+    "field": "option",
+    "before": "我没写汉字。",
+    "after": "我不会说汉语。",
+    "reason": "Phủ định kỹ năng nói, trong khi đề hỏi kỹ năng viết."
+  },
+  {
+    "id": "H1-B06-010",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B06-011",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B06-019",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B06-020",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B06-021",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B06-023",
+    "field": "hint",
+    "reason": "Giới thiệu cụm xuất hiện sớm trong bài khóa, không giả định đã học 这/个.",
+    "before": null,
+    "after": "Ngữ liệu hỗ trợ trong bài khóa: 这个 (zhège) = này; 这个字 = chữ này, 这个菜 = món này."
+  },
+  {
+    "id": "H1-B07-013",
+    "field": "option",
+    "before": "喝茶",
+    "after": "读汉字",
+    "reason": "Đọc chữ Hán là kỹ năng khác; mục đích nêu trong đoạn là 看书."
+  },
+  {
+    "id": "H1-B08-009",
+    "field": "option",
+    "before": "在",
+    "after": "不",
+    "reason": "不 phủ định hành động, không diễn đạt ý muốn."
+  },
+  {
+    "id": "H1-B08-011",
+    "field": "option",
+    "before": "两本杯子",
+    "after": "两杯子",
+    "reason": "Thiếu lượng từ 个 theo khuôn số + lượng từ + danh từ của bài."
+  },
+  {
+    "id": "H1-B09-013",
+    "field": "option",
+    "before": "椅子上面",
+    "after": "商店",
+    "reason": "Cửa hàng là nơi có thể đến, nhưng đoạn cho biết chó ở nhà dưới ghế."
+  },
+  {
+    "id": "H1-B14-013",
+    "field": "option",
+    "before": "三件衣服",
+    "after": "三个杯子",
+    "reason": "Cốc là đồ đã học, nhưng đoạn chỉ nói người kể mua táo."
+  },
+  {
+    "id": "H1-B14-013",
+    "field": "option",
+    "before": "一台电脑",
+    "after": "一本书",
+    "reason": "Không có thông tin người kể mua sách."
+  },
+  {
+    "id": "H1-B15-013",
+    "field": "option",
+    "before": "火车",
+    "after": "飞机和出租车",
+    "reason": "Ghép phương tiện của hai người; đoạn gán máy bay cho người kể, taxi cho 李月."
+  }
+]

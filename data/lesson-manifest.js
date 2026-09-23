@@ -1,6 +1,141 @@
-/* Auto-assembled lesson manifest. Add a lesson here when its canonical data file is ready. */
+/* Canonical manifest shared by the homepage and review pages. */
 window.HAN_NGU_DATA = window.HAN_NGU_DATA || {};
 window.HAN_NGU_DATA.manifest = [
+  {
+    "id": "hsk1_bai1",
+    "level": 1,
+    "lessonNo": 1,
+    "titleZh": "你好！",
+    "titleVi": "Xin chào!",
+    "href": "hsk1_bai1_index.html",
+    "data": "data/lessons/hsk1/bai1.js"
+  },
+  {
+    "id": "hsk1_bai2",
+    "level": 1,
+    "lessonNo": 2,
+    "titleZh": "谢谢你！",
+    "titleVi": "Cảm ơn bạn!",
+    "href": "hsk1_bai2_index.html",
+    "data": "data/lessons/hsk1/bai2.js"
+  },
+  {
+    "id": "hsk1_bai3",
+    "level": 1,
+    "lessonNo": 3,
+    "titleZh": "你叫什么名字？",
+    "titleVi": "Bạn tên là gì?",
+    "href": "hsk1_bai3_index.html",
+    "data": "data/lessons/hsk1/bai3.js"
+  },
+  {
+    "id": "hsk1_bai4",
+    "level": 1,
+    "lessonNo": 4,
+    "titleZh": "她是我的汉语老师。",
+    "titleVi": "Cô ấy là giáo viên tiếng Trung của tôi.",
+    "href": "hsk1_bai4_index.html",
+    "data": "data/lessons/hsk1/bai4.js"
+  },
+  {
+    "id": "hsk1_bai5",
+    "level": 1,
+    "lessonNo": 5,
+    "titleZh": "她女儿今年二十岁。",
+    "titleVi": "Con gái cô ấy năm nay hai mươi tuổi.",
+    "href": "hsk1_bai5_index.html",
+    "data": "data/lessons/hsk1/bai5.js"
+  },
+  {
+    "id": "hsk1_bai6",
+    "level": 1,
+    "lessonNo": 6,
+    "titleZh": "我会说汉语。",
+    "titleVi": "Tôi biết nói tiếng Trung.",
+    "href": "hsk1_bai6_index.html",
+    "data": "data/lessons/hsk1/bai6.js"
+  },
+  {
+    "id": "hsk1_bai7",
+    "level": 1,
+    "lessonNo": 7,
+    "titleZh": "今天几号？",
+    "titleVi": "Hôm nay ngày mấy?",
+    "href": "hsk1_bai7_index.html",
+    "data": "data/lessons/hsk1/bai7.js"
+  },
+  {
+    "id": "hsk1_bai8",
+    "level": 1,
+    "lessonNo": 8,
+    "titleZh": "我想喝茶。",
+    "titleVi": "Tôi muốn uống trà.",
+    "href": "hsk1_bai8_index.html",
+    "data": "data/lessons/hsk1/bai8.js"
+  },
+  {
+    "id": "hsk1_bai9",
+    "level": 1,
+    "lessonNo": 9,
+    "titleZh": "你儿子在哪儿工作？",
+    "titleVi": "Con trai bạn làm việc ở đâu?",
+    "href": "hsk1_bai9_index.html",
+    "data": "data/lessons/hsk1/bai9.js"
+  },
+  {
+    "id": "hsk1_bai10",
+    "level": 1,
+    "lessonNo": 10,
+    "titleZh": "我能坐这儿吗？",
+    "titleVi": "Tôi có thể ngồi đây không?",
+    "href": "hsk1_bai10_index.html",
+    "data": "data/lessons/hsk1/bai10.js"
+  },
+  {
+    "id": "hsk1_bai11",
+    "level": 1,
+    "lessonNo": 11,
+    "titleZh": "现在几点？",
+    "titleVi": "Bây giờ là mấy giờ?",
+    "href": "hsk1_bai11_index.html",
+    "data": "data/lessons/hsk1/bai11.js"
+  },
+  {
+    "id": "hsk1_bai12",
+    "level": 1,
+    "lessonNo": 12,
+    "titleZh": "明天天气怎么样？",
+    "titleVi": "Thời tiết ngày mai thế nào?",
+    "href": "hsk1_bai12_index.html",
+    "data": "data/lessons/hsk1/bai12.js"
+  },
+  {
+    "id": "hsk1_bai13",
+    "level": 1,
+    "lessonNo": 13,
+    "titleZh": "他在学做中国菜呢。",
+    "titleVi": "Anh ấy đang học nấu món Trung Quốc.",
+    "href": "hsk1_bai13_index.html",
+    "data": "data/lessons/hsk1/bai13.js"
+  },
+  {
+    "id": "hsk1_bai14",
+    "level": 1,
+    "lessonNo": 14,
+    "titleZh": "她买了不少衣服。",
+    "titleVi": "Cô ấy đã mua khá nhiều quần áo.",
+    "href": "hsk1_bai14_index.html",
+    "data": "data/lessons/hsk1/bai14.js"
+  },
+  {
+    "id": "hsk1_bai15",
+    "level": 1,
+    "lessonNo": 15,
+    "titleZh": "我是坐飞机来的。",
+    "titleVi": "Tôi đến bằng máy bay.",
+    "href": "hsk1_bai15_index.html",
+    "data": "data/lessons/hsk1/bai15.js"
+  },
   {
     "id": "hsk2_bai1_jiuyue",
     "level": 2,
