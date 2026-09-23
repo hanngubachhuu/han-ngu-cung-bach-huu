@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/curriculum-mapping.schema.json",
+  "title":"HSK Curriculum Crosswalk",
+  "type":"object","additionalProperties":false,
+  "required":["system","levelRefs","mappingType","sourceRefs"],
+  "properties":{
+    "system":{"enum":["hsk2.0","hsk3.0"]},
+    "levelRefs":{"type":"array","minItems":1,"items":{"type":"string"},"uniqueItems":true},
+    "mappingType":{"enum":["primary","direct","cross-listed","broader","narrower","uncertain","not-yet-mapped"]},
+    "note":{"type":["string","null"]},
+    "evidence":{"type":["string","null"]},
+    "sourceRefs":{"type":"array","minItems":1,"items":{"type":"string"},"uniqueItems":true}
+  }
+}
