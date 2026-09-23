@@ -311,6 +311,7 @@ function setupMobileNav(){
 }
 const LEARNING_KEY='hnh_learning_state_v1';
 const LESSON_INDEX=Object.create(null);
+const CANONICAL_BY_LEVEL=Object.create(null);
 let learningState={last:null,visited:[]};
 
 function readLearningState(){
@@ -332,6 +333,23 @@ function saveLearningState(){
 function pathnameKey(){
   return (location.pathname.split('/').pop()||'trang-chu.html').toLowerCase();
 }
+function registerLesson(meta){
+  if(!meta?.href)return;
+  const href=meta.href.split('#')[0].split('?')[0];
+  const key=href.split('/').pop().toLowerCase();
+  const record={
+    level:Number(meta.level),
+    lessonNo:Number(meta.lessonNo||0),
+    title:meta.title||'',
+    href
+  };
+  LESSON_INDEX[key]=record;
+  if(!CANONICAL_BY_LEVEL[record.level])CANONICAL_BY_LEVEL[record.level]=[];
+  if(!CANONICAL_BY_LEVEL[record.level].some(x=>x.href===href)){
+    CANONICAL_BY_LEVEL[record.level].push(record);
+    CANONICAL_BY_LEVEL[record.level].sort((a,b)=>a.lessonNo-b.lessonNo);
+  }
+}
 function collectLessonIndex(levels){
   levels.forEach(level=>{
     const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
@@ -340,10 +358,45 @@ function collectLessonIndex(levels){
     links.forEach(a=>{
       const href=(a.getAttribute('href')||'').split('#')[0].split('?')[0];
       if(!href)return;
-      const key=href.split('/').pop().toLowerCase();
-      if(!/^([a-z0-9_-]+)\.html$/.test(key))return;
-      LESSON_INDEX[key]={level:Number(badge),title:a.textContent.trim(),href};
+      registerLesson({
+        level:Number(badge),
+        title:a.textContent.trim(),
+        href
+      });
     });
+  });
+}
+function ingestCanonicalManifest(){
+  const manifest=window.HAN_NGU_DATA?.manifest;
+  if(!Array.isArray(manifest))return;
+  manifest.forEach(item=>{
+    registerLesson({
+      level:item.level,
+      lessonNo:item.lessonNo,
+      title:'Bài '+item.lessonNo+' · '+(item.titleZh||item.title||''),
+      href:item.href
+    });
+  });
+}
+function loadCanonicalManifest(){
+  if(Array.isArray(window.HAN_NGU_DATA?.manifest)&&window.HAN_NGU_DATA.manifest.length){
+    ingestCanonicalManifest();
+    return Promise.resolve();
+  }
+  return new Promise(resolve=>{
+    const existing=document.querySelector('script[data-hnh-lesson-manifest="1"]');
+    if(existing){
+      existing.addEventListener('load',()=>{ingestCanonicalManifest();resolve();},{once:true});
+      existing.addEventListener('error',()=>resolve(),{once:true});
+      return;
+    }
+    const script=document.createElement('script');
+    script.src='data/lesson-manifest.js';
+    script.async=true;
+    script.dataset.hnhLessonManifest='1';
+    script.onload=()=>{ingestCanonicalManifest();resolve();};
+    script.onerror=()=>resolve();
+    document.head.appendChild(script);
   });
 }
 function trackCurrentLesson(){
@@ -355,7 +408,12 @@ function trackCurrentLesson(){
   saveLearningState();
 }
 function lessonsForLevel(level){
-  return Object.values(LESSON_INDEX).filter(x=>x.level===level);
+  if(Array.isArray(CANONICAL_BY_LEVEL[level])&&CANONICAL_BY_LEVEL[level].length){
+    return CANONICAL_BY_LEVEL[level];
+  }
+  return Object.values(LESSON_INDEX)
+    .filter(x=>x.level===level)
+    .sort((a,b)=>(a.lessonNo||0)-(b.lessonNo||0));
 }
 function buildLevelStatus(level){
   const list=lessonsForLevel(level);
@@ -384,7 +442,9 @@ function addLevelStatus(level,index){
 function getLastLearningMeta(){
   if(!learningState.last)return null;
   const key=(learningState.last.path||'').toLowerCase();
-  return LESSON_INDEX[key]?{...LESSON_INDEX[key],path:key}:null;
+  if(LESSON_INDEX[key])return {...LESSON_INDEX[key],path:key};
+  if(learningState.last.href)return {...learningState.last,path:key};
+  return null;
 }
 function injectBreadcrumb(){
   const key=pathnameKey();
@@ -480,7 +540,7 @@ function makeMegaMenu(){
   const makeDetail=(sourceLevel,index)=>{
     const badge=sourceLevel.querySelector('.dd-level-badge')?.textContent?.trim()||'';
     const title=sourceLevel.querySelector('.dd-level-name')?.textContent?.trim()||('HSK '+badge);
-    const lessons=[...sourceLevel.querySelectorAll('.dd-level-lessons a')];
+    const lessons=lessonsForLevel(Number(badge));
     const soon=!!sourceLevel.querySelector('.dd-level-soon');
 
     renderResume();
@@ -514,9 +574,11 @@ function makeMegaMenu(){
     if(lessons.length){
       const list=document.createElement('div');
       list.className='hsk-mega-detail-list';
-      lessons.forEach(a=>{
-        const clone=a.cloneNode(true);
-        const lessonKey=(a.getAttribute('href')||'').split('#')[0].split('?')[0].split('/').pop().toLowerCase();
+      lessons.forEach(lesson=>{
+        const clone=document.createElement('a');
+        clone.href=lesson.href;
+        clone.textContent=lesson.title;
+        const lessonKey=lesson.href.split('#')[0].split('?')[0].split('/').pop().toLowerCase();
         if(learningState.visited.includes(lessonKey)){
           clone.classList.add('lesson-seen');
           clone.setAttribute('data-learning-status','seen');
@@ -600,9 +662,10 @@ function makeMegaMenu(){
   renderResume();
 }
 
-function initHskMegaMenu(){
+async function initHskMegaMenu(){
   if(!panel||!dropdown)return;
   panel.style.maxHeight='calc(100dvh - 92px)';
+  await loadCanonicalManifest();
   makeMegaMenu();
   dropdownBtn?.addEventListener('click',e=>{
     e.preventDefault();
@@ -627,6 +690,5 @@ function initHskMegaMenu(){
 readLearningState();
 markCurrentNav();
 setupMobileNav();
-initHskMegaMenu();
-injectBreadcrumb();
+initHskMegaMenu().finally(injectBreadcrumb);
 })();
