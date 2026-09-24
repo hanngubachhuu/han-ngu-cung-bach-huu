@@ -272,8 +272,21 @@ function normalizeLessonLayout(){
   document.body.classList.toggle('has-lesson-intro',hasIntro);
 
   const routes=Array.from(document.querySelectorAll('.lesson-route'));
-  if(routes.length>1){
-    routes.slice(1).forEach(route=>route.remove());
+  if(!routes.length) return;
+
+  // The static lesson template historically contains the route twice:
+  // once inside the intro card and once after the app. Do not merely hide
+  // one of them. Move one canonical route to the actual page-flow position:
+  // Lesson content -> Lesson navigation -> Footer.
+  const canonical=routes[0];
+  routes.slice(1).forEach(route=>route.remove());
+  const footer=document.getElementById('siteFooter');
+
+  // Remove the canonical route from its original location (inside the card)
+  // and place it immediately before the footer.
+  if(footer && canonical.parentNode!==footer.parentNode){
+    canonical.remove();
+    footer.parentNode.insertBefore(canonical,footer);
   }
 }
 normalizeLessonLayout();
