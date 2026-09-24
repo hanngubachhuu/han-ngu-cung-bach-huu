@@ -76,34 +76,18 @@ function enhanceSiteFooter(){
 }
 enhanceSiteFooter();
 
-/* ===== Lesson layout fix =====
-   HSK 1 lesson pages currently carry two .lesson-route blocks:
-   one in the intro card and one after the app. Keep a single,
-   intentional navigation block and let the footer follow the page.
+/* ===== Lesson page flow =====
+   Intro pages use the shared body flex layout. Lesson navigation is
+   part of the static page structure and is not created, moved, or removed
+   here.
 */
-function normalizeLessonLayout(){
-  const hasIntro=!!document.getElementById('introScreen');
-  document.body.classList.toggle('has-lesson-intro',hasIntro);
-
-  const routes=Array.from(document.querySelectorAll('.lesson-route'));
-  if(!routes.length) return;
-
-  // The static lesson template historically contains the route twice:
-  // once inside the intro card and once after the app. Do not merely hide
-  // one of them. Move one canonical route to the actual page-flow position:
-  // Lesson content -> Lesson navigation -> Footer.
-  const canonical=routes[0];
-  routes.slice(1).forEach(route=>route.remove());
-  const footer=document.getElementById('siteFooter');
-
-  // Remove the canonical route from its original location (inside the card)
-  // and place it immediately before the footer.
-  if(footer && canonical.parentNode!==footer.parentNode){
-    canonical.remove();
-    footer.parentNode.insertBefore(canonical,footer);
-  }
+function setupLessonPageFlow(){
+  document.body.classList.toggle(
+    'has-lesson-intro',
+    !!document.getElementById('introScreen')
+  );
 }
-normalizeLessonLayout();
+setupLessonPageFlow();
 
 const panel=document.getElementById('hskDropdownPanel');
 const dropdown=document.getElementById('hskDropdown');
