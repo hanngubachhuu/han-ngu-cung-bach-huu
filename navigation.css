@@ -2803,3 +2803,157 @@ body{
     text-align:left !important;
   }
 }
+
+
+/* ============================================================
+   LESSON FOOTER / ROUTE POLISH — v5
+   - Một cụm điều hướng bài học duy nhất
+   - Trang bài học ngắn vẫn kéo footer xuống cuối viewport
+   - Nút điều hướng có hierarchy + hover/press rõ ràng, thân thiện mobile
+   ============================================================ */
+body.has-lesson-intro{
+  min-height:100vh !important;
+}
+
+body.has-lesson-intro #introScreen{
+  flex:1 0 auto;
+  min-height:0;
+  width:100%;
+}
+
+body.has-lesson-intro .site-footer-v2{
+  margin-top:20px !important;
+}
+
+.lesson-route{
+  width:100%;
+  box-sizing:border-box;
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:stretch;
+  gap:10px !important;
+  margin:24px 0 0 !important;
+  padding:8px !important;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:linear-gradient(180deg,var(--bg-soft),var(--bg-card));
+  box-shadow:var(--shadow-sm);
+}
+
+.lesson-route a{
+  position:relative;
+  min-height:52px !important;
+  padding:10px 14px !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  box-sizing:border-box;
+  border:1px solid transparent;
+  border-radius:12px;
+  background:transparent;
+  color:var(--text-soft);
+  text-decoration:none !important;
+  font:700 12.5px/1.35 var(--font-vn,"Times New Roman",serif);
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    border-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease;
+}
+
+.lesson-route a:first-child{
+  justify-content:flex-start;
+}
+
+.lesson-route a:last-child{
+  justify-content:flex-end;
+  text-align:right;
+}
+
+.lesson-route a:hover{
+  transform:translateY(-2px);
+  background:var(--bg-card);
+  border-color:var(--border);
+  color:var(--color-primary);
+  box-shadow:var(--shadow-sm);
+}
+
+.lesson-route a:active{
+  transform:translateY(0);
+}
+
+.lesson-route a:nth-child(2){
+  min-width:132px;
+  padding-inline:16px !important;
+  background:var(--color-primary-subtle);
+  border-color:rgba(192,57,43,.18);
+  color:var(--color-primary);
+  text-align:center;
+}
+
+.lesson-route a:nth-child(2)::before{
+  content:"📚";
+  font-size:15px;
+  line-height:1;
+  transition:transform .18s ease;
+}
+
+.lesson-route a:nth-child(2):hover{
+  background:var(--color-primary);
+  border-color:var(--color-primary);
+  color:#fff !important;
+  box-shadow:0 8px 18px rgba(192,57,43,.22);
+}
+
+.lesson-route a:nth-child(2):hover::before{
+  transform:translateY(-1px) rotate(-4deg) scale(1.05);
+}
+
+.lesson-route a:first-child::first-letter,
+.lesson-route a:last-child::first-letter{
+  transition:transform .18s ease;
+}
+
+.lesson-route a:first-child:hover::first-letter{
+  color:var(--color-primary);
+}
+
+.lesson-route a:last-child:hover::first-letter{
+  color:var(--color-primary);
+}
+
+@media(max-width:640px){
+  .lesson-route{
+    gap:6px !important;
+    margin-top:20px !important;
+    padding:6px !important;
+    border-radius:15px;
+  }
+
+  .lesson-route a{
+    min-height:48px !important;
+    padding:8px 7px !important;
+    border-radius:10px;
+    font-size:11px;
+    line-height:1.25;
+  }
+
+  .lesson-route a:nth-child(2){
+    min-width:0;
+    padding-inline:8px !important;
+    font-size:10.5px;
+  }
+
+  .lesson-route a:nth-child(2)::before{
+    font-size:13px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .lesson-route a,
+  .lesson-route a:nth-child(2)::before{
+    transition:none !important;
+  }
+}
