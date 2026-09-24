@@ -6,7 +6,6 @@ const FOOTER_CSS = `
   position:relative;
   isolation:isolate;
   overflow:hidden;
-  margin-top:48px !important;
   color:#F8F5EE;
   background:#26343F;
   border-top:1px solid rgba(214,137,16,.45);
