@@ -209,22 +209,6 @@ function registerLesson(meta){
     CANONICAL_BY_LEVEL[record.level].sort((a,b)=>a.lessonNo-b.lessonNo);
   }
 }
-function collectLessonIndex(levels){
-  levels.forEach(level=>{
-    const badge=level.querySelector('.dd-level-badge')?.textContent?.trim()||'';
-    if(!/^[1-6]$/.test(badge))return;
-    const links=[...level.querySelectorAll('.dd-level-lessons a')];
-    links.forEach(a=>{
-      const href=(a.getAttribute('href')||'').split('#')[0].split('?')[0];
-      if(!href)return;
-      registerLesson({
-        level:Number(badge),
-        title:a.textContent.trim(),
-        href
-      });
-    });
-  });
-}
 function ingestCanonicalManifest(){
   const manifest=window.HAN_NGU_DATA?.manifest;
   if(!Array.isArray(manifest))return;
@@ -287,21 +271,6 @@ function buildLevelStatus(level){
   if(seen>0)return {kind:'seen',label:seen+' / '+list.length+' · Đã xem',ratio:seen/list.length};
   return {kind:'empty',label:'Chưa học',ratio:0};
 }
-function addLevelStatus(level,index){
-  const head=level.querySelector('.dd-level-head');
-  const name=head?.querySelector('.dd-level-name');
-  if(!head||!name)return;
-  level.dataset.levelIndex=String(index);
-  const status=buildLevelStatus(Number(level.querySelector('.dd-level-badge')?.textContent?.trim()||0));
-  level.dataset.learningStatus=status.kind;
-  let el=head.querySelector('.hsk-level-status');
-  if(!el){
-    el=document.createElement('span');
-    el.className='hsk-level-status';
-    head.insertBefore(el,head.querySelector('.dd-level-caret')||null);
-  }
-  el.textContent=status.label;
-}
 function getLastLearningMeta(){
   if(!learningState.last)return null;
   const key=(learningState.last.path||'').toLowerCase();
@@ -341,23 +310,6 @@ function injectBreadcrumb(){
   nav.appendChild(list);
   document.getElementById('siteNav').insertAdjacentElement('afterend',nav);
 }
-function extractLevelNumber(level){
-  const fromData=String(level?.getAttribute('data-level')||'').match(/(?:hsk)?(\\d+)/i);
-  if(fromData)return Number(fromData[1]);
-  const badge=level?.querySelector('.dd-level-badge')?.textContent?.trim()||'';
-  const fromBadge=badge.match(/\\d+/);
-  if(fromBadge)return Number(fromBadge[0]);
-  const text=level?.querySelector('.dd-level-name')?.textContent||'';
-  const fromText=text.match(/HSK\\s*(\\d+)/i);
-  return fromText?Number(fromText[1]):0;
-}
-
-function cleanLevelTitle(level,number){
-  // Menu chỉ hiển thị tên cấp độ thuần túy, không kéo theo "Sơ cấp",
-  // "Trung cấp", "Cao cấp" hay tên giáo trình cũ từ HTML nguồn.
-  return number?('HSK '+number):'HSK';
-}
-
 function makeMegaMenu(){
   if(!panel||panel.dataset.megaReady==='1')return;
 
