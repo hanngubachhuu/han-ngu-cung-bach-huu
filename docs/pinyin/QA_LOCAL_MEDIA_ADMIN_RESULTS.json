@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-24T17:41:26.759Z",
+  "checks": [
+    "46 local source reviews; seven rejected videos retained only in excluded history; required checks and persistence work",
+    "Export/import round trip and mobile source-review layout work",
+    "Local administration and converted video also work when opened directly from a file"
+  ],
+  "errors": []
+}

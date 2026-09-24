@@ -538,12 +538,15 @@ AI **không được**:
 
 # 17. Nguyên tắc tối thượng
 
-## Quyết định tích hợp Pinyin — 24/09/2026
+## Quyết định tích hợp phát âm — cập nhật 25/09/2026
 
-- `phat-am.html` là cổng phát âm trong navigation chung; dùng nguyên hệ thống `hsk1-navigation.js` / `navigation.css`. Cổng này dẫn tới không gian luyện tập `pinyin.html`, không tạo một mega menu thứ hai.
-- `pinyin.html` có bảng âm, thanh công cụ và menu cục bộ cho phiên luyện phát âm theo giao diện đã được yêu cầu. `pinyin.css` / `pinyin.js` chỉ sở hữu không gian này; không ghi đè navigation/footer dùng chung ở các trang khác.
+- `phat-am.html` là trang luyện phát âm chuẩn, vào học trực tiếp, dùng nguyên navigation/footer `hsk1-navigation.js` / `navigation.css`. `pinyin.html` chỉ là URL tương thích, chuyển đến trang chuẩn và giữ hash/query; không tồn tại hai giao diện luyện tập riêng.
+- `pinyin.css` / `pinyin.js` sở hữu bốn phần Âm cơ bản / Ghép âm / Thanh điệu / Luyện nghe. Các phần được chọn bằng hash; hash `#videos` cũ mở Âm cơ bản. CSS trang không sở hữu lại navigation/footer.
+- `data/pinyin-basics.js` là danh mục chuẩn các âm cơ bản: 21 thanh mẫu, 24 vận mẫu nhập môn, y/w tách riêng. Có 46 video từ thư viện chủ website cung cấp và một mẫu nghe x trong xī. `media/pinyin/` chứa MP4, MP3 tách từ cùng clip, ảnh xem trước; không dùng video Douyin bị từ chối.
+- Khung luyện có một DOM và một nguồn trạng thái. Trên desktop nó nằm cạnh bảng; dưới 850px cùng khung đó được đưa vào dialog, đóng thì trả về chỗ cũ. Đổi âm, đổi phần, đóng dialog hoặc rời trang phải dừng các media trước đó. Video lỗi dùng audio của chính clip, không thay bằng âm khác.
 - Dữ liệu chuẩn Pinyin là `data/pinyin-data.js`; ánh xạ audio là `data/pinyin-audio.js`. Chúng không thuộc lesson schema vì bảng phát âm phục vụ nhiều bài/cấp độ. `scripts/validate-pinyin.mjs` kiểm tra bảng âm, chính tả, coverage và hash audio.
-- `hnbh_pinyin_v1` chỉ chứa âm đánh dấu và kết quả bài nghe; không sao chép trạng thái bài học của `hnh_learning_state_v1`. `hnbh_pinyin_review_v1` là phiếu kiểm tra cục bộ của quản trị, tách dữ liệu học sinh.
+- `hnbh_pinyin_v1` giữ `saved` / `best` hiện có và thêm `basicSaved` cho âm cơ bản; không xóa tiến độ cũ hoặc sao chép trạng thái bài học `hnh_learning_state_v1`. `hnbh_pinyin_review_v1` là phiếu kiểm tra cục bộ của quản trị, tách dữ liệu học sinh.
+- `scripts/prepare-pinyin-media.py` chuyển đổi có thể tái chạy từ thư viện gốc; không sửa MPG. `docs/pinyin/basic-media-manifest.json` ghi tên gốc, hash và đầu ra. Cache version của CSS/JS phát âm do workflow triển khai thêm, không viết tay trong HTML.
 - `admin/pinyin-sources*` sở hữu tác giả/nguồn và phiếu duyệt. `admin/` cùng `docs/pinyin/` không được đưa lên Pages; thông báo giấy phép vẫn đi cùng audio.
 - Trang chủ chuẩn là `trang-chu.html`. `index.html` là bản vào tương đương cho xem trước; build sao chép từ trang chuẩn trước bước cache-busting để hai địa chỉ không lệch script/nội dung. Thẻ Phát âm trỏ tới `phat-am.html` ngay trong renderer trang chủ.
 

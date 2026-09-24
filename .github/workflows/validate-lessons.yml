@@ -6,6 +6,9 @@ on:
       - "scripts/validate-lessons.mjs"
       - "scripts/validate-pinyin.mjs"
       - "pinyin.*"
+      - "phat-am.html"
+      - "media/pinyin/**"
+      - "docs/pinyin/basic-media-manifest.json"
       - "audio/pinyin/**"
       - "docs/pinyin/audio-manifest.json"
       - "admin/pinyin-sources*"
@@ -16,6 +19,9 @@ on:
       - "scripts/validate-lessons.mjs"
       - "scripts/validate-pinyin.mjs"
       - "pinyin.*"
+      - "phat-am.html"
+      - "media/pinyin/**"
+      - "docs/pinyin/basic-media-manifest.json"
       - "audio/pinyin/**"
       - "docs/pinyin/audio-manifest.json"
       - "admin/pinyin-sources*"
@@ -32,4 +38,5 @@ jobs:
       - run: node scripts/validate-lessons.mjs
       - run: node scripts/validate-pinyin.mjs
       - run: node --check pinyin.js
+      - run: node --check data/pinyin-basics.js
       - run: node --check admin/pinyin-sources.js

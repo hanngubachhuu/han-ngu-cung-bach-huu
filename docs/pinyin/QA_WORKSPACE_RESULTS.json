@@ -1,0 +1,349 @@
+{
+  "date": "2026-09-24T17:40:07.702Z",
+  "base": "http://127.0.0.1:8766/",
+  "checks": [
+    "47 basic choices, 46 local videos; no external player or eager media downloads",
+    "All 46 converted videos and the x-in-xī fallback actually play from the matching tile",
+    "Sound groups, ü search, empty state, audio-only, speed and saved sounds work",
+    "Repeat mode plays exactly three complete samples",
+    "Video failure falls back to audio extracted from the very same clip",
+    "405-syllable chart retained; related mouth videos open the correct component and stop previous audio",
+    "Listening still unlocks choices after playback; four-tone comparison still works",
+    "Old Pinyin URL and saved section links remain usable",
+    "1440/1024/850/768/390/375 widths fit; one mobile dialog, close/Escape stop video and audio",
+    "Changing screen size restores the single player without duplicate media or trapped dialog",
+    "Blocked storage does not prevent learning"
+  ],
+  "media": [
+    {
+      "id": "b",
+      "src": "http://127.0.0.1:8766/media/pinyin/b.mp4",
+      "duration": 2.52,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "p",
+      "src": "http://127.0.0.1:8766/media/pinyin/p.mp4",
+      "duration": 4.12,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "m",
+      "src": "http://127.0.0.1:8766/media/pinyin/m.mp4",
+      "duration": 2.08,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "f",
+      "src": "http://127.0.0.1:8766/media/pinyin/f.mp4",
+      "duration": 4.12,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "d",
+      "src": "http://127.0.0.1:8766/media/pinyin/d.mp4",
+      "duration": 3.8,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "t",
+      "src": "http://127.0.0.1:8766/media/pinyin/t.mp4",
+      "duration": 4,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "n",
+      "src": "http://127.0.0.1:8766/media/pinyin/n.mp4",
+      "duration": 3.4,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "l",
+      "src": "http://127.0.0.1:8766/media/pinyin/l.mp4",
+      "duration": 3.16,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "g",
+      "src": "http://127.0.0.1:8766/media/pinyin/g.mp4",
+      "duration": 2.84,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "k",
+      "src": "http://127.0.0.1:8766/media/pinyin/k.mp4",
+      "duration": 3.16,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "h",
+      "src": "http://127.0.0.1:8766/media/pinyin/h.mp4",
+      "duration": 3.52,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "j",
+      "src": "http://127.0.0.1:8766/media/pinyin/j.mp4",
+      "duration": 3.8,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "q",
+      "src": "http://127.0.0.1:8766/media/pinyin/q.mp4",
+      "duration": 3.04,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "x",
+      "src": "http://127.0.0.1:8766/audio/pinyin/xi1.mp3",
+      "duration": 1.08,
+      "width": null,
+      "height": null
+    },
+    {
+      "id": "zh",
+      "src": "http://127.0.0.1:8766/media/pinyin/zh.mp4",
+      "duration": 2.88,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ch",
+      "src": "http://127.0.0.1:8766/media/pinyin/ch.mp4",
+      "duration": 3.16,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "sh",
+      "src": "http://127.0.0.1:8766/media/pinyin/sh.mp4",
+      "duration": 2.68,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "r",
+      "src": "http://127.0.0.1:8766/media/pinyin/r.mp4",
+      "duration": 3.52,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "z",
+      "src": "http://127.0.0.1:8766/media/pinyin/z.mp4",
+      "duration": 3.16,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "c",
+      "src": "http://127.0.0.1:8766/media/pinyin/c.mp4",
+      "duration": 2.8,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "s",
+      "src": "http://127.0.0.1:8766/media/pinyin/s.mp4",
+      "duration": 2.68,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "a",
+      "src": "http://127.0.0.1:8766/media/pinyin/a.mp4",
+      "duration": 4.6,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "o",
+      "src": "http://127.0.0.1:8766/media/pinyin/o.mp4",
+      "duration": 4.12,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "e",
+      "src": "http://127.0.0.1:8766/media/pinyin/e.mp4",
+      "duration": 4.6,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "i",
+      "src": "http://127.0.0.1:8766/media/pinyin/i.mp4",
+      "duration": 4.84,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "u",
+      "src": "http://127.0.0.1:8766/media/pinyin/u.mp4",
+      "duration": 4.48,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "v",
+      "src": "http://127.0.0.1:8766/media/pinyin/v.mp4",
+      "duration": 4.28,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ai",
+      "src": "http://127.0.0.1:8766/media/pinyin/ai.mp4",
+      "duration": 4.76,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ei",
+      "src": "http://127.0.0.1:8766/media/pinyin/ei.mp4",
+      "duration": 3,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ui",
+      "src": "http://127.0.0.1:8766/media/pinyin/ui.mp4",
+      "duration": 4.48,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ao",
+      "src": "http://127.0.0.1:8766/media/pinyin/ao.mp4",
+      "duration": 3.88,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ou",
+      "src": "http://127.0.0.1:8766/media/pinyin/ou.mp4",
+      "duration": 4.24,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "iu",
+      "src": "http://127.0.0.1:8766/media/pinyin/iu.mp4",
+      "duration": 3.64,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ie",
+      "src": "http://127.0.0.1:8766/media/pinyin/ie.mp4",
+      "duration": 4.12,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ve",
+      "src": "http://127.0.0.1:8766/media/pinyin/ve.mp4",
+      "duration": 4.24,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "an",
+      "src": "http://127.0.0.1:8766/media/pinyin/an.mp4",
+      "duration": 4.76,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "en",
+      "src": "http://127.0.0.1:8766/media/pinyin/en.mp4",
+      "duration": 3.92,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "in",
+      "src": "http://127.0.0.1:8766/media/pinyin/in.mp4",
+      "duration": 3.76,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "un",
+      "src": "http://127.0.0.1:8766/media/pinyin/un.mp4",
+      "duration": 3.4,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "vn",
+      "src": "http://127.0.0.1:8766/media/pinyin/vn.mp4",
+      "duration": 4.36,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ang",
+      "src": "http://127.0.0.1:8766/media/pinyin/ang.mp4",
+      "duration": 4.76,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "eng",
+      "src": "http://127.0.0.1:8766/media/pinyin/eng.mp4",
+      "duration": 3.4,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ing",
+      "src": "http://127.0.0.1:8766/media/pinyin/ing.mp4",
+      "duration": 4.12,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "ong",
+      "src": "http://127.0.0.1:8766/media/pinyin/ong.mp4",
+      "duration": 4.84,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "er",
+      "src": "http://127.0.0.1:8766/media/pinyin/er.mp4",
+      "duration": 4.24,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "y",
+      "src": "http://127.0.0.1:8766/media/pinyin/y.mp4",
+      "duration": 3.64,
+      "width": 352,
+      "height": 288
+    },
+    {
+      "id": "w",
+      "src": "http://127.0.0.1:8766/media/pinyin/w.mp4",
+      "duration": 2.92,
+      "width": 352,
+      "height": 288
+    }
+  ],
+  "errors": []
+}

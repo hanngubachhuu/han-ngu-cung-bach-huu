@@ -1,0 +1,332 @@
+{
+  "date": "2026-09-24T20:05:30.238545+00:00",
+  "checks": [
+    "46 original MPG files remain byte-identical",
+    "46 MP4 files decode completely without errors",
+    "46 extracted MP3 files decode completely and contain non-silent PCM"
+  ],
+  "files": [
+    {
+      "id": "a",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.598,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ai",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.754,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "an",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.754,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ang",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.754,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ao",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.866,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "b",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.508,
+      "audioPeak": 32546,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "c",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.795,
+      "audioPeak": 25357,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ch",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.135,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "d",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.788,
+      "audioPeak": 32433,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "e",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.598,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ei",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.978,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "en",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.918,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "eng",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.396,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "er",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.232,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "f",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.101,
+      "audioPeak": 32086,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "g",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.821,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "h",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.5,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "i",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.833,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ie",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.101,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "in",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.736,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ing",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.101,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "iu",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.631,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "j",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.788,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "k",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.135,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "l",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.135,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "m",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.064,
+      "audioPeak": 31397,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "n",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.396,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "o",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.101,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ong",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.833,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ou",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.232,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "p",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.101,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "q",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.03,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "r",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.5,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "s",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.664,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "sh",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.664,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "t",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.997,
+      "audioPeak": 26310,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "u",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.467,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ve",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.232,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "ui",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.467,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "un",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.396,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "v",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.258,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "vn",
+      "videoDecode": "PASS",
+      "audioSeconds": 4.336,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "w",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.9,
+      "audioPeak": 29763,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "y",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.631,
+      "audioPeak": 32768,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "z",
+      "videoDecode": "PASS",
+      "audioSeconds": 3.135,
+      "audioPeak": 20401,
+      "sourceUnchanged": true
+    },
+    {
+      "id": "zh",
+      "videoDecode": "PASS",
+      "audioSeconds": 2.873,
+      "audioPeak": 32767,
+      "sourceUnchanged": true
+    }
+  ]
+}

@@ -1,8 +1,9 @@
-/* Shared, local-only practice state. No account or third-party request until video is opened. */
+/* Pronunciation workspace: local media, basic sounds, syllable chart and listening practice. */
 (()=>{'use strict';
-const D=window.HNBH_PINYIN,A=window.HNBH_PINYIN_AUDIO,$=id=>document.getElementById(id);
-if(!D||!A){$('chartSummary').textContent='Bảng âm chưa tải được. Hãy tải lại trang.';return;}
+const D=window.HNBH_PINYIN,A=window.HNBH_PINYIN_AUDIO,B=window.HNBH_PINYIN_BASICS,$=id=>document.getElementById(id);
+if(!D||!A||!B){$('chartSummary').textContent='Bảng âm chưa tải được. Hãy tải lại trang.';return;}
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const basicById=new Map(B.sounds.map(s=>[s.id,s]));
 const byBase=new Map(D.syllables.map(s=>[s.base,s]));
 const key=(base,tone)=>base.replace(/ü/g,'v')+tone;
 const hasAudio=(base,tone)=>Boolean(A[key(base,tone)]);
@@ -11,9 +12,10 @@ const storeKey='hnbh_pinyin_v1';let stored={},storageOK=true;
 function storageWarning(){storageOK=false;$('storageNote').hidden=false;$('storageNote').textContent='Trình duyệt đang chặn lưu dữ liệu. Em vẫn học được trong phiên này; âm đã đánh dấu và kết quả có thể mất khi đóng trang.';}
 try{const value=JSON.parse(localStorage.getItem(storeKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))stored=value;}catch{storageWarning();}
 const saved=new Set((Array.isArray(stored.saved)?stored.saved:[]).filter(x=>byBase.has(x)));
+const basicSaved=new Set((Array.isArray(stored.basicSaved)?stored.basicSaved:[]).filter(id=>basicById.has(id)));
 const best={};
 for(const mode of ['tones',...D.contrastGroups.map(g=>g.id)])if(Number.isInteger(stored.best?.[mode])&&stored.best[mode]>=0&&stored.best[mode]<=10)best[mode]=stored.best[mode];
-function persist(){if(!storageOK)return;try{localStorage.setItem(storeKey,JSON.stringify({version:1,saved:[...saved],best}));}catch{storageWarning();}}
+function persist(){if(!storageOK)return;try{localStorage.setItem(storeKey,JSON.stringify({version:1,saved:[...saved],basicSaved:[...basicSaved],best}));}catch{storageWarning();}}
 
 // One player and cancellable queue prevent overlapping samples when changing tones or views.
 const audio=document.createElement('audio');audio.id='pinyinSample';audio.preload='none';audio.hidden=true;document.body.append(audio);
@@ -31,7 +33,7 @@ function playOne(src,ticket,speed){return new Promise(resolve=>{
  try{const request=audio.play();if(request)request.catch(()=>finish(ticket===playback?'error':'cancelled'));}catch{finish('error');}
 });}
 async function playQueue(keys,{status,speed=1,onComplete}={}){
- stopPlayback('Đã dừng âm trước.');closeVideo();const ticket=playback;playStatus=status;
+ stopPlayback('Đã dừng âm trước.');stopBasic();const ticket=playback;playStatus=status;
  for(let i=0;i<keys.length;i++){
   if(ticket!==playback)return false;
   const src=A[keys[i]];if(!src){status?.('Chưa có bản thu của âm này.');playStatus=null;return false;}
@@ -44,8 +46,8 @@ async function playQueue(keys,{status,speed=1,onComplete}={}){
  if(ticket!==playback)return false;status?.('Đã nghe xong.');playStatus=null;onComplete?.();return true;
 }
 
-let initial='all',view=matchMedia('(max-width:600px)').matches?'cards':'table',visible=[],selected=null,tone=1,dialogTrigger=null;
-$('chartSummary').textContent=`${D.syllables.length} âm tiết trong bảng học. Chọn một ô để xem khẩu hình và nghe từng thanh.`;
+let initial='all',view=matchMedia('(max-width:600px)').matches?'cards':'table',visible=[],selected=null,tone=1,dialogTrigger=null,pendingBasic=null;
+$('chartSummary').textContent=`${D.syllables.length} âm tiết trong bảng học. Chọn một ô để nghe từng thanh, xem cách ghép và lưu âm cần luyện.`;
 $('initialFilters').innerHTML=[['all','Tất cả'],...Object.keys(D.rows).map(x=>[x,x])].map(([v,t])=>`<button type="button" data-initial="${v}" aria-pressed="${v===initial}">${t}</button>`).join('');
 function matchesGroup(final,group){return group==='all'||(group==='open'?!/^[iuü]/.test(final):final.startsWith(group));}
 function syllableButton(s){const favorite=saved.has(s.base);return `<button type="button" data-syllable="${escape(s.base)}" class="${favorite?'saved':''}" aria-label="Âm ${escape(s.base)}${favorite?', cần luyện thêm':''}">${escape(s.base)}</button>`;}
@@ -84,9 +86,11 @@ function renderTone(){
  $('audioStatus').textContent=tone===5?'Chưa có mẫu thanh nhẹ trong từ hoặc câu ở mục này.':!hasAudio(s.base,tone)?'Chưa có bản thu cho âm + thanh này. Em có thể xem video hướng dẫn.':'';
  $('initialTip').textContent=D.initialTips[s.initial];$('finalTip').textContent=D.finalTip(s.final);$('spellingNote').textContent=spellingFor(s);
  const favorite=saved.has(s.base);$('saveSyllable').setAttribute('aria-pressed',String(favorite));$('saveSyllable').textContent=favorite?'★ Đã lưu để luyện':'☆ Cần luyện thêm';
+ const related=[...new Set([s.initial,({iou:'iu',uei:'ui',uen:'un',ü:'v',üe:'ve',ün:'vn'})[s.final]||s.final])].filter(id=>basicById.has(id));
+ $('dialogRelated').innerHTML=related.map(id=>`<button type="button" class="button secondary" data-related="${id}">${basicById.get(id).video?'Khẩu hình':'Nghe âm'} ${escape(basicById.get(id).symbol)}</button>`).join('');
 }
 function openSyllable(base,n=1,trigger=document.activeElement){
- const s=byBase.get(base);if(!s)return;stopPlayback('Đã dừng.');selected=s;tone=n;dialogTrigger=trigger;renderTone();
+ const s=byBase.get(base);if(!s)return;stopPlayback('Đã dừng.');stopBasic();selected=s;tone=n;dialogTrigger=trigger;renderTone();
  if(!$('syllableDialog').open)$('syllableDialog').showModal();$('closeDialog').focus();
 }
 function playSelected(all=false){if(!selected)return;const keys=all?[1,2,3,4].map(n=>key(selected.base,n)):Array($('repeatAudio').checked?3:1).fill(key(selected.base,tone));playQueue(keys,{status:message=>$('audioStatus').textContent=message,speed:Number($('audioSpeed').value)});}
@@ -96,39 +100,145 @@ $('stopAudio').addEventListener('click',()=>stopPlayback('Đã dừng âm thanh.
 $('audioSpeed').addEventListener('change',()=>{audio.playbackRate=Number($('audioSpeed').value);});
 $('saveSyllable').addEventListener('click',()=>{if(!selected)return;if(saved.has(selected.base))saved.delete(selected.base);else saved.add(selected.base);persist();renderTone();renderChart();});
 $('closeDialog').addEventListener('click',()=>$('syllableDialog').close());
-$('syllableDialog').addEventListener('close',()=>{stopPlayback();if(dialogTrigger?.isConnected)dialogTrigger.focus();else $('syllableSearch').focus();});
+$('syllableDialog').addEventListener('close',()=>{
+ stopPlayback();
+ if(pendingBasic){const id=pendingBasic;pendingBasic=null;switchPanel('basics');openBasic(id,true);return;}
+ if(dialogTrigger?.isConnected)dialogTrigger.focus();else $('syllableSearch').focus();
+});
 $('toneCards').innerHTML=D.tones.map(t=>`<button class="tone-card" type="button" data-ma="${t.n}" aria-label="Nghe ${D.toned('ma',t.n)}, ${t.name}"><h3>${t.name}</h3><svg viewBox="0 0 120 90" aria-hidden="true"><path class="curve-guide" d="M 10 12 H 110 M 10 42 H 110 M 10 72 H 110"/><path class="curve" d="${t.path}"/></svg><span class="tone-symbol">${D.toned('ma',t.n)} <small>${t.contour}</small></span><p>${t.description}</p><small>▷ Nghe âm mẫu</small></button>`).join('');
 $('toneCards').addEventListener('click',e=>{const b=e.target.closest('[data-ma]');if(b){openSyllable('ma',Number(b.dataset.ma),b);playSelected();}});
 $('compareMa').addEventListener('click',e=>{openSyllable('ma',1,e.currentTarget);playSelected(true);});
 
-let videoIndex=0;
-function closeVideo(){if(!$('videoStage').querySelector('iframe'))return;resetVideoStage();}
-function resetVideoStage(){
- $('videoStage').style.removeProperty('height');$('videoStage').style.removeProperty('aspect-ratio');$('videoStage').innerHTML='<button id="loadVideo" type="button" class="video-load"><span aria-hidden="true">▷</span><b>Mở video khẩu hình</b><small>Quan sát, nghe mẫu và đọc theo</small></button>';$('closeVideo').hidden=true;
+// Basic sounds use one local video and one audio element, with a single active media run.
+const basicVideo=$('basicVideo'),basicAudio=document.createElement('audio');
+basicAudio.id='basicAudio';basicAudio.preload='none';basicAudio.hidden=true;document.body.append(basicAudio);
+const smallScreen=matchMedia('(max-width:850px)');
+let basicCurrent=basicById.get('a'),basicGroup='all',basicVisible=[...B.sounds],basicTrigger=null;
+let basicRun=0,basicTimer=null,basicActive=null,basicRepeats=0,videoFailed=false;
+function stopBasic(){
+ basicRun++;clearTimeout(basicTimer);basicTimer=null;basicActive=null;basicRepeats=0;
+ basicVideo.pause();basicAudio.pause();
+ basicPlayLabel(false);
 }
-// Douyin's horizontal player reserves 35px below its 16:9 image for native controls.
-function fitVideo(){if($('videoStage').querySelector('iframe'))$('videoStage').style.height=Math.ceil($('videoStage').clientWidth*9/16+40)+'px';}
-if('ResizeObserver' in window)new ResizeObserver(fitVideo).observe($('videoStage'));else window.addEventListener('resize',fitVideo);
-function selectVideo(index){
- if(!D.videos[index])index=0;
- videoIndex=index;const v=D.videos[index];resetVideoStage();
- $('videoStep').textContent=`VIDEO ${index+1} / ${D.videos.length}`;$('videoTitle').textContent=v.title;$('videoNote').textContent=v.note;$('videoOriginal').href=`https://open.douyin.com/player/video?vid=${v.id}&autoplay=0`;$('videoOriginal').title='Mở video trong một tab riêng';
- for(const b of $('videoList').children)b.setAttribute('aria-pressed',String(Number(b.dataset.video)===index));
+function basicPlayLabel(playing){$('playBasic').innerHTML=playing?'<span aria-hidden="true">Ⅱ</span> Tạm dừng':'<span aria-hidden="true">▷</span> Phát mẫu';}
+function basicTip(s){
+ if(s.group==='initials')return D.initialTips[s.id];
+ if(s.group==='spelling')return s.id==='y'?'Nghe cách đọc trong yi. Khi viết âm tiết, nhóm i/ü có các dạng bắt đầu bằng y.':'Nghe cách đọc trong wu. Khi viết âm tiết, nhóm u có các dạng bắt đầu bằng w.';
+ return D.finalTip(s.final);
 }
-$('videoList').innerHTML=D.videos.map((v,i)=>`<button type="button" data-video="${i}" aria-pressed="false"><span class="step-no">${i+1}</span><span>${escape(v.title)}</span></button>`).join('');
-$('videoCount').textContent=`${D.videos.length} video cận miệng`;
-$('videoList').addEventListener('click',e=>{const b=e.target.closest('[data-video]');if(b)selectVideo(Number(b.dataset.video));});
-$('videoStage').addEventListener('click',e=>{
- if(!e.target.closest('#loadVideo'))return;stopPlayback('Đã dừng để xem video.');const v=D.videos[videoIndex],frame=document.createElement('iframe');
- frame.title=v.title;frame.src=`https://open.douyin.com/player/video?vid=${v.id}&autoplay=0`;
- frame.allow='autoplay; fullscreen; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
- $('videoStage').style.aspectRatio='auto';$('videoStage').replaceChildren(frame);fitVideo();$('closeVideo').hidden=false;
+function mediaIcon(video){return video?'<svg class="media-mark" viewBox="0 0 10 10" aria-hidden="true"><path fill="currentColor" d="M2 1 9 5 2 9Z"/></svg>':'<svg class="media-mark" viewBox="0 0 10 10" aria-hidden="true"><path fill="none" stroke="currentColor" d="M1 6V5a4 4 0 0 1 8 0v1M1 5v4h2V5ZM7 5v4h2V5Z"/></svg>';}
+function renderBasicGrid(){
+ const q=D.normalize($('basicSearch').value);
+ basicVisible=B.sounds.filter(s=>(basicGroup==='all'||s.group===basicGroup)&&(!q||D.normalize(s.symbol).includes(q))&&(!$('basicOnlySaved').checked||basicSaved.has(s.id)));
+ const ids=new Set(basicVisible.map(s=>s.id));
+ $('basicSavedCount').textContent=basicSaved.size;
+ $('basicResultCount').textContent=`${basicVisible.length} âm phù hợp`;
+ $('basicEmpty').hidden=basicVisible.length>0;
+ $('soundGroups').innerHTML=B.groups.filter(g=>basicVisible.some(s=>s.group===g.id)).map(g=>`<section class="sound-section sound-section--${g.id}" aria-labelledby="group-${g.id}"><header class="sound-section-heading"><h3 id="group-${g.id}">${g.title}</h3><p>${g.subtitle}</p></header><div class="family-grid">${g.families.map(f=>{const sounds=f.ids.split(' ').filter(id=>ids.has(id)).map(id=>basicById.get(id));return !sounds.length?'':`<div class="sound-row"><span class="family-label">${f.title}</span><div class="sound-tiles">${sounds.map(s=>`<button type="button" class="sound-tile" data-basic="${s.id}" aria-pressed="${s.id===basicCurrent.id}" aria-label="Âm ${escape(s.symbol)} · ${s.video?'video khẩu hình':'nghe '+s.audioLabel}${basicSaved.has(s.id)?' · cần luyện thêm':''}">${escape(s.symbol)}${mediaIcon(s.video)}${basicSaved.has(s.id)?'<span class="saved-mark" aria-hidden="true">★</span>':''}</button>`).join('')}</div></div>`;}).join('')}</div></section>`).join('');
+ for(const button of $('basicFilters').children)button.setAttribute('aria-pressed',String(button.dataset.group===basicGroup));
+ updateBasicPosition();
+}
+function updateBasicPosition(){
+ const i=basicVisible.findIndex(s=>s.id===basicCurrent.id);
+ $('basicPosition').textContent=i<0?'':`${i+1} / ${basicVisible.length}`;
+ $('previousBasic').disabled=$('nextBasic').disabled=basicVisible.length<2;
+}
+function updateBasicSaved(){
+ const value=basicSaved.has(basicCurrent.id);
+ $('saveBasic').setAttribute('aria-pressed',String(value));$('saveBasic').textContent=value?'★':'☆';
+ $('saveBasic').setAttribute('aria-label',`${value?'Bỏ lưu':'Lưu'} âm ${basicCurrent.symbol}${value?'':' để luyện thêm'}`);
+}
+function renderBasicPlayer(){
+ const s=basicCurrent;videoFailed=false;
+ $('basicTitle').textContent=s.symbol;$('basicFamily').textContent=s.family;
+ $('basicTip').textContent=basicTip(s);$('basicNote').textContent=s.note;$('basicNote').hidden=!s.note;
+ basicVideo.removeAttribute('src');basicVideo.load();basicAudio.removeAttribute('src');basicAudio.load();
+ basicVideo.hidden=!s.video;$('basicAudioView').hidden=Boolean(s.video);
+ if(s.video){basicVideo.src=s.video;basicVideo.poster=s.poster;}else basicVideo.removeAttribute('poster');
+ basicVideo.setAttribute('aria-label',`Video khẩu hình âm ${s.symbol}`);
+ $('basicAudioLabel').textContent=s.audioLabel;
+ $('listenBasic').hidden=!s.video;
+ $('basicStatus').textContent=s.video?'Bấm phát mẫu để bắt đầu.':`Nghe ${s.symbol} trong âm tiết ${s.audioLabel}.`;
+ updateBasicSaved();updateBasicPosition();
+}
+function showBasicPlayer(){
+ if(smallScreen.matches){
+  $('basicDialog').append($('basicPlayer'));
+  if(!$('basicDialog').open)$('basicDialog').showModal();
+  $('closeBasicDialog').focus({preventScroll:true});
+ }
+}
+function openBasic(id,autoplay=true,trigger=document.activeElement){
+ const s=basicById.get(id);if(!s)return;
+ stopPlayback();stopBasic();basicCurrent=s;basicTrigger=trigger;renderBasicPlayer();
+ for(const button of $('soundGroups').querySelectorAll('[data-basic]'))button.setAttribute('aria-pressed',String(button.dataset.basic===id));
+ showBasicPlayer();if(autoplay)playBasic(false);
+}
+function playBasic(audioOnly=false){
+ stopPlayback();stopBasic();const ticket=basicRun;
+ const useAudio=audioOnly||!basicCurrent.video||videoFailed;
+ const media=useAudio?basicAudio:basicVideo;
+ if(useAudio)basicAudio.src=basicCurrent.audio;
+ media.currentTime=0;media.playbackRate=Number($('basicSpeed').value);media.preservesPitch=true;
+ basicActive=media;basicRepeats=$('basicRepeat').checked?2:0;
+ $('basicStatus').textContent=useAudio?'Đang tải âm mẫu…':'Đang tải video…';
+ media.play().catch(()=>{if(ticket===basicRun)$('basicStatus').textContent='Bấm Phát mẫu để nghe lại. Nếu video chưa tải được, chọn Chỉ nghe âm.';});
+}
+for(const media of [basicVideo,basicAudio]){
+ media.addEventListener('play',()=>{
+  stopPlayback();const other=media===basicVideo?basicAudio:basicVideo;other.pause();
+  basicActive=media;$('basicStatus').textContent=media===basicVideo?'Đang phát khẩu hình và âm mẫu.':'Đang nghe âm mẫu.';
+  basicPlayLabel(true);
+ });
+ media.addEventListener('pause',()=>{if(basicActive===media&&!media.ended&&!basicTimer){basicPlayLabel(false);$('basicStatus').textContent='Đã tạm dừng.';}});
+ media.addEventListener('ended',()=>{
+  if(basicActive!==media)return;
+  if(basicRepeats>0){
+   const ticket=basicRun;basicRepeats--;$('basicStatus').textContent='Chuẩn bị nghe lại…';
+   basicTimer=setTimeout(()=>{basicTimer=null;if(ticket!==basicRun)return;media.currentTime=0;media.play().catch(()=>{if(ticket===basicRun)$('basicStatus').textContent='Bấm Phát mẫu để nghe lại.';});},650);
+  }else{basicActive=null;basicPlayLabel(false);$('basicStatus').textContent='Đã nghe xong. Giờ hãy đọc theo một lần.';}
+ });
+}
+basicVideo.addEventListener('error',()=>{
+ if(!basicCurrent.video||!basicVideo.getAttribute('src'))return;
+ const requested=basicActive===basicVideo;stopBasic();videoFailed=true;basicVideo.hidden=true;$('basicAudioView').hidden=false;
+ $('basicStatus').textContent='Video chưa tải được. Em vẫn có thể nghe bản thu của âm này.';
+ if(requested)playBasic(true);
 });
-$('closeVideo').addEventListener('click',()=>{closeVideo();$('loadVideo').focus();});
-$('dialogVideo').addEventListener('click',()=>{
- const category=selected?.initial==='∅'?'finals':'initials';$('syllableDialog').close();selectVideo(D.videos.findIndex(v=>v.key===category));
- $('videos').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});$('loadVideo').focus({preventScroll:true});
+basicAudio.addEventListener('error',()=>{if(!basicAudio.getAttribute('src'))return;stopBasic();$('basicStatus').textContent='Chưa tải được âm thanh. Kiểm tra kết nối rồi bấm Phát mẫu để thử lại.';});
+$('soundGroups').addEventListener('click',event=>{const b=event.target.closest('[data-basic]');if(b)openBasic(b.dataset.basic,true,b);});
+$('basicFilters').addEventListener('click',event=>{const b=event.target.closest('[data-group]');if(b){basicGroup=b.dataset.group;renderBasicGrid();}});
+$('basicSearch').addEventListener('input',renderBasicGrid);$('basicOnlySaved').addEventListener('change',renderBasicGrid);
+$('basicReset').addEventListener('click',()=>{basicGroup='all';$('basicSearch').value='';$('basicOnlySaved').checked=false;renderBasicGrid();$('basicSearch').focus();});
+$('saveBasic').addEventListener('click',()=>{if(basicSaved.has(basicCurrent.id))basicSaved.delete(basicCurrent.id);else basicSaved.add(basicCurrent.id);persist();updateBasicSaved();renderBasicGrid();});
+$('playBasic').addEventListener('click',()=>{if(basicActive&&(!basicActive.paused||basicTimer)){stopBasic();$('basicStatus').textContent='Đã tạm dừng.';}else playBasic(false);});
+$('listenBasic').addEventListener('click',()=>playBasic(true));
+$('basicSpeed').addEventListener('change',()=>{basicVideo.playbackRate=basicAudio.playbackRate=Number($('basicSpeed').value);});
+$('basicRepeat').addEventListener('change',()=>{if(basicActive)basicRepeats=$('basicRepeat').checked?2:0;});
+for(const [id,delta]of [['previousBasic',-1],['nextBasic',1]])$(id).addEventListener('click',()=>{
+ if(!basicVisible.length)return;let i=basicVisible.findIndex(s=>s.id===basicCurrent.id);i=i<0?0:(i+delta+basicVisible.length)%basicVisible.length;openBasic(basicVisible[i].id,true,basicTrigger);
 });
+$('closeBasicDialog').addEventListener('click',()=>{stopBasic();$('basicDialog').close();});
+$('basicDialog').addEventListener('cancel',stopBasic);
+$('basicDialog').addEventListener('close',()=>{
+ stopBasic();$('basicPlayerHome').append($('basicPlayer'));
+ const currentTile=$('soundGroups').querySelector(`[data-basic="${basicCurrent.id}"]`);
+ if(smallScreen.matches&&!$('basics').hidden)(currentTile||$('basicSearch')).focus({preventScroll:true});
+});
+$('basicDialog').addEventListener('click',e=>{if(e.target===$('basicDialog')){const r=$('basicDialog').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom){stopBasic();$('basicDialog').close();}}});
+smallScreen.addEventListener('change',()=>{stopBasic();if($('basicDialog').open)$('basicDialog').close();else $('basicPlayerHome').append($('basicPlayer'));});
+$('dialogRelated').addEventListener('click',e=>{const b=e.target.closest('[data-related]');if(b){pendingBasic=b.dataset.related;$('syllableDialog').close();}});
+
+// One public entry page. Old hashes (including #videos) continue to reach the right tool.
+function switchPanel(id,writeHash=true){
+ if(id==='videos')id='basics';if(!['basics','chart','tones','practice'].includes(id))id='basics';
+ stopPlayback();stopBasic();if($('basicDialog').open)$('basicDialog').close();
+ for(const p of document.querySelectorAll('.study-panel'))p.hidden=p.id!==id;
+ for(const link of document.querySelectorAll('.study-tabs a')){if(link.hash==='#'+id)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');}
+ if(writeHash)window.history.replaceState(null,'','#'+id);
+}
+document.querySelector('.study-tabs').addEventListener('click',e=>{const a=e.target.closest('a');if(a){e.preventDefault();switchPanel(a.hash.slice(1));}});
+window.addEventListener('hashchange',()=>switchPanel(location.hash.slice(1),false));
 
 let round=null;
 function makePool(mode){
@@ -147,7 +257,7 @@ function makePool(mode){
 }
 function history(){const value=best[$('practiceMode').value];$('practiceHistory').textContent=Number.isInteger(value)?`Tốt nhất trên trình duyệt này: ${value}/10`:'';}
 function startRound(retry){
- stopPlayback();closeVideo();const mode=$('practiceMode').value,pool=retry||shuffle(makePool(mode)).slice(0,10);
+ stopPlayback();stopBasic();const mode=$('practiceMode').value,pool=retry||shuffle(makePool(mode)).slice(0,10);
  if(!pool.length){$('practiceArea').textContent='Chưa có đủ âm mẫu cho nhóm này.';return;}
  round={mode,questions:pool.map(q=>({...q,choices:shuffle(q.choices)})),index:0,score:0,wrong:[],heard:false,answered:false,retry:Boolean(retry)};renderQuestion();
 }
@@ -187,12 +297,7 @@ $('practiceArea').addEventListener('click',e=>{
 });
 $('startPractice').addEventListener('click',()=>startRound());
 $('practiceMode').addEventListener('change',()=>{stopPlayback();round=null;history();$('practiceArea').innerHTML='<div class="practice-empty"><h3>Đã chọn nhóm luyện mới</h3><p>Bấm “Bắt đầu lượt luyện” để nghe 10 câu của nhóm này.</p></div>';});
-function closeMenu(){if(!$('sidebar').classList.contains('open'))return;$('sidebar').classList.remove('open');$('menuButton').setAttribute('aria-expanded','false');}
-$('menuButton').addEventListener('click',()=>{const open=$('sidebar').classList.toggle('open');$('menuButton').setAttribute('aria-expanded',String(open));});
-document.addEventListener('click',e=>{if(!e.target.closest('#sidebar,#menuButton'))closeMenu();});
-$('sidebar').addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('sidebar').classList.contains('open')){closeMenu();$('menuButton').focus();}});
-window.addEventListener('pagehide',()=>{stopPlayback();closeVideo();});
-document.addEventListener('visibilitychange',()=>{if(document.hidden){stopPlayback('Đã dừng khi rời trang.');closeVideo();}});
-renderChart();selectVideo(0);history();
+window.addEventListener('pagehide',()=>{stopPlayback();stopBasic();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopPlayback('Đã dừng khi rời trang.');stopBasic();}});
+renderChart();renderBasicGrid();renderBasicPlayer();history();switchPanel(location.hash.slice(1),false);
 })();

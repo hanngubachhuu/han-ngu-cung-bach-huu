@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const context={window:{}};vm.createContext(context);
-for(const file of ['data/pinyin-data.js','data/pinyin-audio.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
+for(const file of ['data/pinyin-data.js','data/pinyin-audio.js','data/pinyin-basics.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const D=context.window.HNBH_PINYIN,A=context.window.HNBH_PINYIN_AUDIO;
 assert.equal(D.syllables.length,405);assert.equal(new Set(D.syllables.map(s=>s.base)).size,405);
 assert.equal(Object.keys(D.rows).length,22);
@@ -34,12 +34,41 @@ for(const g of D.contrastGroups)for(const pair of g.pairs){
  assert.equal(pair.length,2);assert.notEqual(pair[0],pair[1]);
  for(const base of pair){assert(D.syllables.some(s=>s.base===base));for(let t=1;t<=4;t++)assert(A[base.replace(/ü/g,'v')+t]);}
 }
-assert.equal(new Set(D.videos.map(v=>v.id)).size,2);
-for(const v of D.videos){assert.match(v.id,/^\d{19}$/);assert(!v.author&&!v.original,'Teacher and source metadata belong in the administrative review files.');}
-assert.deepEqual(Array.from(D.videos,v=>v.key),['initials','finals']);
-const admin=fs.readFileSync(path.join(root,'admin/pinyin-sources-data.js'),'utf8');
-for(const v of D.videos)assert(admin.includes(v.id),'Every public video must have an administrative source record.');
+const B=context.window.HNBH_PINYIN_BASICS;
+assert.equal(B.sounds.length,47);assert.equal(new Set(B.sounds.map(s=>s.id)).size,47);
+assert.equal(B.sounds.filter(s=>s.video).length,46);
+assert.equal(B.sounds.filter(s=>s.group==='initials').length,21);
+assert.equal(B.sounds.filter(s=>s.group==='finals').length,24);
+assert.equal(B.sounds.filter(s=>s.group==='spelling').length,2);
+assert.equal(B.sounds.find(s=>s.id==='x').video,null);
+assert.equal(B.sounds.find(s=>s.id==='x').audio,A.xi1);
+const media=JSON.parse(fs.readFileSync(path.join(root,'docs/pinyin/basic-media-manifest.json'),'utf8'));
+assert.equal(media.files.length,46);
+vm.runInContext(fs.readFileSync(path.join(root,'admin/pinyin-sources-data.js'),'utf8'),context);
+const sourceRegister=context.window.HNBH_PINYIN_SOURCES;
+assert.equal(sourceRegister.videos.length,46);
+assert.equal(new Set(sourceRegister.videos.map(v=>v.id)).size,46);
+for(const s of B.sounds){
+ assert(!s.author&&!s.source,'Source metadata belongs in the administrative review files.');
+ assert(fs.existsSync(path.join(root,s.audio)),s.id);
+ if(!s.video)continue;
+ const m=media.files.find(f=>f.id===s.id);assert(m,s.id);
+ const sourceRecord=sourceRegister.videos.find(v=>v.id==='local-'+s.id);
+ assert(sourceRecord&&sourceRecord.local,'Each clip needs a local administrative source record: '+s.id);
+ assert.equal(sourceRecord.original,m.sourceFile,s.id);
+ assert.equal(sourceRecord.url,'../'+s.video,s.id);
+ for(const type of ['video','audio','poster']){
+  assert.equal(s[type],m[type].path,s.id);
+  const bytes=fs.readFileSync(path.join(root,s[type]));
+  assert.equal(bytes.length,m[type].bytes,s.id);
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),m[type].sha256,s.id);
+ }
+}
+for(const file of ['phat-am.html','pinyin.html','pinyin.js','data/pinyin-data.js','data/pinyin-basics.js']){
+ const source=fs.readFileSync(path.join(root,file),'utf8');
+ assert(!/douyin\.com|7480865057459555595|7646738541879364883/.test(source),'Rejected videos must not remain in public code: '+file);
+}
 assert(fs.existsSync(path.join(root,'audio/pinyin/NOTICE.md')),'Audio attribution must travel with the assets.');
 const deploy=fs.readFileSync(path.join(root,'.github/workflows/deploy.yml'),'utf8');
 assert(deploy.includes('--exclude="admin/"'),'Local administration must not be published as an unsecured admin site.');
-console.log(JSON.stringify({syllables:405,samples:1620,bytes:totalBytes,knownMissing:missing,videoLessons:D.videos.length,status:'PASS'}));
+console.log(JSON.stringify({syllables:405,samples:1620,bytes:totalBytes,knownMissing:missing,basicSounds:B.sounds.length,localVideos:46,audioOnly:'x in xī',status:'PASS'}));

@@ -59,11 +59,11 @@ jobs:
           # The root entry is generated from the canonical homepage.
           cp dist/trang-chu.html dist/index.html
 
-          # Cache-bust shared navigation assets so GitHub Pages/browsers never
-          # serve an older navigation.css or hsk1-navigation.js after deploy.
+          # Cache-bust shared navigation and pronunciation assets at build time.
           find dist -type f -name "*.html" -print0 | xargs -0 sed -E -i \
             -e "s#navigation\\.css(\\?v=[^\"']*)?#navigation.css?v=$GITHUB_SHA#g" \
-            -e "s#hsk1-navigation\\.js(\\?v=[^\"']*)?#hsk1-navigation.js?v=$GITHUB_SHA#g"
+            -e "s#hsk1-navigation\\.js(\\?v=[^\"']*)?#hsk1-navigation.js?v=$GITHUB_SHA#g" \
+            -e "s#(pinyin\\.(css|js)|data/pinyin-(data|audio|basics)\\.js)(\\?v=[^\"']*)?#\\1?v=$GITHUB_SHA#g"
 
           touch dist/.nojekyll
 

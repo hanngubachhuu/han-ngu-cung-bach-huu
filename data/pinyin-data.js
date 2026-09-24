@@ -30,25 +30,25 @@ const zero={yi:'i',ya:'ia',ye:'ie',yao:'iao',you:'iou',yan:'ian',yin:'in',yang:'
 const finals='a o e -i er ai ei ao ou an en ang eng ong i ia ie iao iou ian in iang ing iong u ua uo uai uei uan uen uang ueng ü üe üan ün'.split(' ');
 const initialTips={
  '∅':'Không có thanh mẫu. y và w trong các âm tiết này làm nhiệm vụ ghi chính tả; không tính thêm vào 21 thanh mẫu.',
- b:'Khép hai môi rồi mở nhanh, bật hơi nhẹ. b Pinyin là âm tắc không bật hơi mạnh; đừng đọc thành b hữu thanh của tiếng Việt.',
+ b:'Khép hai môi rồi mở nhanh, không bật hơi. Luồng hơi yếu hơn p; đừng đọc thành b hữu thanh của tiếng Việt.',
  p:'Khép hai môi rồi mở với luồng hơi rõ. Đặt một mảnh giấy trước miệng để so sánh p với b.',
  m:'Khép hai môi, để hơi đi qua mũi. Khi nối sang vận mẫu, mở môi tự nhiên.',
  f:'Răng trên chạm nhẹ môi dưới; đẩy hơi qua khe hẹp. Không khép cả hai môi như b hoặc p.',
- d:'Đầu lưỡi chạm vùng ngay sau răng trên rồi nhả nhanh; luồng hơi nhẹ. Đừng đồng nhất với đ của tiếng Việt.',
+ d:'Đầu lưỡi chạm vùng ngay sau răng trên rồi nhả nhanh, không bật hơi. Đừng đồng nhất với đ của tiếng Việt.',
  t:'Cùng vị trí đầu lưỡi với d nhưng bật hơi rõ hơn. Giữ nguyên vận mẫu khi so sánh d và t.',
  n:'Đầu lưỡi chạm vùng sau răng trên; hơi đi qua mũi. Phân biệt với l bằng đường thoát của luồng hơi.',
  l:'Đầu lưỡi chạm vùng sau răng trên; hơi thoát qua hai bên lưỡi. Giữ đầu lưỡi rõ, tránh lẫn với n.',
- g:'Phần sau lưỡi chạm ngạc mềm rồi nhả ra; luồng hơi nhẹ, không bật mạnh.',
+ g:'Phần sau lưỡi chạm ngạc mềm rồi nhả ra, không bật hơi. So sánh với luồng hơi rõ hơn của k.',
  k:'Vị trí gần g nhưng bật hơi rõ. Luyện cùng vận mẫu: gē – kē.',
  h:'Nâng phần sau lưỡi gần ngạc mềm để tạo khe cho hơi đi qua. Không thêm một nguyên âm trước h.',
- j:'Đầu lưỡi để gần răng dưới, mặt trước lưỡi nâng gần ngạc cứng. Chặn rồi nhả luồng hơi nhẹ; không cuộn đầu lưỡi như zh.',
+ j:'Đầu lưỡi để gần răng dưới, mặt trước lưỡi nâng gần ngạc cứng. Chặn rồi nhả qua khe hẹp, không bật hơi; không cuộn đầu lưỡi như zh.',
  q:'Vị trí lưỡi như j nhưng bật hơi rõ. Giữ đầu lưỡi gần răng dưới; đừng đổi thành ch.',
  x:'Đầu lưỡi gần răng dưới, mặt trước lưỡi nâng gần ngạc cứng; hơi xát qua khe. Khác vị trí đầu lưỡi của s và sh.',
- zh:'Đầu lưỡi nâng về vùng sau lợi trên rồi nhả ra, không bật hơi mạnh. Không cuộn lưỡi quá mức.',
+ zh:'Đầu lưỡi nâng về vùng sau lợi trên rồi nhả ra, không bật hơi. Không cuộn lưỡi quá mức.',
  ch:'Vị trí đầu lưỡi như zh nhưng bật hơi rõ. So sánh zhī – chī với cùng một thanh điệu.',
  sh:'Đầu lưỡi nâng về phía sau lợi trên; để hơi xát qua khe. Khác s ở vị trí lưỡi.',
  r:'Đầu lưỡi nâng hơi về sau, có tiếng rung của dây thanh. Không rung đầu lưỡi liên tiếp như một số cách đọc r tiếng Việt.',
- z:'Đầu lưỡi ở phía trước, gần mặt sau răng trên; chặn rồi nhả nhẹ qua khe hẹp. Là âm không bật hơi mạnh.',
+ z:'Đầu lưỡi ở phía trước, gần mặt sau răng trên; chặn rồi nhả qua khe hẹp, không bật hơi. So sánh với c.',
  c:'Vị trí như z nhưng bật hơi rõ. Phân biệt c với ch ở vị trí lưỡi, c với z ở luồng hơi.',
  s:'Đầu lưỡi ở phía trước, hơi xát qua khe gần răng. Không lùi đầu lưỡi về sau như sh.'
 };
@@ -79,15 +79,11 @@ const tones=[
  {n:3,name:'Thanh 3 · Thượng thanh',contour:'214',description:'Khi đọc riêng: xuống thấp rồi lên. Trong lời nói liền, thường chỉ giữ phần thấp.',path:'M 10 56 Q 48 86 62 67 L 110 28'},
  {n:4,name:'Thanh 4 · Khứ thanh',contour:'51',description:'Bắt đầu cao rồi đi xuống nhanh, dứt khoát.',path:'M 10 12 L 110 72'}
 ];
-const videos=[
- {id:'7480865057459555595',key:'initials',title:'Khẩu hình thanh mẫu',note:'Quan sát môi và răng khi đọc các thanh mẫu. Môi chỉ cho thấy một phần cách phát âm; kết hợp nghe mẫu và chú ý luồng hơi.'},
- {id:'7646738541879364883',key:'finals',title:'Khẩu hình vận mẫu',note:'So sánh độ mở và độ tròn của môi. Nhìn từng âm, tạm dừng rồi đọc theo; đối chiếu cách viết vận mẫu trong bảng Pinyin.'}
-];
 const contrastGroups=[
  {id:'air',title:'Bật hơi',tip:'Giữ cùng thanh và vận mẫu; chú ý luồng hơi mạnh hơn ở p, t, k, q, ch, c.',pairs:[['ba','pa'],['da','ta'],['ge','ke'],['ji','qi'],['zhi','chi'],['zi','ci']]},
  {id:'tongue',title:'Vị trí lưỡi',tip:'So sánh âm đầu lưỡi ở phía trước với âm đầu lưỡi nâng về sau; j/q/x giữ đầu lưỡi gần răng dưới.',pairs:[['zi','zhi'],['ci','chi'],['si','shi'],['ji','zhi'],['qi','chi'],['xi','shi']]},
  {id:'nasal',title:'Đuôi -n / -ng',tip:'-n kết thúc ở đầu lưỡi; -ng kết thúc ở phần sau lưỡi. Đừng thêm một âm g hay một nguyên âm riêng.',pairs:[['ban','bang'],['fan','fang'],['jin','jing'],['xin','xing'],['chen','cheng'],['lin','ling']]},
  {id:'round',title:'u / ü và n / l',tip:'ü: lưỡi ở phía trước như i, môi tròn. n thoát hơi qua mũi; l thoát hơi hai bên lưỡi.',pairs:[['lu','lü'],['nu','nü'],['na','la'],['ni','li'],['nü','lü']]}
 ];
-window.HNBH_PINYIN={version:1,rows,finals,syllables,initialTips,finalTip,toned,normalize,tones,videos,contrastGroups};
+window.HNBH_PINYIN={version:1,rows,finals,syllables,initialTips,finalTip,toned,normalize,tones,contrastGroups};
 })();
