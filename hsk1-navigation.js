@@ -261,6 +261,23 @@ function enhanceSiteFooter(){
   });
 }
 enhanceSiteFooter();
+
+/* ===== Lesson layout fix =====
+   HSK 1 lesson pages currently carry two .lesson-route blocks:
+   one in the intro card and one after the app. Keep a single,
+   intentional navigation block and let the footer follow the page.
+*/
+function normalizeLessonLayout(){
+  const hasIntro=!!document.getElementById('introScreen');
+  document.body.classList.toggle('has-lesson-intro',hasIntro);
+
+  const routes=Array.from(document.querySelectorAll('.lesson-route'));
+  if(routes.length>1){
+    routes.slice(1).forEach(route=>route.remove());
+  }
+}
+normalizeLessonLayout();
+
 const panel=document.getElementById('hskDropdownPanel');
 const dropdown=document.getElementById('hskDropdown');
 const dropdownBtn=document.getElementById('hskDropdownBtn');
