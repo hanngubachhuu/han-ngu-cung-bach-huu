@@ -364,7 +364,7 @@
 
 
 /* ============================================================
-   NAV v3 — TRẠNG THÁI HỌC TẬP / HỌC TIẾP / BREADCRUMB
+   NAVIGATION — TRẠNG THÁI HỌC TẬP / HỌC TIẾP / BREADCRUMB
    ============================================================ */
 .site-nav-links>a[aria-current="page"]{
   color:var(--color-primary) !important;
@@ -605,7 +605,7 @@
    PAGE FLOW & FOOTER LAYOUT
    - Body là flex-column để trang ngắn đẩy footer xuống cuối viewport.
    - Footer giữ nguyên flow, không absolute/fixed.
-   - Footer visual dùng .site-footer-v2, chỉ khai báo một nơi.
+   - Footer visual dùng .footer-system, chỉ khai báo một nơi.
    ============================================================ */
 html{min-height:100%;}
 body{
@@ -2169,7 +2169,7 @@ body{
 
 /* Mega menu chỉ còn danh sách bài và khối Học tiếp, không lặp lại
    "LỘ TRÌNH HSK / HSK 2 / 15 bài học". */
-.hnh-mega-v12 .hsk-mega-detail > .hsk-mega-detail-head{
+.hnh-mega .hsk-mega-detail > .hsk-mega-detail-head{
   display:none !important;
 }
 
@@ -2234,34 +2234,34 @@ body{
    ============================================================ */
 
 /* Mega menu: bỏ hoàn toàn vùng tiêu đề phụ cũ nếu còn trong DOM/cache. */
-.hnh-mega-v12 .hsk-mega-detail > .hsk-mega-detail-head{
+.hnh-mega .hsk-mega-detail > .hsk-mega-detail-head{
   display:none !important;
 }
-.hnh-mega-v12 .hsk-mega-detail{
+.hnh-mega .hsk-mega-detail{
   min-width:0 !important;
   overflow:hidden !important;
 }
-.hnh-mega-v12 .hsk-mega-detail-list{
+.hnh-mega .hsk-mega-detail-list{
   min-width:0 !important;
 }
 
 /* Desktop default: panel gọn lại, không kéo quá rộng. */
 @media (min-width:1101px){
-  .hnh-mega-v12.site-nav-dropdown-panel{
+  .hnh-mega.site-nav-dropdown-panel{
     width:min(720px,calc(100vw - 28px)) !important;
     max-width:720px !important;
     max-height:min(500px,calc(100dvh - 96px)) !important;
     overflow:hidden !important;
   }
-  .hnh-mega-v12 .hsk-mega-levels{
+  .hnh-mega .hsk-mega-levels{
     min-width:0 !important;
     width:170px !important;
   }
-  .hnh-mega-v12 .hsk-mega-detail{
+  .hnh-mega .hsk-mega-detail{
     min-width:0 !important;
     padding:14px !important;
   }
-  .hnh-mega-v12 .hsk-mega-detail-list{
+  .hnh-mega .hsk-mega-detail-list{
     max-height:330px !important;
     overflow-y:auto !important;
     overflow-x:hidden !important;
@@ -2338,18 +2338,18 @@ body{
   .site-nav-dropdown-panel{
     top:calc(100% + 8px) !important;
   }
-  .hnh-mega-v12.site-nav-dropdown-panel{
+  .hnh-mega.site-nav-dropdown-panel{
     width:min(700px,calc(100vw - 24px)) !important;
     max-width:700px !important;
     max-height:min(470px,calc(100dvh - 84px)) !important;
   }
-  .hnh-mega-v12 .hsk-mega-levels{
+  .hnh-mega .hsk-mega-levels{
     width:150px !important;
   }
-  .hnh-mega-v12 .hsk-mega-detail{
+  .hnh-mega .hsk-mega-detail{
     padding:12px !important;
   }
-  .hnh-mega-v12 .hsk-mega-detail-list{
+  .hnh-mega .hsk-mega-detail-list{
     max-height:310px !important;
     overflow-y:auto !important;
   }
@@ -2467,7 +2467,7 @@ body{
   }
 
   /* Overlay độc lập để mega menu không làm trang phía dưới phình cao. */
-  .hnh-mega-v12.site-nav-dropdown-panel,
+  .hnh-mega.site-nav-dropdown-panel,
   .site-nav-dropdown-panel{
     position:fixed !important;
     top:74px !important;
@@ -2486,12 +2486,12 @@ body{
     box-shadow:0 18px 42px rgba(54,45,39,.20) !important;
     z-index:2200 !important;
   }
-  .site-nav-dropdown.open .hnh-mega-v12.site-nav-dropdown-panel,
+  .site-nav-dropdown.open .hnh-mega.site-nav-dropdown-panel,
   .site-nav-dropdown.open .site-nav-dropdown-panel{
     display:block !important;
     visibility:visible !important;
   }
-  .hnh-mega-v12 .hsk-mega-levels{
+  .hnh-mega .hsk-mega-levels{
     width:100% !important;
     min-width:0 !important;
     border-right:0 !important;
@@ -2500,11 +2500,11 @@ body{
     margin-bottom:8px !important;
     padding:5px !important;
   }
-  .hnh-mega-v12 .hsk-mega-levels .dd-level-head{
+  .hnh-mega .hsk-mega-levels .dd-level-head{
     min-height:44px !important;
     padding:8px 10px !important;
   }
-  .hnh-mega-v12 .hsk-mega-detail{
+  .hnh-mega .hsk-mega-detail{
     width:100% !important;
     min-width:0 !important;
     min-height:0 !important;
@@ -2513,11 +2513,11 @@ body{
     border-radius:10px !important;
     overflow:hidden !important;
   }
-  .hnh-mega-v12 .hsk-mega-resume{
+  .hnh-mega .hsk-mega-resume{
     margin-bottom:8px !important;
     padding:8px 10px !important;
   }
-  .hnh-mega-v12 .hsk-mega-detail-list{
+  .hnh-mega .hsk-mega-detail-list{
     width:100% !important;
     height:min(34vh,260px) !important;
     max-height:min(34vh,260px) !important;
@@ -2527,25 +2527,25 @@ body{
     overflow-x:hidden !important;
     padding:3px 4px 6px 2px !important;
   }
-  .hnh-mega-v12 .hsk-mega-lesson-row{
+  .hnh-mega .hsk-mega-lesson-row{
     width:100% !important;
     min-height:44px !important;
     height:44px !important;
     flex:0 0 44px !important;
   }
-  .hnh-mega-v12 .hsk-mega-lesson-link{
+  .hnh-mega .hsk-mega-lesson-link{
     font-size:12px !important;
   }
-  .hnh-mega-v12 .hsk-mega-lesson-action{
+  .hnh-mega .hsk-mega-lesson-action{
     min-width:88px !important;
     font-size:10px !important;
   }
 }
 
 /* Hậu thuẫn cho header cũ/cached: các tiêu đề phụ vẫn bị ẩn. */
-.hnh-mega-v12 .hsk-mega-detail-kicker,
-.hnh-mega-v12 .hsk-mega-detail-title,
-.hnh-mega-v12 .hsk-mega-detail-sub{
+.hnh-mega .hsk-mega-detail-kicker,
+.hnh-mega .hsk-mega-detail-title,
+.hnh-mega .hsk-mega-detail-sub{
   display:none !important;
 }
 
@@ -2595,7 +2595,7 @@ body{
   /* QUAN TRỌNG:
      Mega menu desktop bị biến thành một accordion dọc.
      Không fixed, không grid 2 cột, không transform, không tràn khỏi viewport. */
-  #siteNav .hnh-mega-v12.site-nav-dropdown-panel{
+  #siteNav .hnh-mega.site-nav-dropdown-panel{
     position:static !important;
     inset:auto !important;
     transform:none !important;
@@ -2619,17 +2619,17 @@ body{
     opacity:1 !important;
   }
 
-  #siteNav .site-nav-dropdown.open .hnh-mega-v12.site-nav-dropdown-panel{
+  #siteNav .site-nav-dropdown.open .hnh-mega.site-nav-dropdown-panel{
     display:block !important;
   }
 
-  #siteNav .hnh-mega-v12.site-nav-dropdown-panel::before{
+  #siteNav .hnh-mega.site-nav-dropdown-panel::before{
     display:none !important;
     content:none !important;
   }
 
   /* Sáu cấp HSK trở thành các hàng chọn cấp độ. */
-  #siteNav .hnh-mega-v12 .hsk-mega-levels{
+  #siteNav .hnh-mega .hsk-mega-levels{
     display:flex !important;
     flex-direction:column !important;
     width:100% !important;
@@ -2642,7 +2642,7 @@ body{
     overflow:hidden !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level{
+  #siteNav .hnh-mega .hsk-mega-levels .dd-level{
     width:100% !important;
     margin:0 !important;
     padding:0 !important;
@@ -2650,11 +2650,11 @@ body{
     border-bottom:1px solid #E3D9CE !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level:last-child{
+  #siteNav .hnh-mega .hsk-mega-levels .dd-level:last-child{
     border-bottom:0 !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level-head{
+  #siteNav .hnh-mega .hsk-mega-levels .dd-level-head{
     width:100% !important;
     min-height:46px !important;
     padding:10px 12px !important;
@@ -2665,19 +2665,19 @@ body{
     transform:none !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level.active .dd-level-head{
+  #siteNav .hnh-mega .hsk-mega-levels .dd-level.active .dd-level-head{
     background:#F8E7E3 !important;
     color:#C0392B !important;
     box-shadow:inset 3px 0 0 #C0392B !important;
   }
 
   /* Không xổ danh sách bài kiểu menu lồng cũ trong cột trái. */
-  #siteNav .hnh-mega-v12 .dd-level-lessons{
+  #siteNav .hnh-mega .dd-level-lessons{
     display:none !important;
   }
 
   /* Khu bài học nằm dưới danh sách cấp độ, một cột duy nhất. */
-  #siteNav .hnh-mega-v12 .hsk-mega-detail{
+  #siteNav .hnh-mega .hsk-mega-detail{
     display:block !important;
     width:100% !important;
     min-width:0 !important;
@@ -2692,17 +2692,17 @@ body{
     overflow:hidden !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-detail-head{
+  #siteNav .hnh-mega .hsk-mega-detail-head{
     display:none !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-resume{
+  #siteNav .hnh-mega .hsk-mega-resume{
     margin:0 0 8px !important;
     padding:8px 9px !important;
     box-sizing:border-box !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-detail-list{
+  #siteNav .hnh-mega .hsk-mega-detail-list{
     display:flex !important;
     flex-direction:column !important;
     width:100% !important;
@@ -2718,7 +2718,7 @@ body{
   }
 
   /* Trên mobile cả hàng là link bài, không có cột nút khổng lồ bên phải. */
-  #siteNav .hnh-mega-v12 .hsk-mega-lesson-row{
+  #siteNav .hnh-mega .hsk-mega-lesson-row{
     display:block !important;
     width:100% !important;
     min-width:0 !important;
@@ -2733,11 +2733,11 @@ body{
     transform:none !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-lesson-row:last-child{
+  #siteNav .hnh-mega .hsk-mega-lesson-row:last-child{
     border-bottom:0 !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-lesson-link{
+  #siteNav .hnh-mega .hsk-mega-lesson-link{
     display:block !important;
     width:100% !important;
     min-width:0 !important;
@@ -2752,16 +2752,16 @@ body{
     line-height:1.35 !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-lesson-link::before{
+  #siteNav .hnh-mega .hsk-mega-lesson-link::before{
     display:none !important;
     content:none !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-lesson-action{
+  #siteNav .hnh-mega .hsk-mega-lesson-action{
     display:none !important;
   }
 
-  #siteNav .hnh-mega-v12 .hsk-mega-review{
+  #siteNav .hnh-mega .hsk-mega-review{
     display:block !important;
     width:100% !important;
     margin:8px 0 0 !important;
@@ -2780,7 +2780,7 @@ body{
    - Single source of truth for footer visuals.
    ============================================================ */
 /* ===== Hán Ngữ Cùng Bách Hữu · Footer System v2 ===== */
-.site-footer-v2{
+.footer-system{
   position:relative;
   isolation:isolate;
   overflow:hidden;
@@ -2788,12 +2788,12 @@ color:#F8F5EE;
   background:#26343F;
   border-top:1px solid rgba(214,137,16,.45);
 }
-.site-footer-v2::before{
+.footer-system::before{
   content:"";
   position:absolute;left:0;right:0;top:0;height:4px;
   background:#C0392B;
 }
-.site-footer-v2::after{
+.footer-system::after{
   content:"学  ·  汉  ·  习  ·  礼";
   position:absolute;right:24px;top:18px;
   color:rgba(255,255,255,.045);
@@ -2801,7 +2801,7 @@ color:#F8F5EE;
   font-size:42px;font-weight:700;letter-spacing:.35em;
   pointer-events:none;user-select:none;
 }
-.site-footer-v2 .site-footer-inner{
+.footer-system .site-footer-inner{
   position:relative;z-index:1;
   width:min(1100px,calc(100% - 40px));
   margin:0 auto !important;
@@ -2810,10 +2810,10 @@ color:#F8F5EE;
   grid-template-columns:minmax(250px,1.45fr) minmax(140px,.8fr) minmax(160px,.9fr) minmax(190px,1fr) !important;
   gap:34px !important;
 }
-.site-footer-v2 .footer-v2-brand{
+.footer-system .footer-brand{
   display:flex;align-items:flex-start;gap:14px;
 }
-.site-footer-v2 .footer-v2-seal{
+.footer-system .footer-seal{
   width:48px;height:48px;flex:0 0 48px;
   display:flex;align-items:center;justify-content:center;
   border:1px solid rgba(214,137,16,.7);
@@ -2824,42 +2824,42 @@ color:#F8F5EE;
   background:rgba(255,255,255,.04);
   box-shadow:0 8px 22px rgba(0,0,0,.14);
 }
-.site-footer-v2 .footer-v2-kicker{
+.footer-system .footer-kicker{
   margin:0 0 4px;
   color:#F4C56E;
   font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
 }
-.site-footer-v2 .footer-v2-title{
+.footer-system .footer-title{
   margin:0;
   color:#FFFDF8;
   font-size:20px;font-weight:800;line-height:1.25;
 }
-.site-footer-v2 .footer-v2-quote{
+.footer-system .footer-quote{
   margin:16px 0 8px;
   color:#FFFDF8;
   font-family:"Songti SC","Noto Serif SC","STSong",serif;
   font-size:15px;line-height:1.7;
 }
-.site-footer-v2 .footer-v2-desc{
+.footer-system .footer-desc{
   margin:0;
   max-width:390px;
   color:rgba(248,245,238,.72);
   font-size:13px;line-height:1.8;
 }
-.site-footer-v2 .footer-v2-loop{
+.footer-system .footer-loop{
   display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;
 }
-.site-footer-v2 .footer-v2-loop span{
+.footer-system .footer-loop span{
   display:inline-flex;align-items:center;min-height:30px;
   padding:4px 9px;border:1px solid rgba(255,255,255,.12);
   border-radius:999px;color:rgba(248,245,238,.84);
   font-size:11px;background:rgba(255,255,255,.035);
 }
-.site-footer-v2 .footer-v2-col h4{
+.footer-system .footer-col h4{
   margin:2px 0 14px;color:#FFFDF8;
   font-size:12.5px;font-weight:800;letter-spacing:.06em;
 }
-.site-footer-v2 .footer-v2-col a{
+.footer-system .footer-col a{
   display:flex;align-items:center;gap:7px;
   width:fit-content;max-width:100%;
   min-height:36px;padding:5px 0;
@@ -2868,38 +2868,38 @@ color:#F8F5EE;
   border-radius:8px;
   transition:color .18s ease,transform .18s ease;
 }
-.site-footer-v2 .footer-v2-col a::before{
+.footer-system .footer-col a::before{
   content:"";
   width:5px;height:5px;flex:0 0 5px;border-radius:50%;
   background:rgba(244,197,110,.55);
   transition:background .18s ease,transform .18s ease;
 }
-.site-footer-v2 .footer-v2-col a:hover,
-.site-footer-v2 .footer-v2-col a[aria-current="page"]{
+.footer-system .footer-col a:hover,
+.footer-system .footer-col a[aria-current="page"]{
   color:#FFFDF8;transform:translateX(2px);
 }
-.site-footer-v2 .footer-v2-col a:hover::before,
-.site-footer-v2 .footer-v2-col a[aria-current="page"]::before{
+.footer-system .footer-col a:hover::before,
+.footer-system .footer-col a[aria-current="page"]::before{
   background:#C0392B;transform:scale(1.45);
 }
-.site-footer-v2 .footer-v2-feature{
+.footer-system .footer-feature{
   margin-top:4px;
   padding:14px 14px 13px;
   border:1px solid rgba(214,137,16,.35);
   border-radius:14px;
   background:rgba(255,255,255,.045);
 }
-.site-footer-v2 .footer-v2-feature strong{
+.footer-system .footer-feature strong{
   display:block;color:#FFFDF8;font-size:13px;margin-bottom:4px;
 }
-.site-footer-v2 .footer-v2-feature span{
+.footer-system .footer-feature span{
   display:block;color:rgba(248,245,238,.68);font-size:11.5px;line-height:1.6;
 }
-.site-footer-v2 .footer-v2-feature a{
+.footer-system .footer-feature a{
   min-height:34px;margin-top:7px;color:#F4C56E;font-weight:800;
 }
-.site-footer-v2 .footer-v2-feature a::before{background:#F4C56E;}
-.site-footer-v2 .site-footer-bottom{
+.footer-system .footer-feature a::before{background:#F4C56E;}
+.footer-system .site-footer-bottom{
   position:relative;z-index:1;
   width:min(1100px,calc(100% - 40px));
   margin:0 auto !important;
@@ -2909,50 +2909,50 @@ color:#F8F5EE;
   display:flex;align-items:center;justify-content:space-between;gap:18px;
   font-size:11px !important;text-align:left !important;
 }
-.site-footer-v2 .footer-v2-bottom-note{line-height:1.6;}
-.site-footer-v2 .footer-v2-back{
+.footer-system .footer-bottom-note{line-height:1.6;}
+.footer-system .footer-back{
   display:inline-flex;align-items:center;justify-content:center;
   min-height:38px;padding:8px 13px;
   border:1px solid rgba(255,255,255,.16);border-radius:999px;
   color:rgba(248,245,238,.78);text-decoration:none;font-size:11px;font-weight:700;
   transition:border-color .18s ease,color .18s ease,transform .18s ease;
 }
-.site-footer-v2 .footer-v2-back:hover{
+.footer-system .footer-back:hover{
   color:#FFFDF8;border-color:rgba(244,197,110,.6);transform:translateY(-1px);
 }
-.site-footer-v2 a:focus-visible{
+.footer-system a:focus-visible{
   outline:2px solid #F4C56E;outline-offset:3px;
 }
 @media (prefers-reduced-motion:reduce){
-  .site-footer-v2 *{transition:none !important;}
+  .footer-system *{transition:none !important;}
 }
 @media (max-width:920px){
-  .site-footer-v2 .site-footer-inner{
+  .footer-system .site-footer-inner{
     grid-template-columns:1.4fr 1fr 1fr !important;
   }
-  .site-footer-v2 .footer-v2-feature{grid-column:2 / -1;}
+  .footer-system .footer-feature{grid-column:2 / -1;}
 }
 @media (max-width:700px){
-  .site-footer-v2::after{right:8px;font-size:30px;top:22px;}
-  .site-footer-v2 .site-footer-inner{
+  .footer-system::after{right:8px;font-size:30px;top:22px;}
+  .footer-system .site-footer-inner{
     width:min(calc(100% - 28px),620px);
     padding:48px 0 24px !important;
     grid-template-columns:1fr 1fr !important;
     gap:26px 20px !important;
   }
-  .site-footer-v2 .footer-v2-brand{grid-column:1 / -1;}
-  .site-footer-v2 .footer-v2-feature{grid-column:1 / -1;}
-  .site-footer-v2 .site-footer-bottom{
+  .footer-system .footer-brand{grid-column:1 / -1;}
+  .footer-system .footer-feature{grid-column:1 / -1;}
+  .footer-system .site-footer-bottom{
     width:min(calc(100% - 28px),620px);
     padding:14px 0 18px !important;
     flex-direction:column;align-items:flex-start;
   }
 }
 @media (max-width:460px){
-  .site-footer-v2 .site-footer-inner{grid-template-columns:1fr !important;}
-  .site-footer-v2 .footer-v2-brand,
-  .site-footer-v2 .footer-v2-feature{grid-column:auto;}
-  .site-footer-v2 .footer-v2-col a{min-height:38px;}
+  .footer-system .site-footer-inner{grid-template-columns:1fr !important;}
+  .footer-system .footer-brand,
+  .footer-system .footer-feature{grid-column:auto;}
+  .footer-system .footer-col a{min-height:38px;}
 }
 
 /* ============================================================
