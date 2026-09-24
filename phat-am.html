@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phát âm tiếng Trung — Hán Ngữ Cùng Bách Hữu</title>
+<meta name="description" content="Nền tảng luyện phát âm tiếng Trung: thanh mẫu, vận mẫu, thanh điệu và ghép âm.">
+<script>document.documentElement.setAttribute("data-theme","light");</script>
+<style>
+:root{
+  --bg:#FDFBF7;--surface:#FFFDF9;--soft:#F5F0E8;--border:#E5DDD2;
+  --text:#3F332E;--muted:#70665F;--brand:#C0392B;--gold:#D68910;
+  --green:#27AE60;--shadow:0 12px 34px rgba(73,58,52,.08);
+  --font-vn:"Times New Roman","Times",serif;
+  --font-cn:"KaiTi","STKaiti","KaiTi_GB2312",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-vn);-webkit-font-smoothing:antialiased}
+.zh{font-family:var(--font-cn)}
+.page-hero{max-width:980px;margin:0 auto;padding:80px 22px 48px}
+.eyebrow{display:inline-block;padding:6px 12px;border-radius:999px;background:#F8E7E3;color:var(--brand);font-size:12px;font-weight:800;letter-spacing:.06em}
+h1{font-family:var(--font-cn);font-size:46px;line-height:1.25;margin:18px 0 12px}
+.lead{max-width:720px;color:var(--muted);font-size:17px;line-height:1.8;margin:0}
+.path{max-width:980px;margin:0 auto;padding:0 22px 26px;color:var(--muted);font-size:13px}
+.path a{color:var(--brand);text-decoration:none}
+.pron-grid{max-width:980px;margin:0 auto;padding:0 22px 70px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:var(--shadow);transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease}
+.card:hover{transform:translateY(-3px);border-color:#D9BDB5;box-shadow:0 16px 36px rgba(73,58,52,.11)}
+.card .symbol{font-family:var(--font-cn);font-size:31px;color:var(--brand);margin-bottom:10px}
+.card{display:block;text-decoration:none;color:inherit}.card:focus-visible,.entry-button:focus-visible{outline:3px solid var(--brand);outline-offset:4px}
+.entry-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.entry-button{display:inline-flex;align-items:center;min-height:48px;padding:12px 20px;border-radius:10px;background:var(--brand);color:white;text-decoration:none;font-weight:bold}.entry-button.secondary{background:var(--surface);color:var(--brand);border:1px solid var(--border)}
+.card h2{font-size:18px;margin:0 0 7px}.card p{margin:0;color:var(--muted);line-height:1.65;font-size:13.5px}
+.notice{max-width:980px;margin:0 auto 70px;padding:22px;border:1px dashed #DCC9BC;border-radius:18px;background:#FBF5ED;color:var(--muted)}
+.notice strong{color:var(--text)}
+@media(max-width:760px){
+  .page-hero{padding:52px 18px 32px}.path{padding:0 18px 20px}
+  h1{font-size:36px}.lead{font-size:15px}
+  .pron-grid{padding:0 18px 48px;grid-template-columns:1fr 1fr}
+}
+@media(max-width:460px){.pron-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+<link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel"></div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <span class="eyebrow">PHÁT ÂM · 拼音</span>
+    <h1 class="zh">先正其音，再学其语</h1>
+    <p class="lead">Tra 405 âm tiết, nghe từng thanh và quan sát video cận miệng. Luyện các cặp âm dễ nhầm, xem lời giải và nghe lại những câu còn sai.</p>
+    <div class="entry-actions"><a class="entry-button" href="pinyin.html">Mở bảng Pinyin →</a><a class="entry-button secondary" href="pinyin.html#videos">Xem khẩu hình</a><a class="entry-button secondary" href="pinyin.html#practice">Luyện nghe phân biệt</a></div>
+  </section>
+
+  <div class="path">Trang chủ › <a href="phat-am.html">Phát âm</a></div>
+
+  <section class="pron-grid" aria-label="Lộ trình phát âm">
+    <a class="card" href="pinyin.html#videos"><div class="symbol">韵</div><h2>韵母 · Vận mẫu</h2><p>Quan sát môi, nghe mẫu và phân biệt độ mở, độ tròn của môi.</p></a>
+    <a class="card" href="pinyin.html#tones"><div class="symbol">声</div><h2>声调 · Thanh điệu</h2><p>Nghe bốn thanh, theo dõi đường đi của giọng và đọc lại.</p></a>
+    <a class="card" href="pinyin.html#practice"><div class="symbol">声母</div><h2>Thanh mẫu</h2><p>Luyện bật hơi, vị trí lưỡi và những nhóm âm người Việt dễ nhầm.</p></a>
+    <a class="card" href="pinyin.html#chart"><div class="symbol">拼</div><h2>拼读 · Ghép âm</h2><p>Lọc thanh mẫu, vận mẫu; chọn một âm tiết để nghe và đánh dấu cần luyện.</p></a>
+  </section>
+
+  <div class="notice">
+    <strong>Bắt đầu bằng một nhóm âm nhỏ.</strong><br>
+    Nghe mẫu → nhìn khẩu hình → đọc theo → luyện phân biệt. Kết quả và âm cần luyện được lưu trên trình duyệt em đang dùng.
+  </div>
+</main>
+
+<script src="hsk1-navigation.js" defer></script>
+</body>
+</html>

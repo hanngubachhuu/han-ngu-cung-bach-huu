@@ -14,10 +14,10 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Migrate first ZIP upload to normal files
         run: |
@@ -56,6 +56,15 @@ jobs:
           rm -rf dist
           mkdir dist
           rsync -a --exclude=".git/" --exclude=".github/" --exclude="dist/" --exclude="README.md" --exclude="admin/" --exclude="docs/pinyin/" ./ dist/
+          # The root entry is generated from the canonical homepage.
+          cp dist/trang-chu.html dist/index.html
+
+          # Cache-bust shared navigation assets so GitHub Pages/browsers never
+          # serve an older navigation.css or hsk1-navigation.js after deploy.
+          find dist -type f -name "*.html" -print0 | xargs -0 sed -E -i \
+            -e "s#navigation\\.css(\\?v=[^\"']*)?#navigation.css?v=$GITHUB_SHA#g" \
+            -e "s#hsk1-navigation\\.js(\\?v=[^\"']*)?#hsk1-navigation.js?v=$GITHUB_SHA#g"
+
           touch dist/.nojekyll
 
       - name: Publish to GitHub Pages branch

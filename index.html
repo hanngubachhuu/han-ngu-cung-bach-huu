@@ -72,7 +72,12 @@
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
-  margin:0; background:var(--bg); color:var(--text);
+  margin:0; background-color:var(--bg); color:var(--text);
+  background-image:url("img/website-bg.jpg?v=20260924-1");
+  background-position:center top;
+  background-size:cover;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
   font-family:var(--font-vn);
   transition:background .25s, color .25s;
   padding-bottom:60px;
@@ -298,43 +303,49 @@ button{font-family:var(--font-vn); cursor:pointer;}
    TRANG CHỦ — HERO
    ============================================================ */
 .hero-home{
-  background:var(--color-primary); color:#fff; text-align:center;
-  padding:64px 20px 84px; position:relative; overflow:hidden;
+  background-color:#ead8c7;
+  background-image:linear-gradient(rgba(255,248,239,.08),rgba(255,248,239,.08)),url("img/hero-home-bg.webp?v=20260924-3");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  color:#5d3026;
+  text-align:center;
+  padding:64px 20px 84px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:inset 0 -70px 110px rgba(71,39,25,.08);
 }
-.hero-home .bg-blobs{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.hero-home .bg-blob{ position:absolute; border-radius:50%; filter:blur(48px); opacity:.35; animation:blobFloat 16s ease-in-out infinite; }
-.hero-home .bg-blob.b1{ width:320px; height:320px; left:-80px; top:-80px; background:radial-gradient(circle, #fff, transparent 70%); animation-duration:18s; }
-.hero-home .bg-blob.b2{ width:280px; height:280px; right:-70px; bottom:-90px; background:radial-gradient(circle, var(--color-accent), transparent 70%); animation-duration:14s; animation-delay:-4s; }
-@keyframes blobFloat{
-  0%,100%{ transform:translate(0,0) scale(1); }
-  33%{ transform:translate(20px,-18px) scale(1.06); }
-  66%{ transform:translate(-16px,16px) scale(.96); }
-}
+.hero-home .bg-blobs{display:none;}
 .hero-home-inner{position:relative; z-index:1; max-width:720px; margin:0 auto;}
 .hero-eyebrow{
   display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; letter-spacing:.04em;
-  color:#fff; background:rgba(255,255,255,.18); padding:6px 15px; border-radius:var(--radius-full); margin-bottom:18px;
+  color:#6f3025; background:rgba(255,250,242,.82); border:1px solid rgba(123,61,43,.14);
+  padding:6px 15px; border-radius:var(--radius-full); margin-bottom:18px;
+  box-shadow:0 2px 10px rgba(73,43,30,.08);
 }
 .hero-home h1{
   font-family:var(--font-cn); font-size:34pt; margin:0 0 14px; line-height:1.3;
-  position:relative; background:linear-gradient(100deg, #fff 30%, #fde3b0 45%, #fff 60%);
-  background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation:titleShine 5s ease-in-out infinite;
+  position:relative; background:none; -webkit-background-clip:border-box; background-clip:border-box;
+  color:#6a2f24; animation:none; text-shadow:0 2px 6px rgba(255,248,238,.65);
 }
-@keyframes titleShine{ 0%{background-position:200% 0;} 60%,100%{background-position:-40% 0;} }
-.hero-home p{font-size:16px; color:rgba(255,255,255,.92); line-height:1.7; margin:0 0 30px;}
+.hero-home p{
+  font-size:16px; color:#4f3a32; line-height:1.7; margin:0 0 30px;
+  text-shadow:0 1px 0 rgba(255,249,240,.48);
+}
 .hero-home-ctas{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
-.hero-home .btn-secondary{background:#fff; border-color:#fff;}
-.hero-home .btn-ghost{color:#fff; border-color:rgba(255,255,255,.6);}
-.hero-home .btn-ghost:hover{background:rgba(255,255,255,.12);}
+.hero-home .btn-secondary{background:rgba(255,252,246,.94); border-color:rgba(255,252,246,.94); color:#6f3025;}
+.hero-home .btn-secondary:hover{background:#fff; border-color:#fff;}
+.hero-home .btn-ghost{color:#7b241c; border-color:rgba(123,36,28,.52); background:rgba(255,249,241,.16);}
+.hero-home .btn-ghost:hover{background:rgba(255,249,241,.68);}
 .hero-stats{
   display:grid; grid-template-columns:repeat(3, 1fr); gap:0; max-width:640px; margin:34px auto 0;
-  background:rgba(255,255,255,.12); border-radius:var(--radius); overflow:hidden;
+  background:rgba(255,250,242,.76); border:1px solid rgba(123,61,43,.12);
+  border-radius:var(--radius); overflow:hidden; box-shadow:0 5px 18px rgba(67,39,28,.08);
 }
-.hero-stat{padding:16px 8px; text-align:center; border-right:1px solid rgba(255,255,255,.18);}
+.hero-stat{padding:16px 8px; text-align:center; border-right:1px solid rgba(123,61,43,.16);}
 .hero-stat:last-child{border-right:none;}
-.hero-stat b{display:block; font-size:22px; font-weight:800;}
-.hero-stat span{font-size:12px; color:rgba(255,255,255,.85);}
+.hero-stat b{display:block; font-size:22px; font-weight:800; color:#6a2f24;}
+.hero-stat span{font-size:12px; color:#6b554b;}
 
 /* ============================================================
    SECTION CHUNG
@@ -386,52 +397,349 @@ button{font-family:var(--font-vn); cursor:pointer;}
    LỘ TRÌNH HSK — danh sách dọc theo cấp độ, mặc định thu gọn,
    bấm vào để mở ra xem danh sách bài học bên trong.
    ============================================================ */
-.level-grid{display:flex; flex-direction:column; gap:14px; max-width:720px; margin:0 auto;}
+/* ============================================================
+   LỘ TRÌNH HSK — THIẾT KẾ MỚI
+   Chỉ hiển thị cấp độ; không badge số, không "giáo trình cũ",
+   không tag sơ cấp/trung cấp. Bấm một cấp → mở bài bên trong.
+   ============================================================ */
+.level-grid{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-width:860px;
+  margin:0 auto;
+}
 .level-card{
-  background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-sm); transition:box-shadow var(--motion-normal), border-color var(--motion-normal), transform var(--motion-normal);
+  position:relative;
+  isolation:isolate;
+  background:#FFFDF9;
+  border:1px solid #E2D8CC;
+  border-radius:18px;
+  box-shadow:0 3px 12px rgba(73,58,52,.06);
   overflow:hidden;
+  transition:box-shadow 360ms ease,border-color 360ms ease,transform 360ms ease;
 }
 .level-card.has-lessons{cursor:pointer;}
-.level-card.has-lessons:hover{box-shadow:var(--shadow); border-color:var(--color-primary); transform:translateY(-1px);}
-.level-card-head{display:flex; align-items:center; gap:16px; padding:18px 22px;}
-.level-card-badge{
-  width:46px; height:46px; border-radius:var(--radius-full); background:var(--color-primary-subtle); color:var(--color-primary);
-  font-weight:800; font-size:15px; display:flex; align-items:center; justify-content:center; flex:0 0 auto;
-  transition:background var(--motion-normal), color var(--motion-normal);
+.level-card.has-lessons:hover{
+  border-color:#D8BEB3;
+  box-shadow:0 10px 26px rgba(73,58,52,.10);
+  transform:translateY(-2px);
 }
-.level-card.open .level-card-badge{background:var(--color-primary); color:#fff;}
-.level-card-info{flex:1 1 auto; min-width:0;}
-.level-card-info h3{margin:0 0 2px; font-size:16.5px; color:var(--text);}
-.level-card-info p{margin:0; font-size:12.5px; color:var(--text-soft);}
-.level-card-meta{flex:0 0 auto; text-align:right;}
-.level-card-count{display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:var(--color-primary);}
-.level-card-soon{font-size:11.5px; color:var(--text-faint); background:var(--bg-soft); padding:5px 13px; border-radius:var(--radius-full);}
-.level-card-caret{font-size:11px; color:var(--color-primary); transition:transform var(--motion-normal);}
+.level-card-head{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  min-height:66px;
+  padding:13px 18px;
+}
+.level-card-badge{display:none !important;}
+.level-card-info{
+  flex:1 1 auto;
+  min-width:0;
+}
+.level-card-info h3{
+  margin:0;
+  font-size:18px;
+  color:#493A34;
+  letter-spacing:.01em;
+}
+.level-card-info p{display:none !important;}
+.level-card-meta{
+  flex:0 0 auto;
+  text-align:right;
+}
+.level-card-count{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:32px;
+  padding:6px 11px;
+  border:1px solid #E6D6CC;
+  border-radius:999px;
+  background:#FAF3EC;
+  color:#A84A39;
+  font-size:11px;
+  font-weight:800;
+}
+.level-card-soon{
+  font-size:10.5px;
+  color:#8B827B;
+  background:#F3EEE7;
+  padding:6px 11px;
+  border-radius:999px;
+}
+.level-card-caret{
+  font-size:10px;
+  color:#C0392B;
+  transition:transform 360ms ease;
+}
 .level-card.open .level-card-caret{transform:rotate(180deg);}
 .level-card-lessons{
-  max-height:0; overflow:hidden; border-top:0 solid var(--border-soft); background:var(--bg-soft);
-  transition:max-height var(--motion-normal) var(--ease-standard);
+  max-height:0;
+  overflow:hidden;
+  border-top:0 solid #E7DED5;
+  background:#FCF8F2;
+  transition:max-height 420ms cubic-bezier(.4,0,.2,1),border-top-width 220ms ease;
 }
-.level-card.open .level-card-lessons{max-height:10000px; border-top-width:1px;}
+.level-card.open .level-card-lessons{
+  max-height:9000px;
+  border-top-width:1px;
+}
 .lesson-row{
-  display:flex; flex-direction:column; gap:4px; padding:14px 22px; text-decoration:none; color:inherit;
-  border-bottom:1px solid var(--border-soft); transition:background var(--motion-fast);
+  position:relative;
+  isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:10px 16px;
+  text-decoration:none;
+  color:inherit;
+  border-bottom:1px solid #EAE2DA;
+  transition:background 320ms ease,border-color 320ms ease,box-shadow 320ms ease,transform 320ms ease;
 }
 .lesson-row:last-child{border-bottom:none;}
-.lesson-row:hover{background:var(--bg-card);}
-.lesson-row-top{display:flex; align-items:center; gap:10px;}
-.lesson-row-num{
-  width:26px; height:26px; border-radius:var(--radius-full); background:var(--bg-card); border:1px solid var(--border);
-  color:var(--text-soft); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+.lesson-row-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
-.lesson-row-zh{font-family:var(--font-cn); font-size:14pt; color:var(--text); flex:1 1 auto; min-width:0;}
-.lesson-row-cta{font-size:11.5px; font-weight:700; color:var(--color-primary); flex:0 0 auto; white-space:nowrap;}
-.lesson-row-vi{font-size:12px; color:var(--text-soft); padding-left:36px;}
-.review-row{background:var(--color-primary-subtle);}
-.review-row:hover{background:var(--color-primary-subtle); filter:brightness(0.97);}
-.review-row .lesson-row-num{background:var(--color-primary); border-color:var(--color-primary); color:#fff;}
-.review-row .lesson-row-cta{color:var(--color-primary);}
+.lesson-row-num{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  background:#FFFDF9;
+  border:1px solid #DDD1C5;
+  color:#756C65;
+  font-size:10.5px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 30px;
+}
+.lesson-row-zh{
+  font-family:var(--font-cn);
+  font-size:14pt;
+  color:#433831;
+  flex:1 1 auto;
+  min-width:0;
+}
+.lesson-row-cta{
+  font-size:10.5px;
+  font-weight:800;
+  color:#A84A39;
+  opacity:.35;
+  transform:translateX(4px);
+  transition:opacity 280ms ease,transform 280ms ease,color 280ms ease;
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+.lesson-row:hover,
+.lesson-row:focus-visible{
+  background:#FFF4EE;
+  border-color:#EACFC5;
+  box-shadow:0 5px 16px rgba(192,57,43,.06);
+  transform:translateX(2px);
+  outline:none;
+}
+.lesson-row:hover .lesson-row-cta,
+.lesson-row:focus-visible .lesson-row-cta{
+  opacity:1;
+  transform:translateX(0);
+}
+.lesson-row-vi{
+  font-size:11.5px;
+  color:#756C65;
+  padding-left:40px;
+}
+.review-row{
+  background:#F8E7E3;
+}
+.review-row:hover{
+  background:#F5DDD8;
+  filter:none;
+}
+.review-row .lesson-row-num{
+  background:#C0392B;
+  border-color:#C0392B;
+  color:#fff;
+}
+.review-row .lesson-row-cta{
+  color:#C0392B;
+}
+
+/* ============================================================
+   HIỆU ỨNG NỘI BỘ THEO CẤP ĐỘ HSK
+   ============================================================ */
+.level-card[data-home-hsk-level="1"] .lesson-row:hover{
+  box-shadow:0 7px 17px rgba(73,58,52,.07);
+}
+
+/* HSK 2 — lửa */
+.level-card[data-home-hsk-level="2"] .lesson-row::before,
+.level-card[data-home-hsk-level="2"] .lesson-row::after,
+.level-card[data-home-hsk-level="3"] .lesson-row::before,
+.level-card[data-home-hsk-level="3"] .lesson-row::after,
+.level-card[data-home-hsk-level="4"] .lesson-row::before,
+.level-card[data-home-hsk-level="4"] .lesson-row::after,
+.level-card[data-home-hsk-level="5"] .lesson-row::before,
+.level-card[data-home-hsk-level="5"] .lesson-row::after,
+.level-card[data-home-hsk-level="6"] .lesson-row::before,
+.level-card[data-home-hsk-level="6"] .lesson-row::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 360ms ease,transform 360ms ease,filter 360ms ease;
+}
+.level-card[data-home-hsk-level="2"] .lesson-row::before{
+  inset:-4px;
+  border-radius:12px;
+  background:
+    radial-gradient(ellipse at 14% 100%,rgba(232,93,31,.68),transparent 28%),
+    radial-gradient(ellipse at 50% 105%,rgba(244,169,54,.62),transparent 29%),
+    radial-gradient(ellipse at 86% 100%,rgba(192,57,43,.68),transparent 28%);
+  filter:blur(calc(1px + (1 - var(--home-power, .18))*2px));
+}
+.level-card[data-home-hsk-level="2"] .lesson-row::after{
+  inset:-3px;
+  background:
+    linear-gradient(76deg,transparent 40%,rgba(244,197,110,.72) 43% 46%,transparent 49%) left bottom/44px 25px no-repeat,
+    linear-gradient(104deg,transparent 40%,rgba(255,152,61,.62) 43% 46%,transparent 49%) center bottom/50px 27px no-repeat,
+    linear-gradient(284deg,transparent 41%,rgba(192,57,43,.58) 44% 47%,transparent 50%) right bottom/46px 25px no-repeat;
+}
+.level-card[data-home-hsk-level="2"] .lesson-row:hover::before,
+.level-card[data-home-hsk-level="2"] .lesson-row:focus-visible::before{
+  opacity:calc(.18 + var(--home-power, .18)*.72);
+  animation:homeFlameRise calc(1.45s - var(--home-power, .18)*.55s) ease-in-out infinite alternate;
+}
+.level-card[data-home-hsk-level="2"] .lesson-row:hover::after,
+.level-card[data-home-hsk-level="2"] .lesson-row:focus-visible::after{
+  opacity:calc(.16 + var(--home-power, .18)*.64);
+  animation:homeFlameFlicker 1s ease-in-out infinite alternate;
+}
+@keyframes homeFlameRise{
+  from{transform:translateY(2px) scale(.98);}
+  to{transform:translateY(-5px) scale(1.035);}
+}
+@keyframes homeFlameFlicker{
+  from{transform:skewX(-1deg);filter:blur(.7px);}
+  to{transform:skewX(1deg);filter:blur(.1px);}
+}
+
+/* HSK 3 — sét */
+.level-card[data-home-hsk-level="3"] .lesson-row{
+  background:#FBFDFF;
+}
+.level-card[data-home-hsk-level="3"] .lesson-row:hover{
+  background:#EEF7FC;
+  box-shadow:0 7px 20px rgba(41,128,185,.10);
+}
+.level-card[data-home-hsk-level="3"] .lesson-row::before{
+  inset:-5px;
+  background:
+    linear-gradient(118deg,transparent 27%,rgba(41,128,185,.72) 29% 30.4%,transparent 32%) left top/66px 46px no-repeat,
+    linear-gradient(238deg,transparent 29%,rgba(82,168,230,.76) 31% 32.4%,transparent 34%) right top/68px 48px no-repeat,
+    linear-gradient(64deg,transparent 73%,rgba(41,128,185,.62) 75% 76.3%,transparent 78%) left bottom/68px 44px no-repeat,
+    linear-gradient(296deg,transparent 71%,rgba(82,168,230,.66) 73% 74.3%,transparent 76%) right bottom/70px 46px no-repeat;
+  filter:drop-shadow(0 0 calc(2px + var(--home-power,.18)*5px) rgba(41,128,185,.30));
+}
+.level-card[data-home-hsk-level="3"] .lesson-row:hover::before{
+  opacity:calc(.18 + var(--home-power,.18)*.76);
+  animation:homeLightning 1s steps(2,end) infinite;
+}
+@keyframes homeLightning{
+  0%,100%{transform:translate(0,0);}
+  18%{transform:translate(-1px,1px);opacity:.95;}
+  19%{opacity:.2;}
+  48%{transform:translate(1px,-1px);opacity:.82;}
+  49%{opacity:.2;}
+  78%{transform:translate(-1px,0);opacity:.92;}
+}
+
+/* HSK 4 — sóng */
+.level-card[data-home-hsk-level="4"] .lesson-row:hover{
+  background:#EEF9F8;
+  box-shadow:0 7px 21px rgba(39,128,128,.10);
+}
+.level-card[data-home-hsk-level="4"] .lesson-row::before{
+  inset:-9px;
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at center,transparent 32%,rgba(39,128,128,.15) 33% 34%,transparent 35% 48%,rgba(39,128,128,.12) 49% 50%,transparent 51% 63%,rgba(39,128,128,.10) 64% 65%,transparent 66%);
+  transform:scale(.58);
+}
+.level-card[data-home-hsk-level="4"] .lesson-row:hover::before{
+  opacity:calc(.16 + var(--home-power,.18)*.76);
+  animation:homeWave 2.1s ease-out infinite;
+}
+@keyframes homeWave{
+  0%{transform:scale(.45);}
+  55%{transform:scale(calc(.78 + var(--home-power,.18)*.30));opacity:.72;}
+  100%{transform:scale(calc(1.05 + var(--home-power,.18)*.48));opacity:.02;}
+}
+
+/* HSK 5 — kim giáp */
+.level-card[data-home-hsk-level="5"] .lesson-row:hover{
+  background:#F1F1EF;
+  box-shadow:0 7px 20px rgba(70,78,84,.12);
+}
+.level-card[data-home-hsk-level="5"] .lesson-row::before{
+  inset:-4px;
+  border-radius:10px;
+  border:calc(1px + var(--home-power,.18)*3px) solid transparent;
+  background:
+    linear-gradient(#F1F1EF,#F1F1EF) padding-box,
+    linear-gradient(135deg,#626A70 0%,#E9ECEE 32%,#8C959B 58%,#F4F6F7 78%,#575F65 100%) border-box;
+}
+.level-card[data-home-hsk-level="5"] .lesson-row:hover::before{
+  opacity:calc(.20 + var(--home-power,.18)*.78);
+  animation:homeMetalLock 820ms ease-out both;
+}
+@keyframes homeMetalLock{
+  0%{transform:scale(.975);filter:brightness(.9);}
+  55%{transform:scale(1.015);filter:brightness(1.12);}
+  100%{transform:scale(calc(1 + var(--home-power,.18)*.02));filter:brightness(1);}
+}
+
+/* HSK 6 — thiên quang */
+.level-card[data-home-hsk-level="6"] .lesson-row:hover{
+  background:#F5F1FB;
+  box-shadow:0 7px 23px rgba(92,72,130,.13);
+}
+.level-card[data-home-hsk-level="6"] .lesson-row::before{
+  inset:-9px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 18% 28%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 76% 18%,rgba(244,197,110,.78) 0 1px,transparent 2px),
+    radial-gradient(circle at 68% 78%,rgba(103,84,153,.70) 0 1px,transparent 2px),
+    radial-gradient(circle at 24% 72%,rgba(192,57,43,.58) 0 1px,transparent 2px),
+    radial-gradient(ellipse at center,transparent 22%,rgba(103,84,153,.14) 43%,transparent 66%);
+  filter:blur(calc(.4px + (1 - var(--home-power,.18))*1.2px));
+}
+.level-card[data-home-hsk-level="6"] .lesson-row:hover::before{
+  opacity:calc(.18 + var(--home-power,.18)*.78);
+  animation:homeCosmic 2.15s ease-in-out infinite;
+}
+@keyframes homeCosmic{
+  0%,100%{transform:rotate(0) scale(.94);}
+  50%{transform:rotate(4deg) scale(calc(1 + var(--home-power,.18)*.08));}
+}
+
+@media(max-width:700px){
+  .level-card-head{padding:12px 14px;min-height:60px;}
+  .level-card-info h3{font-size:16px;}
+  .level-card-count{font-size:10px;min-height:30px;padding:5px 9px;}
+  .lesson-row{padding:9px 11px;}
+  .lesson-row-top{gap:8px;}
+  .lesson-row-zh{font-size:13pt;}
+  .lesson-row-vi{padding-left:38px;font-size:11px;}
+  .lesson-row-cta{font-size:9.5px;}
+}
 
 /* ============================================================
    GIỚI THIỆU
@@ -511,7 +819,88 @@ button{font-family:var(--font-vn); cursor:pointer;}
 @media(max-width:760px){.hskk-home-inner{grid-template-columns:1fr;}}
 
 </style>
-<link rel="stylesheet" href="navigation.css">
+<link rel="stylesheet" href="navigation.css?v=20260924-7">
+
+<style id="navFinalFix">
+/* FINAL NAV FIX 2026-09-24 */
+#siteNav{position:sticky!important;top:0!important;z-index:3000!important;overflow:visible!important;}
+#siteNav .site-nav-inner{width:100%!important;max-width:1200px!important;margin:0 auto!important;min-width:0!important;box-sizing:border-box!important;}
+
+@media (min-width:1101px){
+  #siteNav .site-nav-inner{height:72px!important;padding:0 20px!important;gap:18px!important;}
+  #siteNav .site-nav-brand{flex:0 1 auto!important;min-width:0!important;max-width:none!important;overflow:visible!important;}
+  #siteNav .site-nav-brand>span{display:inline!important;max-width:none!important;overflow:visible!important;white-space:nowrap!important;}
+  #siteNav .site-nav-links{flex:1 1 auto!important;min-width:0!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-end!important;gap:16px!important;position:static!important;max-height:none!important;overflow:visible!important;visibility:visible!important;pointer-events:auto!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+  #siteNav .site-nav-links>a,#siteNav .site-nav-dropdown>.site-nav-dropdown-btn{display:inline-flex!important;align-items:center!important;width:auto!important;min-width:max-content!important;min-height:42px!important;padding:5px 0!important;border:0!important;white-space:nowrap!important;font-size:14px!important;line-height:1.2!important;}
+  #siteNav .site-nav-dropdown-panel{width:min(740px,calc(100vw - 28px))!important;max-width:740px!important;max-height:min(500px,calc(100dvh - 94px))!important;overflow:hidden!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-levels{width:165px!important;min-width:165px!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-detail{min-width:0!important;}
+}
+
+@media (min-width:761px) and (max-width:1100px){
+  #siteNav .site-nav-inner{height:64px!important;padding:0 10px!important;gap:10px!important;}
+  #siteNav .site-nav-brand{flex:0 0 190px!important;width:190px!important;max-width:190px!important;min-width:190px!important;gap:7px!important;overflow:visible!important;}
+  #siteNav .site-nav-logo-img{width:48px!important;max-width:48px!important;height:44px!important;flex:0 0 48px!important;object-fit:contain!important;}
+  #siteNav .site-nav-brand>span{display:block!important;flex:1 1 auto!important;min-width:0!important;overflow:visible!important;white-space:nowrap!important;font-size:12px!important;line-height:1.1!important;}
+  #siteNav .site-nav-links{flex:1 1 auto!important;min-width:0!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-end!important;gap:8px!important;position:static!important;max-height:none!important;overflow:visible!important;visibility:visible!important;pointer-events:auto!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+  #siteNav .site-nav-links>a,#siteNav .site-nav-dropdown>.site-nav-dropdown-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:auto!important;min-width:max-content!important;min-height:34px!important;padding:3px 0!important;border:0!important;white-space:nowrap!important;font-size:12.5px!important;line-height:1.1!important;}
+  #siteNav .site-nav-links .site-nav-cta{padding:6px 9px!important;}
+  #siteNav .site-nav-burger{display:none!important;}
+  #siteNav .hnh-mega-v12.site-nav-dropdown-panel{width:min(680px,calc(100vw - 20px))!important;max-width:680px!important;max-height:min(440px,calc(100dvh - 80px))!important;overflow:hidden!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-levels{width:145px!important;min-width:145px!important;}
+}
+
+@media (max-width:760px){
+  #siteNav .site-nav-inner{height:64px!important;min-height:64px!important;padding:0 14px!important;gap:10px!important;}
+  #siteNav .site-nav-brand{flex:1 1 auto!important;min-width:0!important;max-width:calc(100% - 54px)!important;overflow:visible!important;}
+  #siteNav .site-nav-logo-img{height:46px!important;width:auto!important;max-width:170px!important;}
+  #siteNav .site-nav-brand>span{display:none!important;}
+
+  #siteNav .site-nav-burger{display:flex!important;width:44px!important;height:44px!important;min-width:44px!important;flex:0 0 44px!important;align-items:center!important;justify-content:center!important;margin:0!important;padding:0!important;color:#493A34!important;background:#FFFDF9!important;border:1px solid #CDBFB0!important;border-radius:10px!important;box-shadow:0 2px 9px rgba(54,45,39,.12)!important;font-size:21px!important;line-height:1!important;opacity:1!important;visibility:visible!important;}
+  #siteNav .site-nav-burger[aria-expanded="true"]{color:#C0392B!important;background:#F8E7E3!important;border-color:#C0392B!important;}
+
+  #siteNav .site-nav-links{position:absolute!important;top:64px!important;left:0!important;right:0!important;width:100%!important;height:auto!important;max-height:calc(100dvh - 64px)!important;display:block!important;flex:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;overflow-y:auto!important;overflow-x:hidden!important;background:#F8F3EA!important;border-bottom:1px solid #DCCFC1!important;box-shadow:0 12px 30px rgba(54,45,39,.16)!important;}
+  #siteNav .site-nav-links.open{visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+  #siteNav .site-nav-links>a,#siteNav .site-nav-links>.site-nav-dropdown{display:block!important;width:100%!important;min-width:0!important;box-sizing:border-box!important;float:none!important;clear:both!important;}
+  #siteNav .site-nav-links>a{min-height:52px!important;padding:14px 18px!important;border-bottom:1px solid #E3D9CF!important;color:#4B3A33!important;font-size:16px!important;line-height:1.25!important;white-space:nowrap!important;text-align:left!important;}
+  #siteNav .site-nav-dropdown{position:static!important;}
+  #siteNav .site-nav-dropdown>.site-nav-dropdown-btn{display:flex!important;width:100%!important;min-height:52px!important;padding:14px 18px!important;box-sizing:border-box!important;align-items:center!important;justify-content:space-between!important;border:0!important;border-bottom:1px solid #E3D9CF!important;color:#4B3A33!important;background:transparent!important;font-size:16px!important;line-height:1.25!important;white-space:nowrap!important;text-align:left!important;}
+  #siteNav .site-nav-links .site-nav-cta{display:block!important;width:100%!important;min-height:52px!important;padding:14px 18px!important;background:#C0392B!important;color:#fff!important;text-align:center!important;border-radius:0!important;}
+
+  #siteNav .hnh-mega-v12.site-nav-dropdown-panel{position:fixed!important;top:72px!important;left:10px!important;right:10px!important;bottom:10px!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important;margin:0!important;display:none!important;overflow:auto!important;padding:8px!important;box-sizing:border-box!important;background:#FFFDF9!important;border:1px solid #DCCFC1!important;border-radius:15px!important;box-shadow:0 18px 45px rgba(54,45,39,.22)!important;z-index:4000!important;}
+  #siteNav .site-nav-dropdown.open .hnh-mega-v12.site-nav-dropdown-panel{display:block!important;visibility:visible!important;opacity:1!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-levels{width:100%!important;min-width:0!important;padding:4px!important;margin:0 0 8px!important;border:0!important;border-bottom:1px solid #E5DCD2!important;border-radius:10px!important;background:#FBF7EF!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-detail{width:100%!important;min-width:0!important;min-height:0!important;height:auto!important;max-height:none!important;padding:8px!important;border-radius:10px!important;overflow:hidden!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-resume{margin-bottom:7px!important;padding:8px 10px!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-detail-list{width:100%!important;height:260px!important;min-height:0!important;max-height:260px!important;gap:6px!important;overflow-y:auto!important;overflow-x:hidden!important;padding:3px!important;}
+  #siteNav .hnh-mega-v12 .hsk-mega-lesson-row{width:100%!important;min-height:44px!important;height:44px!important;flex:0 0 44px!important;}
+}
+</style>
+
+<style id="navMobileAccordionFinal">
+@media(max-width:760px){
+#siteNav .site-nav-links{position:absolute!important;top:64px!important;left:0!important;right:0!important;width:100%!important;max-height:calc(100dvh - 64px)!important;height:auto!important;display:block!important;overflow-y:auto!important;overflow-x:hidden!important;background:#F8F3EA!important}
+#siteNav .site-nav-links>a,#siteNav .site-nav-links>.site-nav-dropdown{display:block!important;float:none!important;clear:both!important;width:100%!important;box-sizing:border-box!important}
+#siteNav .site-nav-dropdown{position:static!important;width:100%!important}
+#siteNav .site-nav-dropdown>.site-nav-dropdown-btn{display:flex!important;width:100%!important;min-height:52px!important;align-items:center!important;justify-content:space-between!important;box-sizing:border-box!important}
+#siteNav .hnh-mega-v12.site-nav-dropdown-panel{position:static!important;inset:auto!important;transform:none!important;display:none!important;width:100%!important;min-width:0!important;max-width:none!important;height:auto!important;max-height:none!important;margin:0!important;padding:8px 10px 10px!important;overflow:visible!important;grid-template-columns:none!important;gap:0!important;border:0!important;border-radius:0!important;background:#F1ECE3!important;box-shadow:none!important}
+#siteNav .site-nav-dropdown.open .hnh-mega-v12.site-nav-dropdown-panel{display:block!important}
+#siteNav .hnh-mega-v12.site-nav-dropdown-panel::before{display:none!important}
+#siteNav .hnh-mega-v12 .hsk-mega-levels{display:flex!important;flex-direction:column!important;width:100%!important;min-width:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:10px!important;background:#FBF7EF!important;overflow:hidden!important}
+#siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level{width:100%!important;margin:0!important;padding:0!important;border:0!important;border-bottom:1px solid #E3D9CE!important;border-radius:0!important}
+#siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level:last-child{border-bottom:0!important}
+#siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level-head{width:100%!important;min-height:46px!important;padding:10px 12px!important;box-sizing:border-box!important;border:0!important;border-radius:0!important;background:transparent!important;transform:none!important}
+#siteNav .hnh-mega-v12 .hsk-mega-levels .dd-level.active .dd-level-head{background:#F8E7E3!important;color:#C0392B!important;box-shadow:inset 3px 0 0 #C0392B!important}
+#siteNav .hnh-mega-v12 .dd-level-lessons{display:none!important}
+#siteNav .hnh-mega-v12 .hsk-mega-detail{display:block!important;width:100%!important;min-width:0!important;min-height:0!important;height:auto!important;max-height:none!important;margin:8px 0 0!important;padding:9px!important;box-sizing:border-box!important;border:1px solid #DDD3C7!important;border-radius:10px!important;background:#FFFDF9!important;overflow:hidden!important}
+#siteNav .hnh-mega-v12 .hsk-mega-detail-head,#siteNav .hnh-mega-v12 .hsk-mega-detail-kicker,#siteNav .hnh-mega-v12 .hsk-mega-detail-title,#siteNav .hnh-mega-v12 .hsk-mega-detail-sub{display:none!important}
+#siteNav .hnh-mega-v12 .hsk-mega-detail-list{display:flex!important;flex-direction:column!important;width:100%!important;height:270px!important;max-height:270px!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:0!important;gap:0!important}
+#siteNav .hnh-mega-v12 .hsk-mega-lesson-row{display:block!important;width:100%!important;height:auto!important;min-height:0!important;flex:0 0 auto!important;margin:0!important;padding:0!important;border:0!important;border-bottom:1px solid #E8E0D7!important;border-radius:0!important;background:#FFFDF9!important;box-shadow:none!important;transform:none!important}
+#siteNav .hnh-mega-v12 .hsk-mega-lesson-link{display:block!important;width:100%!important;min-width:0!important;min-height:42px!important;padding:11px 8px 11px 16px!important;box-sizing:border-box!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;color:#433831!important;font-size:13px!important}
+#siteNav .hnh-mega-v12 .hsk-mega-lesson-action{display:none!important}
+#siteNav .hnh-mega-v12 .hsk-mega-review{display:block!important;width:100%!important;margin:8px 0 0!important;padding:10px 12px!important;box-sizing:border-box!important;border:1px solid #DECFC2!important;border-radius:8px!important;background:#FFFDF9!important}
+}
+</style>
 </head>
 <body>
 
@@ -526,36 +915,127 @@ button{font-family:var(--font-vn); cursor:pointer;}
       <a href="trang-chu.html">Trang chủ</a>
       <div class="site-nav-dropdown" id="hskDropdown">
         <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
-        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
-            <div class="dd-level-lessons">
-              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a>
-              <a href="bai2_index.html">Bài 2 · 我每天六点起床</a>
-              <a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a>
-              <a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a>
-              <a href="bai5_index.html">Bài 5 · 就买这件吧</a>
-              <a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a>
-              <a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
-              <a href="bai8_index.html">Bài 8 · 让我想想再告诉你</a>
-              <a href="bai9_index.html">Bài 9 · 题太多，我没做完</a>
-              <a href="bai10_index.html">Bài 10 · 别找了，手机在桌子上呢</a>
-              <a href="bai11_index.html">Bài 11 · 他比我大三岁</a>
-              <a href="bai12_index.html">Bài 12 · 你穿得太少了</a>
-              <a href="bai13_index.html">Bài 13 · 门开着呢</a>
-              <a href="bai14_index.html">Bài 14 · 你看过那个电影吗</a>
-              <a href="bai15_index.html">Bài 15 · 新年就要到了</a>
+        <div class="site-nav-dropdown-panel hsk-mega-panel-fallback" id="hskDropdownPanel" aria-label="Lộ trình HSK">
+          <div class="hsk-mega-levels">
+            <div class="dd-level" data-level="hsk1">
+              <div class="dd-level-head" role="button" tabindex="0" aria-expanded="true">
+                <span class="dd-level-name">HSK 1</span>
+                <span class="dd-level-caret">›</span>
+              </div>
+              <div class="dd-level-lessons">
+                <a href="hsk1_bai1_index.html">Bài 1 · 你好！</a>
+                <a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a>
+                <a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a>
+                <a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a>
+                <a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a>
+                <a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a>
+                <a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a>
+                <a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a>
+                <a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a>
+                <a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a>
+                <a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a>
+                <a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a>
+                <a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a>
+                <a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a>
+                <a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a>
+              </div>
             </div>
+            <div class="dd-level" data-level="hsk2">
+              <div class="dd-level-head" role="button" tabindex="0" aria-expanded="false">
+                <span class="dd-level-name">HSK 2</span>
+                <span class="dd-level-caret">›</span>
+              </div>
+              <div class="dd-level-lessons">
+                <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a>
+                <a href="bai2_index.html">Bài 2 · 我每天六点起床</a>
+                <a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a>
+                <a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a>
+                <a href="bai5_index.html">Bài 5 · 就买这件吧</a>
+                <a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a>
+                <a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+                <a href="bai8_index.html">Bài 8 · 让我想想再告诉你</a>
+                <a href="bai9_index.html">Bài 9 · 题太多，我没做完</a>
+                <a href="bai10_index.html">Bài 10 · 别找了，手机在桌子上呢</a>
+                <a href="bai11_index.html">Bài 11 · 他比我大三岁</a>
+                <a href="bai12_index.html">Bài 12 · 你穿得太少了</a>
+                <a href="bai13_index.html">Bài 13 · 门开着呢</a>
+                <a href="bai14_index.html">Bài 14 · 你看过那个电影吗</a>
+                <a href="bai15_index.html">Bài 15 · 新年就要到了</a>
+              </div>
+            </div>
+            <div class="dd-level" data-level="hsk3"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name">HSK 3</span><span class="dd-level-caret">›</span></div></div>
+            <div class="dd-level" data-level="hsk4"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name">HSK 4</span><span class="dd-level-caret">›</span></div></div>
+            <div class="dd-level" data-level="hsk5"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name">HSK 5</span><span class="dd-level-caret">›</span></div></div>
+            <div class="dd-level" data-level="hsk6"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name">HSK 6</span><span class="dd-level-caret">›</span></div></div>
           </div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
-          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+          <section class="hsk-mega-detail" aria-label="Chương trình HSK đang chọn">
+            <div class="hsk-mega-detail-list">
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="1" style="--hnh-power:.18">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai1_index.html">Bài 1 · 你好！</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai1_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="2" style="--hnh-power:.24">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai2_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="3" style="--hnh-power:.30">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai3_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="4" style="--hnh-power:.36">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai4_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="5" style="--hnh-power:.41">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai5_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="6" style="--hnh-power:.47">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai6_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="7" style="--hnh-power:.53">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai7_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="8" style="--hnh-power:.58">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai8_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="9" style="--hnh-power:.64">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai9_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="10" style="--hnh-power:.70">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai10_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="11" style="--hnh-power:.76">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai11_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="12" style="--hnh-power:.81">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai12_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="13" style="--hnh-power:.88">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai13_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="14" style="--hnh-power:.94">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai14_index.html">Bắt đầu học</a>
+              </div>
+              <div class="hsk-mega-lesson-row" data-hnh-hsk-level="1" data-hnh-lesson-seq="15" style="--hnh-power:1">
+                <a class="hsk-mega-lesson-link" href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a>
+                <a class="hsk-mega-lesson-action" href="hsk1_bai15_index.html">Bắt đầu học</a>
+              </div>
+            </div>
+          </section>
+          <a class="dd-static-link dd-review-link hsk-mega-review" href="on-tap-chung.html">Ôn tập chung →</a>
         </div>
-      </div>
-      <a href="hskk.html">HSKK</a>
+        </div>
+            <a href="hskk.html">HSKK</a>
       <a href="on-tap-chung.html">Ôn tập chung</a>
       <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
       <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
@@ -756,7 +1236,7 @@ button{font-family:var(--font-vn); cursor:pointer;}
 // Các bài chưa có dữ liệu canonical vẫn giữ danh sách dự kiến bên dưới.
 // ============================================================
 var HSK_LEVELS = [
-  {id:'phat-am', label:'Phát âm', badge:'PA', tag:'Nền tảng nghe – nói', lessons:[]},
+  {id:'phat-am', label:'Phát âm', badge:'PA', tag:'Nền tảng nghe – nói', href:'phat-am.html', lessons:[]},
   {id:'hsk1', label:'HSK 1', badge:'1', tag:'Giáo trình chuẩn cũ', reviewHref:'on-tap-hsk1.html', lessons:[]},
   {id:'hsk2', label:'HSK 2', badge:'2', tag:'Sơ cấp', lessons:[
     {num:2, zh:'我每天六点起床', vi:'Mỗi ngày tôi dậy lúc 6 giờ', href:'bai2_index.html'},
@@ -824,45 +1304,68 @@ function renderLevelGrid(){
   var grid = document.getElementById('levelGrid');
   if(!grid) return;
   grid.innerHTML = '';
+
   HSK_LEVELS.forEach(function(level){
     var hasLessons = level.lessons.length > 0;
     var card = document.createElement('div');
     card.className = 'level-card' + (hasLessons ? ' has-lessons' : '');
-    var head = document.createElement('div');
+    card.setAttribute('data-home-hsk-level', level.badge);
+
+    var head = document.createElement(level.href ? 'a' : 'div');
     head.className = 'level-card-head';
+    if(level.href) head.href = level.href;
+
+    var countOrState = level.href ? '<span class="level-card-count">Vào học →</span>' : hasLessons
+      ? '<span class="level-card-count">' + level.lessons.length + ' bài<span class="level-card-caret">▾</span></span>'
+      : '<span class="level-card-soon">Đang xây dựng</span>';
+
     head.innerHTML =
-      '<span class="level-card-badge">' + level.badge + '</span>' +
-      '<span class="level-card-info"><h3>' + level.label + '</h3><p>' + level.tag + '</p></span>' +
-      '<span class="level-card-meta">' + (hasLessons
-        ? '<span class="level-card-count">' + level.lessons.length + ' bài<span class="level-card-caret">▾</span></span>'
-        : '<span class="level-card-soon">Sắp ra mắt</span>') + '</span>';
+      '<span class="level-card-info"><h3>' + level.label + '</h3></span>' +
+      '<span class="level-card-meta">' + countOrState + '</span>';
+
     card.appendChild(head);
+
     if(hasLessons){
       var lessonsWrap = document.createElement('div');
       lessonsWrap.className = 'level-card-lessons';
-      level.lessons.forEach(function(l){
+
+      level.lessons.forEach(function(l, lessonIndex){
         var a = document.createElement('a');
         a.className = 'lesson-row';
         a.href = l.href;
+
+        var power = Math.min(1, 0.18 + lessonIndex * 0.058);
+        a.style.setProperty('--home-power', power.toFixed(2));
+        a.setAttribute('data-home-lesson-seq', String(lessonIndex + 1));
+
         a.innerHTML =
           '<span class="lesson-row-top"><span class="lesson-row-num">' + l.num + '</span>' +
           '<span class="lesson-row-zh">' + l.zh + '</span>' +
-          '<span class="lesson-row-cta">Vào học →</span></span>' +
+          '<span class="lesson-row-cta">' + (lessonIndex === 0 ? 'Bắt đầu học →' : 'Vào học →') + '</span></span>' +
           '<span class="lesson-row-vi">' + l.vi + '</span>';
+
         lessonsWrap.appendChild(a);
       });
+
       card.appendChild(lessonsWrap);
-      head.addEventListener('click', function(){ card.classList.toggle('open'); });
+
+      head.addEventListener('click', function(){
+        // Chỉ một cấp mở tại một thời điểm để trang không biến thành
+        // một bức tường dài các bài học.
+        grid.querySelectorAll('.level-card.open').forEach(function(other){
+          if(other !== card) other.classList.remove('open');
+        });
+        card.classList.toggle('open');
+      });
     }
+
     grid.appendChild(card);
   });
-  // Mặc định TẤT CẢ các cấp độ đều thu gọn — người dùng bấm vào mới xem
-  // được danh sách bài học bên trong (không tự động mở sẵn cấp nào).
 }
 
 (function(){
   mergeLessonManifest();
-  renderHskDropdown();
+  // hsk1-navigation.js là nguồn duy nhất dựng mega menu trên navbar.
   renderLevelGrid();
   // Thống kê tổng của toàn website, không gắn với riêng một cấp HSK.
   var heroLessonCount = document.getElementById('heroLessonCount');
@@ -878,39 +1381,7 @@ function renderLevelGrid(){
     });
   });
 
-  var burger = document.getElementById('siteNavBurger');
-  var links = document.getElementById('siteNavLinks');
-  var ddWrap = document.getElementById('hskDropdown');
-  var ddBtn = document.getElementById('hskDropdownBtn');
-
-  if(ddBtn && ddWrap){
-    ddBtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = ddWrap.classList.toggle('open');
-      ddBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.addEventListener('click', function(e){
-      if(ddWrap.classList.contains('open') && !ddWrap.contains(e.target)){
-        ddWrap.classList.remove('open');
-        ddBtn.setAttribute('aria-expanded','false');
-      }
-    });
-  }
-
-  if(burger && links){
-    burger.addEventListener('click', function(){
-      var open = links.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      burger.textContent = open ? '✕' : '☰';
-    });
-    links.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){
-        links.classList.remove('open');
-        burger.setAttribute('aria-expanded','false');
-        burger.textContent = '☰';
-      });
-    });
-  }
+  // Navigation và mega menu do hsk1-navigation.js quản lý duy nhất, tránh trùng event.
   var yearEl = document.getElementById('footerYear');
   if(yearEl) yearEl.textContent = new Date().getFullYear();
 })();
@@ -919,6 +1390,6 @@ function renderLevelGrid(){
 (function(){var y=document.getElementById('footerYear');if(y)y.textContent=new Date().getFullYear();var b=document.getElementById('siteBackTop');if(b){window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>420);},{passive:true});b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});}})();
 </script>
 
-<script src="hsk1-navigation.js" defer></script>
+<script src="hsk1-navigation.js?v=20260924-7" defer></script>
 </body>
 </html>

@@ -36,6 +36,10 @@ Chiều cao iframe được kiểm tra ở 1366/768/390 px, có đủ chỗ cho 
 
 ## Hồi quy và giới hạn
 
-Các validator 30 bài canonical, HSK 1 (369 câu, 1.009 kiểm tra chấm điểm, 45 hash audio), cân bằng kỹ năng HSK 2 và đồng bộ bài 8–15 đều đạt. Không sửa ngân hàng HSK 2 trong đợt Pinyin. Đã khôi phục script dựng nội dung trang chủ index từ trang-chu để trang vào chính không bị trống danh sách cấp học.
+Các validator 30 bài canonical, HSK 1 (369 câu, 1.009 kiểm tra chấm điểm, 45 hash audio), cân bằng kỹ năng HSK 2 và đồng bộ bài 8–15 đều đạt. Không sửa ngân hàng HSK 2 trong đợt Pinyin.
+
+Sau khi GitHub có thêm các commit giao diện tới `0945970`, đã hợp nhất và giữ nguyên `hsk1-navigation.js`, `navigation.css`, nền tranh thủy mặc và ảnh trang chủ của bản mới. Thay đổi Pinyin được tích hợp qua cổng `phat-am.html`; thẻ trang chủ trỏ tới cổng đó. `index.html` đồng bộ từ trang chủ chuẩn `trang-chu.html`; workflow thực hiện bản sao trước bước cache-busting để hai địa chỉ không lệch nhau.
+
+`QA_INTEGRATION_RESULTS.json` ghi kiểm tra lại ở 1366/390 px: index, trang-chu, phat-am, HSK 1 bài 1 và HSK 2 bài 11 đều có menu đi tới Pinyin; chân trang chỉ xuất hiện một lần; không tràn ngang. Bài HSK 1 khởi động được, mega menu mới vẫn có các bài học. Không có lỗi JavaScript ở lượt kiểm tra tích hợp này. Kết quả menu ở báo cáo trình duyệt trước hợp nhất được thay bằng lượt kiểm tra tích hợp mới.
 
 Chưa thử Safari/iPhone hoặc Android thật; chưa có tài khoản/đồng bộ, tự chấm phát âm hay thu âm người học. Quản trị là bản cục bộ, phiếu duyệt không tự sửa học liệu công khai. Trạng thái GitHub Pages và kiểm tra sau triển khai được ghi riêng trong báo cáo hoàn thành tại thư mục làm việc.
