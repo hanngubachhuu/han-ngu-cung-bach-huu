@@ -1757,12 +1757,6 @@ body{
 }
 .site-nav-logo-img{height:54px !important;max-width:250px !important;}
 .site-nav-links{gap:24px !important;}
-.site-nav-links>a,
-.site-nav-dropdown-btn{
-  min-height:46px !important;
-  font-size:15px !important;
-  font-weight:700 !important;
-}
 .site-nav-dropdown-panel{
   width:min(900px,calc(100vw - 28px)) !important;
   top:calc(100% + 10px) !important;
@@ -1786,7 +1780,6 @@ body{
   background:#FBF8F1 !important;
   border-radius:14px !important;
 }
-.hsk-mega-levels .dd-level{margin:0 0 5px !important;}
 .hsk-mega-levels .dd-level-head{
   min-height:48px !important;
   padding:9px 12px !important;
@@ -1932,9 +1925,6 @@ body{
 .site-nav-logo-img{
   height:54px !important;
   max-width:250px !important;
-}
-.site-nav-links{
-  gap:24px !important;
 }
 .site-nav-links>a,
 .site-nav-dropdown-btn{
