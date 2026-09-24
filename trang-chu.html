@@ -298,43 +298,49 @@ button{font-family:var(--font-vn); cursor:pointer;}
    TRANG CHỦ — HERO
    ============================================================ */
 .hero-home{
-  background:var(--color-primary); color:#fff; text-align:center;
-  padding:64px 20px 84px; position:relative; overflow:hidden;
+  background-color:#ead8c7;
+  background-image:linear-gradient(rgba(255,248,239,.08),rgba(255,248,239,.08)),url("img/hero-home-bg.webp");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  color:#5d3026;
+  text-align:center;
+  padding:64px 20px 84px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:inset 0 -70px 110px rgba(71,39,25,.08);
 }
-.hero-home .bg-blobs{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.hero-home .bg-blob{ position:absolute; border-radius:50%; filter:blur(48px); opacity:.35; animation:blobFloat 16s ease-in-out infinite; }
-.hero-home .bg-blob.b1{ width:320px; height:320px; left:-80px; top:-80px; background:radial-gradient(circle, #fff, transparent 70%); animation-duration:18s; }
-.hero-home .bg-blob.b2{ width:280px; height:280px; right:-70px; bottom:-90px; background:radial-gradient(circle, var(--color-accent), transparent 70%); animation-duration:14s; animation-delay:-4s; }
-@keyframes blobFloat{
-  0%,100%{ transform:translate(0,0) scale(1); }
-  33%{ transform:translate(20px,-18px) scale(1.06); }
-  66%{ transform:translate(-16px,16px) scale(.96); }
-}
+.hero-home .bg-blobs{display:none;}
 .hero-home-inner{position:relative; z-index:1; max-width:720px; margin:0 auto;}
 .hero-eyebrow{
   display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; letter-spacing:.04em;
-  color:#fff; background:rgba(255,255,255,.18); padding:6px 15px; border-radius:var(--radius-full); margin-bottom:18px;
+  color:#6f3025; background:rgba(255,250,242,.82); border:1px solid rgba(123,61,43,.14);
+  padding:6px 15px; border-radius:var(--radius-full); margin-bottom:18px;
+  box-shadow:0 2px 10px rgba(73,43,30,.08);
 }
 .hero-home h1{
   font-family:var(--font-cn); font-size:34pt; margin:0 0 14px; line-height:1.3;
-  position:relative; background:linear-gradient(100deg, #fff 30%, #fde3b0 45%, #fff 60%);
-  background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation:titleShine 5s ease-in-out infinite;
+  position:relative; background:none; -webkit-background-clip:border-box; background-clip:border-box;
+  color:#6a2f24; animation:none; text-shadow:0 2px 6px rgba(255,248,238,.65);
 }
-@keyframes titleShine{ 0%{background-position:200% 0;} 60%,100%{background-position:-40% 0;} }
-.hero-home p{font-size:16px; color:rgba(255,255,255,.92); line-height:1.7; margin:0 0 30px;}
+.hero-home p{
+  font-size:16px; color:#4f3a32; line-height:1.7; margin:0 0 30px;
+  text-shadow:0 1px 0 rgba(255,249,240,.48);
+}
 .hero-home-ctas{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
-.hero-home .btn-secondary{background:#fff; border-color:#fff;}
-.hero-home .btn-ghost{color:#fff; border-color:rgba(255,255,255,.6);}
-.hero-home .btn-ghost:hover{background:rgba(255,255,255,.12);}
+.hero-home .btn-secondary{background:rgba(255,252,246,.94); border-color:rgba(255,252,246,.94); color:#6f3025;}
+.hero-home .btn-secondary:hover{background:#fff; border-color:#fff;}
+.hero-home .btn-ghost{color:#7b241c; border-color:rgba(123,36,28,.52); background:rgba(255,249,241,.16);}
+.hero-home .btn-ghost:hover{background:rgba(255,249,241,.68);}
 .hero-stats{
   display:grid; grid-template-columns:repeat(3, 1fr); gap:0; max-width:640px; margin:34px auto 0;
-  background:rgba(255,255,255,.12); border-radius:var(--radius); overflow:hidden;
+  background:rgba(255,250,242,.76); border:1px solid rgba(123,61,43,.12);
+  border-radius:var(--radius); overflow:hidden; box-shadow:0 5px 18px rgba(67,39,28,.08);
 }
-.hero-stat{padding:16px 8px; text-align:center; border-right:1px solid rgba(255,255,255,.18);}
+.hero-stat{padding:16px 8px; text-align:center; border-right:1px solid rgba(123,61,43,.16);}
 .hero-stat:last-child{border-right:none;}
-.hero-stat b{display:block; font-size:22px; font-weight:800;}
-.hero-stat span{font-size:12px; color:rgba(255,255,255,.85);}
+.hero-stat b{display:block; font-size:22px; font-weight:800; color:#6a2f24;}
+.hero-stat span{font-size:12px; color:#6b554b;}
 
 /* ============================================================
    SECTION CHUNG
