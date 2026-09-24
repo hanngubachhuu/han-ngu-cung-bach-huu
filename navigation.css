@@ -2806,23 +2806,14 @@ body{
 
 
 /* ============================================================
-   LESSON FOOTER / ROUTE POLISH — v5
-   - Một cụm điều hướng bài học duy nhất
-   - Trang bài học ngắn vẫn kéo footer xuống cuối viewport
-   - Nút điều hướng có hierarchy + hover/press rõ ràng, thân thiện mobile
+   LESSON FOOTER / ROUTE POLISH
+   - Một cụm điều hướng bài học duy nhất.
+   - Footer dùng flow của body, không absolute/fixed, không override margin.
    ============================================================ */
-body.has-lesson-intro{
-  min-height:100vh !important;
-}
-
 body.has-lesson-intro #introScreen{
   flex:1 0 auto;
   min-height:0;
   width:100%;
-}
-
-body.has-lesson-intro .site-footer-v2{
-  margin-top:20px !important;
 }
 
 .lesson-route{
