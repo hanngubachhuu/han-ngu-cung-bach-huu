@@ -4,10 +4,22 @@ on:
     paths:
       - "data/**"
       - "scripts/validate-lessons.mjs"
+      - "scripts/validate-pinyin.mjs"
+      - "pinyin.*"
+      - "audio/pinyin/**"
+      - "docs/pinyin/audio-manifest.json"
+      - "admin/pinyin-sources*"
+      - ".github/workflows/deploy.yml"
   pull_request:
     paths:
       - "data/**"
       - "scripts/validate-lessons.mjs"
+      - "scripts/validate-pinyin.mjs"
+      - "pinyin.*"
+      - "audio/pinyin/**"
+      - "docs/pinyin/audio-manifest.json"
+      - "admin/pinyin-sources*"
+      - ".github/workflows/deploy.yml"
 
 jobs:
   validate:
@@ -18,3 +30,6 @@ jobs:
         with:
           node-version: 24
       - run: node scripts/validate-lessons.mjs
+      - run: node scripts/validate-pinyin.mjs
+      - run: node --check pinyin.js
+      - run: node --check admin/pinyin-sources.js

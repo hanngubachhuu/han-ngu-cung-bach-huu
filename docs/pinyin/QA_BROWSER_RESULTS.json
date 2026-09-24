@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-24T04:44:12.947Z",
+  "checks": [
+    "405 chart cells; audio and Douyin not fetched until requested",
+    "Combined initial/final/search filters and empty state",
+    "u-colon input selects ü and requested fourth-tone recording",
+    "Favorite persists; Escape closes dialog and stops audio",
+    "Repeat, speed, four-tone sequence; neutral tone has no fabricated audio",
+    "Upstream jv4 filename mapped to standard Pinyin ju4 and plays successfully",
+    "Media error is recoverable and does not unlock answers",
+    "10 unique tones questions; real playback, 9/10 grading and incorrect-answer review",
+    "10 unique air questions; real playback, 9/10 grading and incorrect-answer review",
+    "10 unique tongue questions; real playback, 9/10 grading and incorrect-answer review",
+    "10 unique nasal questions; real playback, 9/10 grading and incorrect-answer review",
+    "10 unique round questions; real playback, 9/10 grading and incorrect-answer review",
+    "Best scores persist by practice mode; short retries do not overwrite 10-question scores",
+    "Two mouth-only official-player links, lazy loading, switching and stop (external player separately reviewed in Chrome)",
+    "1920/1366/768/390 layout without body overflow; mobile cards/menu; long-syllable modal fits",
+    "Pronunciation linked from homepage card and HSK1/HSK2 navigation",
+    "Blocked storage keeps learning available with accurate notice"
+  ],
+  "errors": []
+}

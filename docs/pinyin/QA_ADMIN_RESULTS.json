@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-24T04:47:11.637Z",
+  "checks": [
+    "Two source records, authors and 405 audio review choices; no fabricated teacher approval",
+    "Review checks, note and status persist; incomplete review cannot be marked approved",
+    "Administrative audio review plays the chosen sample and stops on changing selection",
+    "JSON export/import round-trip and malformed import preserves existing review",
+    "Admin page fits desktop and mobile",
+    "Local file opens without a server",
+    "Student page has two mouth videos without source and teacher listings",
+    "Video geometry reserves full native controls at desktop/tablet/mobile widths without resize feedback"
+  ],
+  "errors": []
+}

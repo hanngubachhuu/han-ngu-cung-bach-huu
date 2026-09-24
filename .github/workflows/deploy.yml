@@ -55,7 +55,7 @@ jobs:
         run: |
           rm -rf dist
           mkdir dist
-          rsync -a --exclude=".git/" --exclude=".github/" --exclude="dist/" --exclude="README.md" ./ dist/
+          rsync -a --exclude=".git/" --exclude=".github/" --exclude="dist/" --exclude="README.md" --exclude="admin/" --exclude="docs/pinyin/" ./ dist/
           touch dist/.nojekyll
 
       - name: Publish to GitHub Pages branch
