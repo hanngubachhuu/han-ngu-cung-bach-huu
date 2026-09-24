@@ -8,7 +8,7 @@ function enhanceSiteFooter(){
     footer.className='site-footer no-print';
     document.body.appendChild(footer);
   }
-  footer.classList.add('site-footer-v2');
+  footer.classList.add('footer-system');
   const path=(location.pathname.split('/').pop()||'trang-chu.html').toLowerCase();
   const isLesson=/^(bai\d+_index|hsk1_bai\d+_index)\.html$/.test(path);
   const currentKey =
@@ -20,20 +20,20 @@ function enhanceSiteFooter(){
     isLesson?'lesson':'';
   footer.innerHTML=`
     <div class="site-footer-inner">
-      <div class="footer-v2-brand">
-        <div class="footer-v2-seal" aria-hidden="true">汉</div>
+      <div class="footer-brand">
+        <div class="footer-seal" aria-hidden="true">汉</div>
         <div>
-          <p class="footer-v2-kicker">汉语 · HỌC CÓ NGỮ CẢNH</p>
-          <h2 class="footer-v2-title">Hán Ngữ Cùng Bách Hữu</h2>
-          <p class="footer-v2-quote">学而时习之，不亦说乎。</p>
-          <p class="footer-v2-desc">Học tiếng Trung bằng ngữ cảnh, cấu trúc câu, thực hành và ôn tập có hệ thống. Học để dùng được, hiểu được và nhớ lâu.</p>
-          <div class="footer-v2-loop" aria-label="Vòng học tập">
+          <p class="footer-kicker">汉语 · HỌC CÓ NGỮ CẢNH</p>
+          <h2 class="footer-title">Hán Ngữ Cùng Bách Hữu</h2>
+          <p class="footer-quote">学而时习之，不亦说乎。</p>
+          <p class="footer-desc">Học tiếng Trung bằng ngữ cảnh, cấu trúc câu, thực hành và ôn tập có hệ thống. Học để dùng được, hiểu được và nhớ lâu.</p>
+          <div class="footer-loop" aria-label="Vòng học tập">
             <span>Từ vựng</span><span>Câu</span><span>Ngữ cảnh</span><span>Ôn tập</span>
           </div>
         </div>
       </div>
 
-      <nav class="footer-v2-col" aria-label="Khám phá">
+      <nav class="footer-col" aria-label="Khám phá">
         <h4>KHÁM PHÁ</h4>
         <a data-key="home" href="trang-chu.html">Trang chủ</a>
         <a data-key="review" href="on-tap-chung.html">Ôn tập chung</a>
@@ -41,7 +41,7 @@ function enhanceSiteFooter(){
         <a data-key="hanzi" href="chu-han.html">Chữ Hán</a>
       </nav>
 
-      <nav class="footer-v2-col" aria-label="Luyện tập">
+      <nav class="footer-col" aria-label="Luyện tập">
         <h4>LUYỆN TẬP</h4>
         <a data-key="hskk" href="hskk.html">HSKK</a>
         <a data-key="lesson" href="trang-chu.html#bai-hoc">Lộ trình bài học</a>
@@ -49,9 +49,9 @@ function enhanceSiteFooter(){
         <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
       </nav>
 
-      <div class="footer-v2-col">
+      <div class="footer-col">
         <h4>GÓC BÁCH HỮU</h4>
-        <div class="footer-v2-feature">
+        <div class="footer-feature">
           <strong>以今语为体，以古语为骨</strong>
           <span>Tiếng Việt là nền, Hán văn là chiều sâu. Học tiếng Trung không chỉ ở từ và câu, mà ở cách hiểu và vận dụng.</span>
           <a href="trang-chu.html#lien-he">Liên hệ với Bách Hữu →</a>
@@ -59,8 +59,8 @@ function enhanceSiteFooter(){
       </div>
     </div>
     <div class="site-footer-bottom">
-      <span class="footer-v2-bottom-note">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu · Học tiếng Trung theo ngữ cảnh</span>
-      <a class="footer-v2-back" href="#" aria-label="Quay về đầu trang">↑&nbsp; Lên đầu trang</a>
+      <span class="footer-bottom-note">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu · Học tiếng Trung theo ngữ cảnh</span>
+      <a class="footer-back" href="#" aria-label="Quay về đầu trang">↑&nbsp; Lên đầu trang</a>
     </div>
   `;
   footer.querySelectorAll('[data-key]').forEach(a=>{
@@ -68,7 +68,7 @@ function enhanceSiteFooter(){
   });
   const y=footer.querySelector('#footerYear');
   if(y) y.textContent=new Date().getFullYear();
-  const back=footer.querySelector('.footer-v2-back');
+  const back=footer.querySelector('.footer-back');
   if(back) back.addEventListener('click',e=>{
     e.preventDefault();
     window.scrollTo({top:0,behavior:'smooth'});
@@ -319,7 +319,7 @@ function makeMegaMenu(){
   trackCurrentLesson();
 
   panel.innerHTML='';
-  panel.classList.add('hsk-mega-panel','hnh-mega-v12');
+  panel.classList.add('hsk-mega-panel','hnh-mega');
 
   const levelCol=document.createElement('div');
   levelCol.className='hsk-mega-levels';
