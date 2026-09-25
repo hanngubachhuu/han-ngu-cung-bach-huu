@@ -78,8 +78,14 @@ function walkAndResolve(value, supabase){
     if(split<=0) return Promise.resolve(value);
     const bucket=raw.slice(0,split);
     const path=raw.slice(split+1);
-    return supabase.storage.from(bucket).createSignedUrl(path,3600)
-      .then(({data,error})=>error?Promise.reject(error):(data?.signedUrl||value));
+    // Private assets: download through the authenticated Supabase client,
+    // then expose only an in-memory blob URL to the lesson engine.
+    return supabase.storage.from(bucket).download(path)
+      .then(({data,error})=>{
+        if(error) return Promise.reject(error);
+        if(!(data instanceof Blob)) throw new Error('Tệp riêng tư không trả về Blob hợp lệ.');
+        return URL.createObjectURL(data);
+      });
   }
   if(Array.isArray(value)) return Promise.all(value.map(v=>walkAndResolve(v,supabase)));
   if(value && typeof value==='object'){
