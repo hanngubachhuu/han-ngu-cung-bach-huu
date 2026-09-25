@@ -93,11 +93,14 @@ function walkAndResolve(value, supabase){
 
 async function loadLesson(supabase){
   const {data,error}=await supabase.rpc('get_private_lesson_content',{p_lesson_id:LESSON_ID});
-  if(error) throw error;
-  if(!data) throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
+if(error) throw error;
 
-  const content=await walkAndResolve(data.content,supabase);
-  const lesson={id:data.id,...content};
+const row=Array.isArray(data)?data[0]:data;
+if(!row) throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
+if(!row.id) throw new Error('Dữ liệu bài học riêng không hợp lệ.');
+
+const content=await walkAndResolve(row.content,supabase);
+const lesson={id:row.id,...content};
   window.HAN_NGU_DATA.register(lesson);
 
   const engine=document.createElement('script');
