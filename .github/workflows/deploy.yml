@@ -1,78 +1,32 @@
 name: Deploy website
-
 on:
   push:
-    branches: ["main"]
+    branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: write
-
 concurrency:
   group: deploy-website
   cancel-in-progress: true
-
 jobs:
   deploy:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Migrate first ZIP upload to normal files
-        run: |
-          if [ -f "web.zip" ]; then
-            rm -rf __web_extract
-            mkdir -p __web_extract
-            unzip -q web.zip -d __web_extract
-            if [ -d "__web_extract/web" ]; then
-              cp -a __web_extract/web/. .
-            else
-              cp -a __web_extract/. .
-            fi
-            if [ -f "trang-chu.html" ]; then
-              cp "trang-chu.html" "index.html"
-            fi
-            rm -rf __web_extract
-            rm -f web.zip
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -A
-            if ! git diff --cached --quiet; then
-              git commit -m "Migrate website files from web.zip"
-              git push
-            fi
-          elif [ -f "trang-chu.html" ] && [ ! -f "index.html" ]; then
-            cp "trang-chu.html" "index.html"
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add index.html
-            git commit -m "Add website entry point"
-            git push
-          fi
-
-      - name: Prepare deployment folder
-        run: |
-          rm -rf dist
-          mkdir dist
-          rsync -a --exclude=".git/" --exclude=".github/" --exclude="dist/" --exclude="README.md" --exclude="admin/" --exclude="docs/pinyin/" ./ dist/
-          # The root entry is generated from the canonical homepage.
-          cp dist/trang-chu.html dist/index.html
-
-          # Cache-bust shared navigation and pronunciation assets at build time.
-          find dist -type f -name "*.html" -print0 | xargs -0 sed -E -i \
-            -e "s#navigation\\.css(\\?v=[^\"']*)?#navigation.css?v=$GITHUB_SHA#g" \
-            -e "s#hsk1-navigation\\.js(\\?v=[^\"']*)?#hsk1-navigation.js?v=$GITHUB_SHA#g" \
-            -e "s#(private-lesson-loader\\.js|data/supabase-public\\.js)(\\?v=[^\"']*)?#\\1?v=$GITHUB_SHA#g" \
-            -e "s#(pinyin\\.(css|js)|data/pinyin-(data|audio|basics)\\.js)(\\?v=[^\"']*)?#\\1?v=$GITHUB_SHA#g"
-
-          touch dist/.nojekyll
-
-      - name: Publish to GitHub Pages branch
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npm run validate:study
+      - name: Publish static compatibility site
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./dist
           force_orphan: true
-          commit_message: "Deploy website"
+          commit_message: Deploy website

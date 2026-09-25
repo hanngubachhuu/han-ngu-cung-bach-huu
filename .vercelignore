@@ -1,7 +1,16 @@
 .github/
 admin/
 docs/pinyin/
-scripts/
+.env
+.env.local
+.env.*
+!.env.example
+.cache/
+node_modules/
+dist/
+test-results/
+tests/
+supabase/
 
 # Internal architecture / development documentation
 ARCHITECTURE.md
