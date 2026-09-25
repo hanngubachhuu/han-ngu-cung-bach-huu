@@ -536,7 +536,19 @@ AI **không được**:
 
 ---
 
-# 17. Nguyên tắc tối thượng
+# 17. Công cụ Hán tự, Từ điển và Đọc hiểu — 26/09/2026
+
+- `chu-han.html`, `tu-dien.html`, `doc-hieu.html` dùng navigation hiện tại và một lớp dùng chung trong `study/`. `scripts/render-study-pages.mjs` sở hữu markup ba trang; `study/study.css` chỉ sở hữu giao diện công cụ. URL Hán tự `?char=...&lesson=...` vẫn hoạt động.
+- Dữ liệu giáo trình `data/lessons/` và registry/manifest vẫn là nguồn chính. `scripts/build-study-data.mjs` tạo `data/study/catalog.json`, các entry và bài đọc công khai; đây là dữ liệu sinh ra, không sửa tay. `.cache/study-seed.json` chứa bản nhập quản trị gồm các dòng dành cho học sinh và không được commit/publish. Sửa nguồn rồi build và seed lại khi nội dung đổi.
+- `data/study/unicode.json` là nguồn bổ sung riêng vì giáo trình không có bộ thủ, số nét và biến thể cho mọi chữ. Importer khóa Unicode Unihan 17.0 và ghi nguồn/hash/giấy phép. Không dùng Unihan để tự gán Hán Việt, không suy ra HSK 3.0 từ tên giáo trình HSK 2.0.
+- `study/repository.mjs` sở hữu truy vấn từ/chữ/bài đọc; các trang không định nghĩa nghĩa từ riêng. Kho công khai chỉ có nội dung bài 1–3. Supabase giữ record theo bài để RLS lọc quyền `student_lesson_access`; mục từ có thể được gộp từ nhiều bài mà không công khai record riêng.
+- `study/storage.mjs` sở hữu sổ từ/chữ và bài đã lưu: khách lưu trong `hnh_study_v1`; tài khoản lưu trong bảng Supabase có RLS theo chủ sở hữu. Không chuyển âm thầm sang localStorage khi phiên tài khoản bị lỗi. Không tự nhập dữ liệu khách vào tài khoản.
+- `study/handwriting.mjs` giữ Pointer Events và trace; adapter nhận dạng dùng API riêng. `hanzi-practice.js` dùng Hanzi Writer với chữ mục tiêu để luyện nét, không suy đoán chữ từ canvas. Build đóng gói thư viện và 9.574 tệp nét cùng giấy phép.
+- `api/study.js` là Vercel Node Function, `server/study-service.mjs` giữ khóa phía server, xác minh người dùng bằng `auth.getUser()`, schema phản hồi, quota nguyên tử và cache theo người dùng. Mặc định `STUDY_AI_ENABLED=false`; không có khóa/AI thì tra cứu, bài mẫu, pinyin và luyện nét vẫn hoạt động.
+- `scripts/build-web.mjs` tạo `dist/` bằng danh sách thư mục công khai, bundle vendor và thêm cache version. Vercel build từ source branch; `gh-pages` chỉ nhận artifact tĩnh để tương thích, không chạy API. Không dùng lại bước rsync toàn bộ repo vì nó có thể đưa file môi trường lên web.
+- Phạm vi, schema, migrations, lệnh kiểm thử và phần còn giới hạn nằm trong [docs/STUDY_WORKSPACE.md](docs/STUDY_WORKSPACE.md).
+
+# 18. Nguyên tắc tối thượng
 
 ## Quyết định tích hợp phát âm — cập nhật 25/09/2026
 

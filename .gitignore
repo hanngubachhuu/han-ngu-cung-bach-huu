@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.vercel/
+dist/
+.cache/
+test-results/
+supabase/.temp/

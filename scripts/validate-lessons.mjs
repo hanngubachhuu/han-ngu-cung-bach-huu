@@ -19,13 +19,19 @@ const errors = [];
 const seenIds = new Set();
 
 for (const item of manifest) {
-  if (!item.id || !item.data || !item.href) {
+  if (!item.id || !item.href || (item.visibility !== 'student' && !item.data)) {
     errors.push(`Manifest thiếu id/data/href: ${JSON.stringify(item)}`);
     continue;
   }
   if (seenIds.has(item.id)) errors.push(`Trùng lesson id: ${item.id}`);
   seenIds.add(item.id);
 
+  if(item.visibility === 'student'){
+    const page=fs.readFileSync(path.join(ROOT,item.href),'utf8');
+    if(item.data && fs.existsSync(path.join(ROOT,item.data)))errors.push(`Bài riêng vẫn có dữ liệu công khai: ${item.data}`);
+    if(!page.includes('private-lesson-loader.js')||!page.includes(item.id))errors.push(`Bài riêng thiếu cổng tải xác thực: ${item.id}`);
+    continue;
+  }
   const file = path.join(ROOT, item.data);
   if (!fs.existsSync(file)) {
     errors.push(`Không tồn tại file dữ liệu: ${item.data}`);

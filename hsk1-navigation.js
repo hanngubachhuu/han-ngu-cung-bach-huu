@@ -544,6 +544,11 @@ async function initHskMegaMenu(){
 }
 readLearningState();
 ensurePronunciationNav();
+if(navLinks&&!navLinks.querySelector('.site-nav-study')){
+  const link=document.createElement('a');link.className='site-nav-study';link.href='tu-dien.html';link.textContent='Tra cứu & đọc';
+  const pronunciation=navLinks.querySelector('.site-nav-pronunciation');
+  if(pronunciation)pronunciation.insertAdjacentElement('afterend',link);else navLinks.append(link);
+}
 markCurrentNav();
 setupMobileNav();
 initHskMegaMenu().finally(injectBreadcrumb);

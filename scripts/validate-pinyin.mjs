@@ -70,5 +70,11 @@ for(const file of ['phat-am.html','pinyin.html','pinyin.js','data/pinyin-data.js
 }
 assert(fs.existsSync(path.join(root,'audio/pinyin/NOTICE.md')),'Audio attribution must travel with the assets.');
 const deploy=fs.readFileSync(path.join(root,'.github/workflows/deploy.yml'),'utf8');
-assert(deploy.includes('--exclude="admin/"'),'Local administration must not be published as an unsecured admin site.');
+assert(deploy.includes('npm run build'),'Deployment must use the explicit public-file build.');
+const buildSource=fs.readFileSync(path.join(root,'scripts/build-web.mjs'),'utf8');
+const publicMatch=buildSource.match(/publicDirectories\s*=\s*new Set\(\[([\s\S]*?)\]\)/);
+assert(publicMatch,'Public directory allowlist must be inspectable.');
+const publicDirs=vm.runInNewContext('['+publicMatch[1]+']');
+for(const denied of ['admin','docs','server','api','.cache','supabase'])assert(!publicDirs.includes(denied),'Internal directory must not be published: '+denied);
+if(fs.existsSync(path.join(root,'dist')))assert(!fs.existsSync(path.join(root,'dist','admin')),'Built site must not contain the admin tools.');
 console.log(JSON.stringify({syllables:405,samples:1620,bytes:totalBytes,knownMissing:missing,basicSounds:B.sounds.length,localVideos:46,audioOnly:'x in xī',status:'PASS'}));

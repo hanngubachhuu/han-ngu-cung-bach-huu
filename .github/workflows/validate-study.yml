@@ -1,0 +1,28 @@
+name: Validate study web app
+on: [pull_request, workflow_dispatch]
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - run: npm run validate:study
+      - run: node scripts/validate-lessons.mjs
+      - run: npx playwright install --with-deps chromium
+      - name: Check browser interactions
+        run: |
+          node scripts/dev-server.mjs &
+          trap 'kill $!' EXIT
+          npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: study-browser-results
+          path: test-results/
