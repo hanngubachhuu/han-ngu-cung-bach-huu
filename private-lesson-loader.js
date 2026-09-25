@@ -130,7 +130,7 @@ async function loadLesson(supabase){
     if(access?.lesson_id===LESSON_ID && access?.active===true){
       throw new Error('Đã đăng nhập. UID: '+session.user.id+' | QUYỀN: CÓ | lesson_content: BỊ RLS CHẶN');
     }
-    throw new Error('Đã đăng nhập. UID: '+session.user.id+' | RPC kiểm tra quyền: '+(debugAccess?.has_access?'CÓ':'KHÔNG')+' | SELECT student_lesson_access: KHÔNG THẤY DÒNG');
+    throw new Error('Đã đăng nhập. UID: '+session.user.id+' | DB rows: '+(debugAccess?.row_count??'NULL')+' | DB match: '+(debugAccess?.matching_count??'NULL')+' | SELECT quyền: KHÔNG THẤY DÒNG');
   }
 
   const content=await walkAndResolve(data.content,supabase);
