@@ -96,6 +96,10 @@ async function loadLesson(supabase){
   if(sessionError) throw sessionError;
   if(!session) throw new Error('Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.');
 
+  const {data:debugAccess,error:debugAccessError}=await supabase.rpc('debug_bai4_access');
+  console.info('[private-lesson] debug access rpc:',{data:debugAccess,error:debugAccessError});
+  if(debugAccessError) throw debugAccessError;
+
   const {data:access,error:accessError}=await supabase
     .from('student_lesson_access')
     .select('lesson_id,active')
@@ -104,6 +108,7 @@ async function loadLesson(supabase){
     .maybeSingle();
 
   console.info('[private-lesson] auth user:',session.user.id);
+  console.info('[private-lesson] debug result:',debugAccess);
   console.info('[private-lesson] access check:',{data:access,error:accessError});
   if(accessError){
     throw new Error('Kiểm tra quyền thất bại: '+(accessError.message||'Supabase RLS/API error'));
@@ -125,7 +130,7 @@ async function loadLesson(supabase){
     if(access?.lesson_id===LESSON_ID && access?.active===true){
       throw new Error('Đã đăng nhập. UID: '+session.user.id+' | QUYỀN: CÓ | lesson_content: BỊ RLS CHẶN');
     }
-    throw new Error('Đã đăng nhập. UID: '+session.user.id+' | QUYỀN BÀI 4: KHÔNG THẤY DÒNG student_lesson_access');
+    throw new Error('Đã đăng nhập. UID: '+session.user.id+' | RPC kiểm tra quyền: '+(debugAccess?.has_access?'CÓ':'KHÔNG')+' | SELECT student_lesson_access: KHÔNG THẤY DÒNG');
   }
 
   const content=await walkAndResolve(data.content,supabase);
