@@ -27,15 +27,17 @@ Supabase
 - Trang chủ
 - Giới thiệu
 - Thông tin khóa học
+- Ba bài đầu của mỗi cấp HSK được chủ động công khai để người dùng mới trải nghiệm
 - Nội dung mẫu được chủ động công khai
 - Logo, ảnh nền, tài nguyên trang trí
 
 ### Student-private
-- Lesson content chưa công khai
-- Bài tập và dữ liệu luyện tập
-- Audio/video học tập
-- PDF/tài liệu khóa học
+- Từ bài 4 trở đi của mỗi cấp HSK
+- Bài tập và dữ liệu luyện tập private
+- Audio/video học tập private
+- PDF/tài liệu khóa học private
 - Nội dung HSK/HSKK chỉ dành cho học viên
+- Các bài hoặc tài nguyên đã đặt trạng thái private dù có liên kết trực tiếp
 
 ### Admin-private
 - Phiếu nguồn/duyệt
@@ -98,7 +100,10 @@ Không phát triển trực tiếp trên `gh-pages`.
 - GitHub repository đã được kết nối với project Vercel.
 
 ### Phase 2 — Tách public/private
+- Public mặc định chỉ gồm tài nguyên chung và ba bài đầu của mỗi cấp HSK.
 - Loại data/audio/media private khỏi artifact public.
+- Từ bài 4 trở đi không nằm trong public deployment.
+- Quyền public/private phải được xác định ở tầng dữ liệu/server, không bảo vệ bằng frontend-only checks.
 - Giữ các tài nguyên thật sự public ở deployment.
 
 ### Phase 3 — Auth
