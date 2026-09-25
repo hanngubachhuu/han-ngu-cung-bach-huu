@@ -92,6 +92,22 @@ function walkAndResolve(value, supabase){
 }
 
 async function loadLesson(supabase){
+  const {data:{session},error:sessionError}=await supabase.auth.getSession();
+  if(sessionError) throw sessionError;
+  if(!session) throw new Error('Phiên đăng nhập đã hết. Vui lòng đăng nhập lại.');
+
+  const {data:access,error:accessError}=await supabase
+    .from('student_lesson_access')
+    .select('lesson_id,active')
+    .eq('lesson_id',LESSON_ID)
+    .eq('active',true)
+    .maybeSingle();
+
+  console.info('[private-lesson] auth user:',session.user.id);
+  console.info('[private-lesson] access check:',{data:access,error:accessError});
+
+  if(accessError) throw accessError;
+
   const {data,error}=await supabase
     .from('lesson_content')
     .select('id,level,lesson_no,title_zh,title_vi,visibility,content')
@@ -99,8 +115,15 @@ async function loadLesson(supabase){
     .eq('visibility','student')
     .maybeSingle();
 
+  console.info('[private-lesson] lesson check:',{data,error});
+
   if(error) throw error;
-  if(!data) throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
+  if(!data){
+    if(access?.lesson_id===LESSON_ID && access?.active===true){
+      throw new Error('Đã đăng nhập và đã có quyền Bài 4, nhưng kho nội dung đang từ chối truy cập. Cần kiểm tra RLS của lesson_content.');
+    }
+    throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
+  }
 
   const content=await walkAndResolve(data.content,supabase);
   const lesson={id:data.id,...content};
