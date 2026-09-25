@@ -5,8 +5,6 @@
 
 const LESSON_ID = document.body.dataset.lessonId;
 const SUPABASE_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-const assetUrls = new Set();
-
 if(!LESSON_ID) return;
 
 function loadScript(src){
@@ -83,15 +81,12 @@ async function resolvePrivateAsset(value,supabase){
 
   const {data,error}=await supabase.storage
     .from(asset.bucket)
-    .download(asset.path, {}, {cache:'no-store'});
+    .createSignedUrl(asset.path,3600);
 
   if(error) throw error;
-  if(!(data instanceof Blob)) throw new Error('Tài nguyên riêng không hợp lệ.');
+  if(!data?.signedUrl) throw new Error('Không tạo được đường dẫn nghe riêng.');
 
-  const audioBlob=new Blob([data],{type:'audio/mpeg'});
-  const url=URL.createObjectURL(audioBlob);
-  assetUrls.add(url);
-  return url;
+  return data.signedUrl;
 }
 
 async function resolvePrivateAssets(value,supabase){
@@ -110,11 +105,6 @@ async function resolvePrivateAssets(value,supabase){
     return Object.fromEntries(entries);
   }
   return value;
-}
-
-function releaseAssetUrls(){
-  assetUrls.forEach(url=>URL.revokeObjectURL(url));
-  assetUrls.clear();
 }
 
 async function loadLesson(supabase){
