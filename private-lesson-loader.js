@@ -105,6 +105,9 @@ async function loadLesson(supabase){
 
   console.info('[private-lesson] auth user:',session.user.id);
   console.info('[private-lesson] access check:',{data:access,error:accessError});
+  if(accessError){
+    throw new Error('Kiểm tra quyền thất bại: '+(accessError.message||'Supabase RLS/API error'));
+  }
 
   if(accessError) throw accessError;
 
@@ -120,9 +123,9 @@ async function loadLesson(supabase){
   if(error) throw error;
   if(!data){
     if(access?.lesson_id===LESSON_ID && access?.active===true){
-      throw new Error('Đã đăng nhập và đã có quyền Bài 4, nhưng kho nội dung đang từ chối truy cập. Cần kiểm tra RLS của lesson_content.');
+      throw new Error('Đã đăng nhập. UID: '+session.user.id+' | QUYỀN: CÓ | lesson_content: BỊ RLS CHẶN');
     }
-    throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
+    throw new Error('Đã đăng nhập. UID: '+session.user.id+' | QUYỀN BÀI 4: KHÔNG THẤY DÒNG student_lesson_access');
   }
 
   const content=await walkAndResolve(data.content,supabase);
