@@ -94,6 +94,8 @@ Không phát triển trực tiếp trên `gh-pages`.
 - Dựng Vercel project từ repository hiện tại.
 - Giữ nguyên giao diện và đường dẫn trong giai đoạn đầu.
 - Chỉ đổi deployment, chưa đổi data contract.
+- Vercel project `hanngubachhuu` đã được tạo trong đúng team.
+- GitHub repository đã được kết nối với project Vercel.
 
 ### Phase 2 — Tách public/private
 - Loại data/audio/media private khỏi artifact public.
