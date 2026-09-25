@@ -88,7 +88,7 @@ async function resolvePrivateAsset(value,supabase){
   if(error) throw error;
   if(!(data instanceof Blob)) throw new Error('Tài nguyên riêng không hợp lệ.');
 
-  const audioBlob=new Blob([data],{type:data.type||'audio/mpeg'});
+  const audioBlob=new Blob([data],{type:'audio/mpeg'});
   const url=URL.createObjectURL(audioBlob);
   assetUrls.add(url);
   return url;
