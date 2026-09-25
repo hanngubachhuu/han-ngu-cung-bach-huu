@@ -106,10 +106,24 @@ const lesson={id:row.id,...content};
   const engine=document.createElement('script');
   engine.src='hsk1-lesson-engine.js';
   engine.dataset.privateLessonEngine='1';
+  let engineRuntimeError = null;
+  const engineRuntimeErrorHandler = event => {
+    const filename = event?.filename || '';
+    if(filename.includes('hsk1-lesson-engine.js')){
+      engineRuntimeError = event.error || new Error(event.message || 'Lỗi JavaScript khi khởi tạo bài học.');
+    }
+  };
+  window.addEventListener('error', engineRuntimeErrorHandler);
   engine.onload=()=>{
     // Script có thể tải thành công nhưng lỗi runtime trong lúc khởi tạo.
     // Chỉ đóng màn hình đăng nhập khi engine đã thực sự render dữ liệu bài học.
     setTimeout(()=>{
+      window.removeEventListener('error', engineRuntimeErrorHandler);
+      if(engineRuntimeError){
+        setBusy(false);
+        status('Lỗi khởi tạo bài học: '+(engineRuntimeError.message||String(engineRuntimeError)), 'error');
+        return;
+      }
       const title=document.getElementById('introZh')?.textContent?.trim();
       const vocabCount=document.getElementById('vocabCount')?.textContent?.trim();
       if(title && title !== '—' && vocabCount && vocabCount !== '0 từ'){
