@@ -106,8 +106,24 @@ const lesson={id:row.id,...content};
   const engine=document.createElement('script');
   engine.src='hsk1-lesson-engine.js';
   engine.dataset.privateLessonEngine='1';
-  engine.onload=hideGate;
-  engine.onerror=()=>status('Không tải được bộ máy bài học. Vui lòng thử lại.', 'error');
+  engine.onload=()=>{
+    // Script có thể tải thành công nhưng lỗi runtime trong lúc khởi tạo.
+    // Chỉ đóng màn hình đăng nhập khi engine đã thực sự render dữ liệu bài học.
+    setTimeout(()=>{
+      const title=document.getElementById('introZh')?.textContent?.trim();
+      const vocabCount=document.getElementById('vocabCount')?.textContent?.trim();
+      if(title && title !== '—' && vocabCount && vocabCount !== '0 từ'){
+        hideGate();
+      }else{
+        setBusy(false);
+        status('Bộ máy bài học chưa khởi tạo được dữ liệu. Vui lòng tải lại trang và thử lại.', 'error');
+      }
+    },0);
+  };
+  engine.onerror=()=>{
+    setBusy(false);
+    status('Không tải được bộ máy bài học. Vui lòng thử lại.', 'error');
+  };
   document.body.appendChild(engine);
 }
 
