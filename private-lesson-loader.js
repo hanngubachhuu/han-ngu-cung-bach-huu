@@ -100,7 +100,13 @@ if(!row) throw new Error('Tài khoản này chưa được cấp quyền cho bà
 if(!row.id) throw new Error('Dữ liệu bài học riêng không hợp lệ.');
 
 const content=await walkAndResolve(row.content,supabase);
-const lesson={id:row.id,...content};
+// DB stores the lesson payload itself. The existing HSK1 engine expects
+// the canonical lesson shape: { id, content, exerciseSections }.
+const lesson={
+  id:row.id,
+  content:content?.content || content,
+  exerciseSections:content?.exerciseSections || []
+};
   window.HAN_NGU_DATA.register(lesson);
 
   const engine=document.createElement('script');
