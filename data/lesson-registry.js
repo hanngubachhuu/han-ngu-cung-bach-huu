@@ -79,7 +79,9 @@
         message:error?.message || String(error)
       });
     }
-    const results = await Promise.all(R.manifest.map(async item => {
+    // Private lessons are never loaded into public review pages.
+    const publicManifest = R.manifest.filter(item => item.visibility !== "student");
+    const results = await Promise.all(publicManifest.map(async item => {
       try{
         await R.loadScript(item.data);
         const lesson = R.lessons[item.id];
