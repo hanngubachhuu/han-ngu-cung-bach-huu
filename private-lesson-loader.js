@@ -78,13 +78,14 @@ function walkAndResolve(value, supabase){
     if(split<=0) return Promise.resolve(value);
     const bucket=raw.slice(0,split);
     const path=raw.slice(split+1);
-    // Private assets: download through the authenticated Supabase client,
-    // then expose only an in-memory blob URL to the lesson engine.
-    return supabase.storage.from(bucket).download(path)
+    // Private assets: create a short-lived signed URL only.
+    // The lesson engine will fetch/play the URL when the learner actually uses the audio.
+    // This avoids downloading every audio file while the lesson is booting.
+    return supabase.storage.from(bucket).createSignedUrl(path, 3600)
       .then(({data,error})=>{
         if(error) return Promise.reject(error);
-        if(!(data instanceof Blob)) throw new Error('Tệp riêng tư không trả về Blob hợp lệ.');
-        return URL.createObjectURL(data);
+        if(!data?.signedUrl) throw new Error('Không tạo được đường dẫn audio riêng tư.');
+        return data.signedUrl;
       });
   }
   if(Array.isArray(value)) return Promise.all(value.map(v=>walkAndResolve(v,supabase)));
