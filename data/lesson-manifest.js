@@ -35,7 +35,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "她是我的汉语老师。",
     "titleVi": "Cô ấy là giáo viên tiếng Trung của tôi.",
     "href": "hsk1_bai4_index.html",
-    "data": "data/lessons/hsk1/bai4.js"
+    "data": "data/lessons/hsk1/bai4.js",
+    "visibility": "student"
   },
   {
     "id": "hsk1_bai5",

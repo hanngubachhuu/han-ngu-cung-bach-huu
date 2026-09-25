@@ -1,0 +1,11 @@
+.github/
+admin/
+docs/pinyin/
+scripts/
+
+# Internal architecture / development documentation
+ARCHITECTURE.md
+CODE_RULES.md
+LESSON_TEMPLATE_V2.md
+SECURITY_ARCHITECTURE.md
+README.md
