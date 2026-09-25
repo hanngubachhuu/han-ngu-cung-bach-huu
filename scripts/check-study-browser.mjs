@@ -118,7 +118,11 @@ try {
     false,
   );
   await page.keyboard.press("Escape");
-  assert.equal(await page.locator("#authPassword").inputValue(), "");
+  await page.waitForFunction(
+    () =>
+      !document.querySelector("#authDialog").open &&
+      document.querySelector("#authPassword").value === "",
+  );
   await page.unroute("**/auth/v1/token?**");
   for (const query of ["lvyou", "lǚyóu", "lu:3you2", "du lich"]) {
     await page.locator("#dictionarySearch").fill(query);
@@ -286,6 +290,16 @@ try {
   console.log(
     "PASS: 12 responsive views and 12 study interaction flows; no browser errors.",
   );
+} catch (error) {
+  await fs.writeFile(
+    new URL("../test-results/study-browser.json", import.meta.url),
+    JSON.stringify(
+      { passed: false, baseUrl: base, error: error.message, viewports: report },
+      null,
+      2,
+    ),
+  );
+  throw error;
 } finally {
   await browser.close();
 }
