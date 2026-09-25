@@ -98,10 +98,17 @@ function walkAndResolve(value, supabase){
 }
 
 async function loadLesson(supabase){
-  const {data,error}=await supabase.rpc('get_private_lesson_content',{p_lesson_id:LESSON_ID});
-if(error) throw error;
+  // Read the private lesson directly through PostgREST.
+  // RLS on lesson_content is the authorization boundary, so no secret key is needed.
+  const {data,error}=await supabase
+    .from('lesson_content')
+    .select('id,content')
+    .eq('id',LESSON_ID)
+    .eq('visibility','student')
+    .maybeSingle();
+  if(error) throw error;
 
-const row=Array.isArray(data)?data[0]:data;
+const row=data;
 if(!row) throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
 if(!row.id) throw new Error('Dữ liệu bài học riêng không hợp lệ.');
 
