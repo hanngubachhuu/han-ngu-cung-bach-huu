@@ -150,3 +150,18 @@ Mỗi phase phải:
 
 ### Netlify
 Là phương án thay thế khả thi cho hosting và serverless. Netlify Blobs có access control, nhưng với mô hình dữ liệu HSK/HSKK + student/admin permissions, Supabase cho boundary database/RLS rõ hơn.
+
+
+## Trạng thái pilot HSK1 Bài 4
+
+- Supabase project `hanngubachhuu` đã hoạt động ở region `ap-southeast-1`.
+- Canonical content của `hsk1_bai4` đã chuyển vào `public.lesson_content` với `visibility='student'`.
+- RLS đã kiểm tra: anonymous không đọc được; quyền student dựa trên bảng `student_lesson_access`.
+- Ba audio của Bài 4 đã chuyển vào bucket private `lesson-private`.
+- Mapping asset nằm ở `public.lesson_assets`; Storage RLS chỉ cho tài khoản có quyền bài học đọc object.
+- `data/lessons/hsk1/bai4.js` và ba audio Bài 4 đã loại khỏi migration branch để không còn nằm trong public deployment.
+- Bài 4 không còn được `lesson-registry` nạp vào kho ôn tập công khai.
+- Deployment Vercel từ migration branch đã build READY.
+- Chưa merge migration branch vào `main` và chưa chuyển production sang kiến trúc mới.
+- Tài khoản mới mặc định chưa có quyền bài 4; quyền phải được cấp trong `student_lesson_access`.
+
