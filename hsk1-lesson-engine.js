@@ -430,47 +430,42 @@ function renderListening(q, body){
     script.setAttribute('aria-label','Kịch bản câu nghe');
     player.append(status,script); body.appendChild(player);
   } else {
-    const audio = document.createElement('audio'); audio.preload='metadata'; audio.src=q.audioSrc;
-    const play = el('button','audio-play','Phát audio'); play.type='button';
+    const audio = document.createElement('audio');
+    audio.preload='metadata';
+    audio.src=q.audioSrc;
+
+    const play = el('button','audio-play','Phát audio');
+    play.type='button';
     play.setAttribute('aria-label','Phát hoặc tạm dừng tệp nghe tiếng Trung');
-    const speed = el('button','audio-speed','1.0×'); speed.type='button';
+
+    const speed = el('button','audio-speed','1.0×');
+    speed.type='button';
     speed.setAttribute('aria-label','Đổi tốc độ phát audio');
-    const status = el('div','audio-status','Sẵn sàng nghe.'); status.setAttribute('role','status');
-    let blobUrl=null;
+
+    const status = el('div','audio-status','Sẵn sàng nghe.');
+    status.setAttribute('role','status');
+
     const setRest=()=>{ play.textContent='Phát audio'; };
     audio.addEventListener('pause',()=>{if(!audio.ended)play.textContent='Tiếp tục';});
     audio.addEventListener('error',()=>{setRest();status.textContent='Tệp nghe chưa tải được. Kiểm tra kết nối rồi thử lại.';});
-    async function playAudio(){
+    audio.addEventListener('ended',()=>{setRest();status.textContent='Đã phát xong. Em có thể nghe lại.';});
+
+    play.addEventListener('click',async()=>{
+      if(!audio.paused){
+        audio.pause();
+        play.textContent='Tiếp tục';
+        status.textContent='Đã tạm dừng.';
+        return;
+      }
+
       try{
         await audio.play();
         play.textContent='Tạm dừng';
         status.textContent='Đang phát audio.';
-      }catch(firstError){
-        // Một số trình duyệt từ chối phát trực tiếp media cross-origin từ signed URL.
-        // Fallback: tải signed URL thành Blob rồi phát bằng blob: URL.
-        try{
-          status.textContent='Đang tải audio…';
-          const response=await fetch(q.audioSrc,{cache:'no-store'});
-          if(!response.ok) throw new Error('HTTP '+response.status);
-          const blob=await response.blob();
-          if(blobUrl) URL.revokeObjectURL(blobUrl);
-          blobUrl=URL.createObjectURL(blob);
-          audio.src=blobUrl;
-          audio.load();
-          await audio.play();
-          play.textContent='Tạm dừng';
-          status.textContent='Đang phát audio.';
-        }catch(secondError){
-          const detail=secondError?.message||firstError?.message||'Không rõ lỗi';
-          status.textContent='Không thể phát tệp ('+detail+').';
-        }
+      }catch(error){
+        status.textContent='Không thể phát tệp. Em hãy thử lại.';
       }
-    }
-    play.addEventListener('click', async () => {
-      if(audio.paused){ await playAudio(); }
-      else { audio.pause(); play.textContent='Tiếp tục'; status.textContent='Đã tạm dừng.'; }
     });
-    audio.addEventListener('ended',()=>{setRest();status.textContent='Đã phát xong. Em có thể nghe lại.'; if(blobUrl){URL.revokeObjectURL(blobUrl);blobUrl=null;}});
 
     speed.addEventListener('click',()=>{ const rates=[.8,1,1.15]; const next=rates[(rates.indexOf(audio.playbackRate)+1)%rates.length]; audio.playbackRate=next; speed.textContent=next.toFixed(2).replace(/0$/,'')+'×'; });
     player.append(play,speed,status,audio); body.appendChild(player);

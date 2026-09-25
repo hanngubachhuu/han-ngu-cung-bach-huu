@@ -63,6 +63,7 @@ jobs:
           find dist -type f -name "*.html" -print0 | xargs -0 sed -E -i \
             -e "s#navigation\\.css(\\?v=[^\"']*)?#navigation.css?v=$GITHUB_SHA#g" \
             -e "s#hsk1-navigation\\.js(\\?v=[^\"']*)?#hsk1-navigation.js?v=$GITHUB_SHA#g" \
+            -e "s#(private-lesson-loader\\.js|data/supabase-public\\.js)(\\?v=[^\"']*)?#\\1?v=$GITHUB_SHA#g" \
             -e "s#(pinyin\\.(css|js)|data/pinyin-(data|audio|basics)\\.js)(\\?v=[^\"']*)?#\\1?v=$GITHUB_SHA#g"
 
           touch dist/.nojekyll
