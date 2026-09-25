@@ -236,7 +236,6 @@ async function boot(){
   await continueWithSession(supabase);
 }
 
-window.addEventListener('pagehide',releaseAssetUrls,{once:true});
 
 boot().catch(error=>{
   getGate();
