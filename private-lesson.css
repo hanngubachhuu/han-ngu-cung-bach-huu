@@ -75,6 +75,8 @@
   line-height:1.5;
   color:#5f6368;
 }
+.private-lesson-status.is-error{color:#9b1c1c}
+.private-lesson-status.is-ok{color:#2d6a4f}
 .private-lesson-user{
   margin-top:16px;
   padding-top:14px;
