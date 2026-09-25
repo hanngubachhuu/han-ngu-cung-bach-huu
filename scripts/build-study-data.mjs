@@ -57,7 +57,7 @@ for (const meta of registry.manifest) {
   };
   const sourceHash = crypto
     .createHash("sha256")
-    .update(await read(meta.data))
+    .update((await read(meta.data)).replace(/\r\n/g, "\n"))
     .digest("hex")
     .slice(0, 16);
   provenance.sourceVersion = sourceHash;

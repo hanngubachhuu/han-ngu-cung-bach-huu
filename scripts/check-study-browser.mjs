@@ -20,6 +20,7 @@ const browser = await chromium.launch({
 });
 const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
+    permissions: ["clipboard-read", "clipboard-write"],
   }),
   page = await context.newPage(),
   errors = [];
@@ -40,6 +41,27 @@ const screenshot = async (name, fullPage = true) => {
   });
 };
 try {
+  if (process.env.STUDY_ACCESS_URL) {
+    await page.goto(process.env.STUDY_ACCESS_URL);
+    await page.waitForURL((url) => url.origin === new URL(base).origin);
+  }
+  const apiStatus = await context.request.get(
+    base + "/api/study?action=status",
+  );
+  assert.equal(apiStatus.status(), 200);
+  assert.equal((await apiStatus.json()).aiEnabled, false);
+  for (const hiddenPath of [
+    "/.env.local",
+    "/.cache/study-seed.json",
+    "/server/study-service.mjs",
+  ]) {
+    assert.ok(
+      [403, 404].includes(
+        (await context.request.get(base + hiddenPath)).status(),
+      ),
+      hiddenPath + " must not be served",
+    );
+  }
   for (const width of [375, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of ["chu-han", "tu-dien", "doc-hieu"]) {
@@ -237,6 +259,9 @@ try {
     JSON.stringify(
       {
         passed: true,
+        baseUrl: base,
+        aiEnabled: false,
+        privateAssetsBlocked: true,
         viewports: report,
         flows: [
           "search variants",
