@@ -83,7 +83,7 @@ async function resolvePrivateAsset(value,supabase){
 
   const {data,error}=await supabase.storage
     .from(asset.bucket)
-    .download(asset.path);
+    .download(asset.path, {}, {cache:'no-store'});
 
   if(error) throw error;
   if(!(data instanceof Blob)) throw new Error('Tài nguyên riêng không hợp lệ.');
