@@ -22,6 +22,27 @@ export const wordId = (word) =>
   Array.from(word)
     .map((c) => c.codePointAt(0).toString(16))
     .join("-");
+export const wordFromId = (id) => {
+  if (!/^w-(?:[0-9a-f]+-?)+$/i.test(id)) return null;
+  try {
+    const points = id
+      .slice(2)
+      .split("-")
+      .filter(Boolean)
+      .map((hex) => parseInt(hex, 16));
+    if (
+      !points.length ||
+      points.some(
+        (point) =>
+          !Number.isInteger(point) || point < 0 || point > 0x10ffff,
+      )
+    )
+      return null;
+    return String.fromCodePoint(...points);
+  } catch {
+    return null;
+  }
+};
 export function escapeHtml(value) {
   return String(value ?? "").replace(
     /[&<>"']/g,
