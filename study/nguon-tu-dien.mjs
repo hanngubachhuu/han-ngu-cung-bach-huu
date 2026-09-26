@@ -24,19 +24,19 @@ try {
     unihan: `Thông tin mã chữ, pinyin, số nét, bộ thủ, giản–phồn và nghĩa tiếng Anh từ Unicode Unihan 17.0. Bảng kTGH cung cấp ${n(counts.commonCharacters)} chữ thông dụng năm 2013, không phải danh sách HSK. Trường kVietnamese chỉ hiển thị là “Âm Việt (Unihan)”; không dùng thay âm Hán Việt. Một số chữ hiếm chưa có nghĩa Việt, âm đọc hoặc dữ liệu luyện nét.`,
   };
   const licenses = {
-    cvdict: "CC-BY-SA-4.0.txt",
-    hanviet: "HANVIET-LICENSE",
-    unihan: "UNICODE-LICENSE.txt",
-    jieba: "JIEBA-LICENSE.txt",
+    cvdict: "https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/blob/main/sources/dictionaries/CC-BY-SA-4.0.txt",
+    hanviet: "https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/blob/main/sources/dictionaries/HANVIET-LICENSE",
+    unihan: "https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/blob/main/sources/dictionaries/UNICODE-LICENSE.txt",
+    jieba: "https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/blob/main/sources/dictionaries/JIEBA-LICENSE.txt",
   };
   $("#lexiconSources").innerHTML =
     Object.entries(sources)
       .map(
         ([id, source]) =>
-          `<section id="${esc(id)}" class="st-panel"><p class="st-eyebrow">${esc(source.license)}</p><h2>${esc(source.name)}</h2><p>${esc(notes[id])}</p><p class="st-caption">Tác giả / tổ chức: ${esc(source.author)}. Phiên bản: <code>${esc(source.version)}</code>.</p><div class="st-reference-links"><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Nguồn gốc ↗</a><a href="data/study/lexicon/${licenses[id]}">Giấy phép đầy đủ</a></div></section>`,
+          `<section id="${esc(id)}" class="st-panel"><p class="st-eyebrow">${esc(source.license)}</p><h2>${esc(source.name)}</h2><p>${esc(notes[id])}</p><p class="st-caption">Tác giả / tổ chức: ${esc(source.author)}. Phiên bản: <code>${esc(source.version)}</code>.</p><div class="st-reference-links"><a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">Nguồn gốc ↗</a><a href="${esc(licenses[id])}" target="_blank" rel="noopener noreferrer">Giấy phép đầy đủ ↗</a></div></section>`,
       )
       .join("") +
-    `<section class="st-panel"><h2>Dữ liệu để đối chiếu và tái sử dụng</h2><p>Các tệp dữ liệu tra cứu giữ nguồn và giấy phép tương ứng. Bản chuyển định dạng CVDICT tiếp tục theo CC BY-SA 4.0; các phần MIT và Unicode giữ giấy phép gốc.</p><div class="st-reference-links"><a href="data/study/lexicon/manifest.json">Danh mục, số lượng và SHA-256</a><a href="data/study/lexicon/${esc(files.words.gzip)}" download>Kho từ (.json.gz)</a><a href="data/study/lexicon/${esc(files.characters.gzip)}" download>Kho chữ (.json.gz)</a><a href="https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/tree/main/sources/dictionaries">Dữ liệu nguồn và quy trình nhập ↗</a></div></section>`;
+    `<section class="st-panel"><h2>Dữ liệu để đối chiếu và tái sử dụng</h2><p>Kho từ mở rộng được truy vấn trực tiếp từ Supabase, còn nguồn nén được lưu ở Supabase Storage. Website không đưa toàn bộ kho từ và kho chữ vào mỗi deployment Vercel.</p><div class="st-reference-links"><a href="${esc(files.cvdict.gzip)}" target="_blank" rel="noopener noreferrer">Snapshot CVDICT (.gz) ↗</a><a href="${esc(files.hanviet.gzip)}" target="_blank" rel="noopener noreferrer">Snapshot Hán Việt (.gz) ↗</a><a href="${esc(files.unihan.gzip)}" target="_blank" rel="noopener noreferrer">Snapshot Unihan (.gz) ↗</a><a href="https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/tree/main/sources/dictionaries" target="_blank" rel="noopener noreferrer">Dữ liệu nguồn và quy trình nhập ↗</a></div></section>`
 } catch (error) {
   $("#lexiconStatistics").textContent = error.message;
 }
