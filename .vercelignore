@@ -11,6 +11,8 @@ dist/
 test-results/
 tests/
 supabase/
+data/study/lexicon/
+data/hanzi-strokes/
 
 # Internal architecture / development documentation
 ARCHITECTURE.md
