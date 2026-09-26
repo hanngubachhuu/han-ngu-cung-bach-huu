@@ -76,8 +76,27 @@ function buildSkills(sections){
   return skills;
 }
 
+function parsePayload(value){
+  if(typeof value==='string'){
+    try{return JSON.parse(value);}catch{return null;}
+  }
+  if(Array.isArray(value)){
+    if(value.length!==1) return null;
+    return parsePayload(value[0]);
+  }
+  return value && typeof value==='object' ? value : null;
+}
+
 function adapt(payload){
-  if(!payload || typeof payload!=='object') throw new Error('Dữ liệu bài học HSK2 không hợp lệ.');
+  payload=parsePayload(payload);
+  if(!payload) throw new Error('Dữ liệu bài học HSK2 không hợp lệ.');
+
+  // Supabase RPC may return a row ({id, content}), the JSON payload itself,
+  // or a one-row array. Normalize that transport detail here.
+  if(typeof payload.content==='string'){
+    const parsed=parsePayload(payload.content);
+    if(parsed) payload={...payload,content:parsed};
+  }
 
   // Bài 5–9: payload.content là normalized source.
   // Bài 10–15: payload chính là normalized source.
