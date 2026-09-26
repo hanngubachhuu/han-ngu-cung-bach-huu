@@ -223,6 +223,7 @@ function isAnswered(q){
   const v = state.answers[q.id];
   if(v === undefined || v === null) return false;
   if(q.type === 'matching') return Array.isArray(q.terms) && q.terms.length > 0 && q.terms.every(t => v && v[t.id] !== undefined && v[t.id] !== '');
+  if(q.type === 'dialog_fill') return Array.isArray(q.lines) && q.lines.some(line => (line.segs||[]).some(seg => typeof seg === 'number')) && q.lines.every(line => (line.segs||[]).filter(seg=>typeof seg==='number').every(seg => v && v[String(seg)]));
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
@@ -371,6 +372,7 @@ function renderQuestion(){
     case 'retell': renderRetell(q, body); break;
     case 'multi_fill': renderMultiFill(q, body); break;
     case 'matching': renderMatching(q, body); break;
+    case 'dialog_fill': renderDialogFill(q, body); break;
     case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
@@ -380,7 +382,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', matching:'Nối từ - nghĩa', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', matching:'Nối từ - nghĩa', dialog_fill:'Điền hội thoại', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -620,6 +622,44 @@ function renderMatching(q, body){
   body.appendChild(wrap);
 }
 
+function renderDialogFill(q, body){
+  const values=(state.answers[q.id]&&typeof state.answers[q.id]==='object')?{...state.answers[q.id]}:{};
+  const wrap=el('div','dialog-fill-area');
+  wrap.appendChild(el('div','multi-fill-bank','Từ cho sẵn: '+(q.wordBank||[]).join(' · ')));
+  (q.lines||[]).forEach(line=>{
+    const row=el('div','dialog-line');
+    (line.segs||[]).forEach(seg=>{
+      if(typeof seg==='number'){
+        const select=document.createElement('select');
+        select.className='multi-fill-select';
+        select.setAttribute('aria-label','Chọn từ cho chỗ trống '+seg);
+        select.appendChild(new Option('— chọn —',''));
+        (q.wordBank||[]).forEach(word=>select.appendChild(new Option(word,word)));
+        select.value=values[String(seg)]||values[seg]||'';
+        if(state.submitted){
+          select.disabled=true;
+          const correct=(q.correctMap||{})[String(seg)]??(q.correctMap||{})[seg];
+          select.style.borderColor=select.value===correct?'var(--green)':'var(--red)';
+        }else select.addEventListener('change',()=>{
+          values[String(seg)]=select.value; state.answers[q.id]=values;
+          DataStore.saveInProgress(); updateProgress(); renderNavGrid();
+        });
+        row.appendChild(select);
+      }else row.appendChild(el('span','',mixText(String(seg))));
+    });
+    wrap.appendChild(row);
+  });
+  if(state.submitted){
+    const g=gradeQuestion(q);
+    wrap.insertBefore(resultBanner(g.score>=g.max?'correct':'wrong'),wrap.firstChild);
+    const reveal=el('div','answer-reveal-box');
+    reveal.appendChild(el('div','label','Đáp án'));
+    reveal.appendChild(el('div','content',mixText(Object.keys(q.correctMap||{}).sort((a,b)=>Number(a)-Number(b)).map(k=>k+'：'+q.correctMap[k]).join(' · '))));
+    wrap.appendChild(reveal);
+  }
+  body.appendChild(wrap);
+}
+
 function renderSelfCheck(q, body){
   const wrap = el('div','selfcheck-area');
   const ta = el('textarea');
@@ -694,6 +734,11 @@ function gradeQuestion(q){
     const terms=q.terms||[];
     const ok=terms.length>0 && terms.every(t => String(values[t.id] ?? '') === String(correctMap[String(t.id)] ?? correctMap[t.id] ?? ''));
     return { score: ok ? 1 : 0, max };
+  }
+  if(q.type === 'dialog_fill'){
+    const values=v&&typeof v==='object'?v:{}, correctMap=q.correctMap||{}, keys=Object.keys(correctMap);
+    const ok=keys.length>0&&keys.every(k=>String(values[k]||'')===String(correctMap[k]));
+    return {score:ok?1:0,max};
   }
   if(q.type === 'text_fill'){
     const norm = s => (s||'').trim().replace(/\s+/g,'');
@@ -1171,6 +1216,11 @@ function showAttemptDetailModal(record){
         return (t.zh||'')+' → '+(opt ? opt.k+'. '+opt.t : k);
       }).join(' · ');
       isCorrect = gradeQuestion(q).score === 1;
+    } else if(q.type === 'dialog_fill'){
+      const vals=studentVal&&typeof studentVal==='object'?studentVal:{};
+      studentText=Object.keys(q.correctMap||{}).sort((a,b)=>Number(a)-Number(b)).map(k=>k+'：'+(vals[k]||'(chưa chọn)')).join(' · ');
+      correctText=Object.keys(q.correctMap||{}).sort((a,b)=>Number(a)-Number(b)).map(k=>k+'：'+q.correctMap[k]).join(' · ');
+      isCorrect=gradeQuestion(q).score===1;
     } else if(q.type === 'text_fill'){
       studentText = studentVal || '(chưa trả lời)';
       correctText = (q.answer||[]).join(' / ');
