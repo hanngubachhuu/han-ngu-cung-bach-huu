@@ -115,6 +115,8 @@ function adapt(payload){
   // (đặc biệt dialog_fill / matching). Nếu có bản ngoài thì ưu tiên bản đó.
   const questionsSource =
     arr(payload.questions).length ? payload.questions :
+    arr(envelope.questions).length ? envelope.questions :
+    arr(source.questions).length ? source.questions :
     arr(source.exercises?.all);
 
   const questions=questionsSource.map(normalizeQuestion).filter(Boolean);
