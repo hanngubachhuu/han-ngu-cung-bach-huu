@@ -61,7 +61,8 @@ async function search(push = true) {
           "Chưa tìm thấy từ phù hợp",
           "Thử chữ Hán, pinyin không dấu hoặc một nghĩa tiếng Việt ngắn hơn.",
         );
-    $("#dictionaryAi").hidden = !query || $("#onlySavedWords").checked;
+    $("#dictionaryAi").hidden =
+      result.total > 0 || !query || $("#onlySavedWords").checked;
     $("#dictionaryPagination").innerHTML =
       result.total > limit
         ? `<button data-page="${page - 1}" class="st-button" ${!page ? "disabled" : ""}>← Trước</button><span>Trang ${page + 1} / ${Math.ceil(result.total / limit)}</span><button data-page="${page + 1}" class="st-button" ${(page + 1) * limit >= result.total ? "disabled" : ""}>Sau →</button>`
