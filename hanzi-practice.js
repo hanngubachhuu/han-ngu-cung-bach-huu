@@ -1,6 +1,7 @@
 (() => {
   "use strict";
   const WRITER_SRC = "study/vendor/hanzi-writer.min.js";
+  const STROKE_SRC = "https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0.1/";
   let writerPromise = null,
     currentWriter = null,
     drawCleanup = null,
@@ -10,7 +11,7 @@
     if (!characterData.has(char))
       characterData.set(
         char,
-        fetch("data/hanzi-strokes/" + encodeURIComponent(char) + ".json", {
+        fetch(STROKE_SRC + encodeURIComponent(char) + ".json", {
           signal: AbortSignal.timeout(10000),
         })
           .then((r) => {
