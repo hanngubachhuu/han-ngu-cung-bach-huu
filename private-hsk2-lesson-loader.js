@@ -10,7 +10,7 @@ function busy(v){['privateLessonLogin','privateLessonSignup'].forEach(id=>{const
 function hide(){document.getElementById('privateLessonGate')?.remove();}
 async function boot(){
  const cfg=window.HNH_SUPABASE;if(!cfg?.url||!cfg?.publishableKey)throw new Error('Thiếu cấu hình Supabase public.');
- gate();await loadScript(CDN);
+ gate();await loadScript('hsk2-lesson-adapter.js');await loadScript(CDN);
  const supabase=window.supabase.createClient(cfg.url,cfg.publishableKey);
  async function load(){
    const {data:{session}}=await supabase.auth.getSession();
