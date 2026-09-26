@@ -12,6 +12,10 @@ function normalizeQuestion(q){
   out.section = q.section || q.sectionId || q.section_id || '';
   out.explain = q.explain || q.explanation || '';
   if(out.answer === undefined && q.correct !== undefined) out.answer=q.correct;
+  // Dạng reorder trong dữ liệu HSK2 dùng tên correctOrder, còn engine
+  // chấm theo trường answer. Chuẩn hóa ngay tại adapter để engine không
+  // phải biết schema riêng của từng nguồn dữ liệu.
+  if(out.answer === undefined && Array.isArray(q.correctOrder)) out.answer=q.correctOrder;
   if(out.hint === undefined && q.tip !== undefined) out.hint=q.tip;
   return out;
 }
