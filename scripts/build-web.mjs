@@ -21,7 +21,14 @@ for (const item of await fs.readdir(root, { withFileTypes: true })) {
   if (item.isDirectory() && publicDirectories.has(item.name))
     await fs.cp(path.join(root, item.name), path.join(out, item.name), {
       recursive: true,
-      filter: (p) => !p.split(path.sep).some((x) => x.startsWith(".")),
+      filter: (sourcePath) => {
+        const relative = path.relative(root, sourcePath).split(path.sep).join("/");
+        return (
+          !relative.split("/").some((x) => x.startsWith(".")) &&
+          relative !== "data/study/lexicon" &&
+          !relative.startsWith("data/study/lexicon/")
+        );
+      },
     });
   else if (item.isFile() && /\.(html|css|js|ico|webmanifest)$/.test(item.name))
     await fs.copyFile(path.join(root, item.name), path.join(out, item.name));

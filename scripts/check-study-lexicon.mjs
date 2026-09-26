@@ -166,7 +166,7 @@ export async function checkLexicon(page, base, screenshot) {
   await page.waitForSelector("#lexiconSources #cvdict");
   assert.match(await page.locator("#lexiconStatistics").innerText(), /119.044/);
   for (const link of await page
-    .locator('#lexiconSources a[href^="data/"]')
+    .locator('#lexiconSources a[href*="/storage/v1/object/public/study-lexicon/"]')
     .all()) {
     const response = await page.request.get(
       new URL(await link.getAttribute("href"), base).href,
@@ -180,12 +180,12 @@ export async function checkLexicon(page, base, screenshot) {
     false,
   );
   await screenshot("dictionary-sources-mobile");
-  await page.context().route("**/data/study/lexicon/words.*", (route) => route.abort());
+  await page.context().route("**/rest/v1/rpc/search_study_lexicon_v2", (route) => route.abort());
   await page.goto(base + "/tu-dien.html?word=旅游");
   await settled();
   assert.match(await page.locator("#dictionaryWarning").innerText(), /Kho mở rộng chưa tải được/);
   assert.equal(await page.locator(".st-word-title .st-hanzi").first().innerText(), "旅游");
-  await page.context().unroute("**/data/study/lexicon/words.*");
+  await page.context().unroute("**/rest/v1/rpc/search_study_lexicon_v2");
   return {
     firstLookupMs,
     flows: [

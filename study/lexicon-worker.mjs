@@ -1,158 +1,224 @@
-import { WordIndex, inflateWord, tonePinyin } from "./lexicon-core.mjs";
+import { tonePinyin } from "./lexicon-core.mjs";
 import { normalizeLatin, normalizePinyin } from "./core.mjs";
 
-const base = new URL("../data/study/lexicon/", import.meta.url);
-let manifestPromise, wordPromise, characterPromise;
-const manifest = () =>
-  (manifestPromise ||= fetch(new URL("manifest.json", base))
-    .then((r) => {
-      if (!r.ok) throw Error("Không tải được danh mục từ điển mở rộng.");
-      return r.json();
+const storageBase =
+  "https://dmeqxdznzobbarvkmxyg.supabase.co/storage/v1/object/public/study-lexicon/sources/";
+let unicodePromise;
+let hanvietPromise;
+let characterPromise;
+
+async function gzipJson(path) {
+  const response = await fetch(storageBase + path);
+  if (!response.ok) throw Error("Không tải được dữ liệu Hán tự từ Supabase.");
+  if (typeof DecompressionStream !== "function")
+    throw Error("Trình duyệt này chưa hỗ trợ giải nén kho Hán tự.");
+  if (!response.body)
+    throw Error("Không đọc được dữ liệu Hán tự từ Supabase.");
+  const stream = response.body.pipeThrough(new DecompressionStream("gzip"));
+  return new Response(stream).json();
+}
+
+const unicode = () =>
+  (unicodePromise ||= gzipJson("unihan.json.gz").catch((error) => {
+    unicodePromise = null;
+    throw error;
+  }));
+
+const hanviet = () =>
+  (hanvietPromise ||= gzipJson("hanviet.json.gz").catch((error) => {
+    hanvietPromise = null;
+    throw error;
+  }));
+
+const variants = (raw) =>
+  raw
+    ? [
+        ...new Set(
+          raw
+            .split(" ")
+            .map((cp) =>
+              String.fromCodePoint(parseInt(cp.split("<")[0].slice(2), 16)),
+            ),
+        ),
+      ]
+    : [];
+
+function characterSourceRows() {
+  return (characterPromise ||= Promise.all([unicode(), hanviet()])
+    .then(([source, mapping]) => {
+      const rows = [];
+      for (const [character, u] of Object.entries(source.characters || {})) {
+        if (!/^\p{Script=Han}$/u.test(character)) continue;
+        const traditional = variants(u.kTraditionalVariant);
+        const simplified = variants(u.kSimplifiedVariant);
+        const hvForms = mapping[character]
+          ? [character]
+          : traditional.filter((c) => mapping[c]);
+        const hanVietReadings = hvForms.flatMap((form) =>
+          Object.entries(mapping[form] || {})
+            .filter(([, values]) => values?.length)
+            .map(([numbered, values]) => [form, numbered, values]),
+        );
+        const pinyins = [
+          ...(u.kMandarin?.split(" ") || []),
+          ...(u.kHanyuPinyin
+            ?.split(" ")
+            .flatMap(
+              (value) => value.split(":")[1]?.split(",") || [],
+            ) || []),
+        ];
+        if (!pinyins.length)
+          pinyins.push(
+            ...hanVietReadings
+              .filter((reading) => reading[1] !== "*")
+              .map((reading) => tonePinyin(reading[1])),
+          );
+        const radicalKey = u.kRSUnicode?.split(" ")[0]?.split(".")[0];
+        const radical = source.radicals?.[radicalKey] || "";
+        rows.push({
+          character,
+          pinyin: pinyins.join(" · "),
+          strokeCount: Number(u.kTotalStrokes?.split(" ")[0]) || null,
+          radical,
+          radicalNumber: Number(radicalKey?.replaceAll("'", "")) || null,
+          traditional,
+          simplified,
+          vietnameseReadings: u.kVietnamese?.split(" ") || [],
+          definitionEn: u.kDefinition || "",
+          commonRank: Number(u.kTGH?.split(":")[1]) || null,
+          hanVietReadings,
+          hanViet: [
+            ...new Set(hanVietReadings.flatMap((reading) => reading[2])),
+          ].join(" / ") || null,
+        });
+      }
+      return {
+        rows,
+        byChar: new Map(rows.map((row) => [row.character, row])),
+      };
     })
     .catch((error) => {
-      manifestPromise = null;
+      characterPromise = null;
       throw error;
     }));
-async function dataset(name) {
-  const file = (await manifest()).files[name];
-  const compressed = typeof DecompressionStream === "function" && file.gzip;
-  const response = await fetch(new URL(compressed || file.path, base));
-  if (!response.ok)
-    throw Error("Không tải được kho từ điển mở rộng. Hãy thử lại.");
-  if (!compressed) return response.json();
-  const bytes = new Uint8Array(await response.arrayBuffer());
-  if (bytes[0] !== 0x1f || bytes[1] !== 0x8b)
-    return JSON.parse(new TextDecoder().decode(bytes));
-  return new Response(
-    new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip")),
-  ).json();
 }
-const words = () =>
-  (wordPromise ||= dataset("words")
-    .then((rows) => new WordIndex(rows))
-    .catch((e) => {
-      wordPromise = null;
-      throw e;
-    }));
-const characters = () =>
-  (characterPromise ||= dataset("characters")
-    .then((rows) => ({
-      rows: rows.map((row) => ({
-        row,
-        character: row[0],
-        common: row[9],
-        normal: normalizeLatin(
-          [row[1], ...row[10].flatMap((r) => r[2]), ...row[11], ...row[7]].join(
-            " ",
-          ),
-        ),
-        pinyins: row[1].split(" · ").map(normalizePinyin),
-      })),
-      byChar: new Map(rows.map((row) => [row[0], row])),
-    }))
-    .catch((e) => {
-      characterPromise = null;
-      throw e;
-    }));
+
 function characterData(row) {
   if (!row) return null;
   return {
-    character: row[0],
-    pinyin: row[1],
-    strokeCount: row[2] || null,
-    radical: row[3] || null,
-    radicalNumber: row[4] || null,
-    traditional: row[5],
-    simplified: row[6],
-    vietnameseReadings: row[7],
-    definitionEn: row[8],
-    commonRank: row[9] || null,
-    hanViet: [...new Set(row[10].flatMap((r) => r[2]))].join(" / ") || null,
-    hanVietReadings: row[10].map(([form, numbered, values]) => ({
+    character: row.character,
+    pinyin: row.pinyin,
+    strokeCount: row.strokeCount,
+    radical: row.radical || null,
+    radicalNumber: row.radicalNumber,
+    traditional: row.traditional,
+    simplified: row.simplified,
+    vietnameseReadings: row.vietnameseReadings,
+    definitionEn: row.definitionEn,
+    commonRank: row.commonRank,
+    hanViet: row.hanViet,
+    hanVietReadings: row.hanVietReadings.map(([form, numbered, values]) => ({
       character: form,
       numbered,
       pinyin: numbered === "*" ? null : tonePinyin(numbered),
       values,
     })),
-    meaningsVi: row[11],
+    meaningsVi: [],
     curriculumTags: [],
     source: "open-lexicon",
   };
 }
+
+function searchable(row) {
+  return {
+    ...row,
+    normal: normalizeLatin(
+      [
+        row.character,
+        row.pinyin,
+        row.hanViet,
+        ...(row.vietnameseReadings || []),
+        row.definitionEn,
+        ...(row.traditional || []),
+        ...(row.simplified || []),
+      ].join(" "),
+    ),
+    pinyins: (row.pinyin || "")
+      .split(" · ")
+      .map(normalizePinyin)
+      .filter(Boolean),
+  };
+}
+
 async function execute(method, args) {
-  if (method === "manifest") return manifest();
   if (method === "character")
-    return characterData((await characters()).byChar.get(args.character));
+    return characterData(
+      (await characterSourceRows()).byChar.get(args.character),
+    );
+
   if (method === "characters") {
-    const { rows, byChar } = await characters(),
-      normal = normalizeLatin(args.query || ""),
-      pinyin = normalizePinyin(args.query || "");
-    const seen = new Set(),
-      hits = [];
-    const matches = (c) =>
+    const { rows: sourceRows, byChar } = await characterSourceRows();
+    const normal = normalizeLatin(args.query || "");
+    const pinyin = normalizePinyin(args.query || "");
+    const seen = new Set();
+    const hits = [];
+    const matches = (candidate) =>
       !args.query ||
-      args.query.includes(c.character) ||
-      (normal && c.normal.includes(normal)) ||
-      (pinyin && c.pinyins.some((p) => p.includes(pinyin)));
+      args.query.includes(candidate.character) ||
+      candidate.normal.includes(normal) ||
+      (pinyin && candidate.pinyins.some((value) => value.includes(pinyin)));
+
     for (const row of args.overlays || []) {
       const imported = byChar.get(row.character);
+      const base = imported
+        ? searchable(imported)
+        : searchable({
+            character: row.character,
+            pinyin: row.pinyin || "",
+            hanViet: row.hanViet || "",
+            vietnameseReadings: [],
+            definitionEn: "",
+            traditional: [],
+            simplified: [],
+          });
       const candidate = {
-        character: row.character,
-        pinyin: row.pinyin,
-        common: imported?.[9],
-        normal: normalizeLatin(
-          [row.pinyin, row.hanViet, ...(row.meaningsVi || [])].join(" "),
-        ),
-        pinyins: [normalizePinyin(row.pinyin)],
+        ...base,
+        pinyin: row.pinyin || base.pinyin,
+        common: imported?.commonRank || null,
       };
-      if (imported) {
-        candidate.normal +=
-          " " +
-          normalizeLatin(
-            imported[10].flatMap((r) => r[2]).join(" ") +
-              " " +
-              imported[11].join(" "),
-          );
-        if (!candidate.pinyin) candidate.pinyin = imported[1];
-        candidate.pinyins.push(
-          ...imported[1].split(" · ").map(normalizePinyin),
-        );
-      }
-      if ((args.mode !== "common" || candidate.common) && matches(candidate)) {
+      if (row.meaningsVi?.length)
+        candidate.normal += " " + normalizeLatin(row.meaningsVi.join(" "));
+      if (
+        (args.mode !== "common" || candidate.common) &&
+        matches(candidate)
+      ) {
         hits.push(candidate);
         seen.add(row.character);
       }
     }
-    for (const candidate of rows) {
+
+    for (const raw of sourceRows) {
       if (
-        seen.has(candidate.character) ||
-        (args.mode === "common" && !candidate.common) ||
-        !matches(candidate)
+        seen.has(raw.character) ||
+        (args.mode === "common" && !raw.commonRank) ||
+        !matches(searchable(raw))
       )
         continue;
-      hits.push({ character: candidate.character, pinyin: candidate.row[1] });
+      hits.push(raw);
     }
+
     const offset = Math.max(0, args.page || 0) * 72;
     return {
       total: hits.length,
       rows: hits
         .slice(offset, offset + 72)
-        .map(({ character, pinyin }) => ({ character, pinyin })),
+        .map((row) => ({ character: row.character, pinyin: row.pinyin })),
     };
   }
-  const index = await words();
-  if (method === "search") return index.search(args.query, args);
-  if (method === "get") {
-    const source = (await manifest()).sources.cvdict;
-    return args.ids
-      .map((id) => index.byId.get(id))
-      .filter(Boolean)
-      .map((row) => inflateWord(row, source));
-  }
-  if (method === "resolve") return index.resolve(args.words);
-  if (method === "matching") return index.matching(args.text);
-  throw Error("Unknown dictionary request");
+
+  throw Error("Unknown Hán tự request: " + method);
 }
+
 self.onmessage = async ({ data }) => {
   try {
     self.postMessage({

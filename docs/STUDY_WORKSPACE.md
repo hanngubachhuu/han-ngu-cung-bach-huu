@@ -36,7 +36,7 @@ Nguồn giáo trình HSK 2.0: `data/lesson-registry.js`, `data/lesson-manifest.j
 
 `data/study/entries/`, `readings/` và `catalog.json` là đầu ra build. Hai collection được tạo lại mỗi lần để không sót dữ liệu đã rút khỏi kho công khai. Không sửa các JSON sinh ra bằng tay.
 
-`sources/dictionaries/` chứa snapshot nguồn mở có hash và giấy phép; build không cần mạng. `data/study/lexicon/` là đầu ra nén và có tên theo hash. Web Worker tìm kiếm kho lớn, phân trang và kết hợp học liệu được Supabase RLS cho phép; không đưa toàn bộ kho vào DOM hoặc Supabase. Trang `nguon-tu-dien.html` công bố nguồn, số lượng và tải dữ liệu. CVDICT có bản dịch do tác giả dùng AI hỗ trợ nên luôn có nhãn đối chiếu; không phát sinh gọi API AI. Hanzii/Thi Viện là liên kết tra cứu bên ngoài.
+`sources/dictionaries/` chứa snapshot nguồn mở có hash và giấy phép; `data/study/lexicon/` chỉ là đầu ra build offline và không được đưa vào `dist`. Từ điển trên website truy vấn `study_lexicon_words` và các RPC Supabase, nên không tải toàn bộ 119.044 từ về client. Hán tự mở rộng tải snapshot Unihan/Hán Việt nén từ Supabase Storage trong Web Worker. Trang `nguon-tu-dien.html` công bố nguồn, số lượng và link snapshot. CVDICT có bản dịch do tác giả dùng AI hỗ trợ nên luôn có nhãn đối chiếu; không phát sinh gọi API AI. Hanzii/Thi Viện là liên kết tra cứu bên ngoài.
 
 Kho học liệu cũ đang chuyển dần sang riêng tư. Thay đổi này không biến tất cả file giáo trình cũ thành riêng tư. Bài HSK 1 số 4 dùng cổng tải hiện có và không được xuất lại từ seed cục bộ.
 
