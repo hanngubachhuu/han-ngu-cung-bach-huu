@@ -260,16 +260,20 @@ function renderCompactStrip(pct, answered){
 const NAV_EXPANDED_KEY = 'navExpanded_' + LESSON.id;
 function setNavExpanded(expanded){
   const panel = $('#navPanel');
-  panel.classList.toggle('expanded', expanded);
-  $('#btnCollapseNav').setAttribute('aria-expanded', expanded ? 'true' : 'false');
-  $('#navCollapseLabel').textContent = expanded ? 'Thu gọn' : 'Mở rộng';
+  if(panel) panel.classList.toggle('expanded', expanded);
+  const btn = $('#btnCollapseNav');
+  if(btn) btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  const label = $('#navCollapseLabel');
+  if(label) label.textContent = expanded ? 'Thu gọn' : 'Mở rộng';
   try{ localStorage.setItem(NAV_EXPANDED_KEY, expanded ? '1' : '0'); }catch(e){}
 }
 function initNavCollapse(){
   const saved = (() => { try{ return localStorage.getItem(NAV_EXPANDED_KEY); }catch(e){ return null; } })();
   setNavExpanded(saved === '1'); // mặc định THU GỌN trừ khi học sinh đã từng mở rộng trước đó
-  $('#btnCollapseNav').addEventListener('click', () => {
-    setNavExpanded(!$('#navPanel').classList.contains('expanded'));
+  const btn = $('#btnCollapseNav');
+  if(btn) btn.addEventListener('click', () => {
+    const panel = $('#navPanel');
+    setNavExpanded(!(panel && panel.classList.contains('expanded')));
   });
 }
 // Lưới điều hướng câu hỏi: một lưới liền mạch, KHÔNG chia nhãn theo từng phần
@@ -1397,12 +1401,15 @@ document.addEventListener('keydown', (e) => {
 });
 $('#btnScrollTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
 $('#btnScrollBottom').addEventListener('click', () => window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}));
-$('#btnMiniNav').addEventListener('click', () => {
+const miniNavButton = $('#btnMiniNav');
+if(miniNavButton) miniNavButton.addEventListener('click', () => {
   const pop = $('#miniNavPopover');
+  if(!pop) return;
   const open = pop.classList.toggle('open');
-  $('#btnMiniNav').setAttribute('aria-expanded', open ? 'true' : 'false');
+  miniNavButton.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
-$('#btnMiniNavClose').addEventListener('click', closeMiniNav);
+const miniNavCloseButton = $('#btnMiniNavClose');
+if(miniNavCloseButton) miniNavCloseButton.addEventListener('click', closeMiniNav);
 document.addEventListener('click', (e) => {
   const pop = $('#miniNavPopover'), btn = $('#btnMiniNav');
   if(pop && pop.classList.contains('open') && !pop.contains(e.target) && e.target !== btn){
