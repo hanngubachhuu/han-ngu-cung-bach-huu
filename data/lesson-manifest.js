@@ -9,7 +9,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Xin chào!",
     "href": "hsk1_bai1_index.html",
     "data": "data/lessons/hsk1/bai1.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai2",
     "level": 1,
@@ -18,7 +19,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Cảm ơn bạn!",
     "href": "hsk1_bai2_index.html",
     "data": "data/lessons/hsk1/bai2.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai3",
     "level": 1,
@@ -27,7 +29,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Bạn tên là gì?",
     "href": "hsk1_bai3_index.html",
     "data": "data/lessons/hsk1/bai3.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai4",
     "level": 1,
@@ -46,7 +49,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Con gái cô ấy năm nay hai mươi tuổi.",
     "href": "hsk1_bai5_index.html",
     "data": "data/lessons/hsk1/bai5.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai6",
     "level": 1,
@@ -55,7 +59,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Tôi biết nói tiếng Trung.",
     "href": "hsk1_bai6_index.html",
     "data": "data/lessons/hsk1/bai6.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai7",
     "level": 1,
@@ -64,7 +69,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Hôm nay ngày mấy?",
     "href": "hsk1_bai7_index.html",
     "data": "data/lessons/hsk1/bai7.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai8",
     "level": 1,
@@ -73,7 +79,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Tôi muốn uống trà.",
     "href": "hsk1_bai8_index.html",
     "data": "data/lessons/hsk1/bai8.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai9",
     "level": 1,
@@ -82,7 +89,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Con trai bạn làm việc ở đâu?",
     "href": "hsk1_bai9_index.html",
     "data": "data/lessons/hsk1/bai9.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai10",
     "level": 1,
@@ -91,7 +99,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Tôi có thể ngồi đây không?",
     "href": "hsk1_bai10_index.html",
     "data": "data/lessons/hsk1/bai10.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai11",
     "level": 1,
@@ -100,7 +109,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Bây giờ là mấy giờ?",
     "href": "hsk1_bai11_index.html",
     "data": "data/lessons/hsk1/bai11.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai12",
     "level": 1,
@@ -109,7 +119,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Thời tiết ngày mai thế nào?",
     "href": "hsk1_bai12_index.html",
     "data": "data/lessons/hsk1/bai12.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai13",
     "level": 1,
@@ -118,7 +129,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Anh ấy đang học nấu món Trung Quốc.",
     "href": "hsk1_bai13_index.html",
     "data": "data/lessons/hsk1/bai13.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai14",
     "level": 1,
@@ -127,7 +139,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Cô ấy đã mua khá nhiều quần áo.",
     "href": "hsk1_bai14_index.html",
     "data": "data/lessons/hsk1/bai14.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk1_bai15",
     "level": 1,
@@ -136,7 +149,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Tôi đến bằng máy bay.",
     "href": "hsk1_bai15_index.html",
     "data": "data/lessons/hsk1/bai15.js"
-  },
+
+    "visibility": "student"  },
   {
     "id": "hsk2_bai1_jiuyue",
     "level": 2,
