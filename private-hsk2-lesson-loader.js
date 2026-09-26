@@ -19,7 +19,8 @@ async function boot(){
    const {data,error}=await supabase.rpc('get_private_lesson_content',{p_lesson_id:LESSON_ID});
    if(error)throw error;
    if(!data)throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
-   window.HAN_NGU_PRIVATE_LESSON=window.HAN_NGU_HSK2_ADAPTER.adapt(data.content);
+   // RPC may return a lesson row, the payload itself, or a one-row JSON array.
+   window.HAN_NGU_PRIVATE_LESSON=window.HAN_NGU_HSK2_ADAPTER.adapt(data);
    const s=document.createElement('script');s.src='hsk2-lesson-engine.js';s.onload=hide;s.onerror=()=>status('Không tải được bộ máy bài học. Vui lòng thử lại.','error');document.body.appendChild(s);
  }
  document.getElementById('privateLessonForm')?.addEventListener('submit',async e=>{e.preventDefault();busy(true);status('Đang đăng nhập…');try{const email=document.getElementById('privateLessonEmail').value.trim(),password=document.getElementById('privateLessonPassword').value;const {error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;await load();}catch(err){busy(false);status(err?.message||'Đăng nhập không thành công.','error');}});
