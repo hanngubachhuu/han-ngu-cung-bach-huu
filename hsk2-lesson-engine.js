@@ -792,7 +792,14 @@ function classify(pct){
 /* ================================================================
    10) NỘP BÀI / KIỂM TRA TRƯỚC KHI NỘP
    ================================================================ */
-$('#btnSubmit').addEventListener('click', () => tryOpenSubmitModal());
+const submitButton = $('#btnSubmit');
+if(submitButton){
+  submitButton.type = 'button';
+  submitButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    tryOpenSubmitModal();
+  });
+}
 
 function tryOpenSubmitModal(){
   const unanswered = ALL_QUESTIONS.filter(q => !isAnswered(q));
@@ -802,36 +809,44 @@ function tryOpenSubmitModal(){
     box.innerHTML = `<h3>⚠️ Còn câu chưa trả lời</h3><p>Bạn còn <b>${unanswered.length}</b> câu chưa trả lời. Bạn có chắc chắn muốn nộp bài không?</p>`;
     const list = el('div','modal-list');
     unanswered.slice(0,30).forEach(q => list.appendChild(el('span','chip-mini', 'Câu '+(q._index+1))));
+    if(unanswered.length > 30) list.appendChild(el('span','chip-mini','...'));
     box.appendChild(list);
   } else {
     box.innerHTML = `<h3>✅ Đã hoàn thành</h3><p>Bạn đã hoàn thành tất cả câu hỏi. Xác nhận nộp bài?</p>`;
   }
   const actions = el('div','modal-actions');
   const btnBack = el('button','btn btn-secondary','Quay lại làm tiếp');
+  btnBack.type = 'button';
   btnBack.addEventListener('click', () => modal.remove());
   const btnGo = el('button','btn btn-primary','Vẫn nộp bài');
-  btnGo.addEventListener('click', () => { modal.remove(); submitQuiz(false); });
+  btnGo.type = 'button';
+  btnGo.addEventListener('click', () => {
+    modal.remove();
+    submitQuiz(false);
+  });
   actions.appendChild(btnBack); actions.appendChild(btnGo);
   box.appendChild(actions);
   modal.appendChild(box);
-  $('#modalRoot').appendChild(modal);
+  const modalRoot = $('#modalRoot');
+  if(modalRoot) modalRoot.appendChild(modal);
 }
 
 function submitQuiz(auto){
   if(state.submitted) return;
-  state.submitted = true;
-  state.reviewMode = false;
-  closeMiniNav();
-  clearAllRetellTimers();
-  clearInterval(state.timerHandle);
 
-  // Với self_check chưa tự chấm, mặc định 0 điểm cho tới khi học sinh tự đánh giá
+  // Tính kết quả trước khi đổi state. Nếu dữ liệu có lỗi, câu hỏi hiện tại
+  // vẫn còn nguyên để học sinh không bị "mất bài".
+  let result;
+  try{
+    result = computeFullResult();
+  }catch(error){
+    console.error('Không thể chấm bài:', error);
+    alert('Chưa thể nộp bài vì dữ liệu của một câu hỏi đang có lỗi. Bài làm hiện tại vẫn được giữ nguyên. Hãy báo giáo viên.');
+    return;
+  }
+
   const submitTime = Date.now();
   const duration = Math.round((submitTime - state.startTime)/1000);
-  const result = computeFullResult();
-  const tier = classify(result.percentage);
-
-  // Ghi lịch sử (mỗi lần nộp là 1 bản ghi mới, không ghi đè)
   const history = DataStore.getHistory();
   const record = {
     attemptNumber: history.length + 1,
@@ -854,8 +869,15 @@ function submitQuiz(auto){
     version: 1,
     auto: !!auto
   };
+
   DataStore.appendAttempt(record);
   DataStore.clearInProgress();
+
+  state.submitted = true;
+  state.reviewMode = false;
+  closeMiniNav();
+  clearAllRetellTimers();
+  clearInterval(state.timerHandle);
 
   renderAll();
   window.setTimeout(()=>document.getElementById('resultArea')?.scrollIntoView({block:'start', behavior:'smooth'}), 0);
