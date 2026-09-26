@@ -6,4 +6,5 @@ node_modules/
 dist/
 .cache/
 test-results/
+data/study/lexicon/
 supabase/.temp/

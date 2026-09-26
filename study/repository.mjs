@@ -1,6 +1,10 @@
-import { rankEntry, HAN, wordId } from "./core.mjs";
+import { rankEntry, wordId, normalizeLatin } from "./core.mjs";
 import { getClient, getSession } from "./auth.mjs";
-const cache = new Map();
+import { lexiconRequest } from "./lexicon.mjs";
+import { enrichCourseEntry, enrichCharacter } from "./lexicon-merge.mjs";
+const cache = new Map(),
+  accountCache = new Map();
+window.addEventListener("study:auth", () => accountCache.clear());
 async function accountClient() {
   if (!(await getSession())) throw Error("Public catalog mode");
   return getClient();
@@ -22,11 +26,11 @@ async function json(path) {
   return cache.get(path);
 }
 export const catalog = () => json("catalog.json");
-const merge = (rows) => {
+function merge(rows) {
   const map = new Map();
   for (const row of rows) {
-    const e = row.data || row;
-    const old = map.get(e.id);
+    const e = row.data || row,
+      old = map.get(e.id);
     if (!old) map.set(e.id, structuredClone(e));
     else {
       old.curriculumTags.push(...(e.curriculumTags || []));
@@ -39,165 +43,209 @@ const merge = (rows) => {
     }
   }
   return [...map.values()];
-};
+}
+async function accessibleRows(table) {
+  const session = await getSession().catch(() => null);
+  if (!session) return [];
+  const key = session.user.id + ":" + table;
+  if (!accountCache.has(key))
+    accountCache.set(
+      key,
+      (async () => {
+        const client = await getClient(),
+          result = [];
+        // User JWT and RLS decide which course rows are visible; no service key.
+        for (let start = 0; ; start += 1000) {
+          const { data, error } = await client
+            .from(table)
+            .select("data")
+            .order("record_id")
+            .range(start, start + 999);
+          if (error) throw error;
+          result.push(...data);
+          if (data.length < 1000) break;
+        }
+        return result;
+      })().catch((e) => {
+        accountCache.delete(key);
+        throw e;
+      }),
+    );
+  return accountCache.get(key);
+}
+async function courseIndex() {
+  const index = new Map((await catalog()).entries.map((e) => [e.id, e]));
+  for (const e of merge(
+    await accessibleRows("study_dictionary").catch(() => []),
+  ))
+    index.set(e.id, e);
+  return index;
+}
+const fallbackWarning =
+  "Kho mở rộng chưa tải được. Đang hiển thị phần giáo trình có sẵn; hãy thử lại khi kết nối ổn định.";
 export class DictionaryRepository {
-  async search(query, { page = 0, limit = 12, savedIds = null } = {}) {
-    const data = await catalog();
-    // The static index covers public course data only. Private rows stay behind RLS.
-    let results = data.entries
-      .map((e) => ({ ...e, score: query ? rankEntry(e, query) : 1 }))
-      .filter((e) => e.score > 0);
-    let remote = false;
+  async entries(ids, index = null) {
+    index ||= await courseIndex();
+    const imported = new Map(
+      (await lexiconRequest("get", { ids }).catch(() => [])).map((e) => [
+        e.id,
+        e,
+      ]),
+    );
+    return (
+      await Promise.all(
+        ids.map(async (id) => {
+          const summary = index.get(id);
+          const course = summary
+            ? summary.examples
+              ? summary
+              : await json("entries/" + id + ".json")
+            : null;
+          return enrichCourseEntry(course, imported.get(id));
+        }),
+      )
+    ).filter(Boolean);
+  }
+  async search(
+    query,
+    { page = 0, limit = 12, savedIds = null, contains = null } = {},
+  ) {
+    const index = await courseIndex();
+    const overlays = [...index.values()]
+      .filter(
+        (e) =>
+          !contains ||
+          [e.simplified, e.traditional || ""].some((s) => s.includes(contains)),
+      )
+      .map((e) => ({
+        id: e.id,
+        simplified: e.simplified,
+        score: query ? rankEntry(e, query) : 1,
+      }))
+      .filter((e) => e.score > 0 && (!savedIds || savedIds.includes(e.id)));
+    let result, warning;
     try {
-      const c = await accountClient();
-      const { data: rows, error } = await c.rpc("study_search_dictionary", {
-        query_text: query,
-        offset_count: page * limit,
-        result_limit: limit,
+      result = await lexiconRequest("search", {
+        query,
+        page,
+        limit,
+        contains,
+        savedIds,
+        overlays,
       });
-      if (error) throw error;
-      if (rows?.length && !savedIds)
-        return {
-          entries: merge(rows),
-          total: rows[0].total_count,
-          remote: true,
-        };
-      remote = true;
     } catch {
-      /* Public course lookup remains available if the database is temporarily offline. */
+      warning = fallbackWarning;
+      overlays.sort(
+        (a, b) =>
+          b.score - a.score || a.simplified.localeCompare(b.simplified, "zh"),
+      );
+      result = {
+        hits: overlays.slice(page * limit, (page + 1) * limit),
+        total: overlays.length,
+      };
     }
-    if (savedIds) results = results.filter((e) => savedIds.includes(e.id));
-    results.sort(
-      (a, b) =>
-        b.score - a.score || a.simplified.localeCompare(b.simplified, "zh"),
-    );
-    const entries = await Promise.all(
-      results
-        .slice(page * limit, (page + 1) * limit)
-        .map((e) => this.get(e.id)),
-    );
-    return { entries: entries.filter(Boolean), total: results.length, remote };
+    return {
+      entries: await this.entries(
+        result.hits.map((e) => e.id),
+        index,
+      ),
+      total: result.total,
+      warning,
+    };
   }
   async get(id) {
     if (!/^w-[0-9a-f-]+$/.test(id)) return null;
-    try {
-      const c = await accountClient();
-      const { data, error } = await c
-        .from("study_dictionary")
-        .select("data")
-        .eq("entry_id", id);
-      if (!error && data?.length) return merge(data)[0];
-    } catch {}
-    const index = await catalog();
-    if (!index.entries.some((e) => e.id === id)) return null;
-    return json("entries/" + id + ".json");
+    return (await this.entries([id]))[0] || null;
   }
   async batch(words) {
-    const ids = [...new Set(words.map(wordId))];
-    if (!ids.length) return [];
-    try {
-      const c = await accountClient();
-      const { data, error } = await c
-        .from("study_dictionary")
-        .select("data")
-        .in("entry_id", ids);
-      if (!error && data?.length) return merge(data);
-    } catch {}
-    const index = await catalog();
-    return Promise.all(
-      index.entries
-        .filter((e) => ids.includes(e.id))
-        .map((e) => json("entries/" + e.id + ".json")),
-    );
+    const index = await courseIndex();
+    const resolved = await lexiconRequest("resolve", { words }).catch(() => []);
+    const direct = words.map(wordId).filter((id) => index.has(id));
+    return this.entries([...new Set([...direct, ...resolved])], index);
   }
-  async compounds(character) {
-    try {
-      const c = await accountClient();
-      const { data, error } = await c
-        .from("study_dictionary")
-        .select("data")
-        .like("simplified", "%" + character + "%")
-        .limit(80);
-      if (!error && data?.length) return merge(data);
-    } catch {}
-    const data = await catalog();
-    return Promise.all(
-      data.entries
-        .filter((e) => e.simplified.includes(character))
-        .map((e) => json("entries/" + e.id + ".json")),
-    );
+  async compounds(character, options = {}) {
+    return this.search("", { ...options, contains: character });
   }
   async matchingText(text) {
-    const index = await catalog();
-    let candidates = index.entries.filter(
-      (e) =>
-        text.includes(e.simplified) ||
-        (e.traditional && text.includes(e.traditional)),
-    );
-    const segmenter = new Intl.Segmenter("zh", { granularity: "word" });
-    const words = [
-      ...new Set(
-        [...segmenter.segment(text)]
-          .map((s) => s.segment)
-          .filter((s) => HAN.test(s)),
-      ),
-    ];
-    const fetched = await this.batch([
-      ...words,
-      ...candidates.map((e) => e.simplified),
-    ]);
-    return fetched;
+    const index = await courseIndex();
+    const imported = await lexiconRequest("matching", { text }).catch(() => []);
+    const course = [...index.values()]
+      .filter(
+        (e) =>
+          text.includes(e.simplified) ||
+          (e.traditional && text.includes(e.traditional)),
+      )
+      .map((e) => e.id);
+    return this.entries([...new Set([...course, ...imported])], index);
   }
 }
 export class CharacterRepository {
   async list() {
-    const local = (await catalog()).characters;
+    const map = new Map(
+      (await catalog()).characters.map((e) => [e.character, e]),
+    );
+    const remote = new Map();
+    for (const { data: row } of await accessibleRows("study_characters").catch(
+      () => [],
+    )) {
+      const previous = remote.get(row.character);
+      if (previous) previous.curriculumTags.push(...row.curriculumTags);
+      else remote.set(row.character, structuredClone(row));
+    }
+    return [...new Map([...map, ...remote]).values()];
+  }
+  async search(query, { mode = "all", page = 0, overlays = [] } = {}) {
     try {
-      const c = await accountClient();
-      const { data, error } = await c
-        .from("study_characters")
-        .select("data")
-        .limit(5000);
-      if (!error && data?.length) {
-        const map = new Map();
-        for (const { data: row } of data) {
-          const previous = map.get(row.character);
-          if (previous) previous.curriculumTags.push(...row.curriculumTags);
-          else map.set(row.character, structuredClone(row));
-        }
-        return [...map.values()];
-      }
-    } catch {}
-    return local;
+      return await lexiconRequest("characters", {
+        query,
+        mode,
+        page,
+        overlays,
+      });
+    } catch {
+      const normal = normalizeLatin(query);
+      const found = overlays.filter(
+        (c) =>
+          !query ||
+          query.includes(c.character) ||
+          normalizeLatin(
+            [c.pinyin, c.hanViet, ...(c.meaningsVi || [])].join(" "),
+          ).includes(normal),
+      );
+      return {
+        rows: found.slice(page * 72, (page + 1) * 72),
+        total: found.length,
+        warning: fallbackWarning,
+      };
+    }
   }
   async get(character, lessonId = null) {
-    let local = (await catalog()).characters.find(
+    let course = (await catalog()).characters.find(
       (c) => c.character === character,
     );
-    try {
-      const client = await accountClient();
-      const { data, error } = await client
-        .from("study_characters")
-        .select("data")
-        .eq("character", character);
-      if (!error && data?.length) {
-        const preferred =
-          data.find((r) => r.data.lessonId === lessonId) || data[0];
-        local = structuredClone(preferred.data);
-        local.curriculumTags = data.flatMap((r) => r.data.curriculumTags || []);
-      }
-    } catch {}
-    if (local) return local;
-    const unicode = await json("unicode.json");
-    const u = unicode.characters[character];
-    return {
-      character,
-      pinyin: u?.pinyin || null,
-      meaningsVi: [],
-      curriculumTags: [],
-      ...u,
-      provenance: u ? [unicode.provenance] : [],
-    };
+    const rows = (
+      await accessibleRows("study_characters").catch(() => [])
+    ).filter((r) => r.data.character === character);
+    if (rows.length) {
+      course = structuredClone(
+        (rows.find((r) => r.data.lessonId === lessonId) || rows[0]).data,
+      );
+      course.curriculumTags = rows.flatMap((r) => r.data.curriculumTags || []);
+    }
+    let imported = await lexiconRequest("character", { character }).catch(
+      () => null,
+    );
+    if (!imported) {
+      const unicode = await json("unicode.json");
+      imported = {
+        character,
+        pinyin: null,
+        meaningsVi: [],
+        curriculumTags: [],
+        ...unicode.characters[character],
+      };
+    }
+    return enrichCharacter(course, imported);
   }
 }
 export class ReadingRepository {
@@ -210,10 +258,12 @@ export class ReadingRepository {
     return (await catalog()).readings;
   }
   async get(id) {
-    const list = await this.list();
-    const item = list.find((r) => r.id === id);
-    if (!item) return null;
-    return item.sourceText ? item : json("readings/" + id + ".json");
+    const item = (await this.list()).find((r) => r.id === id);
+    return item
+      ? item.sourceText
+        ? item
+        : json("readings/" + id + ".json")
+      : null;
   }
 }
 export const dictionary = new DictionaryRepository();

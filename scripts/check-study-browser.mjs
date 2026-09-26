@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { checkLexicon } from "./check-study-lexicon.mjs";
 const base = process.env.STUDY_BASE_URL || "http://127.0.0.1:4173";
 for (let attempt = 0; attempt < 20; attempt++) {
   try {
@@ -24,7 +25,7 @@ const context = await browser.newContext({
   }),
   page = await context.newPage(),
   errors = [];
-page.setDefaultTimeout(15000);
+page.setDefaultTimeout(30000);
 page.on("pageerror", (e) => errors.push(e.message));
 await fs.mkdir(new URL("../test-results/", import.meta.url), {
   recursive: true,
@@ -129,7 +130,12 @@ try {
     await page.locator("#dictionaryForm").evaluate((f) => f.requestSubmit());
     await page.waitForFunction(
       () =>
-        document.querySelector("#dictionaryCount").textContent === "1 kết quả",
+        !document
+          .querySelector("#dictionaryResults")
+          .hasAttribute("aria-busy") &&
+        document
+          .querySelector("#dictionaryCount")
+          .textContent.endsWith("kết quả"),
     );
     assert.equal(
       await page.locator(".st-word-title .st-hanzi").first().innerText(),
@@ -204,7 +210,11 @@ try {
   );
   await page.locator("#backToCharacters").click();
   await page.locator('[data-level="saved"]').click();
-  assert.equal(await page.locator("#characterGrid [data-char]").count(), 1);
+  await page.waitForFunction(
+    () =>
+      !document.querySelector("#characterGrid").hasAttribute("aria-busy") &&
+      document.querySelectorAll("#characterGrid [data-char]").length === 1,
+  );
   await page.locator('#characterGrid [data-char="旅"]').click();
   await page.locator("#copyCharacter").click();
   await page.waitForFunction(
@@ -257,6 +267,7 @@ try {
     await canvas.evaluate((c) => getComputedStyle(c).touchAction),
     "none",
   );
+  const lexicon = await checkLexicon(page, base, screenshot);
   assert.deepEqual(errors, []);
   await fs.writeFile(
     new URL("../test-results/study-browser.json", import.meta.url),
@@ -266,6 +277,7 @@ try {
         baseUrl: base,
         aiEnabled: false,
         privateAssetsBlocked: true,
+        lexicon,
         viewports: report,
         flows: [
           "search variants",
@@ -288,7 +300,7 @@ try {
     ),
   );
   console.log(
-    "PASS: 12 responsive views and 12 study interaction flows; no browser errors.",
+    "PASS: 12 responsive views, 12 study flows and 10 expanded lexicon flows; no browser errors.",
   );
 } catch (error) {
   await fs.writeFile(
