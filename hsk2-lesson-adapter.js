@@ -15,7 +15,9 @@ function normalizeQuestion(q){
   // Dạng reorder trong dữ liệu HSK2 dùng tên correctOrder, còn engine
   // chấm theo trường answer. Chuẩn hóa ngay tại adapter để engine không
   // phải biết schema riêng của từng nguồn dữ liệu.
-  if(out.answer === undefined && Array.isArray(q.correctOrder)) out.answer=q.correctOrder;
+  // correctOrder mới là nguồn chuẩn cho dạng reorder. Nếu payload cũ còn
+  // answer dạng chuỗi, vẫn phải ưu tiên correctOrder để engine nhận mảng token.
+  if(Array.isArray(q.correctOrder) && !Array.isArray(out.answer)) out.answer=q.correctOrder;
   if(out.hint === undefined && q.tip !== undefined) out.hint=q.tip;
   return out;
 }
