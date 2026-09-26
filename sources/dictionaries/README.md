@@ -65,22 +65,24 @@ see the upstream README for that source history.
 
 ## Runtime
 
-Public lexicon data is loaded lazily in a module Web Worker. Gzip transfer is used
-when `DecompressionStream` is supported; raw JSON is available as a fallback.
-Only result pages cross the worker boundary. Course-only fallback shows a visible
-warning when the expanded corpus is unavailable. Supabase continues to hold
-private course records and users' saved words/characters; imported public words
-can be saved as snapshots under existing owner-only RLS.
+Production does not ship the expanded corpus in Vercel deployments. The 119,044
+CVDICT headwords and 122,596 reading/form groups are stored in Supabase
+Postgres and queried through public, RLS-protected read functions. Unihan and
+the Hán Việt mapping used by the character workspace are stored as gzip snapshots
+in the public Supabase Storage bucket `study-lexicon` and loaded lazily by the
+module Web Worker. Course records remain separate Supabase data with their
+existing lesson-level access rules.
 
-Compact word rows: `[simplified, [[traditional, numberedPinyin, definitions,
-hanViet], ...], normalizedSearchTextOrNull, allCharactersInCommonTable, jiebaFrequency]`.
-The build leaves the normalized search text null; the worker derives it from
-definitions and Hán Việt on load, avoiding a second download of the same meanings.
+The old local compiler `scripts/build-study-lexicon.mjs` remains an audit and
+maintenance tool. It is not part of the Vercel build path and its generated
+`data/study/lexicon/` directory is explicitly excluded from public build output.
 
-Compact character rows: `[character, pinyin, strokeCount, radical, radicalNumber,
-traditionalForms, simplifiedForms, unihanVietnameseReadings, unihanDefinitionEn,
-kTghRank, [[hanVietSourceForm, numberedPinyinOrStar, readings], ...], meaningsVi]`.
+The browser still exposes only paged search results and individual requested
+entries. Search, exact resolution, text matching, pinyin normalization and
+Hán Việt enrichment stay behind the same worker contract, so dictionary cards
+continue to merge course provenance with public reference data.
 
-The union character component includes CVDICT-derived Vietnamese definitions;
-those fields remain CC BY-SA 4.0. Whole converted corpus downloads are linked from
-the source page for attribution, inspection and reuse.
+Stroke-order JSON files are no longer copied into `dist/data/hanzi-strokes/`.
+Hanzi Writer is kept as the local runtime library, while stroke glyph data is
+requested on demand from the pinned Hanzi Writer data CDN release. This avoids
+shipping thousands of mostly-unused files in every deployment.
