@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hồ sơ từ vựng · Hán Ngữ Cùng Bách Hữu</title>
+<style>
+:root{--bg:#FDFBF7;--card:#fff;--soft:#F5F2EB;--text:#2C3E50;--muted:#566573;--faint:#8492A6;--border:#E5E0D8;--primary:#C0392B;--primary-soft:#FADBD8;--green:#27AE60;--green-soft:#E8F8F5;--amber:#D68910;--amber-soft:#FCF3CF;--shadow:0 4px 18px rgba(44,62,80,.08);--cn:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;--vn:"Times New Roman",Times,serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--vn);padding-bottom:60px}a{color:var(--primary)}
+.wrap{max-width:980px;margin:auto;padding:34px 18px 70px}.back{display:inline-flex;gap:7px;margin-bottom:18px;text-decoration:none;font-weight:700}
+.hero{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow)}.eyebrow{display:inline-block;background:var(--primary-soft);color:var(--primary);font-weight:800;font-size:11px;letter-spacing:.07em;padding:6px 10px;border-radius:999px}.han{font-family:var(--cn);font-size:58px;font-weight:800;margin-top:12px}.pinyin{font-size:23px;color:var(--primary);font-weight:700;margin-top:4px}.meaning{font-size:19px;color:var(--muted);margin-top:5px}.meta{font-size:13px;color:var(--faint);margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}.card h2{font-size:19px;margin:0 0 12px}.card p{color:var(--muted);line-height:1.75}
+.item{padding:13px 0;border-bottom:1px solid var(--border)}.item:last-child{border-bottom:0}.pattern{font-weight:800;font-family:var(--cn);font-size:17px}.desc{color:var(--muted);margin-top:3px}.note{margin-top:6px;padding:9px 11px;background:var(--soft);border-radius:9px;color:var(--muted);font-size:13px;line-height:1.6}.examples{margin-top:7px}.ex-zh{font-family:var(--cn);font-size:17px}.ex-vi{font-size:13px;color:var(--muted);margin-top:2px}
+ul{margin:0;padding-left:20px;color:var(--muted);line-height:1.8}.confusion{padding:11px 12px;background:#fff8e7;border-left:4px solid var(--amber);border-radius:8px;margin-bottom:8px}.confusion b{color:#6f5412}.related{display:flex;flex-wrap:wrap;gap:8px}.related a,.char-link{display:inline-flex;padding:7px 10px;border-radius:9px;background:var(--primary-soft);color:var(--primary);font-weight:700;text-decoration:none}.char-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.source-badge{display:inline-block;margin-top:12px;padding:5px 9px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800}
+.sentence{padding:12px 0;border-bottom:1px solid var(--border)}.sentence:last-child{border-bottom:0}.sent-zh{font-family:var(--cn);font-size:19px;line-height:1.65}.sent-pin{color:var(--primary);font-size:13px;margin-top:3px}.sent-vi{color:var(--muted);font-size:13px;margin-top:2px}
+.empty{text-align:center;padding:70px 20px;color:var(--muted)}.nav-row{display:flex;justify-content:space-between;gap:10px;margin-top:16px}.btn{border:1px solid var(--border);background:var(--card);padding:10px 14px;border-radius:10px;font-weight:700;color:var(--text);text-decoration:none}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.han{font-size:50px}}
+</style>
+<link rel="stylesheet" href="navigation.css?v=89a93856b11f440da68fdfade3a72314a563bfaf">
+</head>
+<body>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
+            <div class="dd-level-lessons">
+              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a><a href="bai2_index.html">Bài 2 · 我每天六点起床</a><a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a><a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a><a href="bai5_index.html">Bài 5 · 就买这件吧</a><a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a><a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+            </div>
+          </div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<main class="wrap"><a class="back" href="on-tap-chung.html">← Quay lại Ôn tập chung · Từ vựng</a><div id="app"><div class="empty">Đang tải hồ sơ từ vựng…</div></div></main>
+<footer class="site-footer no-print" id="siteFooter">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button">↑</button>
+<script src="data/lesson-registry.js"></script><script src="data/lesson-manifest.js"></script>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const wordParams=new URLSearchParams(location.search),wanted=wordParams.get('word')||'',wantedLesson=wordParams.get('lesson')||'';
+
+function chars(s){return Array.from(String(s||'')).filter(c=>/[\u3400-\u9fff]/.test(c))}
+function charLinks(word){return chars(word).map(c=>'<a class="char-link" href="chu-han.html?char='+encodeURIComponent(c)+'">'+esc(c)+' · chữ Hán</a>').join('')}
+function render(hit,v){
+ const c=hit.l.content||{},detail=v.detail||{},examples=(c.exampleSentences||[]).filter(x=>x.zh&&x.zh.includes(v.han));
+ document.title='Hồ sơ từ '+v.han+' · Hán Ngữ Cùng Bách Hữu';
+ const coll=Array.isArray(detail.collocations)?detail.collocations:[];
+ const notes=Array.isArray(detail.usageNotes)?detail.usageNotes:[];
+ const conf=Array.isArray(detail.commonConfusions)?detail.commonConfusions:[];
+ const related=Array.isArray(detail.relatedWords)?detail.relatedWords:[];
+ $('#app').innerHTML=
+ '<section class="hero"><span class="eyebrow">'+esc((hit.l.content?.course?.system||'HSK')+' '+(hit.l.content?.course?.level||''))+' · BÀI '+esc(hit.l.content?.course?.lessonNo||hit.u)+'</span>'+
+ '<div class="han">'+esc(v.han)+'</div><div class="pinyin">'+esc(v.pinyin||'Chưa có pinyin')+'</div><div class="meaning">'+esc(v.meaning||'Chưa có nghĩa chuẩn hóa')+'</div>'+
+ '<div class="meta">'+esc(v.partOfSpeech||'')+' · '+esc(hit.l.content?.course?.titleZh||'')+'</div><div class="char-links">'+charLinks(v.han)+'</div>'+
+ (detail.status?'<div class="source-badge">'+(c.course?.level===1?'Từ vựng và cách dùng trong bài':'Nội dung mở rộng · '+esc(detail.status))+'</div>':'')+'</section>'+
+ '<div class="grid">'+
+ '<section class="card"><h2>🧩 Cách kết hợp thường gặp</h2>'+(coll.length?coll.map(x=>'<div class="item"><div class="pattern">'+esc(x.pattern||'')+'</div><div class="desc">'+esc(x.meaning||'')+'</div>'+(x.note?'<div class="note">'+esc(x.note)+'</div>':'')+(Array.isArray(x.examples)&&x.examples.length?'<div class="examples">'+x.examples.map(e=>'<div class="ex-zh">'+esc(e)+'</div>').join('')+'</div>':'')+'</div>').join(''):'<p>Chưa có dữ liệu mở rộng.</p>')+'</section>'+
+ '<section class="card"><h2>⚠️ Lưu ý khi sử dụng</h2>'+(notes.length?'<ul>'+notes.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Chưa có lưu ý mở rộng.</p>')+
+ (conf.length?'<h2 style="margin-top:18px">🔎 Dễ nhầm với</h2>'+conf.map(x=>'<div class="confusion"><b>'+esc(x.with||'')+'</b><div>'+esc(x.difference||'')+'</div></div>').join(''):'')+'</section>'+
+ '<section class="card"><h2>🔗 Từ liên quan</h2>'+(related.length?'<div class="related">'+related.map(w=>'<a href="tu-vung.html?word='+encodeURIComponent(w)+'">'+esc(w)+'</a>').join('')+'</div>':'<p>Chưa có dữ liệu liên quan.</p>')+'</section>'+
+ '<section class="card"><h2>💬 Câu mẫu trong bài</h2>'+(examples.length?examples.map(x=>'<div class="sentence"><div class="sent-zh">'+esc(x.zh)+'</div><div class="sent-pin">'+esc(x.pinyin||'')+'</div><div class="sent-vi">'+esc(x.vi||'')+'</div></div>').join(''):'<p>Chưa có câu mẫu trực tiếp cho từ này trong dữ liệu bài học.</p>')+'</section>'+
+ '</div><div class="nav-row"><a class="btn" href="on-tap-chung.html">← Danh sách từ</a><a class="btn" href="'+esc(hit.u)+'">Mở bài học →</a></div>';
+}
+async function load(){
+ if(!wanted){$('#app').innerHTML='<div class="empty">Hãy mở hồ sơ từ vựng từ Ôn tập chung.</div>';return}
+ const lessons=(await window.HAN_NGU_DATA.loadAll()).map(window.HAN_NGU_DATA.prepare);
+ // Keep older word-only links on their original HSK 2 profile; new links carry lesson context.
+ lessons.sort((a,b)=>{const rank=l=>wantedLesson&&l.id===wantedLesson?0:l.content?.course?.level===2?1:2;return rank(a)-rank(b)});
+ for(const l of lessons){const v=(l.content?.vocabulary||[]).find(x=>x.han===wanted);if(v){render({u:l.__href||l.href||'',l},v);return}}
+ $('#app').innerHTML='<div class="empty">Chưa có hồ sơ mở rộng cho từ '+esc(wanted)+'.</div>';
+}
+$('#footerYear').textContent=new Date().getFullYear();
+const b=$('#siteNavBurger'),l=$('#siteNavLinks');if(b&&l)b.onclick=()=>{const o=l.classList.toggle('open');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')};
+const bt=$('#siteBackTop');addEventListener('scroll',()=>bt.classList.toggle('visible',scrollY>400));bt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+load().catch(()=>$('#app').innerHTML='<div class="empty">Không tải được dữ liệu từ vựng.</div>');
+})();
+</script>
+<script data-nav-dropdown-fix="1">
+(function(){
+  var b=document.getElementById('hskDropdownBtn'),d=document.getElementById('hskDropdown');
+  if(!b||!d||b.dataset.dropdownBound)return;
+  b.dataset.dropdownBound='1';
+  b.addEventListener('click',function(e){e.stopPropagation();var o=d.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');});
+  document.addEventListener('click',function(e){if(d.classList.contains('open')&&!d.contains(e.target)){d.classList.remove('open');b.setAttribute('aria-expanded','false');}});
+  d.querySelectorAll('.dd-level-head').forEach(function(h){h.addEventListener('click',function(){var x=h.closest('.dd-level');if(x&&x.querySelector('.dd-level-lessons'))x.classList.toggle('open');});});
+})();
+</script>
+<script src="hsk1-navigation.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script>
+</body>
+</html>

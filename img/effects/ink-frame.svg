@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 180" preserveAspectRatio="none">
+<defs>
+  <filter id="rough" x="-8%" y="-30%" width="116%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency=".018 .09" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="soft" x="-15%" y="-50%" width="130%" height="200%">
+    <feGaussianBlur stdDeviation="1.2"/>
+  </filter>
+</defs>
+<g fill="none" stroke="#272521" stroke-linecap="round" filter="url(#rough)">
+  <path d="M18 32 C150 7 265 41 388 24 S650 34 778 18 1015 9 1180 30" stroke-width="10" opacity=".88"/>
+  <path d="M20 42 C174 31 292 49 421 37 S681 45 811 30 1015 25 1176 39" stroke-width="4" opacity=".48"/>
+  <path d="M22 148 C164 169 281 140 409 155 S667 143 800 158 1024 171 1178 148" stroke-width="9" opacity=".82"/>
+  <path d="M21 138 C164 151 286 132 419 145 S690 133 821 146 1014 155 1178 137" stroke-width="3" opacity=".46"/>
+  <path d="M30 28 C24 62 34 83 26 113 S26 145 38 163" stroke-width="7" opacity=".72"/>
+  <path d="M43 21 C38 53 50 81 41 112 S39 147 51 160" stroke-width="3" opacity=".42"/>
+  <path d="M1170 20 C1180 50 1166 77 1178 106 S1175 143 1163 162" stroke-width="7" opacity=".73"/>
+  <path d="M1154 23 C1162 57 1148 87 1160 116 S1157 148 1146 158" stroke-width="3" opacity=".42"/>
+</g>
+<g fill="#272521" opacity=".75">
+  <circle cx="82" cy="54" r="4"/><circle cx="105" cy="26" r="3"/><circle cx="145" cy="64" r="6"/>
+  <circle cx="1098" cy="48" r="5"/><circle cx="1131" cy="81" r="3"/><circle cx="1078" cy="133" r="4"/>
+  <circle cx="71" cy="121" r="3"/><circle cx="1115" cy="151" r="3"/>
+</g>
+<g stroke="#272521" fill="none" opacity=".5" filter="url(#soft)">
+  <path d="M12 67 Q58 77 18 93" stroke-width="4"/>
+  <path d="M1188 66 Q1144 78 1181 91" stroke-width="4"/>
+</g>
+</svg>

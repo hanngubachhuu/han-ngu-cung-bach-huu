@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Luyện phát âm tiếng Trung | Hán Ngữ Cùng Bách Hữu</title>
+ <meta name="description" content="Chọn từng thanh mẫu, vận mẫu để xem video cận miệng và nghe mẫu. Luyện bốn thanh, tra bảng ghép Pinyin và phân biệt âm dễ nhầm.">
+ <link rel="stylesheet" href="pinyin.css?v=89a93856b11f440da68fdfade3a72314a563bfaf"><link rel="stylesheet" href="navigation.css?v=89a93856b11f440da68fdfade3a72314a563bfaf">
+ <script src="data/pinyin-data.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script><script src="data/pinyin-audio.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script>
+ <script src="data/pinyin-basics.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script><script src="pinyin.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script>
+ <script src="hsk1-navigation.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script>
+</head>
+<body class="pronunciation-page">
+<a class="skip-link" href="#main">Đến nội dung</a>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel"></div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<main id="main" class="pronunciation-main">
+ <div class="breadcrumb"><a href="trang-chu.html">Trang chủ</a><span aria-hidden="true">/</span><span>Phát âm</span></div>
+ <header class="page-intro">
+  <div><p class="eyebrow">拼音 · NỀN TẢNG TIẾNG TRUNG</p><h1>Luyện <em>phát âm</em></h1><p>Nhìn khẩu hình. Nghe từng âm. Chậm rãi đọc theo.</p></div>
+  <div class="intro-note"><span class="intro-seal zh" aria-hidden="true">音</span><div><strong>Bắt đầu từ một âm nhỏ</strong><span>46 video khẩu hình · 405 âm tiết để luyện</span></div></div>
+ </header>
+ <nav class="study-tabs" aria-label="Các phần phát âm">
+  <a href="#basics" aria-current="page"><span>01</span> Âm cơ bản</a>
+  <a href="#chart"><span>02</span> Ghép âm</a>
+  <a href="#tones"><span>03</span> Thanh điệu</a>
+  <a href="#practice"><span>04</span> Luyện nghe</a>
+ </nav>
+ <noscript><p class="notice">Cần bật JavaScript để chọn âm và luyện nghe.</p></noscript>
+ <p id="storageNote" class="notice" hidden></p>
+ <section id="basics" class="study-panel" aria-labelledby="basicsTitle">
+  <div class="basic-layout">
+   <div class="sound-library">
+    <div class="library-heading"><div><h2 id="basicsTitle">Hôm nay mình luyện âm nào?</h2><p>Chạm vào âm để xem và nghe ngay.</p></div><span class="library-legend"><span aria-hidden="true">▷</span> Video <span aria-hidden="true">◖</span> Audio</span></div>
+    <div class="basic-toolbar"><label class="basic-search"><span class="sr-only">Tìm âm cơ bản</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="basicSearch" type="search" placeholder="Tìm âm: a, sh, ü…" autocomplete="off" spellcheck="false"></label><label class="check-label"><input id="basicOnlySaved" type="checkbox"> Cần luyện <span id="basicSavedCount">0</span></label></div>
+    <div class="basic-filters" id="basicFilters" role="group" aria-label="Nhóm âm cơ bản"><button type="button" data-group="all" aria-pressed="true">Tất cả</button><button type="button" data-group="initials" aria-pressed="false">Thanh mẫu</button><button type="button" data-group="finals" aria-pressed="false">Vận mẫu</button><button type="button" data-group="spelling" aria-pressed="false">y / w</button></div>
+    <p id="basicResultCount" class="sr-only" role="status"></p>
+    <div id="soundGroups"></div>
+    <div id="basicEmpty" class="empty-state" hidden><h3>Chưa có âm phù hợp</h3><p>Thử một âm khác hoặc xem lại tất cả các nhóm.</p><button id="basicReset" class="button secondary" type="button">Xem tất cả âm</button></div>
+    <p class="library-footnote">y và w là chữ ghi chính tả, được đặt riêng với 21 thanh mẫu. Âm <b>x</b> hiện có mẫu nghe trong <b>xī</b>.</p>
+   </div>
+   <div id="basicPlayerHome" class="basic-player-home">
+    <article id="basicPlayer" class="basic-player" aria-labelledby="basicTitle">
+     <div class="player-top"><p class="eyebrow">NGHE · NHÌN · ĐỌC THEO</p><button id="closeBasicDialog" class="icon-button mobile-player-close" type="button" aria-label="Đóng khung luyện âm">×</button></div>
+     <div class="player-heading"><div><h2 id="basicTitle">a</h2><p id="basicFamily">Vận mẫu đơn</p></div><button id="saveBasic" class="icon-button save-sound" type="button" aria-label="Lưu âm a để luyện thêm" aria-pressed="false">☆</button></div>
+     <div class="basic-media">
+      <video id="basicVideo" controls playsinline preload="none" width="352" height="288" aria-label="Video khẩu hình âm a"></video>
+      <div id="basicAudioView" class="audio-only" hidden><svg viewBox="0 0 120 64" aria-hidden="true"><path d="M10 29v6m10-16v26m10-34v42m10-38v34m10-48v62m10-52v42m10-34v26m10-42v58m10-44v30m10-22v14m10-10v6"/></svg><strong id="basicAudioLabel"></strong><span>Mẫu nghe</span></div>
+     </div>
+     <div class="basic-play-actions"><button id="playBasic" type="button" class="button primary"><span aria-hidden="true">▷</span> Phát mẫu</button><button id="listenBasic" type="button" class="button secondary">Chỉ nghe âm</button></div>
+     <div class="basic-settings"><label>Tốc độ <select id="basicSpeed" aria-label="Tốc độ mẫu cơ bản"><option value="1">1×</option><option value="0.75">0,75×</option><option value="0.5">0,5×</option></select></label><label class="check-label"><input id="basicRepeat" type="checkbox"> Lặp 3 lần</label></div>
+     <p id="basicStatus" class="player-status" role="status" aria-live="polite">Bấm phát mẫu để bắt đầu.</p>
+     <div class="basic-guidance"><h3>Chú ý khi đọc</h3><p id="basicTip"></p><p id="basicNote" class="spelling-note" hidden></p></div>
+     <div class="basic-pagination"><button id="previousBasic" type="button" aria-label="Âm trước">← Âm trước</button><span id="basicPosition"></span><button id="nextBasic" type="button" aria-label="Âm tiếp theo">Âm sau →</button></div>
+    </article>
+   </div>
+  </div>
+ </section>
+  <section hidden class="study-panel" id="chart" aria-labelledby="chartTitle">
+    <div class="section-heading"><div><h2 id="chartTitle">Ghép âm và nghe bốn thanh</h2><p id="chartSummary" class="muted">Đang tải bảng âm…</p></div><span class="badge">21 thanh mẫu + âm đầu rỗng</span></div>
+    <div class="chart-tools">
+      <label class="search-box"><span>Tìm âm tiết</span><input id="syllableSearch" type="search" placeholder="Ví dụ: cong, lǜ, lu:4, nv" autocomplete="off" spellcheck="false"></label>
+      <label><span>Nhóm vận mẫu</span><select id="finalFilter"><option value="all">Tất cả vận mẫu</option><option value="open">Nhóm a, o, e…</option><option value="i">Nhóm i</option><option value="u">Nhóm u</option><option value="ü">Nhóm ü</option></select></label>
+      <div class="view-picker" role="group" aria-label="Kiểu hiển thị"><button id="tableView" type="button" aria-pressed="true">Bảng ghép âm</button><button id="cardsView" type="button" aria-pressed="false">Thẻ âm tiết</button></div>
+      <label class="check-label"><input id="onlySaved" type="checkbox"> Âm cần luyện <span id="savedCount">0</span></label>
+    </div>
+    <div id="initialFilters" class="initial-filters" role="group" aria-label="Lọc thanh mẫu"></div>
+    <div class="chart-caption"><span id="filterCount" role="status" aria-live="polite"></span><button id="resetFilters" class="text-button" type="button">Xóa bộ lọc</button></div>
+    <div class="matrix-wrap" id="matrixWrap" tabindex="0" role="region" aria-label="Bảng ghép Pinyin; có thể cuộn ngang và dọc"><div id="matrix"></div></div>
+    <div id="syllableCards" class="syllable-cards" hidden></div>
+    <p id="noResults" class="empty-state" hidden>Không có âm phù hợp. Thử bỏ bộ lọc hoặc gõ một âm như <b>cong</b>, <b>lü</b>.</p>
+    <p class="chart-footnote">Bảng ghép dùng vận mẫu đầy đủ <b>iou, uei, uen</b>; trong âm tiết chúng được viết thành <b>iu, ui, un</b>. Ký hiệu <b>∅</b> chỉ âm đầu rỗng; ô “·” không phải tổ hợp để luyện trong bảng này.</p>
+  </section>
+  <section hidden class="study-panel" id="tones" aria-labelledby="tonesTitle">
+    <div class="section-heading"><div><p class="eyebrow">声调</p><h2 id="tonesTitle">Bốn thanh, một âm tiết</h2></div><button class="button secondary" id="compareMa" type="button">Nghe mā · má · mǎ · mà</button></div>
+    <div class="tone-grid" id="toneCards"></div>
+    <div class="learning-note"><b>Thanh nhẹ · 轻声</b><p>Đọc nhẹ và thường ngắn hơn; cao độ phụ thuộc âm đứng trước. Ví dụ: <span lang="zh" class="zh">妈妈</span> <span class="pinyin">māma</span>, <span lang="zh" class="zh">你好吗？</span> <span class="pinyin">Nǐ hǎo ma?</span> Thanh nhẹ không ghi dấu; cần luyện trong từ và câu, không tách thành một thanh cố định.</p></div>
+    <details class="rule-details"><summary>Ba điều dễ nhầm khi chuyển từ tiếng Việt sang Pinyin</summary><div class="rules-grid"><article><h3>Dấu giống, âm không hoàn toàn giống</h3><p>Đừng thay thanh 2 bằng “sắc” hay thanh 3 bằng “hỏi” tiếng Việt. Nghe hướng đi của giọng và đọc trong quãng giọng thoải mái.</p></article><article><h3>Thanh 3 trong lời nói liền</h3><p><span class="zh" lang="zh">你好</span> ghi <span class="pinyin">nǐ hǎo</span>; khi nói liền, thanh 3 đầu chuyển gần thanh 2. Trước thanh 1, 2, 4, thanh 3 thường đọc thấp, không cần uốn lên đầy đủ.</p></article><article><h3>Chữ u đôi khi ghi âm ü</h3><p><span class="pinyin">ju, qu, xu, yu</span> thuộc nhóm ü dù không có hai chấm. Với <span class="pinyin">nü, lü</span>, phải giữ hai chấm để phân biệt <span class="pinyin">nu, lu</span>.</p></article></div></details>
+  </section>
+  <section hidden class="study-panel" id="practice" aria-labelledby="practiceTitle">
+    <div class="section-heading"><div><p class="eyebrow">听一听 · 选一选</p><h2 id="practiceTitle">Nghe và phân biệt</h2><p>Mỗi lượt 10 câu. Nghe trước, chọn sau, xem lại các âm còn nhầm.</p></div><span id="practiceHistory" class="muted"></span></div>
+    <div class="practice-setup"><label><span>Nội dung luyện</span><select id="practiceMode"><option value="tones">Bốn thanh điệu</option><option value="air">Bật hơi / không bật hơi</option><option value="tongue">z c s / zh ch sh và j q x</option><option value="nasal">Đuôi -n / -ng</option><option value="round">u / ü và n / l</option></select></label><button id="startPractice" class="button primary" type="button">Bắt đầu lượt luyện</button></div>
+    <div class="practice-card" id="practiceArea"><div class="practice-empty"><span class="big-icon" aria-hidden="true">听</span><h3>Luyện tai trước, luyện miệng sau</h3><p>Chọn một nhóm âm ở trên. Âm mẫu sẽ chỉ phát khi em bấm nghe.</p></div></div>
+    <p class="muted small">Điểm này đo khả năng nghe và chọn âm, chưa đánh giá giọng đọc của em. Tiến độ được lưu trên trình duyệt đang dùng.</p>
+  </section>
+
+ <div class="study-next"><span>Đã quen các âm cơ bản?</span><a href="hsk1_bai1_index.html">Bắt đầu HSK 1 · 你好！ →</a></div>
+</main>
+<dialog id="basicDialog" class="basic-dialog" aria-label="Luyện âm cơ bản"></dialog>
+<dialog id="syllableDialog" aria-labelledby="syllableTitle">
+  <div class="dialog-head"><span class="eyebrow">ÂM TIẾT PINYIN</span><button id="closeDialog" class="icon-button" type="button" aria-label="Đóng bảng âm tiết">×</button></div>
+  <div class="syllable-hero"><div><h2 id="syllableTitle"></h2><p id="syllableParts"></p></div><button id="saveSyllable" class="save-button" type="button" aria-pressed="false">☆ Cần luyện thêm</button></div>
+  <div class="tone-options" id="toneOptions" role="group" aria-label="Chọn thanh điệu"></div>
+  <p id="toneDescription" class="tone-description"></p>
+  <div class="audio-controls"><button class="button primary" id="playSyllable" type="button">▷ Nghe phát âm</button><button class="button secondary" id="playAllTones" type="button">Nghe bốn thanh</button><button id="stopAudio" class="button secondary" type="button" aria-label="Dừng âm thanh">Dừng</button></div>
+  <div class="play-settings"><label>Tốc độ <select id="audioSpeed"><option value="1">1×</option><option value="0.85">0,85×</option></select></label><label><input id="repeatAudio" type="checkbox"> Lặp 3 lần</label><span id="audioStatus" role="status" aria-live="polite"></span></div>
+  <div class="articulation"><h3>Cách đặt môi và lưỡi</h3><p id="initialTip"></p><p id="finalTip"></p><p class="spelling-note" id="spellingNote"></p></div>
+  <div class="related-sounds" id="dialogRelated" aria-label="Khẩu hình các thành phần"></div>
+  <p class="small muted">Nghe mẫu rồi đọc lại trong quãng giọng tự nhiên. Khi ghép vào câu, cách đọc có thể thay đổi theo thanh nhẹ và biến điệu.</p>
+</dialog>
+</body>
+</html>

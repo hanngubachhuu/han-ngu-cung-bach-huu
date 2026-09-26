@@ -1,0 +1,6 @@
+(()=>{const $=id=>document.getElementById(id);
+const setLogo=async()=>{try{const h=await (await fetch('trang-chu.html?logo='+Date.now(),{cache:'no-store'})).text();const m=h.match(/<img[^>]+src="([^"]+)"[^>]*alt="Logo Hán Ngữ Cùng Bách Hữu"/);if(m)$('navLogo').innerHTML='<img src="'+m[1]+'" alt="Logo Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">'}catch(e){}};
+const nav=()=>{let b=$('siteNavBurger'),l=$('siteNavLinks'),d=$('hskDropdown'),db=$('hskDropdownBtn');if(db&&d)db.onclick=e=>{e.stopPropagation();let o=d.classList.toggle('open');db.setAttribute('aria-expanded',o?'true':'false')};document.addEventListener('click',e=>{if(d&&!d.contains(e.target)){d.classList.remove('open');db&&db.setAttribute('aria-expanded','false')}});if(b&&l)b.onclick=()=>{let o=l.classList.toggle('open');b.textContent=o?'✕':'☰';b.setAttribute('aria-expanded',o?'true':'false')};$('footerYear').textContent=new Date().getFullYear();let bt=$('siteBackTop');addEventListener('scroll',()=>bt.classList.toggle('visible',scrollY>400));bt.onclick=()=>scrollTo({top:0,behavior:'smooth'})};
+$('soundBtn').onclick=()=>{if('speechSynthesis'in window){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance('明');u.lang='zh-CN';u.rate=.78;speechSynthesis.speak(u)}};
+setLogo();nav();
+})();

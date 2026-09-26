@@ -1,0 +1,32 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/example.schema.json",
+  "title":"Example Sentence",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["id","entityType","zhHans","status","version","audit"],
+  "properties":{
+    "id":{"type":"string","pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "entityType":{"const":"example"},
+    "zhHans":{"type":"string","minLength":1},
+    "pinyin":{"type":["string","null"]},
+    "vi":{"type":["string","null"]},
+    "targetRefs":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "skillTags":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "sourceRefs":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "status":{"enum":["draft","review","published","archived"]},
+    "version":{
+      "type":"object","additionalProperties":false,"required":["content","schema"],
+      "properties":{"content":{"type":"string"},"schema":{"type":"string"}}
+    },
+    "audit":{
+      "type":"object","additionalProperties":false,"required":["createdAt","updatedAt"],
+      "properties":{
+        "createdAt":{"type":"string","format":"date-time"},
+        "updatedAt":{"type":"string","format":"date-time"},
+        "createdBy":{"type":["string","null"]},
+        "updatedBy":{"type":["string","null"]}
+      }
+    }
+  }
+}

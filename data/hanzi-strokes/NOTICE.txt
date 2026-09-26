@@ -1,0 +1,1 @@
+Hanzi Writer Data 2.0.1 / Make Me A Hanzi. Original glyphs by Arphic Technology. Redistributed without modification under the Arphic Public License; see ARPHICPL.TXT. Source: https://github.com/chanind/hanzi-writer-data

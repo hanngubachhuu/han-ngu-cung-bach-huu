@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ôn tập chung — Hán Ngữ Cùng Bách Hữu</title>
+<meta name="description" content="Kho ôn tập chung từ vựng, ngữ pháp, chữ Hán và bài tập được tổng hợp từ các bài học.">
+<style>
+:root{--bg:#FDFBF7;--card:#fff;--soft:#F5F2EB;--text:#2C3E50;--muted:#566573;--faint:#8492A6;--border:#E5E0D8;--primary:#C0392B;--primary-soft:#FADBD8;--green:#27AE60;--green-soft:#E8F8F5;--shadow:0 4px 18px rgba(44,62,80,.08);--radius:14px;--cn:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;--vn:"Times New Roman",Times,serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--vn);padding-bottom:60px}
+button,input,select{font-family:var(--vn)}button{cursor:pointer}a{text-decoration:none;color:var(--primary)}
+.wrap{max-width:1040px;margin:0 auto;padding:38px 18px 80px}.head{text-align:center;max-width:780px;margin:8px auto 24px}.eyebrow{display:inline-block;background:var(--primary-soft);color:var(--primary);font-weight:800;font-size:12px;letter-spacing:.08em;padding:7px 15px;border-radius:999px}
+h1{font-size:35px;line-height:1.2;margin:14px 0 10px}.head p{font-size:16px;line-height:1.75;color:var(--muted);margin:0}.sync{margin-top:16px;padding:11px 14px;border:1px solid var(--border);background:var(--card);border-radius:10px;color:var(--muted);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:22px 0}.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:15px;text-align:center;box-shadow:var(--shadow)}.stat b{display:block;font-size:25px;color:var(--primary)}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;background:var(--soft);padding:6px;border-radius:18px;margin:20px 0 14px}.tab{border:0;background:transparent;color:var(--muted);font-weight:700;font-size:12px;padding:11px 6px;border-radius:12px}.tab.active{background:var(--primary);color:#fff}
+.toolbar{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:9px;margin-bottom:20px}.toolbar input,.toolbar select{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-size:14px;outline:0}
+.panel{display:none}.panel.active{display:block}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}.card h2{font-size:19px;margin:0 0 8px}.card p{color:var(--muted);line-height:1.75}
+.tag{display:inline-block;background:var(--primary-soft);color:var(--primary);font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;margin-right:5px}.mini{font-size:12px;color:var(--faint)}
+.lesson-list{display:grid;gap:9px}.lesson-link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border:1px solid var(--border);border-radius:10px;background:var(--soft);color:inherit}.lesson-link:hover{border-color:var(--primary);background:var(--card)}
+.action-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip,.btn{border:1px solid var(--border);background:var(--card);color:var(--muted);padding:9px 12px;border-radius:10px;font-weight:700;font-size:12px}.chip{border-radius:999px}.chip.active,.btn-primary{background:var(--primary);border-color:var(--primary);color:#fff}.btn-green{background:var(--green);border-color:var(--green);color:#fff}
+.vocab-grid,.hanzi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}.item .han{font-family:var(--cn);font-size:28px;font-weight:700}.item .pin{color:var(--primary);margin-top:4px}.item .meaning,.item p{color:var(--muted);line-height:1.65}
+.fc{max-width:560px;margin:0 auto}.fc-count{text-align:center;color:var(--muted);font-size:13px;margin-bottom:9px}.fc-card{min-height:300px;background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:28px;cursor:pointer}.fc-card .han{font-family:var(--cn);font-size:58px}.fc-card .pin{color:var(--primary);font-size:17px;margin-top:9px}.fc-back{display:none}.fc-card.flipped .fc-front{display:none}.fc-card.flipped .fc-back{display:block}.fc-back .meaning{font-size:22px;font-weight:700}.fc-actions{display:flex;justify-content:center;gap:8px;margin-top:11px}
+.exercise{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:9px}.exercise .prompt{font-size:15px;line-height:1.7}.answer{display:none;background:var(--green-soft);border-radius:8px;padding:10px;margin-top:10px;line-height:1.65}.exercise.open .answer{display:block}
+.hanzi-grid{grid-template-columns:repeat(5,1fr)}.hanzi{text-align:center}.hanzi .char{font-family:var(--cn);font-size:46px}.hanzi .meta{font-size:11px;color:var(--muted);line-height:1.5;margin-top:6px}
+.quiz{max-width:760px;margin:0 auto}.quiz-opt{display:block;width:100%;text-align:left;border:1px solid var(--border);background:var(--soft);padding:11px 13px;border-radius:9px;margin:8px 0}.quiz-opt.selected{border-color:var(--primary);background:var(--primary-soft)}.quiz-input{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;font-size:15px}.result{text-align:center;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:14px}.result b{font-size:44px;color:var(--primary)}
+.empty{text-align:center;color:var(--muted);padding:32px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(3,1fr)}.tabs{grid-template-columns:repeat(3,1fr)}.toolbar{grid-template-columns:1fr}.hanzi-grid{grid-template-columns:repeat(4,1fr)}}@media(max-width:520px){.wrap{padding:28px 12px 70px}h1{font-size:29px}.head p{font-size:14px}.stats{grid-template-columns:repeat(2,1fr)}.tabs{grid-template-columns:repeat(2,1fr)}.vocab-grid{grid-template-columns:1fr}.hanzi-grid{grid-template-columns:repeat(3,1fr)}}
+
+.exercise .prompt,.exercise .answer,#panel-quiz h2{white-space:pre-line}.review-options p{margin:6px 0}.exercise audio{width:100%;max-width:420px}
+</style>
+<link rel="stylesheet" href="navigation.css?v=89a93856b11f440da68fdfade3a72314a563bfaf">
+</head>
+<body>
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
+            <div class="dd-level-lessons">
+              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a><a href="bai2_index.html">Bài 2 · 我每天六点起床</a><a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a><a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a><a href="bai5_index.html">Bài 5 · 就买这件吧</a><a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a><a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+              <a href="bai8_index.html">Bài 8 · 让我想想再告诉你</a>
+              <a href="bai9_index.html">Bài 9 · 题太多，我没做完</a>
+              <a href="bai10_index.html">Bài 10 · 别找了，手机在桌子上呢</a>
+              <a href="bai11_index.html">Bài 11 · 他比我大三岁</a>
+              <a href="bai12_index.html">Bài 12 · 你穿得太少了</a>
+              <a href="bai13_index.html">Bài 13 · 门开着呢</a>
+              <a href="bai14_index.html">Bài 14 · 你看过那个电影吗</a>
+              <a href="bai15_index.html">Bài 15 · 新年就要到了</a>
+            </div>
+          </div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<main class="wrap">
+  <header class="head"><span class="eyebrow">ÔN TẬP CHUNG</span><h1>Ôn tập chung</h1><p>Một kho ôn tập dùng chung cho toàn bộ hệ thống. Từ vựng, ngữ pháp, chữ Hán và bài tập được tổng hợp từ các bài học, không còn gắn riêng với HSK 2.</p><div class="sync" id="syncStatus">Đang đồng bộ dữ liệu bài học…</div></header>
+  <section class="stats"><div class="stat"><b id="statLessons">0</b><span>bài học</span></div><div class="stat"><b id="statVocab">0</b><span>mục từ vựng</span></div><div class="stat"><b id="statGrammar">0</b><span>điểm ngữ pháp</span></div><div class="stat"><b id="statHanzi">0</b><span>chữ Hán</span></div><div class="stat"><b id="statQuestions">0</b><span>câu bài tập</span></div></section>
+  <div class="tabs no-print" id="tabs"><button class="tab active" data-tab="overview">Tổng quan</button><button class="tab" data-tab="vocab">Từ vựng</button><button class="tab" data-tab="grammar">Ngữ pháp</button><button class="tab" data-tab="hanzi">Chữ Hán</button><button class="tab" data-tab="exercises">Bài tập</button><button class="tab" data-tab="quiz">Kiểm tra</button></div>
+  <div class="toolbar no-print"><input id="search" type="search" placeholder="Tìm từ, chữ Hán, ngữ pháp, câu hỏi…"><select id="levelFilter"><option value="all">Tất cả cấp độ</option></select><select id="lessonFilter"><option value="all">Tất cả bài học</option></select></div>
+  <section class="panel active" id="panel-overview"></section><section class="panel" id="panel-vocab"></section><section class="panel" id="panel-grammar"></section><section class="panel" id="panel-hanzi"></section><section class="panel" id="panel-exercises"></section><section class="panel" id="panel-quiz"></section>
+</main>
+<footer class="site-footer no-print" id="siteFooter">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a><a href="hskk.html">HSKK</a><a href="on-tap-chung.html">Ôn tập chung</a><a href="trang-chu.html#gioi-thieu">Giới thiệu</a><a href="trang-chu.html#lien-he">Liên hệ</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Lên đầu trang" title="Lên đầu trang">↑</button>
+<script src="data/lesson-registry.js?v=20260920-4"></script><script src="data/lesson-manifest.js?v=20260920-4"></script><script src="on-tap-chung.js?v=20260920-3"></script>
+<script src="hanzi-practice.js"></script>
+<script src="hsk1-navigation.js?v=89a93856b11f440da68fdfade3a72314a563bfaf" defer></script>
+</body>
+</html>
