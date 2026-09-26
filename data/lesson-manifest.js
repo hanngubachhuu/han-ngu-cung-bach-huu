@@ -186,6 +186,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Công việc này là anh ấy giới thiệu giúp tôi",
     "href": "bai4_index.html",
     "data": "data/lessons/hsk2/bai4.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai5_jiu",
@@ -195,6 +197,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Mua chiếc áo này đi",
     "href": "bai5_index.html",
     "data": "data/lessons/hsk2/bai5.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai6_zenme",
@@ -204,6 +208,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Sao bạn không ăn nữa?",
     "href": "bai6_index.html",
     "data": "data/lessons/hsk2/bai6.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai7_li",
@@ -213,6 +219,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Nhà bạn có cách công ty xa không?",
     "href": "bai7_index.html",
     "data": "data/lessons/hsk2/bai7.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai8_rangwo",
@@ -222,6 +230,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Để tôi nghĩ rồi nói cho bạn biết",
     "href": "bai8_index.html",
     "data": "data/lessons/hsk2/bai8.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai9_tidu",
@@ -231,6 +241,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Bài nhiều quá, tôi chưa làm xong",
     "href": "bai9_index.html",
     "data": "data/lessons/hsk2/bai9.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai10_biezhao",
@@ -240,6 +252,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Đừng tìm nữa, điện thoại ở trên bàn",
     "href": "bai10_index.html",
     "data": "data/lessons/hsk2/bai10.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai11_bida",
@@ -249,6 +263,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Anh ấy lớn hơn tôi ba tuổi",
     "href": "bai11_index.html",
     "data": "data/lessons/hsk2/bai11.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai12_chuande",
@@ -258,6 +274,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Bạn mặc ít quá",
     "href": "bai12_index.html",
     "data": "data/lessons/hsk2/bai12.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai13_menkai",
@@ -267,6 +285,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Cửa đang mở đấy",
     "href": "bai13_index.html",
     "data": "data/lessons/hsk2/bai13.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai14_kanvou",
@@ -276,6 +296,8 @@ window.HAN_NGU_DATA.manifest = [
     "titleVi": "Bạn đã từng xem bộ phim đó chưa?",
     "href": "bai14_index.html",
     "data": "data/lessons/hsk2/bai14.js"
+    "visibility": "student"
+  }
   },
   {
     "id": "hsk2_bai15_xinnian",
@@ -287,3 +309,5 @@ window.HAN_NGU_DATA.manifest = [
     "data": "data/lessons/hsk2/bai15.js"
   }
 ];
+    "visibility": "student"
+  }
