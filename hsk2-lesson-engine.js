@@ -222,6 +222,7 @@ function countAnswered(){
 function isAnswered(q){
   const v = state.answers[q.id];
   if(v === undefined || v === null) return false;
+  if(q.type === 'matching') return Array.isArray(q.terms) && q.terms.length > 0 && q.terms.every(t => v && v[t.id] !== undefined && v[t.id] !== '');
   if(q.type === 'multi_fill') return Array.isArray(v) && v.length === q.answers.length && v.every(Boolean);
   if(Array.isArray(v)) return v.length === q.tokens?.length; // reorder: đủ số token
   if(typeof v === 'string') return v.trim().length > 0;
@@ -369,6 +370,7 @@ function renderQuestion(){
     case 'self_check': renderSelfCheck(q, body); break;
     case 'retell': renderRetell(q, body); break;
     case 'multi_fill': renderMultiFill(q, body); break;
+    case 'matching': renderMatching(q, body); break;
     case 'listening': renderListening(q, body); break;
   }
   card.appendChild(body);
@@ -378,7 +380,7 @@ function renderQuestion(){
   area.appendChild(card);
 }
 function typeLabel(t){
-  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', self_check:'Tự luận'}[t] || t;
+  return {mcq:'Trắc nghiệm', text_fill:'Điền từ', reorder:'Sắp xếp câu', listening:'Nghe hiểu', retell:'Đọc - kể lại', multi_fill:'Điền nhiều chỗ trống', matching:'Nối từ - nghĩa', self_check:'Tự luận'}[t] || t;
 }
 
 function resultBanner(status){
@@ -557,6 +559,67 @@ function renderMultiFill(q, body){
   body.appendChild(text); body.appendChild(el('div','multi-fill-bank','Từ cho sẵn: '+q.options.join(' · ')));
   if(state.submitted){ const g=gradeQuestion(q); body.insertBefore(resultBanner(g.score>=g.max?'correct':'wrong'),text); if(g.score<g.max) body.appendChild(el('div','answer-reveal-box','<div class="label">Đáp án</div><div class="content">'+mixText(q.answers.join(' · '))+'</div>')); }
 }
+function renderMatching(q, body){
+  const values = (state.answers[q.id] && typeof state.answers[q.id] === 'object')
+    ? {...state.answers[q.id]} : {};
+  const wrap = el('div','matching-area');
+  const intro = el('div','hint-inline','Chọn nghĩa đúng cho từng từ.');
+  wrap.appendChild(intro);
+
+  const bank = el('div','multi-fill-bank');
+  bank.innerHTML = '<b>Nghĩa lựa chọn:</b> ' + (q.optionsPool||[]).map(o=>escapeHtml(o.k+'. '+o.t)).join(' · ');
+  wrap.appendChild(bank);
+
+  (q.terms||[]).forEach(term=>{
+    const row=el('div','matching-row');
+    row.style.display='grid';
+    row.style.gridTemplateColumns='minmax(120px,1fr) minmax(180px,1.5fr)';
+    row.style.gap='12px';
+    row.style.alignItems='center';
+    row.style.margin='10px 0';
+    row.appendChild(el('div','', '<span class="zh">'+escapeHtml(term.zh||'')+'</span>'));
+
+    const select=document.createElement('select');
+    select.className='multi-fill-select';
+    select.setAttribute('aria-label','Chọn nghĩa cho '+(term.zh||''));
+    select.appendChild(new Option('— chọn nghĩa —',''));
+    (q.optionsPool||[]).forEach(o=>select.appendChild(new Option(o.k+'. '+o.t,o.k)));
+    select.value=values[term.id] || '';
+
+    if(state.submitted){
+      select.disabled=true;
+      const correct=(q.correctMap||{})[String(term.id)] ?? (q.correctMap||{})[term.id];
+      if(select.value===correct) select.style.borderColor='var(--green)';
+      else select.style.borderColor='var(--red)';
+    }else{
+      select.addEventListener('change',()=>{
+        values[term.id]=select.value;
+        state.answers[q.id]=values;
+        DataStore.saveInProgress();
+        updateProgress();
+        renderNavGrid();
+      });
+    }
+    row.appendChild(select);
+    wrap.appendChild(row);
+  });
+
+  if(state.submitted){
+    const g=gradeQuestion(q);
+    wrap.insertBefore(resultBanner(g.score>=g.max?'correct':'wrong'),intro);
+    const reveal=el('div','answer-reveal-box');
+    reveal.appendChild(el('div','label','Đáp án'));
+    const answerText=(q.terms||[]).map(t=>{
+      const k=(q.correctMap||{})[String(t.id)] ?? (q.correctMap||{})[t.id];
+      const opt=(q.optionsPool||[]).find(o=>o.k===k);
+      return (t.zh||'')+' → '+(opt ? opt.k+'. '+opt.t : k);
+    }).join(' · ');
+    reveal.appendChild(el('div','content',mixText(answerText)));
+    wrap.appendChild(reveal);
+  }
+  body.appendChild(wrap);
+}
+
 function renderSelfCheck(q, body){
   const wrap = el('div','selfcheck-area');
   const ta = el('textarea');
@@ -624,6 +687,13 @@ function gradeQuestion(q){
   const v = state.answers[q.id];
   if(q.type === 'mcq'){
     return { score: (v === q.answer) ? 1 : 0, max };
+  }
+  if(q.type === 'matching'){
+    const values = v && typeof v === 'object' ? v : {};
+    const correctMap=q.correctMap||{};
+    const terms=q.terms||[];
+    const ok=terms.length>0 && terms.every(t => String(values[t.id] ?? '') === String(correctMap[String(t.id)] ?? correctMap[t.id] ?? ''));
+    return { score: ok ? 1 : 0, max };
   }
   if(q.type === 'text_fill'){
     const norm = s => (s||'').trim().replace(/\s+/g,'');
@@ -1088,6 +1158,19 @@ function showAttemptDetailModal(record){
       const correctOpt = (q.options||[]).find(o=>o.k===q.answer);
       correctText = correctOpt ? `${correctOpt.k}. ${correctOpt.t}` : q.answer;
       isCorrect = studentVal === q.answer;
+    } else if(q.type === 'matching'){
+      const vals = studentVal && typeof studentVal === 'object' ? studentVal : {};
+      studentText = (q.terms||[]).map(t => {
+        const k=vals[t.id];
+        const opt=(q.optionsPool||[]).find(o=>o.k===k);
+        return (t.zh||'')+' → '+(opt ? opt.k+'. '+opt.t : '(chưa chọn)');
+      }).join(' · ');
+      correctText = (q.terms||[]).map(t => {
+        const k=(q.correctMap||{})[String(t.id)] ?? (q.correctMap||{})[t.id];
+        const opt=(q.optionsPool||[]).find(o=>o.k===k);
+        return (t.zh||'')+' → '+(opt ? opt.k+'. '+opt.t : k);
+      }).join(' · ');
+      isCorrect = gradeQuestion(q).score === 1;
     } else if(q.type === 'text_fill'){
       studentText = studentVal || '(chưa trả lời)';
       correctText = (q.answer||[]).join(' / ');
