@@ -1,3 +1,5 @@
+create extension if not exists pg_trgm with schema extensions;
+
 insert into storage.buckets (id,name,public)
 values ('study-lexicon','study-lexicon',true)
 on conflict (id) do update set public = excluded.public;
@@ -39,7 +41,10 @@ create table if not exists public.study_lexicon_meta (
   hanviet_version text not null,
   unihan_version text not null,
   jieba_version text not null,
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  source_rows integer not null default 122597,
+  merged_rows integer not null default 1,
+  direct_han_viet_characters integer not null default 10540
 );
 
 alter table public.study_lexicon_meta enable row level security;
@@ -49,19 +54,24 @@ on public.study_lexicon_meta for select to anon, authenticated using (true);
 
 insert into public.study_lexicon_meta
   (id,words,readings,characters,common_characters,han_viet_characters,
-   cvdict_version,hanviet_version,unihan_version,jieba_version)
+   cvdict_version,hanviet_version,unihan_version,jieba_version,
+   source_rows,merged_rows,direct_han_viet_characters)
 values
   (1,119044,122596,103013,8105,13610,
    'c379d909e308343a247e51619f7839a2060a271c',
    'a1292b0fdfbfeed41e08ae53e8bc4e01167bed28',
    '17.0.0',
-   '67fa2e36e72f69d9134b8a1037b83fbb070b9775')
+   '67fa2e36e72f69d9134b8a1037b83fbb070b9775',
+   122597,1,10540)
 on conflict (id) do update set
   words=excluded.words,
   readings=excluded.readings,
   characters=excluded.characters,
   common_characters=excluded.common_characters,
   han_viet_characters=excluded.han_viet_characters,
+  source_rows=excluded.source_rows,
+  merged_rows=excluded.merged_rows,
+  direct_han_viet_characters=excluded.direct_han_viet_characters,
   cvdict_version=excluded.cvdict_version,
   hanviet_version=excluded.hanviet_version,
   unihan_version=excluded.unihan_version,
@@ -218,3 +228,57 @@ order by w.simplified;
 $fn$;
 
 grant execute on function public.list_study_lexicon_single_characters() to anon, authenticated;
+
+
+create or replace function public.get_study_lexicon_meta()
+returns jsonb
+language sql
+stable
+as $fn$
+select jsonb_build_object(
+  'schema',m.schema_version,
+  'version',concat(m.cvdict_version,'|',m.hanviet_version,'|',m.unihan_version,'|',m.jieba_version),
+  'counts',jsonb_build_object(
+    'sourceRows',m.source_rows,
+    'mergedRows',m.merged_rows,
+    'words',m.words,
+    'readings',m.readings,
+    'characters',m.characters,
+    'commonCharacters',m.common_characters,
+    'hanVietCharacters',m.han_viet_characters,
+    'directHanVietCharacters',m.direct_han_viet_characters
+  ),
+  'sources',jsonb_build_object(
+    'cvdict',jsonb_build_object(
+      'id','cvdict','name','CVDICT','author','Phong Phan; CC-CEDICT contributors',
+      'url','https://github.com/ph0ngp/CVDICT','version',m.cvdict_version,
+      'license','CC-BY-SA-4.0','licenseUrl','https://creativecommons.org/licenses/by-sa/4.0/'
+    ),
+    'hanviet',jsonb_build_object(
+      'id','hanviet','name','Hán Việt Pinyin','author','Phong Phan',
+      'url','https://github.com/ph0ngp/hanviet-pinyin-wordlist','version',m.hanviet_version,
+      'license','MIT','licenseUrl','https://github.com/ph0ngp/hanviet-pinyin-words/blob/a1292b0fdfbfeed41e08ae53e8bc4e01167bed28/LICENSE'
+    ),
+    'unihan',jsonb_build_object(
+      'id','unihan','name','Unicode Unihan 17.0','author','Unicode, Inc.',
+      'url','https://www.unicode.org/reports/tr38/','version',m.unihan_version,
+      'license','Unicode-3.0','licenseUrl','https://www.unicode.org/license.txt'
+    ),
+    'jieba',jsonb_build_object(
+      'id','jieba','name','Jieba word frequencies','author','Sun Junyi and contributors',
+      'url','https://github.com/fxsjy/jieba','version',m.jieba_version,
+      'license','MIT','licenseUrl','https://github.com/fxsjy/jieba/blob/67fa2e36e72f69d9134b8a1037b83fbb070b9775/LICENSE'
+    )
+  ),
+  'files',jsonb_build_object(
+    'cvdict',jsonb_build_object('gzip','https://dmeqxdznzobbarvkmxyg.supabase.co/storage/v1/object/public/study-lexicon/sources/cvdict.u8.gz'),
+    'hanviet',jsonb_build_object('gzip','https://dmeqxdznzobbarvkmxyg.supabase.co/storage/v1/object/public/study-lexicon/sources/hanviet.json.gz'),
+    'unihan',jsonb_build_object('gzip','https://dmeqxdznzobbarvkmxyg.supabase.co/storage/v1/object/public/study-lexicon/sources/unihan.json.gz'),
+    'jieba',jsonb_build_object('gzip','https://dmeqxdznzobbarvkmxyg.supabase.co/storage/v1/object/public/study-lexicon/sources/jieba.txt.gz')
+  )
+)
+from public.study_lexicon_meta m
+where m.id=1;
+$fn$;
+
+grant execute on function public.get_study_lexicon_meta() to anon,authenticated;
