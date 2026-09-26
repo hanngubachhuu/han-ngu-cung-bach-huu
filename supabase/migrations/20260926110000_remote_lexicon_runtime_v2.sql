@@ -73,7 +73,10 @@ base as (
     w.*,
     case
       when p.raw <> '' and (w.simplified=p.raw or w.traditional=p.raw) then 1000
-      when p.normalized <> '' and w.pinyin_normalized=p.normalized then 900
+      when p.normalized <> '' and (
+        w.pinyin_normalized=p.normalized
+        or replace(w.pinyin_normalized,' ','')=replace(p.normalized,' ','')
+      ) then 900
       when p.normalized <> '' and extensions.unaccent(lower(coalesce(w.han_viet,'')))=p.normalized then 850
       when p.normalized <> '' and exists (
         select 1 from unnest(w.meanings_vi) m
@@ -98,6 +101,7 @@ base as (
       or w.simplified=p.raw
       or w.traditional=p.raw
       or w.pinyin_normalized=p.normalized
+      or replace(w.pinyin_normalized,' ','')=replace(p.normalized,' ','')
       or extensions.unaccent(lower(coalesce(w.han_viet,''))) ilike '%'||p.normalized||'%'
       or w.search_text ilike '%'||p.normalized||'%'
     )
