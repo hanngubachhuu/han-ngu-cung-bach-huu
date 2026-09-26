@@ -219,6 +219,7 @@ async function openReading(
     sentences = pieces.filter((p) => p.type === "sentence");
     index = Math.min(result?.sentenceIndex || 0, sentences.length - 1);
     let si = 0;
+    const usedEntries = new Map();
     $("#readingProse").innerHTML = pieces
       .map((piece) => {
         if (piece.type === "break") return esc(piece.text);
@@ -227,6 +228,7 @@ async function openReading(
         let pyOffset = 0;
         const tokens = segmentText(piece.text, entries)
           .map((token) => {
+            if (token.entry) usedEntries.set(token.entry.id, token.entry);
             const length = [...token.text].length;
             const py = sentencePinyin
               .slice(pyOffset, pyOffset + length)
@@ -273,17 +275,32 @@ async function openReading(
         "Bản dịch và câu hỏi do AI tạo. Hãy đối chiếu với văn bản; câu trả lời chỉ được kiểm tra trong phạm vi bài này.";
     const ids = await savedWords().catch(() => []);
     if (current !== sequence) return;
-    $("#keyWordCount").textContent = entries.length + " từ";
-    $("#keyVocabulary").innerHTML = entries.length
-      ? entries
-          .map((e) =>
-            entryCard(e, { compact: true, saved: ids.includes(e.id) }),
-          )
-          .join("")
-      : empty(
-          "Chưa có từ trong kho",
-          "Chạm vào một từ trong bài để mở tra cứu bổ sung.",
-        );
+    const vocabulary = [...usedEntries.values()];
+    $("#keyWordCount").textContent = vocabulary.length + " từ";
+    let visibleWords = 20;
+    const renderVocabulary = () => {
+      $("#keyVocabulary").innerHTML = vocabulary.length
+        ? vocabulary
+            .slice(0, visibleWords)
+            .map((e) =>
+              entryCard(e, { compact: true, saved: ids.includes(e.id) }),
+            )
+            .join("") +
+          (visibleWords < vocabulary.length
+            ? '<button class="st-button" data-more-vocabulary>Xem thêm từ</button>'
+            : "")
+        : empty(
+            "Chưa có từ trong kho",
+            "Chạm vào một từ trong bài để mở tra cứu bổ sung.",
+          );
+    };
+    $("#keyVocabulary").onclick = (event) => {
+      if (event.target.closest("[data-more-vocabulary]")) {
+        visibleWords += 20;
+        renderVocabulary();
+      }
+    };
+    renderVocabulary();
     renderQuiz(active.result.questions);
     $("#readingInputView").hidden = true;
     $("#readingResult").hidden = false;

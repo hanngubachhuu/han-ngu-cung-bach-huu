@@ -1,14 +1,24 @@
-import { $, initShared, empty, entryCard, icon, toast } from "./ui.mjs";
+import {
+  $,
+  initShared,
+  empty,
+  entryCard,
+  icon,
+  toast,
+  referenceLinks,
+} from "./ui.mjs";
 import { characters, dictionary, catalog } from "./repository.mjs";
 import { escapeHtml as esc, HAN, LEVELS, normalizeLatin } from "./core.mjs";
 import { savedCharacters, savedWords, toggleCharacter } from "./storage.mjs";
 import { HandwritingCanvas } from "./handwriting.mjs";
+import { lexiconManifest } from "./lexicon.mjs";
 let all = [],
   radicals = [],
   saved = [],
   mode = "all",
   page = 0,
   reloadRequest = 0,
+  renderRequest = 0,
   request = 0;
 const PAGE = 72;
 function readingProfiles(c) {
@@ -23,7 +33,9 @@ function readingProfiles(c) {
       : "")
   );
 }
-function render() {
+async function render() {
+  const generation = ++renderRequest;
+  $("#characterGrid").setAttribute("aria-busy", "true");
   const query = $("#characterSearch").value.trim(),
     n = normalizeLatin(query),
     radicalMode = mode === "radicals";
@@ -39,7 +51,9 @@ function render() {
             all.find((c) => c.character === character) || { character },
         )
       : all;
-  if (!radicalMode && mode !== "all" && mode !== "saved")
+  if (mode === "saved")
+    rows = await Promise.all(saved.map((char) => characters.get(char)));
+  if (!radicalMode && mode !== "all" && mode !== "common" && mode !== "saved")
     rows = rows.filter((c) => c.curriculumTags?.some((t) => t.level === mode));
   if (query)
     rows = rows.filter(
@@ -50,11 +64,24 @@ function render() {
           (x) => x && normalizeLatin(x).includes(n),
         ),
     );
-  $("#characterCount").textContent =
-    rows.length + (radicalMode ? " bộ thủ" : " chữ");
+  let total = rows.length,
+    warning = "";
+  if (mode === "all" || mode === "common") {
+    const result = await characters.search(query, {
+      mode,
+      page,
+      overlays: all,
+    });
+    rows = result.rows;
+    total = result.total;
+    warning = result.warning;
+  } else rows = rows.slice(page * PAGE, (page + 1) * PAGE);
+  if (generation !== renderRequest) return;
+  $("#characterCount").textContent = total + (radicalMode ? " bộ thủ" : " chữ");
+  $("#characterWarning").hidden = !warning;
+  $("#characterWarning").textContent = warning || "";
   $("#characterGrid").innerHTML = rows.length
     ? rows
-        .slice(page * PAGE, (page + 1) * PAGE)
         .map(
           (c) =>
             `<button data-char="${esc(c.character)}" lang="zh-Hans" aria-label="Xem chữ ${esc(c.character)}">${esc(c.character)}<small>${esc(c.pinyin || (c.number ? "Bộ " + c.number : ""))}</small></button>`,
@@ -62,9 +89,10 @@ function render() {
         .join("")
     : empty("Chưa có chữ phù hợp", "Đổi bộ lọc hoặc thử gõ trực tiếp chữ Hán.");
   $("#characterPagination").innerHTML =
-    rows.length > PAGE
-      ? `<button class="st-button" data-page="${page - 1}" ${!page ? "disabled" : ""}>← Trước</button><span>${page + 1} / ${Math.ceil(rows.length / PAGE)}</span><button class="st-button" data-page="${page + 1}" ${(page + 1) * PAGE >= rows.length ? "disabled" : ""}>Sau →</button>`
+    total > PAGE
+      ? `<button class="st-button" data-page="${page - 1}" ${!page ? "disabled" : ""}>← Trước</button><span>${page + 1} / ${Math.ceil(total / PAGE)}</span><button class="st-button" data-page="${page + 1}" ${(page + 1) * PAGE >= total ? "disabled" : ""}>Sau →</button>`
       : "";
+  $("#characterGrid").removeAttribute("aria-busy");
 }
 async function openCharacter(char, push = true) {
   char = [...char].find((c) => HAN.test(c));
@@ -80,7 +108,7 @@ async function openCharacter(char, push = true) {
     history.pushState({}, "", url);
   }
   try {
-    const [c, words, wordIds, characterIds] = await Promise.all([
+    const [c, compounds, wordIds, characterIds] = await Promise.all([
       characters.get(char, new URL(location.href).searchParams.get("lesson")),
       dictionary.compounds(char),
       savedWords(),
@@ -93,19 +121,57 @@ async function openCharacter(char, push = true) {
       <div class="st-detail-top"><div class="st-character" lang="zh-Hans">${esc(char)}</div><div>
         <p class="st-eyebrow">HÁN TỰ TRONG NGỮ CẢNH</p><h2 class="st-detail-title">${esc(char)} · ${esc(c.pinyin || "Chưa có âm đọc")}</h2>
         <p>${esc((c.meaningsVi || []).join("; ") || "Tra từ ghép bên dưới để xem nghĩa trong ngữ cảnh.")}</p>
-        <p class="st-help">Hán Việt: ${esc(c.hanViet || "chưa có dữ liệu đã kiểm chứng")}</p>
+        <p class="st-help">Hán Việt: ${esc(c.hanViet || "chưa có dữ liệu")}</p>
         <div class="st-actions"><button class="st-icon" data-speak="${esc(char)}" aria-label="Nghe chữ ${esc(char)}">${icon("audio")}</button>
           <button class="st-button" id="copyCharacter">Sao chép</button>
           <button class="st-button" id="saveCharacter" aria-pressed="${isSaved}">${isSaved ? "Đã lưu chữ" : "Lưu chữ"}</button>
           <button class="st-button primary" id="practiceCharacter">Thứ tự nét & luyện viết</button></div>
       </div></div>
-      <dl class="st-facts"><div><dt>Số nét</dt><dd>${esc(c.strokeCount || "Chưa có")}</dd></div><div><dt>Bộ thủ</dt><dd>${esc(c.radical || "Chưa có")}</dd></div><div><dt>Phồn thể</dt><dd>${esc((c.traditional || []).join(" · ") || "—")}</dd></div></dl>
+      <dl class="st-facts"><div><dt>Số nét</dt><dd>${esc(c.strokeCount || "Chưa có")}</dd></div><div><dt>Bộ thủ</dt><dd>${esc(c.radical || "Chưa có")}</dd></div><div><dt>Phồn thể</dt><dd>${esc((c.traditional || []).join(" · ") || "—")}</dd></div><div><dt>Giản thể</dt><dd>${esc((c.simplified || []).join(" · ") || "—")}</dd></div></dl>
+      ${c.hanVietReadings?.length ? `<details class="st-details"><summary>Âm Hán Việt theo cách đọc và dạng chữ</summary><div class="st-hv-readings">${c.hanVietReadings.map((r) => `<p><b lang="zh-Hant">${esc(r.character)}</b> · ${esc(r.pinyin || "Nguồn chưa chia theo pinyin")} <strong>${esc(r.values.join(" / "))}</strong></p>`).join("")}</div><p class="st-caption">Nguồn Phong Phan; cần đối chiếu ngữ cảnh khi một cách đọc có nhiều âm Hán Việt.</p></details>` : ""}
+      ${c.vietnameseReadings?.length ? `<p class="st-caption">Âm Việt (Unihan): ${esc(c.vietnameseReadings.join(" · "))}. Trường này không đồng nhất với âm Hán Việt.</p>` : ""}
+      ${!c.meaningsVi?.length && c.definitionEn ? `<p class="st-help">Nghĩa tham khảo tiếng Anh (Unihan): ${esc(c.definitionEn)}</p>` : ""}
+      ${c.commonRank ? '<p class="st-caption">Có trong bảng 8.105 chữ thông dụng (2013); đây không phải cấp HSK.</p>' : ""}
       <p class="st-caption">${c.curriculumTags?.length ? "Trong giáo trình HSK 2.0: " + c.curriculumTags.map((t) => `<a href="${esc(t.href)}">HSK ${esc(t.level)} · Bài ${esc(t.lessonNo)}</a>`).join(", ") : "Chưa gán cấp HSK"}</p>
       ${c.structure ? `<details class="st-details" open><summary>Cấu tạo chữ</summary><p>${esc(typeof c.structure === "string" ? c.structure : JSON.stringify(c.structure))}</p></details>` : ""}
       ${deep.memoryAid ? `<details class="st-details"><summary>Gợi ý ghi nhớ</summary><p>${esc(deep.memoryAid)}</p></details>` : ""}
-      <div class="st-section-head st-compound-heading"><h2>Từ ghép và ví dụ</h2><span class="st-caption">${words.length} từ có ${esc(char)}</span></div>
-      ${words.length ? words.map((w) => entryCard(w, { saved: wordIds.includes(w.id) })).join("") : empty("Chưa có từ ghép trong kho", "Dữ liệu sẽ được bổ sung khi có nguồn tiếng Việt đã kiểm chứng.")}
-      <p class="st-source">Nguồn: học liệu của website; số nét, bộ thủ và biến thể bổ sung từ Unicode Unihan 17.0. Không suy diễn Hán Việt từ cách đọc hiện đại.</p>`;
+      ${referenceLinks(char)}
+      <p class="st-source">Học liệu trong giáo trình được ưu tiên. <a href="nguon-tu-dien.html">Nguồn mở bổ sung</a>: Unicode Unihan 17.0 (Unicode-3.0); âm Hán Việt: Phong Phan (MIT); nghĩa Việt: CVDICT, Phong Phan & CC-CEDICT (CC BY-SA 4.0, bản dịch có hỗ trợ AI khi biên soạn).</p>
+      <div class="st-section-head st-compound-heading"><h2>Từ chứa chữ ${esc(char)}</h2><span class="st-caption">${compounds.total} từ</span></div><div id="characterCompounds"></div><div id="compoundPagination" class="st-pagination"></div>`;
+    let compoundRequest = 0;
+    const renderCompounds = (result, currentPage) => {
+      $("#characterCompounds").innerHTML =
+        (result.warning
+          ? `<p role="status" class="st-notice">${esc(result.warning)}</p>`
+          : "") +
+        (result.entries.length
+          ? result.entries
+              .map((w) => entryCard(w, { saved: wordIds.includes(w.id) }))
+              .join("")
+          : empty(
+              "Chưa có từ chứa chữ này",
+              "Có thể đối chiếu thêm qua Hanzii hoặc Thi Viện.",
+            ));
+      $("#compoundPagination").innerHTML =
+        result.total > 12
+          ? `<button class="st-button" data-compound-page="${currentPage - 1}" ${!currentPage ? "disabled" : ""}>← Trước</button><span>${currentPage + 1} / ${Math.ceil(result.total / 12)}</span><button class="st-button" data-compound-page="${currentPage + 1}" ${(currentPage + 1) * 12 >= result.total ? "disabled" : ""}>Sau →</button>`
+          : "";
+      $("#characterCompounds").removeAttribute("aria-busy");
+    };
+    renderCompounds(compounds, 0);
+    $("#compoundPagination").onclick = async (event) => {
+      const button = event.target.closest("[data-compound-page]");
+      if (!button) return;
+      const current = ++compoundRequest,
+        nextPage = Number(button.dataset.compoundPage);
+      $("#characterCompounds").setAttribute("aria-busy", "true");
+      const result = await dictionary.compounds(char, { page: nextPage });
+      if (seq !== request || current !== compoundRequest) return;
+      renderCompounds(result, nextPage);
+      target
+        .querySelector(".st-compound-heading")
+        .scrollIntoView({ block: "start" });
+    };
     target
       .querySelector(".st-facts")
       .insertAdjacentHTML("afterend", readingProfiles(c));
@@ -158,7 +224,7 @@ async function reload() {
   all = rows;
   saved = ids;
   radicals = data.radicals;
-  render();
+  await render();
 }
 let searchTimer;
 $("#characterSearch").addEventListener("input", () => {
@@ -166,6 +232,7 @@ $("#characterSearch").addEventListener("input", () => {
   $("#characterBrowser").hidden = false;
   $("#characterDetail").hidden = true;
   request++;
+  renderRequest++;
   clearTimeout(searchTimer);
   searchTimer = setTimeout(render, 180);
 });
@@ -175,6 +242,7 @@ $("#characterSearch").addEventListener("keydown", (e) => {
 });
 $("#levelFilters").innerHTML = [
   ["all", "Tất cả"],
+  ["common", "Thông dụng"],
   ...LEVELS.map((x) => [x, "HSK " + x]),
   ["radicals", "214 bộ thủ"],
   ["saved", "Đã lưu"],
@@ -226,6 +294,17 @@ window.addEventListener("study:auth", () => {
   if (char) openCharacter(char, false);
 });
 await initShared();
+lexiconManifest()
+  .then(({ counts }) => {
+    $("#characterCoverage").textContent =
+      counts.characters.toLocaleString("vi-VN") +
+      " chữ · " +
+      counts.commonCharacters.toLocaleString("vi-VN") +
+      " chữ thông dụng · " +
+      counts.hanVietCharacters.toLocaleString("vi-VN") +
+      " chữ có âm Hán Việt";
+  })
+  .catch(() => {});
 await reload().catch((e) => {
   $("#characterGrid").innerHTML = empty("Không tải được kho chữ", e.message);
 });

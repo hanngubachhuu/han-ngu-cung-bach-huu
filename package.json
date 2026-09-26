@@ -6,7 +6,7 @@
     "node": "24.x"
   },
   "scripts": {
-    "build": "node scripts/build-study-data.mjs && node scripts/build-web.mjs",
+    "build": "node scripts/build-study-data.mjs && node scripts/build-study-lexicon.mjs && node scripts/build-web.mjs",
     "test": "node --test tests/*.test.mjs",
     "dev": "node --env-file-if-exists=.env.local scripts/dev-server.mjs",
     "validate:study": "node scripts/validate-study.mjs",

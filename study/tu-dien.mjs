@@ -4,6 +4,7 @@ import { savedWords, savedWordEntries } from "./storage.mjs";
 import { HandwritingCanvas } from "./handwriting.mjs";
 import { api } from "./auth.mjs";
 import { wordId, rankEntry } from "./core.mjs";
+import { lexiconManifest } from "./lexicon.mjs";
 let page = 0,
   seq = 0,
   ids = [];
@@ -50,8 +51,10 @@ async function search(push = true) {
       ? "Kết quả cho “" + query + "”"
       : $("#onlySavedWords").checked
         ? "Sổ từ của bạn"
-        : "Từ vựng trong giáo trình";
+        : "Kho từ điển Trung–Việt";
     $("#dictionaryCount").textContent = result.total + " kết quả";
+    $("#dictionaryWarning").hidden = !result.warning;
+    $("#dictionaryWarning").textContent = result.warning || "";
     $("#savedWordsCount").textContent = ids.length + " từ đã lưu";
     $("#dictionaryResults").innerHTML = result.entries.length
       ? result.entries
@@ -145,6 +148,13 @@ window.addEventListener("study:auth", () => {
   search(false);
 });
 await initShared();
+lexiconManifest()
+  .then(({ counts }) => {
+    $("#dictionaryCoverage").textContent =
+      counts.words.toLocaleString("vi-VN") +
+      " mục từ nguồn mở · thêm học liệu trong giáo trình";
+  })
+  .catch(() => {});
 $("#dictionarySearch").value =
   new URL(location.href).searchParams.get("word") || "";
 await search(false);

@@ -1,4 +1,4 @@
-import { escapeHtml as esc } from "./core.mjs";
+import { escapeHtml as esc, HAN } from "./core.mjs";
 import { aiEnabled, getClient, getSession, loadCapabilities } from "./auth.mjs";
 import { savedWords, toggleWord } from "./storage.mjs";
 import { dictionary } from "./repository.mjs";
@@ -42,17 +42,60 @@ export function levelLabel(e) {
     : "Chưa phân loại HSK";
 }
 const displayedEntries = new Map();
+export function referenceLinks(word) {
+  return `<div class="st-reference-links"><span>Đối chiếu</span><a href="https://hanzii.net/search/word/${encodeURIComponent(word)}?hl=vi" target="_blank" rel="noopener noreferrer">Hanzii ↗</a><a href="https://hvdic.thivien.net/whv/${encodeURIComponent(word)}" target="_blank" rel="noopener noreferrer">Thi Viện ↗</a><a href="nguon-tu-dien.html">Nguồn dữ liệu</a></div>`;
+}
+function meanings(items) {
+  return `<ol class="st-meanings">${(items || []).map((m) => `<li>${esc(m)}</li>`).join("")}</ol>`;
+}
+function readingGroups(readings) {
+  return readings
+    .map(
+      (r, i) =>
+        `<section class="st-reading-group"><p class="st-reading-label"><span>${i + 1}</span><b>${esc(r.pinyin)}</b> <span lang="zh-Hant">${esc(r.traditional)}</span></p>${r.hanViet ? `<p class="st-caption">Âm Hán Việt tham khảo: ${esc(r.hanViet)}</p>` : ""}${meanings(r.meaningsVi)}${r.classifiers?.length ? `<p class="st-caption">Lượng từ: ${esc(r.classifiers.join(" · "))}</p>` : ""}</section>`,
+    )
+    .join("");
+}
+function sourceNote(e) {
+  const source = e.provenance?.source;
+  if (source === "openai") return "Gợi ý AI · cần đối chiếu khi sử dụng";
+  const course = (e.curriculumTags || [])
+    .map(
+      (t) =>
+        `<a href="${esc(t.href)}">HSK ${esc(t.level)} · Bài ${t.lessonNo}</a>`,
+    )
+    .join(", ");
+  return (
+    (course ? "Giáo trình: " + course + ". " : "") +
+    (source === "cvdict" || e.lexiconProvenance
+      ? '<a href="nguon-tu-dien.html#cvdict">CVDICT · Phong Phan & CC-CEDICT · CC BY-SA 4.0</a>. Phần nghĩa từ nguồn mở có hỗ trợ AI khi biên soạn, cần đối chiếu.'
+      : "") +
+    (e.hanVietSource === "hanviet-pinyin-wordlist"
+      ? ' <a href="nguon-tu-dien.html#hanviet">Âm Hán Việt: Phong Phan · MIT</a>; ghép âm từng chữ, không thay thế nghĩa của từ.'
+      : "")
+  );
+}
 export function entryCard(e, { compact = false, saved = false } = {}) {
   displayedEntries.set(e.id, e);
   return `<article class="st-word-card ${compact ? "is-compact" : ""}" data-entry="${esc(e.id)}">
     <div class="st-word-head"><div><p class="st-pinyin">${esc(e.pinyin || "")}</p><div class="st-word-title"><a class="st-hanzi" lang="zh-Hans" href="tu-dien.html?word=${encodeURIComponent(e.simplified)}">${esc(e.simplified)}</a>${e.traditional && e.traditional !== e.simplified ? `<span class="st-traditional" lang="zh-Hant">${esc(e.traditional)}</span>` : ""}<button class="st-icon" data-speak="${esc(e.simplified)}" aria-label="Nghe ${esc(e.simplified)}">${icon("audio")}</button></div></div><button class="st-icon st-save" data-save="${esc(e.id)}" aria-label="Lưu từ ${esc(e.simplified)}" aria-pressed="${saved}">${icon("save")}</button></div>
     <div class="st-meta"><span>${esc(levelLabel(e))}</span>${e.partOfSpeech?.length ? `<span>${esc(e.partOfSpeech.join(" · "))}</span>` : ""}${e.hanViet ? `<span class="st-hanviet">${esc(e.hanViet)}</span>` : ""}</div>
-    <ol class="st-meanings">${(e.meaningsVi || []).map((m) => `<li>${esc(m)}</li>`).join("")}</ol>
-    ${e.classifiers?.length ? `<p class="st-caption">Lượng từ: ${esc(e.classifiers.join(" · "))}</p>` : ""}
+    ${e.readings?.length > 1 && !compact ? readingGroups(e.readings) : meanings(e.meaningsVi)}
+    ${compact && e.readings?.length > 1 ? `<p class="st-caption">${e.readings.length} cách đọc / dạng chữ · mở mục từ để đối chiếu</p>` : ""}
+    ${!(e.readings?.length > 1) && e.classifiers?.length ? `<p class="st-caption">Lượng từ: ${esc(e.classifiers.join(" · "))}</p>` : ""}
+    ${!compact && e.supplementalReadings?.length ? `<details class="st-details"><summary>Nghĩa và cách đọc khác từ CVDICT</summary>${readingGroups(e.supplementalReadings)}</details>` : ""}
     ${
       compact
         ? ""
-        : `<div class="st-char-links"><span>Xem từng chữ</span>${[...new Set([...e.simplified])].map((c) => `<a lang="zh-Hans" href="chu-han.html?char=${encodeURIComponent(c)}">${esc(c)}</a>`).join("")}</div>
+        : `<div class="st-char-links"><span>Xem từng chữ</span>${[
+            ...new Set([...e.simplified]),
+          ]
+            .filter((c) => HAN.test(c))
+            .map(
+              (c) =>
+                `<a lang="zh-Hans" href="chu-han.html?char=${encodeURIComponent(c)}">${esc(c)}</a>`,
+            )
+            .join("")}</div>
     ${(e.examples || [])
       .slice(0, 3)
       .map(
@@ -67,8 +110,9 @@ export function entryCard(e, { compact = false, saved = false } = {}) {
       )
       .join("")}
     ${e.detail?.usageNotes?.length ? `<details class="st-details"><summary>Cách dùng và lưu ý</summary><ul>${e.detail.usageNotes.map((n) => "<li>" + esc(n) + "</li>").join("")}</ul>${(e.detail.commonConfusions || []).map((c) => `<p><b>${esc(c.with)}</b> — ${esc(c.difference)}</p>`).join("")}</details>` : ""}
-    <div class="st-source">${e.provenance?.source === "openai" ? "Gợi ý AI · cần đối chiếu khi sử dụng" : `Nguồn: ${(e.curriculumTags || []).map((t) => `<a href="${esc(t.href)}">HSK ${esc(t.level)} · Bài ${t.lessonNo}</a>`).join(", ") || "Dữ liệu bổ sung"}`}</div>`
+    ${referenceLinks(e.simplified)}`
     }
+    <div class="st-source">${sourceNote(e)}</div>
   </article>`;
 }
 let speechGeneration = 0;

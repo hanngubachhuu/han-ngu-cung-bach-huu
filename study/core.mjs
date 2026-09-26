@@ -36,18 +36,29 @@ export function rankEntry(entry, query) {
     n = normalizeLatin(q),
     p = normalizePinyin(q);
   if (!q) return 0;
-  if ([entry.simplified, entry.traditional].includes(q)) return 1000;
-  if (p && normalizePinyin(entry.pinyin) === p) return 900;
-  const meanings = [...(entry.meaningsVi || []), entry.hanViet || ""]
+  const readings = [
+    ...(entry.readings || []),
+    ...(entry.supplementalReadings || []),
+  ];
+  const forms = [
+    entry.simplified,
+    entry.traditional,
+    ...readings.map((r) => r.traditional),
+  ].filter(Boolean);
+  const pinyins = [entry.pinyin, ...readings.map((r) => r.pinyin)]
+    .filter(Boolean)
+    .map(normalizePinyin);
+  if (forms.includes(q)) return 1000;
+  if (p && pinyins.includes(p)) return 900;
+  const meanings = [
+    ...(entry.meaningsVi || []),
+    entry.hanViet || "",
+    ...readings.flatMap((r) => [...(r.meaningsVi || []), r.hanViet || ""]),
+  ]
     .map(normalizeLatin)
     .filter(Boolean);
   if (meanings.includes(n)) return 800;
-  const values = [
-    entry.simplified,
-    entry.traditional || "",
-    normalizePinyin(entry.pinyin),
-    ...meanings,
-  ];
+  const values = [...forms, ...pinyins, ...meanings];
   if (
     values.some(
       (v) =>
@@ -66,12 +77,12 @@ export function rankEntry(entry, query) {
     return 400;
   if (
     /^[a-z]{4,80}$/.test(p) &&
-    withinOneEdit(p, normalizePinyin(entry.pinyin))
+    pinyins.some((value) => withinOneEdit(p, value))
   )
     return 200;
   return 0;
 }
-function withinOneEdit(a, b) {
+export function withinOneEdit(a, b) {
   if (Math.abs(a.length - b.length) > 1) return false;
   let i = 0,
     j = 0,
@@ -108,7 +119,15 @@ export function segmentText(text, entries) {
   // Longest dictionary match wins; unknown spans use locale-aware segmentation.
   const byFirst = new Map();
   for (const e of entries)
-    for (const word of new Set([e.simplified, e.traditional].filter(Boolean))) {
+    for (const word of new Set(
+      [
+        e.simplified,
+        e.traditional,
+        ...(e.readings || e.supplementalReadings || []).map(
+          (r) => r.traditional,
+        ),
+      ].filter(Boolean),
+    )) {
       const group = byFirst.get(word[0]) || [];
       group.push({ word, entry: e });
       byFirst.set(word[0], group);
