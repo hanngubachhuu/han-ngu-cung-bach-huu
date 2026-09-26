@@ -44,6 +44,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "她女儿今年二十岁。",
     "titleVi": "Con gái cô ấy năm nay hai mươi tuổi.",
     "href": "hsk1_bai5_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai5.js"
   },
   {
@@ -53,6 +54,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "我会说汉语。",
     "titleVi": "Tôi biết nói tiếng Trung.",
     "href": "hsk1_bai6_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai6.js"
   },
   {
@@ -62,6 +64,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "今天几号？",
     "titleVi": "Hôm nay ngày mấy?",
     "href": "hsk1_bai7_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai7.js"
   },
   {
@@ -71,6 +74,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "我想喝茶。",
     "titleVi": "Tôi muốn uống trà.",
     "href": "hsk1_bai8_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai8.js"
   },
   {
@@ -80,6 +84,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "你儿子在哪儿工作？",
     "titleVi": "Con trai bạn làm việc ở đâu?",
     "href": "hsk1_bai9_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai9.js"
   },
   {
@@ -89,6 +94,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "我能坐这儿吗？",
     "titleVi": "Tôi có thể ngồi đây không?",
     "href": "hsk1_bai10_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai10.js"
   },
   {
@@ -98,6 +104,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "现在几点？",
     "titleVi": "Bây giờ là mấy giờ?",
     "href": "hsk1_bai11_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai11.js"
   },
   {
@@ -107,6 +114,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "明天天气怎么样？",
     "titleVi": "Thời tiết ngày mai thế nào?",
     "href": "hsk1_bai12_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai12.js"
   },
   {
@@ -116,6 +124,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "他在学做中国菜呢。",
     "titleVi": "Anh ấy đang học nấu món Trung Quốc.",
     "href": "hsk1_bai13_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai13.js"
   },
   {
@@ -125,6 +134,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "她买了不少衣服。",
     "titleVi": "Cô ấy đã mua khá nhiều quần áo.",
     "href": "hsk1_bai14_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai14.js"
   },
   {
@@ -134,6 +144,7 @@ window.HAN_NGU_DATA.manifest = [
     "titleZh": "我是坐飞机来的。",
     "titleVi": "Tôi đến bằng máy bay.",
     "href": "hsk1_bai15_index.html",
+    "visibility": "student"
     "data": "data/lessons/hsk1/bai15.js"
   },
   {
