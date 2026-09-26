@@ -21,7 +21,11 @@ for (const item of await fs.readdir(root, { withFileTypes: true })) {
   if (item.isDirectory() && publicDirectories.has(item.name))
     await fs.cp(path.join(root, item.name), path.join(out, item.name), {
       recursive: true,
-      filter: (p) => !p.split(path.sep).some((x) => x.startsWith(".")),
+      filter: (p) => {
+        if (p.split(path.sep).some((x) => x.startsWith("."))) return false;
+        const rel = path.relative(root, p);
+        return !rel.startsWith(path.join("data", "study", "lexicon") + path.sep);
+      },
     });
   else if (item.isFile() && /\.(html|css|js|ico|webmanifest)$/.test(item.name))
     await fs.copyFile(path.join(root, item.name), path.join(out, item.name));
@@ -47,32 +51,9 @@ await fs.copyFile(
   path.join(root, "node_modules/hanzi-writer/dist/hanzi-writer.min.js"),
   path.join(out, "study/vendor/hanzi-writer.min.js"),
 );
-const strokeSource = path.join(root, "node_modules/hanzi-writer-data");
-const strokeOutput = path.join(out, "data/hanzi-strokes");
-await fs.mkdir(strokeOutput, { recursive: true });
-const strokeFiles = (await fs.readdir(strokeSource)).filter(
-  (f) => f.endsWith(".json") && f !== "package.json",
-);
-for (let i = 0; i < strokeFiles.length; i += 80)
-  await Promise.all(
-    strokeFiles
-      .slice(i, i + 80)
-      .map((file) =>
-        fs.copyFile(
-          path.join(strokeSource, file),
-          path.join(strokeOutput, file),
-        ),
-      ),
-  );
-await fs.copyFile(
-  path.join(strokeSource, "ARPHICPL.TXT"),
-  path.join(strokeOutput, "ARPHICPL.TXT"),
-);
-await fs.writeFile(
-  path.join(strokeOutput, "NOTICE.txt"),
-  "Hanzi Writer Data 2.0.1 / Make Me A Hanzi. Original glyphs by Arphic Technology. Redistributed without modification under the Arphic Public License; see ARPHICPL.TXT. Source: https://github.com/chanind/hanzi-writer-data\n",
-);
-console.log("Bundled stroke data for " + strokeFiles.length + " characters.");
+// Stroke-order glyph data is loaded on demand from the upstream Hanzi Writer
+// data CDN. Keeping 9,000+ JSON files out of dist prevents every deployment
+// from carrying the whole handwriting corpus.
 for (const module of ["pinyin-pro", "hanzi-writer", "@supabase/supabase-js"]) {
   const base = path.join(root, "node_modules", module);
   const license = (await fs.readdir(base)).find((x) => /^license/i.test(x));
