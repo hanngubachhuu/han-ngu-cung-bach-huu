@@ -99,12 +99,18 @@ function adapt(payload){
   // Bài 5–9: payload.content là normalized source.
   // Bài 10–15: payload chính là normalized source.
   // Bài 4: payload.content là normalized source, còn section metadata ở payload.sections.
-  const source = payload.content && typeof payload.content==='object' && !Array.isArray(payload.content)
+  const envelope = payload.content && typeof payload.content==='object' && !Array.isArray(payload.content)
     ? payload.content
     : payload;
 
+  // The private RPC returns lesson_content.content as an envelope whose
+  // normalized lesson source is nested under envelope.content.
+  const source = envelope.content && typeof envelope.content==='object' && !Array.isArray(envelope.content)
+    ? envelope.content
+    : envelope;
+
   const course=source.course || {};
-  const ui=payload.ui || {};
+  const ui=payload.ui || envelope.ui || {};
   // Bài 4 có một payload.questions đầy đủ hơn bản exercises.all bên trong
   // (đặc biệt dialog_fill / matching). Nếu có bản ngoài thì ưu tiên bản đó.
   const questionsSource =
