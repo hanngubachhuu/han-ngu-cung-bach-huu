@@ -729,36 +729,58 @@ function rowExplain(typeClass, icon, title, content){
 function gradeQuestion(q){
   const max = 1;
   const v = state.answers[q.id];
+
   if(q.type === 'mcq'){
     return { score: (v === q.answer) ? 1 : 0, max };
   }
+
   if(q.type === 'matching'){
     const values = v && typeof v === 'object' ? v : {};
-    const correctMap=q.correctMap||{};
-    const terms=q.terms||[];
-    const ok=terms.length>0 && terms.every(t => String(values[t.id] ?? '') === String(correctMap[String(t.id)] ?? correctMap[t.id] ?? ''));
+    const correctMap = q.correctMap && typeof q.correctMap === 'object' ? q.correctMap : {};
+    const terms = Array.isArray(q.terms) ? q.terms : [];
+    const ok = terms.length > 0 && terms.every(t =>
+      String(values[t.id] ?? '') === String(correctMap[String(t.id)] ?? correctMap[t.id] ?? '')
+    );
     return { score: ok ? 1 : 0, max };
   }
+
   if(q.type === 'dialog_fill'){
-    const values=v&&typeof v==='object'?v:{}, correctMap=q.correctMap||{}, keys=Object.keys(correctMap);
-    const ok=keys.length>0&&keys.every(k=>String(values[k]||'')===String(correctMap[k]));
-    return {score:ok?1:0,max};
+    const values = v && typeof v === 'object' ? v : {};
+    const correctMap = q.correctMap && typeof q.correctMap === 'object' ? q.correctMap : {};
+    const keys = Object.keys(correctMap);
+    const ok = keys.length > 0 && keys.every(k =>
+      String(values[k] ?? '') === String(correctMap[k] ?? '')
+    );
+    return { score: ok ? 1 : 0, max };
   }
+
   if(q.type === 'text_fill'){
-    const norm = s => (s||'').trim().replace(/\s+/g,'');
-    const ok = (q.answer||[]).some(a => norm(a) === norm(v));
+    const norm = s => String(s ?? '').trim().replace(/\s+/g,'');
+    const answers = Array.isArray(q.answer) ? q.answer : (q.answer === undefined || q.answer === null ? [] : [q.answer]);
+    const ok = answers.some(a => norm(a) === norm(v));
     return { score: ok ? 1 : 0, max };
   }
-  if(q.type === 'multi_fill'){ const ok=Array.isArray(v) && v.length===q.answers.length && v.every((item,index)=>item===q.answers[index]); return { score:ok?1:0, max }; }
+
+  if(q.type === 'multi_fill'){
+    const expected = Array.isArray(q.answers) ? q.answers : [];
+    const ok = Array.isArray(v) && v.length === expected.length && v.every((item,index) => item === expected[index]);
+    return { score: ok ? 1 : 0, max };
+  }
+
   if(q.type === 'reorder'){
-    const arr = v || [];
-    const ok = arr.length === q.answer.length && arr.every((t,i) => t === q.answer[i]);
+    const arr = Array.isArray(v) ? v : [];
+    const expected = Array.isArray(q.answer)
+      ? q.answer
+      : (Array.isArray(q.correctOrder) ? q.correctOrder : []);
+    const ok = expected.length > 0 && arr.length === expected.length && arr.every((t,i) => t === expected[i]);
     return { score: ok ? 1 : 0, max };
   }
+
   if(q.type === 'self_check' || q.type === 'retell'){
     const mark = state.selfMarks[q.id];
     return { score: (mark === undefined ? 0 : mark), max };
   }
+
   return { score:0, max };
 }
 function computeFullResult(){
@@ -770,6 +792,8 @@ function computeFullResult(){
   ALL_QUESTIONS.forEach(q => {
     const g = gradeQuestion(q);
     score += g.score; max += g.max;
+    if(!bySection[q._sectionId]) bySection[q._sectionId] = {label:q._sectionTitle || q._sectionId || 'Phần chưa xác định', score:0, max:0};
+    if(!bySkill[q._skill]) bySkill[q._skill] = {label:q._skill || 'Kỹ năng chưa xác định', score:0, max:0};
     bySection[q._sectionId].score += g.score; bySection[q._sectionId].max += g.max;
     bySkill[q._skill].score += g.score; bySkill[q._skill].max += g.max;
     if(!isAnswered(q)) unanswered++;
