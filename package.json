@@ -1,0 +1,7 @@
+{
+  "name": "han-ngu-cung-bach-huu",
+  "private": true,
+  "scripts": {
+    "build": "node vercel-build.mjs"
+  }
+}
