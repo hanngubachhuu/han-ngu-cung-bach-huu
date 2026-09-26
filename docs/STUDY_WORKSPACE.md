@@ -30,13 +30,13 @@ Nguồn giáo trình HSK 2.0: `data/lesson-registry.js`, `data/lesson-manifest.j
 - Học liệu công khai: 62 từ, 91 chữ và 5 bài đọc từ bài 1–3 của HSK 1/2, cộng 214 bộ thủ Unicode.
 - Kho mở rộng: 119.044 mục từ, 122.596 nhóm cách đọc/dạng chữ từ CVDICT; 103.013 chữ từ hợp nhất Unihan, CVDICT và Hán Việt Pinyin. Có 8.105 chữ thông dụng và 13.610 chữ có ánh xạ âm Hán Việt (gồm biến thể giản–phồn). Không đồng nghĩa với từng ấy mục đã được giáo viên kiểm chứng. Xem [nguồn, giấy phép và quy trình nhập](../sources/dictionaries/README.md).
 - Bản nhập Supabase: 344 record từ, 524 record chữ, 45 bài đọc; các record ngoài bài 1–3 được bảo vệ bằng quyền bài học. Record không đồng nghĩa với số từ duy nhất.
-- Bộ nét cục bộ: 9.574 chữ từ `hanzi-writer-data@2.0.1`; chứa giấy phép Arphic và NOTICE trong bản build. Hanzi Writer, Supabase JS và pinyin-pro có license kèm bundle.
+- Bộ nét: Hanzi Writer 3.7.3 chạy trong bundle; dữ liệu stroke order của `hanzi-writer-data@2.0.1` được tải theo từng chữ từ CDN, không đóng gói 9.000+ tệp JSON vào deployment.
 - `scripts/import-unicode.py` nhập tập dữ liệu Unihan 17.0 có hash/nguồn. Không suy diễn âm Hán Việt; trường thiếu được hiển thị rõ. Bộ lọc HSK 3–9 hoạt động nhưng chưa có nguồn giáo trình tương ứng trong dự án.
 - Pinyin của bài tự nhập do pinyin-pro suy ra theo câu, cần đối chiếu chữ đa âm. Bản dịch bài mẫu chỉ được lấy khi có câu khớp chính xác trong ví dụ giáo trình. Câu hỏi mẫu lấy từ bài tập canonical; không tự dựng đáp án cho đoạn bất kỳ khi AI tắt.
 
 `data/study/entries/`, `readings/` và `catalog.json` là đầu ra build. Hai collection được tạo lại mỗi lần để không sót dữ liệu đã rút khỏi kho công khai. Không sửa các JSON sinh ra bằng tay.
 
-`sources/dictionaries/` chứa snapshot nguồn mở có hash và giấy phép; build không cần mạng. `data/study/lexicon/` là đầu ra nén và có tên theo hash. Web Worker tìm kiếm kho lớn, phân trang và kết hợp học liệu được Supabase RLS cho phép; không đưa toàn bộ kho vào DOM hoặc Supabase. Trang `nguon-tu-dien.html` công bố nguồn, số lượng và tải dữ liệu. CVDICT có bản dịch do tác giả dùng AI hỗ trợ nên luôn có nhãn đối chiếu; không phát sinh gọi API AI. Hanzii/Thi Viện là liên kết tra cứu bên ngoài.
+`sources/dictionaries/` chứa snapshot nguồn mở có hash và giấy phép. CVDICT được nhập vào `public.study_lexicon_words` của Supabase; Unihan và Hán Việt được lưu nén trong bucket Storage `study-lexicon`. Web Worker chỉ nhận các trang kết quả và dựng thông tin Hán tự từ snapshot. Vercel không còn build hoặc ship `data/study/lexicon/`. Trang `nguon-tu-dien.html` công bố nguồn, số lượng và liên kết snapshot. Hanzii/Thi Viện là liên kết tra cứu bên ngoài.
 
 Kho học liệu cũ đang chuyển dần sang riêng tư. Thay đổi này không biến tất cả file giáo trình cũ thành riêng tư. Bài HSK 1 số 4 dùng cổng tải hiện có và không được xuất lại từ seed cục bộ.
 
@@ -67,6 +67,10 @@ Mỗi lệnh trả JSON `{count,total,sql}`. Dùng công cụ quản trị Supab
 `tests/study-rls.sql` kiểm tra tài khoản sở hữu, từ chối đọc/sửa/chèn chéo chủ, lưu chữ, tài khoản không tồn tại, và quota cá nhân/toàn cục. Test cần một tài khoản đã xác nhận và **ROLLBACK toàn bộ thay đổi**. Không dùng tài khoản sinh ra để giả rằng đã kiểm tra đăng nhập giao diện thật.
 
 Advisors sau cập nhật: không còn cảnh báo RLS/policy của bảng study. Còn cảnh báo cấu hình bảo vệ mật khẩu rò rỉ chưa bật ở Auth; xem [hướng dẫn Supabase](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection). Cảnh báo nhiều SELECT policy ở `lesson_content` thuộc hệ thống bài học có sẵn; các index mới chưa được sử dụng nhiều nên giữ lại.
+
+## Kiến trúc kho từ điển mở rộng
+
+Kho công khai lớn được tách khỏi Vercel. CVDICT 119.044 mục từ và 122.596 nhóm cách đọc/dạng chữ nằm trong Supabase Postgres; Unihan 17.0 và dữ liệu Hán Việt nén nằm trong Supabase Storage. Web Worker gọi các RPC tìm kiếm đã giới hạn kết quả, đồng thời giữ lớp merge học liệu HSK và Hán Việt ở phía client. `data/study/lexicon/` chỉ còn phục vụ audit/kiểm tra thủ công khi cần, không nằm trên đường build production.
 
 ## Vercel và GitHub
 
