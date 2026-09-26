@@ -1367,33 +1367,3 @@ function init(){
   renderIntroScreen();
 }
 init();
-</script>
-<footer class="site-footer no-print" id="siteFooter">
-  <div class="site-footer-inner">
-    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
-    <div class="site-footer-links">
-      <a href="trang-chu.html">Trang chủ</a>
-      <a href="hskk.html">HSKK</a>
-      <a href="on-tap-chung.html">Ôn tập chung</a>
-      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
-      <a href="trang-chu.html#lien-he">Liên hệ</a>
-    </div>
-  </div>
-  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
-</footer>
-<button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Quay về đầu trang" title="Quay về đầu trang">↑</button>
-<script>
-(function(){
-  var y=document.getElementById('footerYear');
-  if(y) y.textContent=new Date().getFullYear();
-  var b=document.getElementById('siteBackTop');
-  if(b){
-    window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>420);},{passive:true});
-    b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-  }
-})();
-</script>
-
-<script src="hsk1-navigation.js" defer></script>
-</body>
-</html>
