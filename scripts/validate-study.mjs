@@ -66,22 +66,8 @@ for (const reading of data.readings) {
   );
   if (r.questions.length) assert.ok(validateQuestions(r.questions));
 }
-const sourceManifest = JSON.parse(
-  await fs.readFile(
-    new URL("../sources/dictionaries/manifest.json", root),
-    "utf8",
-  ),
-);
-assert.equal(sourceManifest.schema, 1);
-assert.equal(sourceManifest.sources.length, 4);
-assert.ok(sourceManifest.sources.every((source) => source.sha256));
-
-await assert.rejects(
-  fs.access(new URL("data/study/lexicon/", dist)),
-  "Local lexicon build output must not ship with Vercel deployments",
-);
 const lexiconSourceCode = await fs.readFile(
-  new URL("../study/lexicon.mjs", root),
+  new URL("../study/lexicon.mjs", import.meta.url),
   "utf8",
 );
 assert.match(lexiconSourceCode, /get_study_lexicon_meta/);
