@@ -88,9 +88,11 @@ function adapt(payload){
 
   const course=source.course || {};
   const ui=payload.ui || {};
+  // Bài 4 có một payload.questions đầy đủ hơn bản exercises.all bên trong
+  // (đặc biệt dialog_fill / matching). Nếu có bản ngoài thì ưu tiên bản đó.
   const questionsSource =
-    arr(source.exercises?.all).length ? source.exercises.all :
-    arr(payload.questions);
+    arr(payload.questions).length ? payload.questions :
+    arr(source.exercises?.all);
 
   const questions=questionsSource.map(normalizeQuestion).filter(Boolean);
   const sections=buildSections(payload,source,questions);
