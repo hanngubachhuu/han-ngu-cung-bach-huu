@@ -13,7 +13,7 @@ Các RPC có kiểm tra `auth.uid()` và quyền hiện hành, `search_path` c�
 
 Bài riêng kiểm tra lại quyền mỗi 60 giây; tải audio bằng phiên được xác thực và dùng blob URL trong phiên trang. Việc thu hồi không thể lấy lại dữ liệu người học đã tải hoặc chụp lại. Repo nguồn vẫn public khi audit: chuyển dist sang private content không xóa các bản nguồn đã công khai trong Git/history/fork. Cần quyết định riêng về quyền riêng tư kho mã.
 
-Bootstrap ADMIN chỉ thực hiện bằng kênh quản trị DB sau khi chủ sở hữu phê duyệt gói phát hành. Chủ sở hữu đã chỉ định `bachhuu1809@gmail.com`; truy vấn tổng hợp ngày 27/09/2026 xác nhận đúng một Auth user có email này và đã xác nhận email. Script `supabase/operations/bootstrap_owner.sql` kiểm tra lại điều kiện đó trong transaction, không cho thay ADMIN khác và ghi audit. Không nhận quyền ADMIN từ metadata, OAuth hay lời khai của trình duyệt. Chưa bootstrap trong đợt này.
+Bootstrap ADMIN đã thực hiện bằng kênh quản trị DB ngày 27/09/2026 sau xác nhận trực tiếp của chủ sở hữu. Truy vấn tổng hợp xác nhận đúng một ADMIN là `bachhuu1809@gmail.com`, đã xác nhận email và giữ đủ 24 quyền học. Script `supabase/operations/bootstrap_owner.sql` kiểm tra điều kiện trong transaction, không thay ADMIN khác và ghi audit. Không nhận quyền ADMIN từ metadata, OAuth hay lời khai của trình duyệt.
 
 Test PostgreSQL cục bộ bao gồm truy cập chéo tài khoản, tự nâng quyền, bỏ qua duyệt, enrollment-only, thu hồi, tạm ngưng, storage, version và giới hạn RPC. Xem `tests/account-rls.test.mjs`. Đây chưa phải bằng chứng đã kiểm thử trên production với hai người dùng thật.
 

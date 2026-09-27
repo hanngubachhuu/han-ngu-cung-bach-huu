@@ -35,7 +35,12 @@ export async function runDocumentAction(
   body,
   { adapterFactory = googleAdapter, configured = googleConfigured() } = {},
 ) {
-  if (action === "status") return { configured };
+  if (action === "status") {
+    if (!configured) return { configured: false, connected: false };
+    // The factory refreshes OAuth and verifies the owner before exposing an adapter.
+    await adapterFactory();
+    return { configured: true, connected: true };
+  }
   if (!configured) throw Error("GOOGLE_NOT_CONFIGURED");
   const rpc = async (command, payload) => {
     const { data, error } = await c.rpc("account_document_command", {

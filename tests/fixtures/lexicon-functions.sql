@@ -313,4 +313,3 @@ offset greatest(0,offset_rows)
 limit greatest(1,least(result_limit,100));
 $function$
 ;
-

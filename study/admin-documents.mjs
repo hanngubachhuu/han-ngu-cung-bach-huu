@@ -34,6 +34,10 @@ function message(error) {
         "Chưa kết nối Google Docs cho website. Cần cấu hình OAuth phía máy chủ bằng tài khoản bachhuu1809@gmail.com.",
       GOOGLE_ACCOUNT_MISMATCH:
         "Tài khoản Google kết nối chưa đúng bachhuu1809@gmail.com.",
+      GOOGLE_AUTH_FAILED:
+        "Kết nối Google đã hết hạn hoặc bị thu hồi. Cần kết nối lại tài khoản bachhuu1809@gmail.com; dữ liệu trên website vẫn được giữ nguyên.",
+      DOCUMENT_SERVICE_UNAVAILABLE:
+        "Chưa liên lạc được với dịch vụ hồ sơ. Hãy tải lại trang và thử lại sau ít phút.",
       VERSION_CONFLICT:
         "Dữ liệu đã thay đổi. Xem lại bản so sánh mới trước khi đồng bộ.",
       SYNC_INCOMPLETE_REVIEW_REQUIRED:
@@ -42,6 +46,29 @@ function message(error) {
     }[error.message] ||
     "Chưa xử lý được tài liệu. Kiểm tra kết nối và xem lại định dạng ba trường được phép sửa."
   );
+}
+export function mountDocumentConnection(root) {
+  root.innerHTML =
+    '<h2>Kết nối Google Docs</h2><p data-google-connection role="status"></p><button class="st-button" type="button">Kiểm tra lại kết nối</button>';
+  const status = root.querySelector("[data-google-connection]");
+  const button = root.querySelector("button");
+  const check = async () => {
+    button.disabled = true;
+    status.textContent = "Đang kiểm tra tài khoản Google…";
+    try {
+      const result = await request("status");
+      if (!root.isConnected) return;
+      status.textContent = result.connected
+        ? "Đã xác minh kết nối với bachhuu1809@gmail.com. Chọn học viên bên dưới để tạo hoặc đồng bộ hồ sơ."
+        : "Chưa có kết nối Google hoạt động. Bạn vẫn có thể duyệt học viên và cấp bài trên website.";
+    } catch (error) {
+      if (root.isConnected) status.textContent = message(error);
+    } finally {
+      button.disabled = false;
+    }
+  };
+  button.addEventListener("click", check);
+  check();
 }
 export async function mountDocuments(root, student) {
   root.innerHTML =

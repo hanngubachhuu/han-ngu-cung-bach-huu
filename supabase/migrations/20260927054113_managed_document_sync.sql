@@ -69,4 +69,3 @@ create function public.account_document_command(command text,payload jsonb) retu
 revoke all on function account_internal.document_command(text,jsonb),public.account_document_command(text,jsonb) from public,anon;
 grant execute on function account_internal.document_command(text,jsonb),public.account_document_command(text,jsonb) to authenticated;
 notify pgrst, 'reload schema';
-

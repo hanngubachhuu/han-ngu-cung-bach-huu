@@ -158,11 +158,12 @@ await context.route(
     return fulfill({});
   },
 );
+let googleStatus = { configured: false, connected: false };
 await context.route("**/api/account?**", (route) =>
   route.fulfill({
-    status: 200,
+    status: googleStatus.error ? 503 : 200,
     contentType: "application/json",
-    body: '{"configured":false}',
+    body: JSON.stringify(googleStatus),
   }),
 );
 try {
@@ -249,6 +250,22 @@ try {
   assert.equal(await page.locator("#adminWorkspace").isVisible(), false);
   profile = { ...profile, role: "ADMIN", version: 3 };
   await page.reload();
+  await page
+    .getByText("Chưa có kết nối Google hoạt động.", { exact: false })
+    .waitFor();
+  googleStatus = { error: "GOOGLE_AUTH_FAILED" };
+  await page.getByRole("button", { name: "Kiểm tra lại kết nối" }).click();
+  await page
+    .getByText("Kết nối Google đã hết hạn hoặc bị thu hồi.", { exact: false })
+    .waitFor();
+  googleStatus = { configured: true, connected: true };
+  await page.getByRole("button", { name: "Kiểm tra lại kết nối" }).click();
+  await page
+    .getByText("Đã xác minh kết nối với bachhuu1809@gmail.com.", {
+      exact: false,
+    })
+    .waitFor();
+  googleStatus = { configured: false, connected: false };
   await page.locator("[data-student]").click();
   await page
     .getByText("Chưa kết nối Google Docs cho website.", { exact: false })

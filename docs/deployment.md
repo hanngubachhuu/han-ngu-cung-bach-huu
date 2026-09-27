@@ -2,11 +2,15 @@
 
 ## Trạng thái hiện tại
 
-DATABASE APPLIED, WEBSITE RELEASE IN PROGRESS (27/09/2026). Chủ sở hữu đã phê duyệt triển khai và xác nhận trực tiếp ADMIN cho `bachhuu1809@gmail.com`. Hai schema account/Docs đã áp dụng; đúng một ADMIN đã được kiểm chứng, 24 quyền học còn nguyên. Chưa deploy frontend mới trước khi chuyển đủ nội dung/audio riêng.
+DATABASE APPLIED, PREVIEW READY, PRODUCTION PENDING (28/09/2026). Chủ sở hữu đã phê duyệt triển khai và xác nhận trực tiếp ADMIN cho `bachhuu1809@gmail.com`. Hai schema account/Docs đã áp dụng; truy vấn lại ngày 28/09 xác nhận đúng một ADMIN, 24 quyền học và 24 bài còn nguyên. Preview đầu tiên đã build thành công; chưa chuyển website chính thức trước khi đủ nội dung/audio riêng và kiểm tra tích hợp.
 
 Đã vá live: anonymous/authenticated không thể gọi `import_study_lexicon_words()`; chín hàm đọc từ điển có search_path cố định, truy vấn mẫu vẫn trả kết quả. Không gọi importer, không đổi corpus.
 
-Lần từ chối migration trước đã được xử lý bằng phê duyệt trực tiếp của chủ sở hữu, sao lưu và kiểm thử khôi phục. Lần cấp ADMIN cần xác nhận riêng theo yêu cầu automatic review; đã nhận xác nhận rồi thực hiện. Vercel được kiểm tra qua dashboard: ba biến Google bí mật do chủ sở hữu nhập ở Preview; SUPABASE_URL và SUPABASE_PUBLISHABLE_KEY đã được bổ sung cho Preview/Production. Cấu hình Google Production đang hoàn tất trong đợt phát hành.
+Vercel đã lưu ba biến Google bí mật cùng SUPABASE_URL và SUPABASE_PUBLISHABLE_KEY cho cả Preview/Production. Không đọc hoặc sao chép giá trị secrets. Cần deployment mới để sử dụng cấu hình vừa đổi. Lưu cấu hình không đồng nghĩa đã xác minh OAuth hay đồng bộ Google Docs thật.
+
+PR [#19](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/pull/19); preview đầu tiên `dpl_D4ATBPzEdAD7P4PprZBSYgjGqG6B`, commit `8d68da8b8166c0dbb451f71539f190efb071dd03`. [GitHub Actions 36322870714](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36322870714) pass toàn bộ kiểm tra PR, gồm các luồng trình duyệt. Bản production vẫn ở commit `01904b0bf98289e82ad52ec0d17ee39f0c1f1635` trong lần kiểm tra triển khai gần nhất; chưa promote PR này.
+
+Kho `lesson-private` vẫn `public=false`. Đã tải bằng Storage dashboard và kiểm tra DB đủ 21/33 audio mới (HSK 1 bài 5–11); 12 tệp bài 12–15 còn thiếu. Bài 4 giữ nguyên ba tệp cũ. Chưa chạy transaction content vì cần đủ tệp. Các metadata thư mục rỗng không được tính là audio. Chrome đang yêu cầu đóng bảng tiện ích mở rộng để tiếp tục thao tác; không thay đổi bảo vệ trình duyệt.
 
 Sao lưu có phạm vi: `.cache/backups/account-before-20260927.json` (gitignored), gồm dữ liệu bảy bảng liên quan, metadata Auth không chứa mật khẩu/token, chính sách và định nghĩa hàm. `node scripts/check-release-restore.mjs` đã khôi phục bảy bảng vào PostgreSQL WASM, chạy hai migration và bootstrap: 24 nội dung không đổi, 24 quyền học giữ nguyên, khách đọc được 0 bài riêng. Đây không phải backup toàn bộ Auth/Storage hay staging Supabase được hosting. Gói Free không có scheduled backup; chưa tạo tài nguyên tính phí.
 
@@ -53,4 +57,4 @@ Không suy rộng kết quả này thành production đã phát hành hoặc Goo
 
 Không drop các bảng tài khoản hoặc xóa người học. Khi lỗi frontend, phục hồi deployment đã kiểm chứng; lưu ý phiên bản cũ có thể chứa dữ liệu bài riêng công khai. Khi lỗi content, dùng `.cache/private-release-rollback.sql`, kiểm số dòng trả về bằng số dòng backup; dừng nếu after_hash đã khác. Không khôi phục policy cũ rộng hơn chỉ để làm test xanh. Asset upload mới có thể giữ trong bucket riêng; không cần xóa để rollback.
 
-Chưa thực hiện backup/restore staging thật, bootstrap, SMTP email, Google OAuth thật hoặc deploy trong đợt này. Những bước này không được tính là hoàn tất chỉ vì code/test cục bộ pass.
+Chưa kiểm tra restore trên staging được hosting, gửi SMTP thật, đồng bộ Google Docs thật hoặc phát hành production mới. Cần hoàn tất 12 audio, xác minh bytes/tệp, chạy transaction nội dung, kiểm tra Auth/SMTP/redirect và kiểm thử với tài khoản thật trước khi merge phát hành. Bootstrap ADMIN và preview đã hoàn tất như ghi ở đầu tài liệu.

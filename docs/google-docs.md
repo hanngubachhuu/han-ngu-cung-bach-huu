@@ -1,6 +1,6 @@
 # Đồng bộ Google Docs
 
-Trạng thái: code và kiểm thử adapter/merge/permission đã có; CHƯA kết nối end-to-end với thông tin OAuth của website. Tài khoản Google connector đã được xác minh là `bachhuu1809@gmail.com`, nhưng token của connector không phải credential để đưa vào Vercel.
+Trạng thái: đã lưu cấu hình OAuth riêng của website vào Vercel Preview/Production; CHƯA kiểm chứng end-to-end với Google thật. Tài khoản Google connector đã được xác minh là `bachhuu1809@gmail.com`, nhưng token của connector không phải credential để đưa vào Vercel. API trạng thái dành cho ADMIN thực hiện refresh OAuth và kiểm tra danh tính Google trước khi báo kết nối thành công; hết hạn/thu hồi quyền sẽ trả lỗi cụ thể.
 
 Mỗi hồ sơ quản lý có UUID trong documents và google_document_id duy nhất. Tên tài liệu hoặc email không dùng làm khóa. Website đọc dữ liệu hoạt động từ PostgreSQL; không đọc Google Doc mỗi lần học viên đăng nhập.
 

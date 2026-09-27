@@ -10,6 +10,46 @@ import {
 import { googleAdapter } from "../server/google-docs-adapter.mjs";
 import handler from "../api/account.js";
 const base = { full_name: "Name", phone: "123", learning_goal: "Learn" };
+test("document status verifies Google access and never reports expired credentials as connected", async () => {
+  const offline = await runDocumentAction(
+    null,
+    "status",
+    {},
+    {
+      configured: false,
+      adapterFactory: async () => {
+        throw Error("must not connect");
+      },
+    },
+  );
+  assert.deepEqual(offline, { configured: false, connected: false });
+  assert.deepEqual(
+    await runDocumentAction(
+      null,
+      "status",
+      {},
+      {
+        configured: true,
+        adapterFactory: async () => ({}),
+      },
+    ),
+    { configured: true, connected: true },
+  );
+  await assert.rejects(
+    runDocumentAction(
+      null,
+      "status",
+      {},
+      {
+        configured: true,
+        adapterFactory: async () => {
+          throw Error("GOOGLE_AUTH_FAILED");
+        },
+      },
+    ),
+    /GOOGLE_AUTH_FAILED/,
+  );
+});
 test("Google document parser rejects authority fields, malformed and duplicate blocks", () => {
   assert.deepEqual(
     parseDocument("Notes\n" + documentBlock(base) + "\nNotes").fields,
