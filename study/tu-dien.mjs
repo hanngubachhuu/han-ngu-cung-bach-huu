@@ -1,160 +1,418 @@
-import { $, initShared, entryCard, empty, toast } from "./ui.mjs";
-import { dictionary } from "./repository.mjs";
+import { $, initShared, empty, toast } from "./ui.mjs";
+import { dictionary, characters, reference, grammar } from "./repository.mjs";
 import { savedWords, savedWordEntries } from "./storage.mjs";
-import { HandwritingCanvas } from "./handwriting.mjs";
-import { api } from "./auth.mjs";
-import { wordId, rankEntry } from "./core.mjs";
+import { rankEntry, escapeHtml as esc } from "./core.mjs";
 import { lexiconManifest } from "./lexicon.mjs";
-let page = 0,
-  seq = 0,
-  ids = [];
+import {
+  matchesLevel,
+  readHistory,
+  rememberQuery,
+  searchGrammar,
+} from "./reference-core.mjs";
+import {
+  modes,
+  resultList,
+  wordView,
+  headerView,
+  charactersView,
+  entryCharacters,
+  examplesView,
+  grammarView,
+  relatedView,
+  noSelection,
+} from "./dictionary-view.mjs";
+
 const limit = 12;
-let searchTimer;
-$("#dictionarySearch").addEventListener("input", () => {
-  clearTimeout(searchTimer);
-  seq++;
-  page = 0;
-  searchTimer = setTimeout(search, 250);
-});
-async function search(push = true) {
-  const current = ++seq,
-    query = $("#dictionarySearch").value.trim();
+let page = 0,
+  searchGeneration = 0,
+  detailGeneration = 0;
+let rows = [],
+  ids = [],
+  selected = null,
+  mode = "word",
+  timer,
+  composing = false;
+let allGrammar = false;
+let initializing = true;
+const historyStorage = {
+  getItem: (key) => localStorage.getItem(key),
+  setItem: (key, value) => localStorage.setItem(key, value),
+};
+const query = () => $("#dictionarySearch").value.trim();
+const level = () => $("#dictionaryLevel").value;
+const cumulative = () => $("#cumulativeLevel").checked;
+function historyView() {
+  const history = readHistory(historyStorage);
+  $("#dictionaryHistory").innerHTML = history.length
+    ? history
+        .map(
+          (word) =>
+            `<button type="button" data-query="${esc(word)}">${esc(word)}</button>`,
+        )
+        .join("")
+    : '<p class="dc-note">Các từ bạn mở sẽ xuất hiện ở đây.</p>';
+  $("#clearDictionaryHistory").disabled = !history.length;
+}
+function syncUrl(push = false) {
+  const url = new URL(location.href);
+  for (const [key, value] of Object.entries({
+    word: query(),
+    level: level(),
+    mode: mode === "word" ? "" : mode,
+    entry: selected?.id || "",
+    page: page ? String(page) : "",
+    cumulative: cumulative() ? "1" : "",
+    saved: $("#onlySavedWords").checked ? "1" : "",
+  })) {
+    if (value) url.searchParams.set(key, value);
+    else url.searchParams.delete(key);
+  }
+  if (url.href !== location.href)
+    history[push ? "pushState" : "replaceState"]({}, "", url);
+}
+function setMode(next, { push = true } = {}) {
+  mode = Object.hasOwn(modes, next) ? next : "word";
+  allGrammar = false;
+  document.querySelectorAll("[data-mode]").forEach((b) => {
+    const active = b.dataset.mode === mode;
+    b.setAttribute("aria-selected", String(active));
+    b.tabIndex = active ? 0 : -1;
+  });
+  $("#dictionaryDetail").setAttribute("aria-labelledby", "tab-" + mode);
+  syncUrl(push);
+  renderDetail();
+}
+async function renderDetail() {
+  const current = ++detailGeneration,
+    entry = selected,
+    activeMode = mode;
+  const target = $("#dictionaryContent");
+  target.innerHTML =
+    '<p class="dc-loading" role="status">Đang tải nội dung…</p>';
+  $("#dictionaryDetail").setAttribute("aria-busy", "true");
+  try {
+    let html;
+    if (activeMode === "grammar") {
+      const all = await grammar();
+      html = grammarView(
+        allGrammar ? all : searchGrammar(all, query()),
+        query(),
+        allGrammar,
+      );
+    } else if (!entry) html = noSelection();
+    else if (activeMode === "word")
+      html = wordView(entry, ids.includes(entry.id));
+    else {
+      html = headerView(entry, ids.includes(entry.id));
+      if (activeMode === "example")
+        html += `<section class="dc-panel"><h3>Ví dụ với “${esc(entry.simplified)}”</h3><p class="dc-note">Cấp HSK gắn với từ đang tra, không gắn với toàn bộ câu ví dụ.</p>${examplesView(entry)}</section>`;
+      if (activeMode === "character") {
+        const chars = await Promise.all(
+          entryCharacters(entry).map((c) => characters.get(c)),
+        );
+        html += charactersView(chars.filter(Boolean));
+      }
+      if (activeMode === "related") {
+        const result = await dictionary.compounds(entry.simplified, {
+          limit: 30,
+        });
+        html += relatedView(
+          result.entries.filter((e) => e.id !== entry.id),
+          entry.simplified,
+        );
+        if (result.warning)
+          html += `<p class="st-notice">${esc(result.warning)}</p>`;
+      }
+    }
+    if (current === detailGeneration)
+      target.innerHTML =
+        `<div class="dc-detail-head"><h2>${esc(modes[activeMode])}</h2><span>${entry ? esc(entry.simplified) : ""}</span></div>` +
+        html;
+  } catch (error) {
+    if (current === detailGeneration)
+      target.innerHTML =
+        empty("Chưa tải được nội dung", error.message) +
+        '<button class="st-button dc-retry" data-retry-detail>Thử lại</button>';
+  } finally {
+    if (current === detailGeneration)
+      $("#dictionaryDetail").removeAttribute("aria-busy");
+  }
+}
+async function search({ push = false, preferredId = null } = {}) {
+  const current = ++searchGeneration;
+  ++detailGeneration;
   $("#dictionaryCount").textContent = "Đang tra…";
   $("#dictionaryResults").setAttribute("aria-busy", "true");
-  $("#dictionaryAi").hidden = true;
-  if (push) {
-    const url = new URL(location.href);
-    query
-      ? url.searchParams.set("word", query)
-      : url.searchParams.delete("word");
-    history.replaceState({}, "", url);
-  }
+  $("#dictionaryContent").innerHTML =
+    '<p class="dc-loading" role="status">Đang tra kho từ…</p>';
+  const q = query(),
+    filterLevel = level(),
+    inclusive = cumulative();
+  $("#hanziiReference").href = q
+    ? `https://hanzii.net/search/word/${encodeURIComponent(q)}?hl=vi`
+    : "https://hanzii.net/?hl=vi";
   try {
     ids = await savedWords();
     let result;
     if ($("#onlySavedWords").checked) {
-      const snapshots = await savedWordEntries(),
-        found = new Set(snapshots.map((e) => e.id));
-      const missing = await Promise.all(
-        ids.filter((id) => !found.has(id)).map((id) => dictionary.get(id)),
-      );
-      const matches = [...snapshots, ...missing.filter(Boolean)]
-        .filter((e) => !query || rankEntry(e, query) > 0)
-        .sort((a, b) => rankEntry(b, query) - rankEntry(a, query));
+      const snapshots = await savedWordEntries();
+      const fresh = await dictionary.entries(ids);
+      const byId = new Map(fresh.map((e) => [e.id, e]));
+      for (const e of snapshots)
+        if (!byId.has(e.id) && ids.includes(e.id)) byId.set(e.id, e);
+      const matches = [...byId.values()]
+        .filter(
+          (e) =>
+            (!q || rankEntry(e, q) > 0) &&
+            matchesLevel(e, filterLevel, inclusive),
+        )
+        .sort((a, b) => rankEntry(b, q) - rankEntry(a, q));
       result = {
         entries: matches.slice(page * limit, (page + 1) * limit),
         total: matches.length,
       };
-    } else result = await dictionary.search(query, { page, limit });
-    if (current !== seq) return;
-    $("#dictionaryHeading").textContent = query
-      ? "Kết quả cho “" + query + "”"
-      : $("#onlySavedWords").checked
-        ? "Sổ từ của bạn"
-        : "Kho từ điển Trung–Việt";
-    $("#dictionaryCount").textContent = result.total + " kết quả";
+    } else
+      result = await dictionary.search(q, {
+        page,
+        limit,
+        level: filterLevel,
+        cumulative: inclusive,
+      });
+    if (current !== searchGeneration) return;
+    if (page && page * limit >= result.total) {
+      page = 0;
+      return search({ push });
+    }
+    rows = result.entries;
+    selected = rows.find((e) => e.id === preferredId) || rows[0] || null;
+    $("#dictionaryHeading").textContent = $("#onlySavedWords").checked
+      ? "Sổ từ đã lưu"
+      : filterLevel
+        ? `Từ vựng HSK ${filterLevel}${inclusive ? " trở xuống" : ""}`
+        : "Kết quả tra cứu";
+    $("#dictionaryCount").textContent =
+      result.total.toLocaleString("vi-VN") + " kết quả";
+    $("#toggleDictionaryShelf").textContent = [
+      filterLevel
+        ? `HSK ${filterLevel}${inclusive ? " trở xuống" : ""}`
+        : "Bộ lọc HSK",
+      $("#onlySavedWords").checked ? "đang xem từ đã lưu" : "sổ từ",
+    ].join(" · ");
+    $("#dictionaryResults").innerHTML = rows.length
+      ? resultList(rows, selected.id)
+      : '<p class="dc-loading">Không có kết quả. Thử xóa tìm kiếm hoặc bỏ bộ lọc.</p>';
     $("#dictionaryWarning").hidden = !result.warning;
     $("#dictionaryWarning").textContent = result.warning || "";
-    $("#savedWordsCount").textContent = ids.length + " từ đã lưu";
-    $("#dictionaryResults").innerHTML = result.entries.length
-      ? result.entries
-          .map((e) => entryCard(e, { saved: ids.includes(e.id) }))
-          .join("")
-      : empty(
-          "Chưa tìm thấy từ phù hợp",
-          "Thử chữ Hán, pinyin không dấu hoặc một nghĩa tiếng Việt ngắn hơn.",
-        );
-    $("#dictionaryAi").hidden =
-      result.total > 0 || !query || $("#onlySavedWords").checked;
+    $("#savedWordsCount").textContent = String(ids.length);
     $("#dictionaryPagination").innerHTML =
       result.total > limit
-        ? `<button data-page="${page - 1}" class="st-button" ${!page ? "disabled" : ""}>← Trước</button><span>Trang ${page + 1} / ${Math.ceil(result.total / limit)}</span><button data-page="${page + 1}" class="st-button" ${(page + 1) * limit >= result.total ? "disabled" : ""}>Sau →</button>`
+        ? `<button type="button" data-page="${page - 1}" class="st-button" aria-label="Trang trước" ${!page ? "disabled" : ""}>←</button><span>${page + 1} / ${Math.ceil(result.total / limit)}</span><button type="button" data-page="${page + 1}" class="st-button" aria-label="Trang sau" ${(page + 1) * limit >= result.total ? "disabled" : ""}>→</button>`
         : "";
-  } catch (e) {
-    if (current === seq) {
-      $("#dictionaryResults").innerHTML = empty("Chưa tra được từ", e.message);
-      $("#dictionaryCount").textContent = "";
-    }
+    document
+      .querySelectorAll("[data-level]")
+      .forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.dataset.level === filterLevel)),
+      );
+    syncUrl(push);
+    await renderDetail();
+  } catch (error) {
+    if (current !== searchGeneration) return;
+    rows = [];
+    selected = null;
+    $("#dictionaryCount").textContent = "Chưa tải được kết quả";
+    $("#dictionaryResults").innerHTML =
+      '<button type="button" class="st-button dc-retry" data-retry-search>Thử lại</button>';
+    $("#dictionaryPagination").innerHTML = "";
+    $("#dictionaryContent").innerHTML = empty(
+      "Chưa tra được từ",
+      error.message,
+    );
   } finally {
-    if (current === seq) $("#dictionaryResults").removeAttribute("aria-busy");
+    if (current === searchGeneration)
+      $("#dictionaryResults").removeAttribute("aria-busy");
   }
 }
-$("#dictionaryForm").onsubmit = (e) => {
+function submitQuery(value) {
+  clearTimeout(timer);
+  page = 0;
+  allGrammar = false;
+  $("#dictionarySearch").value = value;
+  rememberQuery(historyStorage, value);
+  historyView();
+  search({ push: true });
+}
+$("#dictionaryForm").addEventListener("submit", (e) => {
   e.preventDefault();
-  clearTimeout(searchTimer);
+  submitQuery(query());
+});
+$("#dictionarySearch").addEventListener("compositionstart", () => {
+  composing = true;
+  clearTimeout(timer);
+});
+$("#dictionarySearch").addEventListener("compositionend", () => {
+  composing = false;
+  scheduleSearch();
+});
+function scheduleSearch() {
+  clearTimeout(timer);
+  ++searchGeneration;
+  ++detailGeneration;
   page = 0;
-  search();
-};
-$("#onlySavedWords").onchange = () => {
-  page = 0;
-  search();
-};
-document.querySelectorAll("[data-query]").forEach(
-  (b) =>
-    (b.onclick = () => {
-      $("#dictionarySearch").value = b.dataset.query;
-      page = 0;
-      search();
-    }),
-);
-$("#dictionaryPagination").onclick = (e) => {
-  const b = e.target.closest("[data-page]");
-  if (b) {
-    page = Number(b.dataset.page);
-    search();
-    $("#dictionaryHeading").scrollIntoView({ block: "start" });
-  }
-};
-$("#openDictionaryInk").onclick = () => $("#inkDialog").showModal();
-new HandwritingCanvas($("#dictionaryInk"), {
-  onSelect: (char) => {
-    $("#dictionarySearch").value = char;
-    $("#inkDialog").close();
+  allGrammar = false;
+  if (!composing) timer = setTimeout(() => search(), 300);
+}
+$("#dictionarySearch").addEventListener("input", scheduleSearch);
+$("#clearDictionarySearch").addEventListener("click", () => {
+  submitQuery("");
+  $("#dictionarySearch").focus();
+});
+$("#toggleDictionaryShelf").addEventListener("click", () => {
+  const open = $("#dictionaryShelf").classList.toggle("is-open");
+  $("#toggleDictionaryShelf").setAttribute("aria-expanded", String(open));
+});
+for (const id of ["dictionaryLevel", "cumulativeLevel", "onlySavedWords"])
+  $("#" + id).addEventListener("change", () => {
+    clearTimeout(timer);
     page = 0;
-    search();
-  },
+    search({ push: true });
+  });
+$("#dictionaryResults").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-entry-id]");
+  if (!b) return;
+  selected = rows.find((row) => row.id === b.dataset.entryId);
+  if (!selected) return;
+  rememberQuery(historyStorage, selected.simplified);
+  historyView();
+  syncUrl(true);
+  document
+    .querySelectorAll("[data-entry-id]")
+    .forEach((button) =>
+      button.setAttribute(
+        "aria-current",
+        String(button.dataset.entryId === selected.id),
+      ),
+    );
+  renderDetail();
+  if (matchMedia("(max-width:700px)").matches)
+    $("#dictionaryDetail").scrollIntoView({ block: "start" });
 });
-$("#dictionaryAiButton").onclick = async (e) => {
-  const query = $("#dictionarySearch").value.trim(),
-    current = seq;
-  e.target.disabled = true;
-  try {
-    const data = await api("dictionary", { query });
-    if (current !== seq) return;
-    const entry = {
-      ...data.entry,
-      id: wordId(data.entry.simplified),
-      curriculumTags: [],
-      hskLevel: null,
-      hanViet: null,
-      provenance: { source: "openai" },
-    };
-    $("#dictionaryResults").insertAdjacentHTML("beforeend", entryCard(entry));
-    $("#dictionaryAi").hidden = true;
-    toast("Đã thêm giải thích AI. Hãy đối chiếu nghĩa và ví dụ.");
-  } catch (error) {
-    toast(error.message);
-  } finally {
-    e.target.disabled = false;
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.dataset.query !== undefined) {
+    $("#dictionaryLevel").value = "";
+    $("#onlySavedWords").checked = false;
+    submitQuery(b.dataset.query);
   }
-};
+  if (b.dataset.mode) setMode(b.dataset.mode);
+  if (b.dataset.showMode) {
+    setMode(b.dataset.showMode);
+    $("#tab-" + mode).focus();
+  }
+  if (b.dataset.level) {
+    $("#dictionaryLevel").value = b.dataset.level;
+    $("#onlySavedWords").checked = false;
+    submitQuery("");
+  }
+  if (b.dataset.page) {
+    page = Number(b.dataset.page);
+    search({ push: true });
+  }
+  if (b.hasAttribute("data-all-grammar")) {
+    allGrammar = true;
+    renderDetail();
+  }
+  if (b.hasAttribute("data-retry-detail")) renderDetail();
+  if (b.hasAttribute("data-retry-search")) search();
+});
+$(".dc-tabs").addEventListener("keydown", (e) => {
+  const tabs = [...document.querySelectorAll("[data-mode]")];
+  const index = tabs.indexOf(document.activeElement);
+  if (index < 0 || !["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key))
+    return;
+  e.preventDefault();
+  const next =
+    e.key === "Home"
+      ? 0
+      : e.key === "End"
+        ? tabs.length - 1
+        : (index + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) %
+          tabs.length;
+  tabs[next].focus();
+  setMode(tabs[next].dataset.mode);
+});
+document.addEventListener("keydown", (e) => {
+  if (
+    e.key === "/" &&
+    !e.ctrlKey &&
+    !e.metaKey &&
+    !e.altKey &&
+    !e.target.closest("input,textarea,select,[contenteditable],dialog")
+  ) {
+    e.preventDefault();
+    $("#dictionarySearch").focus();
+  }
+});
+$("#clearDictionaryHistory").addEventListener("click", () => {
+  try {
+    localStorage.removeItem("hnh_dictionary_history");
+    historyView();
+  } catch {
+    toast("Thiết bị chưa cho phép thay đổi lịch sử.");
+  }
+});
 window.addEventListener("study:saved", async () => {
-  ids = await savedWords().catch(() => []);
-  $("#savedWordsCount").textContent = ids.length + " từ đã lưu";
-  if ($("#onlySavedWords").checked) search(false);
+  ids = await savedWords().catch(() => ids);
+  $("#savedWordsCount").textContent = String(ids.length);
+  if ($("#onlySavedWords").checked) search({ preferredId: selected?.id });
 });
-window.addEventListener("study:auth", () => {
+window.addEventListener("study:auth", (event) => {
+  if (initializing) return;
+  if (event.detail?.userId === event.detail?.previousUser) return;
   page = 0;
-  search(false);
+  search();
 });
-await initShared();
-lexiconManifest()
-  .then(({ counts }) => {
+function restoreUrl() {
+  const params = new URL(location.href).searchParams;
+  $("#dictionarySearch").value =
+    params.get("word") || (params.size ? "" : "学习");
+  $("#dictionaryLevel").value = /^[1-6]$/.test(params.get("level"))
+    ? params.get("level")
+    : "";
+  $("#cumulativeLevel").checked = params.get("cumulative") === "1";
+  $("#onlySavedWords").checked = params.get("saved") === "1";
+  page = Math.max(0, Math.min(10000, parseInt(params.get("page")) || 0));
+  mode = Object.hasOwn(modes, params.get("mode")) ? params.get("mode") : "word";
+  document.querySelectorAll("[data-mode]").forEach((b) => {
+    const active = b.dataset.mode === mode;
+    b.setAttribute("aria-selected", String(active));
+    b.tabIndex = active ? 0 : -1;
+  });
+  $("#dictionaryDetail").setAttribute("aria-labelledby", "tab-" + mode);
+  allGrammar = false;
+  return params.get("entry");
+}
+window.addEventListener("popstate", () => {
+  clearTimeout(timer);
+  search({ preferredId: restoreUrl() });
+});
+const preferredId = restoreUrl();
+historyView();
+await initShared({ serviceNotice: false });
+initializing = false;
+Promise.all([reference(), lexiconManifest()])
+  .then(([extra, { counts }]) => {
     $("#dictionaryCoverage").textContent =
-      counts.words.toLocaleString("vi-VN") +
-      " mục từ nguồn mở · thêm học liệu trong giáo trình";
+      `${counts.words.toLocaleString("vi-VN")} mục từ nguồn mở · ${extra.entries.length.toLocaleString("vi-VN")} từ có nhãn HSK 2.0`;
+    $("#dictionaryLevels").innerHTML = Object.entries(extra.counts)
+      .map(
+        ([n, count]) =>
+          `<button type="button" data-level="${n}" aria-pressed="${level() === n}">HSK ${n}<small>${count.toLocaleString("vi-VN")} từ</small></button>`,
+      )
+      .join("");
   })
-  .catch(() => {});
-$("#dictionarySearch").value =
-  new URL(location.href).searchParams.get("word") || "";
-await search(false);
+  .catch(() => {
+    $("#dictionaryCoverage").textContent =
+      "Kho từ giáo trình · đang dùng dữ liệu tải được";
+  });
+await search({ preferredId });

@@ -144,12 +144,12 @@ try {
   }
   await page.locator("[data-save]").first().click();
   await page.locator("#onlySavedWords").check();
-  await page.waitForFunction(() =>
-    document.querySelector("#savedWordsCount").textContent.startsWith("1 "),
+  await page.waitForFunction(
+    () => document.querySelector("#savedWordsCount").textContent === "1",
   );
   await page.reload();
-  await page.waitForFunction(() =>
-    document.querySelector("#savedWordsCount").textContent.startsWith("1 "),
+  await page.waitForFunction(
+    () => document.querySelector("#savedWordsCount").textContent === "1",
   );
   await screenshot("dictionary-desktop");
   await page.goto(base + "/doc-hieu.html");

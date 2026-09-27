@@ -499,38 +499,6 @@
 .st-compound-heading {
   margin-top: var(--space-lg);
 }
-.st-dictionary-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 270px;
-  gap: var(--space-lg);
-  align-items: start;
-}
-.st-search-form {
-  display: flex;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-sm);
-}
-.st-search-form .st-search {
-  flex: 1;
-}
-.st-search-hints {
-  display: flex;
-  gap: var(--space-xs);
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-lg);
-}
-.st-search-hints button {
-  background: none;
-  border: 0;
-  color: var(--color-primary);
-  min-height: 36px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  padding: var(--space-2xs);
-}
 .st-word-card {
   border: 1px solid var(--color-border);
   background: var(--color-surface);
@@ -986,9 +954,6 @@
   .st-layout {
     grid-template-columns: 240px minmax(0, 1fr);
   }
-  .st-dictionary-layout {
-    grid-template-columns: minmax(0, 1fr) 230px;
-  }
   .st-reader-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1039,9 +1004,6 @@
     margin-left: auto;
   }
   .st-layout,
-  .st-dictionary-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .st-ink {
     max-width: 340px;
     margin-inline: auto;
@@ -1051,18 +1013,6 @@
   }
   .st-hanzi-sidebar .st-ink-details:not([open]) {
     margin-top: 0;
-  }
-  .st-search-form {
-    flex-wrap: wrap;
-  }
-  .st-search-form .st-search {
-    flex-basis: 100%;
-  }
-  .st-search-form .primary {
-    flex: 1;
-  }
-  .st-dictionary-layout > aside {
-    order: 2;
   }
   .st-detail-top {
     grid-template-columns: 120px minmax(0, 1fr);

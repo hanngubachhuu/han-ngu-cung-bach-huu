@@ -567,3 +567,15 @@ AI **không được**:
 Và:
 
 > **Một lần sửa tốt là một lần làm hệ thống dễ sửa hơn cho lần sau.**
+
+
+## Từ điển tham khảo — cập nhật 27/09/2026
+
+- `scripts/templates/dictionary.html` là phần thân chuẩn của trang từ điển; `scripts/render-study-pages.mjs` ghép navigation, header và dialog dùng chung. Build luôn render lại, không sửa HTML sinh ra như nguồn chính.
+- `study/tu-dien.mjs` giữ truy vấn, mục từ được chọn, bộ lọc, phân trang và URL; `study/dictionary-view.mjs` giữ phần trình bày. `study/dictionary.css` chỉ sở hữu bố cục trang, dùng token từ `study/study.css`. Thẻ từ, lưu từ, phát âm và tài khoản vẫn dùng `study/ui.mjs`/`storage.mjs`.
+- `sources/hsk/hsk20-reference.json` khóa commit và SHA-256 của danh mục cộng đồng; chỉ nhập nhãn `old-*`, không dùng nhãn new để suy diễn đề cương mới. `sources/study/local-vocabulary.json` là bản trích Excel có tên file/hash/sheet/dòng. Hai nguồn này cần thiết vì catalog giáo trình không đủ thông tin phân cấp cho từ ngoài bài học. Không sửa nội dung gốc Excel.
+- `scripts/import-study-materials.py` trích dữ liệu và lập danh mục 24 tài liệu trong thư mục được chỉ định. `sources/study/import-audit.json` lưu lỗi cấu trúc và ví dụ không phù hợp. PDF/DOCX mới chỉ được lập danh mục, chưa coi là nội dung đã duyệt.
+- `scripts/build-study-reference.mjs` tạo `data/study/reference.json` và `docs/dictionary/data-audit.json`: ưu tiên cấp của danh mục tham chiếu, giữ xung đột cấp trong báo cáo; 81 từ chỉ có ở Excel ghi nguồn riêng. Từ có nhãn HSK khác với số lượng mục chuẩn của đề thi. Ví dụ giữ `unreviewed-reference`, không đưa vào điểm đánh giá học sinh.
+- `DictionaryRepository` bổ sung phân cấp và ví dụ vào cùng mục từ cho từ điển, Hán tự và đọc hiểu. Không thay nghĩa giáo trình bằng nghĩa Excel. Bộ lọc HSK áp dụng trước phân trang trong worker, không lọc riêng 12 kết quả đang hiển thị. Không lấy cấp giáo trình làm cấp của từ.
+- `build-study-data.mjs` sinh `grammar.json` chỉ từ bài công khai (1–3); không xuất bài riêng tư. Tab Kết hợp từ hiện là mục từ chứa chuỗi chữ, có nhãn phạm vi; không tự tạo đồng nghĩa/trái nghĩa hoặc cấu trúc kết hợp khi chưa có nguồn.
+- Lịch sử tra nằm riêng ở `hnh_dictionary_history`, tối đa 12 truy vấn, không gửi lên server. Tìm chữ/pinyin/nghĩa, lọc, lưu khách và phát âm bằng giọng thiết bị không cần dịch vụ trả phí. Không đưa nút AI/viết tay trả phí chưa sẵn sàng vào trang từ điển.

@@ -36,6 +36,8 @@ export function empty(title, copy) {
   );
 }
 export function levelLabel(e) {
+  if (e.hsk)
+    return `HSK ${e.hsk.level} · 2.0${e.hsk.source === "local-hsk-workbook" ? " (tài liệu bổ sung)" : ""}`;
   const tags = e.curriculumTags || [];
   return tags.length
     ? "Giáo trình HSK " + [...new Set(tags.map((t) => t.level))].join(" · ")
@@ -59,6 +61,8 @@ function readingGroups(readings) {
 function sourceNote(e) {
   const source = e.provenance?.source;
   if (source === "openai") return "Gợi ý AI · cần đối chiếu khi sử dụng";
+  if (source === "local-hsk-workbook" || source === "hsk-reference")
+    return '<a href="nguon-tu-dien.html#hsk-reference">Danh mục HSK 2.0 và tài liệu từ vựng bổ sung</a>. Nghĩa Việt từ tài liệu cá nhân, chưa thẩm định toàn bộ.';
   const course = (e.curriculumTags || [])
     .map(
       (t) =>
@@ -75,7 +79,15 @@ function sourceNote(e) {
       : "")
   );
 }
-export function entryCard(e, { compact = false, saved = false } = {}) {
+export function entryCard(
+  e,
+  {
+    compact = false,
+    saved = false,
+    examples = true,
+    sourceDetails = false,
+  } = {},
+) {
   displayedEntries.set(e.id, e);
   return `<article class="st-word-card ${compact ? "is-compact" : ""}" data-entry="${esc(e.id)}">
     <div class="st-word-head"><div><p class="st-pinyin">${esc(e.pinyin || "")}</p><div class="st-word-title"><a class="st-hanzi" lang="zh-Hans" href="tu-dien.html?word=${encodeURIComponent(e.simplified)}">${esc(e.simplified)}</a>${e.traditional && e.traditional !== e.simplified ? `<span class="st-traditional" lang="zh-Hant">${esc(e.traditional)}</span>` : ""}<button class="st-icon" data-speak="${esc(e.simplified)}" aria-label="Nghe ${esc(e.simplified)}">${icon("audio")}</button></div></div><button class="st-icon st-save" data-save="${esc(e.id)}" aria-label="Lưu từ ${esc(e.simplified)}" aria-pressed="${saved}">${icon("save")}</button></div>
@@ -96,7 +108,7 @@ export function entryCard(e, { compact = false, saved = false } = {}) {
                 `<a lang="zh-Hans" href="chu-han.html?char=${encodeURIComponent(c)}">${esc(c)}</a>`,
             )
             .join("")}</div>
-    ${(e.examples || [])
+    ${(examples ? e.examples || [] : [])
       .slice(0, 3)
       .map(
         (x) =>
@@ -106,13 +118,13 @@ export function entryCard(e, { compact = false, saved = false } = {}) {
             .split(esc(e.simplified))
             .join(
               "<mark>" + esc(e.simplified) + "</mark>",
-            )}</p>${x.pinyin ? `<p class="st-pinyin">${esc(x.pinyin)}</p>` : ""}${x.vietnamese ? `<p>${esc(x.vietnamese)}</p>` : ""}</div></div>`,
+            )}</p>${x.pinyin ? `<p class="st-pinyin">${esc(x.pinyin)}</p>` : ""}${x.vietnamese ? `<p>${esc(x.vietnamese)}</p>` : ""}${x.quality === "unreviewed-reference" ? '<p class="st-caption">Ví dụ từ tài liệu bổ sung · chưa thẩm định</p>' : ""}</div></div>`,
       )
       .join("")}
     ${e.detail?.usageNotes?.length ? `<details class="st-details"><summary>Cách dùng và lưu ý</summary><ul>${e.detail.usageNotes.map((n) => "<li>" + esc(n) + "</li>").join("")}</ul>${(e.detail.commonConfusions || []).map((c) => `<p><b>${esc(c.with)}</b> — ${esc(c.difference)}</p>`).join("")}</details>` : ""}
     ${referenceLinks(e.simplified)}`
     }
-    <div class="st-source">${sourceNote(e)}</div>
+    ${sourceDetails ? `<details class="st-details"><summary>Nguồn và lưu ý</summary><div class="st-source">${sourceNote(e)}${e.hsk ? '<p><a href="nguon-tu-dien.html#hsk-reference">Nguồn phân cấp HSK 2.0</a></p>' : ""}</div></details>` : `<div class="st-source">${sourceNote(e)}</div>`}
   </article>`;
 }
 let speechGeneration = 0;
@@ -197,7 +209,7 @@ export async function showWord(id) {
       );
   }
 }
-export async function initShared() {
+export async function initShared({ serviceNotice = true } = {}) {
   loadCapabilities().then(({ aiEnabled }) => {
     for (const id of ["dictionaryAiButton", "readingUseAi", "aiVoice"]) {
       const control = document.getElementById(id);
@@ -206,7 +218,7 @@ export async function initShared() {
         if (!aiEnabled) control.title = "AI tạm chưa bật";
       }
     }
-    if (!aiEnabled) {
+    if (!aiEnabled && serviceNotice) {
       const note = document.createElement("p");
       note.className = "st-service-note";
       note.textContent =

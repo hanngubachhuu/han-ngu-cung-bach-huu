@@ -27,7 +27,8 @@ try {
 } catch {}
 const allEntries = [],
   allReadings = [],
-  allCharacters = [];
+  allCharacters = [],
+  publicGrammar = [];
 for (const meta of registry.manifest) {
   if (!meta.data || meta.private || meta.access === "private") continue;
   try {
@@ -61,6 +62,19 @@ for (const meta of registry.manifest) {
     .digest("hex")
     .slice(0, 16);
   provenance.sourceVersion = sourceHash;
+  if (visibility === "public")
+    for (const g of c.grammar || [])
+      publicGrammar.push({
+        id: meta.id + "--" + g.id,
+        title: g.title || "",
+        pattern: g.pattern || "",
+        explanation: g.explanation || g.desc || "",
+        examples: (g.examples || [g.example]).filter(
+          (x) => typeof x === "string" && x,
+        ),
+        curriculum,
+        provenance: { ...provenance, sourceRefs: g.sourceRefs || [] },
+      });
   for (const v of c.vocabulary || []) {
     if (!v.han || !v.pinyin) continue;
     const examples = (c.exampleSentences || [])
@@ -272,6 +286,10 @@ const index = {
   })),
 };
 await fs.writeFile(new URL("catalog.json", base), JSON.stringify(index));
+await fs.writeFile(
+  new URL("grammar.json", base),
+  JSON.stringify(publicGrammar),
+);
 await fs.mkdir(new URL("entries/", base), { recursive: true });
 await fs.mkdir(new URL("readings/", base), { recursive: true });
 for (const e of entries)

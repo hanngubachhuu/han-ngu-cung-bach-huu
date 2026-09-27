@@ -73,6 +73,8 @@ export async function checkLexicon(page, base, screenshot) {
     await page.locator("[data-save]").first().getAttribute("aria-pressed"),
     "true",
   );
+  if (!(await page.locator("#onlySavedWords").isVisible()))
+    await page.locator("#toggleDictionaryShelf").click();
   await page.locator("#onlySavedWords").check();
   await settled();
   assert.equal(await page.locator(".st-word-card").count(), 1);

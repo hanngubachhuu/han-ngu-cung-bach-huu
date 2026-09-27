@@ -1,7 +1,20 @@
 import { $, initShared } from "./ui.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { lexiconManifest } from "./lexicon.mjs";
+import { reference } from "./repository.mjs";
 await initShared();
+reference()
+  .then((data) => {
+    const localOnly = data.entries.filter(
+      (e) => e.hsk.source === "local-hsk-workbook",
+    ).length;
+    $("#hskReferenceStatistics").textContent =
+      `${data.entries.length.toLocaleString("vi-VN")} từ có nhãn cấp độ: ${(data.entries.length - localOnly).toLocaleString("vi-VN")} từ trong danh mục tham chiếu và ${localOnly} từ chỉ có trong tài liệu bổ sung (đánh dấu *). Tài liệu: ${data.sources.workbook.name}. Khi hai nguồn khác cấp, ưu tiên danh mục tham chiếu; giữ khác biệt trong báo cáo dữ liệu của dự án.`;
+  })
+  .catch(() => {
+    $("#hskReferenceStatistics").textContent =
+      "Chưa tải được thống kê phân cấp.";
+  });
 try {
   const { counts, sources, files } = await lexiconManifest();
   const n = (number) => number.toLocaleString("vi-VN");

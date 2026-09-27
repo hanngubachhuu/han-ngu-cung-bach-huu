@@ -1,0 +1,3440 @@
+{
+  "counts": {
+    "1": 150,
+    "2": 148,
+    "3": 301,
+    "4": 612,
+    "5": 1354,
+    "6": 2507
+  },
+  "words": 5072,
+  "referenceWords": 4991,
+  "workbookWords": 4896,
+  "exampleCount": 4703,
+  "conflicts": [
+    {
+      "word": "等",
+      "referenceLevel": 4,
+      "workbookLevel": 2,
+      "sheet": "HSK2",
+      "row": 22
+    },
+    {
+      "word": "对",
+      "referenceLevel": 4,
+      "workbookLevel": 2,
+      "sheet": "HSK2",
+      "row": 26
+    },
+    {
+      "word": "过",
+      "referenceLevel": 4,
+      "workbookLevel": 2,
+      "sheet": "HSK2",
+      "row": 38
+    },
+    {
+      "word": "为什么",
+      "referenceLevel": 3,
+      "workbookLevel": 2,
+      "sheet": "HSK2",
+      "row": 108
+    },
+    {
+      "word": "还",
+      "referenceLevel": 2,
+      "workbookLevel": 3,
+      "sheet": "HSK3",
+      "row": 102
+    },
+    {
+      "word": "经历",
+      "referenceLevel": 4,
+      "workbookLevel": 3,
+      "sheet": "HSK3",
+      "row": 131
+    },
+    {
+      "word": "为",
+      "referenceLevel": 2,
+      "workbookLevel": 3,
+      "sheet": "HSK3",
+      "row": 228
+    },
+    {
+      "word": "喜欢",
+      "referenceLevel": 1,
+      "workbookLevel": 3,
+      "sheet": "HSK3",
+      "row": 235
+    },
+    {
+      "word": "现在",
+      "referenceLevel": 1,
+      "workbookLevel": 3,
+      "sheet": "HSK3",
+      "row": 236
+    },
+    {
+      "word": "长",
+      "referenceLevel": 2,
+      "workbookLevel": 3,
+      "sheet": "HSK3",
+      "row": 277
+    },
+    {
+      "word": "棒",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 8
+    },
+    {
+      "word": "包子",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 9
+    },
+    {
+      "word": "比如",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 18
+    },
+    {
+      "word": "表示",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 23
+    },
+    {
+      "word": "表演",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 24
+    },
+    {
+      "word": "餐厅",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 38
+    },
+    {
+      "word": "厕所",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 39
+    },
+    {
+      "word": "出现",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 56
+    },
+    {
+      "word": "厨房",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 57
+    },
+    {
+      "word": "词语",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 60
+    },
+    {
+      "word": "存",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 63
+    },
+    {
+      "word": "错误",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 64
+    },
+    {
+      "word": "打招呼",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 69
+    },
+    {
+      "word": "倒",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 83
+    },
+    {
+      "word": "登机牌",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 87
+    },
+    {
+      "word": "低",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 89
+    },
+    {
+      "word": "短信",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 100
+    },
+    {
+      "word": "对于",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 103
+    },
+    {
+      "word": "房东",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 115
+    },
+    {
+      "word": "放松",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 118
+    },
+    {
+      "word": "付款",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 124
+    },
+    {
+      "word": "敢",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 132
+    },
+    {
+      "word": "胳膊",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 140
+    },
+    {
+      "word": "功夫",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 144
+    },
+    {
+      "word": "国籍",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 161
+    },
+    {
+      "word": "果汁",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 163
+    },
+    {
+      "word": "互联网",
+      "referenceLevel": 6,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 178
+    },
+    {
+      "word": "建议",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 207
+    },
+    {
+      "word": "降落",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 211
+    },
+    {
+      "word": "郊区",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 215
+    },
+    {
+      "word": "接着",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 221
+    },
+    {
+      "word": "节",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 222
+    },
+    {
+      "word": "景色",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 235
+    },
+    {
+      "word": "举",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 241
+    },
+    {
+      "word": "举行",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 243
+    },
+    {
+      "word": "聚会",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 246
+    },
+    {
+      "word": "开心",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 248
+    },
+    {
+      "word": "烤鸭",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 251
+    },
+    {
+      "word": "客厅",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 258
+    },
+    {
+      "word": "矿泉水",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 264
+    },
+    {
+      "word": "来自",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 272
+    },
+    {
+      "word": "礼拜天",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 278
+    },
+    {
+      "word": "零钱",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 290
+    },
+    {
+      "word": "毛",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 301
+    },
+    {
+      "word": "迷路",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 305
+    },
+    {
+      "word": "秒",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 308
+    },
+    {
+      "word": "排队",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 322
+    },
+    {
+      "word": "葡萄",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 334
+    },
+    {
+      "word": "普通话",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 336
+    },
+    {
+      "word": "勺子",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 371
+    },
+    {
+      "word": "使",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 387
+    },
+    {
+      "word": "是否",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 390
+    },
+    {
+      "word": "糖",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 425
+    },
+    {
+      "word": "提",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 431
+    },
+    {
+      "word": "同时",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 442
+    },
+    {
+      "word": "卫生间",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 452
+    },
+    {
+      "word": "现金",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 464
+    },
+    {
+      "word": "相同",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 467
+    },
+    {
+      "word": "橡皮",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 471
+    },
+    {
+      "word": "小吃",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 473
+    },
+    {
+      "word": "小伙子",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 474
+    },
+    {
+      "word": "信封",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 480
+    },
+    {
+      "word": "信息",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 481
+    },
+    {
+      "word": "修理",
+      "referenceLevel": 6,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 489
+    },
+    {
+      "word": "学期",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 491
+    },
+    {
+      "word": "眼镜",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 500
+    },
+    {
+      "word": "要是",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 507
+    },
+    {
+      "word": "以为",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 514
+    },
+    {
+      "word": "应聘",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 521
+    },
+    {
+      "word": "邮局",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 530
+    },
+    {
+      "word": "云",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 546
+    },
+    {
+      "word": "占线",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 554
+    },
+    {
+      "word": "重",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 576
+    },
+    {
+      "word": "自信",
+      "referenceLevel": 5,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 591
+    },
+    {
+      "word": "左右",
+      "referenceLevel": 6,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 596
+    },
+    {
+      "word": "作用",
+      "referenceLevel": 3,
+      "workbookLevel": 4,
+      "sheet": "HSK4",
+      "row": 598
+    },
+    {
+      "word": "暗",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 9
+    },
+    {
+      "word": "包括",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 17
+    },
+    {
+      "word": "报到",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 24
+    },
+    {
+      "word": "报道",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 25
+    },
+    {
+      "word": "报社",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 27
+    },
+    {
+      "word": "抱怨",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 28
+    },
+    {
+      "word": "表达",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 47
+    },
+    {
+      "word": "播放",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 55
+    },
+    {
+      "word": "差距",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 84
+    },
+    {
+      "word": "超级",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 92
+    },
+    {
+      "word": "潮湿",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 94
+    },
+    {
+      "word": "吵",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 95
+    },
+    {
+      "word": "成熟",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 111
+    },
+    {
+      "word": "池塘",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 121
+    },
+    {
+      "word": "词汇",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 152
+    },
+    {
+      "word": "大厦",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 176
+    },
+    {
+      "word": "代表",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 180
+    },
+    {
+      "word": "代替",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 181
+    },
+    {
+      "word": "当地",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 193
+    },
+    {
+      "word": "当心",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 194
+    },
+    {
+      "word": "岛屿",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 198
+    },
+    {
+      "word": "断",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 229
+    },
+    {
+      "word": "兑换",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 236
+    },
+    {
+      "word": "顿",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 239
+    },
+    {
+      "word": "朵",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 242
+    },
+    {
+      "word": "耳环",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 245
+    },
+    {
+      "word": "反映",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 261
+    },
+    {
+      "word": "范围",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 263
+    },
+    {
+      "word": "分手",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 275
+    },
+    {
+      "word": "风景",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 280
+    },
+    {
+      "word": "干燥",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 301
+    },
+    {
+      "word": "高级",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 310
+    },
+    {
+      "word": "工具",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 323
+    },
+    {
+      "word": "鼓掌",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 344
+    },
+    {
+      "word": "归纳",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 364
+    },
+    {
+      "word": "果然",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 374
+    },
+    {
+      "word": "好客",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 385
+    },
+    {
+      "word": "猴子",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 397
+    },
+    {
+      "word": "忽然",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 401
+    },
+    {
+      "word": "怀孕",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 415
+    },
+    {
+      "word": "或许",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 431
+    },
+    {
+      "word": "极其",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 437
+    },
+    {
+      "word": "集合",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 440
+    },
+    {
+      "word": "假设",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 458
+    },
+    {
+      "word": "兼职",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 468
+    },
+    {
+      "word": "交往",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 483
+    },
+    {
+      "word": "尽快",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 506
+    },
+    {
+      "word": "经商",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 515
+    },
+    {
+      "word": "精神",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 518
+    },
+    {
+      "word": "开水",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 541
+    },
+    {
+      "word": "看望",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 544
+    },
+    {
+      "word": "宽",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 562
+    },
+    {
+      "word": "昆虫",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 563
+    },
+    {
+      "word": "扩大",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 564
+    },
+    {
+      "word": "朗读",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 568
+    },
+    {
+      "word": "冷淡",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 580
+    },
+    {
+      "word": "亮",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 599
+    },
+    {
+      "word": "流泪",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 611
+    },
+    {
+      "word": "媒体",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 631
+    },
+    {
+      "word": "梦想",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 635
+    },
+    {
+      "word": "敏感",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 645
+    },
+    {
+      "word": "难免",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 667
+    },
+    {
+      "word": "嗯",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 674
+    },
+    {
+      "word": "农村",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 680
+    },
+    {
+      "word": "欧洲",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 685
+    },
+    {
+      "word": "培训",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 690
+    },
+    {
+      "word": "墙",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 736
+    },
+    {
+      "word": "群",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 769
+    },
+    {
+      "word": "人民币",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 778
+    },
+    {
+      "word": "软",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 792
+    },
+    {
+      "word": "色彩",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 797
+    },
+    {
+      "word": "狮子",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 838
+    },
+    {
+      "word": "湿润",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 839
+    },
+    {
+      "word": "时差",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 841
+    },
+    {
+      "word": "市场",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 857
+    },
+    {
+      "word": "数",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 881
+    },
+    {
+      "word": "搜索",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 897
+    },
+    {
+      "word": "随身",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 899
+    },
+    {
+      "word": "随手",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 901
+    },
+    {
+      "word": "淘气",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 916
+    },
+    {
+      "word": "讨价还价",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 917
+    },
+    {
+      "word": "特色",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 919
+    },
+    {
+      "word": "网络",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 965
+    },
+    {
+      "word": "维修",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 974
+    },
+    {
+      "word": "位于",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 980
+    },
+    {
+      "word": "胃口",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 983
+    },
+    {
+      "word": "握手",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 996
+    },
+    {
+      "word": "勿",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1002
+    },
+    {
+      "word": "吸取",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1006
+    },
+    {
+      "word": "夏令营",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1015
+    },
+    {
+      "word": "现代",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1021
+    },
+    {
+      "word": "限制",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1024
+    },
+    {
+      "word": "消极",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1041
+    },
+    {
+      "word": "写作",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1050
+    },
+    {
+      "word": "血",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1051
+    },
+    {
+      "word": "信任",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1056
+    },
+    {
+      "word": "学历",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1077
+    },
+    {
+      "word": "押金",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1084
+    },
+    {
+      "word": "演讲",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1088
+    },
+    {
+      "word": "一律",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1102
+    },
+    {
+      "word": "一再",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1103
+    },
+    {
+      "word": "亿",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1113
+    },
+    {
+      "word": "印刷",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1121
+    },
+    {
+      "word": "硬",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1130
+    },
+    {
+      "word": "用功",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1135
+    },
+    {
+      "word": "圆",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1157
+    },
+    {
+      "word": "在乎",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1166
+    },
+    {
+      "word": "窄",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1175
+    },
+    {
+      "word": "长辈",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1181
+    },
+    {
+      "word": "整齐",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1202
+    },
+    {
+      "word": "制造",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1221
+    },
+    {
+      "word": "猪",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1233
+    },
+    {
+      "word": "逐渐",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1236
+    },
+    {
+      "word": "主动",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1238
+    },
+    {
+      "word": "主题",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1242
+    },
+    {
+      "word": "撞",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1259
+    },
+    {
+      "word": "字母",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1276
+    },
+    {
+      "word": "组",
+      "referenceLevel": 6,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1286
+    },
+    {
+      "word": "组成",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1287
+    },
+    {
+      "word": "组织",
+      "referenceLevel": 4,
+      "workbookLevel": 5,
+      "sheet": "HSK5",
+      "row": 1289
+    },
+    {
+      "word": "别人",
+      "referenceLevel": 3,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 140
+    },
+    {
+      "word": "场",
+      "referenceLevel": 4,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 241
+    },
+    {
+      "word": "地道",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 430
+    },
+    {
+      "word": "翻",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 525
+    },
+    {
+      "word": "刚刚",
+      "referenceLevel": 4,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 641
+    },
+    {
+      "word": "各自",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 667
+    },
+    {
+      "word": "后面",
+      "referenceLevel": 1,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 804
+    },
+    {
+      "word": "结果",
+      "referenceLevel": 4,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 974
+    },
+    {
+      "word": "尽量",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 993
+    },
+    {
+      "word": "看来",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1077
+    },
+    {
+      "word": "脾气",
+      "referenceLevel": 4,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1371
+    },
+    {
+      "word": "扇子",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1581
+    },
+    {
+      "word": "狮子",
+      "referenceLevel": 4,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1643
+    },
+    {
+      "word": "项",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1986
+    },
+    {
+      "word": "小气",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1996
+    },
+    {
+      "word": "孝顺",
+      "referenceLevel": 5,
+      "workbookLevel": 6,
+      "sheet": "HSK6",
+      "row": 1998
+    }
+  ],
+  "readingConflicts": [
+    {
+      "word": "不客气",
+      "referencePinyin": "bù kè qi",
+      "workbookPinyin": "bú kèqì",
+      "sheet": "HSK1",
+      "row": 8
+    },
+    {
+      "word": "都",
+      "referencePinyin": "Dū",
+      "workbookPinyin": "dōu",
+      "sheet": "HSK1",
+      "row": 22
+    },
+    {
+      "word": "读",
+      "referencePinyin": "dòu",
+      "workbookPinyin": "dú",
+      "sheet": "HSK1",
+      "row": 23
+    },
+    {
+      "word": "对不起",
+      "referencePinyin": "duì bu qǐ",
+      "workbookPinyin": "duìbùqǐ",
+      "sheet": "HSK1",
+      "row": 24
+    },
+    {
+      "word": "个",
+      "referencePinyin": "gě",
+      "workbookPinyin": "gè",
+      "sheet": "HSK1",
+      "row": 33
+    },
+    {
+      "word": "后面",
+      "referencePinyin": "hòu mian",
+      "workbookPinyin": "hòumiàn",
+      "sheet": "HSK1",
+      "row": 41
+    },
+    {
+      "word": "几",
+      "referencePinyin": "jī",
+      "workbookPinyin": "jǐ",
+      "sheet": "HSK1",
+      "row": 45
+    },
+    {
+      "word": "看",
+      "referencePinyin": "kān",
+      "workbookPinyin": "kàn",
+      "sheet": "HSK1",
+      "row": 51
+    },
+    {
+      "word": "吗",
+      "referencePinyin": "má",
+      "workbookPinyin": "ma",
+      "sheet": "HSK1",
+      "row": 62
+    },
+    {
+      "word": "那",
+      "referencePinyin": "Nā",
+      "workbookPinyin": "nà",
+      "sheet": "HSK1",
+      "row": 71
+    },
+    {
+      "word": "上",
+      "referencePinyin": "shǎng",
+      "workbookPinyin": "shàng",
+      "sheet": "HSK1",
+      "row": 91
+    },
+    {
+      "word": "谁",
+      "referencePinyin": "shéi",
+      "workbookPinyin": "shuí/ shéi",
+      "sheet": "HSK1",
+      "row": 94
+    },
+    {
+      "word": "时候",
+      "referencePinyin": "shí hou",
+      "workbookPinyin": "shíhòu",
+      "sheet": "HSK1",
+      "row": 97
+    },
+    {
+      "word": "听",
+      "referencePinyin": "yǐn",
+      "workbookPinyin": "tīng",
+      "sheet": "HSK1",
+      "row": 110
+    },
+    {
+      "word": "喂",
+      "referencePinyin": "wéi",
+      "workbookPinyin": "wèi",
+      "sheet": "HSK1",
+      "row": 112
+    },
+    {
+      "word": "喜欢",
+      "referencePinyin": "xǐ huan",
+      "workbookPinyin": "xǐhuān",
+      "sheet": "HSK1",
+      "row": 116
+    },
+    {
+      "word": "先生",
+      "referencePinyin": "xiān sheng",
+      "workbookPinyin": "xiānshēng",
+      "sheet": "HSK1",
+      "row": 120
+    },
+    {
+      "word": "小姐",
+      "referencePinyin": "xiǎo jie",
+      "workbookPinyin": "xiǎojiě",
+      "sheet": "HSK1",
+      "row": 124
+    },
+    {
+      "word": "谢谢",
+      "referencePinyin": "xiè xie",
+      "workbookPinyin": "xièxiè",
+      "sheet": "HSK1",
+      "row": 127
+    },
+    {
+      "word": "学生",
+      "referencePinyin": "xué sheng",
+      "workbookPinyin": "xuéshēng",
+      "sheet": "HSK1",
+      "row": 129
+    },
+    {
+      "word": "吧",
+      "referencePinyin": "bā",
+      "workbookPinyin": "ba",
+      "sheet": "HSK2",
+      "row": 2
+    },
+    {
+      "word": "得",
+      "referencePinyin": "dé",
+      "workbookPinyin": "děi",
+      "sheet": "HSK2",
+      "row": 21
+    },
+    {
+      "word": "弟弟",
+      "referencePinyin": "dì di",
+      "workbookPinyin": "dìdì",
+      "sheet": "HSK2",
+      "row": 23
+    },
+    {
+      "word": "过",
+      "referencePinyin": "Guō",
+      "workbookPinyin": "guò",
+      "sheet": "HSK2",
+      "row": 38
+    },
+    {
+      "word": "还",
+      "referencePinyin": "Huán",
+      "workbookPinyin": "hái",
+      "sheet": "HSK2",
+      "row": 39
+    },
+    {
+      "word": "号",
+      "referencePinyin": "háo",
+      "workbookPinyin": "hào",
+      "sheet": "HSK2",
+      "row": 42
+    },
+    {
+      "word": "累",
+      "referencePinyin": "lěi",
+      "workbookPinyin": "lèi",
+      "sheet": "HSK2",
+      "row": 65
+    },
+    {
+      "word": "离",
+      "referencePinyin": "chī",
+      "workbookPinyin": "lí",
+      "sheet": "HSK2",
+      "row": 66
+    },
+    {
+      "word": "便宜",
+      "referencePinyin": "biàn yí",
+      "workbookPinyin": "piányí",
+      "sheet": "HSK2",
+      "row": 82
+    },
+    {
+      "word": "妻子",
+      "referencePinyin": "qī zǐ",
+      "workbookPinyin": "qīzi",
+      "sheet": "HSK2",
+      "row": 84
+    },
+    {
+      "word": "事情",
+      "referencePinyin": "shì qing",
+      "workbookPinyin": "shìqíng",
+      "sheet": "HSK2",
+      "row": 95
+    },
+    {
+      "word": "晚上",
+      "referencePinyin": "wǎn shang",
+      "workbookPinyin": "wǎnshàng",
+      "sheet": "HSK2",
+      "row": 107
+    },
+    {
+      "word": "要",
+      "referencePinyin": "yāo",
+      "workbookPinyin": "yào",
+      "sheet": "HSK2",
+      "row": 124
+    },
+    {
+      "word": "一起",
+      "referencePinyin": "yī qǐ",
+      "workbookPinyin": "yìqǐ",
+      "sheet": "HSK2",
+      "row": 128
+    },
+    {
+      "word": "右边",
+      "referencePinyin": "yòu bian",
+      "workbookPinyin": "yòubiān",
+      "sheet": "HSK2",
+      "row": 133
+    },
+    {
+      "word": "早上",
+      "referencePinyin": "zǎo shang",
+      "workbookPinyin": "zǎoshàng",
+      "sheet": "HSK2",
+      "row": 139
+    },
+    {
+      "word": "着",
+      "referencePinyin": "zhāo",
+      "workbookPinyin": "zhe",
+      "sheet": "HSK2",
+      "row": 143
+    },
+    {
+      "word": "左边",
+      "referencePinyin": "zuǒ bian",
+      "workbookPinyin": "zuǒbiān",
+      "sheet": "HSK2",
+      "row": 151
+    },
+    {
+      "word": "啊",
+      "referencePinyin": "ā",
+      "workbookPinyin": "a",
+      "sheet": "HSK3",
+      "row": 3
+    },
+    {
+      "word": "别人",
+      "referencePinyin": "bié ren",
+      "workbookPinyin": "biérén",
+      "sheet": "HSK3",
+      "row": 24
+    },
+    {
+      "word": "差",
+      "referencePinyin": "chā",
+      "workbookPinyin": "chà",
+      "sheet": "HSK3",
+      "row": 32
+    },
+    {
+      "word": "聪明",
+      "referencePinyin": "cōng ming",
+      "workbookPinyin": "cōngmíng",
+      "sheet": "HSK3",
+      "row": 43
+    },
+    {
+      "word": "更",
+      "referencePinyin": "gēng",
+      "workbookPinyin": "gèng",
+      "sheet": "HSK3",
+      "row": 82
+    },
+    {
+      "word": "关系",
+      "referencePinyin": "guān xi",
+      "workbookPinyin": "guānxì",
+      "sheet": "HSK3",
+      "row": 87
+    },
+    {
+      "word": "还是",
+      "referencePinyin": "hái shi",
+      "workbookPinyin": "háishì",
+      "sheet": "HSK3",
+      "row": 93
+    },
+    {
+      "word": "记得",
+      "referencePinyin": "jì de",
+      "workbookPinyin": "jìdé",
+      "sheet": "HSK3",
+      "row": 111
+    },
+    {
+      "word": "教",
+      "referencePinyin": "Jiào",
+      "workbookPinyin": "jiāo",
+      "sheet": "HSK3",
+      "row": 118
+    },
+    {
+      "word": "角",
+      "referencePinyin": "Jué",
+      "workbookPinyin": "jiǎo",
+      "sheet": "HSK3",
+      "row": 119
+    },
+    {
+      "word": "空调",
+      "referencePinyin": "kōng tiáo",
+      "workbookPinyin": "kòngtiáo",
+      "sheet": "HSK3",
+      "row": 140
+    },
+    {
+      "word": "明白",
+      "referencePinyin": "míng bai",
+      "workbookPinyin": "míngbái",
+      "sheet": "HSK3",
+      "row": 163
+    },
+    {
+      "word": "鸟",
+      "referencePinyin": "diǎo",
+      "workbookPinyin": "niǎo",
+      "sheet": "HSK3",
+      "row": 171
+    },
+    {
+      "word": "胖",
+      "referencePinyin": "pán",
+      "workbookPinyin": "pàng",
+      "sheet": "HSK3",
+      "row": 175
+    },
+    {
+      "word": "骑",
+      "referencePinyin": "jì",
+      "workbookPinyin": "qí",
+      "sheet": "HSK3",
+      "row": 179
+    },
+    {
+      "word": "清楚",
+      "referencePinyin": "qīng chu",
+      "workbookPinyin": "qīngchǔ",
+      "sheet": "HSK3",
+      "row": 184
+    },
+    {
+      "word": "太阳",
+      "referencePinyin": "tài yang",
+      "workbookPinyin": "tàiyáng",
+      "sheet": "HSK3",
+      "row": 209
+    },
+    {
+      "word": "万",
+      "referencePinyin": "mò",
+      "workbookPinyin": "wàn",
+      "sheet": "HSK3",
+      "row": 225
+    },
+    {
+      "word": "为",
+      "referencePinyin": "wéi",
+      "workbookPinyin": "wèi",
+      "sheet": "HSK3",
+      "row": 228
+    },
+    {
+      "word": "喜欢",
+      "referencePinyin": "xǐ huan",
+      "workbookPinyin": "xǐhuān",
+      "sheet": "HSK3",
+      "row": 235
+    },
+    {
+      "word": "行李箱",
+      "referencePinyin": "xíng li xiāng",
+      "workbookPinyin": "xínglǐxiāng",
+      "sheet": "HSK3",
+      "row": 247
+    },
+    {
+      "word": "月亮",
+      "referencePinyin": "yuè liang",
+      "workbookPinyin": "yuèliàng",
+      "sheet": "HSK3",
+      "row": 274
+    },
+    {
+      "word": "长",
+      "referencePinyin": "cháng",
+      "workbookPinyin": "zhǎng",
+      "sheet": "HSK3",
+      "row": 277
+    },
+    {
+      "word": "着急",
+      "referencePinyin": "zháo jí",
+      "workbookPinyin": "zhāojí",
+      "sheet": "HSK3",
+      "row": 278
+    },
+    {
+      "word": "爱情",
+      "referencePinyin": "ài qíng",
+      "workbookPinyin": "ài qíng [ái tình]",
+      "sheet": "HSK4",
+      "row": 2
+    },
+    {
+      "word": "安排",
+      "referencePinyin": "ān pái",
+      "workbookPinyin": "ān pái [an bài]",
+      "sheet": "HSK4",
+      "row": 3
+    },
+    {
+      "word": "安全",
+      "referencePinyin": "ān quán",
+      "workbookPinyin": "ān quán [an toàn]",
+      "sheet": "HSK4",
+      "row": 4
+    },
+    {
+      "word": "部分",
+      "referencePinyin": "bù fen",
+      "workbookPinyin": "bù fèn",
+      "sheet": "HSK4",
+      "row": 33
+    },
+    {
+      "word": "差不多",
+      "referencePinyin": "chà bu duō",
+      "workbookPinyin": "chà bù duō",
+      "sheet": "HSK4",
+      "row": 40
+    },
+    {
+      "word": "场",
+      "referencePinyin": "cháng",
+      "workbookPinyin": "chǎng",
+      "sheet": "HSK4",
+      "row": 44
+    },
+    {
+      "word": "窗户",
+      "referencePinyin": "chuāng hu",
+      "workbookPinyin": "chuāng hù",
+      "sheet": "HSK4",
+      "row": 59
+    },
+    {
+      "word": "打扮",
+      "referencePinyin": "dǎ ban",
+      "workbookPinyin": "dǎ bàn",
+      "sheet": "HSK4",
+      "row": 66
+    },
+    {
+      "word": "打招呼",
+      "referencePinyin": "dǎ zhāo hu",
+      "workbookPinyin": "dǎ zhāo hū",
+      "sheet": "HSK4",
+      "row": 69
+    },
+    {
+      "word": "大夫",
+      "referencePinyin": "dà fū",
+      "workbookPinyin": "dài fū",
+      "sheet": "HSK4",
+      "row": 75
+    },
+    {
+      "word": "底",
+      "referencePinyin": "de",
+      "workbookPinyin": "dǐ",
+      "sheet": "HSK4",
+      "row": 90
+    },
+    {
+      "word": "功夫",
+      "referencePinyin": "gōng fu",
+      "workbookPinyin": "gōng fū",
+      "sheet": "HSK4",
+      "row": 144
+    },
+    {
+      "word": "汗",
+      "referencePinyin": "hán",
+      "workbookPinyin": "hàn",
+      "sheet": "HSK4",
+      "row": 168
+    },
+    {
+      "word": "好处",
+      "referencePinyin": "hǎo chǔ",
+      "workbookPinyin": "hǎo chù",
+      "sheet": "HSK4",
+      "row": 170
+    },
+    {
+      "word": "护士",
+      "referencePinyin": "hù shi",
+      "workbookPinyin": "hù shì",
+      "sheet": "HSK4",
+      "row": 180
+    },
+    {
+      "word": "活泼",
+      "referencePinyin": "huó po",
+      "workbookPinyin": "huó pō",
+      "sheet": "HSK4",
+      "row": 184
+    },
+    {
+      "word": "假",
+      "referencePinyin": "gēi",
+      "workbookPinyin": "jiǎ",
+      "sheet": "HSK4",
+      "row": 202
+    },
+    {
+      "word": "节",
+      "referencePinyin": "jiē",
+      "workbookPinyin": "jié",
+      "sheet": "HSK4",
+      "row": 222
+    },
+    {
+      "word": "结果",
+      "referencePinyin": "jiē guǒ",
+      "workbookPinyin": "jié guǒ",
+      "sheet": "HSK4",
+      "row": 224
+    },
+    {
+      "word": "困难",
+      "referencePinyin": "kùn nan",
+      "workbookPinyin": "kùn nán",
+      "sheet": "HSK4",
+      "row": 266
+    },
+    {
+      "word": "来不及",
+      "referencePinyin": "lái bu jí",
+      "workbookPinyin": "lái bù jí",
+      "sheet": "HSK4",
+      "row": 270
+    },
+    {
+      "word": "力气",
+      "referencePinyin": "lì qi",
+      "workbookPinyin": "lì qì",
+      "sheet": "HSK4",
+      "row": 283
+    },
+    {
+      "word": "厉害",
+      "referencePinyin": "lì hai",
+      "workbookPinyin": "lì hài",
+      "sheet": "HSK4",
+      "row": 284
+    },
+    {
+      "word": "凉快",
+      "referencePinyin": "liáng kuai",
+      "workbookPinyin": "liáng kuài",
+      "sheet": "HSK4",
+      "row": 289
+    },
+    {
+      "word": "母亲",
+      "referencePinyin": "mǔ qīn",
+      "workbookPinyin": "mǔ qin",
+      "sheet": "HSK4",
+      "row": 310
+    },
+    {
+      "word": "弄",
+      "referencePinyin": "lòng",
+      "workbookPinyin": "nòng",
+      "sheet": "HSK4",
+      "row": 319
+    },
+    {
+      "word": "脾气",
+      "referencePinyin": "pí qi",
+      "workbookPinyin": "pí qì",
+      "sheet": "HSK4",
+      "row": 328
+    },
+    {
+      "word": "葡萄",
+      "referencePinyin": "pú tao",
+      "workbookPinyin": "pú táo",
+      "sheet": "HSK4",
+      "row": 334
+    },
+    {
+      "word": "热闹",
+      "referencePinyin": "rè nao",
+      "workbookPinyin": "rè nào",
+      "sheet": "HSK4",
+      "row": 358
+    },
+    {
+      "word": "任务",
+      "referencePinyin": "rèn wu",
+      "workbookPinyin": "rèn wù",
+      "sheet": "HSK4",
+      "row": 360
+    },
+    {
+      "word": "商量",
+      "referencePinyin": "shāng liang",
+      "workbookPinyin": "shāng liáng",
+      "sheet": "HSK4",
+      "row": 369
+    },
+    {
+      "word": "师傅",
+      "referencePinyin": "shī fu",
+      "workbookPinyin": "shī fù",
+      "sheet": "HSK4",
+      "row": 383
+    },
+    {
+      "word": "收拾",
+      "referencePinyin": "shōu shi",
+      "workbookPinyin": "shōu shí",
+      "sheet": "HSK4",
+      "row": 395
+    },
+    {
+      "word": "数字",
+      "referencePinyin": "shù zì",
+      "workbookPinyin": "shù zi",
+      "sheet": "HSK4",
+      "row": 404
+    },
+    {
+      "word": "孙子",
+      "referencePinyin": "Sūn zǐ",
+      "workbookPinyin": "sūn zi",
+      "sheet": "HSK4",
+      "row": 417
+    },
+    {
+      "word": "态度",
+      "referencePinyin": "tài du",
+      "workbookPinyin": "tài dù",
+      "sheet": "HSK4",
+      "row": 421
+    },
+    {
+      "word": "趟",
+      "referencePinyin": "tāng",
+      "workbookPinyin": "tàng",
+      "sheet": "HSK4",
+      "row": 427
+    },
+    {
+      "word": "提",
+      "referencePinyin": "dī",
+      "workbookPinyin": "tí",
+      "sheet": "HSK4",
+      "row": 431
+    },
+    {
+      "word": "味道",
+      "referencePinyin": "wèi dao",
+      "workbookPinyin": "wèi dào",
+      "sheet": "HSK4",
+      "row": 453
+    },
+    {
+      "word": "笑话",
+      "referencePinyin": "xiào hua",
+      "workbookPinyin": "xiào huà",
+      "sheet": "HSK4",
+      "row": 476
+    },
+    {
+      "word": "行",
+      "referencePinyin": "háng",
+      "workbookPinyin": "xíng",
+      "sheet": "HSK4",
+      "row": 484
+    },
+    {
+      "word": "呀",
+      "referencePinyin": "ya",
+      "workbookPinyin": "yā",
+      "sheet": "HSK4",
+      "row": 493
+    },
+    {
+      "word": "要是",
+      "referencePinyin": "yào shi",
+      "workbookPinyin": "yào shì",
+      "sheet": "HSK4",
+      "row": 507
+    },
+    {
+      "word": "页",
+      "referencePinyin": "xié",
+      "workbookPinyin": "yè",
+      "sheet": "HSK4",
+      "row": 511
+    },
+    {
+      "word": "与",
+      "referencePinyin": "yú",
+      "workbookPinyin": "yǔ",
+      "sheet": "HSK4",
+      "row": 536
+    },
+    {
+      "word": "脏",
+      "referencePinyin": "zàng",
+      "workbookPinyin": "zāng",
+      "sheet": "HSK4",
+      "row": 551
+    },
+    {
+      "word": "知识",
+      "referencePinyin": "zhī shi",
+      "workbookPinyin": "zhī shí",
+      "sheet": "HSK4",
+      "row": 566
+    },
+    {
+      "word": "值得",
+      "referencePinyin": "zhí de",
+      "workbookPinyin": "zhí dé",
+      "sheet": "HSK4",
+      "row": 568
+    },
+    {
+      "word": "重",
+      "referencePinyin": "chóng",
+      "workbookPinyin": "zhòng",
+      "sheet": "HSK4",
+      "row": 576
+    },
+    {
+      "word": "重点",
+      "referencePinyin": "chóng diǎn",
+      "workbookPinyin": "zhòng diǎn",
+      "sheet": "HSK4",
+      "row": 577
+    },
+    {
+      "word": "主意",
+      "referencePinyin": "zhǔ yi",
+      "workbookPinyin": "zhǔ yì",
+      "sheet": "HSK4",
+      "row": 580
+    },
+    {
+      "word": "薄",
+      "referencePinyin": "Bó",
+      "workbookPinyin": "báo",
+      "sheet": "HSK5",
+      "row": 18
+    },
+    {
+      "word": "背",
+      "referencePinyin": "bēi",
+      "workbookPinyin": "bèi",
+      "sheet": "HSK5",
+      "row": 29
+    },
+    {
+      "word": "玻璃",
+      "referencePinyin": "bō li",
+      "workbookPinyin": "bō lí",
+      "sheet": "HSK5",
+      "row": 54
+    },
+    {
+      "word": "不安",
+      "referencePinyin": "bù ān",
+      "workbookPinyin": "bú ān",
+      "sheet": "HSK5",
+      "row": 59
+    },
+    {
+      "word": "不断",
+      "referencePinyin": "bù duàn",
+      "workbookPinyin": "bú duàn",
+      "sheet": "HSK5",
+      "row": 60
+    },
+    {
+      "word": "不见得",
+      "referencePinyin": "bù jiàn de",
+      "workbookPinyin": "bú jiàn dé",
+      "sheet": "HSK5",
+      "row": 61
+    },
+    {
+      "word": "不耐烦",
+      "referencePinyin": "bù nài fán",
+      "workbookPinyin": "bú nài fán",
+      "sheet": "HSK5",
+      "row": 62
+    },
+    {
+      "word": "不然",
+      "referencePinyin": "bù rán",
+      "workbookPinyin": "bú rán",
+      "sheet": "HSK5",
+      "row": 63
+    },
+    {
+      "word": "不如",
+      "referencePinyin": "bù rú",
+      "workbookPinyin": "bú rú",
+      "sheet": "HSK5",
+      "row": 64
+    },
+    {
+      "word": "不要紧",
+      "referencePinyin": "bù yào jǐn",
+      "workbookPinyin": "bú yào jǐn",
+      "sheet": "HSK5",
+      "row": 65
+    },
+    {
+      "word": "不足",
+      "referencePinyin": "bù zú",
+      "workbookPinyin": "bú zú",
+      "sheet": "HSK5",
+      "row": 66
+    },
+    {
+      "word": "称呼",
+      "referencePinyin": "chēng hu",
+      "workbookPinyin": "chēng hū",
+      "sheet": "HSK5",
+      "row": 104
+    },
+    {
+      "word": "抽屉",
+      "referencePinyin": "chōu ti",
+      "workbookPinyin": "chōu tì",
+      "sheet": "HSK5",
+      "row": 131
+    },
+    {
+      "word": "答应",
+      "referencePinyin": "dā ying",
+      "workbookPinyin": "dā yìng",
+      "sheet": "HSK5",
+      "row": 169
+    },
+    {
+      "word": "打听",
+      "referencePinyin": "dǎ ting",
+      "workbookPinyin": "dǎ tīng",
+      "sheet": "HSK5",
+      "row": 174
+    },
+    {
+      "word": "耽误",
+      "referencePinyin": "dān wu",
+      "workbookPinyin": "dān wù",
+      "sheet": "HSK5",
+      "row": 190
+    },
+    {
+      "word": "道理",
+      "referencePinyin": "dào li",
+      "workbookPinyin": "dào lǐ",
+      "sheet": "HSK5",
+      "row": 202
+    },
+    {
+      "word": "点心",
+      "referencePinyin": "diǎn xin",
+      "workbookPinyin": "diǎn xīn",
+      "sheet": "HSK5",
+      "row": 216
+    },
+    {
+      "word": "豆腐",
+      "referencePinyin": "dòu fu",
+      "workbookPinyin": "dòu fǔ",
+      "sheet": "HSK5",
+      "row": 224
+    },
+    {
+      "word": "盖",
+      "referencePinyin": "Gě",
+      "workbookPinyin": "gài",
+      "sheet": "HSK5",
+      "row": 297
+    },
+    {
+      "word": "干活儿",
+      "referencePinyin": "gàn huó r",
+      "workbookPinyin": "gàn huó ér",
+      "sheet": "HSK5",
+      "row": 307
+    },
+    {
+      "word": "怪不得",
+      "referencePinyin": "guài bu de",
+      "workbookPinyin": "guài bù dé",
+      "sheet": "HSK5",
+      "row": 349
+    },
+    {
+      "word": "管子",
+      "referencePinyin": "Guǎn zǐ",
+      "workbookPinyin": "guǎn zi",
+      "sheet": "HSK5",
+      "row": 355
+    },
+    {
+      "word": "合同",
+      "referencePinyin": "hé tong",
+      "workbookPinyin": "hé tóng",
+      "sheet": "HSK5",
+      "row": 389
+    },
+    {
+      "word": "糊涂",
+      "referencePinyin": "hú tu",
+      "workbookPinyin": "hú tú",
+      "sheet": "HSK5",
+      "row": 407
+    },
+    {
+      "word": "系领带",
+      "referencePinyin": "xì lǐng dài",
+      "workbookPinyin": "jì lǐng dài",
+      "sheet": "HSK5",
+      "row": 449
+    },
+    {
+      "word": "讲究",
+      "referencePinyin": "jiǎng jiu",
+      "workbookPinyin": "jiǎng jiū",
+      "sheet": "HSK5",
+      "row": 478
+    },
+    {
+      "word": "教训",
+      "referencePinyin": "jiào xun",
+      "workbookPinyin": "jiào xùn",
+      "sheet": "HSK5",
+      "row": 490
+    },
+    {
+      "word": "结实",
+      "referencePinyin": "jiē shí",
+      "workbookPinyin": "jiē shi",
+      "sheet": "HSK5",
+      "row": 492
+    },
+    {
+      "word": "戒指",
+      "referencePinyin": "jiè zhi",
+      "workbookPinyin": "jiè zhǐ",
+      "sheet": "HSK5",
+      "row": 502
+    },
+    {
+      "word": "舅舅",
+      "referencePinyin": "jiù jiu",
+      "workbookPinyin": "jiù jiù",
+      "sheet": "HSK5",
+      "row": 522
+    },
+    {
+      "word": "看不起",
+      "referencePinyin": "kàn bu qǐ",
+      "workbookPinyin": "kàn bù qǐ",
+      "sheet": "HSK5",
+      "row": 543
+    },
+    {
+      "word": "会计",
+      "referencePinyin": "kuài jì",
+      "workbookPinyin": "kuàì jì",
+      "sheet": "HSK5",
+      "row": 561
+    },
+    {
+      "word": "老实",
+      "referencePinyin": "lǎo shi",
+      "workbookPinyin": "lǎo shí",
+      "sheet": "HSK5",
+      "row": 574
+    },
+    {
+      "word": "姥姥",
+      "referencePinyin": "lǎo lao",
+      "workbookPinyin": "lǎo lǎo",
+      "sheet": "HSK5",
+      "row": 576
+    },
+    {
+      "word": "力量",
+      "referencePinyin": "lì liang",
+      "workbookPinyin": "lì liàng",
+      "sheet": "HSK5",
+      "row": 586
+    },
+    {
+      "word": "粮食",
+      "referencePinyin": "liáng shi",
+      "workbookPinyin": "liáng shí",
+      "sheet": "HSK5",
+      "row": 598
+    },
+    {
+      "word": "了不起",
+      "referencePinyin": "liǎo bu qǐ",
+      "workbookPinyin": "liǎo bù qǐ",
+      "sheet": "HSK5",
+      "row": 600
+    },
+    {
+      "word": "逻辑",
+      "referencePinyin": "luó ji",
+      "workbookPinyin": "luó jí",
+      "sheet": "HSK5",
+      "row": 620
+    },
+    {
+      "word": "馒头",
+      "referencePinyin": "mán tou",
+      "workbookPinyin": "mán tóu",
+      "sheet": "HSK5",
+      "row": 624
+    },
+    {
+      "word": "眉毛",
+      "referencePinyin": "méi mao",
+      "workbookPinyin": "méi máo",
+      "sheet": "HSK5",
+      "row": 630
+    },
+    {
+      "word": "苗条",
+      "referencePinyin": "miáo tiao",
+      "workbookPinyin": "miáo tiáo",
+      "sheet": "HSK5",
+      "row": 643
+    },
+    {
+      "word": "木头",
+      "referencePinyin": "mù tou",
+      "workbookPinyin": "mù tóu",
+      "sheet": "HSK5",
+      "row": 661
+    },
+    {
+      "word": "脑袋",
+      "referencePinyin": "nǎo dai",
+      "workbookPinyin": "nǎo dài",
+      "sheet": "HSK5",
+      "row": 668
+    },
+    {
+      "word": "欧洲",
+      "referencePinyin": "Oū zhōu",
+      "workbookPinyin": "ōu zhōu",
+      "sheet": "HSK5",
+      "row": 685
+    },
+    {
+      "word": "匹",
+      "referencePinyin": "pī",
+      "workbookPinyin": "pǐ",
+      "sheet": "HSK5",
+      "row": 701
+    },
+    {
+      "word": "片",
+      "referencePinyin": "piān",
+      "workbookPinyin": "piàn",
+      "sheet": "HSK5",
+      "row": 702
+    },
+    {
+      "word": "浅",
+      "referencePinyin": "jiān",
+      "workbookPinyin": "qiǎn",
+      "sheet": "HSK5",
+      "row": 731
+    },
+    {
+      "word": "抢",
+      "referencePinyin": "qiāng",
+      "workbookPinyin": "qiǎng",
+      "sheet": "HSK5",
+      "row": 737
+    },
+    {
+      "word": "切",
+      "referencePinyin": "qiē",
+      "workbookPinyin": "qiè",
+      "sheet": "HSK5",
+      "row": 741
+    },
+    {
+      "word": "圈",
+      "referencePinyin": "juān",
+      "workbookPinyin": "quān",
+      "sheet": "HSK5",
+      "row": 761
+    },
+    {
+      "word": "忍不住",
+      "referencePinyin": "rěn bu zhù",
+      "workbookPinyin": "rěn bù zhù",
+      "sheet": "HSK5",
+      "row": 783
+    },
+    {
+      "word": "舍不得",
+      "referencePinyin": "shě bu de",
+      "workbookPinyin": "shě bù dé",
+      "sheet": "HSK5",
+      "row": 814
+    },
+    {
+      "word": "省略",
+      "referencePinyin": "shěng lu:è",
+      "workbookPinyin": "shěng lüè",
+      "sheet": "HSK5",
+      "row": 832
+    },
+    {
+      "word": "狮子",
+      "referencePinyin": "Shī zǐ",
+      "workbookPinyin": "shī zi",
+      "sheet": "HSK5",
+      "row": 838
+    },
+    {
+      "word": "使劲儿",
+      "referencePinyin": "shǐ jìn r",
+      "workbookPinyin": "shǐ jìn ér",
+      "sheet": "HSK5",
+      "row": 854
+    },
+    {
+      "word": "说不定",
+      "referencePinyin": "shuō bu dìng",
+      "workbookPinyin": "shuō bù dìng",
+      "sheet": "HSK5",
+      "row": 888
+    },
+    {
+      "word": "吐",
+      "referencePinyin": "tǔ",
+      "workbookPinyin": "tǔ/tù",
+      "sheet": "HSK5",
+      "row": 947
+    },
+    {
+      "word": "尾巴",
+      "referencePinyin": "wěi ba",
+      "workbookPinyin": "wěi bā",
+      "sheet": "HSK5",
+      "row": 976
+    },
+    {
+      "word": "位置",
+      "referencePinyin": "wèi zhi",
+      "workbookPinyin": "wèi zhì",
+      "sheet": "HSK5",
+      "row": 981
+    },
+    {
+      "word": "吓",
+      "referencePinyin": "hè",
+      "workbookPinyin": "xià",
+      "sheet": "HSK5",
+      "row": 1014
+    },
+    {
+      "word": "显得",
+      "referencePinyin": "xiǎn de",
+      "workbookPinyin": "xiǎn dé",
+      "sheet": "HSK5",
+      "row": 1017
+    },
+    {
+      "word": "血",
+      "referencePinyin": "xuè",
+      "workbookPinyin": "xiě",
+      "sheet": "HSK5",
+      "row": 1051
+    },
+    {
+      "word": "一辈子",
+      "referencePinyin": "yī bèi zi",
+      "workbookPinyin": "yí bèi zi",
+      "sheet": "HSK5",
+      "row": 1100
+    },
+    {
+      "word": "一旦",
+      "referencePinyin": "yī dàn",
+      "workbookPinyin": "yí dàn",
+      "sheet": "HSK5",
+      "row": 1101
+    },
+    {
+      "word": "一律",
+      "referencePinyin": "yī lǜ",
+      "workbookPinyin": "yí lǜ",
+      "sheet": "HSK5",
+      "row": 1102
+    },
+    {
+      "word": "一再",
+      "referencePinyin": "yī zài",
+      "workbookPinyin": "yí zài",
+      "sheet": "HSK5",
+      "row": 1103
+    },
+    {
+      "word": "一致",
+      "referencePinyin": "yī zhì",
+      "workbookPinyin": "yí zhì",
+      "sheet": "HSK5",
+      "row": 1104
+    },
+    {
+      "word": "应付",
+      "referencePinyin": "yìng fu",
+      "workbookPinyin": "yìng fù",
+      "sheet": "HSK5",
+      "row": 1128
+    },
+    {
+      "word": "运气",
+      "referencePinyin": "yùn qi",
+      "workbookPinyin": "yùn qì",
+      "sheet": "HSK5",
+      "row": 1161
+    },
+    {
+      "word": "在乎",
+      "referencePinyin": "zài hu",
+      "workbookPinyin": "zài hū",
+      "sheet": "HSK5",
+      "row": 1166
+    },
+    {
+      "word": "涨",
+      "referencePinyin": "zhǎng",
+      "workbookPinyin": "zhàng",
+      "sheet": "HSK5",
+      "row": 1182
+    },
+    {
+      "word": "正",
+      "referencePinyin": "zhēng",
+      "workbookPinyin": "zhèng",
+      "sheet": "HSK5",
+      "row": 1204
+    },
+    {
+      "word": "阻止",
+      "referencePinyin": "zǔ zhǐ",
+      "workbookPinyin": "zǔ zhī",
+      "sheet": "HSK5",
+      "row": 1285
+    },
+    {
+      "word": "哎哟",
+      "referencePinyin": "āi yō",
+      "workbookPinyin": "āi yōu",
+      "sheet": "HSK6",
+      "row": 2
+    },
+    {
+      "word": "挨",
+      "referencePinyin": "āi",
+      "workbookPinyin": "ái",
+      "sheet": "HSK6",
+      "row": 3
+    },
+    {
+      "word": "熬",
+      "referencePinyin": "āo",
+      "workbookPinyin": "áo",
+      "sheet": "HSK6",
+      "row": 18
+    },
+    {
+      "word": "巴结",
+      "referencePinyin": "bā jie",
+      "workbookPinyin": "bā jié",
+      "sheet": "HSK6",
+      "row": 23
+    },
+    {
+      "word": "报酬",
+      "referencePinyin": "bào chou",
+      "workbookPinyin": "bào chóu",
+      "sheet": "HSK6",
+      "row": 63
+    },
+    {
+      "word": "比方",
+      "referencePinyin": "bǐ fang",
+      "workbookPinyin": "bǐ fāng",
+      "sheet": "HSK6",
+      "row": 102
+    },
+    {
+      "word": "扁",
+      "referencePinyin": "Piān",
+      "workbookPinyin": "biǎn",
+      "sheet": "HSK6",
+      "row": 117
+    },
+    {
+      "word": "别人",
+      "referencePinyin": "bié ren",
+      "workbookPinyin": "bié rén",
+      "sheet": "HSK6",
+      "row": 140
+    },
+    {
+      "word": "别扭",
+      "referencePinyin": "biè niu",
+      "workbookPinyin": "bié niu",
+      "sheet": "HSK6",
+      "row": 143
+    },
+    {
+      "word": "不屑一顾",
+      "referencePinyin": "bù xiè yī gù",
+      "workbookPinyin": "bù xiè yí gù",
+      "sheet": "HSK6",
+      "row": 183
+    },
+    {
+      "word": "策略",
+      "referencePinyin": "cè lu:è",
+      "workbookPinyin": "cè lüè",
+      "sheet": "HSK6",
+      "row": 219
+    },
+    {
+      "word": "场",
+      "referencePinyin": "cháng",
+      "workbookPinyin": "chǎng",
+      "sheet": "HSK6",
+      "row": 241
+    },
+    {
+      "word": "盛",
+      "referencePinyin": "Shèng",
+      "workbookPinyin": "chéng",
+      "sheet": "HSK6",
+      "row": 269
+    },
+    {
+      "word": "秤",
+      "referencePinyin": "chēng",
+      "workbookPinyin": "chèng",
+      "sheet": "HSK6",
+      "row": 285
+    },
+    {
+      "word": "刺",
+      "referencePinyin": "cī",
+      "workbookPinyin": "cì",
+      "sheet": "HSK6",
+      "row": 347
+    },
+    {
+      "word": "伺候",
+      "referencePinyin": "cì hou",
+      "workbookPinyin": "cì hòu",
+      "sheet": "HSK6",
+      "row": 348
+    },
+    {
+      "word": "地道",
+      "referencePinyin": "dì dào",
+      "workbookPinyin": "dì dao",
+      "sheet": "HSK6",
+      "row": 430
+    },
+    {
+      "word": "对付",
+      "referencePinyin": "duì fu",
+      "workbookPinyin": "duì fù",
+      "sheet": "HSK6",
+      "row": 490
+    },
+    {
+      "word": "番",
+      "referencePinyin": "Pān",
+      "workbookPinyin": "fān",
+      "sheet": "HSK6",
+      "row": 524
+    },
+    {
+      "word": "分量",
+      "referencePinyin": "fēn liàng",
+      "workbookPinyin": "fèn liàng",
+      "sheet": "HSK6",
+      "row": 582
+    },
+    {
+      "word": "夫人",
+      "referencePinyin": "fū ren",
+      "workbookPinyin": "fū rén",
+      "sheet": "HSK6",
+      "row": 601
+    },
+    {
+      "word": "福气",
+      "referencePinyin": "fú qi",
+      "workbookPinyin": "fú qì",
+      "sheet": "HSK6",
+      "row": 608
+    },
+    {
+      "word": "扛",
+      "referencePinyin": "gāng",
+      "workbookPinyin": "káng",
+      "sheet": "HSK6",
+      "row": 640
+    },
+    {
+      "word": "刚刚",
+      "referencePinyin": "gāng gang",
+      "workbookPinyin": "gāng gāng",
+      "sheet": "HSK6",
+      "row": 641
+    },
+    {
+      "word": "工夫",
+      "referencePinyin": "gōng fū",
+      "workbookPinyin": "gōng fu",
+      "sheet": "HSK6",
+      "row": 680
+    },
+    {
+      "word": "呵",
+      "referencePinyin": "ā",
+      "workbookPinyin": "hē",
+      "sheet": "HSK6",
+      "row": 776
+    },
+    {
+      "word": "和气",
+      "referencePinyin": "hé qi",
+      "workbookPinyin": "hé qì",
+      "sheet": "HSK6",
+      "row": 784
+    },
+    {
+      "word": "后面",
+      "referencePinyin": "hòu mian",
+      "workbookPinyin": "hòu miàn",
+      "sheet": "HSK6",
+      "row": 804
+    },
+    {
+      "word": "忽略",
+      "referencePinyin": "hū lu:è",
+      "workbookPinyin": "hū lüè",
+      "sheet": "HSK6",
+      "row": 807
+    },
+    {
+      "word": "记性",
+      "referencePinyin": "jì xing",
+      "workbookPinyin": "jì xìng",
+      "sheet": "HSK6",
+      "row": 902
+    },
+    {
+      "word": "家伙",
+      "referencePinyin": "jiā huo",
+      "workbookPinyin": "jiā huǒ",
+      "sheet": "HSK6",
+      "row": 907
+    },
+    {
+      "word": "结果",
+      "referencePinyin": "jiē guǒ",
+      "workbookPinyin": "jié guǒ",
+      "sheet": "HSK6",
+      "row": 974
+    },
+    {
+      "word": "看来",
+      "referencePinyin": "kàn lai",
+      "workbookPinyin": "kàn lái",
+      "sheet": "HSK6",
+      "row": 1077
+    },
+    {
+      "word": "快活",
+      "referencePinyin": "kuài huo",
+      "workbookPinyin": "kuài huó",
+      "sheet": "HSK6",
+      "row": 1118
+    },
+    {
+      "word": "啦",
+      "referencePinyin": "lā",
+      "workbookPinyin": "la",
+      "sheet": "HSK6",
+      "row": 1133
+    },
+    {
+      "word": "搂",
+      "referencePinyin": "lōu",
+      "workbookPinyin": "lǒu",
+      "sheet": "HSK6",
+      "row": 1212
+    },
+    {
+      "word": "掠夺",
+      "referencePinyin": "lu:è duó",
+      "workbookPinyin": "lüèduó",
+      "sheet": "HSK6",
+      "row": 1226
+    },
+    {
+      "word": "略微",
+      "referencePinyin": "lu:è wēi",
+      "workbookPinyin": "lüèwēi",
+      "sheet": "HSK6",
+      "row": 1227
+    },
+    {
+      "word": "嘛",
+      "referencePinyin": "má",
+      "workbookPinyin": "ma",
+      "sheet": "HSK6",
+      "row": 1232
+    },
+    {
+      "word": "蒙",
+      "referencePinyin": "méng",
+      "workbookPinyin": "mēng",
+      "sheet": "HSK6",
+      "row": 1257
+    },
+    {
+      "word": "眯",
+      "referencePinyin": "mí",
+      "workbookPinyin": "mī",
+      "sheet": "HSK6",
+      "row": 1261
+    },
+    {
+      "word": "迷惑",
+      "referencePinyin": "mí huo",
+      "workbookPinyin": "míhuò",
+      "sheet": "HSK6",
+      "row": 1263
+    },
+    {
+      "word": "摸索",
+      "referencePinyin": "mō suo",
+      "workbookPinyin": "mōsuǒ",
+      "sheet": "HSK6",
+      "row": 1291
+    },
+    {
+      "word": "嗯",
+      "referencePinyin": "ēn",
+      "workbookPinyin": "ń",
+      "sheet": "HSK6",
+      "row": 1322
+    },
+    {
+      "word": "纽扣儿",
+      "referencePinyin": "niǔ kòu er",
+      "workbookPinyin": "niǔkòur",
+      "sheet": "HSK6",
+      "row": 1332
+    },
+    {
+      "word": "虐待",
+      "referencePinyin": "nu:è dài",
+      "workbookPinyin": "nüèdài",
+      "sheet": "HSK6",
+      "row": 1338
+    },
+    {
+      "word": "哦",
+      "referencePinyin": "é",
+      "workbookPinyin": "ó",
+      "sheet": "HSK6",
+      "row": 1339
+    },
+    {
+      "word": "欧洲",
+      "referencePinyin": "Oū zhōu",
+      "workbookPinyin": "Ōuzhōu",
+      "sheet": "HSK6",
+      "row": 1341
+    },
+    {
+      "word": "铺",
+      "referencePinyin": "pù",
+      "workbookPinyin": "pū",
+      "sheet": "HSK6",
+      "row": 1408
+    },
+    {
+      "word": "翘",
+      "referencePinyin": "qiáo",
+      "workbookPinyin": "qiào",
+      "sheet": "HSK6",
+      "row": 1470
+    },
+    {
+      "word": "情形",
+      "referencePinyin": "qíng xing",
+      "workbookPinyin": "qíngxíng",
+      "sheet": "HSK6",
+      "row": 1496
+    },
+    {
+      "word": "狮子",
+      "referencePinyin": "Shī zǐ",
+      "workbookPinyin": "shīzi",
+      "sheet": "HSK6",
+      "row": 1643
+    },
+    {
+      "word": "拾",
+      "referencePinyin": "shè",
+      "workbookPinyin": "shí",
+      "sheet": "HSK6",
+      "row": 1645
+    },
+    {
+      "word": "势力",
+      "referencePinyin": "shì li",
+      "workbookPinyin": "shìlì",
+      "sheet": "HSK6",
+      "row": 1672
+    },
+    {
+      "word": "疏忽",
+      "referencePinyin": "shū hu",
+      "workbookPinyin": "shūhū",
+      "sheet": "HSK6",
+      "row": 1698
+    },
+    {
+      "word": "爽快",
+      "referencePinyin": "shuǎng kuai",
+      "workbookPinyin": "shuǎngkuài",
+      "sheet": "HSK6",
+      "row": 1715
+    },
+    {
+      "word": "妥当",
+      "referencePinyin": "tuǒ dang",
+      "workbookPinyin": "tuǒdàng",
+      "sheet": "HSK6",
+      "row": 1843
+    },
+    {
+      "word": "唾沫",
+      "referencePinyin": "tuò mo",
+      "workbookPinyin": "tuòmò",
+      "sheet": "HSK6",
+      "row": 1847
+    },
+    {
+      "word": "泄露",
+      "referencePinyin": "xiè lù",
+      "workbookPinyin": "xièlòu",
+      "sheet": "HSK6",
+      "row": 2009
+    },
+    {
+      "word": "熨",
+      "referencePinyin": "yù",
+      "workbookPinyin": "yùn",
+      "sheet": "HSK6",
+      "row": 2226
+    },
+    {
+      "word": "攒",
+      "referencePinyin": "cuán",
+      "workbookPinyin": "zǎn",
+      "sheet": "HSK6",
+      "row": 2265
+    },
+    {
+      "word": "战略",
+      "referencePinyin": "zhàn lu:è",
+      "workbookPinyin": "zhànlüè",
+      "sheet": "HSK6",
+      "row": 2299
+    },
+    {
+      "word": "折",
+      "referencePinyin": "shé",
+      "workbookPinyin": "zhé",
+      "sheet": "HSK6",
+      "row": 2318
+    },
+    {
+      "word": "指甲",
+      "referencePinyin": "zhǐ jia",
+      "workbookPinyin": "zhǐjiǎ",
+      "sheet": "HSK6",
+      "row": 2375
+    },
+    {
+      "word": "粥",
+      "referencePinyin": "yù",
+      "workbookPinyin": "zhōu",
+      "sheet": "HSK6",
+      "row": 2414
+    },
+    {
+      "word": "拽",
+      "referencePinyin": "yè",
+      "workbookPinyin": "zhuài",
+      "sheet": "HSK6",
+      "row": 2443
+    },
+    {
+      "word": "幢",
+      "referencePinyin": "chuáng",
+      "workbookPinyin": "zhuàng",
+      "sheet": "HSK6",
+      "row": 2459
+    },
+    {
+      "word": "琢磨",
+      "referencePinyin": "zhuó mó",
+      "workbookPinyin": "zuómo",
+      "sheet": "HSK6",
+      "row": 2466
+    }
+  ],
+  "localOnly": [
+    "踢足球",
+    "电子邮箱",
+    "刮风",
+    "刷牙",
+    "百分之",
+    "地点",
+    "赶",
+    "刚",
+    "高速公路",
+    "空",
+    "旅行",
+    "生意",
+    "弹钢琴",
+    "停",
+    "研究",
+    "照",
+    "转",
+    "作家",
+    "哎",
+    "熬夜",
+    "冰淇淋",
+    "称",
+    "成人",
+    "迟早",
+    "出示",
+    "粗糙",
+    "恭喜",
+    "国王",
+    "后背",
+    "划",
+    "滑",
+    "急诊",
+    "健身",
+    "戒",
+    "靠",
+    "夸张",
+    "老婆",
+    "类型",
+    "连续",
+    "列车",
+    "名胜古迹",
+    "模特",
+    "内部",
+    "碰",
+    "拼音",
+    "平安",
+    "签",
+    "轻易",
+    "日子",
+    "伤害",
+    "商务",
+    "生长",
+    "首",
+    "摔倒",
+    "偷",
+    "投入",
+    "外公",
+    "文字",
+    "无所谓",
+    "香肠",
+    "牙齿",
+    "员工",
+    "乐器",
+    "在于",
+    "占",
+    "着火",
+    "挣",
+    "志愿者",
+    "种类",
+    "重大",
+    "主任",
+    "抓",
+    "装修",
+    "追",
+    "片段",
+    "涮火锅",
+    "素食主义",
+    "通货膨胀",
+    "团员",
+    "修养",
+    "烟花爆竹"
+  ]
+}

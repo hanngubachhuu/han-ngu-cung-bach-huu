@@ -1,0 +1,340 @@
+{
+  "sheets": {
+    "HSK1": 149,
+    "HSK2": 150,
+    "HSK3": 295,
+    "HSK4": 600,
+    "HSK5": 1295,
+    "HSK6": 2513
+  },
+  "rows": 5002,
+  "uniqueWords": 4896,
+  "issues": [
+    {
+      "sheet": "HSK1",
+      "row": 70,
+      "word": "哪里 (哪儿)",
+      "issue": "non-standard-headword"
+    },
+    {
+      "sheet": "HSK1",
+      "row": 70,
+      "word": "哪里 (哪儿)",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "你要去哪儿？"
+    },
+    {
+      "sheet": "HSK2",
+      "row": 5,
+      "word": "帮助",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "请你帮忙翻译这篇文章。"
+    },
+    {
+      "sheet": "HSK3",
+      "row": 57,
+      "word": "电子邮箱",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "请发电子邮件给我。"
+    },
+    {
+      "sheet": "HSK3",
+      "row": 204,
+      "word": "刷牙",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "我每天刷两次牙。"
+    },
+    {
+      "sheet": "HSK4",
+      "row": 86,
+      "word": "得（助动词）",
+      "issue": "non-standard-headword"
+    },
+    {
+      "sheet": "HSK4",
+      "row": 86,
+      "word": "得（助动词）",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "她学汉语学得很好。"
+    },
+    {
+      "sheet": "HSK4",
+      "row": 88,
+      "word": "等（助词）",
+      "issue": "non-standard-headword"
+    },
+    {
+      "sheet": "HSK4",
+      "row": 88,
+      "word": "等（助词）",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "我喜欢听音乐、看电影等等。"
+    },
+    {
+      "sheet": "HSK4",
+      "row": 278,
+      "word": "礼拜天",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "我们星期天去公园。"
+    },
+    {
+      "sheet": "HSK5",
+      "row": 173,
+      "word": "打喷嚏",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "她打了一个喷嚏。"
+    },
+    {
+      "sheet": "HSK5",
+      "row": 1068,
+      "word": "性质",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这件事的性质很特殊。"
+    },
+    {
+      "sheet": "HSK5",
+      "row": 1186,
+      "word": "着火",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "火灾导致了房屋的严重损毁。"
+    },
+    {
+      "sheet": "HSK5",
+      "row": 1196,
+      "word": "振动",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "手机的震动声打断了会议。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 31,
+      "word": "百分点",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他的成绩提高了百分之一。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 38,
+      "word": "颁发",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他们获得了奖状。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 100,
+      "word": "逼迫",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他被迫离开了家乡。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 229,
+      "word": "搀",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他扶着老人过马路。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 272,
+      "word": "城堡",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "古堡的景象非常壮观。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 281,
+      "word": "成效",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这种方法很有效。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 283,
+      "word": "成员",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他是团队的一员。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 323,
+      "word": "处置",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他被安排在这个岗位上。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 331,
+      "word": "喘气",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他跑得气喘吁吁。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 429,
+      "word": "地步",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他的生活已经到了绝境。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 446,
+      "word": "吊",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他从树上掉下来。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 480,
+      "word": "端",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这是问题的关键点。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 495,
+      "word": "队伍",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "军队在训练中。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 776,
+      "word": "呵",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "哥哥，你好吗？"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 870,
+      "word": "机械",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这台机器操作简单。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 988,
+      "word": "界限",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他们的分界线很明确。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1081,
+      "word": "考古",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他对古代文化很感兴趣。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1104,
+      "word": "孔",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这个洞非常深。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1121,
+      "word": "款式",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这款衣服很时尚。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1162,
+      "word": "利害",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他们的利益相关。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1422,
+      "word": "旗帜",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "国旗在空中飘扬。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1468,
+      "word": "强迫",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他被迫放弃了梦想。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1537,
+      "word": "人格",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他是一个有尊严的人。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1541,
+      "word": "人士",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这件事对我们有很大的影响。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1599,
+      "word": "设置",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这个设备很先进。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1616,
+      "word": "审判",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他被判处终身监禁。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1645,
+      "word": "拾",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他在街上捡到了一些钱。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1741,
+      "word": "算数",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "我们班的数学考试成绩很好。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1783,
+      "word": "体面",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他在公司里很有面子。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1899,
+      "word": "文献",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "这篇文章有很高的学术价值。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 1923,
+      "word": "舞蹈",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "她跳舞跳得很好。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 2279,
+      "word": "贼",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "小偷很狡猾。"
+    },
+    {
+      "sheet": "HSK6",
+      "row": 2372,
+      "word": "职务",
+      "issue": "example-missing-headword-or-fields",
+      "chinese": "他被提升为部门主管。"
+    }
+  ]
+}

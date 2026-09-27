@@ -103,6 +103,12 @@ export function inflateWord(row, source) {
       .filter((m) => /^(?:CL|LT|lượng từ)\s*:/i.test(m))
       .map((m) => m.replace(/^[^:]+:\s*/, "")),
   }));
+  // CEDICT capitalizes proper names. Prefer the common-word reading when both
+  // exist, while keeping every source reading and definition available.
+  const ordinary = readings.findIndex(
+    (r) => r.numbered === r.numbered.toLowerCase(),
+  );
+  if (ordinary > 0) readings.unshift(...readings.splice(ordinary, 1));
   const first = readings[0];
   return {
     id: wordId(row[0]),
@@ -216,6 +222,7 @@ export class WordIndex {
       limit = 12,
       contains = null,
       savedIds = null,
+      allowedIds = null,
     } = {},
   ) {
     raw = String(raw).trim().normalize("NFC").slice(0, 120);
@@ -225,14 +232,16 @@ export class WordIndex {
       pinyin: normalizePinyin(raw),
       han: /\p{Script=Han}/u.test(raw),
     };
-    const key = JSON.stringify([raw, contains, savedIds, overlays]);
+    const key = JSON.stringify([raw, contains, savedIds, allowedIds, overlays]);
     let hits;
     if (this.last?.key === key) hits = this.last.hits;
     else {
       const found = new Map();
       const saved = savedIds && new Set(savedIds);
+      const allowed = allowedIds && new Set(allowedIds);
       for (const entry of this.prepared) {
         if (saved && !saved.has(entry.id)) continue;
+        if (allowed && !allowed.has(entry.id)) continue;
         if (contains && !entry.variants.some((v) => v.includes(contains)))
           continue;
         const score = this.score(entry, query);
@@ -247,11 +256,13 @@ export class WordIndex {
       }
       for (const entry of overlays) {
         if (saved && !saved.has(entry.id)) continue;
+        if (allowed && !allowed.has(entry.id)) continue;
         const previous = found.get(entry.id);
         found.set(entry.id, {
+          ...previous,
           ...entry,
           score: Math.max(entry.score, previous?.score || 0),
-          course: true,
+          course: entry.course ?? true,
         });
       }
       hits = [...found.values()].sort(compareHits);

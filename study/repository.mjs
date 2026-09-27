@@ -2,6 +2,7 @@ import { rankEntry, wordId, normalizeLatin } from "./core.mjs";
 import { getClient, getSession } from "./auth.mjs";
 import { lexiconRequest } from "./lexicon.mjs";
 import { enrichCourseEntry, enrichCharacter } from "./lexicon-merge.mjs";
+import { enrichReferenceEntry, matchesLevel } from "./reference-core.mjs";
 const cache = new Map(),
   accountCache = new Map();
 window.addEventListener("study:auth", () => accountCache.clear());
@@ -26,6 +27,8 @@ async function json(path) {
   return cache.get(path);
 }
 export const catalog = () => json("catalog.json");
+export const reference = () => json("reference.json");
+export const grammar = () => json("grammar.json");
 function merge(rows) {
   const map = new Map();
   for (const row of rows) {
@@ -74,7 +77,14 @@ async function accessibleRows(table) {
   return accountCache.get(key);
 }
 async function courseIndex() {
-  const index = new Map((await catalog()).entries.map((e) => [e.id, e]));
+  const [course, extra] = await Promise.all([
+    catalog(),
+    reference().catch(() => ({ entries: [] })),
+  ]);
+  const index = new Map(
+    extra.entries.map((e) => [e.id, { ...e, referenceOnly: true }]),
+  );
+  for (const e of course.entries) index.set(e.id, e);
   for (const e of merge(
     await accessibleRows("study_dictionary").catch(() => []),
   ))
@@ -86,6 +96,12 @@ const fallbackWarning =
 export class DictionaryRepository {
   async entries(ids, index = null) {
     index ||= await courseIndex();
+    const extras = new Map(
+      (await reference().catch(() => ({ entries: [] }))).entries.map((e) => [
+        e.id,
+        e,
+      ]),
+    );
     const imported = new Map(
       (await lexiconRequest("get", { ids }).catch(() => [])).map((e) => [
         e.id,
@@ -101,16 +117,33 @@ export class DictionaryRepository {
               ? summary
               : await json("entries/" + id + ".json")
             : null;
-          return enrichCourseEntry(course, imported.get(id));
+          const base = summary?.referenceOnly
+            ? imported.get(id) || course
+            : enrichCourseEntry(course, imported.get(id));
+          return enrichReferenceEntry(base, extras.get(id));
         }),
       )
     ).filter(Boolean);
   }
   async search(
     query,
-    { page = 0, limit = 12, savedIds = null, contains = null } = {},
+    {
+      page = 0,
+      limit = 12,
+      savedIds = null,
+      contains = null,
+      level = "",
+      cumulative = false,
+    } = {},
   ) {
     const index = await courseIndex();
+    const extra = level ? await reference() : null;
+    const allowedIds = extra
+      ? extra.entries
+          .filter((e) => matchesLevel(e, level, cumulative))
+          .map((e) => e.id)
+      : null;
+    const allowed = allowedIds && new Set(allowedIds);
     const overlays = [...index.values()]
       .filter(
         (e) =>
@@ -121,8 +154,14 @@ export class DictionaryRepository {
         id: e.id,
         simplified: e.simplified,
         score: query ? rankEntry(e, query) : 1,
+        course: !e.referenceOnly,
       }))
-      .filter((e) => e.score > 0 && (!savedIds || savedIds.includes(e.id)));
+      .filter(
+        (e) =>
+          e.score > 0 &&
+          (!savedIds || savedIds.includes(e.id)) &&
+          (!allowed || allowed.has(e.id)),
+      );
     let result, warning;
     try {
       result = await lexiconRequest("search", {
@@ -131,6 +170,7 @@ export class DictionaryRepository {
         limit,
         contains,
         savedIds,
+        allowedIds,
         overlays,
       });
     } catch {

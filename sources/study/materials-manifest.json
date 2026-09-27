@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "directory": "材料汉语水平考试",
+  "files": [
+    {
+      "name": "60 bộ thủ thường gặp trong chữ Hán.pptx.pdf",
+      "bytes": 4480209,
+      "sha256": "e1ee4f781d53ceb8e1c72223889c210de84795542b5a915154d12305f4358ce8",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "Bai-Tap-Luyen-Dich-Tieng-Trung-Ung-Dung-So-Trung-Cap-Giao-Tiep-HSK-Co-Ho-Tro-Phien-Am.pdf",
+      "bytes": 63319181,
+      "sha256": "6ac5473214548aa86fcb71d35943d1ff45f35e6fa4c924b42beac0457499dc0e",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "baitapfullhsk2-han2.pdf",
+      "bytes": 90209220,
+      "sha256": "561b42229a89f6fa444c0ebd9906a65a0991eed217aba4e454fbbf810b3104f4",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "Bài tập nâng cao hán ngữ 3.pdf",
+      "bytes": 19859721,
+      "sha256": "232f72dfaa34077216fbe8544e9c2de66bf412f1812c98a9cdeb39104cc2c001",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "FULL TỪ VỰNG HSK1- HSK6.xlsx",
+      "bytes": 1056515,
+      "sha256": "8dd513280f44d3a1bfed6e1229a3b1f23c7fb26afd61fe3541bdbeadb7c239c5",
+      "kind": "xlsx",
+      "status": "imported-reference"
+    },
+    {
+      "name": "hoanthanhbaitaphsk2.pdf",
+      "bytes": 1985023,
+      "sha256": "62383e0f858bb3263ae3b0a09aeeb6c087848fdc6e28831aa67cec4048b46cb7",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "hsk1.1.pdf",
+      "bytes": 9648595,
+      "sha256": "cafd14830033c25e654cd11abc226d1a4ff62e77be6f2c6d755a2cc02ea423db",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "hsk1.2.pdf",
+      "bytes": 2074073,
+      "sha256": "7519fbf3503976b94200fb2d0f0e0e6e735a3e09229d164a5b764a0c2862f92d",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "hsk2.1.pdf",
+      "bytes": 3457892,
+      "sha256": "0c383326361db1472ebf195d5bdf01ea72e62047796dbc336e04a9989b214887",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "hsk2.pdf",
+      "bytes": 5051874,
+      "sha256": "09f14e334db22776865b74e6064b0bab60bfb46ee0074d10e005e1d0696bc3a5",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "hsk2moinhat.pdf",
+      "bytes": 309135,
+      "sha256": "a1608634b56ccf111f916f905c39b4a4fdba5829579c4898d1e8f8673f4cc9b5",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "hsk3-hán3.pdf",
+      "bytes": 47546376,
+      "sha256": "3141665361bb62dade2bf5cdc9570f5ab1cd3294e6b1bd4178ec645f5099eda2",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "HÁN NGỮ NÂNG CAO TẬP 1.pdf",
+      "bytes": 41571868,
+      "sha256": "9bd6783eb2c7aa6703996bd991210f84796f7543e437628fd3bcc7a0ca6edeb6",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "Luyen-Dich-Song-Ngu-Trung-Viet-Viet-Trung-E-1.pdf",
+      "bytes": 57222535,
+      "sha256": "c734a717fc6fe37109bcce768324d52cfb974318af8f0b84c709ad585f50a8ba",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "luyendich2.pdf",
+      "bytes": 1039318,
+      "sha256": "c7acc0662a34fa4fe691fc2f8971af5a40d9fdddf57e2ae3825fcb4f5a5c911d",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "luyendichbaikhoa.pdf",
+      "bytes": 7381283,
+      "sha256": "425ba6270a7c939df906aee58edea48653b68c595236a5062e4efda18df4cc66",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "luyendichghim.docx",
+      "bytes": 4972259,
+      "sha256": "63af43334546985b1b3c6a3630ec4a5253a68df990bad4e070e630ef76106d4b",
+      "kind": "docx",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "MigiiHSK_Ngữ pháp - HSK 1.pdf",
+      "bytes": 4005000,
+      "sha256": "5656a80fc067d0c3c7a9c31aaaeb6dc076f9c2ca8ebde3f4d377b049c9c007e3",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "MigiiHSK_Ngữ pháp - HSK 2.pdf",
+      "bytes": 8406211,
+      "sha256": "7f7cc9846a6e59a46fe5acdb91ef16b7180ad429ec8d27352b1a432bcaab1f04",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "MigiiHSK_Ngữ pháp - HSK 3.pdf",
+      "bytes": 10678352,
+      "sha256": "33b2ee98f3e869dd1826f40cf9a8c90c0acbf58fca542bf2c8cf96460a5ee4a1",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "NGỮ PHÁP HSK 1 - 2- 3- 4.pdf",
+      "bytes": 42294504,
+      "sha256": "f09827ebb318bfd2f3dba660239b10e9befb6a511ac07899f8f829d10a58e6c3",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "Nhớ Hán tự thông qua chiết tự chữ Hán.pdf",
+      "bytes": 43400278,
+      "sha256": "8c0ac0e79339e4468459eb36aebd4f0e65cddf041c53177794a68d0e540151f1",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "tracnghiemonhsk1.1.docx",
+      "bytes": 13031635,
+      "sha256": "e97eb6b4399aed7144b31f62de3c9dc7f45e345e34ce7a9e6ddbcf953cf687e7",
+      "kind": "docx",
+      "status": "awaiting-content-review"
+    },
+    {
+      "name": "tuvunghsk1.pdf",
+      "bytes": 8955878,
+      "sha256": "a5c77af51f1de715325877df95ae3dfbe304bae0d34df7f988baa87cfafc5075",
+      "kind": "pdf",
+      "status": "awaiting-content-review"
+    }
+  ]
+}
