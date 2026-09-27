@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
-export function generateRelease(source, baseline) {
+export function generateRelease(source, baseline, { staged = false } = {}) {
   const quote = (v) => "'" + String(v).replaceAll("'", "''") + "'";
   const block = (body) => {
     let delimiter = "$release$",
@@ -13,8 +14,16 @@ export function generateRelease(source, baseline) {
     const before = baseline.find((x) => x.id === row.id);
     if (!before) throw Error("Missing baseline for " + row.id);
     const client = row.content.client_view;
+    const serialized = client ? JSON.stringify(client) : null;
+    const clientHash = client
+      ? createHash("md5").update(serialized).digest("hex")
+      : null;
+    if (staged && client)
+      sql += block(
+        ` if (select md5(payload) from account_internal.publication_stage_20260928 where id=${quote(row.id)}) is distinct from ${quote(clientHash)} then raise exception 'STAGED_CONTENT_MISMATCH'; end if;`,
+      );
     const update = client
-      ? `jsonb_set(content,'{client_view}',${quote(JSON.stringify(client))}::jsonb)`
+      ? `jsonb_set(content,'{client_view}',${staged ? `(select payload::jsonb from account_internal.publication_stage_20260928 where id=${quote(row.id)})` : quote(serialized) + "::jsonb"})`
       : `replace(content::text,'audio/hsk1/','supabase://lesson-private/hsk1/')::jsonb`;
     sql += block(
       ` perform 1 from public.lesson_content where id=${quote(row.id)} for update;\n if (select md5(content::text) from public.lesson_content where id=${quote(row.id)}) is distinct from ${quote(before.content_hash)} then raise exception 'CONTENT_CHANGED'; end if;\n insert into account_internal.publication_backup_20260927(id,content) select id,content from public.lesson_content where id=${quote(row.id)};\n update public.lesson_content set content=${update},updated_at=now() where id=${quote(row.id)};\n update account_internal.publication_backup_20260927 b set after_hash=md5(l.content::text) from public.lesson_content l where b.id=l.id and b.id=${quote(row.id)};`,
@@ -30,6 +39,21 @@ export function generateRelease(source, baseline) {
   const rollback = `-- Restore only unchanged post-release content; investigate skipped rows.\nbegin;\nupdate public.lesson_content l set content=b.content,updated_at=now() from account_internal.publication_backup_20260927 b where l.id=b.id and md5(l.content::text)=b.after_hash returning l.id;\ncommit;\n`;
   return { sql, rollback };
 }
+export function generateStagedRelease(source, baseline) {
+  const quote = (v) => "'" + String(v).replaceAll("'", "''") + "'";
+  const setup = `create table account_internal.publication_stage_20260928(id text primary key,payload text not null);\nrevoke all on account_internal.publication_stage_20260928 from public,anon,authenticated;\n`;
+  const uploads = source.payloads
+    .filter((r) => r.content.client_view)
+    .map((r) => ({
+      id: r.id,
+      sql: `insert into account_internal.publication_stage_20260928(id,payload) values(${quote(r.id)},${quote(JSON.stringify(r.content.client_view))}) on conflict(id) do update set payload=excluded.payload;`,
+    }));
+  return {
+    setup,
+    uploads,
+    ...generateRelease(source, baseline, { staged: true }),
+  };
+}
 if (
   process.argv[1] &&
   import.meta.url === pathToFileURL(process.argv[1]).href
@@ -43,6 +67,10 @@ if (
   const { sql, rollback } = generateRelease(source, baseline);
   await fs.writeFile(".cache/private-release.sql", sql);
   await fs.writeFile(".cache/private-release-rollback.sql", rollback);
+  await fs.writeFile(
+    ".cache/private-release-staged.json",
+    JSON.stringify(generateStagedRelease(source, baseline)),
+  );
   console.log(
     `Prepared one transaction for ${source.payloads.length} lessons and ${source.assets.length} assets, plus a guarded rollback. No database changes made.`,
   );

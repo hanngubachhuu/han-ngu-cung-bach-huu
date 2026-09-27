@@ -10,6 +10,6 @@ Quên mật khẩu trả thông báo chung để không xác nhận email tồn 
 
 Phiên được Supabase SDK quản lý. Sự kiện đổi user xóa cache giao diện, bài riêng chuyển về tài khoản. Không tự nhập lịch sử khách vào người vừa đăng nhập. Trình duyệt lưu phiên nên XSS vẫn là rủi ro quan trọng: giữ code tin cậy, escape dữ liệu, tránh thêm script bên thứ ba không kiểm soát. Chưa chuyển sang kiến trúc cookie HttpOnly/BFF.
 
-Việc cần kiểm tra trên provider: Site URL/Redirect URLs chính xác cho production và preview, xác nhận email bật, SMTP riêng, rate limits, thời hạn recovery, minimum password length, leaked-password protection. SMTP và cấu hình Auth hiện chưa được xác minh bằng kiểm thử email thật. Không gửi thư thật hay tạo học viên thật trong các bài test tự động.
+Ngày 28/09/2026 đã lưu trên provider: minimum password length 12, secure password change, xác nhận email bật, anonymous sign-in và manual identity linking tắt. Site URL/Redirect URLs đã đặt chính xác cho production, Pages và preview đang thử; xem deployment.md. Gói Free hiện yêu cầu nâng Pro để bật leaked-password protection; chưa nâng gói. Gmail SMTP đã được chủ sở hữu phê duyệt nhưng còn chờ nhập/lưu mật khẩu ứng dụng theo [hướng dẫn hai bước](SMTP_FOR_OWNER.md). Rate limits và recovery cần kiểm cùng email thật. Không gửi thư thật hay tạo học viên thật trong các bài test tự động.
 
 Nguồn: [Supabase password authentication](https://supabase.com/docs/guides/auth/passwords), [OWASP Forgot Password](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html).

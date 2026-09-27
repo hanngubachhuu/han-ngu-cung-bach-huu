@@ -1,7 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { PGlite } from "@electric-sql/pglite";
-import { generateRelease } from "../scripts/prepare-private-release.mjs";
+import {
+  generateRelease,
+  generateStagedRelease,
+} from "../scripts/prepare-private-release.mjs";
 test("private release is atomic, version guarded, preserves canonical data and supports rollback", async () => {
   const db = new PGlite();
   try {
@@ -55,6 +58,76 @@ test("private release is atomic, version guarded, preserves canonical data and s
       (await db.query("select content from public.lesson_content")).rows[0]
         .content,
       { trusted: "unchanged" },
+    );
+  } finally {
+    await db.close();
+  }
+});
+
+test("staged publication rejects incomplete or altered payloads and commits intact content atomically", async () => {
+  const db = new PGlite();
+  try {
+    await db.exec(`create role anon;create role authenticated;create schema account_internal;create schema storage;
+      create table public.lesson_content(id text primary key,content jsonb,updated_at timestamptz);
+      create table public.lesson_assets(lesson_id text,bucket_id text,object_path text,unique(bucket_id,object_path));
+      create table storage.objects(bucket_id text,name text);
+      insert into public.lesson_content values('first','{"trusted":"一"}',now()),('second','{"trusted":"二"}',now());`);
+    const baseline = (
+      await db.query(
+        "select id,md5(content::text) content_hash from public.lesson_content",
+      )
+    ).rows;
+    const source = {
+      payloads: [
+        {
+          id: "first",
+          content: { client_view: { text: "汉语 It's $release$" } },
+        },
+        { id: "second", content: { client_view: { text: "Next" } } },
+      ],
+      assets: [],
+    };
+    const release = generateStagedRelease(source, baseline);
+    await db.exec(release.setup);
+    await db.exec(release.uploads[0].sql);
+    await assert.rejects(db.exec(release.sql), /STAGED_CONTENT_MISMATCH/);
+    await db.exec("rollback");
+    assert.deepEqual(
+      (
+        await db.query("select content from public.lesson_content order by id")
+      ).rows.map((r) => r.content),
+      [{ trusted: "一" }, { trusted: "二" }],
+    );
+    await db.exec(release.uploads[1].sql);
+    await db.exec(
+      "update account_internal.publication_stage_20260928 set payload='{}' where id='second'",
+    );
+    await assert.rejects(db.exec(release.sql), /STAGED_CONTENT_MISMATCH/);
+    await db.exec("rollback");
+    await db.exec(release.uploads[1].sql);
+    await db.exec(release.sql);
+    assert.deepEqual(
+      (
+        await db.query(
+          "select content from public.lesson_content where id='first'",
+        )
+      ).rows[0].content,
+      { trusted: "一", client_view: { text: "汉语 It's $release$" } },
+    );
+    await db.exec(release.rollback);
+    assert.deepEqual(
+      (
+        await db.query("select content from public.lesson_content order by id")
+      ).rows.map((r) => r.content),
+      [{ trusted: "一" }, { trusted: "二" }],
+    );
+    assert.equal(
+      (
+        await db.query(
+          "select has_table_privilege('authenticated','account_internal.publication_stage_20260928','SELECT') as readable",
+        )
+      ).rows[0].readable,
+      false,
     );
   } finally {
     await db.close();
