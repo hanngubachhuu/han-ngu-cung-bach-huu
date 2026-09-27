@@ -179,7 +179,14 @@ function renderQuiz(questions) {
 }
 async function openReading(
   source,
-  { sample = null, result = null, id = null, title = null, useAi = false } = {},
+  {
+    sample = null,
+    result = null,
+    id = null,
+    title = null,
+    version = null,
+    useAi = false,
+  } = {},
 ) {
   let text;
   try {
@@ -205,6 +212,7 @@ async function openReading(
     if (current !== sequence) return;
     active = {
       id,
+      version,
       title: title || sample?.title || analysis?.title || text.slice(0, 30),
       sourceText: text,
       result: {
@@ -352,7 +360,10 @@ $("#readingHistory").onclick = async (e) => {
   }
   if (b.dataset.deleteReading) {
     try {
-      await deleteReading(b.dataset.deleteReading);
+      await deleteReading(
+        b.dataset.deleteReading,
+        historyRows.find((x) => x.id === b.dataset.deleteReading)?.version,
+      );
       await refreshLibrary();
       toast("Đã xóa bài đã lưu.");
     } catch (error) {
@@ -380,7 +391,10 @@ $("#saveReading").onclick = async (e) => {
     active.result.showTranslation =
       $("#readingProse").classList.contains("show-translation");
     const saved = await saveReading(documentToSave);
-    if (active === documentToSave) active.id = saved.id;
+    if (active === documentToSave) {
+      active.id = saved.id;
+      active.version = saved.version;
+    }
     toast("Đã lưu bài và kết quả làm bài.");
   } catch (error) {
     toast(error.message);

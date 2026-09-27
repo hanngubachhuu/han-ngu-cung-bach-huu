@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    {"source":"/login","destination":"/tai-khoan.html"},
+    {"source":"/register","destination":"/tai-khoan.html?mode=register"},
+    {"source":"/admin","destination":"/quan-tri.html"}
+  ],
   "functions": {"api/study.js": {"maxDuration": 120}},
   "headers": [{"source": "/(.*)", "headers": [
     {"key":"X-Content-Type-Options","value":"nosniff"},

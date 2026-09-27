@@ -26,8 +26,8 @@ LESSON.sections.forEach(sec => {
 ALL_QUESTIONS.forEach((q, i) => q._index = i);
 
 const TOTAL_Q = ALL_QUESTIONS.length;
-const STORAGE_HISTORY_KEY = `${LESSON.id}_history`;
-const STORAGE_INPROGRESS_KEY = `${LESSON.id}_inprogress`;
+const STORAGE_HISTORY_KEY = `${LESSON.id}_history${window.HNH_ACCOUNT_SCOPE||''}`;
+const STORAGE_INPROGRESS_KEY = `${LESSON.id}_inprogress${window.HNH_ACCOUNT_SCOPE||''}`;
 
 // Trạng thái phiên làm bài hiện tại
 let state = {
@@ -1316,6 +1316,7 @@ function persistResult(){
     totalScore:r.score,maxScore:r.max,percentage:r.percentage,correctAnswers:r.correct,wrongAnswers:r.wrong,unansweredQuestions:r.unanswered,pendingSelfChecks:r.pending,scoreBySection:r.bySection,scoreBySkill:r.bySkill,
     extensionScore:r.extensionScore,extensionMax:r.extensionMax,studentAnswers:state.answers,selfMarks:state.selfMarks,version:c.meta.version,auto:!!state.auto};
   if(idx>=0)hist[idx]=record;else hist.push(record);safeStorage.setItem(STORAGE_HISTORY_KEY,JSON.stringify(hist));
+  window.HNH_ATTEMPTS?.capture(record);
 }
 function preparePrint(){
   document.querySelector('.print-report')?.remove();if(!state.submitted)return;

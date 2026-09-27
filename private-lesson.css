@@ -1,4 +1,5 @@
 /* Private lesson gate. Desktop-first; lesson UI remains unchanged behind the gate. */
+.attempt-sync-status{max-width:1000px;margin:16px auto;padding:12px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;font:14px/1.6 sans-serif;color:#34594d;background:#eef5ef;border:1px solid #ceddd1;border-radius:12px}.attempt-sync-status button{min-height:48px;font:inherit;padding:8px 16px;border:1px solid currentColor;border-radius:8px;background:white;color:inherit}
 .private-lesson-gate{
   position:fixed;
   inset:0;
@@ -36,29 +37,17 @@
   color:#5f6368;
   line-height:1.6;
 }
-.private-lesson-form{
-  display:grid;
-  gap:12px;
-}
-.private-lesson-form label{
-  font-size:13px;
-  font-weight:700;
-}
-.private-lesson-form input{
-  width:100%;
-  box-sizing:border-box;
-  border:1px solid #d8dbe0;
-  border-radius:10px;
-  padding:11px 12px;
-  font:inherit;
-}
 .private-lesson-actions{
   display:flex;
   gap:10px;
   margin-top:4px;
 }
-.private-lesson-actions button{
+.private-lesson-actions a{
   flex:1;
+  text-align:center;
+  text-decoration:none;
+  min-height:48px;
+  box-sizing:border-box;
   border:0;
   border-radius:10px;
   padding:11px 14px;
@@ -77,20 +66,3 @@
 }
 .private-lesson-status.is-error{color:#9b1c1c}
 .private-lesson-status.is-ok{color:#2d6a4f}
-.private-lesson-user{
-  margin-top:16px;
-  padding-top:14px;
-  border-top:1px solid #eceef0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  font-size:13px;
-}
-.private-lesson-user button{
-  border:1px solid #d8dbe0;
-  background:#fff;
-  border-radius:9px;
-  padding:8px 11px;
-  cursor:pointer;
-}

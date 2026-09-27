@@ -1,67 +1,15 @@
-/* Student-private lesson loader.
- * Boundary: browser -> Supabase Auth/RLS -> lesson data/assets -> lesson engine.
- */
-(()=>{'use strict';
-
-const LESSON_ID = document.body.dataset.lessonId;
-const SUPABASE_CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-if(!LESSON_ID) return;
-
-function loadScript(src){
-  return new Promise((resolve,reject)=>{
-    const script=document.createElement('script');
-    script.src=src;
-    script.async=true;
-    script.onload=resolve;
-    script.onerror=()=>reject(new Error('Không tải được thư viện xác thực.'));
-    document.head.appendChild(script);
-  });
-}
-
-function getGate(){
-  let gate=document.getElementById('privateLessonGate');
-  if(gate) return gate;
-
-  gate=document.createElement('div');
-  gate.id='privateLessonGate';
-  gate.className='private-lesson-gate';
-  gate.innerHTML=
-    '<div class="private-lesson-card" role="dialog" aria-modal="true" aria-labelledby="privateLessonTitle">'+
-      '<p class="private-lesson-kicker">NỘI DUNG HỌC VIÊN</p>'+
-      '<h1 class="private-lesson-title" id="privateLessonTitle">Đăng nhập để vào bài học</h1>'+
-      '<p class="private-lesson-desc">Bài học này dành cho tài khoản học viên. Đăng nhập để tải nội dung bài học từ kho dữ liệu riêng.</p>'+
-      '<form class="private-lesson-form" id="privateLessonForm">'+
-        '<div><label for="privateLessonEmail">Email</label><input id="privateLessonEmail" type="email" autocomplete="email" required></div>'+
-        '<div><label for="privateLessonPassword">Mật khẩu</label><input id="privateLessonPassword" type="password" minlength="6" autocomplete="current-password" required></div>'+
-        '<div class="private-lesson-actions">'+
-          '<button class="private-lesson-primary" id="privateLessonLogin" type="submit">Đăng nhập</button>'+
-          '<button class="private-lesson-secondary" id="privateLessonSignup" type="button">Tạo tài khoản</button>'+
-        '</div>'+
-      '</form>'+
-      '<div class="private-lesson-status" id="privateLessonStatus" role="status" aria-live="polite"></div>'+
-    '</div>';
-
-  document.body.appendChild(gate);
-  return gate;
-}
-
-function setStatus(message, kind=''){
-  const status=document.getElementById('privateLessonStatus');
-  if(!status) return;
-  status.textContent=message||'';
-  status.classList.toggle('is-error',kind==='error');
-  status.classList.toggle('is-ok',kind==='ok');
-}
-
-function setBusy(busy){
-  document.getElementById('privateLessonLogin')?.toggleAttribute('disabled',busy);
-  document.getElementById('privateLessonSignup')?.toggleAttribute('disabled',busy);
-}
-
-function hideGate(){
-  document.getElementById('privateLessonGate')?.remove();
-}
-
+/* Authentication is shared with the account workspace; RLS authorizes every read. */
+(async()=>{'use strict';
+const LESSON_ID=document.body.dataset.lessonId;
+if(!LESSON_ID)return;
+const gate=document.createElement('section');
+gate.id='privateLessonGate';gate.className='private-lesson-gate';
+const card=document.createElement('div');card.className='private-lesson-card';
+card.innerHTML='<p class="private-lesson-kicker">KHU VỰC HỌC VIÊN</p><h1 class="private-lesson-title">Tiếp tục bài học của bạn</h1><p class="private-lesson-desc">Đăng nhập bằng tài khoản đã được Bách Hữu duyệt và cấp quyền bài học.</p><div class="private-lesson-actions"><a class="private-lesson-primary" id="privateAccountLink">Mở tài khoản</a><a class="private-lesson-secondary" href="trang-chu.html">Trang chủ</a></div><p class="private-lesson-status" id="privateLessonStatus" role="status">Đang kiểm tra tài khoản…</p>';
+gate.append(card);document.body.append(gate);
+card.querySelector('#privateAccountLink').href='tai-khoan.html?next='+encodeURIComponent(location.pathname.split('/').pop());
+function setStatus(message){card.querySelector('#privateLessonStatus').textContent=message;}
+function hideGate(){gate.remove();}
 function parsePrivateAsset(value){
   if(typeof value!=='string'||!value.startsWith('supabase://')) return null;
 
@@ -79,14 +27,13 @@ async function resolvePrivateAsset(value,supabase){
   const asset=parsePrivateAsset(value);
   if(!asset) return value;
 
-  const {data,error}=await supabase.storage
-    .from(asset.bucket)
-    .createSignedUrl(asset.path,3600);
+  const {data,error}=await supabase.storage.from(asset.bucket).download(asset.path);
 
   if(error) throw error;
-  if(!data?.signedUrl) throw new Error('Không tạo được đường dẫn nghe riêng.');
-
-  return data.signedUrl;
+  if(!data) throw new Error('Không tải được tệp nghe riêng.');
+  const url=URL.createObjectURL(data);
+  window.addEventListener('pagehide',()=>URL.revokeObjectURL(url),{once:true});
+  return url;
 }
 
 async function resolvePrivateAssets(value,supabase){
@@ -120,6 +67,10 @@ async function loadLesson(supabase){
   if(!data.id||!data.content) throw new Error('Dữ liệu bài học riêng không hợp lệ.');
 
   const content=await resolvePrivateAssets(data.content,supabase);
+  if(document.body.dataset.lessonEngine==='legacy') {
+    if(!content.client_view)throw new Error('Bài học đang được chuyển sang khu vực riêng. Vui lòng thử lại sau.');
+    window.HNH_PRIVATE_LEGACY=content.client_view;
+  }
   const lesson={
     id:data.id,
     content:content?.content||content,
@@ -133,14 +84,14 @@ async function loadLesson(supabase){
 function loadLessonEngine(){
   return new Promise((resolve,reject)=>{
     const script=document.createElement('script');
-    script.src='hsk1-lesson-engine.js';
+    script.src=document.body.dataset.lessonEngine==='legacy'?'study/lesson-engines/'+LESSON_ID+'.js':'hsk1-lesson-engine.js';
     script.dataset.privateLessonEngine='1';
     script.onload=()=>{
       setTimeout(()=>{
         const title=document.getElementById('introZh')?.textContent?.trim();
         const vocabCount=document.getElementById('vocabCount')?.textContent?.trim();
 
-        if(title&&title!=='—'&&vocabCount&&vocabCount!=='0 từ'){
+        if(document.body.dataset.lessonEngine==='legacy'||(title&&title!=='—'&&vocabCount&&vocabCount!=='0 từ')){
           hideGate();
           resolve();
           return;
@@ -154,92 +105,26 @@ function loadLessonEngine(){
   });
 }
 
-async function continueWithSession(supabase){
-  const {data:{session}}=await supabase.auth.getSession();
-  if(!session){
-    setStatus('Hãy đăng nhập hoặc tạo tài khoản học viên để tiếp tục.');
-    return;
-  }
-
-  setBusy(true);
-  setStatus('Đang tải bài học riêng…');
-
-  try{
-    await loadLesson(supabase);
-  }catch(error){
-    setBusy(false);
-    setStatus(error?.message||'Không thể tải bài học.','error');
-  }
-}
-
-async function boot(){
-  const config=window.HNH_SUPABASE;
-  if(!config?.url||!config?.publishableKey){
-    throw new Error('Thiếu cấu hình Supabase public.');
-  }
-
-  getGate();
-  await loadScript(SUPABASE_CDN);
-
-  const supabase=window.supabase.createClient(
-    config.url,
-    config.publishableKey
-  );
-
-  document.getElementById('privateLessonForm')?.addEventListener('submit',async event=>{
-    event.preventDefault();
-    setBusy(true);
-    setStatus('Đang đăng nhập…');
-
-    try{
-      const email=document.getElementById('privateLessonEmail').value.trim();
-      const password=document.getElementById('privateLessonPassword').value;
-      const {error}=await supabase.auth.signInWithPassword({email,password});
-      if(error) throw error;
-      await continueWithSession(supabase);
-    }catch(error){
-      setBusy(false);
-      setStatus(error?.message||'Đăng nhập không thành công.','error');
-    }
-  });
-
-  document.getElementById('privateLessonSignup')?.addEventListener('click',async ()=>{
-    setBusy(true);
-    setStatus('Đang tạo tài khoản…');
-
-    try{
-      const email=document.getElementById('privateLessonEmail').value.trim();
-      const password=document.getElementById('privateLessonPassword').value;
-      if(!email||!password){
-        throw new Error('Nhập email và mật khẩu trước khi tạo tài khoản.');
-      }
-
-      const {data,error}=await supabase.auth.signUp({
-        email,
-        password,
-        options:{emailRedirectTo:location.href}
-      });
-      if(error) throw error;
-
-      if(data.session){
-        await continueWithSession(supabase);
-      }else{
-        setBusy(false);
-        setStatus('Tài khoản đã được tạo. Hãy kiểm tra email để xác nhận, sau đó đăng nhập lại.','ok');
-      }
-    }catch(error){
-      setBusy(false);
-      setStatus(error?.message||'Không thể tạo tài khoản.','error');
-    }
-  });
-
-  await continueWithSession(supabase);
-}
-
-
-boot().catch(error=>{
-  getGate();
-  setStatus(error?.message||'Không thể khởi tạo khu vực học viên.','error');
-});
-
+try{
+ const {getClient,getSession}=await import('./study/auth.mjs');
+ const {observeAccount,myProfile}=await import('./study/account-service.mjs');
+ await observeAccount();
+ const session=await getSession();
+ if(!session){setStatus('Bạn chưa đăng nhập. Mở tài khoản để đăng nhập hoặc đăng ký.');return;}
+ const profile=await myProfile();
+ if(profile.status!=='APPROVED'){setStatus('Tài khoản chưa có quyền học đang hoạt động. Kiểm tra trạng thái ở trang tài khoản.');return;}
+ const supabase=await getClient();
+ window.HNH_ACCOUNT_SCOPE='::account:'+session.user.id;
+ const {initAttempts}=await import('./study/attempt-sync.mjs');
+ window.HNH_ATTEMPTS=await initAttempts(session.user.id,LESSON_ID);
+ let accessCheck;
+ const revoke=()=>{clearInterval(accessCheck);location.replace('tai-khoan.html?next='+encodeURIComponent(location.pathname.split('/').pop()));};
+ window.addEventListener('study:auth',e=>{if(e.detail.userId!==session.user.id)revoke();});
+ await loadLesson(supabase);
+ // Recheck access while open; the database remains the authority on every request.
+ accessCheck=setInterval(async()=>{
+  try{const {data,error}=await supabase.from('lesson_content').select('id').eq('id',LESSON_ID).maybeSingle();if(!error&&!data)revoke();}catch{}
+ },60000);
+ window.addEventListener('pagehide',()=>clearInterval(accessCheck),{once:true});
+}catch(error){setStatus(error?.message?.includes('quyền')?error.message:'Chưa mở được bài học. Kiểm tra kết nối hoặc trạng thái trong trang tài khoản.');}
 })();

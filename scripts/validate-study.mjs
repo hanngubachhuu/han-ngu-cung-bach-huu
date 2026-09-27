@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { gunzipSync } from "node:zlib";
 import { validateQuestions } from "../study/core.mjs";
+import vm from "node:vm";
 const root = new URL("../", import.meta.url),
   dist = new URL("dist/", root);
 let checked = 0;
@@ -12,7 +13,8 @@ for (const dir of ["study", "server", "api", "scripts"])
   for (const file of await fs.readdir(new URL(dir + "/", root))) {
     if (
       !/\.(mjs|js)$/.test(file) ||
-      (dir === "scripts" && !/study|build-web|dev-server/.test(file))
+      (dir === "scripts" &&
+        !/study|account|private|build-web|dev-server/.test(file))
     )
       continue;
     const result = spawnSync(
@@ -104,6 +106,31 @@ for (const page of ["chu-han", "tu-dien", "doc-hieu", "nguon-tu-dien"]) {
   assert.ok(html.includes('lang="vi"'));
   await fs.access(new URL("study/" + page + ".mjs", dist));
 }
+const registryContext = vm.createContext({ window: {} });
+vm.runInContext(
+  await fs.readFile(new URL("data/lesson-manifest.js", dist), "utf8"),
+  registryContext,
+);
+for (const lesson of registryContext.window.HAN_NGU_DATA.manifest.filter(
+  (m) => m.lessonNo > 3,
+)) {
+  assert.equal(lesson.visibility, "student");
+  assert.equal(lesson.data, undefined);
+  await assert.rejects(
+    fs.access(
+      new URL(`data/lessons/hsk${lesson.level}/bai${lesson.lessonNo}.js`, dist),
+    ),
+  );
+  await assert.rejects(
+    fs.access(new URL(`audio/hsk${lesson.level}/bai${lesson.lessonNo}`, dist)),
+  );
+  const html = await fs.readFile(new URL(lesson.href, dist), "utf8");
+  assert.ok(html.includes("private-lesson-loader.js"));
+  assert.ok(!/const LESSON\s*=/.test(html));
+}
+await assert.rejects(
+  fs.access(new URL("data/lessons/hsk2/exercise-revision-v2.js", dist)),
+);
 console.log(
   `PASS: ${checked} JavaScript syntax checks; public course boundary, 119044 dictionary entries, 103013 characters, source hashes, gzip, licenses, 214 radicals and reading questions verified.`,
 );

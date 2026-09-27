@@ -550,6 +550,9 @@ if(navLinks&&!navLinks.querySelector('.site-nav-study')){
   if(pronunciation)pronunciation.insertAdjacentElement('afterend',link);else navLinks.append(link);
 }
 markCurrentNav();
+if(navLinks&&!navLinks.querySelector('.site-nav-account')){
+  const accountLink=document.createElement('a');accountLink.className='site-nav-account';accountLink.href='tai-khoan.html';accountLink.textContent='Tài khoản';navLinks.append(accountLink);
+}
 setupMobileNav();
 initHskMegaMenu().finally(injectBreadcrumb);
 })();
