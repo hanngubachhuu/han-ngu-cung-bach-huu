@@ -1,6 +1,7 @@
 import { getClient, getSession } from "./auth.mjs";
+import { mergeGuestLibrary, importedReadingId } from "./account-core.mjs";
 const KEY = "hnh_study_v1";
-function read() {
+export function readGuestLibrary() {
   try {
     const x = JSON.parse(localStorage.getItem(KEY) || "{}");
     return {
@@ -24,6 +25,7 @@ function read() {
     return { words: [], characters: [], entries: {}, readings: [] };
   }
 }
+const read = readGuestLibrary;
 function write(value) {
   try {
     localStorage.setItem(KEY, JSON.stringify(value));
@@ -53,7 +55,10 @@ export async function savedWordEntries() {
       (e) => e && typeof e.simplified === "string",
     );
   const c = await getClient();
-  const { data, error } = await c.from("study_saved_words").select("entry");
+  const { data, error } = await c
+    .from("study_saved_words")
+    .select("entry")
+    .eq("user_id", session.user.id);
   if (error) throw Error("Chưa tải được sổ từ.");
   return data.map((x) => x.entry).filter(Boolean);
 }
@@ -97,15 +102,32 @@ export async function saveReading(reading) {
   const session = await getSession();
   if (session) {
     const c = await getClient();
-    const { error } = await c.from("study_readings").upsert({
+    const payload = {
       id: row.id,
       user_id: session.user.id,
       title: row.title,
       source_text: row.sourceText,
       result: row.result,
       updated_at: row.updatedAt,
-    });
-    if (error) throw Error("Chưa lưu được bài đọc. Hãy thử lại.");
+    };
+    const query = reading.version
+      ? c
+          .from("study_readings")
+          .update(payload)
+          .eq("id", row.id)
+          .eq("user_id", session.user.id)
+          .eq("version", reading.version)
+      : c.from("study_readings").insert(payload);
+    const { data: saved, error } = await query.select("version").maybeSingle();
+    if (error?.code === "23505" || (!error && !saved))
+      throw Error(
+        "Bài đọc đã được sửa ở thiết bị khác. Nội dung đang nhập được giữ; tải lại bài hoặc lưu thành bản mới.",
+      );
+    if (error)
+      throw Error(
+        "Chưa lưu được bài đọc. Nội dung đang nhập được giữ; kiểm tra mạng rồi thử lại.",
+      );
+    row.version = saved.version;
   } else {
     const data = read();
     data.readings = [
@@ -116,34 +138,128 @@ export async function saveReading(reading) {
   }
   return row;
 }
-export async function savedReadings() {
+export async function savedReadings({ all = false } = {}) {
   const session = await getSession();
   if (!session) return read().readings;
   const c = await getClient();
-  const { data, error } = await c
-    .from("study_readings")
-    .select("*")
-    .order("updated_at", { ascending: false })
-    .limit(50);
-  if (error) throw Error("Không tải được bài đã lưu.");
-  return data.map((x) => ({
+  const rows = [];
+  do {
+    const { data, error } = await c
+      .from("study_readings")
+      .select("*")
+      .eq("user_id", session.user.id)
+      .order("updated_at", { ascending: false })
+      .order("id")
+      .range(rows.length, rows.length + (all ? 499 : 49));
+    if (error) throw Error("Không tải được bài đã lưu.");
+    rows.push(...data);
+    if (!all || data.length < 500) break;
+  } while (all);
+  return rows.map((x) => ({
     id: x.id,
     title: x.title,
     sourceText: x.source_text,
     result: x.result,
     updatedAt: x.updated_at,
+    version: x.version,
   }));
 }
-export async function deleteReading(id) {
+
+export async function librarySyncPreview() {
+  if (!(await getSession())) throw Error("Đăng nhập trước khi đồng bộ.");
+  const [words, characters, readings] = await Promise.all([
+    savedWords(),
+    savedCharacters(),
+    savedReadings({ all: true }),
+  ]);
+  return {
+    remote: { words, characters, readings },
+    plan: mergeGuestLibrary(read(), { words, characters, readings }),
+    guest: read(),
+  };
+}
+
+export async function importGuestLibrary({ keepConflictCopies = false } = {}) {
+  const session = await getSession();
+  if (!session) throw Error("Đăng nhập trước khi đồng bộ.");
+  const { plan, guest } = await librarySyncPreview(),
+    c = await getClient();
+  const copies = keepConflictCopies
+    ? await Promise.all(
+        plan.conflicts.map(async (r) => ({
+          ...r,
+          id: await importedReadingId(session.user.id, r),
+          title: ((r.title || "Bài đọc") + " (bản trên máy)").slice(0, 150),
+        })),
+      )
+    : [];
+  // An explicit import only adds rows. Existing cloud rows are never overwritten.
+  const batches = [
+    [
+      "study_saved_words",
+      plan.words.map((id) => ({
+        user_id: session.user.id,
+        entry_id: id,
+        entry: guest.entries[id] || null,
+      })),
+      "user_id,entry_id",
+    ],
+    [
+      "study_saved_characters",
+      plan.characters.map((character) => ({
+        user_id: session.user.id,
+        character,
+      })),
+      "user_id,character",
+    ],
+    [
+      "study_readings",
+      [...plan.readings, ...copies].map((r) => ({
+        id: r.id,
+        user_id: session.user.id,
+        title: r.title || "Bài đọc",
+        source_text: r.sourceText,
+        result: r.result || null,
+      })),
+      "id",
+    ],
+  ];
+  for (const [table, rows, onConflict] of batches) {
+    for (let i = 0; i < rows.length; i += 100) {
+      if ((await getSession())?.user.id !== session.user.id)
+        throw Error(
+          "Tài khoản đã thay đổi. Vui lòng kiểm tra lại trước khi đồng bộ.",
+        );
+      const { error } = await c
+        .from(table)
+        .upsert(rows.slice(i, i + 100), { onConflict, ignoreDuplicates: true });
+      if (error)
+        throw Error(
+          "Đồng bộ chưa hoàn tất. Dữ liệu trên máy vẫn được giữ; bạn có thể thử lại an toàn.",
+        );
+    }
+  }
+  window.dispatchEvent(new Event("study:saved"));
+  window.dispatchEvent(new Event("study:characters-saved"));
+  return { ...plan, syncedAt: new Date().toISOString() };
+}
+export async function deleteReading(id, version) {
   const session = await getSession();
   if (session) {
     const c = await getClient();
-    const { error } = await c
+    if (!version) throw Error("Tải lại danh sách trước khi xóa bài.");
+    const { data, error } = await c
       .from("study_readings")
       .delete()
       .eq("id", id)
-      .eq("user_id", session.user.id);
+      .eq("user_id", session.user.id)
+      .eq("version", version)
+      .select("id");
     if (error) throw Error("Chưa xóa được bài.");
+    if (!data?.length)
+      throw Error(
+        "Bài đọc đã thay đổi ở thiết bị khác. Tải lại danh sách trước khi xóa.",
+      );
   } else {
     const d = read();
     d.readings = d.readings.filter((r) => r.id !== id);

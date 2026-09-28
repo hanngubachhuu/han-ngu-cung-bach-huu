@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import handler from "../api/study.js";
+import accountHandler from "../api/account.js";
 const root = fileURLToPath(new URL("../dist/", import.meta.url));
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -21,7 +22,7 @@ http
   .createServer(async (req, res) => {
     try {
       const url = new URL(req.url, "http://localhost");
-      if (url.pathname === "/api/study") {
+      if (["/api/study", "/api/account"].includes(url.pathname)) {
         let body = "",
           size = 0;
         for await (const chunk of req) {
@@ -34,7 +35,10 @@ http
           body += chunk;
         }
         req.body = body;
-        await handler(req, res);
+        await (url.pathname === "/api/account" ? accountHandler : handler)(
+          req,
+          res,
+        );
         return;
       }
       const decoded = decodeURIComponent(url.pathname),

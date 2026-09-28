@@ -38,7 +38,7 @@ Nguồn giáo trình HSK 2.0: `data/lesson-registry.js`, `data/lesson-manifest.j
 
 `sources/dictionaries/` chứa snapshot nguồn mở có hash và giấy phép; build không cần mạng. `data/study/lexicon/` là đầu ra nén và có tên theo hash. Web Worker tìm kiếm kho lớn, phân trang và kết hợp học liệu được Supabase RLS cho phép; không đưa toàn bộ kho vào DOM hoặc Supabase. Trang `nguon-tu-dien.html` công bố nguồn, số lượng và tải dữ liệu. CVDICT có bản dịch do tác giả dùng AI hỗ trợ nên luôn có nhãn đối chiếu; không phát sinh gọi API AI. Hanzii/Thi Viện là liên kết tra cứu bên ngoài.
 
-Kho học liệu cũ đang chuyển dần sang riêng tư. Thay đổi này không biến tất cả file giáo trình cũ thành riêng tư. Bài HSK 1 số 4 dùng cổng tải hiện có và không được xuất lại từ seed cục bộ.
+Bản build tài khoản mới tách bài 4–15 của HSK 1 và HSK 2 khỏi `dist/`, tải bằng Auth/RLS và audio bucket riêng. Đợt chuyển đổi này CHƯA lên production; cần hoàn thành [thứ tự phát hành](deployment.md) trước khi deploy để tránh làm mất truy cập bài. Bài HSK 1 số 4 dùng dữ liệu riêng hiện có và không được xuất lại từ seed cục bộ. Repo nguồn hiện còn công khai, nên chỉ xóa khỏi `dist/` không bảo vệ được các bản nguồn hoặc lịch sử Git đã lộ.
 
 ## Tính năng
 
@@ -50,7 +50,7 @@ Từ điển: chữ giản/phồn thể, pinyin có dấu/không dấu/số than
 
 ## Supabase
 
-Migrations theo thứ tự trong `supabase/migrations/`. Bảng kho curated chỉ cho client SELECT; các bảng `study_saved_words`, `study_saved_characters`, `study_readings`, `study_analysis_cache` chỉ CRUD theo `auth.uid()`. API dùng publishable key và bearer của người dùng, không dùng service-role key.
+Migrations được lưu trong `supabase/migrations/`; lịch sử local/remote chưa được đối chiếu hoàn toàn, không chạy `db push/reset/repair` hàng loạt. Dùng [kế hoạch phát hành](deployment.md). Bảng kho curated chỉ cho client SELECT; các bảng `study_saved_words`, `study_saved_characters`, `study_readings`, `study_analysis_cache` chỉ CRUD theo `auth.uid()`. API dùng publishable key và bearer của người dùng, không dùng service-role key.
 
 `study_internal.consume_quota` là security-definer có search_path rỗng, nằm trong schema nội bộ. Nó chỉ chấp nhận tài khoản tồn tại, xác nhận email, không anonymous. Quota/ngày UTC: phân tích 8, nhận dạng 60, tra bổ sung 30, tạo audio 30; trần toàn dự án 200. Lượt bị chặn không tiêu hao trần còn lại. Cache kết quả theo user/hash/model/schema, 7 ngày; không cache audio hoặc chia cache riêng giữa tài khoản.
 

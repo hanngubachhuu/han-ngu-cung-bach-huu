@@ -10,6 +10,8 @@ Mục tiêu cao nhất của kiến trúc là:
 
 Website phải được phát triển theo hướng có cấu trúc ổn định lâu dài, thay vì giải quyết từng lỗi bằng các lớp vá ngắn hạn.
 
+Bổ sung tài khoản ngày 28/09/2026: [kiến trúc tài khoản và đồng bộ](docs/architecture.md) xác định ranh giới Auth/PostgreSQL, RLS, API Google Docs và build học liệu riêng. Supabase là nguồn chính cho hồ sơ, trạng thái, quyền và kết quả; Google Docs chỉ chỉnh sửa ba trường hồ sơ qua máy chủ, không cấp quyền. Vercel phục vụ website và API Node; GitHub Pages duy trì bản tĩnh tương thích. Xem [trạng thái phát hành thực tế](docs/deployment.md) trước khi vận hành.
+
 Tài liệu này mô tả:
 
 - các tầng của hệ thống;

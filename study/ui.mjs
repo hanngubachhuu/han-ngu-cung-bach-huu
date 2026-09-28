@@ -1,5 +1,6 @@
 import { escapeHtml as esc, HAN } from "./core.mjs";
-import { aiEnabled, getClient, getSession, loadCapabilities } from "./auth.mjs";
+import { aiEnabled, loadCapabilities } from "./auth.mjs";
+import { initAccountUI } from "./account-ui.mjs";
 import { savedWords, toggleWord } from "./storage.mjs";
 import { dictionary } from "./repository.mjs";
 export const $ = (s) => document.querySelector(s);
@@ -276,95 +277,16 @@ export async function initShared({ serviceNotice = true } = {}) {
   $("#wordDialog")?.addEventListener("close", () => {
     wordGeneration++;
   });
-  auth.addEventListener("close", () => {
-    $("#authPassword").value = "";
-  });
   account.addEventListener("click", () => auth.showModal());
-  const client = await getClient().catch(() => null);
-  if (!client) {
-    $("#authStatus").textContent =
-      "Không kết nối được tài khoản. Bạn vẫn có thể học bằng dữ liệu công khai.";
-    return;
-  }
-  let previousUser = null;
-  function update(session) {
-    account.textContent = session ? "Tài khoản" : "Đăng nhập";
-    $("#authForm").hidden = !!session;
-    $("#authSignedIn").hidden = !session;
-    $("#authEmailDisplay").textContent = session?.user.email || "";
-    const userId = session?.user.id || null;
-    if (userId !== previousUser) {
+  window.addEventListener("study:auth", ({ detail }) => {
+    account.textContent = detail.signedIn ? "Tài khoản" : "Đăng nhập";
+    if (detail.userId !== detail.previousUser) {
       wordGeneration++;
       $("#wordDialog")?.close();
       displayedEntries.clear();
       stopSpeech();
     }
-    window.dispatchEvent(
-      new CustomEvent("study:auth", {
-        detail: { signedIn: !!session, userId, previousUser },
-      }),
-    );
-    previousUser = userId;
-  }
-  update(await getSession().catch(() => null));
-  client.auth.onAuthStateChange((_event, session) => update(session));
-  $("#authForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const submit = e.submitter || $("#authForm button[type=submit]");
-    submit.disabled = true;
-    $("#authStatus").textContent = "Đang đăng nhập…";
-    try {
-      const { error } = await client.auth.signInWithPassword({
-        email: $("#authEmail").value.trim(),
-        password: $("#authPassword").value,
-      });
-      if (error) throw error;
-      auth.close();
-      $("#authStatus").textContent = "";
-      toast("Đã đăng nhập. Sổ từ và bài đọc được lưu vào tài khoản.");
-    } catch {
-      $("#authStatus").textContent =
-        "Chưa đăng nhập được. Kiểm tra email, mật khẩu và kết nối.";
-    } finally {
-      submit.disabled = false;
-    }
   });
-  $("#authSignup").addEventListener("click", async (e) => {
-    if (!$("#authForm").reportValidity()) return;
-    e.target.disabled = true;
-    try {
-      const { data, error } = await client.auth.signUp({
-        email: $("#authEmail").value.trim(),
-        password: $("#authPassword").value,
-        options: {
-          emailRedirectTo: new URL("tu-dien.html", location.href).href,
-        },
-      });
-      if (error) throw error;
-      $("#authStatus").textContent = data.session
-        ? "Đã tạo tài khoản."
-        : "Hãy mở email xác nhận để hoàn tất đăng ký.";
-    } catch {
-      $("#authStatus").textContent =
-        "Chưa tạo được tài khoản. Hãy thử lại sau.";
-    } finally {
-      e.target.disabled = false;
-    }
-  });
-  $("#authSignout").addEventListener("click", async (event) => {
-    const button = event.currentTarget;
-    button.disabled = true;
-    try {
-      const { error } = await client.auth.signOut();
-      if (error) throw error;
-      auth.close();
-      stopSpeech();
-      toast("Đã đăng xuất.");
-    } catch {
-      toast("Chưa đăng xuất được. Hãy kiểm tra kết nối và thử lại.");
-    } finally {
-      button.disabled = false;
-    }
-  });
+  await initAccountUI(auth, { dialog: true });
   window.addEventListener("pagehide", stopSpeech);
 }

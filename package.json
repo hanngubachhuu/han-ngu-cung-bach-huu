@@ -6,11 +6,11 @@
     "node": "24.x"
   },
   "scripts": {
-    "build": "node scripts/render-study-pages.mjs && node scripts/build-study-data.mjs && node scripts/build-study-reference.mjs && node scripts/build-study-lexicon.mjs && node scripts/build-web.mjs",
+    "build": "node scripts/render-study-pages.mjs && node scripts/render-account-pages.mjs && node scripts/build-study-data.mjs && node scripts/build-study-reference.mjs && node scripts/build-study-lexicon.mjs && node scripts/build-web.mjs",
     "test": "node --test tests/*.test.mjs",
     "dev": "node --env-file-if-exists=.env.local scripts/dev-server.mjs",
     "validate:study": "node scripts/validate-study.mjs",
-    "lint": "eslint study server api tests scripts/*study*.mjs scripts/build-web.mjs scripts/dev-server.mjs",
+    "lint": "eslint study server api tests scripts/*study*.mjs scripts/*account*.mjs scripts/*private*.mjs scripts/build-web.mjs scripts/dev-server.mjs",
     "format": "prettier --write study/*.mjs study/study.css server/*.mjs api/*.js tests/*.mjs scripts/*study*.mjs scripts/build-web.mjs scripts/dev-server.mjs",
     "test:browser": "node scripts/check-study-browser.mjs"
   },
@@ -20,7 +20,9 @@
     "pinyin-pro": "3.27.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
     "@eslint/js": "9.36.0",
+    "acorn": "8.18.0",
     "esbuild": "0.25.10",
     "eslint": "9.36.0",
     "globals": "16.4.0",

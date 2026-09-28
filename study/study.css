@@ -327,6 +327,7 @@
   font-weight: 700;
 }
 .st-section-head {
+  flex-wrap: wrap;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -1008,6 +1009,7 @@
     max-width: 340px;
     margin-inline: auto;
   }
+  .st-layout { grid-template-columns: minmax(0,1fr); }
   .st-panel {
     padding: var(--space-md);
   }

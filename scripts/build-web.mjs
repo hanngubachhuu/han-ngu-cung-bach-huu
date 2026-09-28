@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
+import { protectPublication } from "./private-publication.mjs";
 const root = fileURLToPath(new URL("../", import.meta.url)),
   out = path.join(root, "dist");
 // Only this fixed build-output directory may be removed.
@@ -109,4 +110,7 @@ for (const item of await fs.readdir(out))
       ),
     );
   }
-console.log("Built public site into dist; API/server/secrets are excluded.");
+await protectPublication(root, out);
+console.log(
+  "Built public site into dist; API/server/secrets and private lesson sources are excluded.",
+);
