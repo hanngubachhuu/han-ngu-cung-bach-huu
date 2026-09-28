@@ -14,7 +14,11 @@ Kho `lesson-private` vẫn `public=false`. Đã tải bằng Storage dashboard �
 
 Đã xuất bản 23 bài trong một transaction: thêm 12 client_view HSK 2 và chuyển đường dẫn audio của 11 bài HSK 1. Kiểm lại 23/23 canonical text được giữ; HSK 1 bài 4 không bị sửa. Có 36 mapping audio và 24 quyền học. SQL chạy dưới role authenticated với claim ADMIN đọc được 24 bài/36 asset; anon đọc 0 bài/0 object riêng. Đây là kiểm RLS trực tiếp bằng role/claim, chưa thay thế đăng nhập và nghe trên trình duyệt thật. Bảng staging và backup không cấp SELECT cho anon/authenticated.
 
-Auth đã lưu minimum password length 12, secure password change, confirm email; anonymous sign-in và manual identity linking tắt. Site URL là `https://hanngubachhuu.vercel.app/tai-khoan.html`; sáu redirect chính xác gồm trang tài khoản và `?mode=reset` trên production, legacy Pages và preview được ghi ở trên. Preview mới cần được thêm URL chính xác nếu dùng để thử email. Leaked-password protection yêu cầu Pro trên dashboard hiện tại; chưa bật hay nâng gói. Chủ sở hữu đã xác nhận Gmail SMTP; biểu mẫu điền sẵn nhưng còn chờ chủ sở hữu nhập mật khẩu ứng dụng và Save changes. Xem [hai bước SMTP của chủ website](SMTP_FOR_OWNER.md). Chưa xác minh gửi/nhận email thật.
+Auth đã lưu minimum password length 12, secure password change, confirm email; anonymous sign-in và manual identity linking tắt. Site URL là `https://hanngubachhuu.vercel.app/tai-khoan.html`; sáu redirect chính xác gồm trang tài khoản và `?mode=reset` trên production, legacy Pages và preview được ghi ở trên. Preview mới cần được thêm URL chính xác nếu dùng để thử email. Leaked-password protection yêu cầu Pro trên dashboard hiện tại; chưa bật hay nâng gói. Chủ sở hữu đã tự nhập/lưu Gmail SMTP. Lúc 03:13 UTC ngày 28/09, yêu cầu recovery tới đúng chủ tài khoản trả 200, Auth log có `user_recovery_requested`, recovery_sent_at khớp; chủ sở hữu xác nhận nhận thư và đúng người gửi. Chưa thực hiện bước đổi mật khẩu thật. Xem [hướng dẫn SMTP](SMTP_FOR_OWNER.md).
+
+Đăng nhập ADMIN thật đã xác minh trên preview: tài khoản APPROVED, đủ 24 bài. Google status refresh OAuth và kiểm email thành công, hiển thị đúng bachhuu1809@gmail.com. Kho chưa có học viên; mục hồ sơ Google của quản trị cho phép kiểm và dùng kết nối với chính hồ sơ của mình.
+
+Kiểm bài thật phát hiện DB HSK 1 bài 5–15 có đầy đủ câu hỏi nhưng thiếu `exerciseSections`, làm engine hiển thị 0 câu. Migration `20260928032108_repair_private_hsk1_exercise_sections` bổ sung metadata từ nguồn đã có trong transaction kiểm baseline và giữ backup riêng. Đối chiếu 11/11 canonical content giữ nguyên, 271 câu được ánh xạ đúng một nhóm, backup không cấp quyền browser. Bài 5 hiện 25 câu và nút audio chuyển sang “Đang phát audio” với tệp riêng thật. Loader mới từ chối cấu trúc thiếu/sai trước khi mở cổng; fixture trình duyệt nay dùng dạng DB phẳng thay vì chỉ dạng nguồn bọc ngoài.
 
 Sao lưu có phạm vi: `.cache/backups/account-before-20260927.json` (gitignored), gồm dữ liệu bảy bảng liên quan, metadata Auth không chứa mật khẩu/token, chính sách và định nghĩa hàm. `node scripts/check-release-restore.mjs` đã khôi phục bảy bảng vào PostgreSQL WASM, chạy hai migration và bootstrap: 24 nội dung không đổi, 24 quyền học giữ nguyên, khách đọc được 0 bài riêng. Đây không phải backup toàn bộ Auth/Storage hay staging Supabase được hosting. Gói Free không có scheduled backup; chưa tạo tài nguyên tính phí.
 
@@ -37,13 +41,13 @@ Windows có thể đặt BROWSER_EXECUTABLE đến Chrome đã cài. Account/pri
 
 Kết quả tại bản local ngày 28/09/2026:
 
-- `npm test`: 46/46 pass; gồm PostgreSQL RLS, giữ quyền học cũ, dữ liệu riêng từng chủ, từ chối đổi owner khi lưu hồ sơ/kết quả, version conflict, retry, lỗi Google/DB giữa chừng và xuất bản dữ liệu lớn qua staging có kiểm hash/rollback toàn transaction.
-- `npm run lint`, `npm run build`, `npm run validate:study`: pass. Validator kiểm 45 file JavaScript, biên public/private, corpus 119.044 từ và 103.013 chữ cùng hash/nguồn/license.
+- `npm test`: 49/49 pass; gồm PostgreSQL RLS, giữ quyền học cũ, dữ liệu riêng từng chủ, từ chối đổi owner khi lưu hồ sơ/kết quả, version conflict, retry, lỗi Google/DB giữa chừng, xuất bản dữ liệu lớn qua staging và metadata nhóm câu hỏi cho payload DB phẳng.
+- `npm run lint`, `npm run build`, `npm run validate:study`: pass. Validator kiểm 46 file JavaScript, biên public/private, corpus 119.044 từ và 103.013 chữ cùng hash/nguồn/license.
 - `check-account-browser.mjs`: pass ở các kích thước 375–1440 px; đăng ký/đăng nhập/quên mật khẩu/recovery, lưu hồ sơ gắn đúng owner, pending/admin, cấp quyền và Google chưa cấu hình/lỗi OAuth/đã kết nối. Auth/email/Google là mô phỏng.
 - `check-private-browser.mjs`: pass 23 engine bài có payload cục bộ, từ chối khách/thu hồi quyền, lưu lịch sử theo tài khoản và gửi kết quả kèm owner. HSK 1 bài 4 kiểm cổng khách; nội dung riêng hiện có chưa được tải cho tài khoản thật. Audio mô phỏng không xác nhận chất lượng phát âm thanh thật.
 - `check-study-browser.mjs`: đã pass hồi quy công cụ học sau sửa lưới mobile: 12 kích thước/trang, 12 luồng học và 10 luồng từ điển mở rộng. Chưa kiểm Safari hoặc thiết bị di động thật.
 
-Không suy rộng kết quả này thành production đã phát hành hoặc Google/SMTP đã kết nối. Không có tài khoản hay thư thử thật được tạo bởi các bài test.
+Không suy rộng các kiểm tra mô phỏng thành production đã phát hành. Thư recovery thật và Google identity được kiểm riêng như phần trạng thái; chưa coi kiểm identity là kiểm trọn vẹn đồng bộ Docs hai chiều. Các bài test tự động không tạo tài khoản hay gửi thư thật.
 
 ## Thứ tự phát hành sau phê duyệt
 
@@ -59,6 +63,6 @@ Không suy rộng kết quả này thành production đã phát hành hoặc Goo
 
 ## Rollback
 
-Không drop các bảng tài khoản hoặc xóa người học. Khi lỗi frontend, phục hồi deployment đã kiểm chứng; lưu ý phiên bản cũ có thể chứa dữ liệu bài riêng công khai. Khi lỗi content, dùng `.cache/private-release-rollback.sql`, kiểm số dòng trả về bằng số dòng backup; dừng nếu after_hash đã khác. Không khôi phục policy cũ rộng hơn chỉ để làm test xanh. Asset upload mới có thể giữ trong bucket riêng; không cần xóa để rollback.
+Không drop các bảng tài khoản hoặc xóa người học. Khi lỗi frontend, phục hồi deployment đã kiểm chứng; lưu ý phiên bản cũ có thể chứa dữ liệu bài riêng công khai. Khi lỗi content, rollback theo thứ tự ngược: `.cache/private-section-repair-rollback.sql` cho 11 bài, sau đó mới `.cache/private-release-rollback.sql` cho 23 bài. Mỗi bước kiểm số dòng bằng backup; dừng nếu after_hash đã khác. Không khôi phục policy cũ rộng hơn chỉ để làm test xanh. Asset upload mới có thể giữ trong bucket riêng; không cần xóa để rollback.
 
-Chưa kiểm tra restore trên staging được hosting, gửi SMTP thật, đồng bộ Google Docs thật hoặc phát hành production mới. Audio, transaction nội dung, bootstrap ADMIN và cấu hình Auth ngoài SMTP đã hoàn tất. Còn nhập/lưu mật khẩu SMTP, kiểm email và các luồng tài khoản/Google/âm thanh thật trước khi merge phát hành.
+Chưa kiểm tra restore trên staging được hosting, đổi mật khẩu thật, đồng bộ Google Docs hai chiều hoặc phát hành production mới. SMTP nhận thư, ADMIN đăng nhập, Google refresh/identity và HSK 1 bài 5/audio đã kiểm thật. Các bước còn lại cần được ghi bằng chứng riêng.

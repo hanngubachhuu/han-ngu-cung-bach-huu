@@ -74,7 +74,18 @@ await context.route(
     }
     if (p.endsWith("/lesson_content")) {
       const id = u.searchParams.get("id")?.replace(/^eq\./, "");
-      return fulfill(deny ? null : payloads.find((x) => x.id === id) || null);
+      const row = payloads.find((x) => x.id === id);
+      // Production HSK 1 rows are flat, while the authoring snapshot is wrapped.
+      const liveShape = row?.id.startsWith("hsk1_")
+        ? {
+            id: row.id,
+            content: {
+              ...row.content.content,
+              exerciseSections: row.content.exerciseSections,
+            },
+          }
+        : row;
+      return fulfill(deny ? null : liveShape || null);
     }
     if (p.includes("/storage/"))
       return route.fulfill({
@@ -112,6 +123,14 @@ try {
           ".q-card,.question-card,#questionCard .q-body",
         ).length > 0,
     );
+    if (row.id.startsWith("hsk1_")) {
+      const total = row.content.content.exercises.all.length;
+      assert.equal(
+        await page.locator("#progressText").textContent(),
+        `0/${total} câu đã làm`,
+      );
+      assert.ok(total > 0);
+    }
     assert.deepEqual(errors, [], file);
   }
   await page.evaluate(() =>

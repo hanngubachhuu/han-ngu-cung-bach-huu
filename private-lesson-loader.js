@@ -71,11 +71,8 @@ async function loadLesson(supabase){
     if(!content.client_view)throw new Error('Bài học đang được chuyển sang khu vực riêng. Vui lòng thử lại sau.');
     window.HNH_PRIVATE_LEGACY=content.client_view;
   }
-  const lesson={
-    id:data.id,
-    content:content?.content||content,
-    exerciseSections:content?.exerciseSections||[]
-  };
+  const {preparePrivateLesson}=await import('./study/private-lesson-data.mjs');
+  const lesson=preparePrivateLesson({id:data.id,content},document.body.dataset.lessonEngine);
 
   window.HAN_NGU_DATA.register(lesson);
   await loadLessonEngine();

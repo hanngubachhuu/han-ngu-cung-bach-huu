@@ -4,7 +4,9 @@ import { PGlite } from "@electric-sql/pglite";
 import {
   generateRelease,
   generateStagedRelease,
+  generateSectionRepair,
 } from "../scripts/prepare-private-release.mjs";
+import { preparePrivateLesson } from "../study/private-lesson-data.mjs";
 test("private release is atomic, version guarded, preserves canonical data and supports rollback", async () => {
   const db = new PGlite();
   try {
@@ -58,6 +60,90 @@ test("private release is atomic, version guarded, preserves canonical data and s
       (await db.query("select content from public.lesson_content")).rows[0]
         .content,
       { trusted: "unchanged" },
+    );
+  } finally {
+    await db.close();
+  }
+});
+
+test("native publication and section repair preserve canonical DB content and expose every exercise", async () => {
+  const db = new PGlite();
+  const canonical = {
+    trusted: "unchanged",
+    exercises: { all: [{ id: "q1", section: "listening" }] },
+    audio: "audio/hsk1/bai5/dialog-1.mp3",
+  };
+  const source = {
+    payloads: [
+      {
+        id: "hsk1_bai5",
+        content: {
+          content: canonical,
+          exerciseSections: [{ id: "listening", title: "Nghe", skill: "nghe" }],
+        },
+      },
+    ],
+    assets: [],
+  };
+  try {
+    await db.exec(`create role anon;create role authenticated;create schema account_internal;
+      create table public.lesson_content(id text primary key,content jsonb,updated_at timestamptz);`);
+    await db.query("insert into public.lesson_content values ($1,$2,now())", [
+      "hsk1_bai5",
+      JSON.stringify(canonical),
+    ]);
+    const baseline = (
+      await db.query(
+        "select id,md5(content::text) as content_hash from public.lesson_content",
+      )
+    ).rows;
+    const release = generateRelease(source, baseline);
+    await db.exec(release.sql);
+    const published = (
+      await db.query("select id,content from public.lesson_content")
+    ).rows[0];
+    const lesson = preparePrivateLesson(published);
+    assert.equal(lesson.exerciseSections.length, 1);
+    assert.deepEqual(lesson.content.exercises, canonical.exercises);
+    assert.equal(
+      lesson.content.audio,
+      "supabase://lesson-private/hsk1/bai5/dialog-1.mp3",
+    );
+    await db.exec(release.rollback);
+    const repair = generateSectionRepair(source, baseline);
+    await db.exec(repair.sql);
+    const fixed = (
+      await db.query("select id,content from public.lesson_content")
+    ).rows[0];
+    assert.equal(
+      preparePrivateLesson(fixed).exerciseSections[0].id,
+      "listening",
+    );
+    const { exerciseSections, ...rest } = fixed.content;
+    assert.equal(exerciseSections.length, 1);
+    assert.deepEqual(rest, canonical);
+    await db.exec(repair.rollback);
+    assert.deepEqual(
+      (await db.query("select content from public.lesson_content")).rows[0]
+        .content,
+      canonical,
+    );
+    await db.exec(
+      "drop table account_internal.publication_sections_backup_20260928",
+    );
+    const mismapped = structuredClone(source);
+    mismapped.payloads[0].content.exerciseSections[0].id = "different";
+    mismapped.payloads[0].content.content.exercises.all[0].section =
+      "different";
+    await assert.rejects(
+      db.exec(generateSectionRepair(mismapped, baseline).sql),
+      /UNMAPPED_QUESTION/,
+    );
+    await db.exec("rollback");
+    assert.deepEqual(
+      (await db.query("select content from public.lesson_content")).rows[0]
+        .content,
+      canonical,
     );
   } finally {
     await db.close();

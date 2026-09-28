@@ -265,6 +265,15 @@ try {
       exact: false,
     })
     .waitFor();
+  await page
+    .locator("summary")
+    .filter({ hasText: "Hồ sơ Google Docs của tôi" })
+    .click();
+  await page.locator("[data-owner-documents] [data-doc-create]").waitFor();
+  await page
+    .locator("summary")
+    .filter({ hasText: "Hồ sơ Google Docs của tôi" })
+    .click();
   googleStatus = { configured: false, connected: false };
   await page.locator("[data-student]").click();
   await page

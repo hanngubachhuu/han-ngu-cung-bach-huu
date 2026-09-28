@@ -58,3 +58,10 @@ Production rollout requires migrations, behavior/RLS tests, build checks and liv
 - Auth provider now has minimum password length 12, secure password change, email confirmation, production Site URL and six exact production/Pages/preview redirect URLs. Anonymous sign-in and manual identity linking remain disabled. The Free dashboard requires Pro for leaked-password protection; no paid upgrade was made. Gmail SMTP was specifically approved and non-secret form fields prepared; owner credential entry/save and real email delivery remain pending.
 - Local unit/PostgreSQL tests: 46/46; lint passed. Real owner login, Google round trip, email recovery and production promotion remain pending; see deployment.md for evidence boundaries.
 - Google status now refreshes OAuth and verifies the designated Google identity before reporting connected. Expired/revoked credentials receive a specific administrator-facing error. This is covered by an automated regression test, not yet a real Google round trip.
+
+## Live verification update (2026-09-28, 10:13 onward)
+
+- Owner completed SMTP credential entry and confirmed receiving the recovery message with the correct sender. Auth `/recover` returned 200 and recorded `user_recovery_requested`; recovery_sent_at matches the test window. Actual password change remains untested.
+- Owner signed into preview: APPROVED, ADMIN navigation and all 24 assigned lessons visible. Google status successfully refreshed OAuth and verified bachhuu1809@gmail.com; document create/update is a separate check.
+- Real HSK 1 lesson testing found a gap hidden by wrapped authoring fixtures: flat production payloads lacked exerciseSections. Added generator metadata, loader validation and flat-payload browser coverage. Applied guarded repair 20260928032108 for 11 lessons/271 questions; all canonical content unchanged and every question maps once. HSK 1 lesson 5 now shows 25 questions and plays private audio.
+- Unit/PostgreSQL tests 49/49; lint/build/validator pass. Private browser regression covers all 23 engines with flat HSK 1 DB shape. This supersedes the earlier pending SMTP/Google identity and 46-test statements above.

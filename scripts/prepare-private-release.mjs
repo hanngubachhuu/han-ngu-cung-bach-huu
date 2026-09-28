@@ -1,6 +1,19 @@
 import fs from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
+function sectionJson(row) {
+  const sections = row.content.exerciseSections;
+  const questions = row.content.content?.exercises?.all;
+  const ids = new Set(sections?.map((section) => section.id));
+  if (
+    !sections?.length ||
+    ids.size !== sections.length ||
+    !questions?.length ||
+    questions.some((question) => !ids.has(question.section))
+  )
+    throw Error("INVALID_EXERCISE_SECTIONS: " + row.id);
+  return JSON.stringify(sections);
+}
 export function generateRelease(source, baseline, { staged = false } = {}) {
   const quote = (v) => "'" + String(v).replaceAll("'", "''") + "'";
   const block = (body) => {
@@ -24,7 +37,7 @@ export function generateRelease(source, baseline, { staged = false } = {}) {
       );
     const update = client
       ? `jsonb_set(content,'{client_view}',${staged ? `(select payload::jsonb from account_internal.publication_stage_20260928 where id=${quote(row.id)})` : quote(serialized) + "::jsonb"})`
-      : `replace(content::text,'audio/hsk1/','supabase://lesson-private/hsk1/')::jsonb`;
+      : `jsonb_set(replace(content::text,'audio/hsk1/','supabase://lesson-private/hsk1/')::jsonb,'{exerciseSections}',${quote(sectionJson(row))}::jsonb)`;
     sql += block(
       ` perform 1 from public.lesson_content where id=${quote(row.id)} for update;\n if (select md5(content::text) from public.lesson_content where id=${quote(row.id)}) is distinct from ${quote(before.content_hash)} then raise exception 'CONTENT_CHANGED'; end if;\n insert into account_internal.publication_backup_20260927(id,content) select id,content from public.lesson_content where id=${quote(row.id)};\n update public.lesson_content set content=${update},updated_at=now() where id=${quote(row.id)};\n update account_internal.publication_backup_20260927 b set after_hash=md5(l.content::text) from public.lesson_content l where b.id=l.id and b.id=${quote(row.id)};`,
     );
@@ -53,6 +66,29 @@ export function generateStagedRelease(source, baseline) {
     uploads,
     ...generateRelease(source, baseline, { staged: true }),
   };
+}
+export function generateSectionRepair(source, baseline) {
+  const quote = (v) => "'" + String(v).replaceAll("'", "''") + "'";
+  let sql =
+    "begin;\ncreate table account_internal.publication_sections_backup_20260928(id text primary key,content jsonb not null,after_hash text);\nrevoke all on account_internal.publication_sections_backup_20260928 from public,anon,authenticated;\n";
+  for (const row of source.payloads.filter((r) => r.id.startsWith("hsk1_"))) {
+    const before = baseline.find((r) => r.id === row.id);
+    if (!before) throw Error("Missing baseline for " + row.id);
+    const sections = sectionJson(row);
+    sql += `do $repair$ begin
+      perform 1 from public.lesson_content where id=${quote(row.id)} for update;
+      if (select md5(content::text) from public.lesson_content where id=${quote(row.id)}) is distinct from ${quote(before.content_hash)} then raise exception 'CONTENT_CHANGED'; end if;
+      if (select content ? 'exerciseSections' from public.lesson_content where id=${quote(row.id)}) then raise exception 'SECTIONS_ALREADY_PRESENT'; end if;
+      insert into account_internal.publication_sections_backup_20260928(id,content) select id,content from public.lesson_content where id=${quote(row.id)};
+      update public.lesson_content set content=jsonb_set(content,'{exerciseSections}',${quote(sections)}::jsonb),updated_at=now() where id=${quote(row.id)};
+      if exists(select 1 from public.lesson_content l, jsonb_array_elements(l.content#>'{exercises,all}') q where l.id=${quote(row.id)} and (select count(*) from jsonb_array_elements(l.content->'exerciseSections') s where s->>'id'=q->>'section')<>1) then raise exception 'UNMAPPED_QUESTION'; end if;
+      update account_internal.publication_sections_backup_20260928 b set after_hash=md5(l.content::text) from public.lesson_content l where b.id=l.id and b.id=${quote(row.id)};
+    end $repair$;\n`;
+  }
+  sql += "commit;\n";
+  const rollback =
+    "begin;\nupdate public.lesson_content l set content=b.content,updated_at=now() from account_internal.publication_sections_backup_20260928 b where l.id=b.id and md5(l.content::text)=b.after_hash returning l.id;\ncommit;\n";
+  return { sql, rollback };
 }
 if (
   process.argv[1] &&

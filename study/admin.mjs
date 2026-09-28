@@ -35,6 +35,21 @@ async function boot() {
     connection.className = "account-card";
     workspace.prepend(connection);
     mountDocumentConnection(connection);
+    const ownerDocuments = document.createElement("details");
+    ownerDocuments.className = "account-card";
+    ownerDocuments.innerHTML =
+      "<summary>Hồ sơ Google Docs của tôi</summary><div data-owner-documents></div>";
+    connection.after(ownerDocuments);
+    let ownerDocumentsMounted = false;
+    ownerDocuments.addEventListener("toggle", () => {
+      if (ownerDocuments.open && !ownerDocumentsMounted) {
+        ownerDocumentsMounted = true;
+        mountDocuments(
+          ownerDocuments.querySelector("[data-owner-documents]"),
+          p,
+        );
+      }
+    });
     document.querySelector("#adminFilter").onsubmit = (e) => {
       e.preventDefault();
       page = 0;

@@ -1,6 +1,6 @@
 # Bật email cho website — hai bước của Bách Hữu
 
-Cập nhật 28/09/2026. Chủ website đã xác nhận dùng Gmail SMTP của **bachhuu1809@gmail.com**. Thông tin không bí mật đã được điền sẵn trong biểu mẫu Supabase; cấu hình chưa hoạt động cho đến khi nhập mật khẩu ứng dụng và lưu.
+Cập nhật 28/09/2026: chủ website đã tự nhập/lưu mật khẩu ứng dụng. Kiểm thử recovery lúc 10:13 giờ Việt Nam trả 200 và được chủ sở hữu xác nhận thư đến đúng người gửi **Hán Ngữ Cùng Bách Hữu — bachhuu1809@gmail.com**. Không đọc giá trị mật khẩu. Các bước dưới dùng khi cần cấu hình lại; hiện không cần làm lại.
 
 1. Mở [Mật khẩu ứng dụng Google](https://myaccount.google.com/apppasswords), chọn đúng **bachhuu1809@gmail.com**. Tạo mật khẩu ứng dụng tên **Website Bách Hữu**. Nếu Google yêu cầu, bật xác minh hai bước trước. Không dùng mật khẩu đăng nhập Gmail thông thường.
 2. Trở về [SMTP Settings của website](https://supabase.com/dashboard/project/dmeqxdznzobbarvkmxyg/auth/smtp), dán mật khẩu vừa tạo vào **Password**, bấm **Save changes**. Báo đã lưu; người triển khai sẽ kiểm tiếp luồng nhận email.
