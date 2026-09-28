@@ -55,6 +55,8 @@ function enhanceSiteFooter(){
           <strong>以今语为体，以古语为骨</strong>
           <span>Tiếng Việt là nền, Hán văn là chiều sâu. Học tiếng Trung không chỉ ở từ và câu, mà ở cách hiểu và vận dụng.</span>
           <a href="trang-chu.html#lien-he">Liên hệ với Bách Hữu →</a>
+          <a href="chinh-sach-du-lieu.html">Chính sách dữ liệu</a>
+          <a href="dieu-kien-su-dung.html">Điều kiện sử dụng</a>
         </div>
       </div>
     </div>

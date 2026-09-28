@@ -36,6 +36,14 @@ function message(error) {
         "Tài khoản Google kết nối chưa đúng bachhuu1809@gmail.com.",
       GOOGLE_AUTH_FAILED:
         "Kết nối Google đã hết hạn hoặc bị thu hồi. Cần kết nối lại tài khoản bachhuu1809@gmail.com; dữ liệu trên website vẫn được giữ nguyên.",
+      GOOGLE_DOCS_API_DISABLED:
+        "Google Docs API chưa được bật cho dự án kết nối. Bật API trong Google Cloud rồi thử lại; không cần tạo lại tài khoản website.",
+      GOOGLE_SCOPE_REQUIRED:
+        "Kết nối Google chưa có quyền thao tác tài liệu của ứng dụng. Cần kết nối lại với quyền Google Drive dành riêng cho các tệp do ứng dụng tạo.",
+      GOOGLE_RATE_LIMITED:
+        "Google đang giới hạn số yêu cầu. Chờ ít phút rồi xem lại thay đổi trước khi đồng bộ.",
+      GOOGLE_REVISION_OR_FORMAT_CONFLICT:
+        "Tài liệu Google đã thay đổi hoặc có định dạng chưa hỗ trợ. Xem lại bản so sánh trước khi đồng bộ.",
       DOCUMENT_SERVICE_UNAVAILABLE:
         "Chưa liên lạc được với dịch vụ hồ sơ. Hãy tải lại trang và thử lại sau ít phút.",
       VERSION_CONFLICT:

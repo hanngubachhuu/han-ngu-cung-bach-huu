@@ -38,7 +38,7 @@ Nguồn giáo trình HSK 2.0: `data/lesson-registry.js`, `data/lesson-manifest.j
 
 `sources/dictionaries/` chứa snapshot nguồn mở có hash và giấy phép; build không cần mạng. `data/study/lexicon/` là đầu ra nén và có tên theo hash. Web Worker tìm kiếm kho lớn, phân trang và kết hợp học liệu được Supabase RLS cho phép; không đưa toàn bộ kho vào DOM hoặc Supabase. Trang `nguon-tu-dien.html` công bố nguồn, số lượng và tải dữ liệu. CVDICT có bản dịch do tác giả dùng AI hỗ trợ nên luôn có nhãn đối chiếu; không phát sinh gọi API AI. Hanzii/Thi Viện là liên kết tra cứu bên ngoài.
 
-Bản build tài khoản mới tách bài 4–15 của HSK 1 và HSK 2 khỏi `dist/`, tải bằng Auth/RLS và audio bucket riêng. Đợt chuyển đổi này CHƯA lên production; cần hoàn thành [thứ tự phát hành](deployment.md) trước khi deploy để tránh làm mất truy cập bài. Bài HSK 1 số 4 dùng dữ liệu riêng hiện có và không được xuất lại từ seed cục bộ. Repo nguồn hiện còn công khai, nên chỉ xóa khỏi `dist/` không bảo vệ được các bản nguồn hoặc lịch sử Git đã lộ.
+Bản build tài khoản mới tách bài 4–15 của HSK 1 và HSK 2 khỏi `dist/`, tải bằng Auth/RLS và audio bucket riêng. Đợt chuyển đổi đã phát hành qua PR #19; đã kiểm hash bản live và đường dẫn nguồn/audio riêng trả 404 trên hai host. Xem [bằng chứng phát hành](deployment.md). Bài HSK 1 số 4 dùng dữ liệu riêng hiện có và không được xuất lại từ seed cục bộ. Repo nguồn hiện còn công khai, nên chỉ xóa khỏi `dist/` không bảo vệ được các bản nguồn hoặc lịch sử Git đã lộ.
 
 ## Tính năng
 
