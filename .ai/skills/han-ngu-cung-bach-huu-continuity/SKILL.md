@@ -2,7 +2,7 @@
 
 ## 1. Mission
 
-Skill này là lớp continuity dành riêng cho repository han-nguu-cung-bach-huu.
+Skill này là lớp continuity dành riêng cho repository han-ngu-cung-bach-huu.
 
 Mục tiêu:
 - tiếp tục công việc ngay sau khi context limit;
