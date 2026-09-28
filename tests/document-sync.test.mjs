@@ -139,6 +139,43 @@ test("document API denies anonymous access before connecting to Google", async (
   assert.equal(response.body.error, "AUTH_REQUIRED");
 });
 
+test("adapter classifies disabled API and missing scopes without leaking provider details", async () => {
+  for (const [reason, status, expected] of [
+    ["SERVICE_DISABLED", 403, "GOOGLE_DOCS_API_DISABLED"],
+    ["ACCESS_TOKEN_SCOPE_INSUFFICIENT", 403, "GOOGLE_SCOPE_REQUIRED"],
+    ["RATE_LIMIT_EXCEEDED", 429, "GOOGLE_RATE_LIMITED"],
+    ["UNKNOWN", 403, "GOOGLE_REQUEST_FAILED"],
+  ]) {
+    const adapter = await googleAdapter(
+      {
+        GOOGLE_CLIENT_ID: "test",
+        GOOGLE_CLIENT_SECRET: "test",
+        GOOGLE_REFRESH_TOKEN: "test",
+      },
+      async (url) => ({
+        ok: url.includes("/token") || url.includes("userinfo"),
+        status,
+        json: async () =>
+          url.includes("/token")
+            ? { access_token: "mock" }
+            : url.includes("userinfo")
+              ? { email: "bachhuu1809@gmail.com", email_verified: true }
+              : {
+                  error: {
+                    message: "private-provider-detail",
+                    details: [{ reason }],
+                  },
+                },
+      }),
+    );
+    await assert.rejects(adapter.create("test-user", base), (error) => {
+      assert.equal(error.message, expected);
+      assert.equal(error.message.includes("private-provider-detail"), false);
+      return true;
+    });
+  }
+});
+
 test("sync rejects stale previews and records partial Google/DB failure without reporting success", async () => {
   const fields = { full_name: "Student", phone: "", learning_goal: "Learn" },
     id = "00000000-0000-4000-8000-000000000003";

@@ -1,6 +1,6 @@
 # Đồng bộ Google Docs
 
-Trạng thái: đã lưu cấu hình OAuth riêng của website vào Vercel Preview/Production; CHƯA kiểm chứng end-to-end với Google thật. Tài khoản Google connector đã được xác minh là `bachhuu1809@gmail.com`, nhưng token của connector không phải credential để đưa vào Vercel. API trạng thái dành cho ADMIN thực hiện refresh OAuth và kiểm tra danh tính Google trước khi báo kết nối thành công; hết hạn/thu hồi quyền sẽ trả lỗi cụ thể.
+Trạng thái 28/09/2026: đã kiểm chứng tạo tài liệu thật từ website chính thức, đồng bộ Google → website và website → Google, chặn bản xem trước cũ, phát hiện cùng trường thay đổi khác nhau và áp dụng lựa chọn giải quyết xung đột. Kiểm readback từ tài liệu và giao diện tài khoản; khôi phục các trường kiểm thử về dữ liệu ban đầu. Tài liệu chỉ có quyền owner. Kiểm chức năng không thay thế kiểm vòng đời OAuth dài hạn.
 
 Mỗi hồ sơ quản lý có UUID trong documents và google_document_id duy nhất. Tên tài liệu hoặc email không dùng làm khóa. Website đọc dữ liệu hoạt động từ PostgreSQL; không đọc Google Doc mỗi lần học viên đăng nhập.
 
@@ -18,6 +18,6 @@ Lệnh start tạo lease hai phút; complete kiểm tra operation và version, c
 
 OAuth chỉ ở máy chủ: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN. Dùng Google Cloud project của chủ sở hữu, bật Docs API, scope `https://www.googleapis.com/auth/drive.file openid email`, offline access và consent của đúng tài khoản. `drive.file` đủ cho các tài liệu do ứng dụng tạo và giới hạn quyền ở từng file; không yêu cầu quyền đọc toàn bộ tài liệu cá nhân. Đặt credentials trong Vercel environment tương ứng, không commit và không gửi vào chat. Adapter xác minh email + email_verified trước thao tác. Không tự cấp quyền công khai hoặc gửi chia sẻ tài liệu. Xem [hướng dẫn chủ tài khoản thiết lập Google từ đầu](GOOGLE_SETUP_FOR_OWNER.md).
 
-Kiểm thử tích hợp sau cấu hình: tạo hồ sơ giả được phép; sửa một trường mỗi phía; sửa cùng trường; thay role trong block phải lỗi; sửa Google giữa preview/apply phải lỗi; mô phỏng lỗi DB sau Google write; kiểm tra sync_logs và retry. Chưa chạy các tình huống đó với Google thật.
+Kiểm thử tích hợp sau cấu hình: tạo hồ sơ giả được phép; sửa một trường mỗi phía; sửa cùng trường; thay role trong block phải lỗi; sửa Google giữa preview/apply phải lỗi; mô phỏng lỗi DB sau Google write; kiểm tra sync_logs và retry. Đã chạy các luồng hai chiều, bản cũ và xung đột với Google thật. Giả lập lỗi DB sau Google write và sửa trường quyền được kiểm bằng unit/RLS tests; chưa chủ động gây các lỗi đó trên production.
 
 Nguồn: [Google Docs batchUpdate và requiredRevisionId](https://developers.google.com/workspace/docs/api/reference/rest/v1/documents/batchUpdate), [phạm vi cấp quyền Google Docs](https://developers.google.com/workspace/docs/api/auth).

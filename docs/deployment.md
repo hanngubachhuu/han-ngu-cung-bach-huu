@@ -2,13 +2,13 @@
 
 ## Trạng thái hiện tại
 
-DATABASE AND PRIVATE CONTENT APPLIED, PREVIEW READY, PRODUCTION PENDING (28/09/2026). Chủ sở hữu đã phê duyệt triển khai và xác nhận trực tiếp ADMIN cho `bachhuu1809@gmail.com`. Hai schema account/Docs đã áp dụng; truy vấn lại xác nhận đúng một ADMIN, 24 quyền học và 24 bài. Nội dung/audio riêng đã sẵn sàng; chưa chuyển website chính thức trước khi kiểm tra tích hợp với tài khoản thật.
+PRODUCTION RELEASED (28/09/2026), PR #19, commit 31984de4328abb48a3b8012ae329a1fdaad5f0ab. Chủ sở hữu đã phê duyệt triển khai và xác nhận trực tiếp ADMIN cho `bachhuu1809@gmail.com`. Hai schema account/Docs đã áp dụng; truy vấn lại xác nhận đúng một ADMIN, 24 quyền học và 24 bài. Giao diện mới đã phát hành trên Vercel và GitHub Pages.
 
 Đã vá live: anonymous/authenticated không thể gọi `import_study_lexicon_words()`; chín hàm đọc từ điển có search_path cố định, truy vấn mẫu vẫn trả kết quả. Không gọi importer, không đổi corpus.
 
 Vercel đã lưu ba biến Google bí mật cùng SUPABASE_URL và SUPABASE_PUBLISHABLE_KEY cho cả Preview/Production. Không đọc hoặc sao chép giá trị secrets. Cần deployment mới để sử dụng cấu hình vừa đổi. Lưu cấu hình không đồng nghĩa đã xác minh OAuth hay đồng bộ Google Docs thật.
 
-PR [#19](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/pull/19); preview được xác minh READY: `dpl_3NNrK9XWhMyd58qGKuNzkKaN6KkG`, commit `a32dd281bf3402934c77bd485c0ee594314a10cb`, tại [website thử nghiệm](https://hanngubachhuu-gmhwqbph3-hanngubachhuu.vercel.app/tai-khoan.html). [GitHub Actions 36336231585](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36336231585) pass toàn bộ kiểm tra PR, gồm các luồng trình duyệt. Bản production vẫn ở commit `01904b0bf98289e82ad52ec0d17ee39f0c1f1635` trong lần kiểm tra triển khai gần nhất; chưa promote PR này.
+PR [#19](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/pull/19); preview được xác minh READY: `dpl_3NNrK9XWhMyd58qGKuNzkKaN6KkG`, commit `a32dd281bf3402934c77bd485c0ee594314a10cb`, tại [website thử nghiệm](https://hanngubachhuu-gmhwqbph3-hanngubachhuu.vercel.app/tai-khoan.html). [GitHub Actions 36336231585](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36336231585) pass toàn bộ kiểm tra PR, gồm các luồng trình duyệt. Bản production đã chuyển sang merge commit `31984de4328abb48a3b8012ae329a1fdaad5f0ab`; workflow Pages [36374167564](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36374167564) thành công. Hash module quản trị, bộ kiểm dữ liệu bài riêng và loader trên cả hai host khớp Git commit; mẫu đường dẫn nguồn/audio riêng trả 404.
 
 Kho `lesson-private` vẫn `public=false`. Đã tải bằng Storage dashboard đủ 33/33 audio mới (HSK 1 bài 5–15); bài 4 giữ nguyên ba tệp cũ. Cả 33 tệp có SHA-256 nguồn khớp manifest build; kích thước, MIME và ETag multipart một phần trên Storage khớp tệp cục bộ. Đây là đối chiếu checksum/metadata, chưa phải tải xuống và băm SHA-256 toàn bộ tệp từ xa. Báo cáo ở `.cache/private-audio-verification.json` (gitignored). Metadata thư mục rỗng không được tính là audio.
 
@@ -41,13 +41,13 @@ Windows có thể đặt BROWSER_EXECUTABLE đến Chrome đã cài. Account/pri
 
 Kết quả tại bản local ngày 28/09/2026:
 
-- `npm test`: 49/49 pass; gồm PostgreSQL RLS, giữ quyền học cũ, dữ liệu riêng từng chủ, từ chối đổi owner khi lưu hồ sơ/kết quả, version conflict, retry, lỗi Google/DB giữa chừng, xuất bản dữ liệu lớn qua staging và metadata nhóm câu hỏi cho payload DB phẳng.
+- `npm test`: 50/50 pass; gồm PostgreSQL RLS, giữ quyền học cũ, dữ liệu riêng từng chủ, từ chối đổi owner khi lưu hồ sơ/kết quả, version conflict, retry, lỗi Google/DB giữa chừng, xuất bản dữ liệu lớn qua staging và metadata nhóm câu hỏi cho payload DB phẳng.
 - `npm run lint`, `npm run build`, `npm run validate:study`: pass. Validator kiểm 46 file JavaScript, biên public/private, corpus 119.044 từ và 103.013 chữ cùng hash/nguồn/license.
 - `check-account-browser.mjs`: pass ở các kích thước 375–1440 px; đăng ký/đăng nhập/quên mật khẩu/recovery, lưu hồ sơ gắn đúng owner, pending/admin, cấp quyền và Google chưa cấu hình/lỗi OAuth/đã kết nối. Auth/email/Google là mô phỏng.
 - `check-private-browser.mjs`: pass 23 engine bài có payload cục bộ, từ chối khách/thu hồi quyền, lưu lịch sử theo tài khoản và gửi kết quả kèm owner. HSK 1 bài 4 kiểm cổng khách; nội dung riêng hiện có chưa được tải cho tài khoản thật. Audio mô phỏng không xác nhận chất lượng phát âm thanh thật.
 - `check-study-browser.mjs`: đã pass hồi quy công cụ học sau sửa lưới mobile: 12 kích thước/trang, 12 luồng học và 10 luồng từ điển mở rộng. Chưa kiểm Safari hoặc thiết bị di động thật.
 
-Không suy rộng các kiểm tra mô phỏng thành production đã phát hành. Thư recovery thật và Google identity được kiểm riêng như phần trạng thái; chưa coi kiểm identity là kiểm trọn vẹn đồng bộ Docs hai chiều. Các bài test tự động không tạo tài khoản hay gửi thư thật.
+Không suy rộng kiểm tra mô phỏng thành kiểm chứng mọi luồng production. Đã kiểm riêng tạo Google Doc thật, đồng bộ hai chiều, từ chối bản xem trước cũ và giải quyết xung đột cùng trường; readback và khôi phục dữ liệu kiểm thử hoàn tất. Các bài test tự động không tạo tài khoản hay gửi thư thật.
 
 ## Thứ tự phát hành sau phê duyệt
 
@@ -65,4 +65,4 @@ Không suy rộng các kiểm tra mô phỏng thành production đã phát hành
 
 Không drop các bảng tài khoản hoặc xóa người học. Khi lỗi frontend, phục hồi deployment đã kiểm chứng; lưu ý phiên bản cũ có thể chứa dữ liệu bài riêng công khai. Khi lỗi content, rollback theo thứ tự ngược: `.cache/private-section-repair-rollback.sql` cho 11 bài, sau đó mới `.cache/private-release-rollback.sql` cho 23 bài. Mỗi bước kiểm số dòng bằng backup; dừng nếu after_hash đã khác. Không khôi phục policy cũ rộng hơn chỉ để làm test xanh. Asset upload mới có thể giữ trong bucket riêng; không cần xóa để rollback.
 
-Chưa kiểm tra restore trên staging được hosting, đổi mật khẩu thật, đồng bộ Google Docs hai chiều hoặc phát hành production mới. SMTP nhận thư, ADMIN đăng nhập, Google refresh/identity và HSK 1 bài 5/audio đã kiểm thật. Các bước còn lại cần được ghi bằng chứng riêng.
+Chưa kiểm tra restore trên staging được hosting hoặc đổi mật khẩu thật. Các lỗi Google/DB giữa chừng được kiểm bằng fixture, không chủ động gây gián đoạn production. Kiểm vòng đời OAuth dài hạn và thiết bị Safari/di động thật còn riêng biệt với các kết quả chức năng đã xác nhận ở trên.

@@ -48,12 +48,22 @@ export async function googleAdapter(env = process.env, request = fetch) {
         signal: timeout(),
       },
     );
-    if (!response.ok)
+    if (!response.ok) {
+      // Return only allowlisted categories; provider messages can contain IDs.
+      const failure = await response.json().catch(() => ({}));
+      const reasons = (failure.error?.details || []).map((item) => item.reason);
+      if (reasons.includes("SERVICE_DISABLED"))
+        throw Error("GOOGLE_DOCS_API_DISABLED");
+      if (reasons.includes("ACCESS_TOKEN_SCOPE_INSUFFICIENT"))
+        throw Error("GOOGLE_SCOPE_REQUIRED");
       throw Error(
-        response.status === 400
-          ? "GOOGLE_REVISION_OR_FORMAT_CONFLICT"
-          : "GOOGLE_REQUEST_FAILED",
+        response.status === 429
+          ? "GOOGLE_RATE_LIMITED"
+          : response.status === 400
+            ? "GOOGLE_REVISION_OR_FORMAT_CONFLICT"
+            : "GOOGLE_REQUEST_FAILED",
       );
+    }
     return response.json();
   }
   function documentId(id) {

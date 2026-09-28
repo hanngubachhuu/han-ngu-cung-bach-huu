@@ -1,6 +1,6 @@
 # Kiến trúc tài khoản và đồng bộ
 
-Trạng thái 2026-09-28: schema tài khoản/Docs và ADMIN duy nhất đã áp dụng production; giao diện mới đang ở preview, chưa phát hành chính thức. Xem [kế hoạch phát hành](deployment.md) trước khi deploy.
+Trạng thái 2026-09-28: giao diện tài khoản và quản trị đã phát hành qua PR #19, commit `31984de4328abb48a3b8012ae329a1fdaad5f0ab`. Xem [bằng chứng và giới hạn kiểm chứng](deployment.md) trước khi triển khai tiếp.
 
 Giữ HTML/CSS/JavaScript thuần, Node 24, npm lockfile và esbuild. Không thêm framework, dịch vụ hàng đợi hoặc database thứ hai.
 
