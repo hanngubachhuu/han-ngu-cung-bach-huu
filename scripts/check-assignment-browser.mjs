@@ -141,8 +141,16 @@ await context.route(
         status: "APPROVED",
         version: admin ? 2 : 1,
       });
-    if (p.endsWith("/assignment_command")) {
-      const { command, payload } = route.request().postDataJSON();
+    if (
+      p.endsWith("/assignment_command") ||
+      p.endsWith("/assignment_authoring")
+    ) {
+      const body = route.request().postDataJSON();
+      const command = body.command;
+      const payload =
+        command === "question_create" && body.payload.question
+          ? body.payload.question
+          : body.payload;
       calls.push({ command, payload });
       if (command === "catalog")
         return fulfill([

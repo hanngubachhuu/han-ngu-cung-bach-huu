@@ -42,3 +42,9 @@ Chỉ lưu quyết định có ảnh hưởng về sau.
 - learning_attempts remains lightweight history; linked submission/detail/answers/version/grading/feedback/rubric entities. Self_reported preserved and excluded from all new eligibility rules. Immutable used versions, published-only learner results, explicit audited regrade; existing course/enrollment reused for HSK/HSKK.
 - Backup only local ignored .cache/backups/assignment-before-20260930.json, no secrets or Git/push. Seven requested tables plus related audit ledger backed up/restore verified. No production migration until user confirms the next checkpoint.
 - Review package: docs/assignment-migrations.md. CP2 Drive/audio and CP3 public verification remain separate and unapproved.
+
+## DEC-008 — Generated distractors and immutable private authoring metadata
+- Authority: direct user phase refinement 2026-09-30; foundation/editor accepted, actual generation before provenance import/archive before Speaking.
+- Use closed Chinese rules with sufficient context, meaningful distractors and exactly one semantic answer; refuse unsupported context. Validation alone is not generation. Admin preview/edit/regenerate; final set in a new question version. No mutation or automatic regrade of history.
+- Add private source/request/archive entities linked to existing question versions, actual import actor/time from DB, original identifier/revision/item, immutable lineage and append-only archive/audit. Atomic preview/commit with stale base and replay protection. Archive removes future selection, preserves existing definition/submission references.
+- Preserve established Auth/course/enrollment/RLS/publication boundaries. No return to full old audits absent actual regression; normal CI remains a release gate. Exact additive DDL and rollback: docs/assignment-authoring.md. Speaking permission/credential changes remain CP2.
