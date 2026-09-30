@@ -28,6 +28,8 @@ async function authenticatedCommand(rpc, command, payload, ownerId) {
 
 const messages = {
   RECORDING_REQUIRED: "Lưu bản ghi cho từng câu nói trước khi nộp bài.",
+  RECORDING_EXPIRED:
+    "Bản ghi đã hết hạn hoặc đã được dọn. Ghi lại và lưu trước khi nộp bài.",
   INVALID_RECORDING_REFERENCE:
     "Bản ghi chưa được xác nhận hoặc không thuộc câu này. Thử lưu lại đúng bản ghi.",
   AUDIO_PROCESSING: "MP3 đang được xử lý. Chờ bản ghi sẵn sàng trước khi chấm.",

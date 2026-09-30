@@ -5,6 +5,10 @@ These **new additive migrations are now applied**. Their source files, as well a
 1. `20260930151008_speaking_private_pipeline.sql`
 2. `20260930173505_document_exam_import.sql`
 
+The additional forward fix `20260930201500_speaking_submission_boundary.sql` preserves those two applied files. It replaces only recording_worker and speaking_check_answer and adds the INVOKER speaking_submission_ready trigger/function on submission_details. Worker claims require a submitted attempt and its exact pinned answer; a superseded or draft recording cannot begin archival/expiry. Save and explicit finalization reject expired/cleaned audio. Existing timed-out finalization remains unchanged. No table/column/RLS/Auth/backfill/data deletion. The helper's service_role EXECUTE is revoked; worker EXECUTE stays service_role-only, all search_paths empty. Disable new work and forward-fix if needed; never revert to the unsafe draft-archival behavior or remove history.
+
+Recovery supplement `.cache/backups/speaking-submit-boundary-before-20261001.json`, captured2026-09-30T20:20:46.537747Z, SHA256 `9f3154734472b44dc6f27aa9b69b4007414a2aff56ba196e22e33239384478bf`: two replaced function DDL/ACL/owners, existing submission trigger definitions and zero-recording/disabled-gate precondition only. No row values, media or secrets. Read-back and Git ignore checks passed. New local tests cover draft/superseded queue exclusion and expiry/cleanup rejection at save AND finalization; full136 tests pass. `.cache/speaking-boundary-production-smoke.sql` is locally validated, uses only synthetic metadata and the approved Admin identity, never a real student or Auth mutation; all gate/fixture changes are transaction-rollback isolated. Hosted completion is recorded separately after rollout.
+
 Production registry: `20260930194254_speaking_private_pipeline` then `20260930194302_document_exam_import`, applied after compatible production API/native health verification on 2026-10-01 Bangkok. Supabase assigns the hosted timestamp; do not repair history to match source filenames. Future fixes require a new migration.
 
 ## Schema delta
