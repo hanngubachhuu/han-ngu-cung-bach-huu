@@ -5,6 +5,11 @@ import {
 } from "./assignment-service.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { getClient } from "./auth.mjs";
+import {
+  AssignmentSelection,
+  questionForm,
+  questionPayload,
+} from "./assignment-editor.mjs";
 
 export function mountAssignmentAdmin(root, profile) {
   root.classList.add("assignment-workspace");
@@ -12,6 +17,7 @@ export function mountAssignmentAdmin(root, profile) {
     request = 0,
     page = 0,
     bankPage = 0;
+  let selection = new AssignmentSelection();
   const command = (name, payload = {}) => call(name, payload, profile.user_id);
   const report = (error) => {
     const node = root.querySelector("[data-status]");
@@ -20,7 +26,7 @@ export function mountAssignmentAdmin(root, profile) {
   function shell(title) {
     root.innerHTML = `<h3>${text(title)}</h3><div class="account-actions"><button class="st-button" data-queue>Bài nộp</button><button class="st-button" data-bank>Đề và rubric</button></div><p data-status role="status" aria-live="polite"></p><div data-content></div>`;
     root.querySelector("[data-queue]").onclick = () => queue();
-    root.querySelector("[data-bank]").onclick = () => bank();
+    root.querySelector("[data-bank]").onclick = () => bank(selection.lessonId);
     return root.querySelector("[data-content]");
   }
   async function queue(filters = {}) {
@@ -258,16 +264,27 @@ export function mountAssignmentAdmin(root, profile) {
         content.textContent = "Chưa có bài học để tạo đề.";
         return;
       }
+      if (selection.lessonId !== lesson)
+        selection = new AssignmentSelection(lesson);
       const data = await command("bank", { lesson_id: lesson, page: bankPage });
       if (!active || generation !== request) return;
       content.innerHTML = `<label>Bài học<select data-lesson>${lessons.map((l) => `<option value="${esc(l.id)}" ${l.id === lesson ? "selected" : ""}>${text(l.course_id)} · ${text(l.title_vi)}</option>`).join("")}</select></label>
         <details><summary>Tạo phiên bản rubric</summary><form data-rubric class="account-form"><label>Tên định danh rubric<input name="rubric_key" required maxlength="120"></label><label>Dạng bài<select name="kind"><option value="writing">Viết</option><option value="translation">Dịch</option><option value="speaking">Nói</option></select></label><label>Tiêu chí và trọng số (mỗi dòng: tên | điểm tối đa; tổng 10)<textarea name="criteria" required rows="4" placeholder="Nội dung | 6&#10;Ngữ pháp | 4"></textarea></label><button class="st-button">Lưu phiên bản rubric</button></form></details>
         <details open><summary>Thêm / tạo phiên bản câu hỏi</summary><form data-question class="account-form"><label>Mã câu ổn định<input name="question_key" required maxlength="120" placeholder="Ví dụ: bai4_cau01"></label><label>Dạng<select name="kind"><option value="mcq">Trắc nghiệm</option><option value="true_false">Đúng / sai</option><option value="text_fill">Điền từ</option><option value="reorder">Sắp xếp từ</option><option value="multi_fill">Nhiều chỗ trống</option><option value="matching">Ghép cặp</option><option value="translation">Dịch mở</option><option value="writing">Viết</option><option value="speaking">Nói (chưa mở ghi âm)</option></select></label><label>Câu hỏi<textarea name="prompt" required rows="3" maxlength="12000"></textarea></label><label>Lựa chọn (mỗi dòng: A | nội dung; sắp xếp từ: mỗi dòng một từ)<textarea name="options" rows="4"></textarea></label><label>Đáp án (MCQ: mã; đúng/sai: true/false; điền/sắp xếp: mỗi cách đúng một dòng; nhiều chỗ trống: mỗi chỗ một dòng, cách đúng thay thế ngăn bởi |; ghép cặp: trái=phải)<textarea name="answer" rows="3"></textarea></label><label>Rubric cho bài mở<select name="rubric_version_id"><option value="">Chọn rubric</option>${data.rubrics.map((r) => `<option value="${esc(r.id)}">${text(r.rubric_key)} · ${text(r.kind)} · v${r.version}</option>`).join("")}</select></label><label>Giải thích (chỉ Admin)<textarea name="explanation" rows="2"></textarea></label><label>Gợi ý (chỉ Admin)<textarea name="tip" rows="2"></textarea></label><button class="st-button">Lưu phiên bản câu hỏi mới</button><p class="st-help">Dùng lại mã câu để tạo phiên bản tiếp theo; bản cũ được giữ. Kiểm tra tính duy nhất của đáp án trước khi xuất bản.</p></form></details>
-        <form data-definition class="account-form"><h4>Chọn phiên bản câu cho đề mới</h4><p>Thứ tự theo danh sách đang chọn. Mỗi mã câu chỉ chọn một phiên bản.</p>${data.questions.map((q) => `<label class="assignment-choice"><input type="checkbox" name="question" value="${esc(q.id)}">${text(q.question_key)} · v${q.version} · ${text(q.prompt)}</label>`).join("") || "<p>Chưa có câu hỏi.</p>"}<label>Tên đề<input name="title" required maxlength="200"></label><label>Giới hạn phút (để trống nếu không giới hạn)<input name="time_limit_minutes" type="number" min="1" max="240"></label><button class="st-button">Lưu đề nháp</button></form>
+        <form data-definition class="account-form"><h4>Chọn phiên bản câu cho đề mới</h4><p>Câu đã chọn được giữ khi đổi trang. Chọn phiên bản khác của cùng mã sẽ thay thế tại vị trí cũ.</p>${data.questions.map((q) => `<div class="assignment-question"><label class="assignment-choice"><input type="checkbox" name="question" value="${esc(q.id)}">${text(q.question_key)} · v${q.version} · ${text(q.prompt)}</label><div class="account-actions"><button class="st-button" type="button" data-edit-question="${esc(q.id)}">Sửa thành phiên bản mới</button><button class="st-button" type="button" data-copy-question="${esc(q.id)}">Nhân bản câu</button></div></div>`).join("") || "<p>Chưa có câu hỏi.</p>"}<section data-selection aria-label="Thứ tự câu trong đề"></section><label>Tên đề<input name="title" required maxlength="200" value="${esc(selection.title)}"></label><label>Giới hạn phút (để trống nếu không giới hạn)<input name="time_limit_minutes" type="number" min="1" max="240" value="${esc(selection.minutes)}"></label><button class="st-button">Lưu đề nháp</button></form>
         <div class="account-actions"><button class="st-button" data-bank-prev ${bankPage ? "" : "disabled"}>← Câu trước</button><button class="st-button" data-bank-next ${data.questions.length === 20 ? "" : "disabled"}>Câu sau →</button></div>
         <h4>Phiên bản đề</h4>${data.definitions.map((v) => `<div class="assignment-row"><span>${text(v.title)} · v${v.version} · ${v.status === "draft" ? "Nháp" : "Đã xuất bản"}</span><button class="st-button" data-definition-preview="${esc(v.id)}">Xem trước</button></div>`).join("")}
         <button class="st-button" data-enable>${data.settings?.enabled ? "Tạm dừng nhận lượt mới" : "Mở nhận bài nộp"}</button><div data-definition-output></div>`;
       content.querySelector("[data-lesson]").onchange = (e) => {
+        if (
+          selection.questions.length &&
+          !window.confirm(
+            "Đổi bài học sẽ bỏ danh sách câu đang chọn chưa lưu. Tiếp tục?",
+          )
+        ) {
+          e.target.value = lesson;
+          return;
+        }
         bankPage = 0;
         bank(e.target.value);
       };
@@ -280,16 +297,20 @@ export function mountAssignmentAdmin(root, profile) {
         bank(lesson);
       };
       async function submitForm(form, action, payload) {
-        const button = form.querySelector(
-          "button[type=submit],button:not([type])",
-        );
-        if (button) button.disabled = true;
+        const controls = [
+          ...content.querySelectorAll("input,textarea,select,button"),
+        ].map((node) => ({ node, disabled: node.disabled }));
+        for (const { node } of controls) node.disabled = true;
         try {
           await command(action, payload);
+          if (action === "definition_create")
+            selection = new AssignmentSelection(lesson);
           if (active && generation === request) bank(lesson);
         } catch (error) {
           report(error);
-          if (button) button.disabled = false;
+        } finally {
+          for (const { node, disabled } of controls)
+            if (node.isConnected) node.disabled = disabled;
         }
       }
       content.querySelector("[data-rubric]").onsubmit = (e) => {
@@ -310,73 +331,99 @@ export function mountAssignmentAdmin(root, profile) {
       };
       content.querySelector("[data-question]").onsubmit = (e) => {
         e.preventDefault();
-        const f = Object.fromEntries(new FormData(e.currentTarget)),
-          lines = (s) =>
-            s
-              .split("\n")
-              .map((x) => x.trim())
-              .filter(Boolean);
-        const options =
-          f.kind === "mcq"
-            ? lines(f.options).map((s) => {
-                const [id, ...label] = s.split("|");
-                return { id: id.trim(), text: label.join("|").trim() };
-              })
-            : lines(f.options);
-        const key =
-          f.kind === "mcq"
-            ? { value: f.answer.trim() }
-            : f.kind === "true_false"
-              ? {
-                  value:
-                    f.answer.trim() === "true"
-                      ? true
-                      : f.answer.trim() === "false"
-                        ? false
-                        : null,
-                }
-              : ["text_fill", "reorder"].includes(f.kind)
-                ? { accepted: lines(f.answer) }
-                : f.kind === "multi_fill"
-                  ? {
-                      values: lines(f.answer).map((s) =>
-                        s.split("|").map((x) => x.trim()),
-                      ),
-                    }
-                  : f.kind === "matching"
-                    ? {
-                        pairs: Object.fromEntries(
-                          lines(f.answer).map((s) =>
-                            s.split("=").map((x) => x.trim()),
-                          ),
-                        ),
-                      }
-                    : null;
-        submitForm(e.currentTarget, "question_create", {
-          lesson_id: lesson,
-          question_key: f.question_key,
-          kind: f.kind,
-          prompt: f.prompt,
-          options,
-          answer_key: key,
-          explanation: f.explanation,
-          tip: f.tip,
-          ...(f.rubric_version_id
-            ? { rubric_version_id: f.rubric_version_id }
-            : {}),
-        });
+        try {
+          const f = Object.fromEntries(new FormData(e.currentTarget));
+          submitForm(
+            e.currentTarget,
+            "question_create",
+            questionPayload(f, lesson),
+          );
+        } catch (error) {
+          report(error);
+        }
       };
+      const definitionForm = content.querySelector("[data-definition]");
+      definitionForm.querySelector('[name="title"]').oninput = (e) => {
+        selection.title = e.target.value;
+      };
+      definitionForm.querySelector('[name="time_limit_minutes"]').oninput = (
+        e,
+      ) => {
+        selection.minutes = e.target.value;
+      };
+      function renderSelection() {
+        for (const input of definitionForm.querySelectorAll(
+          '[name="question"]',
+        ))
+          input.checked = selection.questions.some((q) => q.id === input.value);
+        const selected = content.querySelector("[data-selection]");
+        selected.innerHTML = `<h4>Thứ tự đề · ${selection.questions.length} câu</h4>${selection.questions.map((q, i) => `<div class="assignment-row"><span>${i + 1}. ${text(q.question_key)} · v${q.version}<br>${text(q.prompt)}</span><div class="account-actions"><button class="st-button" type="button" data-move-up="${esc(q.id)}" aria-label="Đưa câu ${i + 1} lên" ${i ? "" : "disabled"}>↑</button><button class="st-button" type="button" data-move-down="${esc(q.id)}" aria-label="Đưa câu ${i + 1} xuống" ${i + 1 < selection.questions.length ? "" : "disabled"}>↓</button><button class="st-button" type="button" data-remove-question="${esc(q.id)}">Bỏ khỏi đề</button></div></div>`).join("") || "<p>Chưa chọn câu. Danh sách này chưa được lưu trên máy chủ.</p>"}`;
+        for (const button of selected.querySelectorAll("button"))
+          button.onclick = () => {
+            if (button.dataset.removeQuestion)
+              selection.remove(button.dataset.removeQuestion);
+            else
+              selection.move(
+                button.dataset.moveUp || button.dataset.moveDown,
+                button.dataset.moveUp ? -1 : 1,
+              );
+            renderSelection();
+          };
+      }
+      for (const input of definitionForm.querySelectorAll('[name="question"]'))
+        input.onchange = () => {
+          try {
+            if (input.checked)
+              selection.choose(
+                data.questions.find((q) => q.id === input.value),
+              );
+            else selection.remove(input.value);
+            renderSelection();
+          } catch (error) {
+            input.checked = false;
+            report(error);
+          }
+        };
+      renderSelection();
+      for (const button of content.querySelectorAll(
+        "[data-edit-question],[data-copy-question]",
+      ))
+        button.onclick = () => {
+          const q = data.questions.find(
+            (q) =>
+              q.id ===
+              (button.dataset.editQuestion || button.dataset.copyQuestion),
+          );
+          const values = questionForm(q, !!button.dataset.copyQuestion),
+            form = content.querySelector("[data-question]");
+          const rubricSelect = form.elements.namedItem("rubric_version_id");
+          if (
+            values.rubric_version_id &&
+            ![...rubricSelect.options].some(
+              (o) => o.value === values.rubric_version_id,
+            )
+          ) {
+            const option = document.createElement("option");
+            option.value = values.rubric_version_id;
+            option.textContent = "Rubric của phiên bản gốc";
+            rubricSelect.add(option);
+          }
+          for (const [name, value] of Object.entries(values))
+            form.elements.namedItem(name).value = value;
+          form.closest("details").open = true;
+          form.elements.namedItem("question_key").focus();
+          root.querySelector("[data-status]").textContent = button.dataset
+            .copyQuestion
+            ? "Bản sao đang ở form. Đặt mã câu mới trước khi lưu."
+            : `Đang sửa từ v${q.version}. Lưu sẽ tạo phiên bản mới; bài đã nộp và điểm đã công bố giữ nguyên.`;
+        };
       content.querySelector("[data-definition]").onsubmit = (e) => {
         e.preventDefault();
-        const f = new FormData(e.currentTarget);
-        submitForm(e.currentTarget, "definition_create", {
-          lesson_id: lesson,
-          title: f.get("title"),
-          time_limit_minutes: f.get("time_limit_minutes")
-            ? Number(f.get("time_limit_minutes"))
-            : null,
-          question_version_ids: f.getAll("question"),
-        });
+        try {
+          submitForm(e.currentTarget, "definition_create", selection.payload());
+        } catch (error) {
+          report(error);
+        }
       };
       for (const b of content.querySelectorAll("[data-definition-preview]"))
         b.onclick = async () => {
@@ -386,7 +433,23 @@ export function mountAssignmentAdmin(root, profile) {
             });
             if (!active || generation !== request) return;
             const box = content.querySelector("[data-definition-output]");
-            box.innerHTML = `<section class="account-notice"><h4>${text(v.title)} · v${v.version}</h4>${v.questions.map((q, i) => `<div class="assignment-question"><p>${i + 1}. ${text(q.prompt)}<br><small>${text(q.kind)} · v${q.version} · 10 điểm</small></p><p>Lựa chọn: ${text(JSON.stringify(q.options))}</p><p>Đáp án (chỉ Admin): ${text(JSON.stringify(q.answer_key))}</p><p>Giải thích: ${text(q.explanation)}<br>Gợi ý: ${text(q.tip)}</p></div>`).join("")}${v.status === "draft" ? '<button class="st-button primary" data-publish-definition>Xuất bản đề này</button>' : ""}</section>`;
+            box.innerHTML = `<section class="account-notice"><h4>${text(v.title)} · v${v.version}</h4>${v.questions.map((q, i) => `<div class="assignment-question"><p>${i + 1}. ${text(q.prompt)}<br><small>${text(q.kind)} · v${q.version} · 10 điểm</small></p><p>Lựa chọn: ${text(JSON.stringify(q.options))}</p><p>Đáp án (chỉ Admin): ${text(JSON.stringify(q.answer_key))}</p><p>Giải thích: ${text(q.explanation)}<br>Gợi ý: ${text(q.tip)}</p></div>`).join("")}${v.status === "draft" ? '<button class="st-button primary" data-publish-definition>Xuất bản đề này</button>' : ""}<button class="st-button" data-reuse-definition>Tạo nháp từ phiên bản này</button><p>Phục hồi nội dung bằng đề mới: lưu nháp, xem trước rồi xuất bản. Lịch sử cũ giữ nguyên.</p></section>`;
+            box.querySelector("[data-reuse-definition]").onclick = () => {
+              if (
+                selection.questions.length &&
+                !window.confirm(
+                  "Thay danh sách câu chưa lưu bằng phiên bản đề này?",
+                )
+              )
+                return;
+              try {
+                selection = selection.reuse(v);
+                bankPage = 0;
+                bank(lesson);
+              } catch (error) {
+                report(error);
+              }
+            };
             box
               .querySelector("[data-publish-definition]")
               ?.addEventListener("click", async () => {

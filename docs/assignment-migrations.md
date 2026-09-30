@@ -86,9 +86,29 @@ Trước/ sau release phải chạy lại checks khi code thay đổi; productio
 
 CP1 foundation có UI tạo rubric/câu/version đề, preview/publish/enable và chấm/regrade. Editor đầy đủ (duplicate/archive/order/rollback UX/distractor validation/import có provenance), speaking/MP3/Drive/cleanup (CP2), course lifecycle/eligibility/graduation và certificate/public verify (CP3) còn tiếp tục. Bài có speaking bị chặn bật nộp tới khi CP2 sẵn; không có upload giả, AI chấm, public audio hay public certificate endpoint trong gói này.
 
+Editor continuation: sửa/nhân bản câu bằng phiên bản mới, chọn xuyên trang (tối đa 200), thay version cùng mã tại chỗ, tăng/giảm thứ tự, bỏ câu khỏi đề nháp, phục hồi đề cũ bằng nháp mới và validation lựa chọn trùng đã triển khai. Dùng đúng RPC cũ, không có migration mới hoặc thay đổi RLS. Lưu khóa controls trong lúc gửi để tránh mất sửa mới. Lịch sử/version/results cũ không bị viết lại; phục hồi không tự publish hoặc regrade. 4 tests model/parser và browser editor xuyên hai trang/ordered payload/edit/copy/restore bổ sung; tổng 76 tests. Archive và import có provenance vẫn còn, không gọi editor phase hoàn tất chỉ từ những chức năng này.
+
 ## Gate cập nhật theo yêu cầu người dùng
 
 Gate sau backup đã được người dùng xác nhận trực tiếp: cho phép chạy cả ba migration theo thứ tự và minimum production smoke, tiếp tục phase tiếp theo khi PASS. Đã kiểm tra chỉ có project production, branches rỗng; người dùng không yêu cầu tạo staging mới. Không reset/drop/Auth mutation. Deploy/verify compatible loader trước khi migration3 đóng quyền raw content; kiểm từng migration và smoke trước feature expansion. Thử production bằng fixture tổng hợp trong transaction rollback, không dùng học viên thật làm dữ liệu bài nộp thử.
+
+## Production rollout verified — 30/09/2026
+
+PR #22 đã merge thành `72f5520d81808bc965a330e8d0f8b86d073adf3c`. CI và deployment thành công; loader/service/student/Admin bytes khớp trên cả Vercel và Pages trước DDL (12:43:35 UTC).
+
+| Local filename version | Production registry version | Name |
+|---|---|---|
+| 20260930074239 | 20260930124349 | official_assignment_model |
+| 20260930074240 | 20260930124401 | official_assignment_commands |
+| 20260930074242 | 20260930124415 | official_assignment_legacy_boundary |
+
+MCP đăng ký timestamp khi áp dụng; nội dung đúng ba file đã duyệt. Không repair/đổi lịch sử để ép timestamp local bằng production. Cả ba thành công theo thứ tự. 8 bảng backup giữ nguyên số dòng và hash toàn bộ cột cũ, course chỉ thêm program HSK. Official entities/activation=0 sau smoke; không còn fixture. Evidence chỉ chứa counts/hashes ở `.cache/assignment-production-verification.json`, không commit backup hay dữ liệu học viên.
+
+Smoke SQL `supabase/operations/assignment_production_smoke.sql` đã rehearsal trên bản restore và chạy production thành công, toàn bộ fixture/audit rollback. Kiểm thực tế role anon/authenticated, identity approved student/Admin, owner isolation, private key/draft result, student grade/publish/question/DML denial, fixed search_path/helper grants, draft/save/submit/version snapshot, objective/manual rubric, preview/publish/regrade/audit, self_reported exclusion, legacy getter và source forgery. Isolation dùng một identity khác không tạo Auth account; đây là DB role/context test, không phải hai session JWT đăng nhập thật.
+
+REST gateway anonymous trả 401/42501 cho assignment RPC, question keys, grades và raw content; Auth settings 200. Browser production với phiên Admin thật xác nhận account dashboard, Admin, Google status, assignment bank qua REST và bài HSK1 cũ qua getter. Student submit production được chứng minh qua public SQL RPC cùng DB role; UI flow student dùng isolated browser mock. Không thay đổi Auth và không ghi bài thử của học viên thật.
+
+Security advisor không có finding mới của assignment. Hai finding có sẵn vẫn giữ nguyên: source cache RLS không policy (INFO), leaked-password protection disabled (WARN). Không mở raw key để giải quyết warning. Phần editor tiếp tục sau smoke PASS; vẫn chưa nhập/activate bài thật, CP2/CP3 và background deadline sweeper còn riêng.
 
 | Bảng backup | Records |
 |---|---:|
