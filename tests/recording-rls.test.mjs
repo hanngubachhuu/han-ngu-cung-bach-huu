@@ -42,7 +42,7 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
       files = (await fs.readdir(dir)).filter((f) => f.endsWith(".sql")).sort();
     for (const file of files) {
       if (
-        !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import/.test(
+        !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary/.test(
           file,
         )
       )
@@ -164,6 +164,24 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
     );
     await rec("confirm", { recording_id: recording.id });
     await rec("confirm", { recording_id: recording.id });
+    await t.test(
+      "confirmed draft recording does not start archival or expiry",
+      async () => {
+        await as(null, "service_role");
+        assert.equal(await worker("claim"), null);
+        await db.exec("reset role");
+        assert.equal(
+          (
+            await rows(
+              "select expires_at from account_internal.speaking_recordings where id=$1",
+              [recording.id],
+            )
+          )[0].expires_at,
+          null,
+        );
+        await as(student);
+      },
+    );
     await t.test(
       "no overwrite/delete or cross-submission answer binding",
       async () => {
@@ -344,6 +362,18 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
     await as(null, "service_role");
     assert.equal(await worker("claim"), null);
     await db.exec("reset role");
+    await t.test(
+      "superseded recording is not archived after the attempt is submitted",
+      async () => {
+        await rows(
+          "insert into account_internal.speaking_recordings(attempt_id,question_version_id,owner_id,request_id,raw_sha256,raw_size,raw_mime,upload_deadline,raw_uploaded_at) values($1,$2,$3,$4,$5,1000,'audio/webm',clock_timestamp()+interval '1 day',clock_timestamp())",
+          [attempt.attempt_id, q.id, student, rid(501), "e".repeat(64)],
+        );
+        await as(null, "service_role");
+        assert.equal(await worker("claim"), null);
+        await db.exec("reset role");
+      },
+    );
     await t.test(
       "retention dates immutable even for direct privileged updates",
       async () => {
@@ -627,6 +657,75 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
             0,
           );
         }
+      },
+    );
+    await t.test(
+      "expired or cleaned reference cannot be saved or submitted from a draft",
+      async () => {
+        await as(admin);
+        const speakingDefinition = await base("definition_create", {
+          lesson_id: "speaking_test",
+          title: "Synthetic expired audio submission",
+          question_version_ids: [q.id],
+        });
+        await base("definition_preview", { version_id: speakingDefinition.id });
+        await base("definition_publish", { version_id: speakingDefinition.id });
+        await as(student);
+        const draft = await base("start", {
+          lesson_id: "speaking_test",
+          request_id: rid(502),
+        });
+        for (const cleaned of [false, true]) {
+          const expired = rid(cleaned ? 504 : 503);
+          await db.exec("reset role");
+          await rows(
+            "insert into account_internal.speaking_recordings(id,attempt_id,question_version_id,owner_id,request_id,raw_sha256,raw_size,raw_mime,created_at,upload_deadline,raw_uploaded_at,conversion_status,mp3_sha256,mp3_size,duration_seconds,drive_status,drive_file_id,uploaded_at,expires_at,cleanup_status,cleaned_at) values($1,$2,$3,$4,$5,$6,1000,'audio/webm',clock_timestamp()-interval '9 days',clock_timestamp()-interval '8 days',clock_timestamp()-interval '9 days','completed',$7,100,1,'completed',$8,clock_timestamp()-interval '8 days',clock_timestamp()-interval '1 day',$9,$10)",
+            [
+              expired,
+              draft.attempt_id,
+              q.id,
+              student,
+              expired,
+              "c".repeat(64),
+              "d".repeat(64),
+              "synthetic_expired_" + cleaned,
+              cleaned ? "completed" : "pending",
+              cleaned ? new Date() : null,
+            ],
+          );
+          await as(student);
+          await assert.rejects(
+            base("save", {
+              attempt_id: draft.attempt_id,
+              revision: draft.revision,
+              answers: { [q.id]: { recording_id: expired } },
+            }),
+            /RECORDING_EXPIRED/,
+          );
+          await db.exec("reset role");
+          await rows(
+            "update public.submission_answers set answer=$1 where attempt_id=$2 and question_version_id=$3",
+            [{ recording_id: expired }, draft.attempt_id, q.id],
+          );
+          await as(student);
+          await assert.rejects(
+            base("submit", {
+              attempt_id: draft.attempt_id,
+              revision: draft.revision,
+            }),
+            /RECORDING_EXPIRED/,
+          );
+        }
+        await db.exec("reset role");
+        assert.equal(
+          (
+            await rows(
+              "select state from public.submission_details where attempt_id=$1",
+              [draft.attempt_id],
+            )
+          )[0].state,
+          "draft",
+        );
       },
     );
   } finally {

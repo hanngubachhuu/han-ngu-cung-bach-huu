@@ -16,7 +16,7 @@ Raw confirmation checks the Storage object identity/size/MIME and live reservati
 
 `uploaded_at` means **successful verified Drive upload**. Only then `expires_at = uploaded_at + interval '7 days'`. Conversion/upload retries never renew this interval. Drive failure leaves raw and MP3 in private Storage with no expiry. Access is denied at expiry; physical cleanup runs on the next successful scan. Drive, MP3 and raw deletion are identity-checked and lease-fenced; 404 means already absent, not a permission error. Metadata, submission, grades, feedback, publications and audit are retained. An unconfirmed upload or permanently failing archive requires operational review; no automatic deletion of the only copy.
 
-The worker runs one bounded leased job per request. Service-role-only RPC and a separate constant-time worker secret protect the background endpoint. There is no caller-supplied SQL/path/URL, no long-running seven-day function, and no client delete/update permission.
+The worker runs one bounded leased job per request. Archival claims require a submitted attempt and the exact recording pinned in its answer; drafts and superseded recordings never start the seven-day archive interval. Save and explicit finalization reject expired/cleaned recordings. Deadline finalization keeps the existing timed-out history rule. Service-role-only RPC and a separate constant-time worker secret protect the background endpoint. There is no caller-supplied SQL/path/URL, no long-running seven-day function, and no client delete/update permission.
 
 ## Credential checkpoint — user action required before real Drive testing
 
