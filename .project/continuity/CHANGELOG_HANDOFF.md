@@ -53,3 +53,7 @@ Mỗi phiên quan trọng để lại một entry ngắn.
 
 ### Verification level
 - V1 đối với repository structure; reconciliation runtime chưa thực hiện.
+
+## 2026-09-30 — confirmation incident recovery
+
+Prepared PR #21 with inline email confirmation recovery and regression coverage; Vietnamese confirmation template saved/reloaded on Supabase. Unit/DB tests 51 pass, lint/build/validate and account browser flow pass. Actual incident login and production owner Google connection verified. Full reconciliation still pending; see latest WORK_STATE checkpoint. No auth/RLS relaxation or lesson data changes.

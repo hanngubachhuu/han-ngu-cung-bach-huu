@@ -75,3 +75,19 @@ A new session should continue by:
 - Next action: execute RECONCILIATION_PLAN.md
 - Critical files: ARCHITECTURE.md, CODE_RULES.md, SECURITY_ARCHITECTURE.md, package.json, data/lesson-manifest.js, data/lesson-registry.js, workflow files, supabase/
 - Critical constraint: reconcile first; remediate later; never invent schema/access rules
+
+## Checkpoint 2026-09-30 — incident email confirmation
+
+This checkpoint supersedes only the incident/runtime portions of the bootstrap above. Full repository reconciliation remains REQUIRED before unrelated or broad application changes. The small auth fix was already in progress when the newly installed continuity files were discovered on origin/main; no lesson/schema/RLS changes were made in this checkpoint.
+
+- Current task: finish release PR #21, then verify deployed account modules against the merged Git commit on Vercel and Pages.
+- Source fix: 13631fb1b9d7de996d3b869fce5a45414102e923; branch fix/email-confirmation-recovery. Includes inline confirmation guidance, persistent 60-second resend cooldown, safe expired callback messages, automated tests, and Vietnamese email template.
+- VERIFIED V3: Supabase confirmation template subject/body saved and reloaded on 2026-09-30. Exact subject: Xác nhận tài khoản | Hán Ngữ Cùng Bách Hữu. ConfirmationURL provider placeholder preserved. Local proof: test-results/confirmation-template-saved.png (ignored).
+- VERIFIED V3: incident account email confirmed; last_sign_in_at 2026-09-28 13:26:45Z. Do not repeat the earlier user-approved manual confirmation or disable confirmation globally. No private student identifiers stored here.
+- VERIFIED V4 before PR21: production admin UI confirms ADMIN and Google connection to the configured owner. This proves current connection, not every sync scenario or refresh-token durability.
+- VERIFIED V2: 51 tests pass; lint, build, validate:study and scripts/check-account-browser.mjs pass. Browser tests are isolated mocks, send no real emails. Mobile confirmation panel inspected at 390px with no horizontal overflow.
+- Mail delivery: earlier provider/Gmail Sent evidence showed dispatch, not Inbox receipt. Root cause of missing recipient mail remains UNKNOWN; Vietnamese copy and recovery guidance reduce friction, not a delivery guarantee.
+- Known failed test attempts: mocked auth error omitted error_code; fixed mock to match provider. Navigating only hash did not reload page; test now navigates via about:blank to emulate incoming email navigation. No application workaround added for these test defects.
+- Tool environment: bundled Git requires GIT_EXEC_PATH pointing to dependencies/native/git/mingw64/bin for HTTPS helper; push requires network escalation. Local browser tests use BROWSER_EXECUTABLE pointing to installed Chrome because the Playwright browser binary is absent.
+- Protected: existing lessons, canonical data, grants, role rules, Google field mapping, SMTP credentials, private build exclusions.
+- Exact next action: inspect PR21 CI; merge only passing source; verify live hashes and Google admin status after deployment. Then finish RECONCILIATION_PLAN.md as a read-only audit and classify remaining schema/visibility/documentation uncertainties. Do not call the entire reconciliation complete from these scoped checks.
