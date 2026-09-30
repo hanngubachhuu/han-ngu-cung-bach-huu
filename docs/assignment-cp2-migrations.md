@@ -1,9 +1,11 @@
 # CP2 + document import migration delta / rollback
 
-These are **new additive, unapplied source migrations**. Previously applied CP1/authoring files are immutable. No db push/reset/repair or historical data drop. Read the exact SQL files for every statement:
+These **new additive migrations are now applied**. Their source files, as well as previously applied CP1/authoring files, are immutable. No db push/reset/repair or historical data drop. Read the exact SQL files for every statement:
 
 1. `20260930151008_speaking_private_pipeline.sql`
 2. `20260930173505_document_exam_import.sql`
+
+Production registry: `20260930194254_speaking_private_pipeline` then `20260930194302_document_exam_import`, applied after compatible production API/native health verification on 2026-10-01 Bangkok. Supabase assigns the hosted timestamp; do not repair history to match source filenames. Future fixes require a new migration.
 
 ## Schema delta
 
@@ -70,4 +72,16 @@ Deploy compatible disabled loader/API -> verify hosted parser/Admin native runti
 
 Rollback: gate off new Speaking starts, suspend new archival jobs, preserve readonly playback/history and required expiry cleanup. Disable document-import UI if its RPC has a defect. Restore old function definitions from the local supplement only if no new data depends on context/recording behavior; otherwise forward-fix through a new additive migration. Never drop/reset/delete existing learners/attempts/versions/grades/audit. No automatic media deletion or public grants to recover a failed archive. Production synthetic fixtures live only inside a rolled-back transaction; no auth.users mutation or real student submissions as fixtures.
 
-Local verification: full133 tests, lint/build/validate, synthetic real MP3 and private Drive mock, PostgreSQL A/B/anon/Admin/worker, retention/retry/race/history, PDF/DOCX/extraction/idempotence/context, browser390/768/1366. CI/hosted proof and Drive credential-dependent tests must be reported separately when executed. No production PASS inferred from local tests.
+Local verification: full133 tests, lint/build/validate, synthetic real MP3 and private Drive mock, PostgreSQL A/B/anon/Admin/worker, retention/retry/race/history, PDF/DOCX/extraction/idempotence/context, browser390/768/1366. Exact CI source698ccb5: Actions36764537430/36764537552 SUCCESS, Linux native runtime179,988,843 bytes and real MP3 PASS.
+
+## Hosted verification and remaining gate
+
+PR25 merged311c7f06b7c361f4f65bcecdc12e499495131059. Production Vercel68Fw1GnKxYeLJE2w8bHNuoEu5yQX READY. Real approved Admin native health converted/probed/decoded synthetic MP3 in232ms **before** migration. Actual authenticated PDF10 and DOCX10 parser calls returned ten editable questions, preserved Hanzi/pinyin/Vietnamese and the supplied keys. No preview was committed as a real exam.
+
+The rollback-only production SQL smoke passed anonymous RPC denial, two nonadmin authenticated contexts, worker/private-table/authoring/grade/publish denial, Admin atomic document import/replay conflict/preview/publish, immutable shared contexts and derived question versions, failure atomicity, private bucket and disabled gate. Both nonadmin UUIDs intentionally have no profiles: this proves the nonadmin permission boundary, **not** full approved/enrolled student A/B owner isolation or real Storage HTTP upload/playback. Those remain in the credential-dependent synthetic E2E gate. No auth.users mutation or real student fixture.
+
+After rollback: courses2, lessons24, profiles2, enrollments4, access26, attempts3, assets36, audit12; official questions/definitions/submissions/imports/contexts/recordings/events and synthetic courses/lessons0. All seven new private tables have RLS enabled and no client policies/privileges. Hosted Storage has only the original lesson-private SELECT plus the two intended Speaking INSERT/SELECT policies; all new definers have empty search_path and explicit role/identity checks. Supabase default privileges also grant service_role EXECUTE on public INVOKER wrappers; nonworker internal definers do not grant service_role EXECUTE. This does not create a client bypass.
+
+Seven affected client modules/CSS match the exact Git source on Vercel and Pages. Backup/server/secret paths404 on both hosts; anonymous recording health and exam-parser POST401. Security advisor adds only intentional private no-policy INFO; the pre-existing Auth leaked-password-protection warning remains outside this rollout, with no Auth change.
+
+Evidence is local and ignored: `.cache/cp2-production-verification.json`, `.cache/cp2-release-verification.json`, `.cache/cp2-production-smoke.sql`. Speaking gate remains false. Real owner JWT isolation, Storage -> MP3 -> Drive -> cleanup/history smoke and scheduler activation are **pending**, not production PASS. No Drive credential or scheduler/Vault secret was configured.
