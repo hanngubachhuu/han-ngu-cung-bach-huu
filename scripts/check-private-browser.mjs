@@ -72,8 +72,14 @@ await context.route(
       attempts++;
       return fulfill({ version: attempts });
     }
-    if (p.endsWith("/lesson_content")) {
-      const id = u.searchParams.get("id")?.replace(/^eq\./, "");
+    if (
+      p.endsWith("/lesson_content") ||
+      p.endsWith("/get_private_lesson_content")
+    ) {
+      const rpc = p.endsWith("/get_private_lesson_content");
+      const id = rpc
+        ? route.request().postDataJSON().p_lesson_id
+        : u.searchParams.get("id")?.replace(/^eq\./, "");
       const row = payloads.find((x) => x.id === id);
       // Production HSK 1 rows are flat, while the authoring snapshot is wrapped.
       const liveShape = row?.id.startsWith("hsk1_")
@@ -85,7 +91,15 @@ await context.route(
             },
           }
         : row;
-      return fulfill(deny ? null : liveShape || null);
+      return fulfill(
+        rpc
+          ? deny || !liveShape
+            ? []
+            : [liveShape]
+          : deny
+            ? null
+            : liveShape || null,
+      );
     }
     if (p.includes("/storage/"))
       return route.fulfill({

@@ -76,3 +76,18 @@ Các điểm sau chỉ là tín hiệu quan sát, chưa phải kết luận:
 - exact schema version transition;
 - exact current working lesson baseline.
 
+
+## 2026-09-30 — Verified reconciliation additions
+
+These findings supersede conflicting bootstrap observations; see RECONCILIATION_REPORT.md for evidence/limits.
+
+- Auth/profile/ADMIN and enrollment/student_lesson_access are existing shared infrastructure; no duplicate role/auth/enrollment system is needed.
+- learning_attempts is the existing history owner. Current source is self_reported, populated by browser points via account_save_attempt/INSERT; it is not official grading or certificate eligibility.
+- Source lesson visibility is not the full publication boundary. scripts/private-publication.mjs protects lessonNo > 3 and rewrites/removes private payloads in dist.
+- Registry helper version and lesson payload versions differ. Native flat and wrapped DB content plus HSK2 client_view need adapter compatibility, not bulk rewrites.
+- Google Docs is a server-side three-field profile editor; a separate recording Drive adapter/conversion/cleanup has not been implemented.
+- User scope for this upgrade: automatic grading only student-account submissions within HSK/HSKK pathway assignments. Manual grading for open speaking/writing/translation. No AI grading or extension into unrelated practice tools.
+
+- CP1 approved: history envelope plus linked private versions/submission/grading entities; self_reported cannot determine completion/graduation/certificates. Immutable historical version/snapshot, published-only learner scores, audited explicit regrade.
+- Rollout ordering: compatible RPC loader on Vercel+Pages precedes raw content GRANT closure. protected_at remains set even when accepting new attempts is disabled. New private keys stay out of public Git.
+- User's post-backup instruction requires a new explicit migration checkpoint confirmation; local foundation and backup are ready but production schema/code have not changed. Exact plan and evidence: docs/assignment-migrations.md.

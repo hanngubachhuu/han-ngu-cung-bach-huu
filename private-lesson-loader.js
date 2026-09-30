@@ -54,18 +54,25 @@ async function resolvePrivateAssets(value,supabase){
   return value;
 }
 
-async function loadLesson(supabase){
-  const {data,error}=await supabase
-    .from('lesson_content')
-    .select('id,content')
-    .eq('id',LESSON_ID)
-    .eq('visibility','student')
-    .maybeSingle();
+async function loadLesson(supabase,userId){
+  const {data:rows,error}=await supabase.rpc('get_private_lesson_content',{p_lesson_id:LESSON_ID});
+  const data=rows?.[0];
 
   if(error) throw error;
   if(!data) throw new Error('Tài khoản này chưa được cấp quyền cho bài học.');
   if(!data.id||!data.content) throw new Error('Dữ liệu bài học riêng không hợp lệ.');
+  if(data.content.officialAssignment){
+    card.querySelector('.private-lesson-title').textContent='Bài nộp HSK / HSKK';
+    card.querySelector('.private-lesson-desc').textContent='Làm bài bằng tài khoản, lưu nháp và xem kết quả sau khi Bách Hữu công bố.';
+    const link=card.querySelector('#privateAccountLink');
+    link.href='tai-khoan.html?assignment='+encodeURIComponent(LESSON_ID)+'#officialAssignments';
+    link.textContent='Mở bài nộp trên tài khoản →';
+    setStatus('Bài này sử dụng quy trình nộp bài chính thức.');
+    return;
+  }
 
+  const {initAttempts}=await import('./study/attempt-sync.mjs');
+  window.HNH_ATTEMPTS=await initAttempts(userId,LESSON_ID);
   const content=await resolvePrivateAssets(data.content,supabase);
   if(document.body.dataset.lessonEngine==='legacy') {
     if(!content.client_view)throw new Error('Bài học đang được chuyển sang khu vực riêng. Vui lòng thử lại sau.');
@@ -112,12 +119,10 @@ try{
  if(profile.status!=='APPROVED'){setStatus('Tài khoản chưa có quyền học đang hoạt động. Kiểm tra trạng thái ở trang tài khoản.');return;}
  const supabase=await getClient();
  window.HNH_ACCOUNT_SCOPE='::account:'+session.user.id;
- const {initAttempts}=await import('./study/attempt-sync.mjs');
- window.HNH_ATTEMPTS=await initAttempts(session.user.id,LESSON_ID);
  let accessCheck;
  const revoke=()=>{clearInterval(accessCheck);location.replace('tai-khoan.html?next='+encodeURIComponent(location.pathname.split('/').pop()));};
  window.addEventListener('study:auth',e=>{if(e.detail.userId!==session.user.id)revoke();});
- await loadLesson(supabase);
+ await loadLesson(supabase,session.user.id);
  // Recheck access while open; the database remains the authority on every request.
  accessCheck=setInterval(async()=>{
   try{const {data,error}=await supabase.from('lesson_content').select('id').eq('id',LESSON_ID).maybeSingle();if(!error&&!data)revoke();}catch{}

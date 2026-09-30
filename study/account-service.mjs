@@ -55,7 +55,7 @@ export async function learnerData() {
   const results = await Promise.all([
     c
       .from("enrollments")
-      .select("course_id,active,access_mode,courses(title)")
+      .select("course_id,active,access_mode,courses(*)")
       .eq("user_id", session.user.id)
       .eq("active", true),
     c
@@ -67,6 +67,7 @@ export async function learnerData() {
       .from("learning_attempts")
       .select("id,lesson_id,score,max_score,submitted_at,source")
       .eq("user_id", session.user.id)
+      .eq("source", "self_reported")
       .order("submitted_at", { ascending: false })
       .limit(30),
   ]);
@@ -116,6 +117,7 @@ export async function adminStudent(userId) {
       .from("learning_attempts")
       .select("lesson_id,score,max_score,submitted_at,source")
       .eq("user_id", userId)
+      .eq("source", "self_reported")
       .order("submitted_at", { ascending: false })
       .limit(30),
   ]);
