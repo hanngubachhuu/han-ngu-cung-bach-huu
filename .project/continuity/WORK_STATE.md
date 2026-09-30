@@ -133,6 +133,14 @@ User explicitly approved CP1 implementation with three binding constraints: lear
 - Initial full-table export was rejected by automatic review for absent payload/destination permission. User explicitly approved exact destination/data; subsequent reviewed export succeeded. JSON parser initially matched wrapper prose; required newline delimiter fixed it; no malformed backup written and no production modifications. Shared INSERT trigger needed nested table-specific IF to avoid nonexistent record field resolution; fixed/tested. All failed approaches recorded, not open runtime defects.
 - Exact next action: present docs/assignment-migrations.md plus backup counts/schema/RLS/backfill/rollback, then STOP awaiting explicit checkpoint confirmation. Do not apply migrations or deploy/activate a pilot before that reply. After confirmation recheck fresh preflight+backup validity, ship compatible RPC loader to BOTH hosts first, apply only the 3 new migrations sequentially and verify postflight/advisors; preserve history and keep activation opt-in. Do not blindly push/reset/repair the 33-vs-14 migration history. CP2/CP3 remain separate.
 
+## Editor release VERIFIED 30/09/2026 20:14 Bangkok — current checkpoint
+
+- PR #23 merged: fcc22f24ec86292cca2282aa032c2d422bb35600. CI 36719544169 SUCCESS; deploy 36719986636 SUCCESS; Pages 36720096488 SUCCESS.
+- V4: loader/account service/student/Admin/editor bytes match source 58e46af3055db3136432bdbf07d8d748d08f352b on Vercel and Pages. Live signed-in Admin bank renders the new cross-page selection/order section through real API. No questions imported or lessons activated.
+- Source SQL checksums match actual statements in production migration registry for all three entries. Original data hashes unchanged and fixtures gone. Evidence remains local ignored, no backup/PII committed.
+- Editor milestone released: version edit/copy, cross-page selection/replacement/order, old definition reuse as new draft, ambiguity validation and controls locked during saves. Model/browser/76 tests/lint/build/validate/CI pass. Archive/provenance import is still not implemented; do not call full Phase4 complete.
+- Exact next action: implement private provenance-aware import with dry-run validation and atomic/idempotent Admin write, plus archive metadata preserving used versions; review additive schema delta before applying further DDL. Three production migrations are immutable. Then pilot import only trusted canonical content, preview/publish/enable explicitly. CP2/CP3 and offline deadline sweeper remain pending; no Auth/Drive permission expansion silently.
+
 ## Production rollout VERIFIED 30/09/2026 — supersedes waiting gates
 
 - Foundation PR #22 merged as 72f5520d81808bc965a330e8d0f8b86d073adf3c. CI and both-host release hashes pass before DDL.
