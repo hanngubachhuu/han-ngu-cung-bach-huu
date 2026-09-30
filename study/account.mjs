@@ -3,16 +3,19 @@ import { learnerData, saveProfile } from "./account-service.mjs";
 import { librarySyncPreview, importGuestLibrary } from "./storage.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { authMessage, safeReturnPath } from "./account-core.mjs";
+import { mountAssignments } from "./assignment-student.mjs";
 
 const dashboard = document.querySelector("#accountDashboard");
 let generation = 0,
   currentUser = null,
-  currentProfile;
+  currentProfile,
+  disposeAssignments;
 async function update({ session, profile, error }) {
   document
     .querySelector("#main")
     .classList.toggle("is-signed-in", !!session && !!profile && !error);
   if (!session || !profile || error) {
+    disposeAssignments?.();
     generation++;
     dashboard.hidden = true;
     dashboard.replaceChildren();
@@ -25,6 +28,7 @@ async function update({ session, profile, error }) {
   )
     return;
   const request = ++generation;
+  disposeAssignments?.();
   currentUser = session.user.id;
   currentProfile = profile;
   dashboard.hidden = false;
@@ -32,6 +36,13 @@ async function update({ session, profile, error }) {
  <div class="account-grid"><section class="account-card"><h3>Bài học của bạn</h3><div id="accountLessons" role="status">Đang tải bài học được cấp…</div></section><section class="account-card"><h3>Sổ tay trên tài khoản</h3><p class="st-help">Từ, chữ và bài đọc được lưu trực tiếp lên tài khoản khi có mạng. Mở lại trên thiết bị khác để học tiếp.</p><div id="syncSummary" role="status">Đang kiểm tra…</div><div class="account-actions"><button class="st-button" id="syncRefresh">Kiểm tra đồng bộ</button><a href="tu-dien.html">Mở sổ từ →</a></div><div id="guestImport"></div><p id="syncStatus" class="account-feedback" role="status"></p></section>
  <section class="account-card"><h3>Hồ sơ của bạn</h3><form id="profileForm" class="account-form"><label>Họ và tên<input name="full_name" autocomplete="name" maxlength="120" required value="${esc(profile.full_name)}"></label><label>Số điện thoại <span class="st-help">Không bắt buộc</span><input name="phone" autocomplete="tel" maxlength="30" value="${esc(profile.phone)}"></label><label>Mục tiêu học tập<textarea name="learning_goal" rows="3" maxlength="1000">${esc(profile.learning_goal)}</textarea></label><button class="st-button" type="submit">Lưu hồ sơ</button></form><p id="profileStatus" class="account-feedback" role="status"></p></section>
  <section class="account-card"><h3>Kết quả gần đây</h3><p class="st-help">Kết quả tự luyện do thiết bị gửi lên, có thể gồm phần tự chấm; không phải điểm thi được xác nhận.</p><div id="accountAttempts" role="status">Đang tải…</div></section></div>`;
+  if (profile.role === "STUDENT" && profile.status === "APPROVED") {
+    const assignments = document.createElement("section");
+    assignments.id = "officialAssignments";
+    assignments.className = "account-card account-dashboard";
+    dashboard.querySelector("header").after(assignments);
+    disposeAssignments = mountAssignments(assignments, profile);
+  }
   document.querySelector("#profileForm").onsubmit = async (e) => {
     e.preventDefault();
     const button = e.submitter;
@@ -64,10 +75,25 @@ async function update({ session, profile, error }) {
     const data = await learnerData();
     if (request !== generation) return;
     document.querySelector("#accountLessons").innerHTML = data.lessons.length
-      ? `<ul class="account-list">${data.lessons.map((l) => `<li><a href="${l.level === 1 ? "hsk1_bai" + l.lesson_no : "bai" + l.lesson_no}_index.html"><span><small>HSK ${l.level} · Bài ${l.lesson_no}</small><br><strong>${esc(l.title_vi)}</strong><br><span lang="zh">${esc(l.title_zh)}</span></span><span aria-hidden="true">→</span></a></li>`).join("")}</ul>`
+      ? `<ul class="account-list">${data.lessons
+          .map((l) => {
+            const program =
+              data.enrollments.find((e) => e.course_id === l.course_id)?.courses
+                ?.program || "HSK";
+            const href =
+              program === "HSKK"
+                ? "tai-khoan.html?assignment=" +
+                  encodeURIComponent(l.id) +
+                  "#officialAssignments"
+                : (l.level === 1
+                    ? "hsk1_bai" + l.lesson_no
+                    : "bai" + l.lesson_no) + "_index.html";
+            return `<li><a href="${href}"><span><small>${esc(program)} ${l.level} · Bài ${l.lesson_no}</small><br><strong>${esc(l.title_vi)}</strong><br><span lang="zh">${esc(l.title_zh)}</span></span><span aria-hidden="true">→</span></a></li>`;
+          })
+          .join("")}</ul>`
       : "<p>Chưa có bài học được cấp. Khi tài khoản được duyệt và có quyền học, bài học sẽ xuất hiện tại đây.</p>";
     document.querySelector("#accountAttempts").innerHTML = data.attempts.length
-      ? `<ul class="account-list">${data.attempts.map((a) => `<li><strong>${esc(data.lessons.find((l) => l.id === a.lesson_id)?.title_vi || a.lesson_id)}</strong><br>${a.score}/${a.max_score} · ${new Date(a.submitted_at).toLocaleDateString("vi-VN")} · Tự luyện</li>`).join("")}</ul>`
+      ? `<ul class="account-list">${data.attempts.map((a) => `<li><strong>${esc(data.lessons.find((l) => l.id === a.lesson_id)?.title_vi || a.lesson_id)}</strong><br>${a.score}/${a.max_score} · ${new Date(a.submitted_at).toLocaleDateString("vi-VN")} · ${a.source === "official" ? "Đã công bố" : "Tự luyện"}</li>`).join("")}</ul>`
       : "<p>Chưa có kết quả được đồng bộ lên tài khoản.</p>";
   } catch (error) {
     if (request === generation) {

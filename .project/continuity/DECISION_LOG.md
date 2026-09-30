@@ -29,3 +29,16 @@ Chỉ lưu quyết định có ảnh hưởng về sau.
 - Decision: phiên đầu tiên sau khi cài continuity phải reconciliation trước khi sửa ứng dụng.
 - Why: tránh biến tài liệu lịch sử thành false state.
 - Status: ACTIVE
+
+## DEC-006 — Scope of official automated grading
+- Date: 2026-09-30
+- Authority: direct user refinement during assignment upgrade request.
+- Decision: auto-grade only HSK/HSKK pathway assignments submitted by authenticated student accounts. Existing entitlement remains necessary; URL/title alone never authorizes grading.
+- Open speaking/writing/translation continue manual rubric grading under original specification. No AI grading.
+- Unrelated practice tools are outside the upgrade. Existing self_reported history is preserved, not promoted to official grades.
+
+## DEC-007 — Approved CP1 and post-backup production gate
+- Authority: explicit user CP1 approval, followed by explicit local backup authorization and mandatory stop before migration.
+- learning_attempts remains lightweight history; linked submission/detail/answers/version/grading/feedback/rubric entities. Self_reported preserved and excluded from all new eligibility rules. Immutable used versions, published-only learner results, explicit audited regrade; existing course/enrollment reused for HSK/HSKK.
+- Backup only local ignored .cache/backups/assignment-before-20260930.json, no secrets or Git/push. Seven requested tables plus related audit ledger backed up/restore verified. No production migration until user confirms the next checkpoint.
+- Review package: docs/assignment-migrations.md. CP2 Drive/audio and CP3 public verification remain separate and unapproved.

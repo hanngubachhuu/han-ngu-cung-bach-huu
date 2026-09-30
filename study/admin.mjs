@@ -9,14 +9,17 @@ import { getClient } from "./auth.mjs";
 import { accountState, authMessage } from "./account-core.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { mountDocuments, mountDocumentConnection } from "./admin-documents.mjs";
+import { mountAssignmentAdmin } from "./assignment-admin.mjs";
 const gate = document.querySelector("#adminGate"),
   workspace = document.querySelector("#adminWorkspace");
 let page = 0,
   selected = null,
   request = 0,
   listRequest = 0,
-  students = [];
+  students = [],
+  disposeAssignments;
 async function boot() {
+  disposeAssignments?.();
   const generation = ++request;
   workspace.hidden = true;
   workspace.replaceChildren();
@@ -40,6 +43,21 @@ async function boot() {
     ownerDocuments.innerHTML =
       "<summary>Hồ sơ Google Docs của tôi</summary><div data-owner-documents></div>";
     connection.after(ownerDocuments);
+    const assignments = document.createElement("details");
+    assignments.className = "account-card account-dashboard";
+    assignments.innerHTML =
+      "<summary>Bài nộp, chấm điểm và đề HSK / HSKK</summary><div data-assignment-admin></div>";
+    ownerDocuments.after(assignments);
+    let assignmentsMounted = false;
+    assignments.addEventListener("toggle", () => {
+      if (assignments.open && !assignmentsMounted) {
+        assignmentsMounted = true;
+        disposeAssignments = mountAssignmentAdmin(
+          assignments.querySelector("[data-assignment-admin]"),
+          p,
+        );
+      }
+    });
     let ownerDocumentsMounted = false;
     ownerDocuments.addEventListener("toggle", () => {
       if (ownerDocuments.open && !ownerDocumentsMounted) {
