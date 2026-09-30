@@ -31,6 +31,8 @@ const messages = {
   INVALID_OPTIONS:
     "Các lựa chọn phải khác nhau, có mã riêng và chứa đáp án đúng.",
   INVALID_ANSWER_KEY: "Đáp án chưa hợp lệ cho dạng câu hỏi này.",
+  INVALID_QUESTION: "Mã câu và nội dung câu hỏi không được để trống.",
+  UNSUPPORTED_QUESTION_TYPE: "Dạng câu hỏi chưa được hỗ trợ.",
   INVALID_RUBRIC: "Rubric cần tiêu chí riêng, trọng số dương và tổng bằng 10.",
   INVALID_RUBRIC_SCORE: "Điểm tiêu chí phải nằm trong trọng số của rubric.",
   INVALID_QUESTIONS:

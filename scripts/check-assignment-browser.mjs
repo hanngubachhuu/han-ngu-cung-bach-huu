@@ -65,6 +65,35 @@ const questions = [
     max_score: 10,
   },
 ];
+const bankQuestions = Array.from({ length: 24 }, (_, i) => ({
+  id: `bank${i}`,
+  lesson_id: "hsk1_bai4",
+  question_key: i === 23 ? "bank0" : `bank${i}`,
+  version: i === 23 ? 2 : 1,
+  kind: "mcq",
+  prompt: `Câu ngân hàng ${i} 你好`,
+  options: [
+    { id: "A", text: "你好" },
+    { id: "B", text: "再见" },
+  ],
+  answer_key: { value: "A" },
+  explanation: "Private explanation",
+  tip: "Private tip",
+  published_at: null,
+  rubric_version_id: null,
+}));
+const oldDefinition = {
+  id: "old_definition",
+  lesson_id: "hsk1_bai4",
+  version: 1,
+  status: "published",
+  title: "Đề trước",
+  time_limit_minutes: 30,
+  questions: [
+    structuredClone(bankQuestions[0]),
+    structuredClone(bankQuestions[20]),
+  ],
+};
 function view() {
   const data = structuredClone(work);
   data.server_time = new Date().toISOString();
@@ -220,7 +249,35 @@ await context.route(
         };
         return fulfill(view());
       }
-      if (command === "bank") return fulfill({ questions: [] });
+      if (command === "bank")
+        return fulfill({
+          questions: bankQuestions.slice(
+            (payload.page || 0) * 20,
+            (payload.page || 0) * 20 + 20,
+          ),
+          rubrics: [],
+          definitions: [oldDefinition],
+          settings: null,
+        });
+      if (command === "definition_preview") return fulfill(oldDefinition);
+      if (command === "definition_create")
+        return fulfill({ id: "new_definition", ...payload });
+      if (command === "question_create") {
+        assert.equal(
+          bankQuestions.find((q) => q.id === "bank20").prompt,
+          "Câu ngân hàng 20 你好",
+        );
+        const versions = bankQuestions.filter(
+          (q) => q.question_key === payload.question_key,
+        );
+        const row = {
+          ...payload,
+          id: `new${bankQuestions.length}`,
+          version: Math.max(0, ...versions.map((q) => q.version)) + 1,
+        };
+        bankQuestions.unshift(row);
+        return fulfill(row);
+      }
       if (command === "regrade") {
         assert.equal(payload.reason, "Kiểm tra lại theo rubric");
         grade.state = "draft";
@@ -329,6 +386,82 @@ try {
   await page.locator("[data-reason]").fill("Kiểm tra lại theo rubric");
   await page.locator("[data-regrade]").click();
   await page.locator("[data-preview]").waitFor();
+  await page.locator("[data-bank]").click();
+  await page.locator('[name="question"][value="bank0"]').check();
+  await page
+    .locator('[data-definition] [name="title"]')
+    .fill("Đề qua nhiều trang");
+  await page
+    .locator('[data-definition] [name="time_limit_minutes"]')
+    .fill("25");
+  await page.locator("[data-bank-next]").click();
+  await page.locator('[name="question"][value="bank20"]').check();
+  await page.locator('[name="question"][value="bank23"]').check();
+  assert.equal(
+    await page.locator("[data-selection] [data-remove-question]").count(),
+    2,
+  );
+  await page.locator('[data-move-up="bank20"]').click();
+  await page.getByRole("button", { name: "Lưu đề nháp", exact: true }).click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-definition] [name="title"]')?.value === "",
+  );
+  assert.deepEqual(
+    calls.findLast((c) => c.command === "definition_create").payload,
+    {
+      lesson_id: "hsk1_bai4",
+      title: "Đề qua nhiều trang",
+      time_limit_minutes: 25,
+      question_version_ids: ["bank20", "bank23"],
+    },
+  );
+  await page.locator('[data-edit-question="bank20"]').click();
+  assert.equal(
+    await page.locator('[data-question] [name="question_key"]').inputValue(),
+    "bank20",
+  );
+  await page
+    .locator('[data-question] [name="prompt"]')
+    .fill("Câu phiên bản mới 您好");
+  await page
+    .getByRole("button", { name: "Lưu phiên bản câu hỏi mới", exact: true })
+    .click();
+  await page.locator('[data-question] [name="prompt"]').waitFor();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-question] [name="prompt"]')?.value === "",
+  );
+  assert.equal(
+    calls.findLast((c) => c.command === "question_create").payload.question_key,
+    "bank20",
+  );
+  await page.locator('[data-copy-question="bank21"]').click();
+  assert.equal(
+    await page.locator('[data-question] [name="question_key"]').inputValue(),
+    "bank21_copy",
+  );
+  await page.locator('[data-definition-preview="old_definition"]').click();
+  await page.locator("[data-reuse-definition]").click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-definition] [name="title"]')?.value ===
+      "Đề trước (từ v1)",
+  );
+  await page.getByRole("button", { name: "Lưu đề nháp", exact: true }).click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector('[data-definition] [name="title"]')?.value === "",
+  );
+  assert.deepEqual(
+    calls.findLast((c) => c.command === "definition_create").payload,
+    {
+      lesson_id: "hsk1_bai4",
+      title: "Đề trước (từ v1)",
+      time_limit_minutes: 30,
+      question_version_ids: ["bank0", "bank20"],
+    },
+  );
   admin = false;
   await page.goto(base + "/tai-khoan.html");
   await page.locator("[data-open]").click();
@@ -360,7 +493,7 @@ try {
   assert(calls.some((c) => c.command === "regrade"));
   assert.deepEqual(errors, []);
   console.log(
-    "Assignment browser passed: autosave/reload, unpublished privacy, rubric/preview/publish/regrade, 390/768/1366px and official legacy gate.",
+    "Assignment browser passed: autosave/reload, unpublished privacy, rubric/preview/publish/regrade, cross-page ordering/version edit/copy/restore, 390/768/1366px and official legacy gate.",
   );
 } finally {
   await browser.close();

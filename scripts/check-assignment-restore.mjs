@@ -168,6 +168,35 @@ try {
     }
     await db.exec("reset role");
   }
+  if (process.argv.includes("--smoke")) {
+    const sql = await fs.readFile(
+      "supabase/operations/assignment_production_smoke.sql",
+      "utf8",
+    );
+    const results = await db.exec(sql);
+    const smoke = results.find((r) => r.rows?.[0]?.smoke_report)?.rows[0]
+      .smoke_report;
+    assert(
+      smoke?.every((r) => r.passed),
+      "Production smoke script rehearsal failed",
+    );
+    assert.equal(
+      Number(
+        (
+          await db.query(
+            "select count(*) from public.lesson_content where id='__hnh_smoke_assignment_20260930'",
+          )
+        ).rows[0].count,
+      ),
+      0,
+    );
+    console.log(
+      JSON.stringify({
+        smokeRehearsal: smoke,
+        syntheticFixturePersisted: false,
+      }),
+    );
+  }
   const report = {
     checkedAt: new Date().toISOString(),
     backupSha256: createHash("sha256").update(bytes).digest("hex"),
