@@ -24,6 +24,7 @@ jobs:
           node scripts/check-account-browser.mjs
           node scripts/check-private-browser.mjs
           node scripts/check-assignment-browser.mjs
+          node scripts/check-assignment-authoring-browser.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

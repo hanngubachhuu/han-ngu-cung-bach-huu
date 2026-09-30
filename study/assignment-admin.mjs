@@ -1,10 +1,17 @@
 import {
   assignmentCommand as call,
+  assignmentAuthoring as callAuthor,
   assignmentMessage,
   assignmentText as text,
 } from "./assignment-service.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { getClient } from "./auth.mjs";
+import { mountDistractorGenerator } from "./distractor-admin.mjs";
+import {
+  QuestionWriteSession,
+  mountAssignmentImport,
+  sourceDescription,
+} from "./assignment-author-ui.mjs";
 import {
   AssignmentSelection,
   questionForm,
@@ -18,7 +25,12 @@ export function mountAssignmentAdmin(root, profile) {
     page = 0,
     bankPage = 0;
   let selection = new AssignmentSelection();
+  let includeArchived = false;
   const command = (name, payload = {}) => call(name, payload, profile.user_id);
+  const author = (name, payload = {}) =>
+    callAuthor(name, payload, profile.user_id);
+  const writes = new QuestionWriteSession(author);
+  const archiveRequests = new Map();
   const report = (error) => {
     const node = root.querySelector("[data-status]");
     if (node) node.textContent = assignmentMessage(error);
@@ -266,15 +278,95 @@ export function mountAssignmentAdmin(root, profile) {
       }
       if (selection.lessonId !== lesson)
         selection = new AssignmentSelection(lesson);
-      const data = await command("bank", { lesson_id: lesson, page: bankPage });
+      const data = await author("bank", {
+        lesson_id: lesson,
+        page: bankPage,
+        include_archived: includeArchived,
+      });
       if (!active || generation !== request) return;
       content.innerHTML = `<label>Bài học<select data-lesson>${lessons.map((l) => `<option value="${esc(l.id)}" ${l.id === lesson ? "selected" : ""}>${text(l.course_id)} · ${text(l.title_vi)}</option>`).join("")}</select></label>
         <details><summary>Tạo phiên bản rubric</summary><form data-rubric class="account-form"><label>Tên định danh rubric<input name="rubric_key" required maxlength="120"></label><label>Dạng bài<select name="kind"><option value="writing">Viết</option><option value="translation">Dịch</option><option value="speaking">Nói</option></select></label><label>Tiêu chí và trọng số (mỗi dòng: tên | điểm tối đa; tổng 10)<textarea name="criteria" required rows="4" placeholder="Nội dung | 6&#10;Ngữ pháp | 4"></textarea></label><button class="st-button">Lưu phiên bản rubric</button></form></details>
         <details open><summary>Thêm / tạo phiên bản câu hỏi</summary><form data-question class="account-form"><label>Mã câu ổn định<input name="question_key" required maxlength="120" placeholder="Ví dụ: bai4_cau01"></label><label>Dạng<select name="kind"><option value="mcq">Trắc nghiệm</option><option value="true_false">Đúng / sai</option><option value="text_fill">Điền từ</option><option value="reorder">Sắp xếp từ</option><option value="multi_fill">Nhiều chỗ trống</option><option value="matching">Ghép cặp</option><option value="translation">Dịch mở</option><option value="writing">Viết</option><option value="speaking">Nói (chưa mở ghi âm)</option></select></label><label>Câu hỏi<textarea name="prompt" required rows="3" maxlength="12000"></textarea></label><label>Lựa chọn (mỗi dòng: A | nội dung; sắp xếp từ: mỗi dòng một từ)<textarea name="options" rows="4"></textarea></label><label>Đáp án (MCQ: mã; đúng/sai: true/false; điền/sắp xếp: mỗi cách đúng một dòng; nhiều chỗ trống: mỗi chỗ một dòng, cách đúng thay thế ngăn bởi |; ghép cặp: trái=phải)<textarea name="answer" rows="3"></textarea></label><label>Rubric cho bài mở<select name="rubric_version_id"><option value="">Chọn rubric</option>${data.rubrics.map((r) => `<option value="${esc(r.id)}">${text(r.rubric_key)} · ${text(r.kind)} · v${r.version}</option>`).join("")}</select></label><label>Giải thích (chỉ Admin)<textarea name="explanation" rows="2"></textarea></label><label>Gợi ý (chỉ Admin)<textarea name="tip" rows="2"></textarea></label><button class="st-button">Lưu phiên bản câu hỏi mới</button><p class="st-help">Dùng lại mã câu để tạo phiên bản tiếp theo; bản cũ được giữ. Kiểm tra tính duy nhất của đáp án trước khi xuất bản.</p></form></details>
-        <form data-definition class="account-form"><h4>Chọn phiên bản câu cho đề mới</h4><p>Câu đã chọn được giữ khi đổi trang. Chọn phiên bản khác của cùng mã sẽ thay thế tại vị trí cũ.</p>${data.questions.map((q) => `<div class="assignment-question"><label class="assignment-choice"><input type="checkbox" name="question" value="${esc(q.id)}">${text(q.question_key)} · v${q.version} · ${text(q.prompt)}</label><div class="account-actions"><button class="st-button" type="button" data-edit-question="${esc(q.id)}">Sửa thành phiên bản mới</button><button class="st-button" type="button" data-copy-question="${esc(q.id)}">Nhân bản câu</button></div></div>`).join("") || "<p>Chưa có câu hỏi.</p>"}<section data-selection aria-label="Thứ tự câu trong đề"></section><label>Tên đề<input name="title" required maxlength="200" value="${esc(selection.title)}"></label><label>Giới hạn phút (để trống nếu không giới hạn)<input name="time_limit_minutes" type="number" min="1" max="240" value="${esc(selection.minutes)}"></label><button class="st-button">Lưu đề nháp</button></form>
+        <div data-write-recovery></div><div data-import></div><label><input type="checkbox" data-show-archived ${includeArchived ? "checked" : ""}> Hiện phiên bản đã archive</label>
+        <form data-definition class="account-form"><h4>Chọn phiên bản câu cho đề mới</h4><p>Câu đã chọn được giữ khi đổi trang. Chọn phiên bản khác của cùng mã sẽ thay thế tại vị trí cũ.</p>${data.questions.map((q) => `<div class="assignment-question"><label class="assignment-choice"><input type="checkbox" name="question" value="${esc(q.id)}" ${q.archive?.archived ? "disabled" : ""}>${text(q.question_key)} · v${q.version} ${q.archive?.archived ? "· Đã archive" : ""} · ${text(q.prompt)}</label><p class="st-help">${text(sourceDescription(q))}</p><div class="account-actions"><button class="st-button" type="button" data-edit-question="${esc(q.id)}">Sửa thành phiên bản mới</button><button class="st-button" type="button" data-copy-question="${esc(q.id)}">Nhân bản câu</button></div><label>Lý do ${q.archive?.archived ? "khôi phục quyền chọn" : "archive phiên bản"}<input data-archive-reason="${esc(q.id)}" maxlength="1000"></label><button class="st-button" type="button" data-archive-question="${esc(q.id)}">${q.archive?.archived ? "Khôi phục quyền chọn" : "Archive phiên bản"}</button></div>`).join("") || "<p>Chưa có câu hỏi.</p>"}<section data-selection aria-label="Thứ tự câu trong đề"></section><label>Tên đề<input name="title" required maxlength="200" value="${esc(selection.title)}"></label><label>Giới hạn phút (để trống nếu không giới hạn)<input name="time_limit_minutes" type="number" min="1" max="240" value="${esc(selection.minutes)}"></label><button class="st-button">Lưu đề nháp</button></form>
         <div class="account-actions"><button class="st-button" data-bank-prev ${bankPage ? "" : "disabled"}>← Câu trước</button><button class="st-button" data-bank-next ${data.questions.length === 20 ? "" : "disabled"}>Câu sau →</button></div>
         <h4>Phiên bản đề</h4>${data.definitions.map((v) => `<div class="assignment-row"><span>${text(v.title)} · v${v.version} · ${v.status === "draft" ? "Nháp" : "Đã xuất bản"}</span><button class="st-button" data-definition-preview="${esc(v.id)}">Xem trước</button></div>`).join("")}
         <button class="st-button" data-enable>${data.settings?.enabled ? "Tạm dừng nhận lượt mới" : "Mở nhận bài nộp"}</button><div data-definition-output></div>`;
+      mountAssignmentImport(
+        content.querySelector("[data-import]"),
+        lesson,
+        author,
+        () => {
+          bankPage = 0;
+          bank(lesson);
+        },
+      );
+      content.querySelector("[data-show-archived]").onchange = (e) => {
+        includeArchived = e.target.checked;
+        bankPage = 0;
+        bank(lesson);
+      };
+      for (const button of content.querySelectorAll("[data-archive-question]"))
+        button.onclick = async () => {
+          const q = data.questions.find(
+            (q) => q.id === button.dataset.archiveQuestion,
+          );
+          const field = [
+            ...content.querySelectorAll("[data-archive-reason]"),
+          ].find((f) => f.dataset.archiveReason === q.id);
+          const reason = field.value.trim();
+          if (!reason && !archiveRequests.has(q.id)) {
+            report(Error("ARCHIVE_REASON_REQUIRED"));
+            field.focus();
+            return;
+          }
+          if (!archiveRequests.has(q.id)) {
+            if (
+              !window.confirm(
+                q.archive?.archived
+                  ? "Khôi phục quyền chọn phiên bản này cho đề mới?"
+                  : "Archive phiên bản này? Đề đã xuất bản và bài cũ vẫn dùng đúng phiên bản của mình.",
+              )
+            )
+              return;
+            archiveRequests.set(q.id, {
+              request_id: crypto.randomUUID(),
+              question_version_id: q.id,
+              archived: !q.archive?.archived,
+              revision: q.archive?.revision || 0,
+              reason,
+            });
+          }
+          button.disabled = true;
+          field.disabled = true;
+          try {
+            await author("archive", archiveRequests.get(q.id));
+            archiveRequests.delete(q.id);
+            selection.remove(q.id);
+            if (active && generation === request) bank(lesson);
+          } catch (error) {
+            if (
+              [
+                "P0001",
+                "40001",
+                "42501",
+                "23514",
+                "23503",
+                "23505",
+                "22P02",
+              ].includes(error?.code)
+            )
+              archiveRequests.delete(q.id);
+            report(error);
+          } finally {
+            if (button.isConnected) {
+              button.disabled = false;
+              field.disabled = archiveRequests.has(q.id);
+              if (archiveRequests.has(q.id))
+                button.textContent = "Kiểm tra / thử lại cùng yêu cầu";
+            }
+          }
+        };
       content.querySelector("[data-lesson]").onchange = (e) => {
         if (
           selection.questions.length &&
@@ -302,7 +394,9 @@ export function mountAssignmentAdmin(root, profile) {
         ].map((node) => ({ node, disabled: node.disabled }));
         for (const { node } of controls) node.disabled = true;
         try {
-          await command(action, payload);
+          if (action === "question_create")
+            await writes.save(payload.question, payload.metadata);
+          else await command(action, payload);
           if (action === "definition_create")
             selection = new AssignmentSelection(lesson);
           if (active && generation === request) bank(lesson);
@@ -311,6 +405,7 @@ export function mountAssignmentAdmin(root, profile) {
         } finally {
           for (const { node, disabled } of controls)
             if (node.isConnected) node.disabled = disabled;
+          if (active && generation === request) renderWriteRecovery();
         }
       }
       content.querySelector("[data-rubric]").onsubmit = (e) => {
@@ -329,15 +424,51 @@ export function mountAssignmentAdmin(root, profile) {
           });
         submitForm(e.currentTarget, "rubric_create", f);
       };
+      const generator = mountDistractorGenerator(
+        content.querySelector("[data-question]"),
+      );
+      let parentVersion = null;
+      function renderWriteRecovery() {
+        const form = content.querySelector("[data-question]"),
+          box = content.querySelector("[data-write-recovery]");
+        if (!writes.pending) {
+          box.replaceChildren();
+          return;
+        }
+        for (const control of form.querySelectorAll(
+          "input,textarea,select,button",
+        ))
+          control.disabled = true;
+        box.innerHTML =
+          '<p>Chưa nhận được xác nhận lưu câu. Giữ nguyên yêu cầu và kiểm tra/thử lại trước khi tạo câu khác.</p><button class="st-button" type="button">Kiểm tra / thử lại yêu cầu lưu câu</button>';
+        box.querySelector("button").onclick = async (e) => {
+          e.target.disabled = true;
+          try {
+            await writes.retry();
+            if (active && generation === request) bank(lesson);
+          } catch (error) {
+            report(error);
+            if (!writes.pending && active && generation === request)
+              bank(lesson);
+          } finally {
+            if (e.target.isConnected) e.target.disabled = false;
+          }
+        };
+      }
+      renderWriteRecovery();
       content.querySelector("[data-question]").onsubmit = (e) => {
         e.preventDefault();
         try {
           const f = Object.fromEntries(new FormData(e.currentTarget));
-          submitForm(
-            e.currentTarget,
-            "question_create",
-            questionPayload(f, lesson),
-          );
+          const payload = questionPayload(f, lesson);
+          generator.validate(payload);
+          submitForm(e.currentTarget, "question_create", {
+            question: payload,
+            metadata: {
+              parent_version_id: parentVersion,
+              generator: generator.metadata(payload),
+            },
+          });
         } catch (error) {
           report(error);
         }
@@ -389,6 +520,10 @@ export function mountAssignmentAdmin(root, profile) {
         "[data-edit-question],[data-copy-question]",
       ))
         button.onclick = () => {
+          if (writes.pending) {
+            report(Error("AUTHORING_PENDING_CHANGED"));
+            return;
+          }
           const q = data.questions.find(
             (q) =>
               q.id ===
@@ -410,6 +545,8 @@ export function mountAssignmentAdmin(root, profile) {
           }
           for (const [name, value] of Object.entries(values))
             form.elements.namedItem(name).value = value;
+          generator.reset();
+          parentVersion = q.id;
           form.closest("details").open = true;
           form.elements.namedItem("question_key").focus();
           root.querySelector("[data-status]").textContent = button.dataset
