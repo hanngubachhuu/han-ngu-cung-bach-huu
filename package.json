@@ -6,8 +6,9 @@
     "node": "24.x"
   },
   "scripts": {
+    "audio:install": "node scripts/install-recording-runtime.mjs",
     "build": "node scripts/render-study-pages.mjs && node scripts/render-account-pages.mjs && node scripts/build-study-data.mjs && node scripts/build-study-reference.mjs && node scripts/build-study-lexicon.mjs && node scripts/build-web.mjs",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test --test-concurrency=2 tests/*.test.mjs",
     "dev": "node --env-file-if-exists=.env.local scripts/dev-server.mjs",
     "validate:study": "node scripts/validate-study.mjs",
     "lint": "eslint study server api tests scripts/*study*.mjs scripts/*account*.mjs scripts/*private*.mjs scripts/*assignment*.mjs scripts/build-web.mjs scripts/dev-server.mjs",
@@ -17,6 +18,9 @@
   "dependencies": {
     "@supabase/supabase-js": "2.57.4",
     "hanzi-writer": "3.7.3",
+    "mammoth": "1.13.0",
+    "parse5": "8.0.0",
+    "pdfjs-dist": "6.3.289",
     "pinyin-pro": "3.27.0"
   },
   "devDependencies": {
@@ -27,6 +31,7 @@
     "eslint": "9.36.0",
     "globals": "16.4.0",
     "hanzi-writer-data": "2.0.1",
+    "jszip": "3.10.1",
     "playwright": "1.62.1",
     "prettier": "3.6.2",
     "supabase": "2.117.0"

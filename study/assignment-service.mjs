@@ -27,6 +27,12 @@ async function authenticatedCommand(rpc, command, payload, ownerId) {
 }
 
 const messages = {
+  RECORDING_REQUIRED: "Lưu bản ghi cho từng câu nói trước khi nộp bài.",
+  INVALID_RECORDING_REFERENCE:
+    "Bản ghi chưa được xác nhận hoặc không thuộc câu này. Thử lưu lại đúng bản ghi.",
+  AUDIO_PROCESSING: "MP3 đang được xử lý. Chờ bản ghi sẵn sàng trước khi chấm.",
+  SPEAKING_VERSION_PINNED:
+    "Bài nói phải được chấm theo đúng phiên bản học viên đã làm.",
   ACCOUNT_CHANGED: "Tài khoản đã thay đổi. Mở lại bài bằng đúng tài khoản.",
   VERSION_CONFLICT:
     "Bài đã thay đổi ở tab hoặc thiết bị khác. Bản trên máy vẫn được giữ; đối chiếu trước khi tiếp tục.",

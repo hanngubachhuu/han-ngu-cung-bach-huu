@@ -1,3 +1,4 @@
+import { mountRecorder } from "./recording-ui.mjs";
 import {
   assignmentCommand as call,
   assignmentMessage,
@@ -7,6 +8,11 @@ import { escapeHtml as esc } from "./core.mjs";
 import { createAssignmentDraft } from "./assignment-draft.mjs";
 
 export function mountAssignments(root, profile) {
+  let recorders = [];
+  const disposeRecorders = () => {
+    recorders.forEach((r) => r.dispose());
+    recorders = [];
+  };
   let active = true,
     request = 0,
     draft,
@@ -21,6 +27,7 @@ export function mountAssignments(root, profile) {
   };
   window.addEventListener("online", online);
   const disconnect = () => {
+    disposeRecorders();
     active = false;
     request++;
     draft?.dispose();
@@ -33,6 +40,7 @@ export function mountAssignments(root, profile) {
     if (status) status.textContent = assignmentMessage(error);
   }
   async function list() {
+    disposeRecorders();
     draft?.dispose();
     draft = null;
     clearInterval(timer);
@@ -103,6 +111,7 @@ export function mountAssignments(root, profile) {
     }
   }
   function render(data) {
+    disposeRecorders();
     draft?.dispose();
     clearInterval(timer);
     clearTimeout(debounce);
@@ -125,7 +134,7 @@ export function mountAssignments(root, profile) {
     root.innerHTML = `<div class="assignment-heading"><h3>${text(data.title)}</h3><button class="st-button" data-back>Danh sách bài</button></div>
       <p data-clock role="timer"></p><p data-status role="status" aria-live="polite">${locked ? "Bài đã nộp. " + (data.result ? "Kết quả đã công bố." : "Đang chờ công bố kết quả.") : "Bản nháp được lưu theo tài khoản."}</p>
       ${data.result ? `<div class="account-notice"><strong>Tổng điểm: ${data.result.normalized_score}/100</strong><p>${data.result.raw_score}/${data.result.raw_max_score} điểm gốc · Công bố ${new Date(data.result.published_at).toLocaleString("vi-VN")}</p></div>` : ""}
-      <form data-answers>${data.answers
+      ${(data.contexts || []).map((c, i) => `<section class="assignment-question" id="student-context-${i}"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}<form data-answers>${data.answers
         .map(({ question: q, answer, position }) => {
           const grade = data.result?.questions.find(
             (g) => g.question_version_id === q.id,
@@ -146,7 +155,7 @@ export function mountAssignments(root, profile) {
               )
               .join("");
           } else if (q.kind === "speaking")
-            input = "<p>Ghi âm sẽ được mở khi hệ thống lưu trữ sẵn sàng.</p>";
+            input = "<p>Bản ghi gắn với đúng phiên bản câu hỏi này.</p>";
           else
             input = `<label>${q.kind === "multi_fill" ? "Mỗi chỗ trống một dòng" : q.kind === "reorder" ? "Sắp xếp các từ; phân cách bằng dấu |" : q.kind === "matching" ? "Mỗi cặp một dòng: mã bên trái = mã bên phải" : "Câu trả lời"}
           <textarea name="${esc(q.id)}" rows="3" maxlength="12000">${esc(
@@ -161,7 +170,7 @@ export function mountAssignments(root, profile) {
                   : answer || "",
           )}</textarea></label>
           ${q.options?.length ? `<p class="st-help">${q.options.map(text).join(" · ")}</p>` : ""}`;
-          return `<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>`;
+          return `<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}`;
         })
         .join(
           "",
@@ -171,6 +180,7 @@ export function mountAssignments(root, profile) {
       .querySelector("[data-refresh]")
       ?.addEventListener("click", () => open(data.attempt_id));
     if (locked) {
+      mountRecordingInputs();
       draft = null;
       if (lateAnswers) {
         const note = document.createElement("div");
@@ -312,9 +322,36 @@ export function mountAssignments(root, profile) {
       link.click();
       URL.revokeObjectURL(url);
     }
+    function mountRecordingInputs() {
+      for (const node of root.querySelectorAll("[data-recorder]")) {
+        const entry = data.answers.find(
+          (a) => a.question.id === node.dataset.recorder,
+        );
+        recorders.push(
+          mountRecorder(node, {
+            attemptId: data.attempt_id,
+            questionId: entry.question.id,
+            ownerId: profile.user_id,
+            answer: entry.answer,
+            locked,
+            onAnswer: async (value) => {
+              draft.edit(entry.question.id, value);
+              const latest = await draft.flush();
+              if (latest.state !== "draft") throw Error("SUBMISSION_LOCKED");
+            },
+          }),
+        );
+      }
+    }
+    mountRecordingInputs();
     let submitting = false;
     async function submit(timeout = false) {
       if (submitting || !active || !form.isConnected) return;
+      if (!timeout && recorders.some((r) => r.busy)) {
+        status.textContent = "Hãy dừng ghi và lưu bản ghi trước khi nộp bài.";
+        return;
+      }
+      if (timeout) disposeRecorders();
       if (
         !timeout &&
         !window.confirm(

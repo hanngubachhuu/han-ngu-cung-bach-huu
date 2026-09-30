@@ -178,6 +178,9 @@ try {
     .getByText("Bài nộp, chấm điểm và đề HSK / HSKK", { exact: true })
     .click();
   await page.locator("[data-bank]").click();
+  await page
+    .getByText("Công cụ soạn nâng cao: phiên bản câu hỏi", { exact: true })
+    .click();
   const open = async () =>
     page
       .getByText("Tự sinh đáp án nhiễu theo quy tắc tiếng Trung", {
@@ -263,6 +266,7 @@ try {
     .locator("[data-generator-status]")
     .filter({ hasText: "chưa khớp" })
     .waitFor();
+  await page.getByText("Công cụ nhập có cấu trúc", { exact: true }).click();
   await page.getByText("Nhập câu hỏi có provenance", { exact: true }).click();
   const packet = {
     format: "hnh-question-import-v1",

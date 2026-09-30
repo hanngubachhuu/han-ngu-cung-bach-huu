@@ -1009,7 +1009,9 @@
     max-width: 340px;
     margin-inline: auto;
   }
-  .st-layout { grid-template-columns: minmax(0,1fr); }
+  .st-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .st-panel {
     padding: var(--space-md);
   }
@@ -1220,4 +1222,9 @@
   .st-source-statistics {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.assignment-audio {
+  width: 100%;
+  max-width: 480px;
 }

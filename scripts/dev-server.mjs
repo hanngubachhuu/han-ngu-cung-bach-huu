@@ -1,3 +1,5 @@
+import examImportHandler from "../api/exam-import.js";
+import recordingHandler from "../api/recordings.js";
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -22,12 +24,22 @@ http
   .createServer(async (req, res) => {
     try {
       const url = new URL(req.url, "http://localhost");
-      if (["/api/study", "/api/account"].includes(url.pathname)) {
+      if (
+        [
+          "/api/study",
+          "/api/account",
+          "/api/recordings",
+          "/api/exam-import",
+        ].includes(url.pathname)
+      ) {
         let body = "",
           size = 0;
         for await (const chunk of req) {
           size += chunk.length;
-          if (size > 650000) {
+          if (
+            size >
+            (url.pathname === "/api/exam-import" ? 4.3 * 1024 * 1024 : 650000)
+          ) {
             res.writeHead(413);
             res.end();
             return;
@@ -35,10 +47,15 @@ http
           body += chunk;
         }
         req.body = body;
-        await (url.pathname === "/api/account" ? accountHandler : handler)(
-          req,
-          res,
-        );
+        await (
+          url.pathname === "/api/exam-import"
+            ? examImportHandler
+            : url.pathname === "/api/recordings"
+              ? recordingHandler
+              : url.pathname === "/api/account"
+                ? accountHandler
+                : handler
+        )(req, res);
         return;
       }
       const decoded = decodeURIComponent(url.pathname),

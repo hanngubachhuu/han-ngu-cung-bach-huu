@@ -1,16 +1,51 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run audio:install && npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    {"source":"/login","destination":"/tai-khoan.html"},
-    {"source":"/register","destination":"/tai-khoan.html?mode=register"},
-    {"source":"/admin","destination":"/quan-tri.html"}
+    {
+      "source": "/login",
+      "destination": "/tai-khoan.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/tai-khoan.html?mode=register"
+    },
+    {
+      "source": "/admin",
+      "destination": "/quan-tri.html"
+    }
   ],
-  "functions": {"api/study.js": {"maxDuration": 120}},
-  "headers": [{"source": "/(.*)", "headers": [
-    {"key":"X-Content-Type-Options","value":"nosniff"},
-    {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},
-    {"key":"X-Frame-Options","value":"SAMEORIGIN"}
-  ]}]
+  "functions": {
+    "api/study.js": {
+      "maxDuration": 120
+    },
+    "api/recordings.js": {
+      "maxDuration": 120,
+      "includeFiles": ".cache/recording-runtime/linux-x64-8.1.3/**"
+    },
+    "api/exam-import.js": {
+      "maxDuration": 60,
+      "includeFiles": "{server/exam-parser-thread.mjs,server/exam-document-parser.mjs,server/exam-file.mjs,node_modules/pdfjs-dist/**,node_modules/mammoth/**,node_modules/parse5/**}"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    }
+  ]
 }

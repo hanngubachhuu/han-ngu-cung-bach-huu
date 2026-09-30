@@ -48,3 +48,13 @@ Chỉ lưu quyết định có ảnh hưởng về sau.
 - Use closed Chinese rules with sufficient context, meaningful distractors and exactly one semantic answer; refuse unsupported context. Validation alone is not generation. Admin preview/edit/regenerate; final set in a new question version. No mutation or automatic regrade of history.
 - Add private source/request/archive entities linked to existing question versions, actual import actor/time from DB, original identifier/revision/item, immutable lineage and append-only archive/audit. Atomic preview/commit with stale base and replay protection. Archive removes future selection, preserves existing definition/submission references.
 - Preserve established Auth/course/enrollment/RLS/publication boundaries. No return to full old audits absent actual regression; normal CI remains a release gate. Exact additive DDL and rollback: docs/assignment-authoring.md. Speaking permission/credential changes remain CP2.
+
+## DEC-009 — Approved Speaking pipeline and credential checkpoint
+- Authority: explicit user CP2 approval and binding sequence. Private Storage/Auth isolation, actual server MP3, immutable binding/history, private server-only Drive, successful archival +7-day retention, idempotent lease-fenced cleanup.
+- Drive production credentials absent. Implement/mock/test UI/schema/worker first; stop before real credential/OAuth use and explain type/scope/secret destination/user actions. No hardcode or reading existing Docs secrets. Keep real Speaking disabled until synthetic hosted E2E passes; no Auth mutation/student fixtures.
+- Native binaries are pinned current 8.1.3 with archive/file hashes and no secrets in decoder environment; unsupported hosted execution fails closed.
+
+## DEC-010 — Simple reviewed PDF/DOCX exam import
+- Authority: attached user implementation brief 2026-10-01.
+- Preserve supplied Chinese/pinyin/Vietnamese; no AI key guessing. Explicit analyze then editable review, add/delete/order and per-owner draft persistence; only confirmation writes an atomic idempotent draft definition through existing versioned system.
+- Automatic provenance/manual origin/rubric; no technical fields required in the new workflow. Shared contexts immutable and referenced once; no overwrite or second enrollment system. PDF scan unsupported with clear OCR message, not fake extraction.
