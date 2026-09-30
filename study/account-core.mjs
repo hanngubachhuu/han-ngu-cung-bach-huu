@@ -53,7 +53,9 @@ export function authMessage(error) {
   if (error?.code === "invalid_credentials")
     return "Chưa đăng nhập được. Kiểm tra lại email và mật khẩu.";
   if (error?.code === "email_not_confirmed")
-    return "Email chưa được xác nhận. Mở thư xác nhận hoặc gửi lại bên dưới.";
+    return "Cần xác nhận email trước khi đăng nhập. Xem hướng dẫn và nút gửi lại thư ngay trên thông báo này.";
+  if (error?.code === "otp_expired")
+    return "Liên kết xác nhận đã hết hạn hoặc đã được dùng. Hãy yêu cầu thư mới và chỉ mở thư mới nhất.";
   if (error?.status === 429 || /rate_limit/.test(error?.code || ""))
     return "Bạn đã thử nhiều lần. Vui lòng chờ vài phút rồi thử lại.";
   if (error?.code === "weak_password")
@@ -61,6 +63,25 @@ export function authMessage(error) {
   if (error?.code === "40001" || /VERSION_CONFLICT/.test(error?.message || ""))
     return "Dữ liệu đã được sửa ở nơi khác. Tải lại bản mới trước khi lưu; nội dung bạn đang nhập vẫn được giữ.";
   return "Chưa kết nối được. Kiểm tra mạng và thử lại; dữ liệu đã lưu vẫn được giữ.";
+}
+// Only interpret provider error flags; never render error_description from a URL.
+export function authCallbackError(value) {
+  const url = new URL(value),
+    hash = new URLSearchParams(url.hash.slice(1));
+  if (
+    !url.searchParams.has("error") &&
+    !hash.has("error") &&
+    !url.searchParams.has("error_code") &&
+    !hash.has("error_code")
+  )
+    return null;
+  const recovery = url.searchParams.get("mode") === "reset";
+  return {
+    recovery,
+    message: recovery
+      ? "Liên kết đặt lại mật khẩu không còn hợp lệ. Nhập email và yêu cầu liên kết khôi phục mới."
+      : "Liên kết xác nhận không còn hợp lệ hoặc đã hết hạn. Nếu chưa đăng nhập được, nhập email và gửi lại thư; chỉ mở thư mới nhất.",
+  };
 }
 export function validatePassword(password, confirmation) {
   if (password.length < 12)
