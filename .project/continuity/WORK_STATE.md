@@ -91,3 +91,14 @@ This checkpoint supersedes only the incident/runtime portions of the bootstrap a
 - Tool environment: bundled Git requires GIT_EXEC_PATH pointing to dependencies/native/git/mingw64/bin for HTTPS helper; push requires network escalation. Local browser tests use BROWSER_EXECUTABLE pointing to installed Chrome because the Playwright browser binary is absent.
 - Protected: existing lessons, canonical data, grants, role rules, Google field mapping, SMTP credentials, private build exclusions.
 - Exact next action: inspect PR21 CI; merge only passing source; verify live hashes and Google admin status after deployment. Then finish RECONCILIATION_PLAN.md as a read-only audit and classify remaining schema/visibility/documentation uncertainties. Do not call the entire reconciliation complete from these scoped checks.
+
+## Release verified 2026-09-30 13:14 Asia/Bangkok
+
+- PR #21 merged: c9908cf1d84483132149e61b6fbab76207de889d. Final PR CI run 36676877902 SUCCESS; production deploy workflow 36677068229 SUCCESS.
+- V4: account-ui.mjs, account-core.mjs, account.css match the merged commit byte hashes on both Vercel and Pages. Sample private lesson source/audio URLs return 404 on both hosts. Evidence: .cache/email-recovery-release-verification.json (local ignored report).
+- V4: expired confirmation callback on live Pages displays Vietnamese guidance and resend controls. Screenshot: test-results/confirmation-live.png. Supabase Vietnamese template persisted after reload.
+- V3: read-only transaction with the incident student's authenticated role/sub sees exactly hsk2_bai5_jiu and hsk2_bai6_zenme. Transaction rolled back, no grants modified.
+- V4: production ADMIN and owner Google connection verified after reload of the new deployment. Existing owner Doc preview reads all three mapped fields successfully; no writes needed or performed in this check.
+- Local checkout recovered after bundled Git failed unlink operations during branch switch: reset index to fetched origin/main and restored only the three known overwritten/missing tracked files from HEAD. Clean git status verified, no user work discarded.
+- Incident recovery release COMPLETE; no further owner setup needed for this release. Deliverability root cause remains UNKNOWN and a fresh external-recipient Inbox test is not yet evidenced.
+- Exact next action: perform the remaining full read-only RECONCILIATION_PLAN.md audit before new broad features. Classify registry schema-version and manifest visibility discrepancies using build/runtime evidence, inspect current DB policies, and replace bootstrap report with verified facts. Preserve deployed auth, grants, content and sync mapping. Do not repeat manual confirmation, SMTP setup, OAuth setup, or already-passing tests without a new reason.
