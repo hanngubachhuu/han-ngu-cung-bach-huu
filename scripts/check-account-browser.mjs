@@ -24,7 +24,9 @@ let profile = {
     status: "PENDING",
     version: 1,
   },
-  rejectLogin = false;
+  rejectLogin = false,
+  unconfirmedLogin = false,
+  resendRequests = 0;
 const managed = {
     ...profile,
     user_id: "00000000-0000-4000-8000-000000000003",
@@ -69,24 +71,38 @@ await context.route(
         body: JSON.stringify(body),
       });
     if (p.endsWith("/token"))
-      return rejectLogin
+      return unconfirmedLogin
         ? fulfill(
             {
-              code: "invalid_credentials",
-              error_code: "invalid_credentials",
-              msg: "Invalid login",
+              code: "email_not_confirmed",
+              error_code: "email_not_confirmed",
+              msg: "Email not confirmed",
             },
             400,
           )
-        : fulfill({
-            access_token: jwt,
-            refresh_token: "test-refresh",
-            expires_in: 3600,
-            token_type: "bearer",
-            user,
-          });
+        : rejectLogin
+          ? fulfill(
+              {
+                code: "invalid_credentials",
+                error_code: "invalid_credentials",
+                msg: "Invalid login",
+              },
+              400,
+            )
+          : fulfill({
+              access_token: jwt,
+              refresh_token: "test-refresh",
+              expires_in: 3600,
+              token_type: "bearer",
+              user,
+            });
     if (p.endsWith("/signup"))
       return fulfill({ id: uid, identities: [], user });
+    if (p.endsWith("/resend")) {
+      resendRequests++;
+      assert.equal(route.request().postDataJSON().type, "signup");
+      return fulfill({});
+    }
     if (
       p.endsWith("/recover") ||
       p.endsWith("/resend") ||
@@ -197,6 +213,64 @@ try {
   await page.locator("#authConfirm").fill("a long phrase test");
   await page.locator("#authSubmit").click();
   await page.getByText("Kiểm tra email xác nhận.", { exact: false }).waitFor();
+  assert.equal(await page.locator("#authConfirmation").isVisible(), true);
+  assert.equal(await page.locator("#authConfirmResend").isDisabled(), true);
+  await page.reload();
+  await page.waitForSelector("#authEmail");
+  assert.equal(await page.locator("#authResend").isDisabled(), true);
+  await page.evaluate(() =>
+    sessionStorage.removeItem("hnh.auth.confirmationRetryAt"),
+  );
+  await page.reload();
+  unconfirmedLogin = true;
+  await page.locator("#authEmail").fill("test@example.invalid");
+  await page.locator("#authPassword").fill("a long phrase test");
+  await page.locator("#authSubmit").click();
+  await page.locator("#authConfirmation").waitFor({ state: "visible" });
+  await page.locator("#authConfirmResend").click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#authConfirmResend")
+      .textContent.includes("Gửi lại sau"),
+  );
+  assert.equal(resendRequests, 1);
+  assert.equal(await page.locator("#authResend").isDisabled(), true);
+  await page.setViewportSize({ width: 390, height: 844 });
+  assert.equal(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth > innerWidth + 1,
+    ),
+    false,
+  );
+  await page.screenshot({
+    path: "test-results/account-confirmation-mobile.png",
+    fullPage: true,
+  });
+  await page.goto("about:blank");
+  await page.goto(
+    base +
+      "/tai-khoan.html#error=access_denied&error_code=otp_expired&error_description=UNTRUSTED",
+  );
+  await page
+    .getByText("Liên kết xác nhận không còn hợp lệ", { exact: false })
+    .waitFor();
+  assert.equal(await page.locator("#authConfirmation").isVisible(), true);
+  assert.doesNotMatch(
+    await page.locator("#authStatus").textContent(),
+    /UNTRUSTED/,
+  );
+  await page.goto(
+    base +
+      "/tai-khoan.html?mode=reset#error=access_denied&error_code=otp_expired",
+  );
+  await page
+    .getByText("Liên kết đặt lại mật khẩu không còn hợp lệ", { exact: false })
+    .waitFor();
+  assert.equal(await page.locator("#authConfirmation").isVisible(), false);
+  unconfirmedLogin = false;
+  await page.goto(base + "/tai-khoan.html");
+  await page.setViewportSize({ width: 1440, height: 960 });
+  await page.locator("#authEmail").fill("test@example.invalid");
   await page.getByRole("button", { name: "Quên mật khẩu?" }).click();
   await page.locator("#authSubmit").click();
   await page.getByText("Nếu email này đã đăng ký", { exact: false }).waitFor();

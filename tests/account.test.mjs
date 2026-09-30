@@ -22,7 +22,24 @@ import {
   validatePassword,
   mergeGuestLibrary,
   accountState,
+  authCallbackError,
 } from "../study/account-core.mjs";
+test("expired callbacks give safe confirmation or recovery guidance", () => {
+  const base = "https://example.com/tai-khoan.html";
+  assert.equal(authCallbackError(base + "#access_token=test"), null);
+  const confirmation = authCallbackError(
+    base +
+      "#error=access_denied&error_code=otp_expired&error_description=UNTRUSTED",
+  );
+  assert.equal(confirmation.recovery, false);
+  assert.match(confirmation.message, /thư mới nhất/);
+  assert.doesNotMatch(confirmation.message, /UNTRUSTED/);
+  const recovery = authCallbackError(
+    base + "?mode=reset&error_code=otp_expired",
+  );
+  assert.equal(recovery.recovery, true);
+  assert.match(recovery.message, /khôi phục mới/);
+});
 test("return locations stay inside the deployment path", () => {
   const base = "https://example.com/han-ngu/tai-khoan.html";
   for (const path of [

@@ -364,6 +364,19 @@
   color: var(--color-text-secondary);
   font-size: 0.85rem;
 }
+.account-confirmation {
+  margin-top: var(--space-lg);
+  overflow-wrap: anywhere;
+}
+.account-confirmation h3 {
+  margin-top: 0;
+}
+.account-confirmation ol {
+  padding-left: 1.3rem;
+}
+.account-confirmation li + li {
+  margin-top: var(--space-xs);
+}
 .account-main :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;

@@ -3,6 +3,7 @@ import { observeAccount, myProfile } from "./account-service.mjs";
 import {
   accountState,
   authMessage,
+  authCallbackError,
   validatePassword,
 } from "./account-core.mjs";
 import { escapeHtml as esc } from "./core.mjs";
@@ -19,7 +20,7 @@ export function authMarkup({ dialog = false } = {}) {
   <p id="authPasswordHint" class="st-help" hidden>Ít nhất 12 ký tự. Nên dùng một cụm từ riêng, dễ nhớ với bạn.</p>
   <p id="authApprovalNote" class="account-notice" hidden>Đăng ký → xác nhận email → chờ Bách Hữu duyệt. Quyền học sẽ được cấp theo khóa và từng bài.</p>
   <button class="st-button primary account-submit" id="authSubmit" type="submit">Đăng nhập</button>
-  </form><div class="account-links"><button type="button" data-auth-mode="forgot">Quên mật khẩu?</button><button type="button" id="authResend">Gửi lại email xác nhận</button></div>
+  </form><section id="authConfirmation" class="account-notice account-confirmation" aria-labelledby="authConfirmationTitle" tabindex="-1" hidden><h3 id="authConfirmationTitle">Xác nhận email để vào học</h3><p>Email nhận thư: <strong id="authConfirmationEmail"></strong></p><ol><li>Mở Hộp thư đến và Thư rác, tìm thư từ <strong>bachhuu1809@gmail.com</strong> (Hán Ngữ Cùng Bách Hữu).</li><li>Mở <strong>thư mới nhất</strong> và bấm liên kết xác nhận. Tiêu đề thư: “Xác nhận tài khoản | Hán Ngữ Cùng Bách Hữu” (thư cũ: “Confirm your email address”).</li><li>Quay lại đây và đăng nhập bằng mật khẩu bạn đã tạo.</li></ol><div class="account-actions"><button type="button" class="st-button" id="authConfirmResend">Gửi lại thư xác nhận</button><a href="https://mail.google.com/" target="_blank" rel="noopener noreferrer">Mở Gmail ↗</a></div><p class="st-help">Chờ vài phút vẫn không thấy thư? <a href="trang-chu.html#lien-he">Liên hệ Bách Hữu</a> và cung cấp email đã đăng ký để được kiểm tra. Không gửi mật khẩu. Không cần đăng ký lại.</p></section><div class="account-links"><button type="button" data-auth-mode="forgot">Quên mật khẩu?</button><button type="button" id="authResend">Gửi lại email xác nhận</button></div>
   <p class="account-fine">Email dùng để xác nhận tài khoản và khôi phục mật khẩu.</p></div>
   <div id="authSignedIn" hidden><p id="authEmailDisplay" class="account-email"></p><div id="authState" class="account-notice" role="status"></div><div class="account-actions"><a class="st-button primary" href="tai-khoan.html">Vào khu vực học tập →</a><button id="authRefresh" class="st-button" type="button">Kiểm tra trạng thái</button><button id="authSignout" class="st-button" type="button">Đăng xuất</button></div></div>
   <p id="authStatus" class="account-feedback" role="status" aria-live="polite" tabindex="-1"></p>`;
@@ -33,6 +34,16 @@ export async function initAccountUI(
   if (!dialog) root.querySelector("#authSignedIn a").href = "#accountDashboard";
   const $ = (id) => root.querySelector("#" + id),
     form = $("authForm");
+  const callbackError = authCallbackError(location.href);
+  const cooldownKey = "hnh.auth.confirmationRetryAt";
+  let resendAfter = 0,
+    resendTimer;
+  try {
+    resendAfter = Number(sessionStorage.getItem(cooldownKey)) || 0;
+  } catch {
+    /* Storage can be blocked. */
+  }
+  resendAfter = Math.min(resendAfter, Date.now() + 60000);
   let mode = "login",
     busy = false,
     generation = 0,
@@ -40,6 +51,39 @@ export async function initAccountUI(
   const status = (message) => {
     $("authStatus").textContent = message;
   };
+  function updateResendButtons() {
+    clearTimeout(resendTimer);
+    const seconds = Math.max(0, Math.ceil((resendAfter - Date.now()) / 1000));
+    for (const [id, label] of [
+      ["authResend", "Gửi lại email xác nhận"],
+      ["authConfirmResend", "Gửi lại thư xác nhận"],
+    ]) {
+      $(id).disabled = busy || seconds > 0;
+      $(id).textContent = seconds ? `Gửi lại sau ${seconds}s` : label;
+    }
+    if (seconds && root.isConnected)
+      resendTimer = setTimeout(updateResendButtons, 1000);
+  }
+  function startResendCooldown() {
+    resendAfter = Date.now() + 60000;
+    try {
+      sessionStorage.setItem(cooldownKey, String(resendAfter));
+    } catch {
+      /* Provider still enforces its own limit. */
+    }
+    updateResendButtons();
+  }
+  function showConfirmation({ focus = true } = {}) {
+    $("authConfirmationEmail").textContent =
+      $("authEmail").value.trim() ||
+      "Nhập email đã đăng ký vào ô Email phía trên.";
+    $("authConfirmation").hidden = false;
+    updateResendButtons();
+    if (focus) $("authConfirmation").focus();
+  }
+  $("authEmail").addEventListener("input", () => {
+    if (!$("authConfirmation").hidden) showConfirmation({ focus: false });
+  });
   function setMode(next) {
     mode = ["login", "register", "forgot", "reset"].includes(next)
       ? next
@@ -88,12 +132,14 @@ export async function initAccountUI(
         String(button.dataset.authMode === mode),
       );
     status("");
+    $("authConfirmation").hidden = true;
   }
   function setBusy(value) {
     busy = value;
     form.setAttribute("aria-busy", String(value));
     for (const button of root.querySelectorAll("button"))
       if (button.id !== "authClose") button.disabled = value;
+    updateResendButtons();
   }
   async function refresh() {
     const request = ++generation;
@@ -202,12 +248,18 @@ export async function initAccountUI(
         status(
           "Nếu email này đã đăng ký, bạn sẽ nhận được liên kết khôi phục. Kiểm tra cả thư rác.",
         );
-      if (submittedMode === "register")
+      if (submittedMode === "register") {
+        if (!result.data.session) {
+          setMode("login");
+          startResendCooldown();
+          showConfirmation();
+        }
         status(
           result.data.session
             ? "Đã tạo tài khoản. Đăng ký đang chờ Bách Hữu duyệt."
             : "Kiểm tra email xác nhận. Sau khi xác nhận, đăng ký sẽ được Bách Hữu xem xét.",
         );
+      }
       if (submittedMode === "login") {
         status("Đã đăng nhập.");
         await refresh();
@@ -220,6 +272,7 @@ export async function initAccountUI(
         await refresh();
       }
     } catch (error) {
+      if (error.code === "email_not_confirmed") showConfirmation();
       status(
         error.message === "RECOVERY_REQUIRED"
           ? "Liên kết khôi phục chưa hợp lệ hoặc đã hết hạn. Hãy yêu cầu liên kết mới."
@@ -246,14 +299,16 @@ export async function initAccountUI(
     }
   };
   $("authRefresh").onclick = refresh;
-  let resendAfter = 0;
-  $("authResend").onclick = async () => {
+  const resendConfirmation = async () => {
+    if (busy) return;
     if (!$("authEmail").reportValidity()) return;
     if (Date.now() < resendAfter) {
       status("Vui lòng chờ một phút trước khi gửi lại.");
       return;
     }
+    showConfirmation();
     setBusy(true);
+    status("Đang yêu cầu gửi thư xác nhận…");
     try {
       const c = await getClient(),
         { error } = await c.auth.resend({
@@ -264,16 +319,20 @@ export async function initAccountUI(
           },
         });
       if (error) throw error;
-      resendAfter = Date.now() + 60000;
+      startResendCooldown();
       status(
-        "Nếu tài khoản đang chờ xác nhận, thư mới sẽ được gửi tới email của bạn.",
+        "Đã yêu cầu gửi lại. Nếu tài khoản đang chờ xác nhận, hãy kiểm tra Hộp thư đến và Thư rác trong vài phút; chỉ dùng thư mới nhất.",
       );
     } catch (e) {
+      if (e.status === 429 || /rate_limit/.test(e.code || ""))
+        startResendCooldown();
       status(authMessage(e));
     } finally {
       setBusy(false);
     }
   };
+  $("authResend").onclick = resendConfirmation;
+  $("authConfirmResend").onclick = resendConfirmation;
   window.addEventListener("study:auth", (event) => {
     if (event.detail.event === "PASSWORD_RECOVERY") {
       recovery = true;
@@ -288,11 +347,17 @@ export async function initAccountUI(
     refresh();
   });
   setMode(initialMode === "reset" ? "forgot" : initialMode);
+  updateResendButtons();
   try {
     await observeAccount();
     await refresh();
   } catch (e) {
     status(authMessage(e));
+  }
+  if (callbackError && !$("authGuest").hidden) {
+    setMode(callbackError.recovery ? "forgot" : "login");
+    if (!callbackError.recovery) showConfirmation();
+    status(callbackError.message);
   }
   return { refresh };
 }
