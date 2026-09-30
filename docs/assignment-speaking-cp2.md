@@ -1,54 +1,49 @@
-# CP2 — Speaking / MP3 / Drive: đề xuất để duyệt
+# CP2 Speaking / MP3 / Drive — approved implementation
 
-## Hiện trạng đã xác nhận
+User approval supersedes the earlier proposal. Safety > quality > speed. Drive production credentials are not configured. Real-course Speaking stays disabled until the entire synthetic production pipeline passes.
 
-Foundation/editor, generator thực sự và import/provenance/archive đã phát hành. PR #24 merge a8c15a3; CI94 tests và browser PASS; migration authoring registry20260930143823, smoke production rollback-only PASS; module mới trên Vercel/Pages khớp Git. Không có câu/đề thật được nhập hoặc bật. Speaking vẫn bị chặn mở nhận bài ở server.
+## Runtime and storage
 
-Server hiện có Vercel Node API và Google Docs adapter dùng publishable key + JWT Admin, xác minh đúng tài khoản chủ sở hữu. Tài liệu setup đã khai báo drive.file/openid/email; phiên Admin thực tế xác nhận Docs đang kết nối. Điều này **chưa** chứng minh Drive API đã bật, folder audio đã có, quyền Drive của token hiện tại đủ, FFmpeg chạy trên hosting, hay scheduler được cấu hình. Không đọc/in credential để kiểm tra.
+Private `speaking-private` bucket, raw <=8 MiB, recording <=6 minutes, MP3 <=3 MiB. Browser uploads only to Supabase with its JWT and a server reservation. Re-record creates a new immutable object identity. Recording has a composite FK to the exact submission answer/question version and an owner FK to the existing profiles. Existing Auth, courses, enrollments and lesson grants remain the permission authority.
 
-Checkpoint này cần thiết vì bản dự án người dùng quy định dừng trước thay đổi storage/Google Drive/deployment hoặc security model; CP1 không phê duyệt audio infrastructure. Chưa tạo bucket/folder/cron, chưa thêm service-role vào server, chưa mở Speaking.
+FFmpeg and FFprobe 8.1.3 are pinned to BtbN monthly release `autobuild-2026-09-30-13-08`, with hardcoded SHA256 and file hashes. `npm run audio:install` verifies the downloaded archive, installs only executables/shared libraries/licenses in ignored `.cache/recording-runtime`, tests synthetic conversion, and fails closed. Linux SONAME libraries are materialized once to avoid duplicate bundle bytes. Vercel includes this directory only in the server function; `dist` excludes it. Deprecated npm binaries were removed after their actual versions proved older than current security fixes. Decoder subprocesses do not inherit server credentials, accept only local file protocols, have input/output/time limits, and validate the resulting MP3 using probe plus complete decode. Current Windows runtime: 167,299,555 bytes, real conversion verified. Linux build and actual hosted execution need independent evidence.
 
-## Một phương án đề xuất
+Primary sources: [FFmpeg downloads](https://ffmpeg.org/download.html), [security fixes](https://ffmpeg.org/security.html), [BtbN build targets and retention](https://github.com/BtbN/FFmpeg-Builds), [Vercel limits](https://vercel.com/docs/functions/limitations).
 
-Giữ Supabase làm authority cho Auth, quyền học, recording metadata, attempt/version, grading, feedback và lịch sử. Tạo bucket staging audio **private riêng**, không dùng lesson-private. Browser ghi âm native, nghe lại tại máy rồi upload trực tiếp vào Storage bằng JWT/RLS và object ID do server cấp. API Vercel chỉ nhận ID/metadata, không proxy upload nhị phân.
+## Recording state and retention
 
-Worker Node trên Vercel hiện tại tải object đã xác nhận, kiểm MIME/codec/duration/checksum bằng FFprobe/FFmpeg, chuyển MP3 mono64kbps32kHz, rồi tạo file trong folder Drive private do ứng dụng tạo. Dùng OAuth chủ sở hữu hiện có nếu kiểm tra capability xác nhận đủ scope; không đổi/xóa credential Docs, không xin scope toàn bộ Drive. Nếu thiếu scope phải dừng để chủ sở hữu consent, không tự đổi quyền.
+Raw confirmation checks the Storage object size/MIME and provider-created timestamp before deadline. Submission pins the confirmed recording reference; no later upload/reference edits are accepted. Conversion completion requires validated MP3 SHA/size/duration. Admin can play a completed MP3 for a submitted answer. Raw audio is owner-only.
 
-Giữ một bản MP3 private trong Storage cho playback qua JWT/RLS, tránh lộ Drive URL/token hoặc cần file public. Drive là bản media liên kết; DB là authority trạng thái và checksum. Worker chỉ đánh dấu ready khi MP3 kiểm chứng và cả hai bản lưu thành công. Mọi bản raw/MP3/Drive dùng cùng expires_at = thời điểm upload gốc được server xác nhận +7 ngày; retry/convert/regrade không kéo dài thời hạn. Các trạng thái upload/processing/failed/ready/expired/deleted phải hiển thị đúng.
+`uploaded_at` means **successful verified Drive upload**. Only then `expires_at = uploaded_at + interval '7 days'`. Conversion/upload retries never renew this interval. Drive failure leaves raw and MP3 in private Storage with no expiry. Access is denied at expiry; physical cleanup runs on the next successful scan. Drive, MP3 and raw deletion are identity-checked and lease-fenced; 404 means already absent, not a permission error. Metadata, submission, grades, feedback, publications and audit are retained. An unconfirmed upload or permanently failing archive requires operational review; no automatic deletion of the only copy.
 
-Đề xuất giới hạn ban đầu: 6 phút/câu, raw tối đa8MiB, MP3 tối đa3MiB. Đây là cấu hình đề xuất CP2, chưa áp lên bài học. Worker timeout và bundle native phải benchmark trước khi deploy; không tự nâng gói hosting nếu giới hạn/quota không đủ. Vercel body limit4.5MB là lý do upload trực tiếp; giới hạn6 phút/64kbps giữ MP3 nhỏ. [Vercel giới hạn](https://vercel.com/docs/functions/limitations), [Supabase upload](https://supabase.com/docs/guides/storage/uploads/standard-uploads).
+The worker runs one bounded leased job per request. Service-role-only RPC and a separate constant-time worker secret protect the background endpoint. There is no caller-supplied SQL/path/URL, no long-running seven-day function, and no client delete/update permission.
 
-Scheduler Supabase Cron + pg_net gọi endpoint worker mỗi5 phút bằng secret riêng trong Vault/server env, job lease và bounded batches. Không dựa vào cron hàng giờ trên Vercel Hobby (chỉ hỗ trợ một lần/ngày). Access bị chặn đúng expires_at; xóa vật lý ở lần cleanup thành công tiếp theo (mục tiêu ≤5 phút sau hạn, provider outage có retry/cảnh báo). Không cam kết xóa vật lý đúng giây thứ604800 khi provider ngừng đáp ứng. [Supabase scheduling](https://supabase.com/docs/guides/functions/schedule-functions), [Vercel cron](https://vercel.com/docs/cron-jobs/usage-and-pricing).
+## Credential checkpoint — user action required before real Drive testing
 
-Worker/background cleanup cần quyền server riêng: đề xuất SUPABASE_SERVICE_ROLE_KEY chỉ ở Vercel env, worker RPC chỉ GRANT EXECUTE cho service_role, cron key riêng. Service-role có quyền rộng ở provider; tuyệt đối không đưa vào client/repo/log/chat. Endpoint chỉ cung cấp các thao tác recording, không nhận SQL/table/path/URL tùy ý. Đây là mở rộng credential boundary cần CP2, khác server Docs hiện chỉ dùng JWT Admin. OAuth Drive giữ drive.file, không drive toàn bộ tài khoản. [Google scope](https://developers.google.com/workspace/drive/api/guides/api-specific-auth).
+Use a dedicated **Google OAuth 2.0 Web application client** for Speaking archival and an owner-authorized offline refresh token, separate from existing Docs credentials. Permissions: `https://www.googleapis.com/auth/drive.file`, `openid`, `email`. No whole-Drive scope. Adapter verifies the owner and rejects public, domain or shared permissions. A My Drive folder must be created by/authorized to this OAuth app; an arbitrary manually created folder is not automatically accessible under drive.file. Service accounts without appropriate Workspace storage ownership are not the chosen adapter.
 
-## Dữ liệu, quyền và deadline
+Enable Google Drive API in that Google Cloud project, configure OAuth consent for the owner and obtain the refresh token with offline consent using the same client. Production OAuth consent is needed for a durable token; external apps left in Testing can have expiring refresh tokens. Do not paste credentials into chat or Git. Enter these values in **Vercel project server-side Production environment secrets**:
 
-| Thành phần | Đề xuất |
-| --- | --- |
-| Recording metadata | Liên kết attempt/student/question version; immutable upload ID/object generation/checksum/MIME/size/duration/provider IDs, uploaded_at/expires_at, processing state, heard_by/at |
-| Jobs/events | Claim/lease/retry/audit, idempotent create/convert/finalize/delete; không ghi vào learning_attempts toàn bộ file/detail |
-| Student | Chỉ cấp/upload/xem recording của mình còn quyền; không ghi ready/Drive ID hoặc thay file đã submit; không đọc file người khác/key/draft grade |
-| Admin | Nghe private recording để chấm rubric, ghi heard_at, cảnh báo gần hết hạn7 ngày; Publish kết quả theo luồng hiện tại |
-| Worker | Service-role-only RPC, giới hạn recording/job; kiểm đúng ID/generation/lease trước finalize/delete, không thao tác Auth/grade/enrollment |
-| Nộp bài | Server phải xác nhận raw upload hoàn tất trước deadline; không tin client timestamp. Submit khóa recording reference đã upload. MP3 có thể còn processing; không nhận thêm nội dung sau submit/deadline, không công bố grade khi media chưa xử lý được |
-| Ghi lại | Chỉ draft, mỗi upload một ID mới; job cũ không thay thế ID mới; giữ lịch sử metadata, expiry gốc và các reference đã sử dụng |
-| Cleanup | Xóa đúng raw/MP3/Drive/temp sau expiry, 404 đã vắng mặt là idempotent success sau identity check; 403/timeout không giả báo thành công. Không xóa submission, điểm, feedback, audit hoặc metadata |
+- `SPEAKING_DRIVE_CLIENT_ID`
+- `SPEAKING_DRIVE_CLIENT_SECRET`
+- `SPEAKING_DRIVE_REFRESH_TOKEN`
+- `SPEAKING_DRIVE_OWNER_EMAIL`
+- `SPEAKING_DRIVE_FOLDER_ID` (private app-created/authorized folder)
+- `SUPABASE_SERVICE_ROLE_KEY` (only for recording worker, never public)
+- `SPEAKING_WORKER_SECRET` (at least 32 random characters)
 
-Ảnh hưởng: bucket/policies mới cho recording, API/worker và scheduler mới trên stack hiện tại; thêm metadata/jobs/events và recording reference vào answer path hiện có. Không tạo enrollment, role học viên hoặc hệ thống auth thứ hai; self_reported tiếp tục không đủ điều kiện khóa học. Không public hóa audio. Cần chủ sở hữu cấu hình secret trong dashboard, bật Drive API nếu chưa có, duyệt folder/private scope; không gửi secret qua chat.
+Existing `SUPABASE_URL` / publishable key remain. No `VITE_`, `NEXT_PUBLIC_`, HTML or public DB secret fields. After configuration, redeploy to make server secrets available. Credential exchange/folder provisioning and real archive calls wait for this checkpoint; no credential was generated, guessed, read or configured during implementation.
 
-## Migration và rollback
+## Scheduler after credential configuration and synthetic smoke
 
-Sau khi CP2 được duyệt, tạo migration bổ sung bằng CLI cho recording metadata/jobs/events, guarded RPC, private bucket policies và Speaking capability gate. Liệt kê exact DDL sau implementation/local tests trước áp dụng. Không sửa migration đã chạy; không backfill audio giả, không di chuyển/xóa lesson asset/history cũ. Scheduler/worker triển khai trước, health-check thực tế trước khi Admin có thể mở Speaking.
+Production already has pg_cron, pg_net and Vault installed. Use Supabase Cron to POST `/api/recordings?action=work` on a five-minute schedule, with a dedicated bearer secret retrieved from Vault. No schedule or Vault secret has been created yet. Do not choose Vercel Cron until the actual project plan supports the needed frequency; the existing Hobby restriction is insufficient. Never put the literal secret into cron SQL or logs. Drain volume and concurrency must be measured before real-course enablement; one bounded job per scan is the initial conservative throughput.
 
-Rollback bằng feature flag chặn lượt Speaking mới và dừng claim conversion mới; giữ readonly/history và cleanup cần thiết cho retention, giữ record/submission/grade nguyên vẹn. Có thể sửa lỗi bằng migration mới. Không drop/reset, không rollback bằng xóa người dùng/bài nộp. Không bật storage/public grants để chữa lỗi playback. Credential rollback chỉ thu hồi credential mới của worker, giữ OAuth Docs.
+## Deployment gate and rollback
 
-## Test và tiêu chí mở nhận bài
+Exact additive schema/RLS/backup/rollback is in `assignment-cp2-migrations.md`. Ship compatible loader/API before enabling access. Native runtime health is authenticated Admin-only and uses synthetic audio; it does not prove Drive or end-to-end pipeline readiness. Keep `speaking_settings.enabled=false` until real synthetic Storage -> conversion -> Drive -> playback -> cleanup and history preservation pass.
 
-Local: fake mic/provider/clock, quyền anon/pending/student A/B/Admin/worker, MIME giả/size/duration, codec và MP3 thật, stale job/re-record race, upload sau deadline, upload mất phản hồi, processing retry, expired playback, cleanup đúng generation, provider404/403/outage, dữ liệu/grade vẫn còn sau delete. Mock browser trên390/768/1366px; browser capability detection và permission denied.
+Disable new Speaking starts through the gate, suspend new worker claims if needed, retain readonly history and required cleanup. Restore old functions from the ignored schema supplement only when the new functionality is disabled and no new imported/submitted data depends on it; otherwise use a forward migration. Never drop/reset or remove learners, attempts, grades, contexts or media to roll back. Existing Docs OAuth is preserved.
 
-Production: fixture audio tổng hợp, không lấy giọng học viên để thử; xác minh private bucket + folder, upload/MP3/checksum/authorized playback, actual worker/scheduler, cleanup idempotence giữ metadata/grade, ACL và không public URL. Test MIME browser thực tế, đặc biệt iPhone/Safari phải có evidence riêng; Chromium không chứng minh Safari. Chỉ bật Speaking khi pipeline thật PASS. Không tạo tài nguyên tính phí/nâng plan nếu chưa có phê duyệt riêng.
+## Verification boundaries
 
-## Phạm vi đề nghị duyệt
-
-Duyệt phương án private Storage → worker Vercel → private Drive + bản playback private, worker server credential/scheduler, retention7 ngày, giới hạn ban đầu và semantics submit raw-confirmed/MP3-processing nói trên. Sau duyệt triển khai kỹ thuật, trình exact migration/rollback trước production audio DDL; setup secret do chủ sở hữu tự nhập. Không bao gồm public certificate CP3.
+Local PostgreSQL tests cover anon/A/B/Admin and service-role boundaries, no signed/list access, draft privacy, exact reference, immutability, retries, archive failure and cleanup race/history retention. Browser Chromium covers 390/768/1366, real MediaRecorder with synthetic mic, permission denial/unsupported runtime, locked MP3 playback and draft import persistence. Chromium is not Safari/iPhone evidence. Drive provider calls are mocks until owner credentials exist. Production readiness must be reported separately, never inferred from local PASS.
