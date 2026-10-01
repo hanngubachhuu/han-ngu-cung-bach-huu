@@ -17,6 +17,10 @@
     }
   ],
   "functions": {
+    "api/speaking-checkpoint.js": {
+      "maxDuration": 120,
+      "includeFiles": ".cache/recording-runtime/linux-x64-8.1.3/**"
+    },
     "api/study.js": {
       "maxDuration": 120
     },
