@@ -1,6 +1,33 @@
 import { createClient } from "@supabase/supabase-js";
+import { randomUUID } from "node:crypto";
 import { normalizeRecording, audioHash } from "./recording-audio.mjs";
 import { createDriveArchive, driveConfigured } from "./recording-drive.mjs";
+
+// Upload paths are immutable, but CDN invalidation after DELETE is asynchronous.
+// A unique nonce forces worker identity/deletion checks to read from the origin.
+// Keep the pinned SDK: its download() predates the cacheNonce option.
+export function recordingServerFetch(
+  baseUrl,
+  fetcher = fetch,
+  timeoutMs = 30000,
+) {
+  const base = new URL(baseUrl);
+  return (input, options = {}) => {
+    const url = new URL(input);
+    const fresh =
+      url.origin === base.origin &&
+      url.pathname.startsWith(
+        base.pathname.replace(/\/$/, "") + "/storage/v1/object/",
+      ) &&
+      (options.method || "GET").toUpperCase() === "GET";
+    if (fresh) url.searchParams.set("cacheNonce", randomUUID());
+    return fetcher(url.toString(), {
+      ...options,
+      ...(fresh ? { cache: "no-store" } : {}),
+      signal: options.signal || AbortSignal.timeout(timeoutMs),
+    });
+  };
+}
 
 // One bounded job per scheduler invocation. No 7-day timer or in-memory queue.
 export async function runRecordingJob({
@@ -77,15 +104,36 @@ export function recordingStorage(client) {
     if (!/^[0-9a-f-]{36}\/(raw|audio\.mp3)$/.test(name))
       throw Error("STORAGE_INVALID_PATH");
   };
-  const missing = (error) =>
-    ["404", "not_found", "NoSuchKey"].includes(
-      String(error?.statusCode || error?.code),
-    );
+  async function missing(error) {
+    // The pinned SDK wraps failed binary downloads in StorageUnknownError,
+    // retaining the HTTP Response instead of parsing its JSON statusCode.
+    const response = error?.originalError,
+      status = error?.status ?? response?.status;
+    if ([401, 403].includes(status)) return false;
+    if (status === 404) return true;
+    if (
+      ["404", "not_found", "NoSuchKey"].includes(
+        String(error?.statusCode || error?.code),
+      )
+    )
+      return true;
+    if (response?.clone && status === 400) {
+      try {
+        const body = await response.clone().json();
+        return ["404", "not_found", "NoSuchKey"].includes(
+          String(body.statusCode || body.code || body.error),
+        );
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  }
   async function read(name, allowMissing = false) {
     valid(name);
     const { data, error } = await bucket.download(name);
     if (error) {
-      if (allowMissing && missing(error)) return null;
+      if (allowMissing && (await missing(error))) return null;
       throw Error("STORAGE_READ_FAILED");
     }
     return Buffer.from(await data.arrayBuffer());
@@ -113,7 +161,8 @@ export function recordingStorage(client) {
       if (bytes === null) return;
       if (audioHash(bytes) !== sha256) throw Error("STORAGE_IDENTITY_CONFLICT");
       const { error } = await bucket.remove([name]);
-      if (error && !missing(error)) throw Error("STORAGE_DELETE_FAILED");
+      if (error && !(await missing(error)))
+        throw Error("STORAGE_DELETE_FAILED");
       if ((await read(name, true)) !== null)
         throw Error("STORAGE_DELETE_UNCONFIRMED");
     },
@@ -129,8 +178,7 @@ export async function productionRecordingJob(env = process.env) {
   const client = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: {
-      fetch: (url, options = {}) =>
-        fetch(url, { ...options, signal: AbortSignal.timeout(30000) }),
+      fetch: recordingServerFetch(env.SUPABASE_URL),
     },
   });
   const command = async (name, payload) => {

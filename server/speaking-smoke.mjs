@@ -8,7 +8,11 @@ import {
   normalizeRecording,
 } from "./recording-audio.mjs";
 import { createDriveArchive, driveConfigured } from "./recording-drive.mjs";
-import { recordingStorage, runRecordingJob } from "./recording-worker.mjs";
+import {
+  recordingStorage,
+  runRecordingJob,
+  recordingServerFetch,
+} from "./recording-worker.mjs";
 
 export const smokeFixture = Object.freeze({
   run: "e8bab12a-886f-4255-ab39-c1f4f25d43b3",
@@ -81,8 +85,10 @@ function makeClient(env, privileged = false) {
         detectSessionInUrl: false,
       },
       global: {
-        fetch: (url, options = {}) =>
-          fetch(url, { ...options, signal: AbortSignal.timeout(20000) }),
+        fetch: privileged
+          ? recordingServerFetch(env.SUPABASE_URL, fetch, 20000)
+          : (url, options = {}) =>
+              fetch(url, { ...options, signal: AbortSignal.timeout(20000) }),
       },
     },
   );
