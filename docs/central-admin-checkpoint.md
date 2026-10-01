@@ -1,6 +1,6 @@
 # Central Admin workspace checkpoint
 
-PR #36 continues from `ba434e7`. This checkpoint implements the central Admin UX and a locally verified HSK publication transaction. It does **not** certify production deployment or a complete official HSKK publication/submission flow.
+PR #36 continues from `ba434e7`, with accepted Admin UX at `3e8a9b7`. The 2026-10-02 update applies only the prepared HSKK authoring infrastructure after a verified scoped backup. It does **not** certify production deployment or a complete official HSKK publication/submission flow.
 
 ## Navigation and content boundaries
 
@@ -41,7 +41,21 @@ The PR test set has 184 tests (172 existing plus 12 new). The complete working d
 
 Lint, build, study validator and the 30 canonical lesson validator are required. CI runs the new central Admin browser check alongside all previous browser suites. Actual CI status belongs to the pushed commit/run and is reported separately, not inferred from local success. CI skips real private-source integration tests when the ignored MP3 is unavailable.
 
-Read-only production schema verification on 2026-10-01 confirms `account_internal.admin_exams`, `public.admin_exam_command(text,jsonb)` and `public.hskk_authoring_draft(text,jsonb)` are absent. Neither the prior HSKK source/review migration nor this checkpoint's additive `20261001140652_central_admin_exam_workspace.sql` was applied in this task. No production database/Auth/storage mutation, migration application, merge or deployment was performed. Official hosted HSKK publication, real student submission and Admin playback/publish verification remain release prerequisites.
+The initial 2026-10-01 audit found the central registry/RPC and HSKK authoring RPC absent. On 2026-10-02, the exact prepared `20261001100121_hskk_authoring_drafts.sql` was applied after reconciliation and a private scoped backup; production records it as `20261001173401_hskk_authoring_drafts`. The three authoring tables, guarded RPC and private source bucket now exist, with zero source registrations/objects/review revisions. `account_internal.admin_exams`, `public.admin_exam_command(text,jsonb)` and the separate `20261001140652_central_admin_exam_workspace.sql` remain absent/unapplied. No source upload, Auth mutation, learner-data modification, merge, application deployment or H71002 publication was performed.
+
+## Production follow-up — 2026-10-02
+
+**Authoring migration: PASS. Remaining hosted pipeline: BLOCKED.** The accepted UI and all pre-existing runtime edits are preserved. Full scope, exact migration/backup checksums, status table and evidence categories are in [H71002 checkpoint](hskk-h71002-checkpoint.md).
+
+Backup: `D:\download\hsk\han-ngu-cung-bach-huu-github\.cache\backups\hskk-before-20261002.json`, 54,053 bytes, SHA-256 `eda4b52bbb79fe13ad363bac794f9675f85869460b6ebc1fbb7ffaaaa38942fd`; ignored/untracked, parsed successfully, no secret/token candidates. It contains scoped learner/access/attempt/submission data and configuration/schema snapshots, excludes Auth/OAuth/session/API secrets and audio, and fingerprints rather than exports lesson content. Every backed-up historical row and all 24 production lesson fingerprints matched after application.
+
+HOSTED database role checks passed in read-only transactions: current approved Admin can call get; student is refused with ADMIN_REQUIRED; anon lacks EXECUTE. Direct access to the three private tables is revoked, RLS/immutable triggers are present and the new source bucket is private. These checks do not prove real JWT/Storage/browser authorization. The advisor's authenticated public SECURITY DEFINER WARN is documented in the H71002 checkpoint, not hidden or called a clean security scan.
+
+The production Vercel application remains at `54e46f1`; its HSKK API returns 404. The `3e8a9b7` preview is READY and its unauthenticated HSKK API returns 401 AUTH_REQUIRED. Computer Use could not connect to the existing authenticated Chrome Admin tab (two CDP focus-emulation timeouts). No JWT/session was extracted and no upload was performed through an impersonated identity or service-role shortcut. Following the user's stop instruction, no dependent production phase was attempted.
+
+Exact H71002 state remains **27 local proposals / 0 confirmed / 0 manually adjusted / 27 unresolved**, with Q26/Q27 unverified. Zero clips, zero official question-version UUID bindings, no real HSKK course/access and no learner session/submission/result. Hosted source access, full exam recording/submission, Admin playback/grading and result publication are NOT TESTED. Source registration/version binding, actual Admin review, finalization, official session/access integration and the complete hosted cycle are BLOCKED. Speaking remains false and scheduler jobs zero.
+
+Current local rerun: **187 tests, 184 passed, 3 pre-existing INVALID_AUDIO failures, 0 skipped**; targeted authoring migration/server-save tests: **2 passed**. No runtime changes were made to fix or conceal the empty-audio fixture. Prior head `3e8a9b7` CI was checked live and both workflows passed; its 184 committed tests include 182 passes and 2 explicit private-source skips. New checkpoint CI is tracked separately by its commit/run.
 
 ## Exact files changed in this checkpoint
 

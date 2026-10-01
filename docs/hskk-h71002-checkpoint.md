@@ -1,6 +1,63 @@
 # H71002 shared exam / authoring checkpoint
 
-This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. No production migration has been applied in this checkpoint.
+This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup; source upload and the complete hosted publishing pipeline remain blocked.
+
+## Production infrastructure checkpoint — 2026-10-02 (Asia/Bangkok)
+
+This update continues PR #36 at `3e8a9b7`. **Phase 1 is applied and verified; the remaining production pipeline is blocked. H71002 is not production-ready.** The accepted central Admin UI is unchanged. No merge, source upload, automatic confirmation, clip generation, publication, Speaking activation, Auth mutation, course/assignment creation or worker scheduling was performed.
+
+### Backup and exact migration
+
+Read-only reconciliation confirmed all six new authoring table/function names and the source bucket/policies were absent, while the existing profiles, courses, enrollments, lesson grants, attempts and official submission tables were present. The unchanged SQL file `supabase/migrations/20261001100121_hskk_authoring_drafts.sql` was then applied through Supabase MCP. Its SHA-256 is `054287b290343eb579b7c4ffa61f667c2e8b1f0df22e4683847b7f939df58236`. Production records the migration as **`20261001173401_hskk_authoring_drafts`**; this is the MCP application timestamp, not a rewrite of the repository migration.
+
+- Backup: `D:\download\hsk\han-ngu-cung-bach-huu-github\.cache\backups\hskk-before-20261002.json`; 54,053 bytes; SHA-256 `eda4b52bbb79fe13ad363bac794f9675f85869460b6ebc1fbb7ffaaaa38942fd`.
+- Capture time: `2026-10-01T17:33:06.929725Z` (2026-10-02 in Asia/Bangkok). JSON read-back succeeded; the file is ignored and untracked. Recursive key/value scanning found zero secret/token candidates.
+- Scope: current public learner profiles, enrollments, lesson grants, attempts, official submission/answer/result/grade rows, assignment activation, Speaking flag, Storage bucket configuration/policies, schema reconciliation and migration inventory. Auth passwords/sessions/identities, OAuth integration credentials, environment/API/JWT secrets and audio bytes are excluded. This is a scoped pre-migration backup, not a complete database/Storage backup.
+- Private post-migration evidence: `.cache/backups/hskk-authoring-after-20261002.json`; SHA-256 `d4bfe7ced099ee6aed4536b252262afbc3ed3c935f80379ebd214288fa16b34c`. Do not publish either artifact.
+- Before/after comparison matched every backed-up historical row: 2 courses, 2 profiles, 4 enrollments, 26 lesson grants, 3 attempts, 0 official submissions/answers/results/grades and 0 lesson assignment activations. All **24 production lesson rows** have identical SHA-256 fingerprints. Local HSK 1/2 canonical content was not edited.
+- Speaking remains `enabled=false`; cron jobs remain zero. The new source registry, source bucket objects and review revisions each contain **0 rows/objects**.
+
+### Evidence and exact state
+
+| Item | State | Evidence / prerequisite |
+| --- | --- | --- |
+| Production authoring migration | PASS | Exact prepared SQL applied; three private tables have RLS and no direct anon/authenticated SELECT grant; immutable triggers, registered-path Storage SELECT/INSERT policies and RPC exist. |
+| Private source registration/upload | BLOCKED | Bucket is private, 32 MiB, MP3 only, but contains no H71002 object or source registration. Production API is absent and no usable authenticated Admin browser session was available. |
+| Source version metadata | BLOCKED | The applied registry contains exam/hash/path/size/Admin/timestamp; it has no independent source-version column. Resolve with a later additive migration and canonical binding, never edit this applied migration. |
+| Actual Admin verification | BLOCKED | **27 local proposals, 0 confirmed, 0 manually adjusted, 27 unresolved.** Q26/Q27 remain unverified cue proposals. No hosted review revision exists. |
+| Finalization | BLOCKED | Current local gate is false; all question confirmations and required non-question review must precede finalization. |
+| Physical clips | BLOCKED | Zero H71002 clips generated; confirmed boundaries and immutable source/question/exam provenance are prerequisites. |
+| Official exam/question binding | BLOCKED | Canonical exam version is 1; all 27 official question-version UUIDs remain null. The private central exam registry/RPC is also absent in production. |
+| HSKK catalog/access | BLOCKED | Production contains only HSK 1 and HSK 2 courses and no real HSKK access. No course/enrollment/assignment was fabricated and no HSK lesson was converted. |
+| Production student session | BLOCKED | No published H71002 or production transport/version/attempt integration. The Admin preview adapter supplies no production evidence. |
+| H71002 recording/submission | NOT TESTED | No H71002 learner attempt was created; no production student recording or submission was made. |
+| H71002 Admin playback/grading | NOT TESTED | Requires a real persisted H71002 submission and private per-question recordings. No official automatic scoring rubric is asserted. |
+| H71002 result publication | NOT TESTED | No H71002 result exists; teacher review and explicit publication are still required. |
+| Hosted database authorization | PASS | Read-only transactions using existing profiles and SET LOCAL ROLE: approved Admin can call get (returns null); student receives ADMIN_REQUIRED; anon receives 42501 permission denied. These are database-role tests, not JWT/browser/Storage tests. |
+| Hosted source/recording security | NOT TESTED | The actual MP3 is not uploaded. Admin download, student/other non-Admin/anon object denial and hosted recording identity/privacy remain unverified. |
+| Hosted complete exam cycle | BLOCKED | Cannot proceed without source upload, human review, official bindings/access, real session/submission transport and working hosted Admin UI. |
+| Publication and rollout | BLOCKED | H71002 remains draft/unpublished. Global Speaking stays off. No automatic merge or publication is authorized. |
+
+REAL-SOURCE / LOCAL: the ignored original MP3 was rehashed and remains exactly 18,417,371 bytes with SHA-256 `101dc744ac9923f9a2925baa52899133944661bee153912443da89f4fe4c39f0`. The cached review reopens 27 structural proposals and 46 non-question proposals, of which 45 remain UNKNOWN. No listening verification is claimed.
+
+HOSTED / SUPABASE: migration/read-back, historical integrity and read-only database role checks passed. HOSTED / VERCEL: production still runs `54e46f1` and `/api/hskk-exams?exam=H71002&action=source` returns **404**. The PR preview at `3e8a9b7` exists and the same unauthenticated endpoint returns **401 AUTH_REQUIRED** with private/no-store headers. These responses do not prove authenticated source playback or full student isolation.
+
+The existing Chrome production Admin tab was selected twice through Computer Use; both attempts timed out on `Emulation.setFocusEmulationEnabled`. No session/JWT was extracted, no Admin identity was impersonated for upload and no Storage service-role shortcut was used. The dependent workflow stops here under the user's explicit instruction to stop when a production prerequisite is missing.
+
+The Supabase security advisor reports one new WARN for authenticated execution of the public SECURITY DEFINER RPC. Its fixed search path and authoritative current approved-Admin guard were verified, including the student denial above; the warning is documented rather than reported as a clean advisor result. The three new private tables also appear as INFO for RLS without policies: their direct grants are revoked and access is intentionally via the guarded RPC. Existing leaked-password-protection WARN remains outside this change. Any refactor to a private definer plus public invoker wrapper must use a new additive migration. See [function-execution advisor](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable) and [RLS policy advisor](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy).
+
+LOCAL / SYNTHETIC: the migration authorization/immutable-history/server-save tests were rerun: **2 passed**. Full working-directory rerun: **187 tests, 184 passed, 3 failed, 0 skipped** in 36.662 seconds. The same three failures are in the pre-existing untracked `tests/hskk-auto-next.test.mjs`: its empty audio URL fails INVALID_AUDIO before the proposed auto-next scenarios execute. That fixture and the pre-existing runtime edits are preserved; this infrastructure checkpoint does not claim that proposed behavior is verified. Log: ignored `test-results/hskk-production-infrastructure-local.txt`.
+
+CI for the prior `3e8a9b7` head was checked live: [Validate study web app](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36884431634) and [Validate lesson data](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36884431628) both passed. That committed PR set has 184 tests; CI passes 182 and explicitly skips the 2 unavailable private-source tests. These are separate from the complete dirty working directory. Prior browser provider tests are synthetic and were not rerun or promoted to hosted evidence in this infrastructure update. CI status for this documentation update must be reported against its own new commit/run.
+
+### Remaining prerequisite order
+
+1. Make the accepted Admin UI and HSKK API available on a controlled hosted deployment connected to this production project, reconcile/apply the separate central workspace migration when appropriate, and obtain a functioning authenticated Admin session.
+2. Add the missing immutable source-version binding, register/upload the exact MP3 through the Admin-authorized path, then test actual Storage access with Admin, student, other non-Admin and anonymous identities.
+3. Have Admin listen and review all 27 question boundaries and relevant non-question regions, including the Q26/Q27 cues; then run finalization and create immutable clips.
+4. Complete the minimum additive official exam/question/audio/timing binding using the existing assignment/attempt/submission/grading model; establish explicit HSKK access without converting HSK lesson data.
+5. Verify real server-clock sessions, scoped idempotent recording retries, persisted submission, Admin playback/grading and published-result privacy in one complete hosted Q1–Q27 cycle. Keep publication and Speaking off until the required explicit release decision.
+
 
 ## Source evidence
 
@@ -16,7 +73,7 @@ This is an unpublished implementation. It does not enable Speaking or create a r
 
 `hskk-exam-core.mjs` separates config validation, server-clock anchoring, immutable session identity, timeline, deadlines, recording reference checks and the published-result projection. `hskk-exam-engine.mjs` runs the shared automatic timed flow. `hskk-experience.mjs`, `hskk-exam-media.mjs` and `hskk-session-journal.mjs` share rendering, audio, MediaRecorder and the owner/attempt-scoped offline retry queue. Admin previews use the same experience renderer with a deliberately non-persistent adapter. Production timed exam sessions are not implemented by that adapter.
 
-`hskk-quan-tri.html` and `hskk-admin.mjs` provide source review, question/section/timing inspection, source upload, proposed-segment review, manual boundaries, waveform, local draft export, and a versioned server-save adapter. The official source definition/timing cannot be changed through audio review. Save is disabled when the new migration is absent. Publish remains disabled.
+The central `quan-tri.html` editor mounts `hskk-admin.mjs` for source review, question/section/timing inspection, source upload, proposed-segment review, manual boundaries, waveform, local draft export, and a versioned server-save adapter. `hskk-quan-tri.html` is a compatibility redirect. The official source definition/timing cannot be changed through audio review. The authoring migration now exists in Supabase, but production application deployment/authenticated hosted save remain blocked. Publish remains disabled.
 
 `audio-transcriber.mjs` is retained as an optional unused timestamp-ASR adapter. `audio-segmentation.mjs` normalizes punctuation/numeral representation and aligns timestamped transcript spans against question text without changing questions. Source announcement cues are separately marked and always require review. Confidence is text-match similarity, not a calibrated speech-recognition probability. Silence alone never generates a question segment.
 
@@ -56,9 +113,9 @@ Actual private-source review test: **27 structural proposals; 27 pass basic sign
 
 States are distinct: AUTOMATIC STRUCTURAL PROPOSAL is never verified; MANUALLY_ADJUSTED may still be unconfirmed; ADMIN VERIFIED requires an explicit confirmation; READY_FOR_PUBLISH requires the complete cross-question server gate. Old run snapshots and audit entries are preserved. Source changes invalidate old approvals and require a new matching run before an old proposal can be confirmed.
 
-## Prepared migration: 20261001100121_hskk_authoring_drafts.sql
+## Applied migration: 20261001100121_hskk_authoring_drafts.sql
 
-**Not applied to production.** Local PostgreSQL/PGlite tests include this migration alongside the existing Speaking migration chain.
+**Applied to production on 2026-10-02 (Asia/Bangkok) as 20261001173401_hskk_authoring_drafts.** The exact unchanged repository SQL was used. Local PostgreSQL/PGlite tests include this migration alongside the existing Speaking migration chain; current production checks are documented at the top.
 
 | Delta | Exact scope |
 | --- | --- |
@@ -75,18 +132,18 @@ States are distinct: AUTOMATIC STRUCTURAL PROPOSAL is never verified; MANUALLY_A
 
 No old table columns, enrollment model, Auth users, grading data, historical question versions, recording RLS, retention rules or worker scheduler are changed. There is no backfill or transformation of current learner data. No `self_reported` score becomes an official result.
 
-Before any production application: reconcile the new object names/bucket and deployed API, make an ignored local backup that excludes every secret/token, verify readability/counts, then apply this additive migration. This checkpoint has not made a new production backup or uploaded source audio to production.
+The authoring migration has now completed the reconciliation, ignored scoped-backup, application and read-back checks documented above. Source audio has not been uploaded to production. The separate central workspace migration and hosted Admin/API prerequisites remain unresolved.
 
 Non-destructive rollback: disable the new authoring entry/API and revoke execution of the new authoring RPC via a follow-up migration if necessary. Keep the new private bucket, immutable source registry, saved versions and audit history. Never drop/reset old data, rewrite an applied migration, or enable Speaking as a rollback workaround.
 
 ## Evidence boundary and remaining work
 
-- Full local tests: 172 passed after the new migration/security work. Includes owner/attempt/question binding, expiry, draft grade/result privacy and all prior recording/Drive/cleanup regressions.
+- Prior implementation checkpoint: 172 local tests passed after the initial migration/security work. Includes owner/attempt/question binding, expiry, draft grade/result privacy and prior recording/Drive/cleanup regressions. The current full working-directory count and failures are reported above.
 - Local browser test: 390/768/1366; real MediaRecorder with a browser-provided fake microphone, second exam config, candidate/device/mic/countdown, per-question auto recording, completion. This is not hosted JWT/RLS proof and does not submit an official assignment.
-- Browser Admin authoring/session responses are mocked locally. The browser suite covers local-runtime failure, successful proposals, waveform dragging, invalid timestamp errors, manual confirmation, cancelled/accepted replacement, confirm-and-next focus, unconfirmed-cue warning, blocked finalization, non-question timestamp/classification save, a new run preserving the confirmed segment, and saving both run snapshots. Server role isolation and immutable/history constraints are tested independently with PostgreSQL roles. Hosted new authoring policies are not yet verified.
+- Browser Admin authoring/session responses are mocked locally. The browser suite covers local-runtime failure, successful proposals, waveform dragging, invalid timestamp errors, manual confirmation, cancelled/accepted replacement, confirm-and-next focus, unconfirmed-cue warning, blocked finalization, non-question timestamp/classification save, a new run preserving the confirmed segment, and saving both run snapshots. Server role isolation and immutable/history constraints are tested independently with PostgreSQL roles. Hosted schema/database role checks now pass; actual authenticated Storage/source/browser tests are still NOT TESTED.
 - Original source audio checksum/decode and local structural segmentation: verified on the private source. Word-level alignment and Admin listening verification are not claimed.
-- Existing production guard read: `speaking_settings.enabled=false`, zero scheduler jobs, new draft table absent. No real student or production fixture was modified.
-- Still required: full-source segment review including instructions/preparation/signals/outro; all confirmed boundaries; hosted draft/source rollout after backup; background authoring job handling if hosted duration requires it; production server session deadlines and generic recovery; course/lesson mapping to real existing HSKK enrollment/access; official question/rubric/version binding; full H71002 student submission and Admin Publish browser verification. No fake course/enrollment or invented rubric may replace these requirements.
+- Current production guard read: `speaking_settings.enabled=false`, zero scheduler jobs; new authoring tables now exist and have no rows. No real student or production fixture was modified.
+- Still required: working hosted Admin/API and source-version binding/upload; full-source segment review including instructions/preparation/signals/outro; all confirmed boundaries; authenticated hosted review saves; background authoring job handling if hosted duration requires it; production server session deadlines and generic recovery; explicit real HSKK access; official exam/question/audio/version binding; full H71002 student submission and Admin result publication browser verification. No fake course/enrollment or invented official rubric may replace these requirements.
 - Generic manual/untimed response workflows, multi-file delivery and complete non-question audio orchestration remain future extensions; the current reference experience implements automatic timed HSKK sections. Do not claim the complete standard form definition of done from these tests.
 
 Release is held. CI workflow includes the HSKK browser suite. The real-source integration test runs only where the ignored private MP3 exists; CI explicitly skips it and runs synthetic signal tests instead. H71002 must remain draft/unpublished until the remaining checks pass and Bách Hữu approves the real scope.
