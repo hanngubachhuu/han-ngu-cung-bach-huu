@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { runRecordingJob } from "../server/recording-worker.mjs";
 import { audioHash } from "../server/recording-audio.mjs";
-import { authorizeWorker } from "../api/recordings.js";
+import recordingHandler, { authorizeWorker } from "../api/recordings.js";
 function fixture({ cleanup = false } = {}) {
   const raw = Buffer.from("synthetic raw"),
     mp3 = Buffer.from("synthetic normalized"),
@@ -179,4 +179,24 @@ test("worker endpoint requires explicit server secret and timing-safe match", ()
   assert.equal(authorizeWorker("Bearer " + secret + "x", secret), false);
   assert.equal(authorizeWorker("Bearer anything", undefined), false);
   assert.equal(authorizeWorker("Bearer short", "short"), false);
+});
+test("retired synthetic smoke action cannot invoke provider or Auth fixture commands", async () => {
+  let body;
+  const res = {
+    setHeader() {},
+    end(value) {
+      body = JSON.parse(value);
+    },
+  };
+  await recordingHandler(
+    {
+      method: "POST",
+      url: "/api/recordings?action=smoke",
+      headers: { authorization: "Bearer synthetic" },
+      body: { step: "users" },
+    },
+    res,
+  );
+  assert.equal(res.statusCode, 400);
+  assert.deepEqual(body, { error: "INVALID_REQUEST" });
 });
