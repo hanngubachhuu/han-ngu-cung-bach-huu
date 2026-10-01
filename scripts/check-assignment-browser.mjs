@@ -370,30 +370,46 @@ try {
   assert.equal(await page.getByText("Tổng điểm:", { exact: false }).count(), 0);
   assert.equal(await page.locator("fieldset:not([disabled])").count(), 0);
   admin = true;
+  // Compose the real Speaking player with grading controls. The player's audio
+  // preview must not receive the grade-preview handler or disabled state.
+  work.answers[1].question.kind = "speaking";
+  work.answers[1].answer = { recording_id: "synthetic-admin-playback" };
   await page.goto(base + "/quan-tri.html");
   await page
     .getByText("Bài nộp, chấm điểm và đề HSK / HSKK", { exact: true })
     .click();
   await page.locator("[data-attempt]").click();
+  await page
+    .locator('[data-recording-playback="q2"] audio')
+    .waitFor({ state: "attached" });
   await page.locator('[data-criterion="content"]').fill("5");
   await page.locator('[data-criterion="grammar"]').fill("3");
   await page
     .locator('[data-id="q2"] [data-feedback]')
     .fill("Lời chào phù hợp.");
-  assert.equal(await page.locator("[data-preview]").isDisabled(), true);
+  assert.equal(
+    await page
+      .getByRole("button", { name: "Xem trước kết quả", exact: true })
+      .isDisabled(),
+    true,
+  );
   await page
     .getByRole("button", { name: "Lưu chấm điểm", exact: true })
     .click();
   await page
     .getByText("Đã lưu. Học viên chưa thấy bản chấm này.", { exact: true })
     .waitFor();
-  await page.locator("[data-preview]").click();
+  await page
+    .getByRole("button", { name: "Xem trước kết quả", exact: true })
+    .click();
   await page.getByText("Học viên sẽ thấy", { exact: true }).waitFor();
   await page.locator("[data-publish]").click();
   await page.locator("[data-regrade]").waitFor();
   await page.locator("[data-reason]").fill("Kiểm tra lại theo rubric");
   await page.locator("[data-regrade]").click();
-  await page.locator("[data-preview]").waitFor();
+  await page
+    .getByRole("button", { name: "Xem trước kết quả", exact: true })
+    .waitFor();
   await page.locator("[data-bank]").click();
   await page.locator('[name="question"][value="bank0"]').check();
   await page

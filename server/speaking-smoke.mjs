@@ -361,6 +361,8 @@ export async function runSpeakingSmoke(admin, body, env = process.env) {
         throw Error("SMOKE_CLEANUP_NOT_DUE");
     }
     const drive = await createDriveArchive(env);
+    const proof = { drive_delete_retry: false, storage_delete_retry: false };
+    let removedObjects = 0;
     return {
       stage: "cleanup",
       ...(await runRecordingJob({
@@ -377,9 +379,24 @@ export async function runSpeakingSmoke(admin, body, env = process.env) {
             throw Error("SMOKE_UNEXPECTED_JOB");
           return value;
         },
-        storage,
-        drive,
+        storage: {
+          ...storage,
+          remove: async (...args) => {
+            await storage.remove(...args);
+            await storage.remove(...args);
+            proof.storage_delete_retry = ++removedObjects === 2;
+          },
+        },
+        drive: {
+          ...drive,
+          remove: async (...args) => {
+            await drive.remove(...args);
+            await drive.remove(...args);
+            proof.drive_delete_retry = true;
+          },
+        },
       })),
+      proof,
     };
   }
   if (body.step === "isolation") return isolation(service, admin, env, storage);

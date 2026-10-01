@@ -190,7 +190,7 @@ export function mountAssignmentAdmin(root, profile) {
         if (!fieldset) return;
         dirty.add(fieldset.dataset.id);
         content.querySelector("[data-publish]").disabled = true;
-        content.querySelector("[data-preview]").disabled = true;
+        content.querySelector("button[data-preview]").disabled = true;
       });
       const version = () => ({
         attempt_id: id,
@@ -201,7 +201,8 @@ export function mountAssignmentAdmin(root, profile) {
         for (const field of form.querySelectorAll("fieldset,button"))
           field.disabled = value;
         if (!value) {
-          content.querySelector("[data-preview]").disabled = dirty.size > 0;
+          content.querySelector("button[data-preview]").disabled =
+            dirty.size > 0;
           content.querySelector("[data-publish]").disabled =
             dirty.size > 0 ||
             data.grading.preview_version !== data.grading.edit_version;
@@ -242,7 +243,7 @@ export function mountAssignmentAdmin(root, profile) {
           if (active && generation === request) {
             root.querySelector("[data-status]").textContent =
               "Đã lưu. Học viên chưa thấy bản chấm này.";
-            content.querySelector("[data-preview]").disabled = false;
+            content.querySelector("button[data-preview]").disabled = false;
           }
         } catch (error) {
           report(error);
@@ -251,7 +252,7 @@ export function mountAssignmentAdmin(root, profile) {
         }
       };
       content
-        .querySelector("[data-preview]")
+        .querySelector("button[data-preview]")
         ?.addEventListener("click", async () => {
           busy(true);
           try {
