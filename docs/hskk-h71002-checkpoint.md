@@ -2,6 +2,52 @@
 
 This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup; source upload and the complete hosted publishing pipeline remain blocked.
 
+## Hosted JWT authorization — 2026-10-02 (Asia/Bangkok)
+
+Continues PR #36 at `39f70f667cb4fa80ac525d91683a7c5c610eae54`. **PASS: all six requested production JWT authorization probes.** This section supersedes the real-JWT NOT TESTED entries and JWT stop point in the historical routing checkpoint below. It verifies authorization on the existing production deployment, not source registration, direct Storage object access or the complete publishing pipeline. No production deployment or database change was made in this checkpoint.
+
+### Real sessions and hosted results
+
+The user ran the read-only GET probe in an existing authenticated Chrome Admin session and a separate Chrome incognito Student session. The probe used the application's current session, verified identity with Supabase `auth.getUser`, and read the current profile's `role,status`. The Admin was **ADMIN / APPROVED**; the existing Student was **STUDENT / PENDING**. No profile status or permission was changed. These are actual authenticated sessions, not synthetic tokens or database-role impersonation.
+
+All requests used the same production origin, `https://hanngubachhuu.vercel.app`. Authenticated requests sent the current access token only in the Authorization header to that origin; token values were never copied into chat, logs, files, screenshots or this document. The probe printed only whitelisted result fields. The Admin output at `2026-10-01T19:48:12.960Z` was both supplied by the user and independently read from the browser's filtered console log; a repeat at `19:54:09.507Z` also passed. The Student output at `19:56:28.011Z` was supplied by the user and corroborated by the actual production runtime requests below.
+
+| Hosted JWT authorization probe | Result | Evidence |
+| --- | --- | --- |
+| Anonymous status | **PASS — 401 AUTH_REQUIRED** | GET `?exam=H71002&action=status`; response contains only the error field. Direct read-only HTTP probe and both browser probes agree. |
+| Admin status | **PASS — 200** | GET `?exam=H71002&action=status` with the real approved Admin JWT; `local_segmentation_enabled=true`, `external_ai_enabled=false`. Production request started at `19:48:09.638Z`. |
+| Student status | **PASS — 403 ADMIN_REQUIRED** | GET `?exam=H71002&action=status` with the real Student JWT; JSON contains only `error`, no exam/source/configuration data. Production request started at `19:56:26.469Z`. |
+| Admin H71002 GET | **PASS — 200** | GET `?exam=H71002` with the real approved Admin JWT; response has `exam_code=H71002` and 27 questions. Production request started at `19:48:11.440Z`; the actual editor also renders all 27 questions. |
+| Student source access | **PASS — 403 ADMIN_REQUIRED** | GET `?exam=H71002&action=audio` with the real Student JWT; JSON contains only `error`. No MP3, audio URL, waveform or segmentation metadata was returned. Production request started at `19:56:28.487Z`. |
+| Anonymous source access | **PASS — 401 AUTH_REQUIRED** | GET `?exam=H71002&action=audio`; response contains only the error field, with no source data. Direct read-only HTTP probe and both browser probes agree. |
+
+The whitelisted denial bodies are exactly `{"error":"AUTH_REQUIRED"}` or `{"error":"ADMIN_REQUIRED"}`. The probe validates the expected status, error category and single-key body rather than merely accepting any 401/403 response. No POST segmentation request was invoked.
+
+### Routing, identity, roles and Storage are separate evidence
+
+- **Vercel routing: PASS.** Deployment `dpl_EC2aaR727AVFpWdmAbDCbVDcbqSt` remains READY, production, source `f7f24c49da41252c98438f527956cf8f7db5d1c3`, and owns the production alias. Runtime request details identify `/api/hskk-exams` as the invoked function in IAD1, with cache BYPASS and the exact exam/action query. The checkpoint head's API implementation is unchanged from this deployed source. These responses are application results, not Vercel protection redirects or edge 404s.
+- **JWT identity: PASS.** The live Admin status trace shows Supabase `/auth/v1/user` followed by `/rest/v1/profiles`; the Admin H71002 GET trace additionally shows `/rest/v1/rpc/hskk_authoring_draft`. The server's `documentContext` verifies the supplied JWT with Supabase Auth before reading the current profile. The draft RPC is the read-only `get` action, not a draft save.
+- **Supabase role checks: PASS for the tested identities.** The actual Admin is APPROVED and allowed; the actual Student is PENDING and denied. The Student audio trace shows only Auth/user and profiles external calls before HTTP 403, with no authoring RPC or Storage request. The handler's approved-Admin guard precedes exam/configuration/source access. The earlier SET LOCAL ROLE checks remain historical database evidence and are not substituted for these real-JWT results.
+- **Storage: API source authorization PASS; direct Storage object access NOT TESTED.** The source denials prove that Student/anonymous requests cannot reach source retrieval through this API. H71002's production source is still unregistered/unuploaded, so this checkpoint does not claim an actual Admin MP3 download or direct authenticated/anonymous Storage object-policy test. No source object was created or modified.
+
+Production runtime evidence was read from the [actual deployment logs](https://vercel.com/hanngubachhuu/hanngubachhuu/EC2aaR727AVFpWdmAbDCbVDcbqSt/logs), including Admin status request `z8xc7-1790884089638-8410150a5fd7`, Admin exam request `snlpg-1790884091440-607e0cad9831`, Student status request `5hr75-1790884586469-44b33aa05832`, and Student audio request `5hr75-1790884588487-2675d53d54af`. Only non-secret request metadata and external-call paths were inspected; Authorization/cookie values and full exam/source response bodies were not recorded.
+
+### Hosted Admin page and limits
+
+The real production Admin was opened through `quan-tri.html` → **Đề thi → Đề thi HSKK → Sơ cấp → H71002 → Sửa đề**. **PASS for authenticated editor loading:** the page shows verified Admin access, H71002, all 27 question selectors, Q1 `太好了！` and its 7-second response window. The catalog/exam API calls succeed, with no HSKK routing 404, authentication loop or raw technical error exposed in the page. The editor remains at **0/27 confirmed** and **LƯU & XUẤT BẢN** is disabled. No input was edited or source upload initiated. An ignored screenshot records the rendered editor at `test-results/hskk/jwt-admin-editor.png`.
+
+Existing authoring prerequisites remain visible as friendly warnings: the central saved-exam list/save connection is unavailable, and the editor's incidental source requests return **503** because no source is registered/uploaded. These are not marked as successful source delivery or complete authoring readiness. No migration or source registration was used to make the page appear ready.
+
+**CORS unchanged.** This checkpoint uses the same-origin Vercel Admin flow. The historical GitHub Pages OPTIONS 405 is not a JWT failure and no broader CORS allowance or security relaxation was introduced.
+
+### Validation and stop condition
+
+`npm run lint` and `npm run build`: **PASS**. The full existing working-directory test run: **187 tests, 184 passed, 3 failed, 0 skipped**. The three failures remain the pre-existing untracked `tests/hskk-auto-next.test.mjs` fixtures with empty audio URLs (`INVALID_AUDIO`); no unrelated test or runtime edits were changed. Logs are ignored under `test-results/hskk-jwt-local-tests.txt` and `test-results/hskk-jwt-build.txt`.
+
+CI at starting head `39f70f6`: [Validate study web app](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36909309300) and [Validate lesson data](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36909309234) both **PASS**. The committed suite has 182 passing tests and 2 explicitly skipped unavailable private-source tests, separate from the untracked local fixture failures. CI for this documentation update is checked against its own new commit after pushing and reported separately.
+
+**STOP: the requested hosted JWT authorization checkpoint is PASS.** No production data was changed by this checkpoint: no database write/migration, source upload, segmentation, audio confirmation, clip generation, question-version binding, learner-access change, production exam session, publication, Speaking activation or scheduler change. Those later release steps remain outside this task; direct Storage/source delivery and central authoring readiness still require their own authorized work.
+
 ## HOSTED API ROUTING — 2026-10-02 (Asia/Bangkok)
 
 Continues PR #36 at `f7f24c49da41252c98438f527956cf8f7db5d1c3`. **The production 404 is resolved. Preview: PASS for route existence. Production: PASS for route existence and actual Admin catalog/exam GET. The complete hosted JWT smoke matrix is still incomplete; do not label the full checkpoint HOSTED API ROUTING VERIFIED yet.** No H71002 upload, segmentation, confirmation, access creation, publication, Speaking activation, scheduler change or database migration was performed in this routing task. The earlier infrastructure checkpoint below is historical and is superseded here for Vercel deployment/session state.
