@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/lesson.schema.json",
+  "title": "Hán Ngữ Cùng Bách Hữu - Lesson",
+  "description": "Schema chung cho một bài học. Nội dung cụ thể được lưu ở dữ liệu riêng.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "entityType", "program", "levelId", "sequence", "status", "version", "audit"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "entityType": { "const": "lesson" },
+    "program": { "enum": ["hsk", "hskk"] },
+    "examSystemId": { "type": "string", "minLength": 1 },
+    "levelId": { "type": "string", "minLength": 1 },
+    "unitId": { "type": ["string", "null"] },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "title": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "zhHans": { "type": ["string", "null"] },
+        "vi": { "type": ["string", "null"] }
+      },
+      "required": ["zhHans", "vi"]
+    },
+    "skills": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["listening", "speaking", "reading", "writing", "translation", "pronunciation", "characters", "vocabulary", "grammar"]
+      }
+    },
+    "contentRefs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "status": {
+      "enum": ["draft", "review", "published", "archived"]
+    },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content", "schema"],
+      "properties": {
+        "content": { "type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "schema": { "type": "string", "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdAt", "updatedAt"],
+      "properties": {
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": ["string", "null"] },
+        "updatedBy": { "type": ["string", "null"] }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contentChecked": { "type": "boolean" },
+        "languageChecked": { "type": "boolean" },
+        "sourceChecked": { "type": "boolean" },
+        "pedagogyChecked": { "type": "boolean" },
+        "approvedForPublish": { "type": "boolean" },
+        "lastReviewedAt": { "type": ["string", "null"], "format": "date-time" }
+      }
+    }
+  }
+}

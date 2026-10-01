@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Từ điển | Hán Ngữ Cùng Bách Hữu</title><meta name="description" content="Nghĩa, cách đọc, Hán tự và ví dụ — trong cùng một nơi tra cứu."><link rel="stylesheet" href="study/study.css"><link rel="stylesheet" href="study/account.css"><link rel="stylesheet" href="navigation.css?v=54e46f1da9398f577e3432ba7c87e09ed34ff6f3"><link rel="stylesheet" href="study/dictionary.css"><script src="data/supabase-public.js?v=54e46f1da9398f577e3432ba7c87e09ed34ff6f3"></script><script src="hsk1-navigation.js?v=54e46f1da9398f577e3432ba7c87e09ed34ff6f3" defer></script><script type="module" src="study/tu-dien.mjs"></script></head><body class="study-page dictionary-page"><a class="st-skip" href="#main">Đến nội dung</a><nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel"></div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav><main class="st-main" id="main"><div class="st-crumb"><a href="trang-chu.html">Trang chủ</a><span>/</span><span>Từ điển</span></div><header class="dc-intro"><div><p class="st-eyebrow">词典 · TỪ ĐIỂN TRUNG–VIỆT</p><h1>Tra một từ. <em>Hiểu thêm một chút.</em></h1><p>Nghĩa, cách đọc, Hán tự và ví dụ — trong cùng một nơi tra cứu.</p></div><span class="st-seal" aria-hidden="true">词</span></header><nav class="st-tool-nav" aria-label="Công cụ học tiếng Trung"><a href="chu-han.html"><span>01</span>Hán Tự</a><a href="tu-dien.html" aria-current="page"><span>02</span>Từ điển</a><a href="doc-hieu.html"><span>03</span>Đọc hiểu</a><button class="st-account" id="accountButton">Đăng nhập</button></nav><noscript><p>Cần bật JavaScript để sử dụng công cụ tra cứu và đọc hiểu.</p></noscript><section class="dc-search-area" aria-label="Tra từ điển">
+  <form id="dictionaryForm">
+    <label for="dictionarySearch" class="dc-search-label"
+      >Bạn muốn tra từ gì?</label
+    >
+    <div class="dc-search-row">
+      <div class="st-search">
+        <span data-icon="search"></span
+        ><input
+          id="dictionarySearch"
+          type="search"
+          placeholder="学习 · xuexi · học tập…"
+          autocomplete="off"
+          maxlength="120"
+          enterkeyhint="search"
+        />
+      </div>
+      <button class="st-button primary" type="submit">Tra từ</button>
+    </div>
+  </form>
+  <div class="dc-search-support">
+    <span>Chữ Hán · Pinyin có/không dấu · Nghĩa Việt</span
+    ><button type="button" id="clearDictionarySearch" class="dc-text-button">
+      Xóa tìm kiếm</button
+    ><button
+      type="button"
+      id="toggleDictionaryShelf"
+      class="dc-text-button dc-filter-toggle"
+      aria-expanded="false"
+      aria-controls="dictionaryShelf"
+    >
+      Bộ lọc HSK & sổ từ</button
+    ><span class="dc-shortcut">Phím / để tra nhanh</span>
+  </div>
+  <div class="dc-tabs" role="tablist" aria-label="Nội dung tra cứu">
+    <button
+      type="button"
+      id="tab-word"
+      role="tab"
+      data-mode="word"
+      aria-selected="true"
+      aria-controls="dictionaryDetail"
+    >
+      Từ vựng</button
+    ><button
+      type="button"
+      id="tab-character"
+      role="tab"
+      data-mode="character"
+      aria-selected="false"
+      aria-controls="dictionaryDetail"
+      tabindex="-1"
+    >
+      Hán tự</button
+    ><button
+      type="button"
+      id="tab-example"
+      role="tab"
+      data-mode="example"
+      aria-selected="false"
+      aria-controls="dictionaryDetail"
+      tabindex="-1"
+    >
+      Ví dụ</button
+    ><button
+      type="button"
+      id="tab-grammar"
+      role="tab"
+      data-mode="grammar"
+      aria-selected="false"
+      aria-controls="dictionaryDetail"
+      tabindex="-1"
+    >
+      Ngữ pháp</button
+    ><button
+      type="button"
+      id="tab-related"
+      role="tab"
+      data-mode="related"
+      aria-selected="false"
+      aria-controls="dictionaryDetail"
+      tabindex="-1"
+    >
+      Kết hợp từ
+    </button>
+  </div>
+</section>
+<p id="dictionaryWarning" class="st-notice" role="status" hidden></p>
+<div class="dc-workspace">
+  <aside class="dc-shelf" id="dictionaryShelf" aria-label="Bộ lọc và sổ từ">
+    <section class="dc-panel">
+      <p class="st-eyebrow">HỌC THEO CẤP ĐỘ</p>
+      <h2>Kho từ HSK 2.0</h2>
+      <div class="dc-filter">
+        <label for="dictionaryLevel"
+          >Lọc kết quả theo cấp<select id="dictionaryLevel">
+            <option value="">Tất cả cấp độ</option>
+            <option value="1">HSK 1</option>
+            <option value="2">HSK 2</option>
+            <option value="3">HSK 3</option>
+            <option value="4">HSK 4</option>
+            <option value="5">HSK 5</option>
+            <option value="6">HSK 6</option>
+          </select></label
+        ><label class="st-check"
+          ><input type="checkbox" id="cumulativeLevel" /> Gồm các cấp thấp
+          hơn</label
+        >
+      </div>
+      <div
+        id="dictionaryLevels"
+        class="dc-levels"
+        aria-label="Khám phá từ vựng từng cấp"
+      ></div>
+      <p class="dc-note">
+        *: từ chỉ có trong tài liệu bổ sung. Cấp của từ theo khung 2.0; câu ví
+        dụ có thể chứa từ ở cấp cao hơn.
+        <a href="nguon-tu-dien.html#hsk-reference">Xem phạm vi và nguồn</a>.
+      </p>
+    </section>
+    <section class="dc-panel">
+      <p class="st-eyebrow">SỔ TỪ CỦA BẠN</p>
+      <h2>Gặp lại để nhớ</h2>
+      <p class="dc-count" id="savedWordsCount">0</p>
+      <p class="st-caption">từ đã lưu</p>
+      <label class="st-check"
+        ><input type="checkbox" id="onlySavedWords" /> Chỉ xem từ đã lưu</label
+      >
+      <p class="dc-note">
+        Lưu bằng dấu đánh dấu cạnh mục từ. Khi chưa đăng nhập, sổ từ được lưu
+        trên thiết bị này.
+      </p>
+      <div class="st-mini-links">
+        <a href="doc-hieu.html">Gặp từ trong bài đọc <span>→</span></a>
+      </div>
+    </section>
+    <section class="dc-panel">
+      <div class="dc-history-head">
+        <h2>Vừa tra gần đây</h2>
+        <button
+          class="dc-text-button"
+          id="clearDictionaryHistory"
+          type="button"
+        >
+          Xóa
+        </button>
+      </div>
+      <div id="dictionaryHistory" class="dc-history"></div>
+      <p class="dc-note">
+        Tham khảo thêm trên
+        <a
+          id="hanziiReference"
+          href="https://hanzii.net/?hl=vi"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Hanzii ↗</a
+        >. Kết quả mở ở tab mới.
+      </p>
+      <p class="dc-note">Nghe bằng giọng tiếng Trung của thiết bị.</p>
+    </section>
+  </aside>
+  <section class="dc-results" aria-labelledby="dictionaryHeading">
+    <div class="dc-results-head">
+      <div>
+        <h2 id="dictionaryHeading">Kết quả tra cứu</h2>
+        <p id="dictionaryCount" class="st-caption" role="status">
+          Đang tải kho từ…
+        </p>
+      </div>
+      <a class="dc-mobile-detail" href="#dictionaryDetail">Xem chi tiết ↓</a>
+    </div>
+    <div
+      id="dictionaryResults"
+      class="dc-results-list"
+      aria-label="Danh sách kết quả"
+    ></div>
+    <div id="dictionaryPagination" class="st-pagination"></div>
+  </section>
+  <section
+    class="dc-detail"
+    id="dictionaryDetail"
+    role="tabpanel"
+    aria-labelledby="tab-word"
+    tabindex="0"
+  >
+    <div id="dictionaryContent">
+      <p class="dc-loading" role="status">Đang mở từ điển…</p>
+    </div>
+  </section>
+</div>
+<footer class="dc-scope">
+  <span id="dictionaryCoverage">Kho từ điển Trung–Việt</span
+  ><a href="nguon-tu-dien.html">Nguồn dữ liệu và phạm vi</a>
+</footer>
+</main><dialog id="wordDialog" aria-labelledby="wordDialogTitle"><div class="st-dialog-head"><h2 id="wordDialogTitle">Tra từ trong bài</h2><button class="st-icon" data-close="wordDialog" aria-label="Đóng tra từ" data-icon="close"></button></div><div class="st-dialog-body"></div></dialog><dialog id="authDialog" class="account-dialog" aria-labelledby="authTitle"></dialog><div id="studyStatus" class="st-toast" role="status" hidden></div></body></html>

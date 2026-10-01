@@ -1,0 +1,29 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/rubric.schema.json",
+  "title":"Speaking Rubric",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["id","entityType","criteria","status"],
+  "properties":{
+    "id":{"type":"string","pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "entityType":{"const":"rubric"},
+    "criteria":{
+      "type":"array","minItems":1,
+      "items":{
+        "type":"object","additionalProperties":false,
+        "required":["id","label","maxScore"],
+        "properties":{
+          "id":{"type":"string"},
+          "label":{"type":"string"},
+          "description":{"type":["string","null"]},
+          "maxScore":{"type":"number","minimum":0},
+          "weight":{"type":["number","null"],"minimum":0}
+        }
+      }
+    },
+    "status":{"enum":["draft","review","published","archived"]},
+    "sourceRefs":{"type":"array","items":{"type":"string"},"uniqueItems":true},
+    "version":{"type":["string","null"]}
+  }
+}

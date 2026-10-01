@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/hskk-task.schema.json",
+  "title": "HSKK Speaking Task",
+  "description": "Mô hình riêng cho task nói HSKK.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "entityType", "levelId", "taskType", "prompt", "status", "version", "audit"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "entityType": { "const": "hskkTask" },
+    "program": { "const": "hskk" },
+    "examSystemId": { "type": "string" },
+    "levelId": { "enum": ["primary", "intermediate", "advanced"] },
+    "taskType": {
+      "enum": ["listen-repeat", "listen-recount", "listen-answer", "read-aloud", "picture-description", "question-answer", "custom"]
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType"],
+      "properties": {
+        "contentType": { "enum": ["audio", "text", "image", "mixed"] },
+        "contentRef": { "type": ["string", "null"] },
+        "mediaRefs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "prepTimeSeconds": { "type": ["integer", "null"], "minimum": 0 },
+    "responseTimeSeconds": { "type": ["integer", "null"], "minimum": 0 },
+    "rubricRef": { "type": ["string", "null"] },
+    "recordingRequired": { "type": "boolean" },
+    "sourceRefs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "status": { "enum": ["draft", "review", "published", "archived"] },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content", "schema"],
+      "properties": {
+        "content": { "type": "string" },
+        "schema": { "type": "string" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdAt", "updatedAt"],
+      "properties": {
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": ["string", "null"] },
+        "updatedBy": { "type": ["string", "null"] }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "promptChecked": { "type": "boolean" },
+        "audioChecked": { "type": "boolean" },
+        "rubricChecked": { "type": "boolean" },
+        "approvedForPublish": { "type": "boolean" }
+      }
+    }
+  }
+}

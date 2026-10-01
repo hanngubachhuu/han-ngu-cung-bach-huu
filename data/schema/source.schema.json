@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/source.schema.json",
+  "title": "Source / Provenance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "title"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "kind": {
+      "enum": ["official", "textbook", "teacher-authored", "research", "dictionary", "media", "other"]
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "author": { "type": ["string", "null"] },
+    "publisher": { "type": ["string", "null"] },
+    "edition": { "type": ["string", "null"] },
+    "date": { "type": ["string", "null"] },
+    "url": { "type": ["string", "null"], "format": "uri" },
+    "referenceNote": { "type": ["string", "null"] },
+    "verifiedAt": { "type": ["string", "null"], "format": "date-time" }
+  }
+}

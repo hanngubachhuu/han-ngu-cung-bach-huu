@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài 6: 你怎么不吃了？ — Bài tập HSK 2</title>
+<style>
+/* ============================================================
+   THIẾT KẾ MỚI — "CLAYMORPHISM" THÂN THIỆN HỌC SINH
+   Dựa trên gợi ý từ skill ui-ux-pro-max (--design-system cho sản
+   phẩm "Kids Learning App"): khối bo tròn dày dặn (claymorphism),
+   viền dày, đổ bóng đôi tạo cảm giác "ấn được" như nút bấm thật,
+   bảng màu Learning Blue + Play Yellow + Fun Pink — vui mắt nhưng
+   vẫn đủ nghiêm túc cho bài kiểm tra HSK. Font vẫn giữ nguyên theo
+   yêu cầu bắt buộc: KaiTi cho chữ Hán, Times New Roman cho chữ Việt.
+   ============================================================ */
+:root{
+  --bg:#eef4ff; --bg-card:#ffffff; --bg-soft:#e4edfe; --bg-alt:#eef4ff;
+  --text:#1a2033; --text-soft:#5b6478; --text-faint:#8b93a7;
+  --border:#d7e3fb; --border-soft:#e6edfc;
+  --brand:#2563eb; --brand-dark:#1d4ed8; --brand-light:#5b8def; --brand-soft:#dbe8fe;
+  --brand-grad: linear-gradient(135deg,#2563eb,#ec4899);
+  --secondary:#f59e0b; --secondary-dark:#d97706; --secondary-soft:#fef3d9;
+  --accent:#ec4899; --accent-dark:#db2777; --accent-soft:#fce7f3;
+  --green:#16a266; --green-soft:#e3f8ee; --green-bd:#9fe0c1;
+  --amber:#c8850a; --amber-soft:#fdf1de; --amber-bd:#f2cf8f;
+  --orange:#d0670f; --orange-soft:#fdece0; --orange-bd:#f3c299;
+  --red:#e0435a; --red-soft:#fceaed; --red-bd:#f2b4c0;
+  --gray:#9aa2b1; --gray-soft:#eef0f4;
+  --shadow-sm: 0 1px 3px rgba(30,52,110,.08);
+  --shadow: 0 4px 16px rgba(30,52,110,.10), 0 1px 3px rgba(30,52,110,.07);
+  --shadow-lg: 0 16px 40px rgba(30,52,110,.16);
+  --radius-lg:26px; --radius:20px; --radius-sm:14px; --radius-xs:10px;
+  --font-cn:"KaiTi","STKaiti","KaiTi_GB2312",serif;
+  --font-vn:"Times New Roman","Times",serif;
+}
+[data-theme="dark"]{
+  --bg:#0f1420; --bg-card:#182032; --bg-soft:#1b2436; --bg-alt:#182032;
+  --text:#eef0f8; --text-soft:#aab0c5; --text-faint:#767e94;
+  --border:#2c3b5c; --border-soft:#26314a;
+  --brand:#5b8dff; --brand-dark:#3f6fe0; --brand-light:#8bb0ff; --brand-soft:#1d2a47;
+  --brand-grad: linear-gradient(135deg,#3f6fe0,#db2777);
+  --secondary:#f0b545; --secondary-dark:#d99a2b; --secondary-soft:#332907;
+  --accent:#f472b6; --accent-dark:#db2777; --accent-soft:#3a1c30;
+  --green:#4fd685; --green-soft:#153224; --green-bd:#255c3b;
+  --amber:#f0b545; --amber-soft:#332907; --amber-bd:#5c4a15;
+  --orange:#ff9c52; --orange-soft:#3a2410; --orange-bd:#6b431c;
+  --red:#ff7086; --red-soft:#3a1620; --red-bd:#6b2635;
+  --gray:#6b7284; --gray-soft:#232739;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
+  --shadow: 0 4px 16px rgba(0,0,0,.35);
+  --shadow-lg: 0 16px 40px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--font-vn);
+  transition:background .25s, color .25s;
+  padding-bottom:60px;
+  -webkit-font-smoothing:antialiased;
+}
+.zh{font-family:var(--font-cn);}
+h1,h2,h3{font-family:var(--font-vn); margin:0 0 .4em;}
+a{color:var(--brand);}
+button{font-family:var(--font-vn); cursor:pointer;}
+::selection{background:var(--brand-soft); color:var(--brand-dark);}
+.container{max-width:960px; margin:0 auto; padding:0 20px;}
+
+/* Tôn trọng người dùng tắt hiệu ứng chuyển động của hệ điều hành —
+   vô hiệu hoá toàn bộ animation/transition "vui mắt" khi được yêu cầu. */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+}
+
+/* ============================================================
+   BUTTONS (dùng chung intro + toàn app)
+   Phong cách "claymorphism": viền dày + bóng đáy tạo cảm giác nút
+   bấm thật (giống nút bấm đồ chơi/Duolingo) — ấn xuống khi click.
+   ============================================================ */
+.btn{
+  border:none; border-radius:14px; padding:12px 20px; font-size:14.5px; font-weight:800;
+  transition:transform .12s ease, box-shadow .12s ease, filter .15s; display:inline-flex; align-items:center; justify-content:center; gap:7px;
+}
+.btn-primary{
+  background:var(--brand-grad); color:#fff;
+  box-shadow:0 4px 0 var(--brand-dark), 0 10px 20px rgba(37,99,235,.28);
+}
+.btn-primary:hover{filter:brightness(1.06); transform:translateY(-1px); box-shadow:0 5px 0 var(--brand-dark), 0 12px 22px rgba(37,99,235,.34);}
+.btn-primary:active{transform:translateY(3px); box-shadow:0 1px 0 var(--brand-dark), 0 4px 10px rgba(37,99,235,.28);}
+.btn-secondary{background:var(--bg-soft); color:var(--text); border:2px solid var(--border); box-shadow:0 3px 0 var(--border);}
+.btn-secondary:hover{background:var(--border-soft); transform:translateY(-1px);}
+.btn-secondary:active{transform:translateY(2px); box-shadow:0 1px 0 var(--border);}
+.btn-ghost{background:transparent; color:var(--brand); border:2px solid var(--brand);}
+.btn-danger{background:var(--red-soft); color:var(--red); border:2px solid var(--red-bd);}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none !important;}
+.btn-lg{padding:17px 36px; font-size:17.5px; border-radius:16px;}
+.btn-block{width:100%;}
+.icon-btn{
+  border:2px solid var(--border); background:var(--bg-soft); color:var(--text);
+  border-radius:999px; width:40px; height:40px; display:flex; align-items:center;
+  justify-content:center; font-size:17px; transition:.15s; flex:0 0 auto;
+}
+.icon-btn:hover{background:var(--brand-soft); border-color:var(--brand); transform:translateY(-2px) scale(1.05);}
+.icon-btn:active{transform:translateY(0) scale(.95);}
+
+/* ============================================================
+   MÀN HÌNH MỞ ĐẦU (INTRO / START SCREEN)
+   ============================================================ */
+#introScreen{
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px 18px;
+  background:
+    radial-gradient(circle at 12% -10%, rgba(124,92,240,.16), transparent 45%),
+    radial-gradient(circle at 100% 0%, rgba(79,95,224,.12), transparent 40%),
+    var(--bg);
+}
+.intro-card{
+  max-width:600px; width:100%; background:var(--bg-card); border:2px solid var(--border-soft);
+  border-radius:30px; box-shadow:var(--shadow-lg); padding:0 0 38px; text-align:center;
+  animation:introPop .45s cubic-bezier(.2,.8,.25,1); overflow:hidden;
+}
+.intro-card-top{
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.18), transparent 55%), var(--brand-grad);
+  padding:36px 40px 30px; margin-bottom:26px;
+}
+.intro-card-body{padding:0 40px;}
+@keyframes introPop{from{opacity:0; transform:translateY(14px) scale(.98);} to{opacity:1; transform:translateY(0) scale(1);}}
+.intro-eyebrow{
+  display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:800; letter-spacing:.04em;
+  color:#fff; background:rgba(255,255,255,.24); padding:7px 17px; border-radius:999px; margin-bottom:16px;
+}
+.intro-title{font-family:var(--font-cn); font-size:42pt; color:#fff; line-height:1.2; margin:0 0 6px;}
+.intro-sub{color:rgba(255,255,255,.9); font-size:14.5px;}
+.intro-stats{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:18px;}
+.intro-stat-chip{
+  background:var(--bg-alt); border:2px solid var(--border-soft); border-radius:999px; padding:8px 16px;
+  font-size:13px; color:var(--text-soft); font-weight:700;
+}
+.intro-stat-chip b{color:var(--text); font-weight:800;}
+/* Accordion "Từ vựng / Ngữ pháp" ở màn hình mở đầu — 2 nút bấm to, bấm vào
+   ô nào thì ô đó mở khung nội dung bên dưới, ô còn lại tự thu gọn. */
+.preview-toggle-row{display:flex; gap:10px; margin-bottom:10px;}
+.preview-toggle-btn{
+  flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
+  padding:14px 10px; border-radius:16px; background:var(--bg-alt); border:2px solid var(--border-soft);
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s; box-shadow:0 3px 0 var(--border-soft);
+  font-family:var(--font-vn); cursor:pointer;
+}
+.preview-toggle-btn:hover{transform:translateY(-2px); border-color:var(--brand-light);}
+.preview-toggle-btn:active{transform:translateY(2px); box-shadow:none;}
+.preview-toggle-btn .ic{font-size:21px;}
+.preview-toggle-btn .lb{font-size:13.5px; font-weight:800; color:var(--text);}
+.preview-toggle-btn .ct{font-size:11px; color:var(--text-faint); font-weight:600;}
+.preview-toggle-btn.active{
+  background:var(--brand-soft); border-color:var(--brand); box-shadow:0 3px 0 var(--brand-light);
+}
+.preview-toggle-btn.active .lb{color:var(--brand-dark);}
+.preview-toggle-btn.active .ct{color:var(--brand);}
+
+.preview-panel{
+  max-height:0; overflow:hidden; opacity:0;
+  transition:max-height .35s cubic-bezier(.4,0,.2,1), opacity .25s ease, margin .35s ease;
+  margin-bottom:0;
+}
+.preview-panel.open{max-height:340px; opacity:1; margin-bottom:18px;}
+.preview-panel-inner{
+  border:2px solid var(--border-soft); border-radius:16px; background:var(--bg-alt);
+  padding:14px 16px; max-height:320px; overflow-y:auto; text-align:left;
+}
+/* Bảng từ vựng */
+.vocab-row{
+  display:grid; grid-template-columns:auto 88px 1fr; gap:10px; align-items:baseline;
+  padding:8px 4px; border-bottom:1px solid var(--border-soft);
+}
+.vocab-row:last-child{border-bottom:none;}
+.vocab-row .han{font-family:var(--font-cn); font-size:19px; color:var(--text); white-space:nowrap;}
+.vocab-row .pinyin{font-size:12.5px; color:var(--brand-dark); font-style:italic; white-space:nowrap;}
+.vocab-row .nghia{font-size:13px; color:var(--text-soft);}
+/* Danh sách ngữ pháp */
+.grammar-item{padding:10px 4px; border-bottom:1px solid var(--border-soft);}
+.grammar-item:last-child{border-bottom:none;}
+.grammar-item .g-title{font-size:13.5px; font-weight:800; color:var(--text); margin-bottom:4px;}
+.grammar-item .g-desc{font-size:12.5px; color:var(--text-soft); line-height:1.55; margin-bottom:4px;}
+.grammar-item .g-example{font-size:12.5px; color:var(--brand-dark); background:var(--brand-soft); padding:6px 10px; border-radius:8px; display:inline-block;}
+.intro-history-box{
+  background:var(--brand-soft); border:2px solid var(--border-soft); border-radius:var(--radius);
+  padding:18px 20px; margin-bottom:22px; text-align:left;
+}
+.intro-history-box .h-title{font-weight:800; font-size:14.5px; color:var(--brand-dark); margin-bottom:10px; display:flex; align-items:center; gap:6px;}
+.intro-history-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(90px,1fr)); gap:10px; margin-bottom:12px;}
+.intro-history-grid .cell{text-align:center;}
+.intro-history-grid .cell b{display:block; font-size:18px; color:var(--text);}
+.intro-history-grid .cell span{font-size:11.5px; color:var(--text-faint);}
+.intro-progress-box{
+  background:var(--secondary-soft); border:2px solid var(--amber-bd); border-radius:var(--radius);
+  padding:16px 20px; margin-bottom:22px; text-align:left; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+}
+.intro-progress-box .txt{font-size:13.5px; color:var(--text); font-weight:600;}
+.intro-progress-box .txt b{color:var(--secondary-dark);}
+.intro-actions{display:flex; flex-direction:column; gap:10px; align-items:stretch;}
+.intro-actions .row{display:flex; gap:10px;}
+.intro-note{margin-top:18px; font-size:12.5px; color:var(--text-faint); display:flex; align-items:center; justify-content:center; gap:6px;}
+@media (max-width:520px){
+  .intro-card{border-radius:24px;}
+  .intro-card-top{padding:30px 22px 24px;}
+  .intro-card-body{padding:0 22px;}
+  .intro-title{font-size:30pt;}
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:var(--bg-card); border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-sm);
+}
+.topbar-inner{
+  max-width:960px; margin:0 auto; padding:12px 20px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.topbar .brand{
+  font-weight:800; font-size:14.5px; color:var(--brand); flex:0 0 auto;
+  display:flex; align-items:center; gap:6px; cursor:pointer;
+}
+.topbar .lesson-name{font-size:13.5px; color:var(--text-soft); flex:1 1 auto; min-width:100px; font-weight:600;}
+.topbar .timer{
+  font-variant-numeric:tabular-nums; font-weight:800; font-size:14.5px;
+  background:var(--brand-soft); color:var(--brand-dark);
+  padding:7px 14px; border-radius:999px; display:flex; align-items:center; gap:6px;
+}
+.topbar .timer.warn{background:var(--red-soft); color:var(--red); animation:timerPulse 1s infinite;}
+@keyframes timerPulse{0%,100%{opacity:1;}50%{opacity:.55;}}
+.progress-track{
+  height:7px; background:var(--bg-soft); overflow:hidden;
+}
+.progress-fill{
+  height:100%; background:var(--brand-grad);
+  width:0%; transition:width .3s;
+}
+.progress-meta{
+  display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-faint); font-weight:600;
+  padding:5px 20px 0; max-width:960px; margin:0 auto;
+}
+
+/* ============================================================
+   HERO / HEADER BÀI HỌC (trong lúc làm bài)
+   ============================================================ */
+.hero{
+  max-width:960px; margin:24px auto 8px; padding:26px 30px;
+  background:var(--bg-card);
+  border-radius:var(--radius-lg); box-shadow:var(--shadow); border:2px solid var(--border-soft);
+  display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+}
+.hero-left{flex:1 1 260px;}
+.hero h1{font-size:24px; color:var(--text);}
+.hero .zh-title{font-family:var(--font-cn); font-size:30pt; color:var(--text); line-height:1.25; margin-bottom:2px;}
+.hero .sub{color:var(--text-faint); font-size:13px;}
+.hero .meta-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
+.chip{background:var(--bg-alt); border:2px solid var(--border-soft); border-radius:999px; padding:6px 14px; font-size:12.5px; color:var(--text-soft); font-weight:700;}
+.hero-ring{flex:0 0 auto;}
+.ring-wrap{position:relative; width:84px; height:84px;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-wrap .ring-bg{fill:none; stroke:var(--bg-soft); stroke-width:8;}
+.ring-wrap .ring-fg{fill:none; stroke:var(--accent); stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset .3s;}
+.ring-wrap .ring-txt{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; color:var(--brand-dark);}
+
+/* ============================================================
+   STAT / HISTORY BANNER (sau khi làm xong, hiển thị lại)
+   ============================================================ */
+.history-banner{
+  background:var(--bg-card); border:2px solid var(--border-soft); border-radius:var(--radius);
+  padding:16px 20px; margin:16px 0; box-shadow:var(--shadow-sm);
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+}
+.history-banner .stats{display:flex; gap:22px; flex-wrap:wrap;}
+.history-banner .stat b{display:block; font-size:18px; color:var(--brand-dark);}
+.history-banner .stat span{font-size:12px; color:var(--text-faint);}
+
+/* ============================================================
+   NAV LƯỚI CÂU HỎI (không chia theo phần — 1 lưới liền mạch)
+   Ô vuông bo tròn dày, đổ bóng đáy nhẹ để trông như nút bấm/thẻ
+   bài — sinh động và dễ nhận biết trạng thái hơn ô phẳng đơn điệu.
+   ============================================================ */
+.nav-panel{
+  background:var(--bg-card); border:2px solid var(--border-soft); border-radius:var(--radius-lg);
+  padding:18px 20px; margin:16px 0; box-shadow:var(--shadow-sm);
+}
+.nav-panel-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+.nav-panel h3{font-size:13.5px; color:var(--text-soft); text-transform:uppercase; letter-spacing:.04em; margin:0;}
+.nav-toggle{
+  border:none; background:transparent; color:var(--brand); font-size:12.5px; font-weight:700; display:none;
+}
+.nav-legend{display:flex; gap:14px; flex-wrap:wrap; font-size:11.5px; color:var(--text-soft); margin-bottom:12px;}
+.legend-dot{width:9px; height:9px; border-radius:3px; display:inline-block; margin-right:5px; vertical-align:middle;}
+.nav-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(38px,1fr)); gap:8px;}
+.nav-cell{
+  aspect-ratio:1; border-radius:11px; border:2px solid var(--border);
+  background:var(--gray-soft); color:var(--text-soft); font-size:12px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; transition:transform .12s ease, box-shadow .12s ease;
+  box-shadow:0 2px 0 var(--border);
+}
+.nav-cell:hover{transform:translateY(-2px); box-shadow:0 4px 0 var(--brand-light); border-color:var(--brand);}
+.nav-cell:active{transform:translateY(1px); box-shadow:0 1px 0 var(--border);}
+.nav-cell.answered{background:var(--brand-soft); color:var(--brand-dark); border-color:var(--brand); box-shadow:0 2px 0 var(--brand-light);}
+.nav-cell.current{outline:2.5px solid var(--accent); outline-offset:2px;}
+.nav-cell.correct{background:var(--green-soft); color:var(--green); border-color:var(--green-bd); box-shadow:0 2px 0 var(--green-bd);}
+.nav-cell.wrong{background:var(--red-soft); color:var(--red); border-color:var(--red-bd); box-shadow:0 2px 0 var(--red-bd);}
+.nav-cell.partial{background:var(--amber-soft); color:var(--amber); border-color:var(--amber-bd); box-shadow:0 2px 0 var(--amber-bd);}
+
+/* ============================================================
+   PASSAGE (ĐOẠN VĂN ĐỌC HIỂU)
+   ============================================================ */
+.passage-card{
+  background:var(--bg-alt); border:2px solid var(--border); border-left:5px solid var(--brand);
+  border-radius:var(--radius-sm); padding:18px 20px; margin-bottom:16px;
+}
+.passage-card .passage-label{font-size:12px; font-weight:700; color:var(--brand-dark); text-transform:uppercase; margin-bottom:8px;}
+.passage-card .passage-text{font-size:19pt; line-height:2; color:var(--text);}
+
+/* ============================================================
+   QUESTION CARD
+   ============================================================ */
+.q-card{
+  background:var(--bg-card); border:2px solid var(--border-soft); border-radius:var(--radius-lg);
+  padding:28px 28px 24px; margin:16px 0; box-shadow:var(--shadow); animation:fadeIn .25s ease;
+}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+@keyframes popIn{0%{opacity:0; transform:scale(.9);} 60%{transform:scale(1.02);} 100%{opacity:1; transform:scale(1);}}
+.q-head{display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap;}
+.q-badge{
+  background:var(--brand-grad); color:#fff; font-weight:800; font-size:12.5px;
+  padding:6px 14px; border-radius:999px; box-shadow:0 2px 0 var(--brand-dark);
+}
+.q-type-badge{
+  font-size:11px; color:var(--text-soft); border:2px solid var(--border-soft); background:var(--bg-alt);
+  padding:4px 11px; border-radius:999px; font-weight:700;
+}
+.q-prompt{font-size:24pt; line-height:1.55; margin:8px 0 14px; color:var(--text); font-weight:600;}
+.hint-inline{
+  display:inline-flex; align-items:center; gap:6px; font-size:19pt; font-weight:600; color:var(--secondary-dark);
+  background:var(--secondary-soft); border:2px solid var(--amber-bd); padding:8px 16px; border-radius:14px; margin-bottom:18px;
+}
+.hint-inline::before{content:"💡"; font-size:15px;}
+
+/* Banner kết quả thân thiện, hiện ngay đầu phần trả lời sau khi nộp bài —
+   nảy nhẹ khi xuất hiện để tạo cảm giác phản hồi tức thì, sinh động. */
+.result-banner{
+  display:flex; align-items:center; gap:10px; padding:14px 18px; border-radius:var(--radius);
+  font-size:15.5px; font-weight:800; margin-bottom:16px; animation:popIn .35s cubic-bezier(.34,1.56,.64,1);
+}
+.result-banner.is-correct{background:var(--green-soft); color:var(--green); border:2px solid var(--green-bd);}
+.result-banner.is-wrong{background:var(--red-soft); color:var(--red); border:2px solid var(--red-bd);}
+.result-banner.is-partial{background:var(--amber-soft); color:var(--amber); border:2px solid var(--amber-bd);}
+
+/* Khung hiển thị đáp án đúng khi học sinh trả lời sai (điền từ / sắp xếp câu) —
+   đồng bộ kiểu dáng với khung đáp án mẫu của phần tự luận, cỡ chữ ngang bằng
+   nội dung câu hỏi để không bị lệch tông. */
+.answer-reveal-box{
+  margin-top:14px; padding:16px 18px; border-radius:var(--radius); background:var(--green-soft);
+  border:2px solid var(--green-bd);
+}
+.answer-reveal-box .label{font-size:12px; font-weight:800; color:var(--green); text-transform:uppercase; margin-bottom:6px; letter-spacing:.03em;}
+.answer-reveal-box .content{font-size:22pt; color:var(--text); line-height:1.6;}
+
+/* mcq options — bo tròn dày dặn, viền rõ, hiệu ứng "ấn xuống" khi bấm giống
+   nút bấm vật lý để tạo cảm giác thao tác chắc chắn, thú vị cho học sinh. */
+.opt-list{display:flex; flex-direction:column; gap:11px;}
+.opt{
+  display:flex; align-items:center; gap:14px; padding:15px 18px; border:2.5px solid var(--border);
+  border-radius:var(--radius); background:var(--bg-alt); font-size:24pt;
+  transition:transform .12s ease, box-shadow .12s ease, border-color .15s, background .15s;
+  box-shadow:0 3px 0 var(--border);
+}
+.opt:hover{border-color:var(--brand-light); background:var(--brand-soft); transform:translateY(-2px); box-shadow:0 5px 0 var(--brand-light);}
+.opt:active{transform:translateY(2px); box-shadow:0 1px 0 var(--border);}
+.opt .opt-letter{
+  width:34px; height:34px; border-radius:50%; background:var(--bg-card); border:2px solid var(--border);
+  display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex:0 0 auto;
+  font-family:var(--font-vn); color:var(--text-soft);
+}
+.opt.selected{border-color:var(--brand); background:var(--brand-soft); box-shadow:0 3px 0 var(--brand-light);}
+.opt.selected .opt-letter{background:var(--brand); color:#fff; border-color:var(--brand);}
+.opt.locked{pointer-events:none; box-shadow:none; transform:none;}
+.opt.correct-answer{border-color:var(--green); background:var(--green-soft); box-shadow:0 3px 0 var(--green-bd); animation:popIn .35s cubic-bezier(.34,1.56,.64,1);}
+.opt.correct-answer .opt-letter{background:var(--green); color:#fff; border-color:var(--green);}
+.opt.wrong-answer{border-color:var(--red); background:var(--red-soft); box-shadow:0 3px 0 var(--red-bd);}
+.opt.wrong-answer .opt-letter{background:var(--red); color:#fff; border-color:var(--red);}
+
+/* text fill */
+.fill-input{
+  width:100%; font-size:24pt; padding:15px 18px; border-radius:var(--radius);
+  border:2.5px solid var(--border); background:var(--bg-alt); color:var(--text);
+  font-family:var(--font-cn);
+}
+.fill-input:focus{outline:none; border-color:var(--brand); background:var(--bg-card); box-shadow:0 0 0 4px var(--brand-soft);}
+.fill-input.locked{pointer-events:none; opacity:.9;}
+.fill-input.correct{border-color:var(--green); background:var(--green-soft);}
+.fill-input.wrong{border-color:var(--red); background:var(--red-soft);}
+
+/* reorder tokens — bo tròn dày, đổ bóng đáy để trông như quân cờ/thẻ chữ
+   có thể "cầm nắm" được, khuyến khích học sinh tương tác. */
+.reorder-zone{
+  min-height:66px; border:2.5px dashed var(--border); border-radius:var(--radius);
+  padding:12px; display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; background:var(--bg-alt);
+}
+.reorder-pool{display:flex; flex-wrap:wrap; gap:8px;}
+.token{
+  font-family:var(--font-cn); font-size:22pt; padding:9px 18px; border-radius:14px;
+  background:var(--bg-card); border:2.5px solid var(--border); box-shadow:0 3px 0 var(--border);
+  transition:transform .12s ease, box-shadow .12s ease, border-color .15s;
+}
+.token:hover{border-color:var(--brand); transform:translateY(-2px); box-shadow:0 4px 0 var(--brand-light);}
+.token:active{transform:translateY(2px); box-shadow:0 1px 0 var(--border);}
+.token.used{opacity:.3; pointer-events:none; box-shadow:none;}
+.token.placed{background:var(--brand-soft); border-color:var(--brand); box-shadow:0 3px 0 var(--brand-light);}
+
+/* self check */
+.selfcheck-area textarea{
+  width:100%; min-height:115px; font-size:24pt; padding:15px 18px; border-radius:var(--radius);
+  border:1.5px solid var(--border); background:var(--bg-alt); color:var(--text); resize:vertical;
+  font-family:var(--font-cn);
+}
+.selfcheck-area textarea:focus{outline:none; border-color:var(--brand); background:var(--bg-card); box-shadow:0 0 0 4px var(--brand-soft);}
+.selfcheck-area textarea.locked{pointer-events:none; opacity:.9;}
+.model-answer-box{
+  margin-top:16px; padding:16px 18px; border-radius:var(--radius); background:var(--green-soft);
+  border:2px solid var(--green-bd);
+}
+.model-answer-box .label{font-size:12px; font-weight:800; color:var(--green); text-transform:uppercase; margin-bottom:6px;}
+.model-answer-box .content{font-size:22pt; color:var(--text); line-height:1.6;}
+.selfmark-row{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.selfmark-row .label-txt{font-size:14.5px; color:var(--text-soft); font-weight:700;}
+.selfmark-row .btn-group{display:flex; gap:10px; flex-wrap:wrap;}
+.selfmark-btn{
+  border:2px solid var(--border); background:var(--bg-card); border-radius:999px; padding:10px 18px;
+  font-size:14px; font-weight:700; color:var(--text-soft); transition:transform .12s ease, box-shadow .12s ease;
+  box-shadow:0 2px 0 var(--border);
+}
+.selfmark-btn:hover{transform:translateY(-2px);}
+.selfmark-btn:active{transform:translateY(1px); box-shadow:none;}
+.selfmark-btn[data-v="1"]:hover, .selfmark-btn[data-v="1"].active{border-color:var(--green-bd); background:var(--green-soft); color:var(--green); box-shadow:0 2px 0 var(--green-bd);}
+.selfmark-btn[data-v="0.5"]:hover, .selfmark-btn[data-v="0.5"].active{border-color:var(--amber-bd); background:var(--amber-soft); color:var(--amber); box-shadow:0 2px 0 var(--amber-bd);}
+.selfmark-btn[data-v="0"]:hover, .selfmark-btn[data-v="0"].active{border-color:var(--red-bd); background:var(--red-soft); color:var(--red); box-shadow:0 2px 0 var(--red-bd);}
+
+/* Khung giải thích sau khi nộp bài — thiết kế lại dạng từng "thẻ" riêng biệt,
+   có icon tròn + tiêu đề rõ ràng + nội dung cỡ chữ dễ đọc, thay vì một khối
+   text nhỏ dồn chung (thiết kế cũ khó theo dõi, không thân thiện). */
+.explain-panel{
+  margin-top:20px; padding-top:18px; border-top:2px dashed var(--border);
+  display:flex; flex-direction:column; gap:12px;
+}
+.explain-row{
+  display:flex; gap:14px; align-items:flex-start; padding:15px 16px; border-radius:var(--radius);
+  background:var(--bg-alt); border:2px solid var(--border-soft); border-left:5px solid var(--brand);
+}
+.explain-row.type-error{border-left-color:var(--red);}
+.explain-row.type-tip{border-left-color:var(--secondary);}
+.explain-row.type-example{border-left-color:var(--green);}
+.explain-row .ico{
+  flex:0 0 auto; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:16px; background:var(--brand-soft); border:2px solid var(--border-soft);
+}
+.explain-row.type-error .ico{background:var(--red-soft);}
+.explain-row.type-tip .ico{background:var(--secondary-soft);}
+.explain-row.type-example .ico{background:var(--green-soft);}
+.explain-row .body{flex:1 1 auto; min-width:0;}
+.explain-row .ttl{font-size:12.5px; font-weight:800; color:var(--text-faint); text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px;}
+.explain-row .txt{font-size:17px; line-height:1.65; color:var(--text);}
+
+/* ============================================================
+   NAV BUTTONS DƯỚI (thanh điều hướng cố định)
+   ============================================================ */
+.q-nav-buttons{
+  position:sticky; bottom:0; z-index:40; background:var(--bg-card); border-top:2px solid var(--border-soft);
+  box-shadow:0 -6px 18px rgba(20,25,45,.06); padding:14px 20px; margin:22px -20px 0;
+  display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.q-nav-buttons .side{display:flex; gap:10px;}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(10,12,20,.55); backdrop-filter:blur(2px);
+  display:flex; align-items:center; justify-content:center; z-index:200; padding:20px;
+}
+.modal-box{
+  background:var(--bg-card); border-radius:var(--radius-lg); padding:30px; max-width:440px; width:100%;
+  box-shadow:var(--shadow-lg); border:2px solid var(--border-soft);
+}
+.modal-box h3{font-size:19px; margin-bottom:10px;}
+.modal-box p{color:var(--text-soft); font-size:14.5px; line-height:1.6;}
+.modal-actions{display:flex; gap:10px; margin-top:20px; justify-content:flex-end; flex-wrap:wrap;}
+.modal-list{max-height:40vh; overflow-y:auto; margin:14px 0; display:flex; flex-wrap:wrap; gap:6px;}
+.modal-list .chip-mini{background:var(--red-soft); color:var(--red); border-radius:8px; padding:4px 10px; font-size:12.5px; font-weight:600;}
+
+/* ============================================================
+   RESULT SCREEN
+   ============================================================ */
+.result-hero{
+  text-align:center; padding:40px 20px; background:var(--bg-card); border-radius:var(--radius-lg);
+  border:2px solid var(--border-soft); box-shadow:var(--shadow); margin:20px 0;
+}
+.result-hero .big-percent{font-size:64px; font-weight:800; line-height:1; animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+.result-hero .tier-label{font-size:22px; font-weight:700; margin-top:6px;}
+.result-hero.tier-excellent{--tc:var(--green);}
+.result-hero.tier-good{--tc:#1fa87a;}
+.result-hero.tier-fair{--tc:var(--amber);}
+.result-hero.tier-weak{--tc:var(--orange);}
+.result-hero.tier-poor{--tc:var(--red);}
+.result-hero .big-percent, .result-hero .tier-label{color:var(--tc);}
+.result-stats{display:grid; grid-template-columns:repeat(auto-fit, minmax(120px,1fr)); gap:12px; margin-top:24px;}
+.result-stat{background:var(--bg-alt); border-radius:var(--radius-sm); padding:14px; border:2px solid var(--border-soft);}
+.result-stat b{display:block; font-size:22px;}
+.result-stat span{font-size:12px; color:var(--text-faint);}
+
+.section-score-list{display:flex; flex-direction:column; gap:10px; margin:16px 0;}
+.section-score-row{display:flex; align-items:center; gap:12px; background:var(--bg-card); border:2px solid var(--border-soft); border-radius:var(--radius-sm); padding:12px 16px;}
+.section-score-row .name{flex:0 0 140px; font-size:13.5px; font-weight:700; color:var(--text-soft);}
+.section-score-row .bar-track{flex:1; height:10px; background:var(--bg-soft); border-radius:999px; overflow:hidden;}
+.section-score-row .bar-fill{height:100%; background:var(--brand); border-radius:999px;}
+.section-score-row .pct{flex:0 0 50px; text-align:right; font-weight:700; font-size:13px;}
+
+canvas#skillChart{width:100%; height:280px; background:var(--bg-card); border-radius:var(--radius); border:2px solid var(--border-soft);}
+
+.filter-bar{display:flex; gap:8px; flex-wrap:wrap; margin:16px 0;}
+.filter-chip{
+  border:2px solid var(--border); background:var(--bg-card); border-radius:999px; padding:8px 17px; font-size:13px; color:var(--text-soft); font-weight:700;
+  transition:transform .12s ease;
+}
+.filter-chip:hover{transform:translateY(-1px);}
+.filter-chip.active{border-color:var(--brand); background:var(--brand-soft); color:var(--brand-dark);}
+
+/* history table */
+.history-table{width:100%; border-collapse:collapse; margin-top:14px; font-size:13.5px;}
+.history-table th, .history-table td{padding:10px 12px; text-align:left; border-bottom:1px solid var(--border-soft);}
+.history-table th{color:var(--text-faint); font-size:11.5px; text-transform:uppercase; letter-spacing:.02em;}
+.history-table tr{cursor:pointer; transition:.15s;}
+.history-table tr:hover{background:var(--bg-alt);}
+.tier-pill{padding:3px 10px; border-radius:999px; font-size:11.5px; font-weight:700;}
+
+.floating-controls{position:fixed; right:22px; bottom:100px; display:flex; flex-direction:column; gap:10px; z-index:60;}
+.floating-controls button{box-shadow:var(--shadow-lg);}
+
+footer.print-footer{display:none;}
+
+@media print{
+  .topbar, .nav-panel, .q-nav-buttons, .floating-controls, .history-banner .btn, .filter-bar, .no-print{display:none !important;}
+  body{background:#fff; color:#000;}
+  .q-card, .result-hero, .passage-card{box-shadow:none; border:1px solid #ccc;}
+  .container{max-width:100%;}
+  @page{size:A4; margin:14mm;}
+}
+@media (max-width:640px){
+  .hero{padding:20px 20px;}
+  .hero .zh-title{font-size:24pt;}
+  .hero-ring{display:none;}
+  .q-card{padding:20px 18px 18px;}
+  .q-prompt{font-size:19pt;}
+  .opt, .fill-input, .selfcheck-area textarea{font-size:18pt;}
+  .q-nav-buttons{margin:22px -18px 0; padding:12px 16px;}
+}
+</style>
+<link rel="stylesheet" href="navigation.css">
+<link rel="stylesheet" href="private-lesson.css"><meta name="robots" content="noindex"><noscript><style>body>*{display:none}body::before{content:"Bài học cần JavaScript và tài khoản được cấp quyền."}</style></noscript></head>
+<body data-lesson-id="hsk2_bai6_zenme" data-lesson-engine="legacy">
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
+            <div class="dd-level-lessons">
+              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a>
+              <a href="bai2_index.html">Bài 2 · 我每天六点起床</a>
+              <a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a>
+              <a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a>
+              <a href="bai5_index.html">Bài 5 · 就买这件吧</a>
+              <a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a>
+              <a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+              <a href="bai8_index.html">Bài 8 · 让我想想再告诉你</a>
+              <a href="bai9_index.html">Bài 9 · 题太多，我没做完</a>
+              <a href="bai10_index.html">Bài 10 · 别找了，手机在桌子上呢</a>
+              <a href="bai11_index.html">Bài 11 · 他比我大三岁</a>
+              <a href="bai12_index.html">Bài 12 · 你穿得太少了</a>
+              <a href="bai13_index.html">Bài 13 · 门开着呢</a>
+              <a href="bai14_index.html">Bài 14 · 你看过那个电影吗</a>
+              <a href="bai15_index.html">Bài 15 · 新年就要到了</a>
+            </div>
+          </div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var btn=document.getElementById('siteNavBurger');
+  var links=document.getElementById('siteNavLinks');
+  var ddBtn=document.getElementById('hskDropdownBtn');
+  var ddWrap=document.getElementById('hskDropdown');
+  if(ddBtn&&ddWrap){
+    ddBtn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=ddWrap.classList.toggle('open');
+      ddBtn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    document.addEventListener('click',function(e){
+      if(ddWrap.classList.contains('open')&&!ddWrap.contains(e.target)){
+        ddWrap.classList.remove('open');
+        ddBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+  if(btn&&links){
+    btn.addEventListener('click',function(){
+      var open=links.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      btn.textContent=open?'✕':'☰';
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        btn.textContent='☰';
+      });
+    });
+  }
+})();
+</script>
+
+<!-- ============================================================
+     MÀN HÌNH MỞ ĐẦU — hiển thị trước khi vào bài làm
+     ============================================================ -->
+<div id="introScreen">
+  <div class="intro-card">
+    <div class="intro-card-top">
+      <div class="intro-eyebrow" id="introEyebrow">📚 HSK 2</div>
+      <h1 class="intro-title" id="introZh">—</h1>
+      <div class="intro-sub" id="introSub">—</div>
+    </div>
+    <div class="intro-card-body">
+    <div class="intro-stats" id="introStats"></div>
+
+    <!-- Accordion Từ vựng / Ngữ pháp — bấm vào ô nào thì ô đó mở rộng ra,
+         ô còn lại thu gọn nhường chỗ (chỉ mở 1 ô tại một thời điểm). -->
+    <div class="preview-toggle-row" id="previewToggleRow">
+      <button class="preview-toggle-btn" id="btnToggleVocab" type="button" data-panel="vocab">
+        <span class="ic">📚</span><span class="lb">Từ vựng</span><span class="ct" id="vocabCount">0 từ</span>
+      </button>
+      <button class="preview-toggle-btn" id="btnToggleGrammar" type="button" data-panel="grammar">
+        <span class="ic">✍️</span><span class="lb">Ngữ pháp</span><span class="ct" id="grammarCount">0 điểm</span>
+      </button>
+    </div>
+    <div class="preview-panel" id="previewPanelVocab">
+      <div class="preview-panel-inner" id="vocabTableWrap"></div>
+    </div>
+    <div class="preview-panel" id="previewPanelGrammar">
+      <div class="preview-panel-inner" id="grammarListWrap"></div>
+    </div>
+
+    <div class="intro-history-box" id="introHistoryBox" style="display:none;"></div>
+    <div class="intro-progress-box" id="introProgressBox" style="display:none;"></div>
+
+    <div class="intro-actions">
+      <button class="btn btn-primary btn-lg btn-block" id="btnStart">🚀 Bắt đầu làm bài</button>
+      <div class="row" id="introSecondaryRow" style="display:none;">
+        <button class="btn btn-secondary btn-block" id="btnViewHistoryIntro">📊 Xem lịch sử làm bài</button>
+      </div>
+    </div>
+    <div class="intro-note">💾 Đáp án được tự động lưu — không lo mất bài khi tải lại trang.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     KHUNG ỨNG DỤNG CHÍNH (ẩn cho tới khi bấm Bắt đầu)
+     ============================================================ -->
+<div id="appShell" style="display:none;">
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span class="brand" id="brandHome" title="Về màn hình đầu">📚 HSK 2</span>
+      <span class="lesson-name" id="topbarLessonName">—</span>
+      <span class="timer" id="timerDisplay">⏱ --:--</span>
+      <button class="icon-btn" id="themeToggle" title="Đổi giao diện sáng/tối">🌙</button>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-meta">
+      <span id="progressText">0/0 câu đã làm</span>
+      <span id="progressPercent">0%</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-left">
+        <h1 class="zh-title" id="heroZh">—</h1>
+        <div class="sub" id="heroSub">—</div>
+        <div class="meta-row" id="heroMeta"></div>
+      </div>
+      <div class="hero-ring">
+        <div class="ring-wrap">
+          <svg width="84" height="84" viewBox="0 0 84 84">
+            <circle class="ring-bg" cx="42" cy="42" r="36"></circle>
+            <circle class="ring-fg" id="ringFg" cx="42" cy="42" r="36" stroke-dasharray="226" stroke-dashoffset="226"></circle>
+          </svg>
+          <div class="ring-txt" id="ringTxt">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY BANNER -->
+    <div class="history-banner" id="historyBanner" style="display:none;"></div>
+
+    <!-- NAV PANEL -->
+    <div class="nav-panel" id="navPanel">
+      <div class="nav-panel-head">
+        <h3>Điều hướng câu hỏi</h3>
+      </div>
+      <div class="nav-legend">
+        <span><i class="legend-dot" style="background:var(--gray-soft); border:1px solid var(--border);"></i>Chưa làm</span>
+        <span><i class="legend-dot" style="background:var(--brand-soft); border:1px solid var(--brand);"></i>Đã làm</span>
+        <span><i class="legend-dot" style="background:var(--brand); border:1px solid var(--brand);"></i>Đang làm</span>
+        <span id="legendGraded" style="display:none;">
+          <i class="legend-dot" style="background:var(--green-soft); border:1px solid var(--green-bd);"></i>Đúng
+          &nbsp;&nbsp;<i class="legend-dot" style="background:var(--red-soft); border:1px solid var(--red-bd);"></i>Sai
+          &nbsp;&nbsp;<i class="legend-dot" style="background:var(--amber-soft); border:1px solid var(--amber-bd);"></i>Một phần
+        </span>
+      </div>
+      <div id="navGridContainer"></div>
+    </div>
+
+    <!-- QUESTION AREA -->
+    <div id="questionArea"></div>
+
+    <!-- NAV BUTTONS -->
+    <div class="q-nav-buttons" id="qNavButtons">
+      <div class="side">
+        <button class="btn btn-secondary" id="btnPrev">← Câu trước</button>
+        <button class="btn btn-secondary" id="btnNext">Câu sau →</button>
+      </div>
+      <button class="btn btn-primary" id="btnSubmit">✅ Nộp bài</button>
+    </div>
+
+    <!-- RESULT AREA -->
+    <div id="resultArea"></div>
+
+  </div>
+
+  <div class="floating-controls no-print">
+    <button class="icon-btn" id="btnScrollTop" title="Lên đầu trang">⬆️</button>
+    <button class="icon-btn" id="btnScrollBottom" title="Xuống cuối trang">⬇️</button>
+  </div>
+
+</div>
+
+<div id="modalRoot"></div>
+
+<script src="data/lesson-registry.js"></script><script src="data/supabase-public.js"></script><script src="private-lesson-loader.js"></script>
+<footer class="site-footer no-print" id="siteFooter">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he">Liên hệ</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Quay về đầu trang" title="Quay về đầu trang">↑</button>
+<script>
+(function(){
+  var y=document.getElementById('footerYear');
+  if(y) y.textContent=new Date().getFullYear();
+  var b=document.getElementById('siteBackTop');
+  if(b){
+    window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>420);},{passive:true});
+    b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+})();
+</script>
+<script src="hsk1-navigation.js" defer></script>
+</body>
+</html>

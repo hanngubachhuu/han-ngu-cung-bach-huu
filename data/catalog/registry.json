@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "v1.0.0",
+  "registryVersion": "v1.0.0",
+  "generatedFor": "han-ngu-cung-bach-huu",
+  "generatedAt": "2026-09-19",
+  "rules": {
+    "learningContentMayBeAddedWithoutApproval": false,
+    "legacyHtmlIsPreserved": true,
+    "answersMustBeSeparatedFromStudentPayload": true,
+    "contentRequiresProvenance": true
+  },
+  "programs": [
+    {
+      "id": "hsk",
+      "name": "HSK",
+      "levels": [
+        "hsk1",
+        "hsk2",
+        "hsk3",
+        "hsk4",
+        "hsk5",
+        "hsk6",
+        "hsk7",
+        "hsk8",
+        "hsk9"
+      ],
+      "note": "Khung có thể chứa toàn bộ dải HSK; trạng thái nội dung hiện tại do registry ghi nhận riêng."
+    },
+    {
+      "id": "hskk",
+      "name": "HSKK",
+      "levels": [
+        "primary",
+        "intermediate",
+        "advanced"
+      ],
+      "note": "Ba cấp được mô hình hóa độc lập với HSK."
+    }
+  ],
+  "siteLearningPages": [
+    {
+      "id": "legacy-hsk2-lesson-1",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 1,
+      "path": "bvnh2-1.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-lesson-2",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 2,
+      "path": "bai2_index.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-lesson-3",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 3,
+      "path": "bai3_index.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-lesson-4",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 4,
+      "path": "bai4_index.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-lesson-5",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 5,
+      "path": "bai5_index.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-lesson-6",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 6,
+      "path": "bai6_index.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-lesson-7",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 7,
+      "path": "bai7_index.html",
+      "kind": "lesson",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hsk2-review",
+      "program": "hsk",
+      "levelId": "hsk2",
+      "sequence": 99,
+      "path": "on-tap-hsk2.html",
+      "kind": "review",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hskk-hub",
+      "program": "hskk",
+      "levelId": "primary",
+      "sequence": 0,
+      "path": "hskk.html",
+      "kind": "hub",
+      "status": "legacy-live"
+    },
+    {
+      "id": "legacy-hskk-primary-speaking",
+      "program": "hskk",
+      "levelId": "primary",
+      "sequence": 1,
+      "path": "baithinoihsk1.html",
+      "kind": "speaking-material",
+      "status": "legacy-live"
+    }
+  ],
+  "legacyDocumentAssets": [
+    {
+      "id": "legacy-doc-hsk2-1-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai_tap_Bai1_HSK2.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-1-answer",
+      "levelId": "hsk2",
+      "path": "data/Dap_an_Bai1_HSK2.docx",
+      "kind": "answer-key"
+    },
+    {
+      "id": "legacy-doc-hsk2-2-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai2_BaiTap.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-2-answer",
+      "levelId": "hsk2",
+      "path": "data/Bai2_DapAn.docx",
+      "kind": "answer-key"
+    },
+    {
+      "id": "legacy-doc-hsk2-3-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai3_BaiTap.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-3-answer",
+      "levelId": "hsk2",
+      "path": "data/Bai3_DapAn.docx",
+      "kind": "answer-key"
+    },
+    {
+      "id": "legacy-doc-hsk2-4-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai4_BaiTap.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-4-answer",
+      "levelId": "hsk2",
+      "path": "data/Bai4_DapAn.docx",
+      "kind": "answer-key"
+    },
+    {
+      "id": "legacy-doc-hsk2-5-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai5_BaiTap.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-5-answer",
+      "levelId": "hsk2",
+      "path": "data/Bai5_DapAn.docx",
+      "kind": "answer-key"
+    },
+    {
+      "id": "legacy-doc-hsk2-6-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai6_BaiTap.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-6-answer",
+      "levelId": "hsk2",
+      "path": "data/Bai6_DapAn.docx",
+      "kind": "answer-key"
+    },
+    {
+      "id": "legacy-doc-hsk2-7-exercise",
+      "levelId": "hsk2",
+      "path": "data/Bai7_BaiTap.docx",
+      "kind": "exercise"
+    },
+    {
+      "id": "legacy-doc-hsk2-7-answer",
+      "levelId": "hsk2",
+      "path": "data/Bai7_DapAn.docx",
+      "kind": "answer-key"
+    }
+  ],
+  "migration": {
+    "canonicalJsonContentItems": 0,
+    "legacyHtmlPages": 10,
+    "legacyDocxAssets": 14,
+    "target": "Migrate one content family at a time without deleting the legacy source until parity is verified.",
+    "currentPhase": "architecture-decided",
+    "migrationStrategy": "rewrite",
+    "adminDashboard": "private-admin-only",
+    "publicAdminDashboard": false,
+    "userState": "backend-database",
+    "sourcePolicy": "light",
+    "publishWorkflow": [
+      "draft",
+      "review",
+      "published",
+      "archived"
+    ],
+    "examVersioning": "per-exam"
+  },
+  "decisions": {
+    "migration": "B",
+    "answerIsolation": "A",
+    "sourcePolicy": "B",
+    "publishWorkflow": "A",
+    "userState": "A",
+    "examVersioning": "A"
+  }
+}

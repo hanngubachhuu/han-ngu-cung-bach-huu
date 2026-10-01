@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "version": "f0e9a45453372a1a",
+  "counts": {
+    "sourceRows": 122597,
+    "mergedRows": 1,
+    "words": 119044,
+    "readings": 122596,
+    "characters": 103013,
+    "commonCharacters": 8105,
+    "hanVietCharacters": 13610,
+    "directHanVietCharacters": 10540,
+    "wordsWithHanViet": 115061
+  },
+  "sources": {
+    "cvdict": {
+      "id": "cvdict",
+      "name": "CVDICT",
+      "author": "Phong Phan; CC-CEDICT contributors",
+      "url": "https://github.com/ph0ngp/CVDICT",
+      "downloadUrl": "https://raw.githubusercontent.com/ph0ngp/CVDICT/c379d909e308343a247e51619f7839a2060a271c/CVDICT.u8",
+      "version": "c379d909e308343a247e51619f7839a2060a271c",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "quality": "ai-assisted-translation",
+      "file": "cvdict.u8.gz",
+      "sha256": "4dde4b204193efa9c192d7f7daeab1bb579c8ccd7c41ed90d1b6caee22ba0948",
+      "bytes": 10803314
+    },
+    "hanviet": {
+      "id": "hanviet",
+      "name": "Hán Việt Pinyin",
+      "author": "Phong Phan",
+      "url": "https://github.com/ph0ngp/hanviet-pinyin-wordlist",
+      "downloadUrl": "https://raw.githubusercontent.com/ph0ngp/hanviet-pinyin-words/a1292b0fdfbfeed41e08ae53e8bc4e01167bed28/src/hanvietData.js",
+      "version": "a1292b0fdfbfeed41e08ae53e8bc4e01167bed28",
+      "license": "MIT",
+      "upstreamSha256": "2131eff4375fcd5033d0de3cc44babeebebd3c4236090826baf9e2aaef1b85ed",
+      "licenseUrl": "https://github.com/ph0ngp/hanviet-pinyin-words/blob/a1292b0fdfbfeed41e08ae53e8bc4e01167bed28/LICENSE",
+      "quality": "community-reference",
+      "file": "hanviet.json.gz",
+      "sha256": "4a24b8666694201c8984d19df831d33afd6dc0136d8ca4fca8eac3ef0a68cb6a",
+      "bytes": 256351
+    },
+    "unihan": {
+      "id": "unihan",
+      "name": "Unicode Unihan 17.0",
+      "author": "Unicode, Inc.",
+      "url": "https://www.unicode.org/reports/tr38/",
+      "downloadUrl": "https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip",
+      "version": "17.0.0",
+      "license": "Unicode-3.0",
+      "upstreamSha256": "f7a48b2b545acfaa77b2d607ae28747404ce02baefee16396c5d2d7a8ef34b5e",
+      "radicalsSha256": "826f83be25cd18fb8a5015a514704504e1982e840ea14d058bf583e1cc620c83",
+      "licenseUrl": "https://www.unicode.org/license.txt",
+      "quality": "reference",
+      "file": "unihan.json.gz",
+      "sha256": "8cdbac86e3b6a89ab719d9f0f0f824290799194443a33a593e722c2487850b62",
+      "bytes": 9150448
+    },
+    "jieba": {
+      "id": "jieba",
+      "name": "Jieba word frequencies",
+      "author": "Sun Junyi and contributors",
+      "url": "https://github.com/fxsjy/jieba",
+      "downloadUrl": "https://raw.githubusercontent.com/fxsjy/jieba/67fa2e36e72f69d9134b8a1037b83fbb070b9775/jieba/dict.txt",
+      "version": "67fa2e36e72f69d9134b8a1037b83fbb070b9775",
+      "license": "MIT",
+      "quality": "ranking-only",
+      "licenseUrl": "https://github.com/fxsjy/jieba/blob/67fa2e36e72f69d9134b8a1037b83fbb070b9775/LICENSE",
+      "file": "jieba.txt.gz",
+      "sha256": "7197c3211ddd98962b036cdf40324d1ea2bfaa12bd028e68faa70111a88e12a8",
+      "bytes": 5071852
+    }
+  },
+  "formatCorrections": [
+    {
+      "line": 67267,
+      "change": "Removed duplicate pinyin brackets; definition unchanged"
+    }
+  ],
+  "files": {
+    "words": {
+      "path": "words.db9d4c09fdde.json",
+      "gzip": "words.db9d4c09fdde.json.gz",
+      "gzipBytes": 5058935,
+      "sha256": "db9d4c09fdde5df488efe846b4ca49bd20b1e28e9ec7922525785b7fe772aeac",
+      "bytes": 15713243
+    },
+    "characters": {
+      "path": "characters.ffd2f22dec35.json",
+      "gzip": "characters.ffd2f22dec35.json.gz",
+      "gzipBytes": 1589572,
+      "sha256": "ffd2f22dec356dd0e29b1d4194586adcde7b6bb8aaa62b81dc76811021c137a1",
+      "bytes": 6956302
+    }
+  }
+}

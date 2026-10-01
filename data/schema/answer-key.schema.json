@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/answer-key.schema.json",
+  "title":"Answer Key",
+  "description":"Dữ liệu chấm/đáp án. Thiết kế để không gửi mặc định cho học sinh.",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["id","entityType","itemRef","visibility","status"],
+  "properties":{
+    "id":{"type":"string","pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "entityType":{"const":"answerKey"},
+    "itemRef":{"type":"string","minLength":1},
+    "visibility":{"const":"teacher-only"},
+    "correctResponse":{"type":["string","array","object","null"]},
+    "acceptedResponses":{"type":"array","items":{"type":"string"}},
+    "score":{"type":["number","null"]},
+    "scoringRule":{"type":["string","null"]},
+    "rationaleRef":{"type":["string","null"]},
+    "status":{"enum":["draft","review","published","archived"]},
+    "version":{"type":["string","null"]}
+  }
+}

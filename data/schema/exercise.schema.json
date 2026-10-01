@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hanngubachhuu.github.io/han-ngu-cung-bach-huu/data/schema/exercise.schema.json",
+  "title": "Exercise / Test Item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "entityType", "program", "skill", "itemType", "prompt", "status", "version", "audit"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "entityType": { "enum": ["exercise", "testItem"] },
+    "program": { "enum": ["hsk", "hskk"] },
+    "examSystemId": { "type": ["string", "null"] },
+    "levelId": { "type": ["string", "null"] },
+    "lessonRef": { "type": ["string", "null"] },
+    "skill": { "enum": ["listening", "speaking", "reading", "writing", "translation", "mixed"] },
+    "itemType": { "type": "string", "minLength": 1 },
+    "difficulty": { "enum": ["unknown", "easy", "medium", "hard"] },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType"],
+      "properties": {
+        "contentType": { "enum": ["text", "audio", "image", "mixed"] },
+        "contentRef": { "type": ["string", "null"] },
+        "mediaRefs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" },
+          "contentRef": { "type": ["string", "null"] },
+          "label": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "answerKeyRef": { "type": ["string", "null"] },
+    "explanationRef": { "type": ["string", "null"] },
+    "sourceRefs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "status": { "enum": ["draft", "review", "published", "archived"] },
+    "version": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content", "schema"],
+      "properties": {
+        "content": { "type": "string" },
+        "schema": { "type": "string" }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdAt", "updatedAt"],
+      "properties": {
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": ["string", "null"] },
+        "updatedBy": { "type": ["string", "null"] }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "answerChecked": { "type": "boolean" },
+        "languageChecked": { "type": "boolean" },
+        "sourceChecked": { "type": "boolean" },
+        "approvedForPublish": { "type": "boolean" }
+      }
+    }
+  }
+}

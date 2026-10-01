@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitleTag">Luyện tập HSK 2</title>
+<style>
+/* ============================================================
+   THEME VARIABLES
+============================================================ */
+:root{
+  --bg:#f4f6fb; --bg-card:#ffffff; --bg-soft:#eef1f8;
+  --text:#1c2333; --text-dim:#5b6577; --text-faint:#8992a3;
+  --accent:#3b5bdb; --accent-dark:#2a43a8; --accent-soft:#e9edfd;
+  --green:#1f9d55; --green-soft:#e6f7ec;
+  --red:#e03131; --red-soft:#fdecec;
+  --amber:#f0a500; --amber-soft:#fff6e0;
+  --gray:#9aa2b1; --gray-soft:#eef0f4;
+  --border:#e3e7f0; --shadow:0 4px 18px rgba(30,40,80,.07);
+  --shadow-sm:0 2px 8px rgba(30,40,80,.06);
+  --radius:16px; --radius-sm:10px;
+  --zh-font:"KaiTi","STKaiti","KaiTi_GB2312",serif;
+  --vi-font:"Times New Roman","Times",serif;
+}
+[data-theme="dark"]{
+  --bg:#12151f; --bg-card:#1a1e2b; --bg-soft:#20253544;
+  --text:#e8eaf2; --text-dim:#a9b0c3; --text-faint:#767f95;
+  --accent:#6d8dff; --accent-dark:#4f6ee0; --accent-soft:#232a48;
+  --green:#4bd07a; --green-soft:#16301f;
+  --red:#ff6b6b; --red-soft:#3a1c1c;
+  --amber:#ffc94a; --amber-soft:#3a2f10;
+  --gray:#767f95; --gray-soft:#232838;
+  --border:#2b3145; --shadow:0 4px 20px rgba(0,0,0,.35);
+  --shadow-sm:0 2px 10px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--vi-font); line-height:1.6;
+  transition:background .3s,color .3s;
+  padding-bottom:40px;
+}
+.zh{font-family:var(--zh-font); font-size:1.15em; letter-spacing:.5px;}
+h1,h2,h3,h4{font-family:var(--vi-font); margin:0 0 8px;}
+h1{font-size:44pt; line-height:1.15;}
+h2{font-size:28pt; line-height:1.2;}
+h3{font-size:20pt; line-height:1.25;}
+h4{font-size:16pt;}
+p{margin:0 0 10px;}
+button{font-family:var(--vi-font); cursor:pointer;}
+a{color:var(--accent);}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px;}
+
+.container{max-width:980px; margin:0 auto; padding:0 18px;}
+.hidden{display:none !important;}
+.card{
+  background:var(--bg-card); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:24px; margin-bottom:20px;
+  border:1px solid var(--border);
+}
+.btn{
+  border:none; border-radius:999px; padding:13px 24px; font-size:17px;
+  font-weight:600; transition:.2s; background:var(--accent-soft); color:var(--accent-dark);
+}
+.btn:hover{filter:brightness(1.05); transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn-primary{background:var(--accent); color:#fff; box-shadow:0 4px 14px rgba(59,91,219,.35);}
+.btn-primary:hover{background:var(--accent-dark);}
+.btn-ghost{background:transparent; color:var(--text-dim); border:1px solid var(--border);}
+.btn-danger{background:var(--red-soft); color:var(--red);}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none;}
+.btn-sm{padding:8px 16px; font-size:15px;}
+
+/* ============ HEADER / TOPBAR ============ */
+.topbar{
+  position:sticky; top:0; z-index:50; background:var(--bg-card);
+  border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm);
+}
+.topbar-inner{
+  max-width:980px; margin:0 auto; padding:10px 18px;
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.brand{font-weight:800; font-size:20px; color:var(--accent-dark); flex:1; min-width:140px;}
+.brand small{display:block; font-weight:400; color:var(--text-faint); font-size:13px;}
+.timer-box{
+  display:flex; align-items:center; gap:6px; background:var(--bg-soft);
+  padding:8px 16px; border-radius:999px; font-weight:700; font-size:17px;
+  font-variant-numeric:tabular-nums;
+}
+.timer-box.warn{color:var(--red); background:var(--red-soft);}
+.icon-btn{
+  background:var(--bg-soft); border:none; border-radius:50%; width:38px; height:38px;
+  display:flex; align-items:center; justify-content:center; font-size:16px; color:var(--text);
+}
+
+/* ============ PROGRESS ============ */
+.progress-wrap{margin:14px 0 6px;}
+.progress-meta{
+  display:flex; justify-content:space-between; font-size:15px; color:var(--text-dim); margin-bottom:6px;
+}
+.progress-bar-track{
+  height:10px; border-radius:999px; background:var(--bg-soft); overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%; background:linear-gradient(90deg,var(--accent),#7c9bff);
+  border-radius:999px; transition:width .4s ease;
+}
+
+/* ============ NAV GRID ============ */
+.nav-toggle-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+.qnav-legend{display:flex; gap:14px; flex-wrap:wrap; font-size:14px; color:var(--text-dim); margin-bottom:10px;}
+.legend-dot{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:middle;}
+.qnav-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(42px,1fr)); gap:8px;}
+.qnav-item{
+  aspect-ratio:1/1; border-radius:8px; border:none; background:var(--gray-soft); color:var(--text-dim);
+  font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  position:relative; transition:.15s;
+}
+.qnav-item.answered{background:var(--accent-soft); color:var(--accent-dark);}
+.qnav-item.current{outline:2px solid var(--accent); outline-offset:2px;}
+.qnav-item.correct{background:var(--green-soft); color:var(--green);}
+.qnav-item.wrong{background:var(--red-soft); color:var(--red);}
+.qnav-item.self{background:var(--amber-soft); color:var(--amber);}
+.qnav-item.partial{background:var(--amber-soft); color:var(--amber);}
+.qnav-item .dot-type{position:absolute; bottom:2px; right:2px; width:5px; height:5px; border-radius:50%; background:var(--text-faint);}
+
+/* ============ QUESTION CARD ============ */
+.q-section-title{font-size:14px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); font-weight:700; margin-bottom:4px;}
+.q-skill-tag{
+  display:inline-block; font-size:13px; padding:4px 12px; border-radius:999px;
+  background:var(--accent-soft); color:var(--accent-dark); font-weight:700; margin-bottom:10px;
+}
+.q-num{font-size:15px; color:var(--text-faint); margin-bottom:6px;}
+.q-prompt{font-size:24pt; line-height:1.5; margin-bottom:18px;}
+.passage-box{
+  background:var(--bg-soft); border-left:4px solid var(--accent); border-radius:8px;
+  padding:18px 20px; margin-bottom:18px; font-size:22pt; line-height:1.6;
+}
+.options-list{display:flex; flex-direction:column; gap:12px;}
+.option-item{
+  display:flex; align-items:center; gap:14px; padding:16px 20px; border-radius:12px;
+  border:1.5px solid var(--border); background:var(--bg-card); transition:.15s; text-align:left; width:100%;
+  font-size:22pt; color:var(--text);
+}
+.option-item:hover{border-color:var(--accent);}
+.option-item.selected{border-color:var(--accent); background:var(--accent-soft); color:var(--accent-dark); font-weight:600;}
+.option-item .opt-key{
+  width:34px; height:34px; border-radius:50%; background:var(--bg-soft); display:flex; align-items:center;
+  justify-content:center; font-size:15px; font-weight:700; flex-shrink:0;
+}
+.option-item.selected .opt-key{background:var(--accent); color:#fff;}
+.option-item.locked.correct-answer{border-color:var(--green); background:var(--green-soft); color:var(--green);}
+.option-item.locked.wrong-selected{border-color:var(--red); background:var(--red-soft); color:var(--red);}
+
+.text-input, textarea.text-input{
+  width:100%; padding:15px 18px; border-radius:12px; border:1.5px solid var(--border);
+  background:var(--bg-card); color:var(--text); font-size:22pt; font-family:var(--zh-font);
+}
+textarea.text-input{min-height:120px; resize:vertical; font-family:var(--vi-font);}
+.text-input:focus, textarea.text-input:focus{outline:none; border-color:var(--accent);}
+select.blank-select{
+  font-family:var(--zh-font); padding:7px 12px; border-radius:8px; border:1.5px solid var(--accent);
+  background:var(--accent-soft); color:var(--accent-dark); font-size:18pt; font-weight:600; margin:0 4px;
+}
+select.blank-select.correct{border-color:var(--green); background:var(--green-soft); color:var(--green);}
+select.blank-select.wrong{border-color:var(--red); background:var(--red-soft); color:var(--red);}
+.sentence-line{font-size:24pt; line-height:2.1;}
+.gap-mark{
+  display:inline-flex; align-items:center; justify-content:center; width:1.1em; height:1.1em;
+  border-radius:50%; background:var(--accent-soft); color:var(--accent-dark); font-size:.6em;
+  font-weight:800; margin:0 2px; vertical-align:middle;
+}
+
+.reorder-tokens-pool, .reorder-answer-row{
+  display:flex; flex-wrap:wrap; gap:10px; min-height:64px; padding:12px; border-radius:12px;
+}
+.reorder-answer-row{background:var(--bg-soft); border:1.5px dashed var(--border); margin-bottom:14px;}
+.token-chip{
+  font-family:var(--zh-font); font-size:20pt; background:var(--accent-soft); color:var(--accent-dark);
+  border:none; padding:10px 16px; border-radius:10px; font-weight:600;
+}
+.token-chip.used{opacity:.35; pointer-events:none;}
+.token-chip.in-answer{background:var(--accent); color:#fff;}
+
+.result-badge{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 16px; border-radius:999px;
+  font-size:15px; font-weight:700; margin-bottom:12px;
+}
+.result-badge.ok{background:var(--green-soft); color:var(--green);}
+.result-badge.no{background:var(--red-soft); color:var(--red);}
+.result-badge.pending{background:var(--amber-soft); color:var(--amber);}
+.result-badge.partial{background:var(--amber-soft); color:var(--amber);}
+
+.classification-box{
+  text-align:center; font-size:32pt; font-weight:800; padding:26px 20px; border-radius:18px;
+  margin:16px auto 22px; max-width:640px; border:2.5px solid transparent; line-height:1.3;
+}
+.classification-box .cb-score{font-size:16pt; font-weight:600; display:block; margin-top:6px;}
+.classification-box.tier-good{background:var(--green-soft); color:var(--green); border-color:var(--green);}
+.classification-box.tier-mid{background:var(--amber-soft); color:var(--amber); border-color:var(--amber);}
+.classification-box.tier-low{background:var(--red-soft); color:var(--red); border-color:var(--red);}
+
+.explain-box{
+  margin-top:16px; padding:18px 20px; background:var(--bg-soft); border-radius:12px; font-size:18pt; line-height:1.55;
+}
+.explain-box p{margin:0 0 10px;}
+.explain-box p:last-child{margin-bottom:0;}
+.explain-box b{color:var(--accent-dark);}
+.ref-answer-box{
+  margin-top:16px; padding:18px 20px; background:var(--amber-soft); border-radius:12px; border-left:4px solid var(--amber);
+  font-size:20pt; line-height:1.55;
+}
+.self-mark-row{display:flex; gap:10px; margin-top:14px;}
+
+.match-table{width:100%; border-collapse:separate; border-spacing:0 10px;}
+.match-row td{padding:6px 0; vertical-align:middle;}
+.match-term{
+  font-family:var(--zh-font); font-size:22pt; background:var(--bg-soft); border-radius:10px;
+  padding:10px 16px; display:inline-block; min-width:64px; text-align:center; font-weight:700;
+}
+.match-arrow{color:var(--text-faint); padding:0 12px; font-size:18px;}
+select.match-select{
+  font-size:16px; padding:9px 12px; border-radius:10px; border:1.5px solid var(--border);
+  background:var(--bg-card); color:var(--text); min-width:220px; max-width:100%;
+}
+select.match-select.correct{border-color:var(--green); background:var(--green-soft); color:var(--green);}
+select.match-select.wrong{border-color:var(--red); background:var(--red-soft); color:var(--red);}
+@media (max-width:640px){
+  .match-table, .match-table tbody, .match-table tr, .match-table td{display:block; width:100%;}
+  .match-row{margin-bottom:4px; border-bottom:1px solid var(--border); padding-bottom:10px;}
+  select.match-select{width:100%; margin-top:6px;}
+}
+
+.qnav-arrows{display:flex; justify-content:space-between; margin-top:20px; gap:10px;}
+
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin:16px 0;}
+.stat-box{background:var(--bg-soft); border-radius:12px; padding:14px; text-align:center;}
+.stat-box .num{font-size:30px; font-weight:800; color:var(--accent-dark);}
+.stat-box .lbl{font-size:14px; color:var(--text-dim); margin-top:2px;}
+
+.filter-row{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0;}
+.filter-chip{
+  padding:8px 18px; border-radius:999px; border:1.5px solid var(--border); background:var(--bg-card);
+  color:var(--text-dim); font-size:15px; font-weight:600;
+}
+.filter-chip.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+
+table.history-table{width:100%; border-collapse:collapse; font-size:16px;}
+table.history-table th, table.history-table td{padding:10px 8px; text-align:left; border-bottom:1px solid var(--border);}
+table.history-table th{color:var(--text-dim); font-size:13px; text-transform:uppercase;}
+table.history-table tr:hover td{background:var(--bg-soft); cursor:pointer;}
+
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(10,14,25,.55); display:flex; align-items:center; justify-content:center;
+  z-index:200; padding:20px;
+}
+.modal-box{
+  background:var(--bg-card); border-radius:var(--radius); padding:26px; max-width:440px; width:100%;
+  box-shadow:var(--shadow);
+}
+.modal-box h3{margin-bottom:10px;}
+.modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap;}
+.missing-list{display:flex; flex-wrap:wrap; gap:6px; margin:12px 0;}
+.missing-chip{background:var(--red-soft); color:var(--red); padding:5px 12px; border-radius:8px; font-size:15px; font-weight:700;}
+
+.float-btns{position:fixed; right:20px; bottom:24px; display:flex; flex-direction:column; gap:10px; z-index:80;}
+.float-btn{
+  width:44px; height:44px; border-radius:50%; background:var(--accent); color:#fff; border:none;
+  box-shadow:var(--shadow); font-size:18px; display:flex; align-items:center; justify-content:center;
+}
+
+.chart-wrap{background:var(--bg-card); border-radius:12px; padding:10px 6px;}
+canvas{max-width:100%;}
+
+.toast{
+  position:fixed; top:16px; left:50%; transform:translateX(-50%); background:var(--text); color:var(--bg-card);
+  padding:11px 22px; border-radius:999px; font-size:16px; z-index:300; box-shadow:var(--shadow);
+  opacity:0; transition:opacity .3s, top .3s; pointer-events:none;
+}
+.toast.show{opacity:1; top:26px;}
+
+.start-hero{text-align:center; padding:34px 20px;}
+.start-hero .zh{font-size:50pt; font-weight:800; display:block; margin-bottom:10px; color:var(--accent-dark); line-height:1.2;}
+.start-meta{display:flex; justify-content:center; gap:26px; flex-wrap:wrap; margin:22px 0; color:var(--text-dim); font-size:16px;}
+.start-meta b{display:block; font-size:26px; color:var(--text); font-weight:800;}
+
+.history-mini{
+  background:var(--accent-soft); border-radius:12px; padding:16px 20px; margin-top:18px; font-size:16px; color:var(--accent-dark);
+}
+
+@media print{
+  .no-print{display:none !important;}
+  body{background:#fff; color:#000; padding:0;}
+  .card{box-shadow:none; border:1px solid #ccc; page-break-inside:avoid;}
+  .container{max-width:100%;}
+  @page{size:A4; margin:14mm;}
+}
+@media (max-width:640px){
+  .card{padding:16px;}
+  .qnav-grid{grid-template-columns:repeat(auto-fill,minmax(32px,1fr));}
+  .start-meta{gap:16px;}
+}
+</style>
+<link rel="stylesheet" href="navigation.css">
+<link rel="stylesheet" href="private-lesson.css"><meta name="robots" content="noindex"><noscript><style>body>*{display:none}body::before{content:"Bài học cần JavaScript và tài khoản được cấp quyền."}</style></noscript></head>
+<body data-lesson-id="hsk2_bai4_zhege_gongzuo" data-lesson-engine="legacy">
+<nav class="site-nav no-print" id="siteNav" aria-label="Điều hướng chính">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="trang-chu.html" aria-label="Hán Ngữ Cùng Bách Hữu, Trang chủ">
+      <img src="img/site-logo.webp" alt="Hán Ngữ Cùng Bách Hữu" class="site-nav-logo-img">
+      <span>Hán Ngữ <span class="site-nav-brand-accent">Cùng Bách Hữu</span></span>
+    </a>
+    <button class="site-nav-burger" id="siteNavBurger" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Mở menu">☰</button>
+    <div class="site-nav-links" id="siteNavLinks">
+      <a href="trang-chu.html">Trang chủ</a>
+      <div class="site-nav-dropdown" id="hskDropdown">
+        <button class="site-nav-dropdown-btn" id="hskDropdownBtn" type="button" aria-expanded="false" aria-controls="hskDropdownPanel">Lộ trình HSK <span class="dd-caret">▾</span></button>
+        <div class="site-nav-dropdown-panel" id="hskDropdownPanel">
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">PA</span>Phát âm</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level" data-level="hsk1"><div class="dd-level-head" role="button" tabindex="0" aria-expanded="false"><span class="dd-level-name"><span class="dd-level-badge">1</span>HSK 1</span><span class="dd-level-caret">▾</span></div><div class="dd-level-lessons"><a href="on-tap-hsk1.html">Ôn tập HSK 1 →</a><a href="hsk1_bai1_index.html">Bài 1 · 你好！</a><a href="hsk1_bai2_index.html">Bài 2 · 谢谢你！</a><a href="hsk1_bai3_index.html">Bài 3 · 你叫什么名字？</a><a href="hsk1_bai4_index.html">Bài 4 · 她是我的汉语老师。</a><a href="hsk1_bai5_index.html">Bài 5 · 她女儿今年二十岁。</a><a href="hsk1_bai6_index.html">Bài 6 · 我会说汉语。</a><a href="hsk1_bai7_index.html">Bài 7 · 今天几号？</a><a href="hsk1_bai8_index.html">Bài 8 · 我想喝茶。</a><a href="hsk1_bai9_index.html">Bài 9 · 你儿子在哪儿工作？</a><a href="hsk1_bai10_index.html">Bài 10 · 我能坐这儿吗？</a><a href="hsk1_bai11_index.html">Bài 11 · 现在几点？</a><a href="hsk1_bai12_index.html">Bài 12 · 明天天气怎么样？</a><a href="hsk1_bai13_index.html">Bài 13 · 他在学做中国菜呢。</a><a href="hsk1_bai14_index.html">Bài 14 · 她买了不少衣服。</a><a href="hsk1_bai15_index.html">Bài 15 · 我是坐飞机来的。</a></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">2</span>HSK 2</span><span class="dd-level-caret">▾</span></div>
+            <div class="dd-level-lessons">
+              <a href="bvnh2-1.html">Bài 1 · 九月去北京旅游最好</a>
+              <a href="bai2_index.html">Bài 2 · 我每天六点起床</a>
+              <a href="bai3_index.html">Bài 3 · 左边那个红色的是我的</a>
+              <a href="bai4_index.html">Bài 4 · 这个工作是他帮我介绍的</a>
+              <a href="bai5_index.html">Bài 5 · 就买这件吧</a>
+              <a href="bai6_index.html">Bài 6 · 你怎么不吃了？</a>
+              <a href="bai7_index.html">Bài 7 · 你家离公司远吗？</a>
+              <a href="bai8_index.html">Bài 8 · 让我想想再告诉你</a>
+              <a href="bai9_index.html">Bài 9 · 题太多，我没做完</a>
+              <a href="bai10_index.html">Bài 10 · 别找了，手机在桌子上呢</a>
+              <a href="bai11_index.html">Bài 11 · 他比我大三岁</a>
+              <a href="bai12_index.html">Bài 12 · 你穿得太少了</a>
+              <a href="bai13_index.html">Bài 13 · 门开着呢</a>
+              <a href="bai14_index.html">Bài 14 · 你看过那个电影吗</a>
+              <a href="bai15_index.html">Bài 15 · 新年就要到了</a>
+            </div>
+          </div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">3</span>HSK 3</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">4</span>HSK 4</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">5</span>HSK 5</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <div class="dd-level"><div class="dd-level-head"><span class="dd-level-name"><span class="dd-level-badge">6</span>HSK 6</span><span class="dd-level-soon">Sắp ra mắt</span></div></div>
+          <a class="dd-static-link dd-review-link" href="on-tap-chung.html">Ôn tập chung →</a>
+        </div>
+      </div>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he" class="site-nav-cta">Liên hệ</a>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var btn=document.getElementById('siteNavBurger');
+  var links=document.getElementById('siteNavLinks');
+  var ddBtn=document.getElementById('hskDropdownBtn');
+  var ddWrap=document.getElementById('hskDropdown');
+  if(ddBtn&&ddWrap){
+    ddBtn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=ddWrap.classList.toggle('open');
+      ddBtn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    document.addEventListener('click',function(e){
+      if(ddWrap.classList.contains('open')&&!ddWrap.contains(e.target)){
+        ddWrap.classList.remove('open');
+        ddBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+  if(btn&&links){
+    btn.addEventListener('click',function(){
+      var open=links.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      btn.textContent=open?'✕':'☰';
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+        btn.textContent='☰';
+      });
+    });
+  }
+})();
+</script>
+
+<!-- ============================================================ TOP BAR ============================================================ -->
+<div class="topbar no-print" id="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span id="brandZh"></span><small id="brandSub"></small></div>
+    <div class="timer-box hidden" id="timerBox">⏱ <span id="timerDisplay">45:00</span></div>
+    <button class="icon-btn" id="themeToggle" title="Đổi giao diện sáng/tối">🌙</button>
+    <button class="icon-btn hidden" id="navPanelToggle" title="Bảng câu hỏi">☰</button>
+  </div>
+  <div class="container hidden" id="progressWrap">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span id="progressText">Đã làm: 0 / 52 câu</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ============================================================ START SCREEN ============================================================ -->
+  <section id="startScreen">
+    <div class="card start-hero">
+      <span class="zh" id="heroZh"></span>
+      <h1 id="heroTitle"></h1>
+      <p id="heroDesc" style="color:var(--text-dim);max-width:560px;margin:0 auto;"></p>
+      <div class="start-meta">
+        <div><b id="metaTotalQ">52</b>Câu hỏi</div>
+        <div><b id="metaSections">13</b>Phần bài tập</div>
+        <div><b id="metaTime">45 phút</b>Thời gian đề nghị</div>
+      </div>
+      <button class="btn btn-primary" id="btnStart" style="font-size:18px;padding:16px 38px;">Bắt đầu làm bài</button>
+      <div id="historyMiniBox" class="history-mini hidden"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================ QUIZ SCREEN ============================================================ -->
+  <section id="quizScreen" class="hidden">
+    <div class="card no-print" id="navPanel">
+      <div class="nav-toggle-row">
+        <h3 style="margin:0;font-size:17px;">Bảng điều hướng câu hỏi</h3>
+        <span id="unansweredCount" style="font-size:14px;color:var(--text-dim);"></span>
+      </div>
+      <div class="qnav-legend">
+        <span><i class="legend-dot" style="background:var(--gray-soft);"></i>Chưa làm</span>
+        <span><i class="legend-dot" style="background:var(--accent-soft);"></i>Đã làm</span>
+        <span><i class="legend-dot" style="background:var(--accent);"></i>Đang xem</span>
+      </div>
+      <div class="qnav-grid" id="qnavGrid"></div>
+    </div>
+
+    <div class="card" id="questionCard"></div>
+
+    <div class="qnav-arrows no-print">
+      <button class="btn btn-ghost" id="btnPrev">← Câu trước</button>
+      <button class="btn btn-primary hidden" id="btnSubmit">Nộp bài</button>
+      <button class="btn btn-ghost" id="btnNext">Câu sau →</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ RESULT SCREEN ============================================================ -->
+  <section id="resultScreen" class="hidden">
+    <div class="card" id="resultSummaryCard"></div>
+
+    <div class="card no-print">
+      <h3>Biểu đồ kết quả theo nhóm kiến thức</h3>
+      <div class="chart-wrap"><canvas id="skillChart" width="900" height="320"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h3>Thống kê lịch sử làm bài</h3>
+      <div class="stat-grid" id="historyStatGrid"></div>
+      <div class="no-print" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+        <button class="btn btn-ghost btn-sm" id="btnShowHistory">Xem lịch sử các lần làm</button>
+        <button class="btn btn-danger btn-sm" id="btnClearHistory">Xóa toàn bộ lịch sử</button>
+      </div>
+      <div id="historyTableWrap" class="hidden" style="margin-top:16px;overflow-x:auto;"></div>
+    </div>
+
+    <div class="card no-print" style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-primary" id="btnRetake">↻ Làm lại bài</button>
+      <button class="btn btn-ghost" id="btnPrintResult">🖨 In kết quả</button>
+      <button class="btn btn-ghost" id="btnPdfExport">⬇ Xuất PDF</button>
+    </div>
+
+    <div class="card no-print">
+      <h3>Xem lại chi tiết từng câu</h3>
+      <div class="filter-row" id="reviewFilters"></div>
+      <div id="reviewList"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Floating buttons -->
+<div class="float-btns no-print">
+  <button class="float-btn" id="btnScrollTop" title="Lên đầu trang">↑</button>
+  <button class="float-btn" id="btnScrollBottom" title="Xuống cuối trang">↓</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Modal container -->
+<div id="modalRoot"></div>
+
+<script src="data/lesson-registry.js"></script><script src="data/supabase-public.js"></script><script src="private-lesson-loader.js"></script>
+<footer class="site-footer no-print" id="siteFooter">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">Hán Ngữ Cùng Bách Hữu</div>
+    <div class="site-footer-links">
+      <a href="trang-chu.html">Trang chủ</a>
+      <a href="hskk.html">HSKK</a>
+      <a href="on-tap-chung.html">Ôn tập chung</a>
+      <a href="trang-chu.html#gioi-thieu">Giới thiệu</a>
+      <a href="trang-chu.html#lien-he">Liên hệ</a>
+    </div>
+  </div>
+  <div class="site-footer-bottom">© <span id="footerYear"></span> Hán Ngữ Cùng Bách Hữu</div>
+</footer>
+<button class="site-back-top no-print" id="siteBackTop" type="button" aria-label="Quay về đầu trang" title="Quay về đầu trang">↑</button>
+<script>
+(function(){
+  var y=document.getElementById('footerYear');
+  if(y) y.textContent=new Date().getFullYear();
+  var b=document.getElementById('siteBackTop');
+  if(b){
+    window.addEventListener('scroll',function(){b.classList.toggle('visible',window.scrollY>420);},{passive:true});
+    b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  }
+})();
+</script>
+<script src="hsk1-navigation.js" defer></script>
+</body>
+</html>
