@@ -430,29 +430,3 @@
     scroll-behavior: auto;
   }
 }
-/* Assignment flow inherits the account palette; script-aware spans preserve Vietnamese. */
-.assignment-workspace { font-family: "Times New Roman", Times, serif; font-size: 17px; }
-.assignment-workspace [lang="zh"] { font-family: "KaiTi", "STKaiti", "KaiTi_GB2312", "Noto Serif CJK SC", serif; }
-.assignment-workspace input, .assignment-workspace textarea, .assignment-workspace select { font: inherit; max-width: 100%; }
-.assignment-workspace textarea { width: 100%; box-sizing: border-box; }
-.assignment-workspace label { display: block; margin: 10px 0; }
-.assignment-workspace details { margin: 16px 0; }
-.assignment-workspace summary { cursor: pointer; padding: 10px 0; font-weight: bold; }
-.assignment-workspace button:focus-visible, .assignment-workspace input:focus-visible, .assignment-workspace textarea:focus-visible, .assignment-workspace select:focus-visible { outline: 3px solid #23724f; outline-offset: 3px; }
-.assignment-heading, .assignment-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.assignment-row { padding: 14px 0; border-bottom: 1px solid #d9e3dd; }
-.assignment-row small { display: block; margin-top: 5px; }
-.assignment-question { min-width: 0; margin: 20px 0; padding: 18px; border: 1px solid #c9d9cd; border-radius: 12px; }
-.assignment-question legend { padding: 0 7px; font-weight: bold; }
-.assignment-question:disabled { opacity: 1; }
-.assignment-question textarea:disabled { color: #243a2e; opacity: 1; }
-.assignment-choice { padding: 10px 12px; background: #f3f7f3; border-radius: 8px; }
-.assignment-choice input { margin-right: 10px; }
-.assignment-prompt, .assignment-feedback { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.65; }
-.assignment-feedback { border-left: 3px solid #23724f; padding-left: 12px; }
-.assignment-workspace [data-clock] { font-variant-numeric: tabular-nums; font-weight: bold; }
-@media (max-width: 600px) {
- .assignment-row, .assignment-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
- .assignment-question { padding: 12px; }
- .assignment-workspace .account-actions { flex-wrap: wrap; }
-}

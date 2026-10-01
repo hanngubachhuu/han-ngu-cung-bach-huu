@@ -178,9 +178,7 @@ try {
     .getByText("Bài nộp, chấm điểm và đề HSK / HSKK", { exact: true })
     .click();
   await page.locator("[data-bank]").click();
-  await page
-    .getByText("Công cụ soạn nâng cao: phiên bản câu hỏi", { exact: true })
-    .click();
+  await page.getByText("Thêm / sửa câu hỏi", { exact: true }).click();
   const open = async () =>
     page
       .getByText("Tự sinh đáp án nhiễu theo quy tắc tiếng Trung", {
@@ -188,6 +186,14 @@ try {
       })
       .click();
   await open();
+  assert.equal(
+    await page.locator('[data-question] [name="options"]').isVisible(),
+    false,
+  );
+  assert.equal(
+    await page.locator('[data-question] [name="answer"]').isVisible(),
+    false,
+  );
   await page.locator("[data-generator-target]").fill("17");
   await page.locator("[data-generator-prompt]").click();
   await page.locator("[data-generate]").click();
@@ -200,19 +206,18 @@ try {
     await page.locator('[data-question] [name="options"]').inputValue(),
     options1,
   );
-  await page.locator('[data-question] [name="question_key"]').fill("number17");
-  await page
-    .getByRole("button", { name: "Lưu phiên bản câu hỏi mới", exact: true })
-    .click();
+  assert.match(
+    await page.locator('[data-question] [name="question_key"]').inputValue(),
+    /^[0-9a-f-]{36}$/,
+  );
+  await page.getByRole("button", { name: "Lưu câu hỏi", exact: true }).click();
   await page.locator('[data-edit-question="q1"]').waitFor();
   assert.equal(writes.length, 1);
   const first = structuredClone(questions[0]);
   await page.locator('[data-edit-question="q1"]').click();
   await open();
-  await page.locator('[data-question] [name="answer"]').fill("A");
-  await page
-    .getByRole("button", { name: "Lưu phiên bản câu hỏi mới", exact: true })
-    .click();
+  await page.locator("[data-key-choice]").selectOption("A");
+  await page.getByRole("button", { name: "Lưu câu hỏi", exact: true }).click();
   await page
     .locator("[data-status]")
     .filter({ hasText: "Sinh lại nhiễu" })
@@ -235,15 +240,23 @@ try {
         : s.slice(0, s.indexOf("|") + 1) + " ???????",
     )
     .join("\n");
-  await page.locator('[data-question] [name="options"]').fill(tampered);
-  await page
-    .getByRole("button", { name: "Lưu phiên bản câu hỏi mới", exact: true })
-    .click();
+  const wrongChoice = [...tampered.split("\n")].find(
+    (line) => !line.startsWith(key + " |"),
+  );
+  const wrongId = wrongChoice.split("|")[0].trim();
+  await page.locator(`[data-option-choice="${wrongId}"]`).fill("???????");
+  await page.getByRole("button", { name: "Lưu câu hỏi", exact: true }).click();
   assert.equal(writes.length, 1);
-  await page.locator('[data-question] [name="options"]').fill(valid);
-  await page
-    .getByRole("button", { name: "Lưu phiên bản câu hỏi mới", exact: true })
-    .click();
+  await page.locator(`[data-option-choice="${wrongId}"]`).fill(
+    valid
+      .split("\n")
+      .find((line) => line.startsWith(wrongId + " |"))
+      .split("|")
+      .slice(1)
+      .join("|")
+      .trim(),
+  );
+  await page.getByRole("button", { name: "Lưu câu hỏi", exact: true }).click();
   await page.locator('[data-edit-question="q2"]').waitFor();
   assert.equal(writes.length, 2);
   assert.deepEqual(
@@ -266,6 +279,10 @@ try {
     .locator("[data-generator-status]")
     .filter({ hasText: "chưa khớp" })
     .waitFor();
+  // The structured developer importer remains hidden in the ordinary Admin UI.
+  await page
+    .locator("[data-developer-tools]")
+    .evaluate((n) => (n.hidden = false));
   await page.getByText("Công cụ nhập có cấu trúc", { exact: true }).click();
   await page.getByText("Nhập câu hỏi có provenance", { exact: true }).click();
   const packet = {
@@ -318,7 +335,15 @@ try {
     .waitFor();
   await page.locator("[data-import-refresh]").click();
   await page.locator('[data-edit-question="import0"]').waitFor();
-  await page.getByText(/fixture:import · mã gốc source-q1/).waitFor();
+  await page
+    .locator('[data-edit-question="import0"]')
+    .locator("..")
+    .locator("..")
+    .getByText("Nguồn tài liệu", { exact: true })
+    .click();
+  await page
+    .getByText("Synthetic import · Nhập ngày", { exact: false })
+    .waitFor();
   await page
     .locator('[data-archive-reason="import0"]')
     .fill("Synthetic retired question");
@@ -338,7 +363,7 @@ try {
   await page.locator('[data-archive-question="import0"]').click();
   await page
     .locator('[data-archive-question="import0"]')
-    .filter({ hasText: "Archive phiên bản" })
+    .filter({ hasText: "Lưu trữ câu" })
     .waitFor();
   assert.equal(
     await page.locator('[name="question"][value="import0"]').isDisabled(),

@@ -61,7 +61,7 @@ for (const button of document.querySelectorAll("[data-login]"))
       pending = await call({ step: "login", label: button.dataset.login });
       origin = pending.studentOrigin;
       if (origin === location.origin) throw Error("CANARY_ORIGIN_NOT_ISOLATED");
-      popup.location.href = origin + "/speaking-browser-student.html";
+      popup.location.href = origin + "/speaking-browser-qa.html";
       deliver();
     } catch (e) {
       pending = null;

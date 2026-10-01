@@ -47,7 +47,12 @@ async function boot() {
     assignments.className = "account-card account-dashboard";
     assignments.innerHTML =
       "<summary>Bài nộp, chấm điểm và đề HSK / HSKK</summary><div data-assignment-admin></div>";
-    ownerDocuments.after(assignments);
+    workspace.prepend(assignments);
+    assignments.addEventListener("assignment:students", () => {
+      assignments.open = false;
+      document.querySelector("#adminFilter").scrollIntoView({ block: "start" });
+      document.querySelector("#adminFilter input").focus();
+    });
     let assignmentsMounted = false;
     assignments.addEventListener("toggle", () => {
       if (assignments.open && !assignmentsMounted) {

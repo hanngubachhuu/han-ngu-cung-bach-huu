@@ -72,6 +72,7 @@ export function mountDistractorGenerator(form) {
       spec = { rule, target };
       needsRegeneration = true;
       field("kind").value = "mcq";
+      form.dispatchEvent(new Event("question:changed"));
       status(
         "Câu và đáp án đúng đã sẵn sàng. Bấm Sinh / sinh lại nhiễu để xem các lựa chọn.",
       );
@@ -93,13 +94,14 @@ export function mountDistractorGenerator(form) {
         .map((o) => `${o.id} | ${o.text}`)
         .join("\n");
       field("answer").value = result.answer_key.value;
+      form.dispatchEvent(new Event("question:changed"));
       spec = { rule: result.rule, target: result.target };
       seed++;
       needsRegeneration = false;
       node("preview").replaceChildren();
       for (const explanation of result.rationale) {
         const p = document.createElement("p");
-        p.textContent = `${explanation.id} · ${explanation.code}: ${explanation.reason}`;
+        p.textContent = `${explanation.id} · ${explanation.reason}`;
         node("preview").append(p);
       }
       status(

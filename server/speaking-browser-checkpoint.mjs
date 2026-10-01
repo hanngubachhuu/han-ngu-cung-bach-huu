@@ -65,11 +65,7 @@ export async function runBrowserCheckpoint(admin, body, env = process.env) {
       .select("id,title,program")
       .eq("id", f.course)
       .single();
-    if (
-      r.error ||
-      r.data.title !== "Synthetic browser Speaking " + f.run ||
-      r.data.program !== "HSKK"
-    )
+    if (r.error || r.data.title !== f.title || r.data.program !== "HSKK")
       throw Error("CANARY_FIXTURE_REQUIRED");
   }
   if (body.step === "users") {

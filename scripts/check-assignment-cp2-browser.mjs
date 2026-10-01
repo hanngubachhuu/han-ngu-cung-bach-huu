@@ -46,8 +46,9 @@ try {
     await page.goto(base + "/trang-chu.html");
     async function mount() {
       await page.evaluate(async () => {
+        document.body.className = "study-page";
         document.body.innerHTML =
-          '<link rel="stylesheet" href="./study/study.css"><main class="account-shell"><section class="account-card account-form"><div id="exam"></div><div id="recorder"></div></section></main>';
+          '<link rel="stylesheet" href="./study/study.css"><link rel="stylesheet" href="./study/account.css"><link rel="stylesheet" href="./study/assignment.css"><main class="account-main"><section class="account-card account-form assignment-workspace"><div id="exam"></div><div id="recorder"></div></section></main>';
         const { mountDocumentExamImport } = await import(
           "./study/exam-import-ui.mjs"
         );
@@ -132,6 +133,10 @@ try {
       () => document.documentElement.scrollWidth > innerWidth + 1,
     );
     assert.equal(overflow, false);
+    await page.screenshot({
+      path: `test-results/cp2-import-review-${width}.png`,
+      fullPage: true,
+    });
     await page.locator("[data-commit]").click();
     await page.locator("[data-open-exam]").waitFor();
     assert.equal(
@@ -154,7 +159,10 @@ try {
               questionId: input.questionId,
               size: input.blob.size,
               mime: input.blob.type,
+              requestId: input.requestId,
             });
+            if (globalThis.failRecordingSave)
+              throw Error("STORAGE_WRITE_FAILED");
             return { recording_id: "synthetic-recording" };
           },
           onAnswer: async (value) => globalThis.answers.push(value),
@@ -169,18 +177,19 @@ try {
     await page.locator("[data-stop]").waitFor({ state: "visible" });
     await page.waitForTimeout(1400);
     await page.locator("[data-stop]").click();
-    await page.locator("[data-upload]").waitFor();
-    await page.waitForFunction(
-      () => !document.querySelector("[data-upload]").disabled,
-    );
-    assert.equal(await page.locator("[data-preview]").isVisible(), true);
-    await page.locator("[data-upload]").click();
+    await page.locator("[data-preview]").waitFor({ state: "visible" });
     await page.waitForFunction(() => globalThis.answers.length === 1);
+    assert.equal(
+      await page.locator(".recorder").getAttribute("data-state"),
+      "saved",
+    );
+    assert.equal(await page.locator("[data-upload]").isVisible(), false);
     const upload = await page.evaluate(() => globalThis.uploads[0]);
     assert.equal(upload.attemptId, "synthetic-attempt");
     assert.equal(upload.questionId, "synthetic-version");
     assert(upload.size > 0);
     assert(upload.mime.startsWith("audio/"));
+    await page.evaluate(() => (globalThis.failRecordingSave = true));
     await page.locator("[data-record]").click();
     await page.waitForTimeout(1200);
     await page.locator("[data-stop]").click();
@@ -188,6 +197,18 @@ try {
       () => !document.querySelector("[data-upload]").disabled,
     );
     assert.equal(await page.evaluate(() => globalThis.audioWidget.busy), true);
+    await page.locator("[data-upload]").waitFor({ state: "visible" });
+    const retryRequest = await page.evaluate(
+      () => globalThis.uploads.at(-1).requestId,
+    );
+    await page.evaluate(() => (globalThis.failRecordingSave = false));
+    await page.locator("[data-upload]").click();
+    await page.waitForFunction(() => globalThis.answers.length === 2);
+    assert.equal(
+      await page.evaluate(() => globalThis.uploads.at(-1).requestId),
+      retryRequest,
+    );
+    assert.equal(await page.evaluate(() => globalThis.audioWidget.busy), false);
     await page.screenshot({
       path: `test-results/cp2-import-${width}.png`,
       fullPage: true,

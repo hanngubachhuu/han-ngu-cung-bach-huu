@@ -335,9 +335,7 @@ try {
   await page.locator('[name="q1"][value="A"]').check();
   await page.locator('[name="q2"]').fill("你好！");
   await page.locator("[data-save]").click();
-  await page
-    .getByText("Đã lưu bản nháp trên tài khoản.", { exact: true })
-    .waitFor();
+  await page.getByText("✓ Đã lưu lúc", { exact: false }).waitFor();
   assert.equal(work.answers[1].answer, "你好！");
   assert.equal(await page.locator("[data-answers] script").count(), 0);
   failSave = true;
@@ -349,9 +347,7 @@ try {
   assert.equal(await page.locator('[name="q2"]').inputValue(), "你好，老师！");
   failSave = false;
   await page.locator("[data-save]").click();
-  await page
-    .getByText("Đã lưu bản nháp trên tài khoản.", { exact: true })
-    .waitFor();
+  await page.getByText("✓ Đã lưu lúc", { exact: false }).waitFor();
   work.revision++;
   work.answers[1].answer = "您好，老师。";
   await page.locator('[name="q2"]').fill("Bản sửa trong tab cũ");
@@ -365,7 +361,9 @@ try {
   await page.waitForFunction(
     () => document.querySelector('[name="q2"]')?.value === "您好，老师。",
   );
-  await page.getByRole("button", { name: "Nộp bài", exact: true }).click();
+  await page.getByRole("button", { name: "Xem lại bài", exact: true }).click();
+  await page.locator("[data-confirm-submit]").click();
+  await page.locator("dialog button[value=confirm]").click();
   await page.getByText("Đang chờ công bố kết quả.", { exact: false }).waitFor();
   assert.equal(await page.getByText("Tổng điểm:", { exact: false }).count(), 0);
   assert.equal(await page.locator("fieldset:not([disabled])").count(), 0);
@@ -393,9 +391,7 @@ try {
       .isDisabled(),
     true,
   );
-  await page
-    .getByRole("button", { name: "Lưu chấm điểm", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Lưu điểm", exact: true }).click();
   await page
     .getByText("Đã lưu. Học viên chưa thấy bản chấm này.", { exact: true })
     .waitFor();
@@ -404,6 +400,7 @@ try {
     .click();
   await page.getByText("Học viên sẽ thấy", { exact: true }).waitFor();
   await page.locator("[data-publish]").click();
+  await page.locator("dialog button[value=confirm]").click();
   await page.locator("[data-regrade]").waitFor();
   await page.locator("[data-reason]").fill("Kiểm tra lại theo rubric");
   await page.locator("[data-regrade]").click();
@@ -448,9 +445,7 @@ try {
   await page
     .locator('[data-question] [name="prompt"]')
     .fill("Câu phiên bản mới 您好");
-  await page
-    .getByRole("button", { name: "Lưu phiên bản câu hỏi mới", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Lưu câu hỏi", exact: true }).click();
   await page.locator('[data-question] [name="prompt"]').waitFor();
   await page.waitForFunction(
     () =>
@@ -490,6 +485,7 @@ try {
   await page.goto(base + "/tai-khoan.html");
   await page.locator("[data-open]").click();
   await page.getByText("Tổng điểm: 90/100", { exact: true }).waitFor();
+  await page.locator('[data-step-question="1"]').click();
   await page
     .getByText("Nhận xét: Lời chào phù hợp.", { exact: true })
     .waitFor();

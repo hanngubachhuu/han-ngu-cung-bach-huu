@@ -1,3 +1,8 @@
+import { confirmAssignment } from "./assignment-dialog.mjs";
+import {
+  mountQuestionFields,
+  mountRubricFields,
+} from "./assignment-question-form.mjs";
 import { mountDocumentExamImport } from "./exam-import-ui.mjs";
 import { mountRecorder } from "./recording-ui.mjs";
 import {
@@ -12,7 +17,6 @@ import { mountDistractorGenerator } from "./distractor-admin.mjs";
 import {
   QuestionWriteSession,
   mountAssignmentImport,
-  sourceDescription,
 } from "./assignment-author-ui.mjs";
 import {
   AssignmentSelection,
@@ -39,13 +43,19 @@ export function mountAssignmentAdmin(root, profile) {
     callAuthor(name, payload, profile.user_id);
   const writes = new QuestionWriteSession(author);
   const archiveRequests = new Map();
+  const learners = new Map();
   const report = (error) => {
     const node = root.querySelector("[data-status]");
     if (node) node.textContent = assignmentMessage(error);
   };
-  function shell(title) {
+  function shell(title, section = "queue") {
     disposePlayers();
-    root.innerHTML = `<h3>${text(title)}</h3><div class="account-actions"><button class="st-button" data-queue>Bài nộp</button><button class="st-button" data-bank>Đề và rubric</button><button class="st-button" data-audio-health>Kiểm tra hệ thống ghi âm</button></div><p data-status role="status" aria-live="polite"></p><div data-content></div>`;
+    root.innerHTML = `<div class="assignment-admin-layout"><nav class="assignment-sidebar" aria-label="Quản trị học tập"><button class="st-button" data-overview ${section === "overview" ? 'aria-current="page"' : ""}>Tổng quan</button><button class="st-button" data-queue ${section === "queue" ? 'aria-current="page"' : ""}>Bài nộp</button><button class="st-button" data-bank ${section === "bank" ? 'aria-current="page"' : ""}>Đề</button><button class="st-button" data-students>Học viên</button><details><summary>Tình trạng dịch vụ</summary><button class="st-button" data-audio-health>Kiểm tra ghi âm</button></details></nav><section class="assignment-admin-main"><p class="st-eyebrow">QUẢN TRỊ HỌC TẬP</p><h3>${text(title)}</h3><p data-status role="status" aria-live="polite"></p><div data-content></div></section></div>`;
+    root.querySelector("[data-overview]").onclick = () => overview();
+    root.querySelector("[data-students]").onclick = () =>
+      root.dispatchEvent(
+        new CustomEvent("assignment:students", { bubbles: true }),
+      );
     root.querySelector("[data-queue]").onclick = () => queue();
     root.querySelector("[data-bank]").onclick = () => bank(selection.lessonId);
     root.querySelector("[data-audio-health]").onclick = async (e) => {
@@ -85,24 +95,61 @@ export function mountAssignmentAdmin(root, profile) {
   }
   async function queue(filters = {}) {
     const generation = ++request,
-      content = shell("Chấm và công bố bài nộp");
+      content = shell("Bài nộp");
     content.innerHTML = "<p>Đang tải…</p>";
     try {
       const list = await command("queue", { ...filters, page });
+      list.forEach((a) => learners.set(a.id, a.full_name));
       if (!active || generation !== request) return;
-      content.innerHTML = `<form data-filter class="account-filter"><label>Trạng thái<select name="state"><option value="">Tất cả</option><option value="draft">Đang làm</option><option value="submitted">Đã nộp</option></select></label><label>Mã bài<input name="lesson_id" value="${esc(filters.lesson_id || "")}"></label><button class="st-button">Lọc</button></form>
-        ${list.length ? list.map((a) => `<div class="assignment-row"><span><strong>${text(a.full_name)}</strong> · ${text(a.course_title)}<br>${text(a.title_vi)}<small>${new Date(a.started_at).toLocaleString("vi-VN")} · ${a.state === "draft" ? "Đang làm" : a.published_revision ? "Đã công bố" : "Chờ chấm / công bố"}</small></span><button class="st-button" data-attempt="${esc(a.id)}">Mở bài</button></div>`).join("") : "<p>Không có bài nộp phù hợp.</p>"}
-        <div class="account-actions"><button class="st-button" data-prev ${page ? "" : "disabled"}>← Trước</button><span>Trang ${page + 1}</span><button class="st-button" data-next ${list.length === 20 ? "" : "disabled"}>Sau →</button></div>`;
-      content.querySelector('[name="state"]').value = filters.state || "";
-      content.querySelector("[data-filter]").onsubmit = (e) => {
-        e.preventDefault();
-        page = 0;
-        queue(
-          Object.fromEntries(
-            [...new FormData(e.currentTarget)].filter(([, v]) => v),
-          ),
-        );
-      };
+      const snapshots = new Map();
+      await Promise.all(
+        list
+          .filter((a) => a.state === "submitted")
+          .map(async (a) => {
+            try {
+              snapshots.set(a.id, await command("get", { attempt_id: a.id }));
+            } catch {
+              /* Keep list usable if one score cannot load. */
+            }
+          }),
+      );
+      if (!active || generation !== request) return;
+      content.innerHTML = `<p class="assignment-intro">Theo dõi và chấm các bài học viên đã nộp.</p><div class="assignment-toolbar"><label>Trạng thái<select data-state-filter><option value="">Tất cả</option><option value="ungraded">Chưa chấm</option><option value="graded">Đã chấm</option></select></label><label>Tìm trong trang hiện tại<input type="search" data-search placeholder="Tên học viên hoặc đề"></label></div><table class="assignment-table"><thead><tr><th>Học viên / Đề</th><th>Thời gian nộp</th><th>Trạng thái</th><th>Điểm</th><th>Thao tác</th></tr></thead><tbody data-queue-rows></tbody></table><p data-empty hidden>Không có bài nộp phù hợp.</p><div class="account-actions"><button class="st-button" data-prev ${page ? "" : "disabled"}>← Trước</button><span>Trang ${page + 1}</span><button class="st-button" data-next ${list.length === 20 ? "" : "disabled"}>Sau →</button></div>`;
+      function rows() {
+        const query = content
+          .querySelector("[data-search]")
+          .value.toLocaleLowerCase("vi-VN");
+        const state = content.querySelector("[data-state-filter]").value;
+        const shown = list.filter((a) => {
+          const grade = snapshots.get(a.id)?.grading;
+          const graded =
+            !!a.published_revision ||
+            (!!grade?.grades?.length &&
+              grade.grades.every((g) => g.score !== null));
+          return (
+            (!state || (state === "graded" ? graded : !graded)) &&
+            (a.full_name + " " + a.title_vi + " " + a.course_title)
+              .toLocaleLowerCase("vi-VN")
+              .includes(query)
+          );
+        });
+        content.querySelector("[data-queue-rows]").innerHTML = shown
+          .map((a) => {
+            const snapshot = snapshots.get(a.id),
+              result = snapshot?.result;
+            const fullyGraded =
+              snapshot?.grading?.grades?.length &&
+              snapshot.grading.grades.every((g) => g.score !== null);
+            return `<tr><td><strong>${text(a.full_name)}</strong><small>${text(a.title_vi)} · ${text(a.course_title)}</small></td><td data-label="Nộp">${snapshot?.submitted_at ? new Date(snapshot.submitted_at).toLocaleString("vi-VN") : a.state === "draft" ? "Đang làm" : "Đã nộp"}</td><td><span class="assignment-pill ${a.published_revision ? "published" : ""}">${a.state === "draft" ? "Đang làm" : a.published_revision ? "Đã công bố" : fullyGraded ? "Đã chấm · Chưa công bố" : "Chưa chấm"}</span></td><td data-label="Điểm">${result ? result.normalized_score + " / 100" : "—"}</td><td><button class="st-button" data-attempt="${esc(a.id)}">Mở bài</button></td></tr>`;
+          })
+          .join("");
+        content.querySelector("[data-empty]").hidden = !!shown.length;
+        for (const button of content.querySelectorAll("[data-attempt]"))
+          button.onclick = () => inspect(button.dataset.attempt);
+      }
+      content.querySelector("[data-search]").oninput = rows;
+      content.querySelector("[data-state-filter]").onchange = rows;
+      rows();
       content.querySelector("[data-prev]").onclick = () => {
         page--;
         queue(filters);
@@ -119,7 +166,7 @@ export function mountAssignmentAdmin(root, profile) {
   }
   async function inspect(id) {
     const generation = ++request,
-      content = shell("Bài làm và chấm điểm");
+      content = shell("Chi tiết bài nộp");
     content.innerHTML = "<p>Đang tải…</p>";
     try {
       let data = await command("get", { attempt_id: id });
@@ -149,7 +196,7 @@ export function mountAssignmentAdmin(root, profile) {
             })),
         );
       }
-      content.innerHTML = `<h4>${text(data.title)}</h4><p>Bắt đầu: ${new Date(data.started_at).toLocaleString("vi-VN")}<br>Nộp: ${data.submitted_at ? new Date(data.submitted_at).toLocaleString("vi-VN") : "Chưa nộp"} · ${data.duration_seconds ?? "—"} giây${data.timed_out ? " · Hết giờ" : ""}</p>
+      content.innerHTML = `<p class="assignment-learner">${text(learners.get(id) || "Học viên")}</p><div class="assignment-heading"><h4>${text(data.title)}</h4><span class="assignment-pill ${data.result ? "published" : ""}">${data.result ? "Đã công bố" : data.submitted_at ? "Chờ chấm / công bố" : "Đang làm"}</span></div><p>Bắt đầu: ${new Date(data.started_at).toLocaleString("vi-VN")}<br>Nộp: ${data.submitted_at ? new Date(data.submitted_at).toLocaleString("vi-VN") : "Chưa nộp"} · ${data.duration_seconds ?? "—"} giây${data.timed_out ? " · Hết giờ" : ""}</p>
         ${data.result ? `<p>Kết quả đang công bố: <strong>${data.result.normalized_score}/100</strong> · lần ${data.result.revision}</p>` : ""}
         ${(data.contexts || []).map((c, i) => `<section class="assignment-question" id="admin-context-${i}"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}<form data-grades>${data.answers
           .map((a) => {
@@ -157,12 +204,26 @@ export function mountAssignmentAdmin(root, profile) {
                 (x) => x.question_version_id === a.question.id,
               ),
               rubric = g?.rubric;
-            return `<fieldset class="assignment-question" data-id="${esc(a.question.id)}" ${editable ? "" : "disabled"}><legend>Câu ${a.position} · phiên bản học viên đã làm ${a.question.version}</legend><p class="assignment-prompt">${text(a.question.prompt)}</p>${a.question.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}<p><strong>Học viên:</strong> ${text(typeof a.answer === "string" ? a.answer : JSON.stringify(a.answer))}</p><details><summary>Đáp án và phiên bản chấm (chỉ Admin)</summary><p>${text(JSON.stringify(g?.grading_question?.answer_key ?? a.private_question.answer_key))}</p><p>${text(g?.grading_question?.explanation ?? a.private_question.explanation)}</p></details>
+            return `<fieldset class="assignment-question" data-id="${esc(a.question.id)}" ${editable ? "" : "disabled"}><legend>Câu ${a.position}</legend><p class="assignment-prompt">${text(a.question.prompt)}</p>${a.question.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}<p><strong>Học viên:</strong> ${
+              a.question.kind === "speaking"
+                ? a.answer?.recording_id
+                  ? "Có bản ghi trả lời"
+                  : "Chưa có bản ghi"
+                : text(
+                    typeof a.answer === "string"
+                      ? a.answer
+                      : Array.isArray(a.answer)
+                        ? a.answer.join(" · ")
+                        : Object.entries(a.answer || {})
+                            .map(([k, v]) => `${k}: ${v}`)
+                            .join(" · "),
+                  )
+            }</p><details><summary>Đáp án tham khảo</summary><p>${text(answerLabel(g?.grading_question?.answer_key ?? a.private_question.answer_key))}</p><p>${text(g?.grading_question?.explanation ?? a.private_question.explanation)}</p></details>
             ${rubric ? rubric.criteria.map((c) => `<label>${text(c.label)} / ${c.weight}<input type="number" data-criterion="${esc(c.id)}" min="0" max="${c.weight}" step="0.01" value="${g?.criteria_scores?.[c.id] ?? ""}"></label>`).join("") : `<label>Điểm /10<input type="number" data-score min="0" max="10" step="0.01" value="${g?.score ?? ""}"></label>`}
             <label>Nhận xét cho học viên<textarea data-feedback maxlength="4000" rows="2">${esc(g?.feedback || "")}</textarea></label></fieldset>${a.question.kind === "speaking" ? `<div class="assignment-question" data-recording-playback="${esc(a.question.id)}"></div>` : ""}`;
           })
           .join("")}
-        ${editable ? '<div class="account-actions"><button class="st-button" type="submit">Lưu chấm điểm</button><button class="st-button" type="button" data-preview>Xem trước kết quả</button><button class="st-button primary" type="button" data-publish disabled>Công bố kết quả</button></div>' : grade ? `<label>Lý do chấm lại<input data-reason maxlength="1000" required></label><label>Phiên bản chấm mới cho một câu<select data-new-key><option value="">Giữ phiên bản chấm hiện tại</option>${revisedKeys.map((k) => `<option value="${esc(k.original)}:${esc(k.question.id)}">Câu ${k.position} · ${esc(k.question.question_key)} · v${k.question.version}</option>`).join("")}</select></label><button class="st-button" type="button" data-regrade>Tạo lần chấm lại</button>` : "<p>Bài đang làm, chưa có bản chấm.</p>"}</form><div data-preview-output></div>`;
+        ${editable ? '<div class="account-actions assignment-sticky"><button class="st-button primary" type="submit">Lưu điểm</button><button class="st-button" type="button" data-preview>Xem trước kết quả</button><button class="st-button primary" type="button" data-publish disabled>Công bố kết quả</button></div>' : grade ? `<label>Lý do chấm lại<input data-reason maxlength="1000" required></label><label>Phiên bản chấm mới cho một câu<select data-new-key><option value="">Giữ phiên bản chấm hiện tại</option>${revisedKeys.map((k) => `<option value="${esc(k.original)}:${esc(k.question.id)}">Câu ${k.position} · ${text(k.question.prompt)}</option>`).join("")}</select></label><button class="st-button" type="button" data-regrade>Tạo lần chấm lại</button>` : "<p>Bài đang làm, chưa có bản chấm.</p>"}</form><div data-preview-output></div>`;
       const dirty = new Set(),
         form = content.querySelector("[data-grades]");
       for (const node of content.querySelectorAll(
@@ -187,6 +248,11 @@ export function mountAssignmentAdmin(root, profile) {
         dirty.add(fieldset.dataset.id);
         content.querySelector("[data-publish]").disabled = true;
         content.querySelector("button[data-preview]").disabled = true;
+        content.querySelector("button[type=submit]").classList.add("primary");
+        content.querySelector("[data-publish]").classList.remove("primary");
+        content
+          .querySelector("button[data-preview]")
+          .classList.remove("primary");
       });
       const version = () => ({
         attempt_id: id,
@@ -202,6 +268,22 @@ export function mountAssignmentAdmin(root, profile) {
           content.querySelector("[data-publish]").disabled =
             dirty.size > 0 ||
             data.grading.preview_version !== data.grading.edit_version;
+          content
+            .querySelector("button[type=submit]")
+            .classList.toggle("primary", dirty.size > 0);
+          content
+            .querySelector("[data-preview]")
+            .classList.toggle(
+              "primary",
+              dirty.size === 0 &&
+                content.querySelector("[data-publish]").disabled,
+            );
+          content
+            .querySelector("[data-publish]")
+            .classList.toggle(
+              "primary",
+              !content.querySelector("[data-publish]").disabled,
+            );
         }
       };
       form.onsubmit = async (e) => {
@@ -267,7 +349,12 @@ export function mountAssignmentAdmin(root, profile) {
         .querySelector("[data-publish]")
         ?.addEventListener("click", async () => {
           if (
-            !window.confirm("Công bố bản kết quả vừa xem trước cho học viên?")
+            !(await confirmAssignment({
+              title: "Công bố kết quả cho học viên?",
+              message:
+                "Học viên sẽ đọc được điểm và nhận xét của bản bạn vừa xem trước.",
+              action: "Công bố kết quả",
+            }))
           )
             return;
           busy(true);
@@ -318,7 +405,7 @@ export function mountAssignmentAdmin(root, profile) {
   }
   async function bank(selectedLesson = "") {
     const generation = ++request,
-      content = shell("Đề và rubric — bản nháp, xem trước, công bố");
+      content = shell("Đề", "bank");
     content.innerHTML = "<p>Đang tải…</p>";
     try {
       const client = await getClient();
@@ -343,14 +430,56 @@ export function mountAssignmentAdmin(root, profile) {
         include_archived: includeArchived,
       });
       if (!active || generation !== request) return;
-      content.innerHTML = `<label>Bài học<select data-lesson>${lessons.map((l) => `<option value="${esc(l.id)}" ${l.id === lesson ? "selected" : ""}>${text(l.course_id)} · ${text(l.title_vi)}</option>`).join("")}</select></label>
-        <div data-document-import></div><details><summary>Công cụ soạn nâng cao: rubric</summary><form data-rubric class="account-form"><label>Tên định danh rubric<input name="rubric_key" required maxlength="120"></label><label>Dạng bài<select name="kind"><option value="writing">Viết</option><option value="translation">Dịch</option><option value="speaking">Nói</option></select></label><label>Tiêu chí và trọng số (mỗi dòng: tên | điểm tối đa; tổng 10)<textarea name="criteria" required rows="4" placeholder="Nội dung | 6&#10;Ngữ pháp | 4"></textarea></label><button class="st-button">Lưu phiên bản rubric</button></form></details>
-        <details ${advancedQuestionOpen ? "open" : ""}><summary>Công cụ soạn nâng cao: phiên bản câu hỏi</summary><form data-question class="account-form"><label>Mã câu ổn định<input name="question_key" required maxlength="120" placeholder="Ví dụ: bai4_cau01"></label><label>Dạng<select name="kind"><option value="mcq">Trắc nghiệm</option><option value="true_false">Đúng / sai</option><option value="text_fill">Điền từ</option><option value="reorder">Sắp xếp từ</option><option value="multi_fill">Nhiều chỗ trống</option><option value="matching">Ghép cặp</option><option value="translation">Dịch mở</option><option value="writing">Viết</option><option value="speaking">Nói (chưa mở ghi âm)</option></select></label><label>Câu hỏi<textarea name="prompt" required rows="3" maxlength="12000"></textarea></label><label>Lựa chọn (mỗi dòng: A | nội dung; sắp xếp từ: mỗi dòng một từ)<textarea name="options" rows="4"></textarea></label><label>Đáp án (MCQ: mã; đúng/sai: true/false; điền/sắp xếp: mỗi cách đúng một dòng; nhiều chỗ trống: mỗi chỗ một dòng, cách đúng thay thế ngăn bởi |; ghép cặp: trái=phải)<textarea name="answer" rows="3"></textarea></label><label>Rubric cho bài mở<select name="rubric_version_id"><option value="">Chọn rubric</option>${data.rubrics.map((r) => `<option value="${esc(r.id)}">${text(r.rubric_key)} · ${text(r.kind)} · v${r.version}</option>`).join("")}</select></label><label>Giải thích (chỉ Admin)<textarea name="explanation" rows="2"></textarea></label><label>Gợi ý (chỉ Admin)<textarea name="tip" rows="2"></textarea></label><button class="st-button">Lưu phiên bản câu hỏi mới</button><p class="st-help">Dùng lại mã câu để tạo phiên bản tiếp theo; bản cũ được giữ. Kiểm tra tính duy nhất của đáp án trước khi xuất bản.</p></form></details>
-        <div data-write-recovery></div><details><summary>Công cụ nhập có cấu trúc</summary><div data-import></div></details><label><input type="checkbox" data-show-archived ${includeArchived ? "checked" : ""}> Hiện phiên bản đã archive</label>
-        <form data-definition class="account-form"><h4>Chọn phiên bản câu cho đề mới</h4><p>Câu đã chọn được giữ khi đổi trang. Chọn phiên bản khác của cùng mã sẽ thay thế tại vị trí cũ.</p>${data.questions.map((q) => `<div class="assignment-question"><label class="assignment-choice"><input type="checkbox" name="question" value="${esc(q.id)}" ${q.archive?.archived ? "disabled" : ""}>${text(q.question_key)} · v${q.version} ${q.archive?.archived ? "· Đã archive" : ""} · ${text(q.prompt)}</label><p class="st-help">${text(sourceDescription(q))}</p><div class="account-actions"><button class="st-button" type="button" data-edit-question="${esc(q.id)}">Sửa thành phiên bản mới</button><button class="st-button" type="button" data-copy-question="${esc(q.id)}">Nhân bản câu</button></div><label>Lý do ${q.archive?.archived ? "khôi phục quyền chọn" : "archive phiên bản"}<input data-archive-reason="${esc(q.id)}" maxlength="1000"></label><button class="st-button" type="button" data-archive-question="${esc(q.id)}">${q.archive?.archived ? "Khôi phục quyền chọn" : "Archive phiên bản"}</button></div>`).join("") || "<p>Chưa có câu hỏi.</p>"}<section data-selection aria-label="Thứ tự câu trong đề"></section><label>Tên đề<input name="title" required maxlength="200" value="${esc(selection.title)}"></label><label>Giới hạn phút (để trống nếu không giới hạn)<input name="time_limit_minutes" type="number" min="1" max="240" value="${esc(selection.minutes)}"></label><button class="st-button">Lưu đề nháp</button></form>
+      const definitionCounts = new Map();
+      if (data.definitions.length) {
+        const { data: links, error: linkError } = await client
+          .from("assignment_version_questions")
+          .select("assignment_version_id")
+          .in(
+            "assignment_version_id",
+            data.definitions.map((v) => v.id),
+          );
+        if (!linkError)
+          for (const link of links || [])
+            definitionCounts.set(
+              link.assignment_version_id,
+              (definitionCounts.get(link.assignment_version_id) || 0) + 1,
+            );
+      }
+      const { data: courses } = await client
+        .from("courses")
+        .select("id,program,level,title");
+      const course = courses?.find(
+        (c) => c.id === lessons.find((l) => l.id === lesson)?.course_id,
+      );
+      if (!active || generation !== request) return;
+      content.innerHTML = `<label>Bài học<select data-lesson>${lessons.map((l) => `<option value="${esc(l.id)}" ${l.id === lesson ? "selected" : ""}>${text(l.title_vi)}</option>`).join("")}</select></label>
+        <section data-exam-list><div class="assignment-heading"><h4>Danh sách đề</h4><button class="st-button primary" data-new-exam>+ Tạo đề mới</button></div><div class="account-actions" role="group" aria-label="Lọc đề"><button class="st-button" data-exam-filter="" aria-pressed="true">Tất cả</button><button class="st-button" data-exam-filter="draft" aria-pressed="false">Nháp</button><button class="st-button" data-exam-filter="published" aria-pressed="false">Đã xuất bản</button></div><table class="assignment-table"><thead><tr><th>Tên đề</th><th>Cấp độ</th><th>Số câu</th><th>Trạng thái</th><th>Cập nhật</th><th>Thao tác</th></tr></thead><tbody>${data.definitions.map((v) => `<tr data-exam-state="${esc(v.status)}"><td><strong>${text(v.title)}</strong></td><td data-label="Cấp độ">${text(course?.title || course?.program || "Theo bài học")}</td><td data-label="Số câu">${v.questions?.length ?? (definitionCounts.has(v.id) ? definitionCounts.get(v.id) : "—")}</td><td><span class="assignment-pill ${v.status === "published" ? "published" : ""}">${v.status === "draft" ? "Nháp" : "Đã xuất bản"}</span></td><td data-label="Cập nhật">${v.published_at || v.created_at ? new Date(v.published_at || v.created_at).toLocaleDateString("vi-VN") : "—"}</td><td><button class="st-button" data-definition-preview="${esc(v.id)}">Xem trước</button></td></tr>`).join("")}</tbody></table><p ${data.definitions.length ? "hidden" : ""}>Chưa có đề. Tạo đề mới hoặc nhập PDF / Word để bắt đầu.</p></section>
+        <div data-document-import></div><details><summary>Thiết lập tiêu chí chấm</summary><form data-rubric class="account-form"><label>Tên bộ tiêu chí<input name="rubric_key" required maxlength="120"></label><label>Dạng bài<select name="kind"><option value="writing">Viết</option><option value="translation">Dịch</option><option value="speaking">Nói</option></select></label><label>Tiêu chí và trọng số (mỗi dòng: tên | điểm tối đa; tổng 10)<textarea name="criteria" required rows="4" placeholder="Nội dung | 6&#10;Ngữ pháp | 4"></textarea></label><button class="st-button">Lưu bộ tiêu chí</button></form></details>
+        <details ${advancedQuestionOpen ? "open" : ""}><summary>Thêm / sửa câu hỏi</summary><form data-question class="account-form"><input type="hidden" name="question_key" value="${crypto.randomUUID()}" required><label>Dạng<select name="kind"><option value="mcq">Trắc nghiệm</option><option value="true_false">Đúng / sai</option><option value="text_fill">Điền từ</option><option value="reorder">Sắp xếp từ</option><option value="multi_fill">Nhiều chỗ trống</option><option value="matching">Ghép cặp</option><option value="translation">Dịch mở</option><option value="writing">Viết</option><option value="speaking">Nói (chưa mở ghi âm)</option></select></label><label>Câu hỏi<textarea name="prompt" required rows="3" maxlength="12000"></textarea></label><label>Các lựa chọn<textarea name="options" rows="4"></textarea></label><label>Đáp án đúng<textarea name="answer" rows="3"></textarea></label><label>Bộ tiêu chí chấm<select name="rubric_version_id"><option value="">Chọn tiêu chí</option>${data.rubrics.map((r) => `<option value="${esc(r.id)}">${text(r.rubric_key)}</option>`).join("")}</select></label><label>Giải thích (chỉ Admin)<textarea name="explanation" rows="2"></textarea></label><label>Gợi ý (chỉ Admin)<textarea name="tip" rows="2"></textarea></label><button class="st-button">Lưu câu hỏi</button><p class="st-help">Nội dung cũ và bài đã nộp luôn được giữ. Hãy kiểm tra đáp án trước khi xuất bản.</p></form></details>
+        <div data-write-recovery></div><details data-developer-tools hidden><summary>Công cụ nhập có cấu trúc</summary><div data-import></div></details><label><input type="checkbox" data-show-archived ${includeArchived ? "checked" : ""}> Hiện câu đã lưu trữ</label>
+        <form data-definition class="account-form"><h4>Chọn câu hỏi cho đề</h4><p>Chọn câu từ ngân hàng, sắp xếp lại rồi đặt tên và lưu đề.</p>${data.questions.map((q) => `<div class="assignment-question"><label class="assignment-choice"><input type="checkbox" name="question" value="${esc(q.id)}" ${q.archive?.archived ? "disabled" : ""}>${q.archive?.archived ? "Đã lưu trữ · " : ""}${text(q.prompt)}</label><details><summary>Nguồn tài liệu</summary><p class="st-help">${text(q.provenance?.source || "Nguồn tài liệu chưa được xác định")}${q.provenance?.imported_at ? " · Nhập ngày " + new Date(q.provenance.imported_at).toLocaleDateString("vi-VN") : ""}</p></details><div class="account-actions"><button class="st-button" type="button" data-edit-question="${esc(q.id)}">Sửa</button><button class="st-button" type="button" data-copy-question="${esc(q.id)}">Nhân bản câu</button></div><label>Lý do ${q.archive?.archived ? "khôi phục quyền chọn" : "lưu trữ câu"}<input data-archive-reason="${esc(q.id)}" maxlength="1000"></label><button class="st-button" type="button" data-archive-question="${esc(q.id)}">${q.archive?.archived ? "Khôi phục quyền chọn" : "Lưu trữ câu"}</button></div>`).join("") || "<p>Chưa có câu hỏi.</p>"}<section data-selection aria-label="Thứ tự câu trong đề"></section><label>Tên đề<input name="title" required maxlength="200" value="${esc(selection.title)}"></label><label>Giới hạn phút (để trống nếu không giới hạn)<input name="time_limit_minutes" type="number" min="1" max="240" value="${esc(selection.minutes)}"></label><div class="assignment-sticky account-actions"><button class="st-button primary">Lưu đề nháp</button><button class="st-button" type="button" data-jump-definitions>Danh sách đề</button></div></form>
         <div class="account-actions"><button class="st-button" data-bank-prev ${bankPage ? "" : "disabled"}>← Câu trước</button><button class="st-button" data-bank-next ${data.questions.length === 20 ? "" : "disabled"}>Câu sau →</button></div>
-        <h4>Phiên bản đề</h4>${data.definitions.map((v) => `<div class="assignment-row"><span>${text(v.title)} · v${v.version} · ${v.status === "draft" ? "Nháp" : "Đã xuất bản"}</span><button class="st-button" data-definition-preview="${esc(v.id)}">Xem trước</button></div>`).join("")}
         <button class="st-button" data-enable>${data.settings?.enabled ? "Tạm dừng nhận lượt mới" : "Mở nhận bài nộp"}</button><div data-definition-output></div>`;
+      for (const button of content.querySelectorAll("[data-exam-filter]"))
+        button.onclick = () => {
+          for (const b of content.querySelectorAll("[data-exam-filter]"))
+            b.setAttribute("aria-pressed", String(b === button));
+          for (const row of content.querySelectorAll("[data-exam-state]"))
+            row.hidden =
+              !!button.dataset.examFilter &&
+              row.dataset.examState !== button.dataset.examFilter;
+        };
+      content.querySelector("[data-new-exam]").onclick = () => {
+        content
+          .querySelector("[data-document-import]")
+          .scrollIntoView({ block: "start" });
+        content.querySelector("[data-manual]")?.focus();
+      };
+      content.querySelector("[data-jump-definitions]").onclick = () =>
+        content
+          .querySelector("[data-exam-list]")
+          ?.scrollIntoView({ block: "center" });
       mountDocumentExamImport(content.querySelector("[data-document-import]"), {
         lessonId: lesson,
         ownerId: profile.user_id,
@@ -392,7 +521,7 @@ export function mountAssignmentAdmin(root, profile) {
               !window.confirm(
                 q.archive?.archived
                   ? "Khôi phục quyền chọn phiên bản này cho đề mới?"
-                  : "Archive phiên bản này? Đề đã xuất bản và bài cũ vẫn dùng đúng phiên bản của mình.",
+                  : "Lưu trữ câu này? Đề đã xuất bản và bài cũ vẫn giữ nguyên nội dung.",
               )
             )
               return;
@@ -491,7 +620,11 @@ export function mountAssignmentAdmin(root, profile) {
           });
         submitForm(e.currentTarget, "rubric_create", f);
       };
+      mountRubricFields(content.querySelector("[data-rubric]"));
       const generator = mountDistractorGenerator(
+        content.querySelector("[data-question]"),
+      );
+      const questionFields = mountQuestionFields(
         content.querySelector("[data-question]"),
       );
       const advancedDetails = content
@@ -561,7 +694,7 @@ export function mountAssignmentAdmin(root, profile) {
         ))
           input.checked = selection.questions.some((q) => q.id === input.value);
         const selected = content.querySelector("[data-selection]");
-        selected.innerHTML = `<h4>Thứ tự đề · ${selection.questions.length} câu</h4>${selection.questions.map((q, i) => `<div class="assignment-row"><span>${i + 1}. ${text(q.question_key)} · v${q.version}<br>${text(q.prompt)}</span><div class="account-actions"><button class="st-button" type="button" data-move-up="${esc(q.id)}" aria-label="Đưa câu ${i + 1} lên" ${i ? "" : "disabled"}>↑</button><button class="st-button" type="button" data-move-down="${esc(q.id)}" aria-label="Đưa câu ${i + 1} xuống" ${i + 1 < selection.questions.length ? "" : "disabled"}>↓</button><button class="st-button" type="button" data-remove-question="${esc(q.id)}">Bỏ khỏi đề</button></div></div>`).join("") || "<p>Chưa chọn câu. Danh sách này chưa được lưu trên máy chủ.</p>"}`;
+        selected.innerHTML = `<h4>Thứ tự đề · ${selection.questions.length} câu</h4>${selection.questions.map((q, i) => `<div class="assignment-row"><span>Câu ${i + 1}<br>${text(q.prompt)}</span><div class="account-actions"><button class="st-button" type="button" data-move-up="${esc(q.id)}" aria-label="Đưa câu ${i + 1} lên" ${i ? "" : "disabled"}>↑</button><button class="st-button" type="button" data-move-down="${esc(q.id)}" aria-label="Đưa câu ${i + 1} xuống" ${i + 1 < selection.questions.length ? "" : "disabled"}>↓</button><button class="st-button" type="button" data-remove-question="${esc(q.id)}">Bỏ khỏi đề</button></div></div>`).join("") || "<p>Chưa chọn câu. Danh sách này chưa được lưu trên máy chủ.</p>"}`;
         for (const button of selected.querySelectorAll("button"))
           button.onclick = () => {
             if (button.dataset.removeQuestion)
@@ -613,19 +746,20 @@ export function mountAssignmentAdmin(root, profile) {
           ) {
             const option = document.createElement("option");
             option.value = values.rubric_version_id;
-            option.textContent = "Rubric của phiên bản gốc";
+            option.textContent = "Bộ tiêu chí của câu gốc";
             rubricSelect.add(option);
           }
           for (const [name, value] of Object.entries(values))
             form.elements.namedItem(name).value = value;
           generator.reset();
+          questionFields.render();
           parentVersion = q.id;
           form.closest("details").open = true;
-          form.elements.namedItem("question_key").focus();
+          form.elements.namedItem("prompt").focus();
           root.querySelector("[data-status]").textContent = button.dataset
             .copyQuestion
-            ? "Bản sao đang ở form. Đặt mã câu mới trước khi lưu."
-            : `Đang sửa từ v${q.version}. Lưu sẽ tạo phiên bản mới; bài đã nộp và điểm đã công bố giữ nguyên.`;
+            ? "Bản sao đang ở form. Chỉnh nội dung rồi lưu câu hỏi."
+            : `Đang chỉnh câu hỏi. Nội dung mới sẽ được lưu riêng; bài đã nộp giữ nguyên.`;
         };
       content.querySelector("[data-definition]").onsubmit = (e) => {
         e.preventDefault();
@@ -643,7 +777,7 @@ export function mountAssignmentAdmin(root, profile) {
             });
             if (!active || generation !== request) return;
             const box = content.querySelector("[data-definition-output]");
-            box.innerHTML = `<section class="account-notice"><h4>${text(v.title)} · v${v.version}</h4>${(v.contexts || []).map((c) => `<section class="assignment-question"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}${v.questions.map((q, i) => `<div class="assignment-question"><p>${i + 1}. ${text(q.prompt)}<br><small>${text(q.kind)} · v${q.version} · 10 điểm</small></p><p>Lựa chọn: ${text(JSON.stringify(q.options))}</p><p>Đáp án (chỉ Admin): ${text(JSON.stringify(q.answer_key))}</p><p>Giải thích: ${text(q.explanation)}<br>Gợi ý: ${text(q.tip)}</p></div>`).join("")}${v.status === "draft" ? '<button class="st-button primary" data-publish-definition>Xuất bản đề này</button>' : ""}<button class="st-button" data-reuse-definition>Tạo nháp từ phiên bản này</button><p>Phục hồi nội dung bằng đề mới: lưu nháp, xem trước rồi xuất bản. Lịch sử cũ giữ nguyên.</p></section>`;
+            box.innerHTML = `<section class="account-notice"><h4>${text(v.title)}</h4>${(v.contexts || []).map((c) => `<section class="assignment-question"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}${v.questions.map((q, i) => `<div class="assignment-question"><p>${i + 1}. ${text(q.prompt)}<br><small>10 điểm</small></p><p>Lựa chọn: ${text(q.options.map((o) => (typeof o === "string" ? o : o.text)).join(" · "))}</p><p>Đáp án (chỉ Admin): ${text(answerLabel(q.answer_key))}</p><p>Giải thích: ${text(q.explanation)}<br>Gợi ý: ${text(q.tip)}</p></div>`).join("")}${v.status === "draft" ? '<button class="st-button primary" data-publish-definition>Xuất bản đề này</button>' : ""}<button class="st-button" data-reuse-definition>Tạo bản nháp từ đề này</button><p>Phục hồi nội dung bằng đề mới: lưu nháp, xem trước rồi xuất bản. Lịch sử cũ giữ nguyên.</p></section>`;
             box.querySelector("[data-reuse-definition]").onclick = () => {
               if (
                 selection.questions.length &&
@@ -701,6 +835,39 @@ export function mountAssignmentAdmin(root, profile) {
       };
     } catch (error) {
       report(error);
+    }
+  }
+
+  function answerLabel(key) {
+    if (!key) return "Chấm theo tiêu chí của đề.";
+    if (Array.isArray(key.accepted)) return key.accepted.join(" / ");
+    if (key.value !== undefined)
+      return typeof key.value === "boolean"
+        ? key.value
+          ? "Đúng"
+          : "Sai"
+        : String(key.value);
+    if (key.values)
+      return key.values
+        .map((v) => (Array.isArray(v) ? v.join(" / ") : v))
+        .join(" · ");
+    return Object.entries(key)
+      .map(
+        ([k, v]) => k + ": " + (Array.isArray(v) ? v.join(" / ") : String(v)),
+      )
+      .join(" · ");
+  }
+  async function overview() {
+    const generation = ++request,
+      content = shell("Tổng quan", "overview");
+    content.innerHTML = "<p>Đang tải hoạt động gần đây…</p>";
+    try {
+      const list = await command("queue", { page: 0 });
+      if (!active || generation !== request) return;
+      content.innerHTML = `<p class="assignment-intro">Cùng học viên tiến bộ qua từng bài học.</p><p class="st-help">Thống kê trong ${list.length} lượt gần nhất.</p><div class="assignment-stats"><div class="assignment-stat"><span>Chờ chấm / công bố</span><strong>${list.filter((a) => a.state === "submitted" && !a.published_revision).length}</strong></div><div class="assignment-stat"><span>Đã công bố</span><strong>${list.filter((a) => a.published_revision).length}</strong></div><div class="assignment-stat"><span>Đang làm</span><strong>${list.filter((a) => a.state === "draft").length}</strong></div></div><button class="st-button primary assignment-overview-action" data-open-queue>Mở bài nộp</button>`;
+      content.querySelector("[data-open-queue]").onclick = () => queue();
+    } catch (e) {
+      report(e);
     }
   }
   queue();

@@ -2,6 +2,7 @@
 export const browserFixture = Object.freeze({
   run: "be793026-cb25-4452-a044-ed868a6d8028",
   course: "cp2-browser-be793026-cb25-4452-a044-ed868a6d8028",
+  title: "HSKK · Chào hỏi",
   lesson: "cp2-browser-be793026-cb25-4452-a044-ed868a6d8028",
   question: "e477b95d-d7ac-455f-90d3-a72a0df7fd57",
   otherQuestion: "04c09684-eeea-4fc1-a5e0-fa337743c0e3",
