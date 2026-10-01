@@ -9,6 +9,7 @@ export const segmentTypes = Object.freeze([
   "TIME_WARNING",
   "TRANSITION",
   "OUTRO",
+  "UNKNOWN",
 ]);
 export function normalizeSpeech(text) {
   const digits = "零一二三四五六七八九";
@@ -214,6 +215,7 @@ export function confirmSegment(
       end_ms: endMs,
       revision: (segment.revision || 1) + 1,
       status: changed ? "MANUALLY_ADJUSTED" : "CONFIRMED",
+      detection_method: changed ? "manual" : segment.detection_method,
       admin_confirmed: true,
       confirmed_by: actorId,
       confirmed_at: at,

@@ -16,6 +16,8 @@ export function sourceDefinition(value) {
     "non_question_proposals",
     "job_id",
     "review_audit",
+    "segmentation_runs",
+    "non_question_reviews",
   ])
     delete v.audio[k];
   for (const q of v.questions) delete q.audio_segment;

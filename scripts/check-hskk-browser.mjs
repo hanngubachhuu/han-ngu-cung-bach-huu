@@ -229,7 +229,8 @@ try {
       },
     );
     let revision = 0,
-      saveCalls = 0;
+      saveCalls = 0,
+      segmentCalls = 0;
     const adminDraft = {
       ...structuredClone(fixture),
       status: "draft",
@@ -243,6 +244,7 @@ try {
       database_revision: revision,
       draft_storage_available: true,
     };
+    adminDraft.audio.source_audio_id = "a".repeat(64);
     adminDraft.questions.forEach((q) => {
       q.audio_segment = null;
     });
@@ -251,12 +253,35 @@ try {
         action = url.searchParams.get("action");
       if (action === "audio")
         return route.fulfill({ contentType: "audio/mpeg", body: mp3 });
-      if (action === "segment")
+      if (action === "segment") {
+        segmentCalls++;
+        if (segmentCalls === 1)
+          return route.fulfill({
+            status: 503,
+            contentType: "application/json",
+            body: '{"error":"AUDIO_RUNTIME_UNAVAILABLE"}',
+          });
         return route.fulfill({
-          status: 429,
           contentType: "application/json",
-          body: '{"error":"TRANSCRIBER_RATE_LIMIT"}',
+          body: JSON.stringify({
+            run_id: "local-" + segmentCalls,
+            exam_code: adminDraft.exam_code,
+            exam_version: adminDraft.exam_version,
+            source_audio_hash: adminDraft.audio.source_audio_id,
+            matched: 2,
+            non_questions: [],
+            questions: adminDraft.questions.map((q) => ({
+              question_id: q.id,
+              run_id: "local-" + segmentCalls,
+              start_ms: 100,
+              end_ms: 700,
+              confidence: 0.72,
+              detection_method: "structural_timing",
+              status: "NEEDS_REVIEW",
+            })),
+          }),
         });
+      }
       if (action === "save") {
         const body = route.request().postDataJSON();
         assert.equal(body.configuration.audio.url, "");
@@ -264,6 +289,11 @@ try {
         assert.equal(
           body.configuration.questions[0].audio_segment.verified,
           true,
+        );
+        assert.equal(body.configuration.audio.segmentation_runs.length, 2);
+        assert.equal(
+          body.configuration.questions[0].audio_segment.start_seconds,
+          1,
         );
         revision++;
         saveCalls++;
@@ -287,21 +317,37 @@ try {
       ),
     );
     await page
-      .getByRole("button", { name: "AI tự phân đoạn", exact: true })
+      .getByRole("button", { name: "Tự phân đoạn local", exact: true })
       .click();
     await page
       .getByText("Không thể tự phân đoạn audio.", { exact: false })
       .waitFor();
     await page
+      .getByRole("button", { name: "Tự phân đoạn local", exact: true })
+      .click();
+    await page.getByText("Đã đề xuất 2/2", { exact: false }).waitFor();
+    await page
       .getByRole("button", { name: "Chỉnh thủ công", exact: true })
       .click();
     const qrow = page.locator('[data-q="a"]');
+    const bounds = await qrow.locator("[data-editor]").boundingBox();
+    await page.mouse.move(
+      bounds.x + Math.max(2, (bounds.width * 0.1) / 3.7),
+      bounds.y + 40,
+    );
+    await page.mouse.down();
+    await page.mouse.move(bounds.x + bounds.width * 0.2, bounds.y + 40);
+    await page.mouse.up();
     await qrow.locator("[data-from]").fill("1");
     await qrow.locator("[data-to]").fill("2");
     await qrow.getByRole("button", { name: "Nghe đoạn", exact: true }).click();
     await qrow
       .getByRole("button", { name: "Xác nhận đoạn", exact: true })
       .click();
+    await page
+      .getByRole("button", { name: "Tự phân đoạn lại", exact: true })
+      .click();
+    await page.getByText("Đã đề xuất 2/2", { exact: false }).waitFor();
     await page.getByRole("button", { name: "Lưu phân đoạn nháp" }).click();
     await page
       .getByText("Đã lưu phân đoạn audio vào bản nháp.", { exact: false })

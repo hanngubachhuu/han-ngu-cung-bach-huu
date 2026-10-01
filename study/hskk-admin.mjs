@@ -153,7 +153,7 @@ function renderBuilder() {
     onUpdate: (value) => {
       draft = value;
     },
-    runAI: async () => {
+    runSegmentation: async () => {
       const session = await getSession();
       if (!session || session.user.id !== draft.preview_actor_id) throw Error();
       const response = await fetch(
@@ -231,6 +231,8 @@ function renderBuilder() {
           "non_question_proposals",
           "job_id",
           "review_audit",
+          "segmentation_runs",
+          "non_question_reviews",
         ])
           delete d.audio[field];
         for (const q of d.questions) delete q.audio_segment;

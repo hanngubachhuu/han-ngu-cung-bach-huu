@@ -19,7 +19,7 @@
   "functions": {
     "api/hskk-exams.js": {
       "maxDuration": 120,
-      "includeFiles": "server/hskk/**"
+      "includeFiles": "{server/hskk/**,.cache/recording-runtime/linux-x64-8.1.3/**}"
     },
     "api/study.js": {
       "maxDuration": 120

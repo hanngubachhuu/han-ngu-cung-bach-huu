@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import { documentContext } from "../server/document-service.mjs";
-import { openAITranscriber } from "../server/audio-transcriber.mjs";
-import { alignQuestions } from "../server/audio-segmentation.mjs";
-import { createHash, randomUUID } from "node:crypto";
+import { HSKKAudioSegmentationEngine } from "../server/hskk-audio-segmentation.mjs";
+
+import { createHash } from "node:crypto";
 import {
   readDraftRevision,
   saveDraftRevision,
@@ -12,7 +12,7 @@ import {
   readSourceAudio,
 } from "../server/hskk-source-audio.mjs";
 export const config = { maxDuration: 120 };
-// Read-only admin preview. A draft never starts a learner attempt or writes media.
+// Admin-only authoring. Segmentation never starts a learner attempt or publishes.
 export function createExamHandler({
   authorize = documentContext,
   readDraft = (code) =>
@@ -22,8 +22,7 @@ export function createExamHandler({
     ),
   readAudio = async (code, client) =>
     readSourceAudio(client, JSON.parse(await readDraft(code))),
-  transcriber = openAITranscriber(),
-  aiEnabled = process.env.HSKK_AUTHORING_AI_ENABLED === "true",
+  segmenter = new HSKKAudioSegmentationEngine(),
 } = {}) {
   return async (req, res) => {
     res.setHeader("Cache-Control", "private, no-store");
@@ -80,35 +79,32 @@ export function createExamHandler({
       }
       if (action === "status" && req.method === "GET") {
         res.statusCode = 200;
-        return res.end(JSON.stringify({ ai_enabled: aiEnabled }));
+        return res.end(
+          JSON.stringify({
+            local_segmentation_enabled: true,
+            external_ai_enabled: false,
+          }),
+        );
       }
       if (req.method === "POST") {
         if (action !== "segment") {
           res.statusCode = 405;
           return res.end(JSON.stringify({ error: "METHOD_NOT_ALLOWED" }));
         }
-        if (!aiEnabled) throw Error("TRANSCRIBER_NOT_CONFIGURED");
         const exam = JSON.parse(await readDraft(code)),
           bytes = await readAudio(code, client),
           hash = createHash("sha256").update(bytes).digest("hex");
         if (hash !== exam.provenance.sha256[exam.provenance.audio])
           throw Error("SOURCE_HASH_MISMATCH");
-        const transcript = await transcriber.transcribe({
+        const proposal = await segmenter.segment({
           bytes,
-          filename: exam.provenance.audio,
+          exam,
+          sourceHash: hash,
         });
         res.statusCode = 200;
-        return res.end(
-          JSON.stringify(
-            alignQuestions({
-              exam,
-              transcript,
-              sourceHash: hash,
-              jobId: randomUUID(),
-            }),
-          ),
-        );
+        return res.end(JSON.stringify(proposal));
       }
+
       if (url.searchParams.get("action") === "audio") {
         res.setHeader("Content-Type", "audio/mpeg");
         res.statusCode = 200;
@@ -129,7 +125,9 @@ export function createExamHandler({
       const error = [
         "AUTH_REQUIRED",
         "ADMIN_REQUIRED",
-        "TRANSCRIBER_NOT_CONFIGURED",
+        "AUDIO_RUNTIME_UNAVAILABLE",
+        "AUDIO_DECODE_FAILED",
+        "AUDIO_INVALID_DURATION",
         "TRANSCRIBER_RATE_LIMIT",
         "TRANSCRIBER_QUOTA_EXHAUSTED",
         "TRANSCRIPTION_FAILED",
