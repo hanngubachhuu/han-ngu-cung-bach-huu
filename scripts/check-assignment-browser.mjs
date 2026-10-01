@@ -314,6 +314,26 @@ await context.route(
           title_zh: "你好",
         },
       ]);
+    if (p.endsWith("/assignment_version_questions")) {
+      assert.equal(route.request().method(), "HEAD");
+      assert.equal(
+        url.searchParams.get("assignment_version_id"),
+        "eq.old_definition",
+      );
+      return route.fulfill({
+        status: 200,
+        headers: { "content-range": "*/2" },
+      });
+    }
+    if (p.endsWith("/courses"))
+      return fulfill([
+        {
+          id: "hsk1",
+          program: "HSK",
+          level: 1,
+          title: "Tên khóa học khác cấp độ",
+        },
+      ]);
     if (p.includes("/rest/v1/")) return fulfill([]);
     return fulfill({});
   },
@@ -407,7 +427,27 @@ try {
   await page
     .getByRole("button", { name: "Xem trước kết quả", exact: true })
     .waitFor();
+  const originalAnswer = work.answers[0].answer;
+  work.answers[0].question.kind = "true_false";
+  for (const value of [false, true]) {
+    work.answers[0].answer = value;
+    await page.locator("[data-queue]").click();
+    await page.locator("[data-attempt]").click();
+    await page
+      .getByText(`Học viên: ${value ? "Đúng" : "Sai"}`, { exact: true })
+      .waitFor();
+  }
+  work.answers[0].question.kind = "mcq";
+  work.answers[0].answer = originalAnswer;
   await page.locator("[data-bank]").click();
+  await page
+    .locator('[data-exam-list] td[data-label="Cấp độ"]')
+    .getByText("HSK 1", { exact: true })
+    .waitFor();
+  assert.equal(
+    await page.locator('[data-exam-list] td[data-label="Số câu"]').innerText(),
+    "2",
+  );
   await page.locator('[name="question"][value="bank0"]').check();
   await page
     .locator('[data-definition] [name="title"]')
@@ -456,11 +496,21 @@ try {
     "bank20",
   );
   await page.locator('[data-copy-question="bank21"]').click();
-  assert.equal(
+  const firstCopyKey = await page
+    .locator('[data-question] [name="question_key"]')
+    .inputValue();
+  assert.match(firstCopyKey, /^[0-9a-f-]{36}$/);
+  await page.locator('[data-copy-question="bank21"]').click();
+  assert.notEqual(
     await page.locator('[data-question] [name="question_key"]').inputValue(),
-    "bank21_copy",
+    firstCopyKey,
   );
+  oldDefinition.questions[0].kind = "matching";
+  oldDefinition.questions[0].answer_key = { pairs: { 中国: "Trung Quốc" } };
   await page.locator('[data-definition-preview="old_definition"]').click();
+  await page
+    .getByText("Đáp án (chỉ Admin): 中国 → Trung Quốc", { exact: true })
+    .waitFor();
   await page.locator("[data-reuse-definition]").click();
   await page.waitForFunction(
     () =>

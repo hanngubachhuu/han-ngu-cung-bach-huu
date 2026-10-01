@@ -21,7 +21,6 @@ export function mountQuestionFields(form) {
         "true_false",
         "text_fill",
         "multi_fill",
-        "matching",
       ].includes(kind.value);
     answerLabel.hidden =
       mcq ||
@@ -59,7 +58,22 @@ export function mountQuestionFields(form) {
         { id: "C", text: "" },
         { id: "D", text: "" },
       );
-    box.innerHTML = `<h4>Các lựa chọn</h4>${choices.map((o, i) => `<label>Lựa chọn ${i + 1}<textarea rows="2" maxlength="2000" data-option-choice="${esc(o.id)}">${esc(o.text)}</textarea></label>`).join("")}<label>Đáp án đúng<select data-key-choice><option value="">Chọn đáp án đúng</option>${choices.map((o, i) => `<option value="${esc(o.id)}" ${o.id === answer.value ? "selected" : ""}>${esc(o.text || "Lựa chọn " + (i + 1))}</option>`).join("")}</select></label>`;
+    box.innerHTML = `<h4>Các lựa chọn</h4>${choices.map((o, i) => `<label>Lựa chọn ${i + 1}<textarea rows="2" maxlength="2000" data-option-choice="${esc(o.id)}">${esc(o.text)}</textarea></label>`).join("")}<button type="button" class="st-button" data-add-choice ${choices.length >= 8 ? "disabled" : ""}>+ Thêm lựa chọn</button><label>Đáp án đúng<select data-key-choice><option value="">Chọn đáp án đúng</option>${choices.map((o, i) => `<option value="${esc(o.id)}" ${o.id === answer.value ? "selected" : ""}>${esc(o.text || "Lựa chọn " + (i + 1))}</option>`).join("")}</select></label>`;
+    box.querySelector("[data-add-choice]").onclick = () => {
+      const id = [..."ABCDEFGH"].find(
+        (id) => !choices.some((o) => o.id === id),
+      );
+      if (!id || choices.length >= 8) return;
+      options.value =
+        [...box.querySelectorAll("[data-option-choice]")]
+          .map((n) => n.dataset.optionChoice + " | " + n.value.trim())
+          .join("\n") +
+        "\n" +
+        id +
+        " | ";
+      options.dispatchEvent(new Event("input", { bubbles: true }));
+      render();
+    };
     for (const input of box.querySelectorAll("[data-option-choice]"))
       input.oninput = () => {
         options.value = [...box.querySelectorAll("[data-option-choice]")]

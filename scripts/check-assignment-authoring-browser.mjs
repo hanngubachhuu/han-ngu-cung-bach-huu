@@ -369,6 +369,30 @@ try {
     await page.locator('[name="question"][value="import0"]').isDisabled(),
     false,
   );
+  // Presentation regressions: full eight-choice range and matching items stay editable.
+  await page.locator('[data-copy-question="import0"]').click();
+  const originalCopyKey = await page
+    .locator('[data-question] [name="question_key"]')
+    .inputValue();
+  for (let i = 3; i <= 8; i++) {
+    await page.locator("[data-add-choice]").click();
+    await page.locator("[data-option-choice]").last().fill(`Phương án ${i}`);
+  }
+  assert.equal(await page.locator("[data-option-choice]").count(), 8);
+  assert.equal(await page.locator("[data-add-choice]").isDisabled(), true);
+  await page.getByRole("button", { name: "Lưu câu hỏi", exact: true }).click();
+  await page.locator('[data-edit-question="q3"]').waitFor();
+  assert.equal(writes.at(-1).options.length, 8);
+  await page.locator('[data-copy-question="import0"]').click();
+  assert.notEqual(
+    await page.locator('[data-question] [name="question_key"]').inputValue(),
+    originalCopyKey,
+  );
+  await page.locator('[data-question] [name="kind"]').selectOption("matching");
+  assert.equal(
+    await page.locator('[data-question] [name="options"]').isVisible(),
+    true,
+  );
   for (const width of [390, 768, 1366]) {
     await page.setViewportSize({ width, height: 900 });
     assert.equal(

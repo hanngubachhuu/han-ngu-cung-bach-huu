@@ -140,7 +140,7 @@ export function mountAssignmentAdmin(root, profile) {
             const fullyGraded =
               snapshot?.grading?.grades?.length &&
               snapshot.grading.grades.every((g) => g.score !== null);
-            return `<tr><td><strong>${text(a.full_name)}</strong><small>${text(a.title_vi)} · ${text(a.course_title)}</small></td><td data-label="Nộp">${snapshot?.submitted_at ? new Date(snapshot.submitted_at).toLocaleString("vi-VN") : a.state === "draft" ? "Đang làm" : "Đã nộp"}</td><td><span class="assignment-pill ${a.published_revision ? "published" : ""}">${a.state === "draft" ? "Đang làm" : a.published_revision ? "Đã công bố" : fullyGraded ? "Đã chấm · Chưa công bố" : "Chưa chấm"}</span></td><td data-label="Điểm">${result ? result.normalized_score + " / 100" : "—"}</td><td><button class="st-button" data-attempt="${esc(a.id)}">Mở bài</button></td></tr>`;
+            return `<tr><td><strong>${text(a.full_name)}</strong><small>${text(a.title_vi)}${a.program ? " · " + text(a.program) : ""}</small></td><td data-label="Nộp">${snapshot?.submitted_at ? new Date(snapshot.submitted_at).toLocaleString("vi-VN") : a.state === "draft" ? "Đang làm" : "Đã nộp"}</td><td><span class="assignment-pill ${a.published_revision ? "published" : ""}">${a.state === "draft" ? "Đang làm" : a.published_revision ? "Đã công bố" : fullyGraded ? "Đã chấm · Chưa công bố" : "Chưa chấm"}</span></td><td data-label="Điểm">${result ? result.normalized_score + " / 100" : "—"}</td><td><button class="st-button" data-attempt="${esc(a.id)}">Mở bài</button></td></tr>`;
           })
           .join("");
         content.querySelector("[data-empty]").hidden = !!shown.length;
@@ -210,13 +210,17 @@ export function mountAssignmentAdmin(root, profile) {
                   ? "Có bản ghi trả lời"
                   : "Chưa có bản ghi"
                 : text(
-                    typeof a.answer === "string"
+                    typeof a.answer === "boolean"
                       ? a.answer
-                      : Array.isArray(a.answer)
-                        ? a.answer.join(" · ")
-                        : Object.entries(a.answer || {})
-                            .map(([k, v]) => `${k}: ${v}`)
-                            .join(" · "),
+                        ? "Đúng"
+                        : "Sai"
+                      : typeof a.answer === "string"
+                        ? a.answer
+                        : Array.isArray(a.answer)
+                          ? a.answer.join(" · ")
+                          : Object.entries(a.answer || {})
+                              .map(([k, v]) => `${k}: ${v}`)
+                              .join(" · "),
                   )
             }</p><details><summary>Đáp án tham khảo</summary><p>${text(answerLabel(g?.grading_question?.answer_key ?? a.private_question.answer_key))}</p><p>${text(g?.grading_question?.explanation ?? a.private_question.explanation)}</p></details>
             ${rubric ? rubric.criteria.map((c) => `<label>${text(c.label)} / ${c.weight}<input type="number" data-criterion="${esc(c.id)}" min="0" max="${c.weight}" step="0.01" value="${g?.criteria_scores?.[c.id] ?? ""}"></label>`).join("") : `<label>Điểm /10<input type="number" data-score min="0" max="10" step="0.01" value="${g?.score ?? ""}"></label>`}
@@ -432,19 +436,15 @@ export function mountAssignmentAdmin(root, profile) {
       if (!active || generation !== request) return;
       const definitionCounts = new Map();
       if (data.definitions.length) {
-        const { data: links, error: linkError } = await client
-          .from("assignment_version_questions")
-          .select("assignment_version_id")
-          .in(
-            "assignment_version_id",
-            data.definitions.map((v) => v.id),
-          );
-        if (!linkError)
-          for (const link of links || [])
-            definitionCounts.set(
-              link.assignment_version_id,
-              (definitionCounts.get(link.assignment_version_id) || 0) + 1,
-            );
+        await Promise.all(
+          data.definitions.map(async (v) => {
+            const { count, error } = await client
+              .from("assignment_version_questions")
+              .select("assignment_version_id", { count: "exact", head: true })
+              .eq("assignment_version_id", v.id);
+            if (!error && count !== null) definitionCounts.set(v.id, count);
+          }),
+        );
       }
       const { data: courses } = await client
         .from("courses")
@@ -454,7 +454,7 @@ export function mountAssignmentAdmin(root, profile) {
       );
       if (!active || generation !== request) return;
       content.innerHTML = `<label>Bài học<select data-lesson>${lessons.map((l) => `<option value="${esc(l.id)}" ${l.id === lesson ? "selected" : ""}>${text(l.title_vi)}</option>`).join("")}</select></label>
-        <section data-exam-list><div class="assignment-heading"><h4>Danh sách đề</h4><button class="st-button primary" data-new-exam>+ Tạo đề mới</button></div><div class="account-actions" role="group" aria-label="Lọc đề"><button class="st-button" data-exam-filter="" aria-pressed="true">Tất cả</button><button class="st-button" data-exam-filter="draft" aria-pressed="false">Nháp</button><button class="st-button" data-exam-filter="published" aria-pressed="false">Đã xuất bản</button></div><table class="assignment-table"><thead><tr><th>Tên đề</th><th>Cấp độ</th><th>Số câu</th><th>Trạng thái</th><th>Cập nhật</th><th>Thao tác</th></tr></thead><tbody>${data.definitions.map((v) => `<tr data-exam-state="${esc(v.status)}"><td><strong>${text(v.title)}</strong></td><td data-label="Cấp độ">${text(course?.title || course?.program || "Theo bài học")}</td><td data-label="Số câu">${v.questions?.length ?? (definitionCounts.has(v.id) ? definitionCounts.get(v.id) : "—")}</td><td><span class="assignment-pill ${v.status === "published" ? "published" : ""}">${v.status === "draft" ? "Nháp" : "Đã xuất bản"}</span></td><td data-label="Cập nhật">${v.published_at || v.created_at ? new Date(v.published_at || v.created_at).toLocaleDateString("vi-VN") : "—"}</td><td><button class="st-button" data-definition-preview="${esc(v.id)}">Xem trước</button></td></tr>`).join("")}</tbody></table><p ${data.definitions.length ? "hidden" : ""}>Chưa có đề. Tạo đề mới hoặc nhập PDF / Word để bắt đầu.</p></section>
+        <section data-exam-list><div class="assignment-heading"><h4>Danh sách đề</h4><button class="st-button primary" data-new-exam>+ Tạo đề mới</button></div><div class="account-actions" role="group" aria-label="Lọc đề"><button class="st-button" data-exam-filter="" aria-pressed="true">Tất cả</button><button class="st-button" data-exam-filter="draft" aria-pressed="false">Nháp</button><button class="st-button" data-exam-filter="published" aria-pressed="false">Đã xuất bản</button></div><table class="assignment-table"><thead><tr><th>Tên đề</th><th>Cấp độ</th><th>Số câu</th><th>Trạng thái</th><th>Cập nhật</th><th>Thao tác</th></tr></thead><tbody>${data.definitions.map((v) => `<tr data-exam-state="${esc(v.status)}"><td><strong>${text(v.title)}</strong></td><td data-label="Cấp độ">${text(course ? course.program + " " + course.level : "Theo bài học")}</td><td data-label="Số câu">${v.questions?.length ?? (definitionCounts.has(v.id) ? definitionCounts.get(v.id) : "—")}</td><td><span class="assignment-pill ${v.status === "published" ? "published" : ""}">${v.status === "draft" ? "Nháp" : "Đã xuất bản"}</span></td><td data-label="Cập nhật">${v.published_at || v.created_at ? new Date(v.published_at || v.created_at).toLocaleDateString("vi-VN") : "—"}</td><td><button class="st-button" data-definition-preview="${esc(v.id)}">Xem trước</button></td></tr>`).join("")}</tbody></table><p ${data.definitions.length ? "hidden" : ""}>Chưa có đề. Tạo đề mới hoặc nhập PDF / Word để bắt đầu.</p></section>
         <div data-document-import></div><details><summary>Thiết lập tiêu chí chấm</summary><form data-rubric class="account-form"><label>Tên bộ tiêu chí<input name="rubric_key" required maxlength="120"></label><label>Dạng bài<select name="kind"><option value="writing">Viết</option><option value="translation">Dịch</option><option value="speaking">Nói</option></select></label><label>Tiêu chí và trọng số (mỗi dòng: tên | điểm tối đa; tổng 10)<textarea name="criteria" required rows="4" placeholder="Nội dung | 6&#10;Ngữ pháp | 4"></textarea></label><button class="st-button">Lưu bộ tiêu chí</button></form></details>
         <details ${advancedQuestionOpen ? "open" : ""}><summary>Thêm / sửa câu hỏi</summary><form data-question class="account-form"><input type="hidden" name="question_key" value="${crypto.randomUUID()}" required><label>Dạng<select name="kind"><option value="mcq">Trắc nghiệm</option><option value="true_false">Đúng / sai</option><option value="text_fill">Điền từ</option><option value="reorder">Sắp xếp từ</option><option value="multi_fill">Nhiều chỗ trống</option><option value="matching">Ghép cặp</option><option value="translation">Dịch mở</option><option value="writing">Viết</option><option value="speaking">Nói (chưa mở ghi âm)</option></select></label><label>Câu hỏi<textarea name="prompt" required rows="3" maxlength="12000"></textarea></label><label>Các lựa chọn<textarea name="options" rows="4"></textarea></label><label>Đáp án đúng<textarea name="answer" rows="3"></textarea></label><label>Bộ tiêu chí chấm<select name="rubric_version_id"><option value="">Chọn tiêu chí</option>${data.rubrics.map((r) => `<option value="${esc(r.id)}">${text(r.rubric_key)}</option>`).join("")}</select></label><label>Giải thích (chỉ Admin)<textarea name="explanation" rows="2"></textarea></label><label>Gợi ý (chỉ Admin)<textarea name="tip" rows="2"></textarea></label><button class="st-button">Lưu câu hỏi</button><p class="st-help">Nội dung cũ và bài đã nộp luôn được giữ. Hãy kiểm tra đáp án trước khi xuất bản.</p></form></details>
         <div data-write-recovery></div><details data-developer-tools hidden><summary>Công cụ nhập có cấu trúc</summary><div data-import></div></details><label><input type="checkbox" data-show-archived ${includeArchived ? "checked" : ""}> Hiện câu đã lưu trữ</label>
@@ -737,6 +737,8 @@ export function mountAssignmentAdmin(root, profile) {
           );
           const values = questionForm(q, !!button.dataset.copyQuestion),
             form = content.querySelector("[data-question]");
+          if (button.dataset.copyQuestion)
+            values.question_key = crypto.randomUUID();
           const rubricSelect = form.elements.namedItem("rubric_version_id");
           if (
             values.rubric_version_id &&
@@ -850,6 +852,10 @@ export function mountAssignmentAdmin(root, profile) {
     if (key.values)
       return key.values
         .map((v) => (Array.isArray(v) ? v.join(" / ") : v))
+        .join(" · ");
+    if (key.pairs)
+      return Object.entries(key.pairs)
+        .map(([left, right]) => `${left} → ${right}`)
         .join(" · ");
     return Object.entries(key)
       .map(
