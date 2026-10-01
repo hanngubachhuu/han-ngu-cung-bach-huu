@@ -1,8 +1,13 @@
 import fs from "node:fs/promises";
 import { documentContext } from "../server/document-service.mjs";
-import { HSKKAudioSegmentationEngine } from "../server/hskk-audio-segmentation.mjs";
+import { generateConfirmedClip } from "../server/hskk-confirmed-clips.mjs";
+import { checkFinalization } from "../study/hskk-review-validation.mjs";
+import {
+  analyzeSource,
+  HSKKAudioSegmentationEngine,
+} from "../server/hskk-audio-segmentation.mjs";
 
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
   readDraftRevision,
   saveDraftRevision,
@@ -45,6 +50,56 @@ export function createExamHandler({
         return res.end(JSON.stringify({ error: "EXAM_NOT_FOUND" }));
       }
       const action = url.searchParams.get("action");
+      if (req.method === "GET" && action === "waveform") {
+        const exam = JSON.parse(await readDraft(code));
+        const analyzed = await analyzeSource(
+          await readAudio(code, client),
+          exam.provenance.sha256[exam.provenance.audio],
+        );
+        res.statusCode = 200;
+        return res.end(JSON.stringify(analyzed.waveform));
+      }
+      if (req.method === "POST" && ["finalize", "clip"].includes(action)) {
+        const saved = (await readDraftRevision(client, code)).record;
+        if (!saved) throw Error("DRAFT_STORAGE_UNAVAILABLE");
+        const { validateSourceReview } = await import(
+          "../server/hskk-authoring.mjs"
+        );
+        const exam = validateSourceReview(
+          JSON.parse(await readDraft(code)),
+          saved.configuration,
+        );
+        const gate = checkFinalization(exam);
+        if (action === "finalize") {
+          res.statusCode = 200;
+          return res.end(
+            JSON.stringify({ ...gate, database_revision: saved.revision }),
+          );
+        }
+        if (!gate.ready) throw Error("DRAFT_NOT_READY");
+        const clip = await generateConfirmedClip({
+          exam,
+          bytes: await readAudio(code, client),
+          questionId: url.searchParams.get("question"),
+        });
+        exam.audio.clip_provenance = [
+          ...(exam.audio.clip_provenance || []),
+          { ...clip.provenance, draft_revision: saved.revision },
+        ];
+        await saveDraftRevision(client, JSON.parse(await readDraft(code)), {
+          configuration: exam,
+          expected_revision: saved.revision,
+          request_id: randomUUID(),
+        });
+        res.setHeader("Content-Type", "audio/mpeg");
+        res.setHeader(
+          "Content-Disposition",
+          'attachment; filename="confirmed-clip.mp3"',
+        );
+        res.setHeader("X-Clip-Provenance", JSON.stringify(clip.provenance));
+        res.statusCode = 200;
+        return res.end(clip.bytes);
+      }
       if (req.method === "POST" && action === "reserve_source") {
         res.statusCode = 200;
         return res.end(
@@ -123,6 +178,10 @@ export function createExamHandler({
       );
     } catch (e) {
       const error = [
+        "DRAFT_NOT_READY",
+        "CLIP_GENERATION_FAILED",
+        "CLIP_INVALID_OUTPUT",
+        "INVALID_QUESTION",
         "AUTH_REQUIRED",
         "ADMIN_REQUIRED",
         "AUDIO_RUNTIME_UNAVAILABLE",

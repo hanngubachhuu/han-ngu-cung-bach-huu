@@ -206,6 +206,8 @@ test("server save locks official content/timing and strips preview blob paths wh
     { question_id: "q1", start_ms: 2000, end_ms: 3000, status: "NEEDS_REVIEW" },
   ];
   edited.questions[0].audio_segment = {
+    start_ms: 2000,
+    end_ms: 3000,
     start_seconds: 2,
     end_seconds: 3,
     verified: true,

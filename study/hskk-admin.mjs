@@ -153,6 +153,19 @@ function renderBuilder() {
     onUpdate: (value) => {
       draft = value;
     },
+    loadWaveform: async () => {
+      const session = await getSession();
+      if (!session || session.user.id !== draft.preview_actor_id) throw Error();
+      const response = await fetch(
+        "api/hskk-exams?exam=" +
+          encodeURIComponent(draft.exam_code) +
+          "&action=waveform",
+        { headers: { Authorization: "Bearer " + session.access_token } },
+      );
+      if (!response.ok) throw Error();
+      if ((await getSession())?.user.id !== session.user.id) throw Error();
+      return response.json();
+    },
     runSegmentation: async () => {
       const session = await getSession();
       if (!session || session.user.id !== draft.preview_actor_id) throw Error();
@@ -233,6 +246,8 @@ function renderBuilder() {
           "review_audit",
           "segmentation_runs",
           "non_question_reviews",
+          "review_status",
+          "clip_provenance",
         ])
           delete d.audio[field];
         for (const q of d.questions) delete q.audio_segment;

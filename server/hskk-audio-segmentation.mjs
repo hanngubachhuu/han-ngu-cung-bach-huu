@@ -146,7 +146,19 @@ export function analyzePCM(pcm) {
   }
   if (cursor < frames.length * 20)
     silence.push({ start_ms: cursor, end_ms: frames.length * 20 });
-  return { speech_regions, silence, rms_threshold: threshold, frame_ms: 20 };
+  const peaks = [];
+  for (let i = 0; i < frames.length; i += 5)
+    peaks.push(
+      Math.round(Math.min(1, Math.max(...frames.slice(i, i + 5)) * 4) * 1000) /
+        1000,
+    );
+  return {
+    speech_regions,
+    silence,
+    rms_threshold: threshold,
+    frame_ms: 20,
+    waveform: { step_ms: 100, peaks },
+  };
 }
 export class HSKKAudioSegmentationEngine {
   async segment({ bytes, exam, sourceHash }) {
@@ -278,6 +290,7 @@ export function proposeSegments(exam, analysis) {
     run_id,
     job_id: run_id,
     source_audio_hash: analysis.sha256,
+    source_audio_id: analysis.sha256,
     source_sha256: analysis.sha256,
     exam_code: exam.exam_code,
     exam_version: exam.exam_version,

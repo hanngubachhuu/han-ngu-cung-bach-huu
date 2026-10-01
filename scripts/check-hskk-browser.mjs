@@ -8,7 +8,7 @@ import {
   audioHash,
 } from "../server/recording-audio.mjs";
 const base = process.env.STUDY_BASE_URL || "http://127.0.0.1:4173";
-const raw = syntheticWave(),
+const raw = syntheticWave(9),
   mp3 = (await normalizeRecording(raw, audioHash(raw))).bytes;
 const browser = await chromium.launch({
   headless: true,
@@ -251,6 +251,11 @@ try {
     await context.route("**/api/hskk-exams*", (route) => {
       const url = new URL(route.request().url()),
         action = url.searchParams.get("action");
+      if (action === "waveform")
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ step_ms: 100, peaks: Array(100).fill(0.4) }),
+        });
       if (action === "audio")
         return route.fulfill({ contentType: "audio/mpeg", body: mp3 });
       if (action === "segment") {
@@ -268,8 +273,16 @@ try {
             exam_code: adminDraft.exam_code,
             exam_version: adminDraft.exam_version,
             source_audio_hash: adminDraft.audio.source_audio_id,
+            source_sha256: adminDraft.audio.source_audio_id,
             matched: 2,
-            non_questions: [],
+            non_questions: [
+              {
+                start_ms: 10,
+                end_ms: 90,
+                segment_type: "UNKNOWN",
+                run_id: "local-" + segmentCalls,
+              },
+            ],
             questions: adminDraft.questions.map((q) => ({
               question_id: q.id,
               run_id: "local-" + segmentCalls,
@@ -278,6 +291,8 @@ try {
               confidence: 0.72,
               detection_method: "structural_timing",
               status: "NEEDS_REVIEW",
+              match_kind:
+                q.id === "b" ? "unverified_cue" : "unverified_speech_region",
             })),
           }),
         });
@@ -291,6 +306,10 @@ try {
           true,
         );
         assert.equal(body.configuration.audio.segmentation_runs.length, 2);
+        assert.equal(
+          body.configuration.audio.non_question_reviews[0].end_ms,
+          80,
+        );
         assert.equal(
           body.configuration.questions[0].audio_segment.start_seconds,
           1,
@@ -338,11 +357,59 @@ try {
     await page.mouse.down();
     await page.mouse.move(bounds.x + bounds.width * 0.2, bounds.y + 40);
     await page.mouse.up();
+    await qrow.locator("[data-from]").fill("-1");
+    await qrow.locator("[data-to]").focus();
+    await qrow.getByText("Thời gian không hợp lệ:", { exact: false }).waitFor();
     await qrow.locator("[data-from]").fill("1");
     await qrow.locator("[data-to]").fill("2");
     await qrow.getByRole("button", { name: "Nghe đoạn", exact: true }).click();
     await qrow
       .getByRole("button", { name: "Xác nhận đoạn", exact: true })
+      .click();
+    page.once("dialog", (dialog) => dialog.dismiss());
+    await qrow
+      .getByRole("button", { name: "Khôi phục đề xuất", exact: true })
+      .click();
+    assert.ok(
+      (await qrow.locator("summary").textContent()).includes("Đã xác nhận"),
+    );
+    page.once("dialog", (dialog) => dialog.accept());
+    await qrow
+      .getByRole("button", { name: "Khôi phục đề xuất", exact: true })
+      .click();
+    assert.equal(
+      await qrow.locator("[data-from]").inputValue(),
+      "00:00:00.100",
+    );
+    await qrow.locator("[data-from]").fill("00:00:01.000");
+    await qrow.locator("[data-to]").fill("00:00:02.000");
+    await qrow
+      .getByRole("button", { name: "Xác nhận & sang câu tiếp", exact: true })
+      .click();
+    await page
+      .locator('[data-q="b"][open]')
+      .waitFor({ timeout: 3000 })
+      .catch(async (e) => {
+        console.log(await page.locator("[data-segments]").innerText());
+        throw e;
+      });
+    await page
+      .getByText("Đoạn này chỉ là đề xuất vùng lời dẫn/chuyển tiếp.", {
+        exact: false,
+      })
+      .waitFor();
+    await page
+      .getByRole("button", { name: "Kiểm tra hoàn tất", exact: true })
+      .click();
+    await page.getByText("Q2 chưa xác nhận", { exact: false }).waitFor();
+    await page
+      .getByText("Đoạn ngoài câu hỏi · cần nghe để phân loại", { exact: true })
+      .click();
+    await page.locator("[data-nfrom]").fill("00:00:00.010");
+    await page.locator("[data-nto]").fill("00:00:00.080");
+    await page.getByLabel("Loại đoạn ngoài câu hỏi").selectOption("INTRO");
+    await page
+      .getByRole("button", { name: "Lưu phân loại và ranh giới", exact: true })
       .click();
     await page
       .getByRole("button", { name: "Tự phân đoạn lại", exact: true })

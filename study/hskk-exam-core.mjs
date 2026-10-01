@@ -105,7 +105,7 @@ export function validateExam(exam, { playable = false } = {}) {
     if (q.prompt_mode === "audio" && (playable || q.audio_segment)) {
       const a = q.audio_segment;
       requireValue(
-        a?.verified === true &&
+        (!playable || a?.verified === true) &&
           positive(a.end_seconds) &&
           Number.isFinite(a.start_seconds) &&
           a.start_seconds >= 0 &&

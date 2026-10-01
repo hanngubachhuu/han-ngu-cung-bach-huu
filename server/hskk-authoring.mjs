@@ -1,3 +1,7 @@
+import {
+  checkFinalization,
+  validBounds,
+} from "../study/hskk-review-validation.mjs";
 import { validateExam } from "../study/hskk-exam-core.mjs";
 import { isDeepStrictEqual } from "node:util";
 export function sourceDefinition(value) {
@@ -18,6 +22,8 @@ export function sourceDefinition(value) {
     "review_audit",
     "segmentation_runs",
     "non_question_reviews",
+    "review_status",
+    "clip_provenance",
   ])
     delete v.audio[k];
   for (const q of v.questions) delete q.audio_segment;
@@ -33,6 +39,17 @@ export function validateSourceReview(canonical, configuration) {
   )
     throw Error("SOURCE_DEFINITION_LOCKED");
   const value = structuredClone(configuration);
+  for (const q of value.questions) {
+    const s = q.audio_segment;
+    if (!s) continue;
+    if (
+      !validBounds(s.start_ms, s.end_ms, value.audio.duration_seconds) ||
+      s.start_seconds !== s.start_ms / 1000 ||
+      s.end_seconds !== s.end_ms / 1000
+    )
+      throw Error("INVALID_DRAFT");
+  }
+  value.audio.review_status = checkFinalization(value).status;
   value.audio.url = "";
   for (const k of [
     "preview_actor_id",
