@@ -41,15 +41,15 @@ export function mountAudioReview(
   const notice = (text) => {
     root.querySelector("[data-progress]").textContent = text;
   };
-  function update() {
-    onUpdate(exam);
+  function update(options) {
+    onUpdate(exam, options);
     summary();
     if (root.querySelector("[data-gate]").textContent) gate();
   }
   function summary() {
     const s = reviewSummary(exam);
     root.querySelector("[data-summary]").textContent =
-      `${s.total} câu · ${s.confirmed} đã xác nhận · ${s.needs_review} cần kiểm tra · ${s.manually_adjusted} chỉnh thủ công · ${s.non_question} đoạn ngoài câu hỏi · ${s.unknown} đoạn chưa phân loại`;
+      `${s.total} câu · ${proposals.length} đề xuất · ${s.confirmed} đã xác nhận · ${s.needs_review} cần kiểm tra · ${s.manually_adjusted} chỉnh thủ công · ${s.non_question} đoạn ngoài câu hỏi · ${s.unknown} đoạn chưa phân loại`;
     const audit = root.querySelector("[data-audit-list]");
     if (audit)
       audit.innerHTML =
@@ -462,10 +462,18 @@ export function mountAudioReview(
     try {
       const run = await runSegmentation();
       if (cancelled) return;
-      appendSegmentationRun(exam, run);
+      if (run.persisted) {
+        const url = exam.audio.url;
+        exam = run.configuration;
+        exam.audio.url = url;
+        exam.database_revision = run.database_revision;
+        exam.draft_storage_available = true;
+      } else {
+        appendSegmentationRun(exam, run);
+      }
       proposals = exam.audio.proposals;
       envelope = run.analysis?.waveform || envelope;
-      update();
+      update({ persisted: run.persisted });
       render();
       notice(
         `Đã đề xuất ${run.matched}/${exam.questions.length} câu. Mọi đoạn đều cần bạn xác nhận; chưa công bố.`,

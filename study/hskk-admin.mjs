@@ -171,10 +171,17 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         actorId: ownerId,
         runSegmentation: () => api("segment", { method: "POST" }),
         loadWaveform: () => api("waveform"),
-        onUpdate: (value) => {
+        onUpdate: (value, { persisted = false } = {}) => {
           source = value;
-          audioChanges++;
           editor.refreshGate();
+          if (persisted) {
+            report(
+              "Đã lưu đề xuất phân đoạn. Mọi câu đều cần nghe và xác nhận.",
+            );
+            onSaved();
+            return;
+          }
+          audioChanges++;
           clearTimeout(timer);
           if (source.draft_storage_available)
             timer = setTimeout(saveAudio, 600);

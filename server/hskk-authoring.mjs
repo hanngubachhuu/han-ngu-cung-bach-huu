@@ -69,7 +69,12 @@ export async function readDraftRevision(client, examCode) {
   if (error) throw Error("DRAFT_READ_FAILED");
   return { available: true, record: data };
 }
-export async function saveDraftRevision(client, canonical, body) {
+export async function saveDraftRevision(
+  client,
+  canonical,
+  body,
+  { event = "segment_review_saved" } = {},
+) {
   if (!client?.rpc) throw Error("DRAFT_STORAGE_UNAVAILABLE");
   const configuration = validateSourceReview(canonical, body.configuration);
   if (
@@ -86,7 +91,7 @@ export async function saveDraftRevision(client, canonical, body) {
       expected_revision: body.expected_revision,
       request_id: body.request_id,
       source_sha256: canonical.provenance.sha256[canonical.provenance.audio],
-      event: "segment_review_saved",
+      event,
     },
   });
   if (error)

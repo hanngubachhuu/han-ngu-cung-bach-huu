@@ -138,6 +138,7 @@ test("local segmentation API requires Admin and works without OpenAI key", async
       },
       readDraft: async () => JSON.stringify(e),
       readAudio: async () => bytes,
+      persistSegmentation: ({ segmenter }) => segmenter.segment(),
       segmenter: {
         segment: async () => {
           called++;

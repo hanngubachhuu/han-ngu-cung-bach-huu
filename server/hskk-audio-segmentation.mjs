@@ -99,6 +99,7 @@ export async function analyzeSource(bytes, expectedHash) {
       sha256,
       duration_ms: Math.round(seconds * 1000),
       source_duration_ms: Math.round(duration * 1000),
+      source_duration_seconds: duration,
       sample_rate: Number(stream.sample_rate),
       channels: stream.channels,
       analysis_sample_rate: 8000,

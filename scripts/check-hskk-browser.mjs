@@ -2,6 +2,7 @@
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import { appendSegmentationRun } from "../study/hskk-segment-review-state.mjs";
 import {
   normalizeRecording,
   syntheticWave,
@@ -301,35 +302,49 @@ try {
             contentType: "application/json",
             body: '{"error":"AUDIO_RUNTIME_UNAVAILABLE"}',
           });
+        const run = {
+          run_id: "local-" + segmentCalls,
+          exam_code: adminDraft.exam_code,
+          exam_version: adminDraft.exam_version,
+          source_audio_hash: adminDraft.audio.source_audio_id,
+          source_sha256: adminDraft.audio.source_audio_id,
+          matched: 2,
+          non_questions: [
+            {
+              start_ms: 10,
+              end_ms: 90,
+              segment_type: "UNKNOWN",
+              run_id: "local-" + segmentCalls,
+            },
+          ],
+          questions: adminDraft.questions.map((q) => ({
+            question_id: q.id,
+            run_id: "local-" + segmentCalls,
+            start_ms: 100,
+            end_ms: 700,
+            confidence: 0.72,
+            detection_method: "structural_timing",
+            status: "NEEDS_REVIEW",
+            match_kind:
+              q.id === "b" ? "unverified_cue" : "unverified_speech_region",
+          })),
+        };
+        if (segmentCalls === 2) {
+          appendSegmentationRun(adminDraft, run);
+          revision++;
+          return route.fulfill({
+            contentType: "application/json",
+            body: JSON.stringify({
+              ...run,
+              persisted: true,
+              database_revision: revision,
+              configuration: adminDraft,
+            }),
+          });
+        }
         return route.fulfill({
           contentType: "application/json",
-          body: JSON.stringify({
-            run_id: "local-" + segmentCalls,
-            exam_code: adminDraft.exam_code,
-            exam_version: adminDraft.exam_version,
-            source_audio_hash: adminDraft.audio.source_audio_id,
-            source_sha256: adminDraft.audio.source_audio_id,
-            matched: 2,
-            non_questions: [
-              {
-                start_ms: 10,
-                end_ms: 90,
-                segment_type: "UNKNOWN",
-                run_id: "local-" + segmentCalls,
-              },
-            ],
-            questions: adminDraft.questions.map((q) => ({
-              question_id: q.id,
-              run_id: "local-" + segmentCalls,
-              start_ms: 100,
-              end_ms: 700,
-              confidence: 0.72,
-              detection_method: "structural_timing",
-              status: "NEEDS_REVIEW",
-              match_kind:
-                q.id === "b" ? "unverified_cue" : "unverified_speech_region",
-            })),
-          }),
+          body: JSON.stringify(run),
         });
       }
       if (action === "save") {
@@ -369,6 +384,15 @@ try {
       .getByRole("button", { name: "Tự phân đoạn audio", exact: true })
       .click();
     await page.getByText("Đã đề xuất 2/2", { exact: false }).waitFor();
+    await page
+      .getByText("Đã lưu đề xuất phân đoạn.", { exact: false })
+      .waitFor();
+    await page.waitForTimeout(800);
+    assert.equal(
+      saveCalls,
+      0,
+      "A server-persisted run must not trigger a duplicate browser save",
+    );
     await page
       .getByRole("button", { name: "Chỉnh thủ công", exact: true })
       .click();

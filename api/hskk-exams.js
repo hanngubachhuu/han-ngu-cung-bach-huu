@@ -11,7 +11,8 @@ import {
   HSKKAudioSegmentationEngine,
 } from "../server/hskk-audio-segmentation.mjs";
 
-import { createHash, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
+import { segmentAuthoringDraft } from "../server/hskk-segmentation-authoring.mjs";
 import {
   readDraftRevision,
   saveDraftRevision,
@@ -32,6 +33,7 @@ export function createExamHandler({
   readAudio = async (code, client) =>
     readSourceAudio(client, JSON.parse(await readDraft(code))),
   segmenter = new HSKKAudioSegmentationEngine(),
+  persistSegmentation = segmentAuthoringDraft,
   listDrafts = async () =>
     (await fs.readdir(new URL("../server/hskk/", import.meta.url)))
       .filter((f) => /^[A-Za-z0-9_-]+\.json$/.test(f))
@@ -181,15 +183,21 @@ export function createExamHandler({
           res.statusCode = 405;
           return res.end(JSON.stringify({ error: "METHOD_NOT_ALLOWED" }));
         }
-        const exam = JSON.parse(await readDraft(code)),
-          bytes = await readAudio(code, client),
-          hash = createHash("sha256").update(bytes).digest("hex");
-        if (hash !== exam.provenance.sha256[exam.provenance.audio])
-          throw Error("SOURCE_HASH_MISMATCH");
-        const proposal = await segmenter.segment({
-          bytes,
+        const exam = JSON.parse(await readDraft(code));
+        let body = req.body;
+        if (typeof body === "string") {
+          try {
+            body = body ? JSON.parse(body) : {};
+          } catch {
+            throw Error("INVALID_DRAFT");
+          }
+        }
+        const proposal = await persistSegmentation({
+          client,
           exam,
-          sourceHash: hash,
+          bytes: await readAudio(code, client),
+          segmenter,
+          requestId: body?.request_id,
         });
         res.statusCode = 200;
         return res.end(JSON.stringify(proposal));
@@ -238,6 +246,7 @@ export function createExamHandler({
         "SOURCE_STORAGE_UNAVAILABLE",
         "SOURCE_AUDIO_UNAVAILABLE",
         "SOURCE_HASH_MISMATCH",
+        "SOURCE_SIZE_MISMATCH",
       ].includes(e.message)
         ? e.message
         : "EXAM_UNAVAILABLE";
