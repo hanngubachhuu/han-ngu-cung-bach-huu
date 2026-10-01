@@ -134,6 +134,13 @@ try {
     await page
       .getByRole("button", { name: /Dừng (và nghe lại|ghi thử)/ })
       .click();
+    await page.waitForFunction(
+      () =>
+        document.querySelector("[data-replay] audio") ||
+        document
+          .querySelector("[data-message]")
+          ?.textContent.includes("Microphone đã tạo dữ liệu âm thanh."),
+    );
     if (await page.locator("[data-replay] audio").count()) {
       await page.locator("[data-replay] audio").evaluate((a) => a.play());
       await page.getByText("Đã nghe lại bản ghi.", { exact: false }).waitFor();
