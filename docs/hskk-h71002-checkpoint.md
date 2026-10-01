@@ -1,6 +1,65 @@
 # H71002 shared exam / authoring checkpoint
 
-This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup. The original source is now registered/uploaded in private production Storage, with stored bytes and access verified. The requested source checkpoint is not fully PASS because playback in the existing Admin waveform UI requires question boundaries that are absent in production; the complete publishing pipeline remains blocked.
+This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup. The original source is registered/uploaded in private production Storage. Structural proposals are now persisted and playable in the real Admin waveform. No question has been confirmed; the post-persistence real Student check remains pending and the publishing pipeline remains blocked.
+
+## Production structural segmentation — 2026-10-02 (Asia/Bangkok)
+
+Continues PR #36 at `c6d270ff464602d2059e91ac11789060cd542c3c`. **Real production segmentation/persistence and Admin playback: PASS. Security completion is pending the real Student probe after persistence. This is not Admin verification of the boundaries.** This section supersedes the earlier zero-hosted-proposal state and waveform playback blocker. It does not supersede the human-review or publication gates.
+
+### Real production run and immutable draft
+
+The unchanged generic `HSKKAudioSegmentationEngine` / `local-energy-1` ran on the private production H71002 MP3 through the approved Admin's existing **Tự phân đoạn audio** workflow. No OpenAI, paid provider, H71002-specific segmentation rule, source replacement or physical clip was used. The existing `server/hskk/H71002.json` remains the canonical source configuration.
+
+The necessary implementation at `0e2367e25c5ac79accb901cde7c362b01db6f345` connects segmentation to the existing immutable draft RPC. Hash and exact byte size are checked before analysis. Persistence completes before HTTP 200; the browser consumes the stored configuration without making a duplicate save. The default request identity includes exam code/version, canonical source hash and engine version. Explicit UUID request identities support a separately requested new run. Retries reuse the original stored run; optimistic revision conflicts preserve intervening reviews. No production schema, RLS, Storage policy or migration changed.
+
+Production deployment **`dpl_2EuaB8G6HHZXbbs7nfwYQ5qpNv82`** is READY, target production, source `0e2367e`, and owns `hanngubachhuu.vercel.app`. It was rebuilt with Production settings from that exact Git source, excluding existing unrelated dirty Speaking files. Preview readiness was not substituted for this production deployment. [Production deployment](https://vercel.com/hanngubachhuu/hanngubachhuu/2EuaB8G6HHZXbbs7nfwYQ5qpNv82).
+
+- Run ID: **`b48bd897-2c9d-4e54-9d4c-3d98530ceb26`**.
+- Exam code/version: **H71002 / 1**; method **`structural_timing`**, engine **`local-energy-1`**.
+- Run created at **`2026-10-01T21:35:26.319Z`**; immutable draft revision **1** saved at **`21:35:29.122571Z`** (04:35 on October 2, Asia/Bangkok).
+- `source_audio_id`, `source_audio_hash` and analyzed `sha256`: **`101dc744ac9923f9a2925baa52899133944661bee153912443da89f4fe4c39f0`**. `source_audio_id` preserves the existing engine/canonical configuration's content-hash identity; it is not relabelled as the Storage registry UUID.
+- Exact source size: **18,417,371 bytes**, checked by the server before engine invocation. Unrounded ffprobe duration recorded from those production bytes: **1151.085688 seconds**, exactly canonical. The server production reader uses authenticated private Storage, with local fallback disabled, and checks downloaded bytes before returning them to the engine.
+- The immutable revision contains one run with all required metadata, 27 question proposals and all 46 detected non-question regions. Every proposal retains `question_id`, integer `start_ms/end_ms`, confidence, detection method, run ID and `NEEDS_REVIEW`; all 27 have non-null valid bounds. `admin_confirmed=false` for every proposal.
+- Non-question regions: **45 UNKNOWN, 1 PREPARATION**. Undetected INTRO/CANDIDATE_INFO/SECTION_INTRO/TIME_WARNING/TRANSITION/OUTRO labels were not invented or forced onto uncertain regions.
+- Q26 and Q27 retain **`unverified_cue`**. The real UI explicitly says these are proposed cue/transition regions and does not claim the printed PDF question was spoken.
+- Exactly **one draft revision, one draft-save audit, zero question-review audit events**, zero confirmed and zero manually adjusted questions. The audit event is `draft_saved`; it is not a claim of human verification. The source registry/object remain unchanged in the existing private bucket.
+
+| Requested checkpoint check | Result | Evidence |
+| --- | --- | --- |
+| Production segmentation run | **PASS** | Real approved Admin POST `/api/hskk-exams?exam=H71002&action=segment` HTTP 200; Vercel runtime records the production POST at `21:35:18Z`. Immutable Supabase revision independently contains the run. |
+| Proposals | **27 / 27** | 27 structurally matched regions with valid proposed bounds; 27 proposal cards in the actual hosted Admin DOM. |
+| Needs review | **27 / 27** | All proposals NEEDS_REVIEW and not admin-confirmed. |
+| Confirmed | **0 / 27** | No confirmation action or confirmed question record. |
+| Manually adjusted | **0 / 27** | No timestamp input, drag, replacement or manual-boundary action. |
+| Source hash | **PASS** | Production bytes checked before processing; stored run analysis hash/size/duration exactly canonical. Original source not overwritten, transcoded or truncated. |
+| Admin waveform playback | **PASS for actual hosted playback/seek** | Q1, Q16 and Q27 play the original production source at their proposed timestamps; moving playhead reaches the proposed endpoint, with no player error. Q1 context playback works; this is not verification that the proposal matches the intended spoken question. |
+| Student denied | **NOT TESTED after persistence** | Fresh read-only real Student JWT probe requested. Earlier real Student source checks were PASS before proposals existed; those are not silently reused as a new post-persistence real-JWT result. Current local authorization/RPC tests and read-only production privilege checks PASS. |
+| Anonymous denied | **PASS** | After persistence, actual anonymous audio/waveform/source/runs/proposals/status/exam GET each returns only `401 AUTH_REQUIRED`; no source, timestamp, confidence or run data. |
+
+### Hosted Admin playback, reload and retry
+
+The real approved Admin Chrome session was reloaded on the production origin, then opened **Đề thi → Đề thi HSKK → Sơ cấp → H71002 → Phân đoạn audio**. The workspace shows **27 câu · 27 đề xuất · 0 đã xác nhận · 27 cần kiểm tra · 0 chỉnh thủ công · 46 đoạn ngoài câu hỏi · 45 đoạn chưa phân loại**. All 27 cards have question number, proposed timestamps, structural score, automatic-method label and review status. Scores displayed are 68% for Q1–Q15, 74% for Q16–Q25, 78% for Q26–Q27; these are structural fit scores, not ASR probabilities.
+
+Actual production-source playback observations:
+
+- Q1: `00:01:23.480 → 00:01:28.060`; displayed playhead advances to `00:01:28.101` and stops, without error.
+- Q16: `00:05:20.100 → 00:05:26.880`; seek/play succeeds and playhead reaches `00:05:26.975`, without error.
+- Q27: `00:17:08.300 → 00:17:14.600`; seek/play succeeds and playhead reaches `00:17:14.634`, with the unverified-cue warning still visible.
+- Q1 **Nghe ±2 giây** seeks/plays the context; the blue waveform playhead moves beyond the proposed end. The existing context action does not refresh the textual position field, so its actual moving waveform, not a stale text value, is the observed context evidence. Small playback-stop overshoots are browser scheduling observations, not revised persisted bounds.
+
+Reload retrieves the same 27 stored proposals. Retrying the default segmentation workflow returns HTTP success with the original run; read-only database reconciliation still finds **revision 1, one run, one draft audit** and the same run ID. No duplicate draft save or segmentation run was created. There was no proposal import from the ignored local cache.
+
+Production source Storage remains private; anon/authenticated have no direct SELECT on draft revisions/audit. The existing approved-Admin API/profile gate and RPC gate remain unchanged. Anonymous probe timestamp: **`2026-10-01T21:44:57.567Z`**; the seven denial bodies each contain only `AUTH_REQUIRED`. The private object's public URL also remains denied (HTTP 400, checked after persistence).
+
+Ignored evidence: `test-results/hskk/segmentation-production-deployment.png`, `production-proposals-waveform.png`, `production-context-playback.png`, `segmentation-anonymous.json`, and `segmentation-student-console.js`. Browser/Console probes keep tokens inside the authenticated session/request flow; no JWT values are copied into files, logs, screenshots or this checkpoint.
+
+### Validation and stop
+
+**14/14 relevant existing/new tests PASS:** generic energy/duration/source checks, real local cached H71002 analysis, immutable/RLS persistence, idempotent replay, mismatch stop before processing, revision conflict preservation, unavailable-save failure and API authorization before reads. The real cached MP3 test is labelled **REAL H71002 LOCAL PRIVATE SOURCE**; its result is separate from the actual hosted production run recorded above. Persistence fixtures and browser audio are synthetic, explicitly not production audio. No synthetic success substitutes for hosted playback or security.
+
+`npm run lint` and `npm run build`: **PASS**. Relevant HSKK and central Admin browser checks: **PASS at 390/768/1366px**. The HSKK browser check verifies that a server-persisted response does not trigger a redundant browser save; no unrelated fixtures were changed. At implementation commit `0e2367e`, [Validate study web app](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36928777296) and [Validate lesson data](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36928776520) both **PASS**, including the full committed unit suite and browser flows. CI for the documentation-only follow-up is checked against its own commit and reported separately.
+
+**STOP.** Technical segmentation/persistence and source playback are complete. Remaining checkpoint evidence is the post-persistence real Student denial probe, requested through the actual Student Console because the browser automation surface cannot call the session module or extract JWTs. Do not bypass that tool boundary or claim the pending result PASS. All 27 questions still require Bách to listen and confirm in a later human-review step. No physical clips, confirmation, manual adjustment, learner access, learner sessions, publication, Speaking enablement or scheduler enablement occurred.
 
 ## Hosted private source — 2026-10-02 (Asia/Bangkok)
 
