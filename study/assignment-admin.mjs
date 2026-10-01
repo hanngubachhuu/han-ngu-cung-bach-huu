@@ -1,5 +1,6 @@
 import { mountDocumentExamImport } from "./exam-import-ui.mjs";
 import { mountRecorder } from "./recording-ui.mjs";
+import { mountSpeakingSmoke } from "./speaking-smoke-ui.mjs";
 import {
   assignmentCommand as call,
   assignmentAuthoring as callAuthor,
@@ -48,6 +49,9 @@ export function mountAssignmentAdmin(root, profile) {
     root.innerHTML = `<h3>${text(title)}</h3><div class="account-actions"><button class="st-button" data-queue>Bài nộp</button><button class="st-button" data-bank>Đề và rubric</button><button class="st-button" data-audio-health>Kiểm tra hệ thống ghi âm</button></div><p data-status role="status" aria-live="polite"></p><div data-content></div>`;
     root.querySelector("[data-queue]").onclick = () => queue();
     root.querySelector("[data-bank]").onclick = () => bank(selection.lessonId);
+    const smoke = document.createElement("div");
+    root.querySelector("[data-content]").before(smoke);
+    mountSpeakingSmoke(smoke, profile.user_id);
     root.querySelector("[data-audio-health]").onclick = async (e) => {
       e.currentTarget.disabled = true;
       const status = root.querySelector("[data-status]");
