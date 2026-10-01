@@ -17,6 +17,10 @@
     }
   ],
   "functions": {
+    "api/hskk-exams.js": {
+      "maxDuration": 120,
+      "includeFiles": "server/hskk/**"
+    },
     "api/study.js": {
       "maxDuration": 120
     },

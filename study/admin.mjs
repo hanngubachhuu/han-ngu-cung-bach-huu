@@ -35,6 +35,9 @@ async function boot() {
     workspace.hidden = false;
     workspace.innerHTML = `<form id="adminFilter" class="account-filter"><label>Tìm học viên<input name="search" type="search" placeholder="Tìm theo họ tên" maxlength="120"></label><label>Trạng thái<select name="status"><option value="">Tất cả</option>${["PENDING", "APPROVED", "SUSPENDED", "REJECTED"].map((s) => `<option value="${s}">${accountState({ status: s }).label}</option>`).join("")}</select></label><button class="st-button" type="submit">Tìm kiếm</button></form><div class="account-grid"><section class="account-card"><h2>Học viên</h2><p id="adminCount" class="st-help" role="status"></p><div id="studentList" class="account-list"></div><div class="account-actions"><button id="adminPrevious" class="st-button">← Trước</button><button id="adminNext" class="st-button">Sau →</button></div></section><section class="account-card" id="studentDetail"><p>Chọn một học viên để xem hồ sơ và quyền học.</p></section></div><section class="account-card account-dashboard"><h2>Hoạt động quản trị gần đây</h2><div id="adminAudit"></div></section>`;
     const connection = document.createElement("section");
+    const hskkLink=document.createElement("a");
+    hskkLink.className="st-button";hskkLink.href="hskk-quan-tri.html";hskkLink.textContent="HSKK · Đề thi thử";
+    workspace.prepend(hskkLink);
     connection.className = "account-card";
     workspace.prepend(connection);
     mountDocumentConnection(connection);

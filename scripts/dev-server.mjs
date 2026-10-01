@@ -1,5 +1,6 @@
 import examImportHandler from "../api/exam-import.js";
 import recordingHandler from "../api/recordings.js";
+import hskkHandler from "../api/hskk-exams.js";
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -17,6 +18,7 @@ const types = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".mp3": "audio/mpeg",
+  ".pdf": "application/pdf",
   ".mp4": "video/mp4",
   ".txt": "text/plain",
 };
@@ -30,6 +32,7 @@ http
           "/api/account",
           "/api/recordings",
           "/api/exam-import",
+          "/api/hskk-exams",
         ].includes(url.pathname)
       ) {
         let body = "",
@@ -48,7 +51,9 @@ http
         }
         req.body = body;
         await (
-          url.pathname === "/api/exam-import"
+          url.pathname === "/api/hskk-exams"
+            ? hskkHandler
+            : url.pathname === "/api/exam-import"
             ? examImportHandler
             : url.pathname === "/api/recordings"
               ? recordingHandler

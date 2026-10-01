@@ -1,0 +1,196 @@
+.hskk-main {
+  max-width: 1056px;
+  margin: auto;
+  padding: 40px 24px 72px;
+}
+.hskk-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  margin: 24px 0;
+}
+.hskk-hero h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  margin: 8px 0 16px;
+}
+.hskk-seal {
+  font-family: var(--font-chinese);
+  font-size: 64px;
+  color: var(--color-primary);
+  line-height: 1;
+}
+.hskk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.hskk-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hskk-card h2,
+.hskk-card p {
+  margin: 0;
+}
+.hskk-card a {
+  margin-top: auto;
+}
+.hskk-muted {
+  color: var(--color-text-secondary);
+}
+.hskk-badge {
+  color: var(--color-success);
+  font-size: 14px;
+  font-weight: 600;
+}
+.hskk-facts {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+.hskk-facts span {
+  padding: 12px 16px;
+  background: var(--color-surface-subtle);
+  border-radius: 10px;
+}
+.hskk-notice {
+  background: var(--color-accent-subtle);
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+.hskk-session {
+  max-width: 760px;
+  margin: 24px auto;
+}
+.hskk-progress {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.hskk-timer {
+  font-variant-numeric: tabular-nums;
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+.hskk-question {
+  font-family: var(--font-chinese);
+  font-size: 32px;
+  line-height: 1.8;
+}
+.hskk-status {
+  font-size: 20px;
+  padding: 24px 0;
+  text-align: center;
+}
+.hskk-main button,
+.hskk-main .st-button {
+  min-height: 48px;
+}
+.hskk-main audio {
+  width: 100%;
+  max-width: 100%;
+}
+.hskk-main textarea {
+  width: 100%;
+  min-height: 220px;
+  font-family: monospace;
+}
+.hskk-main input,
+.hskk-main select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  background: white;
+}
+.hskk-main label {
+  display: block;
+  margin: 16px 0;
+}
+.hskk-main input[type="checkbox"] {
+  width: 20px;
+  min-height: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.hskk-main meter {
+  width: 100%;
+  height: 20px;
+}
+.hskk-main :focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+.hskk-sections {
+  padding-left: 24px;
+  line-height: 2;
+}
+.hskk-empty {
+  border: 1px dashed var(--color-border-strong);
+  padding: 24px;
+  border-radius: 12px;
+}
+.hskk-editor {
+  display: grid;
+  gap: 16px;
+}
+.hskk-editor details {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+.hskk-editor summary {
+  cursor: pointer;
+  min-height: 48px;
+}
+.hskk-footer {
+  max-width: 1056px;
+  margin: auto;
+  padding: 24px;
+  color: var(--color-text-secondary);
+}
+@media (max-width: 800px) {
+  .hskk-grid {
+    grid-template-columns: 1fr;
+  }
+  .hskk-hero {
+    padding: 24px;
+  }
+  .hskk-seal {
+    font-size: 48px;
+  }
+}
+@media (max-width: 420px) {
+  .hskk-main {
+    padding: 24px 16px 48px;
+  }
+  .hskk-hero {
+    gap: 12px;
+  }
+  .hskk-progress {
+    align-items: flex-start;
+  }
+  .hskk-timer {
+    font-size: 32px;
+  }
+  .hskk-question {
+    font-size: 26px;
+  }
+}

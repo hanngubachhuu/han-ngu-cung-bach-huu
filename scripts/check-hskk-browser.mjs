@@ -1,0 +1,344 @@
+// Local browser evidence only: real MediaRecorder, fake device and provider/session responses.
+import { chromium } from "playwright";
+import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+import {
+  normalizeRecording,
+  syntheticWave,
+  audioHash,
+} from "../server/recording-audio.mjs";
+const base = process.env.STUDY_BASE_URL || "http://127.0.0.1:4173";
+const raw = syntheticWave(),
+  mp3 = (await normalizeRecording(raw, audioHash(raw))).bytes;
+const browser = await chromium.launch({
+  headless: true,
+  args: [
+    "--use-fake-ui-for-media-stream",
+    "--use-fake-device-for-media-stream",
+  ],
+  ...(process.env.BROWSER_EXECUTABLE
+    ? { executablePath: process.env.BROWSER_EXECUTABLE }
+    : {}),
+});
+await fs.mkdir("test-results/hskk", { recursive: true });
+const fixture = {
+  exam_code: "CONFIG_B",
+  title: "Thi thử HSKK",
+  level: "advanced",
+  exam_version: 2,
+  source_type: "mock",
+  audio: { url: "/test-audio.mp3", duration_seconds: 9 },
+  timing: { countdown_seconds: 0.2 },
+  sections: [
+    { id: "one", title_vi: "Đọc câu", preparation_seconds: 0 },
+    { id: "two", title_vi: "Trả lời", preparation_seconds: 0.3 },
+  ],
+  questions: [
+    {
+      id: "a",
+      version_id: "pa",
+      number: 1,
+      version: 1,
+      section_id: "one",
+      type: "speaking_repeat",
+      prompt: "你好。",
+      prompt_mode: "audio",
+      audio_segment: { start_seconds: 0, end_seconds: 0.3, verified: true },
+      response_seconds: 0.6,
+      auto_start: true,
+      auto_stop: true,
+      allow_replay: false,
+      allow_rerecord: false,
+    },
+    {
+      id: "b",
+      version_id: "pb",
+      number: 2,
+      version: 1,
+      section_id: "two",
+      type: "speaking_long_answer",
+      prompt: "请介绍你的学校。",
+      pinyin: null,
+      prompt_mode: "text",
+      response_seconds: 0.8,
+      auto_start: true,
+      auto_stop: true,
+      allow_replay: false,
+      allow_rerecord: false,
+    },
+  ],
+};
+const evidence = [];
+try {
+  for (const width of [390, 768, 1366]) {
+    const context = await browser.newContext({
+      viewport: { width, height: 900 },
+      permissions: ["microphone"],
+    });
+    const page = await context.newPage(),
+      errors = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    for (const route of [
+      "hskk.html",
+      "hskk-so-cap.html",
+      "hskk-trung-cap.html",
+      "hskk-cao-cap.html",
+      "hskk-de-thi.html?exam=H71002",
+    ]) {
+      await page.goto(base + "/" + route);
+      await page.locator("#hskkContent h1").waitFor();
+      assert.ok(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth + 1,
+        ),
+      );
+      await page.screenshot({
+        path: `test-results/hskk/${route.split(".")[0]}-${width}.png`,
+        fullPage: true,
+      });
+    }
+    assert.equal(
+      await page.locator("button:disabled").textContent(),
+      "Bắt đầu thi thử",
+    );
+    assert.equal(
+      (await page.request.get(base + "/server/hskk/H71002.mp3")).status(),
+      404,
+    );
+    assert.equal(
+      (await page.request.get(base + "/media/hskk/H71002.mp3")).status(),
+      404,
+    );
+    await context.route("**/test-audio.mp3", (route) =>
+      route.fulfill({ contentType: "audio/mpeg", body: mp3 }),
+    );
+    await context.route("**/local-engine-check", (route) =>
+      route.fulfill({
+        contentType: "text/html",
+        body: `<!doctype html><html lang="vi"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/study/study.css"><link rel="stylesheet" href="/study/account.css"><link rel="stylesheet" href="/study/hskk.css"><body class="study-page"><main class="hskk-main"><section id="check"></section></main><script type="module">import {mountExamExperience} from '/study/hskk-experience.mjs';import {previewTransport} from '/study/hskk-preview-transport.mjs';const exam=${JSON.stringify(fixture)};const transport=previewTransport(exam,'local-preview');globalThis.captureBytes=[];const original=transport.saveRecording;transport.saveRecording=entry=>{globalThis.captureBytes.push({bytes:entry.blob.size,type:entry.blob.type,question:entry.questionId});return original(entry);};globalThis.dispose=await mountExamExperience(document.querySelector('#check'),{exam,candidate:{id:'local-preview',name:'Xem trước',email:'local@example.invalid'},transport,preview:true});</script></body></html>`,
+      }),
+    );
+    await page.goto(base + "/local-engine-check");
+    await page
+      .getByRole("button", { name: "Xác nhận thông tin", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Phát âm kiểm tra tai nghe", exact: true })
+      .click();
+    assert.equal(await page.locator("[data-body] audio").count(), 0);
+    await page.locator("[data-heard]").check();
+    await page.getByRole("button", { name: "Tiếp tục", exact: true }).click();
+    await page.getByRole("button", { name: "Cho phép microphone" }).click();
+    await page.getByRole("button", { name: "Bắt đầu ghi thử" }).click();
+    await page.waitForTimeout(400);
+    await page.getByRole("button", { name: "Dừng và nghe lại" }).click();
+    await page.locator("[data-replay] audio").evaluate((a) => a.play());
+    await page.getByText("Đã nghe lại bản ghi.", { exact: false }).waitFor();
+    await page
+      .getByRole("button", { name: "Tôi nghe rõ bản ghi — Tiếp tục" })
+      .click();
+    await page.getByRole("button", { name: "Tôi đã sẵn sàng" }).click();
+    await page.screenshot({
+      path: `test-results/hskk/pre-exam-${width}.png`,
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Bắt đầu", exact: true }).click();
+    await page
+      .getByText("Bài thi thử đã hoàn thành.", { exact: true })
+      .waitFor({ timeout: 15000 });
+    const captured = await page.evaluate(() => globalThis.captureBytes);
+    assert.equal(captured.length, 2);
+    assert.ok(
+      captured.every((r) => r.bytes > 0 && r.type.startsWith("audio/")),
+    );
+    assert.deepEqual(
+      captured.map((r) => r.question),
+      ["pa", "pb"],
+    );
+    assert.equal(
+      await page.getByRole("button", { name: "Kết thúc xem trước" }).count(),
+      1,
+    );
+    assert.ok(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    );
+    await page.screenshot({
+      path: `test-results/hskk/completion-${width}.png`,
+      fullPage: true,
+    });
+    await page.getByRole("button", { name: "Kết thúc xem trước" }).click();
+    await page.getByText("Đã kết thúc xem trước.", { exact: false }).waitFor();
+    await page.evaluate(() => globalThis.dispose());
+    const adminId = "00000000-0000-4000-8000-000000000001",
+      adminUser = {
+        id: adminId,
+        aud: "authenticated",
+        role: "authenticated",
+        email: "admin-local@example.invalid",
+        app_metadata: {},
+        user_metadata: {},
+        created_at: new Date().toISOString(),
+      };
+    const jwt =
+      Buffer.from('{"alg":"HS256"}').toString("base64url") +
+      "." +
+      Buffer.from(
+        JSON.stringify({
+          sub: adminId,
+          exp: Math.floor(Date.now() / 1000) + 3600,
+        }),
+      ).toString("base64url") +
+      ".local";
+    await context.addInitScript(
+      ({ jwt, adminUser }) => {
+        localStorage.setItem(
+          "sb-dmeqxdznzobbarvkmxyg-auth-token",
+          JSON.stringify({
+            access_token: jwt,
+            refresh_token: "local-test",
+            expires_at: Math.floor(Date.now() / 1000) + 3600,
+            expires_in: 3600,
+            token_type: "bearer",
+            user: adminUser,
+          }),
+        );
+      },
+      { jwt, adminUser },
+    );
+    await context.route(
+      "https://dmeqxdznzobbarvkmxyg.supabase.co/**",
+      (route) => {
+        const url = new URL(route.request().url());
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify(
+            url.pathname.endsWith("/user")
+              ? adminUser
+              : url.pathname.endsWith("/profiles")
+                ? {
+                    user_id: adminId,
+                    full_name: "Admin cục bộ",
+                    role: "ADMIN",
+                    status: "APPROVED",
+                  }
+                : [],
+          ),
+        });
+      },
+    );
+    let revision = 0,
+      saveCalls = 0;
+    const adminDraft = {
+      ...structuredClone(fixture),
+      status: "draft",
+      rubric: null,
+      provenance: {
+        document: "test-source.pdf",
+        audio: "test-source.mp3",
+        source_version: "test-config-2",
+        sha256: { "test-source.mp3": "a".repeat(64) },
+      },
+      database_revision: revision,
+      draft_storage_available: true,
+    };
+    adminDraft.questions.forEach((q) => {
+      q.audio_segment = null;
+    });
+    await context.route("**/api/hskk-exams*", (route) => {
+      const url = new URL(route.request().url()),
+        action = url.searchParams.get("action");
+      if (action === "audio")
+        return route.fulfill({ contentType: "audio/mpeg", body: mp3 });
+      if (action === "segment")
+        return route.fulfill({
+          status: 429,
+          contentType: "application/json",
+          body: '{"error":"TRANSCRIBER_RATE_LIMIT"}',
+        });
+      if (action === "save") {
+        const body = route.request().postDataJSON();
+        assert.equal(body.configuration.audio.url, "");
+        assert.equal(body.expected_revision, revision);
+        assert.equal(
+          body.configuration.questions[0].audio_segment.verified,
+          true,
+        );
+        revision++;
+        saveCalls++;
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({ revision, configuration: body.configuration }),
+        });
+      }
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ ...adminDraft, database_revision: revision }),
+      });
+    });
+    await page.goto(base + "/hskk-quan-tri.html?exam=CONFIG_B");
+    await page
+      .getByRole("heading", { name: "HSKK · Đề thi thử", exact: true })
+      .waitFor();
+    assert.ok(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    );
+    await page
+      .getByRole("button", { name: "AI tự phân đoạn", exact: true })
+      .click();
+    await page
+      .getByText("Không thể tự phân đoạn audio.", { exact: false })
+      .waitFor();
+    await page
+      .getByRole("button", { name: "Chỉnh thủ công", exact: true })
+      .click();
+    const qrow = page.locator('[data-q="a"]');
+    await qrow.locator("[data-from]").fill("1");
+    await qrow.locator("[data-to]").fill("2");
+    await qrow.getByRole("button", { name: "Nghe đoạn", exact: true }).click();
+    await qrow
+      .getByRole("button", { name: "Xác nhận đoạn", exact: true })
+      .click();
+    await page.getByRole("button", { name: "Lưu phân đoạn nháp" }).click();
+    await page
+      .getByText("Đã lưu phân đoạn audio vào bản nháp.", { exact: false })
+      .waitFor();
+    assert.equal(saveCalls, 1);
+    await page.getByText("6. Công bố", { exact: true }).click();
+    assert.equal(
+      await page
+        .getByRole("button", { name: "Công bố đề", exact: true })
+        .isDisabled(),
+      true,
+    );
+    await page.screenshot({
+      path: `test-results/hskk/admin-${width}.png`,
+      fullPage: true,
+    });
+    assert.deepEqual(errors, []);
+    evidence.push({
+      width,
+      captured,
+      scope: "local preview, fake microphone, no official submission",
+    });
+    await context.close();
+  }
+  await fs.writeFile(
+    "test-results/hskk/browser-evidence.json",
+    JSON.stringify(evidence, null, 2),
+  );
+  console.log(
+    JSON.stringify({
+      pass: true,
+      widths: evidence.map((e) => e.width),
+      actualMediaRecorder: true,
+      hostedRLS: false,
+      officialSubmission: false,
+    }),
+  );
+} finally {
+  await browser.close();
+}
