@@ -441,6 +441,13 @@
 .exam-builder [data-import-question] {
   box-shadow: none;
 }
+.exam-question-preview {
+  display: block;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin-top: var(--space-xs);
+  overflow-wrap: anywhere;
+}
 .exam-question-heading {
   display: flex;
   align-items: center;

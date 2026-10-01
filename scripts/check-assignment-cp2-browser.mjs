@@ -87,10 +87,12 @@ try {
     await page.locator("[data-analyze]").click();
     await page.locator("[data-import-question]").first().waitFor();
     assert.equal(await page.locator("[data-import-question]").count(), 10);
+    assert.equal(await page.locator("[data-import-question][open]").count(), 1);
     await page
       .locator("[data-prompt]")
       .first()
       .fill("Câu được Admin sửa — 你好 nǐ hǎo");
+    await page.locator("[data-import-question] > summary").nth(1).click();
     await page.locator("[data-remove]").nth(1).click();
     assert.equal(await page.locator("[data-import-question]").count(), 9);
     await page.locator("[data-down]").first().click();
