@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import { documentContext } from "../server/document-service.mjs";
 import { recordingRuntimeHealth } from "../server/recording-audio.mjs";
 import { productionRecordingJob } from "../server/recording-worker.mjs";
+import { runSpeakingSmoke } from "../server/speaking-smoke.mjs";
 export const config = { maxDuration: 120 };
 export function authorizeWorker(value, secret) {
   if (
@@ -50,6 +51,15 @@ export default async function handler(req, res) {
       if (!token) throw Error("AUTH_REQUIRED");
       await documentContext(token);
       result = await recordingRuntimeHealth();
+    } else if (action === "smoke") {
+      const token = req.headers.authorization?.match(
+        /^Bearer ([A-Za-z0-9._-]+)$/,
+      )?.[1];
+      if (!token) throw Error("AUTH_REQUIRED");
+      const admin = await documentContext(token);
+      const body =
+        typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+      result = await runSpeakingSmoke(admin, body);
     } else if (action === "work") {
       if (
         !authorizeWorker(
@@ -75,10 +85,14 @@ export default async function handler(req, res) {
       "DRIVE_AUTH_FAILED",
       "DRIVE_ACCOUNT_MISMATCH",
       "DRIVE_NOT_PRIVATE",
+      "DRIVE_PERMISSION_DENIED",
+      "DRIVE_INVALID_FOLDER",
+      "DRIVE_REQUEST_FAILED",
     ]);
-    const code = allowed.has(error.message)
-      ? error.message
-      : "RECORDING_SERVICE_UNAVAILABLE";
+    const code =
+      allowed.has(error.message) || /^SMOKE_[A-Z_]{1,64}$/.test(error.message)
+        ? error.message
+        : "RECORDING_SERVICE_UNAVAILABLE";
     res.statusCode =
       code === "AUTH_REQUIRED"
         ? 401
