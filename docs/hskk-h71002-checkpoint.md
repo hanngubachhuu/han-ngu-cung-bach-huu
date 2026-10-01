@@ -1,6 +1,54 @@
 # H71002 shared exam / authoring checkpoint
 
-This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup; source upload and the complete hosted publishing pipeline remain blocked.
+This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup. The original source is now registered/uploaded in private production Storage, with stored bytes and access verified. The requested source checkpoint is not fully PASS because playback in the existing Admin waveform UI requires question boundaries that are absent in production; the complete publishing pipeline remains blocked.
+
+## Hosted private source — 2026-10-02 (Asia/Bangkok)
+
+Continues PR #36 at `bf059b0da808445619880feca8433bc872eacdaa`. **Registration, upload, stored-byte integrity and hosted access: PASS. Overall requested checkpoint: NOT FULLY PASS — Admin waveform playback is blocked by the current UI's requirement for question boundaries.** No segmentation or question-boundary edit was used to bypass this limitation. This section supersedes earlier missing-source/Storage NOT TESTED entries only for the checks explicitly recorded here.
+
+### Exact source and production storage
+
+- Bucket: **`hskk-authoring-sources`**, `public=false`, maximum 33,554,432 bytes, MP3 MIME only. No bucket/policy change or migration was made.
+- Registered and stored path: **`H71002/101dc744ac9923f9a2925baa52899133944661bee153912443da89f4fe4c39f0.mp3`**. The Storage object's name exactly matches the immutable source registry's `object_path`.
+- Registry ID: `32589128-d8e0-4266-8927-31c2d61803fd`; registered at `2026-10-01T20:24:53.142275Z` (03:24:53 on October 2, Asia/Bangkok). Object created at `20:24:59.197837Z`.
+- Original/local and production-read byte size: **18,417,371**. SHA-256: **`101dc744ac9923f9a2925baa52899133944661bee153912443da89f4fe4c39f0`**. Original ffprobe duration and production-read browser metadata both report **1151.085688 seconds**, with zero observed difference; the repository's source-duration validation permits at most 500 ms difference.
+- Existing hosted canonical version metadata: **`provenance.source_version="H71002"`**, exam version 1, bound to the canonical SHA-256. The registry has immutable ID/hash/path/size/Admin/timestamp identity. There is still no independent registry `source_version` column; this checkpoint verifies the existing canonical version label and immutable content identity, not a newly introduced independent source-version schema.
+
+The existing real approved Admin Chrome session opened `quan-tri.html` → Đề thi → Đề thi HSKK → Sơ cấp → H71002 → Audio → **Tải audio nguồn**. The exact ignored `.cache/hskk-sources/H71002.mp3` was hashed/sized and inspected with ffprobe before file selection. The existing UI called `POST action=reserve_source`, then uploaded the original File through the authenticated Supabase SDK with `audio/mpeg`, `upsert=false`, `cacheControl=0`. It subsequently read the source through the authorized Admin API and displayed **“Đã tải audio vào kho riêng tư.”** No transcode or source editing occurred before storage.
+
+| Hosted private source check | Result | Hosted evidence |
+| --- | --- | --- |
+| Registration | **PASS** | Real Admin reserve request HTTP 200; one registry row with exact exam/hash/path/byte size. Admin read-only `get_source` RPC independently matches the expected metadata. |
+| Upload | **PASS** | One private Storage object, `audio/mpeg`, size/contentLength 18,417,371; object name exactly matches registry path. Existing Admin workflow reports success. |
+| Stored hash | **PASS** | Real Admin GET `action=audio` returned production-stored bytes; browser SHA-256 over that response exactly matches the canonical hash. This is not only a local-file hash or Storage ETag comparison. |
+| Admin read | **PASS** | Real ADMIN / APPROVED JWT: source API HTTP 200, full correct MP3 bytes and duration. Server validates their hash before returning them. Waveform GET HTTP 200 with 11,511 points. Actual waveform UI playback has a separate FAIL below. |
+| Student denied | **PASS** | Real STUDENT / PENDING JWT: audio, waveform, source, status and exam/configuration GET each return 403 with only `ADMIN_REQUIRED`; direct existing Storage object download returns SDK error and no bytes. Source/draft RPCs return ADMIN_REQUIRED. Private registry/audit queries return PGRST106 and no data. |
+| Anonymous denied | **PASS** | Audio, waveform, source, status and exam GET each return 401 with only `AUTH_REQUIRED`. The public Storage URL for the existing private object returns 400 and no audio. |
+| Source immutable | **PASS for original/stored bytes and current authoring guards** | Exact original hash/size/duration preserved after upload; immutable registry trigger enabled, no authenticated Storage UPDATE/DELETE policy, upload is insert-only. No overwrite/delete attempt was made against the production original. |
+
+### Real hosted evidence and access boundaries
+
+The user ran the sanitized read-only Console probe in the existing Admin session and separate Chrome incognito Student session. Admin result timestamp: **`2026-10-01T20:34:40.505Z`**, independently captured from the filtered browser console; Student result: **`20:34:55.335Z`**, supplied by the user and corroborated by Vercel's live 403 requests. Tokens stayed inside the authenticated session/request flow; no token values or full private exam/audio response bodies were printed, copied to chat, written to files or captured in screenshots.
+
+The [actual production runtime logs](https://vercel.com/hanngubachhuu/hanngubachhuu/EC2aaR727AVFpWdmAbDCbVDcbqSt/logs) show the reserve request `6vswt-1790886288745-5d481b004e6a` as **POST, `action=reserve_source`, HTTP 200**. Source request `wjhvr-1790886299286-88b13ab80018` is **GET, `action=audio`, HTTP 200**, with the actual path **Vercel handler → Supabase Auth/user → profiles → hskk_authoring_draft get_source → authenticated Storage object GET**. The server's production reader does not fall back to the ignored local MP3 and hashes downloaded bytes before returning them. The subsequent independent Admin probe recalculated that response's SHA-256 and decoded its duration.
+
+Student checks exercise both the Admin API and the actual existing Storage object. The Student could not obtain source bytes, waveform, segmentation/exam metadata, source path/registry or review audit through these reads. PGRST106 means `account_internal` is not an exposed REST schema; read-only SQL additionally verifies that anon/authenticated lack direct SELECT privileges on the source registry/audit tables. The guarded read-only `get_source` and `get` RPCs independently reject this real Student JWT. The probe recorded direct object denial without recording an HTTP status because the SDK error did not expose one in the inspected fields; no synthetic role test is substituted for that actual-session result.
+
+The public URL denial was an access test, not source publication. The MP3 remains ignored/untracked, absent from `dist`, and stored only in the existing private source bucket. Read-only final reconciliation finds **one matching registry row, one matching object, zero H71002 draft revisions and zero review audit rows**. Only the authorized source registration and object upload changed production application data in this task.
+
+### Admin browser result and proposal state
+
+**Upload/retrieve in the real Admin browser: PASS. Waveform API: PASS. Playback within the existing Admin waveform UI: FAIL / BLOCKED.** Opening Câu 1 and pressing **Nghe đoạn** shows “Chưa có ranh giới hợp lệ. Nhập thời gian hợp lệ trước khi nghe hoặc chỉnh.” The UI's segment player requires start/end values and has no independent full-source playback control. No field was entered, boundary changed, confirmation clicked or test-only boundary persisted. The initial waveform-unavailable notice was from the pre-upload request; the later real Admin waveform request succeeds. That successful API response does not prove working playback in the current UI.
+
+**Local review is unchanged: 27 proposals, 0 confirmed, 0 manually adjusted**, 46 non-question proposals, 45 UNKNOWN. The actual hosted GET reports **27 questions, 0 hosted proposals, 0 confirmed, 0 manually adjusted**. The local cached proposal snapshot has not been registered as a hosted draft; a 27-question count is not reported as 27 hosted proposals. No segmentation run, proposal import or draft save was performed to populate production. Publication remains disabled.
+
+Screenshot evidence of the actual successful private upload is ignored at `test-results/hskk/hosted-source-upload.png`. Read-only probe sources/results remain ignored under `test-results/hskk/hosted-source-console.js`, `test-results/hskk/source-anonymous-probe.mjs`, and `test-results/hskk/source-anonymous.json`; they contain no token values.
+
+### Relevant validation and stop
+
+**5/5 relevant existing tests PASS:** source Storage/RPC denial and immutability, official source metadata locks, canonical H71002 unchanged checksums, Admin API authorization before reads, and waveform/clip authorization gates. These are local fixtures; no hosted segment/clip request was made and no production learner session was created. `npm run lint` and `npm run build` **PASS**. Logs: ignored `test-results/hskk-source-tests.txt`, `test-results/hskk-source-build.txt`. No unrelated fixtures or existing dirty runtime edits were modified. CI for the documentation-only checkpoint commit is checked after push against that exact commit and reported separately.
+
+**STOP after source registration/upload/access verification.** The source bytes and permissions are verified, but the full requested checkpoint is not labelled unconditionally **HOSTED PRIVATE H71002 SOURCE VERIFIED** because real Admin waveform playback did not pass. No clips, segment confirmation/manual adjustment, learner-access binding, learner sessions, publication, Speaking activation or scheduler activation was performed. The only hosted processing was the authorized read-only waveform GET; no `POST action=segment` was invoked. The current UI playback limitation and the absence of hosted proposal boundaries are recorded for a separate authorized next task.
 
 ## Hosted JWT authorization — 2026-10-02 (Asia/Bangkok)
 
