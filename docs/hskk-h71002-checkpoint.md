@@ -2,6 +2,53 @@
 
 This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup; source upload and the complete hosted publishing pipeline remain blocked.
 
+## HOSTED API ROUTING — 2026-10-02 (Asia/Bangkok)
+
+Continues PR #36 at `f7f24c49da41252c98438f527956cf8f7db5d1c3`. **The production 404 is resolved. Preview: PASS for route existence. Production: PASS for route existence and actual Admin catalog/exam GET. The complete hosted JWT smoke matrix is still incomplete; do not label the full checkpoint HOSTED API ROUTING VERIFIED yet.** No H71002 upload, segmentation, confirmation, access creation, publication, Speaking activation, scheduler change or database migration was performed in this routing task. The earlier infrastructure checkpoint below is historical and is superseded here for Vercel deployment/session state.
+
+### Root cause and minimal fix
+
+**Classification F: production was running an older build.** Production previously pointed to deployment `dpl_Gc2zk2ywnG5N2Ch8AHc7yeRX9FLX`, commit `54e46f1da9398f577e3432ba7c87e09ed34ff6f3`. That commit has no `api/hskk-exams.js` or `server/hskk/**` (`git ls-tree` verified), so its Vercel edge returned HTTP **404**, `text/plain`, `x-vercel-error: NOT_FOUND`. The request never reached the function, Admin authorization or Supabase. An absent route (A) was the symptom of this deployment mismatch; the current PR function did not fail deployment (B), disappear during packaging (C), conflict with a rewrite (D), or return this 404 from application code (E).
+
+After explicit user confirmation of the whole-commit production scope, Vercel redeployed the exact unchanged source of `f7f24c4`, with Production selected and build cache disabled. New deployment **`dpl_EC2aaR727AVFpWdmAbDCbVDcbqSt`**, unique URL `https://hanngubachhuu-dgbui0o2z-hanngubachhuu.vercel.app`, is **READY**, target `production`, and owns `https://hanngubachhuu.vercel.app`. Deployment commit metadata matches the requested SHA. No API implementation, route, build script, `vercel.json`, authentication guard or RLS change was needed. The only repository changes for this task are this checkpoint, a read-only hosted routing smoke script, and status assertions in the existing API test.
+
+The initial connector deployment action was rejected by automatic approval review because deploying the whole PR changes production beyond a single API endpoint. No deployment occurred from that rejected call. The user then explicitly approved redeploying `f7f24c4` to production; the subsequent Vercel redeploy completed. Production authorization was not bypassed.
+
+### Actual deployment artifact and request path
+
+- Preview deployment: `dpl_Bk4m6DoQZe1gCnt7LVJxDpAKTzsQ`, `https://hanngubachhuu-a3icg298k-hanngubachhuu.vercel.app`, commit `f7f24c4`, READY. Its Vercel Resources page lists **`/api/hskk-exams`**, **Node.js 24.x**, **IAD1**, **80.7 MB**, **120 seconds**; the Output source inspector identifies it as a serverless function and links to `/api/hskk-exams`. The new production deployment's Resources page independently shows the same route/runtime/region/size/duration.
+- Vercel preview build logs show `npm run audio:install`, conversion `passed`, runtime **8.1.3**, release `autobuild-2026-09-30-13-08`, and **179,988,843 runtime bytes**, followed by build/deployment completion. Existing `includeFiles` includes `{server/hskk/**,.cache/recording-runtime/linux-x64-8.1.3/**}`. Runtime installation/conversion and function bundle size are verified; the dashboard does not expose the per-file Lambda archive, so FFmpeg inclusion is supported by these build/configuration checks rather than a downloaded archive inventory. No hosted FFmpeg execution or source processing was triggered.
+- Real Admin catalog and H71002 GET render the private canonical 27-question exam, proving `server/hskk/H71002.json` is available to the deployed function. The original MP3 remains absent from the private source bucket; an incidental source GET from the editor returns 503, not a routing 404. This source prerequisite is outside the routing fix.
+- `build-web.mjs` removes only its fixed `dist` output and copies a public allowlist; API/server sources stay outside public assets. `outputDirectory=dist` does not hide the Vercel function, as the actual Resources listing and hosted responses demonstrate. Existing rewrites cover only `/login`, `/register`, `/admin`; none intercept `/api/hskk-exams`.
+- Browser `hskkAdminRequest` resolves `./api/hskk-exams` against root-level `quan-tri.html`, sends the current session in the **Authorization: Bearer** header and uses JSON for request bodies/responses. The actual production runtime trace shows **GET /api/hskk-exams → Supabase /auth/v1/user → profiles → hskk_authoring_draft → HTTP 200** for the Admin H71002 GET. No service-role credential was introduced into the browser.
+- Same-origin Vercel Admin needs no CORS preflight. The GitHub Pages fallback is a cross-origin Vercel URL; this handler has no Pages CORS allowlist and OPTIONS returns 405 by its existing method gate. Pages cross-origin authoring is not verified by this checkpoint and was not changed to address the unrelated old-build 404.
+
+### Hosted smoke evidence
+
+Minimal endpoint: **GET `/api/hskk-exams?exam=H71002&action=status`**.
+
+| Probe | PR preview | Production after redeploy |
+| --- | --- | --- |
+| Anonymous status GET | **401 AUTH_REQUIRED**, JSON, private/no-store through the authorized Vercel connector earlier in this task. Subsequent raw requests are 302 HOST_AUTH_REDIRECT at Vercel preview protection; those do not test application authorization. | **401 AUTH_REQUIRED**, JSON, private/no-store; no 404. |
+| Anonymous POST status | Raw request **302 HOST_AUTH_REDIRECT**, NOT TESTED at application layer. Local existing API test confirms 401 before file access. | **401 AUTH_REQUIRED**, JSON, private/no-store. |
+| Anonymous H71002 GET | Raw request **302 HOST_AUTH_REDIRECT**, NOT TESTED at application layer. | **401 AUTH_REQUIRED**, no exam returned. |
+| Anonymous source GET | Raw request **302 HOST_AUTH_REDIRECT**, NOT TESTED at application layer. | **401 AUTH_REQUIRED**, JSON, private/no-store; no source returned. |
+| Invalid Bearer token | Raw request **302 HOST_AUTH_REDIRECT**, NOT TESTED at application layer. | **401 AUTH_REQUIRED**, JSON; distinct from a real student JWT. |
+| Real student JWT status | **NOT TESTED**: no usable student session/JWT available to the hosted smoke runner. | **NOT TESTED**: no usable student session/JWT available to the hosted smoke runner. Prior database-role and synthetic tests are not substituted for this result. |
+| Real Admin JWT status | **NOT TESTED**: the browser has an Admin session, but its normal UI does not call status and Computer Use's read-only DOM scope cannot load/call application modules. | **NOT TESTED** for the same reason. Expected flags are verified only in the local status contract test. |
+| Real Admin catalog GET | **PASS**, real signed-in Admin UI loads the H71002 source catalog. HTTP 200 is implied by the response-checked browser adapter and rendered data, not directly captured in preview logs. | **HTTP 200**, confirmed in Vercel runtime log at `2026-10-01T18:39:03.617Z`, `exam=catalog&action=catalog`; real Admin UI renders the source catalog. |
+| Real Admin H71002 GET | **PASS**, real signed-in Admin UI renders 27 questions, Q1 太好了！, response window 7 seconds; no publication action. | **HTTP 200**, confirmed in Vercel runtime log at `2026-10-01T18:39:05.763Z`, `exam=H71002`; auth/user/profile/draft spans and actual 27-question rendering observed. |
+
+Production read-only HTTP report: ignored `test-results/hskk/api-routing.json`; GET/POST/invalid-token probes are real network requests. The script accepts optional `HSKK_STUDENT_JWT` and `HSKK_ADMIN_JWT` environment values, never logs JWTs or full successful exam/source bodies, and records absent credentials/protected-preview redirects as NOT TESTED. It never uploads, saves, segments, confirms or publishes. Browser sessions were used only through normal Admin navigation; no JWT/cookie was extracted, role impersonated or authentication protection disabled.
+
+### Validation and stop point
+
+Existing API test with added minimal-status assertions: **7/7 passed**; it checks anonymous GET/POST 401 and synthetic authorized GET 200 with exactly `{local_segmentation_enabled:true,external_ai_enabled:false}` before file access. These are local dependency-injected assertions, not hosted real-JWT evidence. ESLint, build and diff checks pass.
+
+Complete working-directory run: **187 tests, 184 passed, 3 failed, 0 skipped** in 27.609 seconds. All three failures are in the pre-existing untracked `tests/hskk-auto-next.test.mjs` and fail `INVALID_AUDIO` on an empty fixture URL. Its test and pre-existing edits to `study/hskk-exam-core.mjs`, `study/hskk-exam-engine.mjs`, `study/hskk-experience.mjs`, plus `docs/speaking-pilot-preflight.md`, remain untouched and excluded from this commit. The committed PR has 184 tests; its prior `f7f24c4` [study app CI](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36901932497) and [lesson data CI](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36901932758) pass, with 182 passing and 2 explicitly skipped unavailable private-MP3 tests. New checkpoint-commit CI is checked separately after pushing.
+
+**STOP HERE.** The 404 is fixed, but real Admin status and student-JWT denial still need direct hosted evidence before the complete checkpoint can be called HOSTED API ROUTING VERIFIED. No subsequent HSKK release step is authorized by this routing task. H71002 remains draft, **0/27 confirmed**, publication disabled; no learner access/attempt, clips, MP3 upload, extra migration, Speaking or scheduler activation was performed.
+
 ## Production infrastructure checkpoint — 2026-10-02 (Asia/Bangkok)
 
 This update continues PR #36 at `3e8a9b7`. **Phase 1 is applied and verified; the remaining production pipeline is blocked. H71002 is not production-ready.** The accepted central Admin UI is unchanged. No merge, source upload, automatic confirmation, clip generation, publication, Speaking activation, Auth mutation, course/assignment creation or worker scheduling was performed.

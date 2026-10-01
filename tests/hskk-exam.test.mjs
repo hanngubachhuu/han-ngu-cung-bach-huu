@@ -355,6 +355,20 @@ test("read-only authoring API authorizes before any file read or AI call, reject
     return { status, output };
   };
   assert.equal((await invoke()).status, 401);
+  assert.equal((await invoke({}, "exam=H71002&action=status")).status, 401);
+  assert.equal(
+    (await invoke({}, "exam=H71002&action=status", "POST")).status,
+    401,
+  );
+  const statusResponse = await invoke(
+    { authorization: "Bearer valid" },
+    "exam=H71002&action=status",
+  );
+  assert.equal(statusResponse.status, 200);
+  assert.deepEqual(JSON.parse(statusResponse.output), {
+    local_segmentation_enabled: true,
+    external_ai_enabled: false,
+  });
   assert.equal(reads, 0);
   assert.equal(
     (
