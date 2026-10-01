@@ -29,7 +29,7 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
     worker = (c, p) => call("recording_worker", c, p);
   try {
     await db.exec(`create role anon;create role authenticated;create role service_role;create schema auth;create schema storage;create schema extensions;
- create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}');
+ create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}',raw_app_meta_data jsonb default '{}');
  create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
  grant usage on schema auth,storage to anon,authenticated,service_role;
  create function storage.allow_any_operation(operations text[]) returns boolean language sql stable as $$select current_setting('storage.operation',true)=any(operations)$$;
@@ -42,7 +42,7 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
       files = (await fs.readdir(dir)).filter((f) => f.endsWith(".sql")).sort();
     for (const file of files) {
       if (
-        !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary/.test(
+        !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary/.test(
           file,
         )
       )
@@ -91,6 +91,195 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
           db.exec("update account_internal.speaking_settings set enabled=true"),
           /permission denied/,
         );
+      },
+    );
+    await t.test(
+      "synthetic gate requires exact owner/attempt/question/time; outsiders and expired Storage writes denied",
+      async () => {
+        await db.exec("reset role;begin");
+        const denied = async (fn, pattern) => {
+          await db.exec("savepoint expected_denial");
+          try {
+            await assert.rejects(fn, pattern);
+          } finally {
+            await db.exec(
+              "rollback to savepoint expected_denial;release savepoint expected_denial",
+            );
+          }
+        };
+        const run = rid(900),
+          lesson = "cp2-browser-" + run,
+          qa = rid(901),
+          av = rid(902),
+          attemptA = rid(903),
+          attemptB = rid(904),
+          outside = rid(905),
+          rawB = rid(906);
+        try {
+          await db.query(
+            "update auth.users set email=$1,raw_app_meta_data=$2 where id=$3",
+            [
+              "speaking-browser-a-" + run + "@example.invalid",
+              { speaking_browser_run: run },
+              student,
+            ],
+          );
+          await db.exec(`insert into public.courses(id,title,program,level) values('${lesson}','Synthetic browser Speaking ${run}','HSKK',1);
+          insert into public.lesson_content(id,course_id,level,lesson_no,title_zh,title_vi,content) values('${lesson}','${lesson}',1,1,'测试','Synthetic browser','{}');
+          insert into public.enrollments(user_id,course_id,active,access_mode) values('${student}','${lesson}',true,'SELECTED'),('${other}','${lesson}',true,'SELECTED');
+          insert into public.student_lesson_access(user_id,lesson_id,active) values('${student}','${lesson}',true),('${other}','${lesson}',true);
+          insert into public.assignment_question_versions(id,lesson_id,question_key,version,kind,prompt,options,rubric_version_id,created_by) values('${qa}','${lesson}','canary',1,'speaking','Synthetic prompt','[]','${rubric.id}','${admin}');
+          insert into public.assignment_versions(id,lesson_id,version,title,created_by) values('${av}','${lesson}',1,'Synthetic browser','${admin}');
+          insert into public.assignment_version_questions(assignment_version_id,position,question_version_id) values('${av}',1,'${qa}');
+          update public.assignment_question_versions set published_at=clock_timestamp(),published_by='${admin}' where id='${qa}';
+          update public.assignment_versions set status='published',previewed_at=clock_timestamp(),published_at=clock_timestamp(),published_by='${admin}' where id='${av}';
+          insert into public.learning_attempts(id,user_id,lesson_id,client_attempt_id,source,score,max_score,submitted_at) values('${attemptA}','${student}','${lesson}','canary-a','official',null,null,null),('${attemptB}','${other}','${lesson}','canary-b','official',null,null,null),('${outside}','${student}','${lesson}','canary-outside','official',null,null,null);
+          insert into public.submission_details(attempt_id,assignment_version_id) values('${attemptA}','${av}'),('${attemptB}','${av}'),('${outside}','${av}');
+          insert into public.submission_answers(attempt_id,question_version_id,position,prompt_snapshot) select a.id,'${qa}',1,account_internal.assignment_question_projection(q) from public.learning_attempts a cross join public.assignment_question_versions q where a.id in ('${attemptA}','${attemptB}','${outside}') and q.id='${qa}';
+          insert into account_internal.speaking_test_gate(owner_id,attempt_id,question_version_id,run_id,expires_at) values('${student}','${attemptA}','${qa}','${run}',clock_timestamp()+interval '1 hour');
+          insert into account_internal.speaking_recordings(id,attempt_id,question_version_id,owner_id,request_id,raw_sha256,raw_size,raw_mime,upload_deadline) values('${rawB}','${attemptB}','${qa}','${other}','${rawB}','${"a".repeat(64)}',1000,'audio/webm',clock_timestamp()+interval '10 minutes');`);
+          const payload = {
+            attempt_id: attemptA,
+            question_version_id: qa,
+            request_id: rid(907),
+            sha256: "a".repeat(64),
+            size: 1000,
+            mime: "audio/webm",
+          };
+          await as(student);
+          await denied(
+            () => rows("select * from account_internal.speaking_test_gate"),
+            /permission denied/,
+          );
+          await denied(
+            () =>
+              rows(
+                "insert into account_internal.speaking_test_gate(owner_id,attempt_id,question_version_id,run_id,expires_at) values($1,$2,$3,$4,clock_timestamp()+interval '1 hour')",
+                [student, outside, qa, run],
+              ),
+            /permission denied/,
+          );
+          await denied(
+            () =>
+              rows(
+                "select account_internal.speaking_canary_allowed($1,$2,$3)",
+                [student, attemptA, qa],
+              ),
+            /permission denied/,
+          );
+          await denied(
+            () => rec("reserve", { ...payload, attempt_id: outside }),
+            /RECORDING_NOT_READY/,
+          );
+          await denied(
+            () => rec("reserve", { ...payload, question_version_id: q.id }),
+            /RECORDING_NOT_READY/,
+          );
+          await as(other);
+          await denied(
+            () => rec("reserve", { ...payload, attempt_id: attemptB }),
+            /RECORDING_NOT_READY/,
+          );
+          await denied(() => rec("reserve", payload), /RECORDING_NOT_READY/);
+          await denied(
+            () =>
+              rows(
+                "insert into storage.objects(bucket_id,name,metadata) values('speaking-private',$1,$2)",
+                [rawB + "/raw", { size: 1000, mimetype: "audio/webm" }],
+              ),
+            /row-level security/,
+          );
+          await as(null, "anon");
+          await denied(() => rec("reserve", payload), /permission denied/);
+          await as(student);
+          const reserved = await rec("reserve", payload);
+          await rows(
+            "insert into storage.objects(bucket_id,name,metadata) values('speaking-private',$1,$2)",
+            [reserved.path, { size: 1000, mimetype: "audio/webm" }],
+          );
+          await db.exec("reset role");
+          await rows(
+            "update account_internal.speaking_test_gate set expires_at=clock_timestamp()+interval '1 second'",
+          );
+          await as(student);
+          const expires = await rec("reserve", {
+            ...payload,
+            request_id: rid(920),
+          });
+          const pending = await rec("reserve", {
+            ...payload,
+            request_id: rid(921),
+          });
+          await rows(
+            "insert into storage.objects(bucket_id,name,metadata) values('speaking-private',$1,$2)",
+            [expires.path, { size: 1000, mimetype: "audio/webm" }],
+          );
+          await new Promise((resolve) => setTimeout(resolve, 1100));
+          await denied(
+            () => rec("confirm", { recording_id: expires.id }),
+            /SUBMISSION_LOCKED/,
+          );
+          await denied(
+            () =>
+              rows(
+                "insert into storage.objects(bucket_id,name,metadata) values('speaking-private',$1,$2)",
+                [pending.path, { size: 1000, mimetype: "audio/webm" }],
+              ),
+            /row-level security/,
+          );
+          await db.exec("reset role");
+          await rows(
+            "update account_internal.speaking_test_gate set expires_at=clock_timestamp()+interval '1 hour'",
+          );
+          await as(student);
+          await rec("confirm", { recording_id: reserved.id });
+          let draft = await base("save", {
+            attempt_id: attemptA,
+            revision: 0,
+            answers: { [qa]: { recording_id: reserved.id } },
+          });
+          draft = await base("submit", {
+            attempt_id: attemptA,
+            revision: draft.revision,
+          });
+          assert.equal(draft.state, "submitted");
+          await as(null, "service_role");
+          assert.equal(await worker("claim", { recording_id: rawB }), null);
+          assert.equal((await worker("claim")).id, reserved.id);
+          await db.exec("reset role");
+          assert.equal(
+            (
+              await rows(
+                "select enabled from account_internal.speaking_settings",
+              )
+            )[0].enabled,
+            false,
+          );
+          await rows(
+            "update account_internal.speaking_test_gate set created_at=clock_timestamp()-interval '1 hour',expires_at=clock_timestamp()-interval '1 second'",
+          );
+          await as(student);
+          await denied(
+            () => rec("reserve", { ...payload, request_id: rid(908) }),
+            /RECORDING_NOT_READY/,
+          );
+          await db.exec("reset role");
+          await rows(
+            "update account_internal.speaking_test_gate set created_at=clock_timestamp(),expires_at=clock_timestamp()+interval '1 hour'",
+          );
+          await rows(
+            "update auth.users set raw_app_meta_data='{}',raw_user_meta_data=$1 where id=$2",
+            [{ speaking_browser_run: run }, student],
+          );
+          await as(student);
+          await denied(
+            () => rec("reserve", { ...payload, request_id: rid(909) }),
+            /RECORDING_NOT_READY/,
+          );
+        } finally {
+          await db.exec("rollback");
+          await as(admin);
+        }
       },
     );
     await db.exec(
