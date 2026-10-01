@@ -81,6 +81,8 @@ export function mountDocumentExamImport(
   } = {},
 ) {
   const key = `hnh.exam-import:${ownerId}:${lessonId}`;
+  const openQuestions = new Set();
+  let expandedInitialized = false;
   let draft = null,
     file = null,
     busy = false,
@@ -145,6 +147,8 @@ export function mountDocumentExamImport(
     extracted = { questions: [], contexts: [], instructions: "", warnings: [] },
     sourceKind = "document",
   ) {
+    openQuestions.clear();
+    expandedInitialized = false;
     draft = {
       ...extracted,
       ownerId,
@@ -159,10 +163,22 @@ export function mountDocumentExamImport(
     persist();
     render();
   }
+  function steps(current) {
+    return (
+      '<ol class="exam-stepper" aria-label="Nhập đề">' +
+      ["Chọn file", "Đọc đề", "Kiểm tra", "Thêm vào đề"]
+        .map(
+          (label, i) =>
+            `<li ${i + 1 === current ? 'aria-current="step"' : ""}>${i + 1}. ${label}</li>`,
+        )
+        .join("") +
+      "</ol>"
+    );
+  }
   function render() {
     if (!root.isConnected) return;
     if (!draft) {
-      root.innerHTML = `<section class="assignment-question"><h4>Tạo đề mới</h4><div class="account-actions"><button type="button" class="st-button" data-manual>Tạo câu hỏi thủ công</button><button type="button" class="st-button" data-file-mode>Nhập từ PDF / Word</button></div><p>Soạn từng câu hoặc tải đề có sẵn để kiểm tra trước khi thêm.</p><div data-upload-panel hidden><h4>Nhập đề từ PDF / Word</h4><label class="account-notice" data-drop>Kéo file vào đây hoặc chọn file<input type="file" accept=".pdf,.docx" data-file></label><p>Định dạng hỗ trợ: PDF, Word (.docx). Tối đa 3 MiB.</p><p data-file-status></p><button type="button" class="st-button primary" data-analyze disabled>Đọc và phân tích đề</button></div><p data-import-status role="status"></p></section>`;
+      root.innerHTML = `<section class="exam-builder"><h4>Tạo đề mới</h4><p>Soạn một đề rõ ràng, phù hợp với bài học đang chọn.</p><div class="account-actions"><button type="button" class="st-button" data-manual>Tạo câu hỏi thủ công</button><button type="button" class="st-button" data-file-mode>Nhập từ PDF / Word</button></div><p>Soạn từng câu hoặc tải đề có sẵn để kiểm tra trước khi thêm.</p><div data-upload-panel hidden>${steps(1)}<h4>Nhập đề từ PDF / Word</h4><label class="exam-drop" data-drop>Kéo file PDF hoặc Word vào đây<input type="file" accept=".pdf,.docx" data-file></label><p>Định dạng hỗ trợ: PDF, Word (.docx). Tối đa 3 MiB.</p><p data-file-status></p><button type="button" class="st-button primary" data-analyze disabled>Đọc và phân tích đề</button></div><p data-import-status role="status"></p></section>`;
       root.querySelector("[data-file-mode]").onclick = () =>
         (root.querySelector("[data-upload-panel]").hidden = false);
       root.querySelector("[data-manual]").onclick = () => {
@@ -200,8 +216,9 @@ export function mountDocumentExamImport(
         busy = true;
         analyze.disabled = true;
         input.disabled = true;
+        root.querySelector(".exam-stepper").outerHTML = steps(2);
         root.querySelector("[data-import-status]").textContent =
-          "Đang đọc và phân tích đề…";
+          "Đang đọc đề. Vui lòng giữ trang mở…";
         try {
           const parsed = await readFile(file, ownerId);
           const extracted = extractExamQuestions(parsed);
@@ -227,7 +244,11 @@ export function mountDocumentExamImport(
     const review = draft.questions.filter(
       (q) => q.needsReview.length && !q.reviewed,
     ).length;
-    root.innerHTML = `<section class="assignment-question"><h4>Kiểm tra đề trước khi thêm</h4><p>${esc(draft.filename)} · ${draft.questions.length} câu đã nhận diện · ${review} câu cần kiểm tra</p><label>Tên đề<input data-exam-title maxlength="200" value="${esc(draft.title)}" ${uncertain ? "disabled" : ""}></label><p data-draft-status role="status">Đã lưu tạm lúc ${new Date(draft.savedAt).toLocaleTimeString("vi-VN")}</p>${draft.warnings.length ? '<p class="account-notice">Có một số nội dung cần đối chiếu với file gốc, gồm cấu trúc bảng, hình hoặc trang scan.</p>' : ""}
+    if (!expandedInitialized && draft.questions.length) {
+      openQuestions.add(draft.questions[0].localId);
+      expandedInitialized = true;
+    }
+    root.innerHTML = `<section class="exam-builder">${steps(3)}<h4>Kiểm tra đề</h4><p>${esc(draft.filename)} · ✓ ${draft.questions.length} câu được nhận diện · ${review ? "⚠ " : ""}${review} câu cần kiểm tra</p><label>Tên đề<input data-exam-title maxlength="200" value="${esc(draft.title)}" ${uncertain ? "disabled" : ""}></label><p data-draft-status role="status">Đã lưu tạm lúc ${new Date(draft.savedAt).toLocaleTimeString("vi-VN")}</p>${draft.warnings.length ? '<p class="account-notice">Có một số nội dung cần đối chiếu với file gốc, gồm cấu trúc bảng, hình hoặc trang scan.</p>' : ""}
    <details ${draft.instructions ? "open" : ""}><summary>Hướng dẫn chung</summary><textarea data-instructions rows="3" maxlength="50000" ${uncertain ? "disabled" : ""}>${esc(draft.instructions)}</textarea></details>
    ${draft.contexts.map((c) => `<label>Đoạn đọc chung<textarea data-context="${esc(c.localId)}" rows="4" maxlength="50000" ${uncertain ? "disabled" : ""}>${esc(c.text)}</textarea></label>`).join("")}
    ${draft.questions
@@ -235,7 +256,7 @@ export function mountDocumentExamImport(
        (
          q,
          i,
-       ) => `<div class="assignment-question" data-import-question="${esc(q.localId)}"><h5>Câu ${i + 1}${q.needsReview.length && !q.reviewed ? " · Cần kiểm tra" : ""}</h5><label>Dạng câu<select data-kind ${uncertain ? "disabled" : ""}><option value="">Chưa xác định</option>${Object.entries(
+       ) => `<details class="assignment-question" data-import-question="${esc(q.localId)}" ${openQuestions.has(q.localId) ? "open" : ""}><summary>Câu ${i + 1} · ${esc(labels[q.kind] || "Chưa xác định")}${q.needsReview.length && !q.reviewed ? " · ⚠ Cần kiểm tra" : ""}<small class="exam-question-preview">${esc(q.prompt.slice(0, 100))}</small></summary><label>Dạng câu<select data-kind ${uncertain ? "disabled" : ""}><option value="">Chưa xác định</option>${Object.entries(
          labels,
        )
          .map(
@@ -257,17 +278,17 @@ export function mountDocumentExamImport(
          )
            .map(
              (o) =>
-               `<option value="${esc(o.id)}" ${q.correctAnswer === o.id ? "selected" : ""}>${esc(q.kind === "mcq" ? o.id : o.text)}</option>`,
+               `<option value="${esc(o.id)}" ${q.correctAnswer === o.id ? "selected" : ""}>${esc(o.text || "Lựa chọn " + o.id)}</option>`,
            )
            .join("")}</select>`
        : `<textarea data-answer rows="2" maxlength="4000" ${uncertain ? "disabled" : ""}>${esc(q.correctAnswer)}</textarea>`
    }</label>
    ${draft.contexts.length ? `<label>Đoạn đọc của câu<select data-question-context ${uncertain ? "disabled" : ""}><option value="">Không có đoạn đọc chung</option>${draft.contexts.map((c, n) => `<option value="${esc(c.localId)}" ${q.contextId === c.localId ? "selected" : ""}>Đoạn ${n + 1}</option>`).join("")}</select></label>` : ""}
    ${q.needsReview.length ? `<p>${q.needsReview.map(esc).join(" ")}</p><label><input type="checkbox" data-reviewed ${q.reviewed ? "checked" : ""} ${uncertain ? "disabled" : ""}> Tôi đã đối chiếu và kiểm tra câu này</label>` : ""}
-   <details><summary>Đối chiếu nội dung gốc</summary><pre style="white-space:pre-wrap">${esc(q.original || "Câu soạn thủ công")}</pre></details><div class="account-actions"><button type="button" class="st-button" data-up ${i === 0 || uncertain ? "disabled" : ""}>Lên</button><button type="button" class="st-button" data-down ${i === draft.questions.length - 1 || uncertain ? "disabled" : ""}>Xuống</button><button type="button" class="st-button" data-remove ${uncertain ? "disabled" : ""}>Xóa câu</button>${q.kind === "mcq" ? `<button type="button" class="st-button" data-add-option ${q.options.length >= 8 || uncertain ? "disabled" : ""}>Thêm lựa chọn</button>` : ""}</div></div>`,
+   <details><summary>Đối chiếu nội dung gốc</summary><pre style="white-space:pre-wrap">${esc(q.original || "Câu soạn thủ công")}</pre></details><div class="account-actions"><button type="button" class="st-button" data-up ${i === 0 || uncertain ? "disabled" : ""}>Lên</button><button type="button" class="st-button" data-down ${i === draft.questions.length - 1 || uncertain ? "disabled" : ""}>Xuống</button><button type="button" class="st-button" data-remove ${uncertain ? "disabled" : ""}>Xóa câu</button>${q.kind === "mcq" ? `<button type="button" class="st-button" data-add-option ${q.options.length >= 8 || uncertain ? "disabled" : ""}>Thêm lựa chọn</button>` : ""}</div></details>`,
      )
      .join("")}
-   <div class="account-actions"><button type="button" class="st-button" data-add ${uncertain ? "disabled" : ""}>Thêm câu thủ công</button><button type="button" class="st-button primary" data-commit>${uncertain ? "Kiểm tra / thử lại lần lưu này" : "Thêm tất cả vào đề"}</button><button type="button" class="st-button" data-cancel ${uncertain ? "disabled" : ""}>Hủy</button></div><p data-import-status role="status">${uncertain ? "Lần lưu trước chưa có xác nhận. Kiểm tra lại trước khi chỉnh tiếp." : ""}</p></section>`;
+   <div class="account-actions assignment-sticky"><button type="button" class="st-button" data-add ${uncertain ? "disabled" : ""}>Thêm câu thủ công</button><button type="button" class="st-button primary" data-commit>${uncertain ? "Kiểm tra / thử lại lần lưu này" : "Lưu đề nháp"}</button><button type="button" class="st-button" data-cancel ${uncertain ? "disabled" : ""}>Hủy</button></div><p data-import-status role="status">${uncertain ? "Lần lưu trước chưa có xác nhận. Kiểm tra lại trước khi chỉnh tiếp." : ""}</p></section>`;
     root.oninput = () => collect();
     root.onchange = (e) => {
       collect();
@@ -291,6 +312,11 @@ export function mountDocumentExamImport(
       addQuestion();
     };
     for (const node of root.querySelectorAll("[data-import-question]")) {
+      node.ontoggle = () => {
+        if (!node.isConnected) return;
+        if (node.open) openQuestions.add(node.dataset.importQuestion);
+        else openQuestions.delete(node.dataset.importQuestion);
+      };
       const index = draft.questions.findIndex(
         (q) => q.localId === node.dataset.importQuestion,
       );
@@ -344,7 +370,7 @@ export function mountDocumentExamImport(
         const result = await commit(draft, ownerId);
         saved = true;
         storage.removeItem(key);
-        root.innerHTML = `<section class="account-notice"><p>✓ Đã thêm ${result.count} câu vào đề nháp ${esc(result.title)}.</p><p>Tiếp tục chỉnh sửa, xem trước rồi xuất bản khi sẵn sàng.</p><button type="button" class="st-button" data-open-exam>Tiếp tục chỉnh sửa đề</button></section>`;
+        root.innerHTML = `<section class="account-notice">${steps(4)}<p>✓ Đã thêm ${result.count} câu vào đề nháp ${esc(result.title)}.</p><p>Tiếp tục chỉnh sửa, xem trước rồi xuất bản khi sẵn sàng.</p><button type="button" class="st-button" data-open-exam>Tiếp tục chỉnh sửa đề</button></section>`;
         root.querySelector("[data-open-exam]").onclick = () => onSaved(result);
       } catch (e) {
         const definitive = [
@@ -372,8 +398,10 @@ export function mountDocumentExamImport(
   }
   function addQuestion() {
     if (draft.questions.length >= 200) return;
+    const localId = crypto.randomUUID();
+    openQuestions.add(localId);
     draft.questions.push({
-      localId: crypto.randomUUID(),
+      localId,
       number: draft.questions.length + 1,
       prompt: "",
       kind: "mcq",

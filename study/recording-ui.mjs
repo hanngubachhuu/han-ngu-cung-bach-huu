@@ -3,7 +3,8 @@ const messages = {
   NotAllowedError: "Chưa được cấp quyền micro. Cho phép micro rồi thử lại.",
   NotFoundError: "Không tìm thấy micro.",
   AUDIO_INVALID_SIZE: "Bản ghi quá 8 MiB hoặc không có âm thanh. Hãy ghi lại.",
-  AUDIO_PROCESSING: "Bản ghi đang được chuyển MP3. Quay lại sau ít phút.",
+  AUDIO_PROCESSING:
+    "Bản ghi đang được chuẩn bị để nghe lại. Vui lòng quay lại sau ít phút.",
   AUDIO_EXPIRED: "Bản ghi đã hết hạn lưu. Bài nộp và nhận xét vẫn được giữ.",
   SUBMISSION_LOCKED: "Bài đã nộp hoặc hết giờ; không thể thay bản ghi.",
   ACCOUNT_CHANGED: "Tài khoản đã thay đổi. Mở lại bài bằng đúng tài khoản.",
@@ -21,6 +22,8 @@ export function mountRecorder(
     answer,
     locked = false,
     onAnswer = async () => {},
+    onState = () => {},
+    autoSave = true,
     upload = uploadRecording,
     download = downloadRecording,
     media = globalThis.navigator?.mediaDevices,
@@ -40,21 +43,52 @@ export function mountRecorder(
     recording = false,
     pending = false,
     generation = 0;
-  root.innerHTML = `<p data-audio-status role="status">${locked ? "Bản ghi thuộc bài đã nộp." : "Tối đa 6 phút/câu. Nghe thử rồi lưu bản ghi trước khi nộp bài."}</p><div class="account-actions">${locked ? "" : '<button type="button" class="st-button" data-record>Ghi âm</button><button type="button" class="st-button" data-stop disabled>Dừng</button><button type="button" class="st-button" data-upload disabled>Lưu bản ghi</button>'}<button type="button" class="st-button" data-play ${answer?.recording_id ? "" : "disabled"}>Nghe bản đã lưu</button></div><audio controls preload="none" data-preview aria-label="Nghe lại bản ghi" class="assignment-audio" hidden></audio>`;
+  root.innerHTML = `<div class="recorder" data-state="idle"><span class="recorder-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg></span><p data-audio-status role="status" aria-live="polite">${locked ? "Bản ghi của bài đã nộp" : answer?.recording_id ? "✓ Bản ghi đã lưu" : "Sẵn sàng ghi âm"}</p><span class="recorder-clock" data-audio-clock hidden>00:00</span><div class="account-actions">${locked ? "" : '<button type="button" class="st-button primary" data-record>Bắt đầu ghi âm</button><button type="button" class="st-button" data-stop hidden disabled>Dừng ghi âm</button><button type="button" class="st-button" data-upload hidden disabled>Thử lưu lại</button>'}<button type="button" class="st-button" data-replay hidden>Nghe lại</button><button type="button" class="st-button" data-play ${answer?.recording_id ? "" : "hidden disabled"}>Nghe bản đã lưu</button></div><audio controls preload="none" data-preview aria-label="Nghe lại bản ghi" class="assignment-audio" hidden></audio>${locked ? "" : '<small class="recorder-help">Tối đa 6 phút. Bản ghi được lưu tự động sau khi dừng.</small>'}</div>`;
   const status = root.querySelector("[data-audio-status]"),
     audio = root.querySelector("audio"),
     record = root.querySelector("[data-record]"),
     stop = root.querySelector("[data-stop]"),
     save = root.querySelector("[data-upload]"),
-    play = root.querySelector("[data-play]");
+    play = root.querySelector("[data-play]"),
+    replay = root.querySelector("[data-replay]"),
+    clock = root.querySelector("[data-audio-clock]"),
+    panel = root.querySelector(".recorder");
   const report = (text) => {
     if (active) status.textContent = text;
   };
   function controls() {
     if (!active) return;
-    if (record) record.disabled = busy || recording;
-    if (stop) stop.disabled = !recording;
-    if (save) save.disabled = busy || recording || !blob;
+    panel.dataset.state = recording
+      ? "recording"
+      : busy
+        ? "saving"
+        : pending
+          ? "unsaved"
+          : answer?.recording_id
+            ? "saved"
+            : "idle";
+    clock.hidden = !recording;
+    if (record) {
+      record.disabled = busy || recording;
+      record.hidden = recording;
+      record.classList.toggle("primary", !blob && !answer?.recording_id);
+    }
+    if (stop) {
+      stop.disabled = !recording;
+      stop.hidden = !recording;
+    }
+    if (save) {
+      save.disabled = busy || recording || !blob;
+      save.hidden = !pending || recording;
+    }
+    replay.hidden = !blob || recording;
+    replay.disabled = busy || recording;
+    play.hidden = !answer?.recording_id || recording || (!!blob && !locked);
+    onState({
+      busy: recording || busy || pending,
+      saved: !!answer?.recording_id && !pending,
+      recording,
+    });
     play.disabled = busy || recording || !answer?.recording_id;
   }
   function stopTracks() {
@@ -125,8 +159,9 @@ export function mountRecorder(
           audio.src = localUrl;
           audio.hidden = false;
           record.textContent = "Ghi lại";
-          report("Đã dừng. Nghe thử; bấm Lưu bản ghi để gửi vào bài.");
+          report("✓ Đã ghi âm. Bạn có thể nghe lại hoặc ghi lại.");
           controls();
+          if (autoSave) void saveRecording();
         };
         recorder.onerror = () => {
           recording = false;
@@ -140,12 +175,11 @@ export function mountRecorder(
         seconds = 0;
         timer = setInterval(() => {
           seconds++;
-          report(
-            `Đang ghi ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")} / 6:00`,
-          );
+          clock.textContent = `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
           if (seconds >= 360 && recorder.state === "recording") recorder.stop();
         }, 1000);
-        report("Đang ghi âm…");
+        clock.textContent = "00:00";
+        report("● Đang ghi âm");
       } catch (e) {
         stopTracks();
         report(explain(e));
@@ -158,38 +192,56 @@ export function mountRecorder(
     stop.onclick = () => {
       if (recorder?.state === "recording") recorder.stop();
     };
-  if (save)
-    save.onclick = async () => {
-      if (busy || !blob || recording) return;
-      busy = true;
+  async function saveRecording() {
+    if (busy || !blob || recording) return;
+    busy = true;
+    controls();
+    report("Đang lưu bản ghi…");
+    try {
+      const value = await upload({
+        blob,
+        requestId,
+        attemptId,
+        questionId,
+        ownerId,
+      });
+      if (!active) return;
+      await onAnswer(value);
+      if (!active) return;
+      answer = value;
+      pending = false;
+      save.hidden = true;
+      record.textContent = "Ghi lại";
+      report(
+        "✓ Bản ghi đã lưu lúc " +
+          new Date().toLocaleTimeString("vi-VN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+      );
+    } catch (e) {
+      report(explain(e));
+    } finally {
+      busy = false;
       controls();
-      report("Đang tải và xác nhận bản ghi…");
-      try {
-        const value = await upload({
-          blob,
-          requestId,
-          attemptId,
-          questionId,
-          ownerId,
-        });
-        if (!active) return;
-        await onAnswer(value);
-        if (!active) return;
-        answer = value;
-        pending = false;
-        report("Đã lưu bản ghi vào bản nháp. MP3 đang được xử lý.");
-      } catch (e) {
-        report(explain(e));
-      } finally {
-        busy = false;
-        controls();
-      }
-    };
+    }
+  }
+  if (save) save.onclick = saveRecording;
+  replay.onclick = async () => {
+    if (!localUrl || busy || recording) return;
+    audio.src = localUrl;
+    audio.hidden = false;
+    try {
+      await audio.play();
+    } catch {
+      report("Bấm nút phát trên thanh âm thanh để nghe lại.");
+    }
+  };
   play.onclick = async () => {
     if (busy || !answer?.recording_id) return;
     busy = true;
     controls();
-    report("Đang tải bản ghi riêng tư…");
+    report("Đang mở bản ghi…");
     try {
       const value = await download(answer.recording_id, ownerId);
       if (!active) return;
@@ -202,7 +254,7 @@ export function mountRecorder(
           ? "Bản ghi lưu đến " +
               new Date(value.meta.expires_at).toLocaleString("vi-VN") +
               "."
-          : "Bản MP3 đã sẵn sàng; bản lưu trữ đang xử lý.",
+          : "Bản ghi đã sẵn sàng để nghe lại.",
       );
       await audio.play();
     } catch (e) {
@@ -219,7 +271,11 @@ export function mountRecorder(
     }
   };
   window.addEventListener("beforeunload", unload);
+  controls();
   return {
+    get saved() {
+      return !!answer?.recording_id && !pending;
+    },
     get busy() {
       return recording || busy || pending;
     },

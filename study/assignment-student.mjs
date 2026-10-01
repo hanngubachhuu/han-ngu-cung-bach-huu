@@ -1,3 +1,4 @@
+import { confirmAssignment } from "./assignment-dialog.mjs";
 import { mountRecorder } from "./recording-ui.mjs";
 import {
   assignmentCommand as call,
@@ -116,6 +117,9 @@ export function mountAssignments(root, profile) {
     clearInterval(timer);
     clearTimeout(debounce);
     const locked = data.state !== "draft";
+    const speaking = data.answers.some((a) => a.question.kind === "speaking");
+    root.classList.toggle("speaking-layout", speaking);
+    let questionIndex = 0;
     const localKey = `hnh.assignment.draft:${profile.user_id}:${data.attempt_id}`;
     let lateAnswers;
     if (locked) {
@@ -131,9 +135,10 @@ export function mountAssignments(root, profile) {
         /* Server result remains readable when browser storage is blocked. */
       }
     }
-    root.innerHTML = `<div class="assignment-heading"><h3>${text(data.title)}</h3><button class="st-button" data-back>Danh sách bài</button></div>
-      <p data-clock role="timer"></p><p data-status role="status" aria-live="polite">${locked ? "Bài đã nộp. " + (data.result ? "Kết quả đã công bố." : "Đang chờ công bố kết quả.") : "Bản nháp được lưu theo tài khoản."}</p>
-      ${data.result ? `<div class="account-notice"><strong>Tổng điểm: ${data.result.normalized_score}/100</strong><p>${data.result.raw_score}/${data.result.raw_max_score} điểm gốc · Công bố ${new Date(data.result.published_at).toLocaleString("vi-VN")}</p></div>` : ""}
+    root.innerHTML = `<div class="speaking-intro"><p class="st-eyebrow">${speaking ? "BÀI LUYỆN NÓI · HSKK" : "BÀI LUYỆN TẬP · HSK / HSKK"}</p><div class="assignment-heading"><h3>${text(data.title)}</h3><button class="st-button" data-back>Danh sách bài</button></div>
+      <p class="assignment-intro">${speaking ? "Bạn hãy đọc kỹ yêu cầu và ghi âm câu trả lời bằng tiếng Trung." : "Hoàn thành từng câu và kiểm tra bài trước khi nộp."}</p>${speaking && !locked ? '<ul class="speaking-guide"><li>① Đọc yêu cầu</li><li>② Bấm ghi âm</li><li>③ Dừng để tự động lưu</li><li>④ Xem lại rồi nộp</li></ul>' : ""}</div><p data-clock role="timer"></p><p data-status role="status" aria-live="polite">${locked ? "✓ Đã nộp bài thành công. Bài của bạn đã được lưu. " + (data.result ? "Kết quả đã công bố." : "Đang chờ công bố kết quả.") : "Bản nháp được lưu theo tài khoản."}</p>
+      ${data.result ? `<div class="assignment-result"><strong>Tổng điểm: ${data.result.normalized_score}/100</strong><p>${data.result.raw_score}/${data.result.raw_max_score} điểm gốc · Công bố ${new Date(data.result.published_at).toLocaleString("vi-VN")}</p></div>` : ""}
+      ${speaking ? `<div class="speaking-progress"><span data-progress-label>Câu 1 / ${data.answers.length}</span><progress data-progress value="1" max="${data.answers.length}" aria-label="Tiến độ câu hỏi"></progress></div><nav class="speaking-nav" aria-label="Chọn câu hỏi">${data.answers.map((a, i) => `<button type="button" class="st-button" data-step-question="${i}" aria-label="Câu ${i + 1}" ${i === 0 ? 'aria-current="step"' : ""}>${i + 1}<span data-complete="${esc(a.question.id)}">${a.answer?.recording_id ? " ✓" : ""}</span></button>`).join("")}</nav>` : ""}
       ${(data.contexts || []).map((c, i) => `<section class="assignment-question" id="student-context-${i}"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}<form data-answers>${data.answers
         .map(({ question: q, answer, position }) => {
           const grade = data.result?.questions.find(
@@ -154,8 +159,7 @@ export function mountAssignments(root, profile) {
                   `<label class="assignment-choice"><input type="radio" name="${esc(q.id)}" value="${esc(o.id)}" ${String(answer) === o.id ? "checked" : ""}>${text(o.text)}</label>`,
               )
               .join("");
-          } else if (q.kind === "speaking")
-            input = "<p>Bản ghi gắn với đúng phiên bản câu hỏi này.</p>";
+          } else if (q.kind === "speaking") input = "";
           else
             input = `<label>${q.kind === "multi_fill" ? "Mỗi chỗ trống một dòng" : q.kind === "reorder" ? "Sắp xếp các từ; phân cách bằng dấu |" : q.kind === "matching" ? "Mỗi cặp một dòng: mã bên trái = mã bên phải" : "Câu trả lời"}
           <textarea name="${esc(q.id)}" rows="3" maxlength="12000">${esc(
@@ -170,12 +174,108 @@ export function mountAssignments(root, profile) {
                   : answer || "",
           )}</textarea></label>
           ${q.options?.length ? `<p class="st-help">${q.options.map(text).join(" · ")}</p>` : ""}`;
-          return `<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}`;
+          return `${speaking ? `<section class="speaking-question" data-question-page="${position - 1}" ${position !== 1 ? "hidden" : ""}>` : ""}<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}${speaking ? "</section>" : ""}`;
         })
         .join(
           "",
-        )}<div class="account-actions">${locked ? '<button type="button" class="st-button" data-refresh>Xem lại trạng thái</button>' : '<button type="button" class="st-button" data-save>Lưu ngay</button><button type="submit" class="st-button primary">Nộp bài</button><button type="button" class="st-button" data-local>Lưu bản trả lời trên máy</button>'}</div></form>`;
-    root.querySelector("[data-back]").onclick = list;
+        )}<div class="speaking-controls">${speaking ? '<button type="button" class="st-button" data-question-prev disabled>← Câu trước</button><button type="button" class="st-button primary" data-question-next>Câu tiếp theo →</button>' : ""}</div><div class="account-actions" data-submit-actions ${speaking && !locked ? "hidden" : ""}>${locked ? '<button type="button" class="st-button" data-refresh>Xem lại trạng thái</button>' : '<button type="button" class="st-button" data-save>Lưu ngay</button><button type="submit" class="st-button primary">Xem lại bài</button><button type="button" class="st-button" data-local>Lưu bản trả lời trên máy</button>'}</div></form><section class="speaking-review" data-review hidden aria-label="Xem lại bài trước khi nộp"></section>`;
+    root.querySelector("[data-back]").onclick = () => {
+      if (recorders.some((r) => r.busy)) {
+        report(Error("RECORDING_REQUIRED"));
+        return;
+      }
+      list();
+    };
+    const pageNodes = [...root.querySelectorAll("[data-question-page]")];
+    function showQuestion(index) {
+      if (recorders.some((r) => r.busy)) {
+        report(Error("RECORDING_REQUIRED"));
+        return;
+      }
+      questionIndex = Math.max(0, Math.min(data.answers.length - 1, index));
+      root.querySelector("[data-review]").hidden = true;
+      pageNodes.forEach((n, i) => (n.hidden = i !== questionIndex));
+      for (const button of root.querySelectorAll("[data-step-question]")) {
+        if (Number(button.dataset.stepQuestion) === questionIndex)
+          button.setAttribute("aria-current", "step");
+        else button.removeAttribute("aria-current");
+      }
+      root.querySelector("[data-progress-label]").textContent =
+        `Câu ${questionIndex + 1} / ${data.answers.length}`;
+      root.querySelector("[data-progress]").value = questionIndex + 1;
+      root.querySelector("[data-question-prev]").disabled = questionIndex === 0;
+      root.querySelector("[data-question-next]").textContent =
+        questionIndex === data.answers.length - 1
+          ? locked
+            ? "Xem lại từ đầu"
+            : "Xem lại bài"
+          : "Câu tiếp theo →";
+      root
+        .querySelector("[data-question-next]")
+        .classList.toggle(
+          "primary",
+          !pageNodes[questionIndex]?.querySelector("[data-record].primary"),
+        );
+    }
+    function answered(value, kind) {
+      if (kind === "speaking") return !!value?.recording_id;
+      if (Array.isArray(value))
+        return value.length > 0 && value.every((v) => String(v).trim());
+      if (value && typeof value === "object")
+        return (
+          Object.keys(value).length > 0 &&
+          Object.values(value).every((v) => String(v).trim())
+        );
+      return (
+        value !== null && value !== undefined && String(value).trim() !== ""
+      );
+    }
+    function showReview() {
+      if (recorders.some((r) => r.busy)) {
+        report(Error("RECORDING_REQUIRED"));
+        return;
+      }
+      const values = new Map(
+        data.answers.map((a) => [a.question.id, a.answer]),
+      );
+      for (const a of draft?.snapshot.answers || [])
+        values.set(a.question.id, a.answer);
+      for (const [id, value] of Object.entries(draft?.pending || {}))
+        values.set(id, value);
+      const completed = data.answers.filter((a) =>
+        answered(values.get(a.question.id), a.question.kind),
+      ).length;
+      const review = root.querySelector("[data-review]");
+      review.innerHTML = `<h4>Xem lại bài của bạn</h4><p>Bạn đã hoàn thành ${completed} / ${data.answers.length} câu.</p><ol>${data.answers.map((a, i) => `<li><span>Câu ${i + 1} · ${answered(values.get(a.question.id), a.question.kind) ? "✓ Đã trả lời" : a.question.kind === "speaking" ? "⚠ Chưa có bản ghi" : "⚠ Chưa hoàn thành"}</span><button class="st-button" type="button" data-review-question="${i}">Quay lại câu ${i + 1}</button></li>`).join("")}</ol><button type="button" class="st-button primary" data-confirm-submit>Nộp bài</button>`;
+      review.hidden = false;
+      if (speaking) pageNodes.forEach((n) => (n.hidden = true));
+      for (const b of review.querySelectorAll("[data-review-question]"))
+        b.onclick = () => {
+          const index = Number(b.dataset.reviewQuestion);
+          if (speaking) showQuestion(index);
+          else {
+            const question = root.querySelectorAll("[data-question]")[index];
+            question.scrollIntoView({ block: "center" });
+          }
+        };
+      review.querySelector("[data-confirm-submit]").onclick = () => submit();
+      review.scrollIntoView({ block: "start" });
+      review.querySelector("h4").setAttribute("tabindex", "-1");
+      review.querySelector("h4").focus();
+    }
+    if (speaking) {
+      root.querySelector("[data-question-prev]").onclick = () =>
+        showQuestion(questionIndex - 1);
+      root.querySelector("[data-question-next]").onclick = () =>
+        questionIndex === data.answers.length - 1
+          ? locked
+            ? showQuestion(0)
+            : showReview()
+          : showQuestion(questionIndex + 1);
+      for (const b of root.querySelectorAll("[data-step-question]"))
+        b.onclick = () => showQuestion(Number(b.dataset.stepQuestion));
+      showQuestion(0);
+    }
     root
       .querySelector("[data-refresh]")
       ?.addEventListener("click", () => open(data.attempt_id));
@@ -215,7 +315,11 @@ export function mountAssignments(root, profile) {
               ? "Trình duyệt chưa lưu được bản nháp. Giữ trang mở và bấm Lưu ngay."
               : pending
                 ? "Đã giữ bản nháp trên máy; đang chờ đồng bộ."
-                : "Đã lưu bản nháp trên tài khoản.";
+                : "✓ Đã lưu lúc " +
+                  new Date().toLocaleTimeString("vi-VN", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
         if (conflict && !root.querySelector("[data-conflict]")) {
           const actions = document.createElement("div");
           actions.dataset.conflict = "";
@@ -296,6 +400,10 @@ export function mountAssignments(root, profile) {
                   )
                 : raw;
       draft.edit(q.id, value);
+      const marker = [...root.querySelectorAll("[data-complete]")].find(
+        (n) => n.dataset.complete === q.id,
+      );
+      if (marker) marker.textContent = answered(value, q.kind) ? " ✓" : "";
       clearTimeout(debounce);
       debounce = setTimeout(() => draft?.flush().catch(() => {}), 500);
     });
@@ -334,6 +442,16 @@ export function mountAssignments(root, profile) {
             ownerId: profile.user_id,
             answer: entry.answer,
             locked,
+            onState: ({ saved }) => {
+              const marker = [...root.querySelectorAll("[data-complete]")].find(
+                (n) => n.dataset.complete === entry.question.id,
+              );
+              if (marker) marker.textContent = saved ? " ✓" : "";
+              if (speaking && pageNodes[questionIndex]?.contains(node))
+                root
+                  .querySelector("[data-question-next]")
+                  .classList.toggle("primary", saved);
+            },
             onAnswer: async (value) => {
               draft.edit(entry.question.id, value);
               const latest = await draft.flush();
@@ -352,14 +470,19 @@ export function mountAssignments(root, profile) {
         return;
       }
       if (timeout) disposeRecorders();
+      submitting = true;
       if (
         !timeout &&
-        !window.confirm(
-          "Nộp bài này? Sau khi nộp, bạn không thể sửa câu trả lời.",
-        )
-      )
+        !(await confirmAssignment({
+          title: "Bạn có chắc muốn nộp bài?",
+          message:
+            "Sau khi nộp, bạn không thể chỉnh sửa câu trả lời. Hãy kiểm tra các câu trước khi xác nhận.",
+          action: "Nộp bài",
+        }))
+      ) {
+        submitting = false;
         return;
-      submitting = true;
+      }
       for (const field of form.querySelectorAll("fieldset,button[type=submit]"))
         field.disabled = true;
       try {
@@ -383,7 +506,7 @@ export function mountAssignments(root, profile) {
     }
     form.onsubmit = (e) => {
       e.preventDefault();
-      submit();
+      showReview();
     };
     const elapsedAtMount = performance.now();
     const remainingAtMount = data.deadline_at
@@ -392,8 +515,7 @@ export function mountAssignments(root, profile) {
     function tick() {
       if (!active || !form.isConnected) return;
       if (remainingAtMount === null) {
-        root.querySelector("[data-clock]").textContent =
-          "Bài này không giới hạn thời gian.";
+        root.querySelector("[data-clock]").hidden = true;
         return;
       }
       const seconds = Math.max(
