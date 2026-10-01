@@ -6,6 +6,7 @@ import {
   assignmentText as text,
 } from "./assignment-service.mjs";
 import { escapeHtml as esc } from "./core.mjs";
+import { safeMedia } from "./media-url.mjs";
 import { createAssignmentDraft } from "./assignment-draft.mjs";
 
 export function mountAssignments(root, profile) {
@@ -174,7 +175,7 @@ export function mountAssignments(root, profile) {
                   : answer || "",
           )}</textarea></label>
           ${q.options?.length ? `<p class="st-help">${q.options.map(text).join(" · ")}</p>` : ""}`;
-          return `${speaking ? `<section class="speaking-question" data-question-page="${position - 1}" ${position !== 1 ? "hidden" : ""}>` : ""}<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}${speaking ? "</section>" : ""}`;
+          return `${speaking ? `<section class="speaking-question" data-question-page="${position - 1}" ${position !== 1 ? "hidden" : ""}>` : ""}<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.pinyin ? `<p class="st-help">${text(q.pinyin)}</p>` : ""}${q.image && safeMedia(q.image) ? `<img class="assignment-question-image" src="${esc(q.image)}" alt="Hình của câu ${position}" loading="lazy">` : ""}${q.audio && safeMedia(q.audio) ? `<audio controls src="${esc(q.audio)}" aria-label="Audio câu ${position}"></audio>` : ""}${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}${speaking ? "</section>" : ""}`;
         })
         .join(
           "",

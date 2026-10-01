@@ -55,7 +55,7 @@ function message(error) {
     "Chưa xử lý được tài liệu. Kiểm tra kết nối và xem lại định dạng ba trường được phép sửa."
   );
 }
-export function mountDocumentConnection(root) {
+export function mountDocumentConnection(root, { onChange = () => {} } = {}) {
   root.innerHTML =
     '<h2>Kết nối Google Docs</h2><p data-google-connection role="status"></p><button class="st-button" type="button">Kiểm tra lại kết nối</button>';
   const status = root.querySelector("[data-google-connection]");
@@ -69,6 +69,7 @@ export function mountDocumentConnection(root) {
       status.textContent = result.connected
         ? "Đã xác minh kết nối với bachhuu1809@gmail.com. Chọn học viên bên dưới để tạo hoặc đồng bộ hồ sơ."
         : "Chưa có kết nối Google hoạt động. Bạn vẫn có thể duyệt học viên và cấp bài trên website.";
+      onChange(result);
     } catch (error) {
       if (root.isConnected) status.textContent = message(error);
     } finally {

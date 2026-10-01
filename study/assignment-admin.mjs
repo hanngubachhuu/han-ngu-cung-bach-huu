@@ -24,7 +24,7 @@ import {
   questionPayload,
 } from "./assignment-editor.mjs";
 
-export function mountAssignmentAdmin(root, profile) {
+export function mountAssignmentAdmin(root, profile, { mode = "legacy" } = {}) {
   root.classList.add("assignment-workspace");
   let players = [];
   const disposePlayers = () => {
@@ -50,6 +50,12 @@ export function mountAssignmentAdmin(root, profile) {
   };
   function shell(title, section = "queue") {
     disposePlayers();
+    if (mode !== "legacy") {
+      root.innerHTML = `<section class="assignment-admin-main">${mode === "submissions" && title !== "Bài nộp" ? '<button class="st-button" data-queue>← Quay lại Bài nộp</button>' : ""}<h3>${text(title)}</h3><p data-status role="status" aria-live="polite"></p><div data-content></div></section>`;
+      const back = root.querySelector("[data-queue]");
+      if (back) back.onclick = () => queue();
+      return root.querySelector("[data-content]");
+    }
     root.innerHTML = `<div class="assignment-admin-layout"><nav class="assignment-sidebar" aria-label="Quản trị học tập"><button class="st-button" data-overview ${section === "overview" ? 'aria-current="page"' : ""}>Tổng quan</button><button class="st-button" data-queue ${section === "queue" ? 'aria-current="page"' : ""}>Bài nộp</button><button class="st-button" data-bank ${section === "bank" ? 'aria-current="page"' : ""}>Đề</button><button class="st-button" data-students>Học viên</button><details><summary>Tình trạng dịch vụ</summary><button class="st-button" data-audio-health>Kiểm tra ghi âm</button></details></nav><section class="assignment-admin-main"><p class="st-eyebrow">QUẢN TRỊ HỌC TẬP</p><h3>${text(title)}</h3><p data-status role="status" aria-live="polite"></p><div data-content></div></section></div>`;
     root.querySelector("[data-overview]").onclick = () => overview();
     root.querySelector("[data-students]").onclick = () =>
@@ -409,13 +415,17 @@ export function mountAssignmentAdmin(root, profile) {
   }
   async function bank(selectedLesson = "") {
     const generation = ++request,
-      content = shell("Đề", "bank");
+      content = shell(
+        mode === "lessons" ? "Bài tập theo bài học" : "Đề",
+        "bank",
+      );
     content.innerHTML = "<p>Đang tải…</p>";
     try {
       const client = await getClient();
       const { data: lessons, error } = await client
         .from("lesson_content")
         .select("id,title_vi,course_id,lesson_no")
+        .not("id", "like", "exam-%")
         .order("course_id")
         .order("lesson_no")
         .limit(100);
@@ -423,7 +433,7 @@ export function mountAssignmentAdmin(root, profile) {
       if (!active || generation !== request) return;
       const lesson = selectedLesson || lessons[0]?.id;
       if (!lesson) {
-        content.textContent = "Chưa có bài học để tạo đề.";
+        content.textContent = "Chưa có bài học để tạo bài tập.";
         return;
       }
       if (selection.lessonId !== lesson)
@@ -470,6 +480,30 @@ export function mountAssignmentAdmin(root, profile) {
               !!button.dataset.examFilter &&
               row.dataset.examState !== button.dataset.examFilter;
         };
+      if (mode === "lessons") {
+        const list = content.querySelector("[data-exam-list]");
+        list.querySelector("h4").textContent = "Bài tập của bài học";
+        list.querySelector("[data-new-exam]").textContent = "+ Tạo bài tập mới";
+        list.querySelector('[role="group"]').hidden = true;
+        list.querySelector("th").textContent = "Tên bộ bài tập";
+        list.querySelector("p").textContent =
+          "Chưa có bộ bài tập được giao cho bài học này.";
+        for (const row of list.querySelectorAll("[data-exam-state]")) {
+          row.querySelector(".assignment-pill").textContent =
+            row.dataset.examState === "published"
+              ? "Đã sẵn sàng giao"
+              : "Chưa sử dụng";
+        }
+        const form = content.querySelector("[data-definition]");
+        form.querySelector("h4").textContent = "Chọn câu hỏi cho bài tập";
+        form.querySelector("p").textContent =
+          "Chọn câu từ ngân hàng, sắp xếp lại rồi lưu bộ bài tập.";
+        form.elements.title.closest("label").firstChild.textContent =
+          "Tên bộ bài tập";
+        form.querySelector("button.primary").textContent = "Lưu bộ bài tập";
+        form.querySelector("[data-jump-definitions]").textContent =
+          "Danh sách bài tập";
+      }
       content.querySelector("[data-new-exam]").onclick = () => {
         content
           .querySelector("[data-document-import]")
@@ -621,11 +655,18 @@ export function mountAssignmentAdmin(root, profile) {
         submitForm(e.currentTarget, "rubric_create", f);
       };
       mountRubricFields(content.querySelector("[data-rubric]"));
+      if (mode !== "legacy") {
+        content.querySelector("[data-rubric]").closest("details").hidden = true;
+        content
+          .querySelector('[name="rubric_version_id"]')
+          .closest("label").hidden = true;
+      }
       const generator = mountDistractorGenerator(
         content.querySelector("[data-question]"),
       );
       const questionFields = mountQuestionFields(
         content.querySelector("[data-question]"),
+        { hideRubric: mode !== "legacy" },
       );
       const advancedDetails = content
         .querySelector("[data-question]")
@@ -666,6 +707,14 @@ export function mountAssignmentAdmin(root, profile) {
         e.preventDefault();
         try {
           const f = Object.fromEntries(new FormData(e.currentTarget));
+          if (
+            mode !== "legacy" &&
+            !f.rubric_version_id &&
+            ["writing", "translation", "speaking"].includes(f.kind)
+          ) {
+            f.rubric_version_id =
+              data.rubrics.find((r) => r.kind === f.kind)?.id || "";
+          }
           const payload = questionPayload(f, lesson);
           generator.validate(payload);
           submitForm(e.currentTarget, "question_create", {
@@ -780,6 +829,14 @@ export function mountAssignmentAdmin(root, profile) {
             if (!active || generation !== request) return;
             const box = content.querySelector("[data-definition-output]");
             box.innerHTML = `<section class="account-notice"><h4>${text(v.title)}</h4>${(v.contexts || []).map((c) => `<section class="assignment-question"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}${v.questions.map((q, i) => `<div class="assignment-question"><p>${i + 1}. ${text(q.prompt)}<br><small>10 điểm</small></p><p>Lựa chọn: ${text(q.options.map((o) => (typeof o === "string" ? o : o.text)).join(" · "))}</p><p>Đáp án (chỉ Admin): ${text(answerLabel(q.answer_key))}</p><p>Giải thích: ${text(q.explanation)}<br>Gợi ý: ${text(q.tip)}</p></div>`).join("")}${v.status === "draft" ? '<button class="st-button primary" data-publish-definition>Xuất bản đề này</button>' : ""}<button class="st-button" data-reuse-definition>Tạo bản nháp từ đề này</button><p>Phục hồi nội dung bằng đề mới: lưu nháp, xem trước rồi xuất bản. Lịch sử cũ giữ nguyên.</p></section>`;
+            if (mode === "lessons") {
+              box.querySelector("[data-reuse-definition]").textContent =
+                "Dùng nội dung này cho bộ bài tập mới";
+              const apply = box.querySelector("[data-publish-definition]");
+              if (apply) apply.textContent = "Áp dụng bộ bài tập này";
+              box.querySelector("section > p:last-child").textContent =
+                "Kiểm tra nội dung trước khi mở nhận bài. Bài làm và kết quả trước đây được giữ nguyên.";
+            }
             box.querySelector("[data-reuse-definition]").onclick = () => {
               if (
                 selection.questions.length &&
@@ -876,7 +933,8 @@ export function mountAssignmentAdmin(root, profile) {
       report(e);
     }
   }
-  queue();
+  if (mode === "lessons") bank(selection.lessonId);
+  else queue();
   return () => {
     disposePlayers();
     active = false;

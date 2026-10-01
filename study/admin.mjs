@@ -10,6 +10,8 @@ import { accountState, authMessage } from "./account-core.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { mountDocuments, mountDocumentConnection } from "./admin-documents.mjs";
 import { mountAssignmentAdmin } from "./assignment-admin.mjs";
+import { assignmentCommand } from "./assignment-service.mjs";
+import { adminExamCommand } from "./admin-exam-service.mjs";
 const gate = document.querySelector("#adminGate"),
   workspace = document.querySelector("#adminWorkspace");
 let page = 0,
@@ -17,9 +19,63 @@ let page = 0,
   request = 0,
   listRequest = 0,
   students = [],
-  disposeAssignments;
+  disposeAssignments,
+  disposeExams,
+  currentProfile,
+  examsLoading = false;
+const disposers = [];
+async function navigate(section, { history = true } = {}) {
+  if (!["overview", "students", "exams", "submissions"].includes(section))
+    section = "overview";
+  for (const panel of workspace.querySelectorAll("[data-admin-panel]"))
+    panel.hidden = panel.dataset.adminPanel !== section;
+  for (const button of workspace.querySelectorAll("[data-admin-nav]")) {
+    if (button.dataset.adminNav === section)
+      button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
+  }
+  if (history) {
+    const url = new URL(location.href);
+    url.searchParams.set("section", section);
+    window.history.pushState({}, "", url);
+  }
+  const panel = workspace.querySelector(`[data-admin-panel="${section}"]`);
+  if (section === "exams" && !disposeExams && !examsLoading) {
+    examsLoading = true;
+    const generation = request;
+    try {
+      const { mountExamWorkspace } = await import("./admin-exams.mjs");
+      if (generation !== request) return;
+      disposeExams = mountExamWorkspace(panel, currentProfile);
+    } catch {
+      if (generation === request)
+        panel.textContent = "Chưa mở được Đề thi. Chọn lại mục này để thử lại.";
+    } finally {
+      if (generation === request) examsLoading = false;
+    }
+  }
+  if (section === "submissions" && !disposeAssignments)
+    disposeAssignments = mountAssignmentAdmin(panel, currentProfile, {
+      mode: "submissions",
+    });
+  workspace.dispatchEvent(
+    new CustomEvent("admin:section", { detail: section, bubbles: true }),
+  );
+}
+window.addEventListener("popstate", () => {
+  if (!workspace.hidden)
+    void navigate(new URLSearchParams(location.search).get("section"), {
+      history: false,
+    });
+});
 async function boot() {
   disposeAssignments?.();
+  disposeExams?.();
+  for (const dispose of disposers.splice(0)) dispose?.();
+  disposeAssignments = disposeExams = null;
+  examsLoading = false;
+  selected = null;
+  page = 0;
   const generation = ++request;
   workspace.hidden = true;
   workspace.replaceChildren();
@@ -32,47 +88,54 @@ async function boot() {
       return;
     }
     gate.textContent = "Đã xác minh quyền quản trị.";
+    currentProfile = p;
     workspace.hidden = false;
-    workspace.innerHTML = `<form id="adminFilter" class="account-filter"><label>Tìm học viên<input name="search" type="search" placeholder="Tìm theo họ tên" maxlength="120"></label><label>Trạng thái<select name="status"><option value="">Tất cả</option>${["PENDING", "APPROVED", "SUSPENDED", "REJECTED"].map((s) => `<option value="${s}">${accountState({ status: s }).label}</option>`).join("")}</select></label><button class="st-button" type="submit">Tìm kiếm</button></form><div class="account-grid"><section class="account-card"><h2>Học viên</h2><p id="adminCount" class="st-help" role="status"></p><div id="studentList" class="account-list"></div><div class="account-actions"><button id="adminPrevious" class="st-button">← Trước</button><button id="adminNext" class="st-button">Sau →</button></div></section><section class="account-card" id="studentDetail"><p>Chọn một học viên để xem hồ sơ và quyền học.</p></section></div><section class="account-card account-dashboard"><h2>Hoạt động quản trị gần đây</h2><div id="adminAudit"></div></section>`;
-    const connection = document.createElement("section");
-    const hskkLink=document.createElement("a");
-    hskkLink.className="st-button";hskkLink.href="hskk-quan-tri.html";hskkLink.textContent="HSKK · Đề thi thử";
-    workspace.prepend(hskkLink);
-    connection.className = "account-card";
-    workspace.prepend(connection);
-    mountDocumentConnection(connection);
-    const ownerDocuments = document.createElement("details");
-    ownerDocuments.className = "account-card";
-    ownerDocuments.innerHTML =
-      "<summary>Hồ sơ Google Docs của tôi</summary><div data-owner-documents></div>";
-    connection.after(ownerDocuments);
-    const assignments = document.createElement("details");
-    assignments.className = "account-card account-dashboard";
-    assignments.innerHTML =
-      "<summary>Bài nộp, chấm điểm và đề HSK / HSKK</summary><div data-assignment-admin></div>";
-    workspace.prepend(assignments);
-    assignments.addEventListener("assignment:students", () => {
-      assignments.open = false;
-      document.querySelector("#adminFilter").scrollIntoView({ block: "start" });
-      document.querySelector("#adminFilter input").focus();
-    });
-    let assignmentsMounted = false;
-    assignments.addEventListener("toggle", () => {
-      if (assignments.open && !assignmentsMounted) {
-        assignmentsMounted = true;
-        disposeAssignments = mountAssignmentAdmin(
-          assignments.querySelector("[data-assignment-admin]"),
-          p,
-        );
-      }
-    });
+    workspace.classList.add("admin-workspace");
+    workspace.innerHTML = `<nav class="admin-primary-nav" aria-label="Quản trị học tập">${[
+      ["overview", "Tổng quan"],
+      ["students", "Học viên"],
+      ["exams", "Đề thi"],
+      ["submissions", "Bài nộp"],
+    ]
+      .map(
+        ([id, label]) =>
+          `<button class="st-button" data-admin-nav="${id}">${label}</button>`,
+      )
+      .join(
+        "",
+      )}</nav><section data-admin-panel="overview"><h2>Tổng quan</h2><div class="assignment-stats" data-overview-stats><p>Đang tải hoạt động…</p></div><details class="account-card"><summary>Hoạt động gần đây</summary><div id="adminAudit"></div></details></section><section data-admin-panel="students" hidden><h2>Học viên</h2><form id="adminFilter" class="account-filter"><label>Tìm học viên<input name="search" type="search" placeholder="Tìm theo họ tên" maxlength="120"></label><label>Trạng thái<select name="status"><option value="">Tất cả</option>${["PENDING", "APPROVED", "SUSPENDED", "REJECTED"].map((s) => `<option value="${s}">${accountState({ status: s }).label}</option>`).join("")}</select></label><button class="st-button" type="submit">Tìm kiếm</button></form><div class="account-grid"><section class="account-card"><p id="adminCount" class="st-help" role="status"></p><div id="studentList" class="account-list"></div><div class="account-actions"><button id="adminPrevious" class="st-button">← Trước</button><button id="adminNext" class="st-button">Sau →</button></div></section><section class="account-card" id="studentDetail"><p>Chọn một học viên để xem hồ sơ và quyền học.</p></section></div><details class="account-card" data-documents><summary>Google Docs</summary><div data-connection></div><div data-owner-documents></div></details><details class="account-card" data-lesson-workspace><summary>Bài tập theo bài học</summary><div data-lesson-admin></div></details></section><section data-admin-panel="exams" hidden></section><section data-admin-panel="submissions" hidden></section>`;
+    for (const b of workspace.querySelectorAll("[data-admin-nav]"))
+      b.onclick = () => void navigate(b.dataset.adminNav);
+    const ownerDocuments = workspace.querySelector("[data-documents]");
     let ownerDocumentsMounted = false;
     ownerDocuments.addEventListener("toggle", () => {
       if (ownerDocuments.open && !ownerDocumentsMounted) {
         ownerDocumentsMounted = true;
-        mountDocuments(
-          ownerDocuments.querySelector("[data-owner-documents]"),
-          p,
+        mountDocumentConnection(
+          ownerDocuments.querySelector("[data-connection]"),
+          {
+            onChange: () => {
+              if (generation === request)
+                void mountDocuments(
+                  ownerDocuments.querySelector("[data-owner-documents]"),
+                  p,
+                );
+            },
+          },
+        );
+      }
+    });
+    const lessons = workspace.querySelector("[data-lesson-workspace]");
+    let lessonsMounted = false;
+    lessons.addEventListener("toggle", () => {
+      if (lessons.open && !lessonsMounted) {
+        lessonsMounted = true;
+        disposers.push(
+          mountAssignmentAdmin(
+            lessons.querySelector("[data-lesson-admin]"),
+            p,
+            { mode: "lessons" },
+          ),
         );
       }
     });
@@ -89,11 +152,49 @@ async function boot() {
       page++;
       loadStudents();
     };
-    await loadStudents();
-    await loadAudit();
+    await navigate(
+      new URLSearchParams(location.search).get("section") ||
+        (new URLSearchParams(location.search).get("module") === "hskk"
+          ? "exams"
+          : "overview"),
+      { history: false },
+    );
+    await Promise.allSettled([
+      loadStudents(),
+      loadAudit(),
+      loadOverview(p, generation),
+    ]);
   } catch (error) {
     gate.textContent = authMessage(error);
   }
+}
+async function loadOverview(profile, generation) {
+  const [all, pending, queue, exams] = await Promise.allSettled([
+    adminData(),
+    adminData({ status: "PENDING" }),
+    assignmentCommand("queue", { page: 0 }, profile.user_id),
+    adminExamCommand("summary", {}, profile.user_id),
+  ]);
+  if (generation !== request) return;
+  const count = (r, key) => (r.status === "fulfilled" ? r.value[key] : "—");
+  workspace.querySelector("[data-overview-stats]").innerHTML = [
+    ["Học viên", count(all, "count")],
+    ["Chờ duyệt", count(pending, "count")],
+    [
+      "Bài chờ chấm (20 lượt gần nhất)",
+      queue.status === "fulfilled"
+        ? queue.value.filter(
+            (a) => a.state === "submitted" && !a.published_revision,
+          ).length
+        : "—",
+    ],
+    ["Đề đang hoạt động", count(exams, "active")],
+  ]
+    .map(
+      ([label, n]) =>
+        `<div class="assignment-stat"><span>${label}</span><strong>${n}</strong></div>`,
+    )
+    .join("");
 }
 async function loadStudents() {
   const generation = request,
@@ -197,6 +298,19 @@ async function showStudent(profile) {
     documents.className = "account-access";
     root.append(documents);
     mountDocuments(documents, profile);
+    const history = document.createElement("section");
+    history.className = "account-access";
+    history.innerHTML =
+      "<h3>Bài giao, bài nộp và kết quả</h3><div data-student-submissions>Đang tải…</div>";
+    root.append(history);
+    const snapshots = await Promise.allSettled(
+      (data.officialAttempts || []).map((a) =>
+        assignmentCommand("get", { attempt_id: a.id }, currentProfile.user_id),
+      ),
+    );
+    if (generation !== request || selected?.user_id !== profile.user_id) return;
+    history.querySelector("[data-student-submissions]").innerHTML =
+      `<ul class="account-list">${snapshots.map((s) => (s.status === "fulfilled" ? `<li><strong>${esc(s.value.title)}</strong> · ${s.value.state === "submitted" ? "Đã nộp" : "Đang làm"}${s.value.submitted_at ? " · " + new Date(s.value.submitted_at).toLocaleString("vi-VN") : ""}<p>${s.value.result ? `${s.value.result.normalized_score} / 100` : "Chưa có kết quả công bố"}</p></li>` : "<li>Chưa tải được một bài. Thử mở lại hồ sơ.</li>")).join("") || "<li>Chưa có bài giao hoặc bài nộp.</li>"}</ul>`;
   } catch (error) {
     root.textContent = authMessage(error);
   }
@@ -240,6 +354,13 @@ async function loadAudit() {
 }
 window.addEventListener("study:auth", (e) => {
   if (e.detail.userId !== e.detail.previousUser) boot();
+});
+window.addEventListener("pagehide", () => {
+  request++;
+  disposeExams?.();
+  disposeAssignments?.();
+  for (const dispose of disposers.splice(0)) dispose?.();
+  workspace.hidden = true;
 });
 await observeAccount();
 await boot();

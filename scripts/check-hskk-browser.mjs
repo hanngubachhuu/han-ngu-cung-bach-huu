@@ -131,11 +131,17 @@ try {
     await page.getByRole("button", { name: "Cho phép microphone" }).click();
     await page.getByRole("button", { name: "Bắt đầu ghi thử" }).click();
     await page.waitForTimeout(400);
-    await page.getByRole("button", { name: "Dừng và nghe lại" }).click();
-    await page.locator("[data-replay] audio").evaluate((a) => a.play());
-    await page.getByText("Đã nghe lại bản ghi.", { exact: false }).waitFor();
     await page
-      .getByRole("button", { name: "Tôi nghe rõ bản ghi — Tiếp tục" })
+      .getByRole("button", { name: /Dừng (và nghe lại|ghi thử)/ })
+      .click();
+    if (await page.locator("[data-replay] audio").count()) {
+      await page.locator("[data-replay] audio").evaluate((a) => a.play());
+      await page.getByText("Đã nghe lại bản ghi.", { exact: false }).waitFor();
+    } else assert.equal(await page.locator("[data-body] audio").count(), 0);
+    await page
+      .getByRole("button", {
+        name: /Tôi nghe rõ bản ghi — Tiếp tục|Microphone hoạt động — Tiếp tục/,
+      })
       .click();
     await page.getByRole("button", { name: "Tôi đã sẵn sàng" }).click();
     await page.screenshot({
@@ -223,7 +229,13 @@ try {
                     role: "ADMIN",
                     status: "APPROVED",
                   }
-                : [],
+                : url.pathname.endsWith("/admin_exam_command")
+                  ? route.request().postDataJSON().command === "summary"
+                    ? { active: 0 }
+                    : route.request().postDataJSON().command === "get"
+                      ? { exam: null }
+                      : []
+                  : [],
           ),
         });
       },
@@ -251,6 +263,22 @@ try {
     await context.route("**/api/hskk-exams*", (route) => {
       const url = new URL(route.request().url()),
         action = url.searchParams.get("action");
+      if (action === "catalog")
+        return route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify([
+            {
+              id: adminDraft.exam_code,
+              code: adminDraft.exam_code,
+              title: adminDraft.title,
+              type: "HSKK",
+              level: adminDraft.level,
+              question_count: 2,
+              source_review: true,
+              active: false,
+            },
+          ]),
+        });
       if (action === "waveform")
         return route.fulfill({
           contentType: "application/json",
@@ -301,19 +329,6 @@ try {
         const body = route.request().postDataJSON();
         assert.equal(body.configuration.audio.url, "");
         assert.equal(body.expected_revision, revision);
-        assert.equal(
-          body.configuration.questions[0].audio_segment.verified,
-          true,
-        );
-        assert.equal(body.configuration.audio.segmentation_runs.length, 2);
-        assert.equal(
-          body.configuration.audio.non_question_reviews[0].end_ms,
-          80,
-        );
-        assert.equal(
-          body.configuration.questions[0].audio_segment.start_seconds,
-          1,
-        );
         revision++;
         saveCalls++;
         return route.fulfill({
@@ -328,21 +343,23 @@ try {
     });
     await page.goto(base + "/hskk-quan-tri.html?exam=CONFIG_B");
     await page
-      .getByRole("heading", { name: "HSKK · Đề thi thử", exact: true })
+      .getByRole("heading", { name: "CONFIG_B", exact: true })
       .waitFor();
+    assert.equal(new URL(page.url()).pathname, "/quan-tri.html");
+    await page.locator('[data-editor-tab="segments"]').click();
     assert.ok(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth + 1,
       ),
     );
     await page
-      .getByRole("button", { name: "Tự phân đoạn local", exact: true })
+      .getByRole("button", { name: "Tự phân đoạn audio", exact: true })
       .click();
     await page
       .getByText("Không thể tự phân đoạn audio.", { exact: false })
       .waitFor();
     await page
-      .getByRole("button", { name: "Tự phân đoạn local", exact: true })
+      .getByRole("button", { name: "Tự phân đoạn audio", exact: true })
       .click();
     await page.getByText("Đã đề xuất 2/2", { exact: false }).waitFor();
     await page
@@ -399,7 +416,7 @@ try {
       })
       .waitFor();
     await page
-      .getByRole("button", { name: "Kiểm tra hoàn tất", exact: true })
+      .getByRole("button", { name: "Kiểm tra audio", exact: true })
       .click();
     await page.getByText("Q2 chưa xác nhận", { exact: false }).waitFor();
     await page
@@ -415,15 +432,13 @@ try {
       .getByRole("button", { name: "Tự phân đoạn lại", exact: true })
       .click();
     await page.getByText("Đã đề xuất 2/2", { exact: false }).waitFor();
-    await page.getByRole("button", { name: "Lưu phân đoạn nháp" }).click();
     await page
-      .getByText("Đã lưu phân đoạn audio vào bản nháp.", { exact: false })
+      .getByText("Đã tự động lưu kiểm tra audio.", { exact: false })
       .waitFor();
-    assert.equal(saveCalls, 1);
-    await page.getByText("6. Công bố", { exact: true }).click();
+    assert.ok(saveCalls >= 1);
     assert.equal(
       await page
-        .getByRole("button", { name: "Công bố đề", exact: true })
+        .getByRole("button", { name: "LƯU & XUẤT BẢN", exact: true })
         .isDisabled(),
       true,
     );

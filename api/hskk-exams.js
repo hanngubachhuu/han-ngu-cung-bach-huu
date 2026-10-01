@@ -1,7 +1,11 @@
 import fs from "node:fs/promises";
+import { readCachedReview } from "../server/hskk-cached-review.mjs";
 import { documentContext } from "../server/document-service.mjs";
 import { generateConfirmedClip } from "../server/hskk-confirmed-clips.mjs";
-import { checkFinalization } from "../study/hskk-review-validation.mjs";
+import {
+  checkFinalization,
+  reviewSummary,
+} from "../study/hskk-review-validation.mjs";
 import {
   analyzeSource,
   HSKKAudioSegmentationEngine,
@@ -28,6 +32,11 @@ export function createExamHandler({
   readAudio = async (code, client) =>
     readSourceAudio(client, JSON.parse(await readDraft(code))),
   segmenter = new HSKKAudioSegmentationEngine(),
+  listDrafts = async () =>
+    (await fs.readdir(new URL("../server/hskk/", import.meta.url)))
+      .filter((f) => /^[A-Za-z0-9_-]+\.json$/.test(f))
+      .map((f) => f.slice(0, -5)),
+  cachedReview = readCachedReview,
 } = {}) {
   return async (req, res) => {
     res.setHeader("Cache-Control", "private, no-store");
@@ -45,11 +54,37 @@ export function createExamHandler({
       const client = await authorize(token);
       const url = new URL(req.url, "https://local.invalid");
       const code = url.searchParams.get("exam");
+      const action = url.searchParams.get("action");
+      if (req.method === "GET" && action === "catalog") {
+        const catalog = await Promise.all(
+          (await listDrafts()).map(async (examCode) => {
+            const canonical = JSON.parse(await readDraft(examCode));
+            const storage = await readDraftRevision(client, examCode);
+            const value =
+              storage.record?.configuration || (await cachedReview(canonical));
+            return {
+              id: value.exam_code,
+              code: value.exam_code,
+              type: "HSKK",
+              level: value.level,
+              title: value.title,
+              active: value.status === "published",
+              question_count: value.questions.length,
+              audio_source_name: value.provenance.audio,
+              audio: reviewSummary(value),
+              updated_at:
+                storage.record?.created_at || value.provenance.imported_at,
+              source_review: true,
+            };
+          }),
+        );
+        res.statusCode = 200;
+        return res.end(JSON.stringify(catalog));
+      }
       if (!/^[A-Za-z0-9_-]{1,64}$/.test(code || "")) {
         res.statusCode = 404;
         return res.end(JSON.stringify({ error: "EXAM_NOT_FOUND" }));
       }
-      const action = url.searchParams.get("action");
       if (req.method === "GET" && action === "waveform") {
         const exam = JSON.parse(await readDraft(code));
         const analyzed = await analyzeSource(
@@ -171,9 +206,14 @@ export function createExamHandler({
       res.statusCode = 200;
       res.end(
         JSON.stringify({
-          ...(saved?.configuration || draft),
+          ...(saved?.configuration || (await cachedReview(draft))),
           database_revision: saved?.revision || 0,
           draft_storage_available: storage.available,
+          // Source authoring is not yet wired to an official timed HSKK session.
+          publish_readiness: {
+            ready: false,
+            reasons: ["Đề chưa được kết nối với phiên thi chính thức."],
+          },
         }),
       );
     } catch (e) {

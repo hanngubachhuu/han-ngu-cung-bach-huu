@@ -14,6 +14,17 @@ import {
   nonQuestionTypes,
 } from "./hskk-review-validation.mjs";
 import { escapeHtml as esc } from "./core.mjs";
+const segmentLabels = {
+  INTRO: "Lời mở đầu",
+  CANDIDATE_INFO: "Thông tin thí sinh",
+  SECTION_INTRO: "Hướng dẫn phần thi",
+  PREPARATION: "Thời gian chuẩn bị",
+  TIME_WARNING: "Thông báo thời gian",
+  TRANSITION: "Chuyển phần",
+  OUTRO: "Kết thúc",
+  UNKNOWN: "Chưa phân loại",
+};
+const reviewLabel = (s) => (confirmed(s) ? "Đã xác nhận" : "Cần kiểm tra");
 export function mountAudioReview(
   root,
   { exam, actorId, runSegmentation, loadWaveform, onUpdate },
@@ -26,7 +37,7 @@ export function mountAudioReview(
     playEnd = 0;
   const player = new Audio(exam.audio.url);
   player.preload = "metadata";
-  root.innerHTML = `<h3>Phân đoạn audio</h3><div data-summary role="status" style="position:sticky;top:0;background:#fff9ed;padding:12px;z-index:2"></div><div class="account-actions"><button class="st-button primary" data-ai>Tự phân đoạn local</button><button class="st-button" data-manual>Chỉnh thủ công</button><button class="st-button" data-finalize>Kiểm tra hoàn tất</button></div><p data-progress role="status"></p><div data-gate></div><label>Lọc đoạn<select data-filter><option value="all">Tất cả</option><option value="review">Cần kiểm tra</option><option value="confirmed">Đã xác nhận</option></select></label><section data-segments></section>`;
+  root.innerHTML = `<h3>Phân đoạn audio</h3><div data-summary class="admin-audio-summary" role="status"></div><div class="account-actions"><button class="st-button primary" data-ai>Tự phân đoạn audio</button><button class="st-button" data-manual>Chỉnh thủ công</button><button class="st-button" data-finalize>Kiểm tra audio</button></div><p data-progress role="status"></p><div data-gate></div><label>Lọc đoạn<select data-filter><option value="all">Tất cả</option><option value="review">Cần kiểm tra</option><option value="confirmed">Đã xác nhận</option></select></label><section data-segments></section><details><summary>Lịch sử kiểm tra audio</summary><ol data-audit-list></ol></details>`;
   const notice = (text) => {
     root.querySelector("[data-progress]").textContent = text;
   };
@@ -38,7 +49,16 @@ export function mountAudioReview(
   function summary() {
     const s = reviewSummary(exam);
     root.querySelector("[data-summary]").textContent =
-      `${s.total} câu · ${s.confirmed} đã xác nhận · ${s.needs_review} cần kiểm tra · ${s.manually_adjusted} chỉnh thủ công (có thể chưa xác nhận) · ${s.non_question} đoạn ngoài câu hỏi · ${s.unknown} UNKNOWN`;
+      `${s.total} câu · ${s.confirmed} đã xác nhận · ${s.needs_review} cần kiểm tra · ${s.manually_adjusted} chỉnh thủ công · ${s.non_question} đoạn ngoài câu hỏi · ${s.unknown} đoạn chưa phân loại`;
+    const audit = root.querySelector("[data-audit-list]");
+    if (audit)
+      audit.innerHTML =
+        (exam.audio.review_audit || [])
+          .map(
+            (a) =>
+              `<li>${a.at ? new Date(a.at).toLocaleString("vi-VN") : ""} · ${esc({ segment_confirmed: "Xác nhận audio", segment_adjusted: "Chỉnh ranh giới", proposal_restored: "Khôi phục đề xuất", non_question_reviewed: "Phân loại đoạn ngoài câu hỏi" }[a.event] || "Cập nhật kiểm tra audio")} ${a.question_id ? "· Câu " + (exam.questions.find((q) => q.id === a.question_id)?.number || "") : ""}${a.current?.start_ms != null ? " · " + timestamp(a.current.start_ms) + " → " + timestamp(a.current.end_ms) : ""}</li>`,
+          )
+          .join("") || "<li>Chưa có thay đổi.</li>";
   }
   function gate() {
     const g = checkFinalization(exam);
@@ -54,8 +74,8 @@ export function mountAudioReview(
       });
     }
     root.querySelector("[data-gate]").innerHTML = g.ready
-      ? "<p>READY_FOR_PUBLISH · Audio đủ điều kiện chuẩn bị clip; đề vẫn chưa công bố.</p>"
-      : `<p>Chưa thể hoàn tất:</p><ul>${g.issues.map((x) => `<li>${esc(x.message)}</li>`).join("")}</ul>`;
+      ? "<p>Audio đã đủ điều kiện. Đề còn cần kiểm tra các điều kiện xuất bản.</p>"
+      : `<p>Audio cần kiểm tra:</p><ul>${g.issues.map((x) => `<li>${esc(x.message)}</li>`).join("")}</ul>`;
     return g;
   }
   function preview(start, end) {
@@ -121,7 +141,7 @@ export function mountAudioReview(
       row.open = openIds.includes(q.id);
       const from = saved?.start_ms ?? p?.start_ms,
         to = saved?.end_ms ?? p?.end_ms;
-      row.innerHTML = `<summary>Câu ${q.number} · ${confirmed(saved) ? "Đã xác nhận" : "Cần kiểm tra"}</summary><p>${esc(part?.title_vi || q.section_id)}</p><p lang="zh">${esc(q.prompt)}</p><p>Đề xuất: ${timestamp(p?.start_ms)} → ${timestamp(p?.end_ms)} · Điểm cấu trúc ${Math.round((p?.confidence || 0) * 100)}% · ${esc(saved?.detection_method || p?.detection_method || "manual")} · <span data-state>${esc(saved?.status || "NEEDS_REVIEW")}</span></p>${["unverified_cue", "source_cue"].includes(p?.match_kind) ? '<p role="note">Đoạn này chỉ là đề xuất vùng lời dẫn/chuyển tiếp. Chưa xác minh câu hỏi được đọc trong audio.</p>' : ""}<p data-period></p><canvas data-editor width="1000" height="120" style="width:100%;height:120px;touch-action:none" aria-label="Ranh giới, vùng chọn và vị trí phát; có thể chỉnh bằng ô thời gian bên dưới"></canvas><label>Bắt đầu HH:MM:SS.mmm (hoặc giây)<input data-from value="${from == null ? "" : timestamp(from)}" inputmode="decimal"></label><label>Kết thúc HH:MM:SS.mmm (hoặc giây)<input data-to value="${to == null ? "" : timestamp(to)}" inputmode="decimal"></label><p data-duration></p><p data-error role="alert"></p><div class="account-actions"><button class="st-button" data-play>Nghe đoạn</button><button class="st-button" data-before>Nghe từ đầu −2 giây</button><button class="st-button" data-after>Nghe tới cuối +2 giây</button><button class="st-button" data-context>Nghe ±2 giây</button><button class="st-button" data-start>Đặt điểm bắt đầu</button><button class="st-button" data-end>Đặt điểm kết thúc</button><button class="st-button" data-replace>Khôi phục đề xuất</button><button class="st-button" data-confirm>Xác nhận đoạn</button><button class="st-button" data-next>Xác nhận & sang câu tiếp</button></div><p>Điểm cấu trúc không phải xác suất nhận dạng lời nói. Chỉ xác nhận sau khi nghe.</p>`;
+      row.innerHTML = `<summary>Câu ${q.number} · ${confirmed(saved) ? "Đã xác nhận" : "Cần kiểm tra"}</summary><p>${esc(part?.title_vi || q.section_id)}</p><p lang="zh">${esc(q.prompt)}</p><p>Đề xuất: ${timestamp(p?.start_ms)} → ${timestamp(p?.end_ms)} · Điểm cấu trúc ${Math.round((p?.confidence || 0) * 100)}% · ${saved?.detection_method === "manual" ? "Chỉnh thủ công" : "Đề xuất tự động"} · <span data-state>${reviewLabel(saved)}</span></p>${["unverified_cue", "source_cue"].includes(p?.match_kind) ? '<p role="note">Đoạn này chỉ là đề xuất vùng lời dẫn/chuyển tiếp. Chưa xác minh câu hỏi được đọc trong audio.</p>' : ""}<p data-period></p><canvas data-editor width="1000" height="120" style="width:100%;height:120px;touch-action:none" aria-label="Ranh giới, vùng chọn và vị trí phát; có thể chỉnh bằng ô thời gian bên dưới"></canvas><label>Bắt đầu HH:MM:SS.mmm (hoặc giây)<input data-from value="${from == null ? "" : timestamp(from)}" inputmode="decimal"></label><label>Kết thúc HH:MM:SS.mmm (hoặc giây)<input data-to value="${to == null ? "" : timestamp(to)}" inputmode="decimal"></label><p data-duration></p><p data-error role="alert"></p><div class="account-actions"><button class="st-button" data-play>Nghe đoạn</button><button class="st-button" data-before>Nghe từ đầu −2 giây</button><button class="st-button" data-after>Nghe tới cuối +2 giây</button><button class="st-button" data-context>Nghe ±2 giây</button><button class="st-button" data-start>Đặt điểm bắt đầu</button><button class="st-button" data-end>Đặt điểm kết thúc</button><button class="st-button" data-replace>Khôi phục đề xuất</button><button class="st-button" data-confirm>Xác nhận đoạn</button><button class="st-button" data-next>Xác nhận & sang câu tiếp</button></div><p>Điểm cấu trúc không phải xác suất nhận dạng lời nói. Chỉ xác nhận sau khi nghe.</p>`;
       section.append(row);
       const values = () => [
         parseTimestamp(row.querySelector("[data-from]").value),
@@ -173,6 +193,23 @@ export function mountAudioReview(
           ctx.stroke();
         }
       }
+      const zoom = document.createElement("div");
+      zoom.className = "account-actions";
+      zoom.innerHTML =
+        '<button class="st-button" data-zoom-in>Phóng to dạng sóng</button><button class="st-button" data-zoom-out>Thu nhỏ dạng sóng</button><button class="st-button" data-pan-left>← Audio trước</button><button class="st-button" data-pan-right>Audio sau →</button>';
+      canvas.after(zoom);
+      function viewport(factor, shift = 0) {
+        const duration = Math.round(exam.audio.duration_seconds * 1000);
+        const span = Math.min(duration, Math.max(200, (right - left) * factor));
+        const middle = (left + right) / 2 + shift * (right - left);
+        left = Math.max(0, Math.min(duration - span, middle - span / 2));
+        right = left + span;
+        paint();
+      }
+      zoom.querySelector("[data-zoom-in]").onclick = () => viewport(0.5);
+      zoom.querySelector("[data-zoom-out]").onclick = () => viewport(2);
+      zoom.querySelector("[data-pan-left]").onclick = () => viewport(1, -0.5);
+      zoom.querySelector("[data-pan-right]").onclick = () => viewport(1, 0.5);
       const display = () => {
         try {
           const [a, b] = values();
@@ -189,8 +226,9 @@ export function mountAudioReview(
           const [a, b] = values();
           saveQuestion(q, p, a, b, confirm);
           error("");
-          row.querySelector("[data-state]").textContent =
-            q.audio_segment.status;
+          row.querySelector("[data-state]").textContent = reviewLabel(
+            q.audio_segment,
+          );
           row.querySelector("summary").textContent =
             `Câu ${q.number} · ${confirmed(q.audio_segment) ? "Đã xác nhận" : "Cần kiểm tra"}`;
           display();
@@ -358,7 +396,7 @@ export function mountAudioReview(
         ),
         s = saved || p,
         row = document.createElement("div");
-      row.innerHTML = `<p>${esc(s.segment_type)} · ${saved ? "Đã lưu" : "Cần kiểm tra"}</p><label>Bắt đầu<input data-nfrom value="${timestamp(s.start_ms)}"></label><label>Kết thúc<input data-nto value="${timestamp(s.end_ms)}"></label><select aria-label="Loại đoạn ngoài câu hỏi">${nonQuestionTypes.map((t) => `<option ${t === s.segment_type ? "selected" : ""}>${t}</option>`).join("")}</select><button class="st-button" data-listen>Nghe đoạn</button><button class="st-button" data-classify>Lưu phân loại và ranh giới</button><p data-error role="alert"></p>`;
+      row.innerHTML = `<p>${esc(segmentLabels[s.segment_type] || "Chưa phân loại")} · ${saved ? "Đã lưu" : "Cần kiểm tra"}</p><label>Bắt đầu<input data-nfrom value="${timestamp(s.start_ms)}"></label><label>Kết thúc<input data-nto value="${timestamp(s.end_ms)}"></label><select aria-label="Loại đoạn ngoài câu hỏi">${nonQuestionTypes.map((t) => `<option value="${t}" ${t === s.segment_type ? "selected" : ""}>${segmentLabels[t]}</option>`).join("")}</select><button class="st-button" data-listen>Nghe đoạn</button><button class="st-button" data-classify>Lưu phân loại và ranh giới</button><p data-error role="alert"></p>`;
       others.append(row);
       const values = () => [
         parseTimestamp(row.querySelector("[data-nfrom]").value),
@@ -409,7 +447,7 @@ export function mountAudioReview(
           ];
           update();
           row.querySelector("[data-error]").textContent =
-            "Đã lưu vào nháp; lưu bản nháp để giữ trên máy chủ.";
+            "Đã cập nhật phân loại và ranh giới.";
         } catch {
           row.querySelector("[data-error]").textContent =
             "Ranh giới không hợp lệ; chưa lưu.";
@@ -420,7 +458,7 @@ export function mountAudioReview(
   }
   root.querySelector("[data-ai]").onclick = async (e) => {
     e.target.disabled = true;
-    notice("Đang phân tích tín hiệu và cấu trúc đề bằng FFmpeg…");
+    notice("Đang phân tích audio và cấu trúc đề…");
     try {
       const run = await runSegmentation();
       if (cancelled) return;
@@ -462,11 +500,28 @@ export function mountAudioReview(
       .catch(() =>
         notice("Chưa tải được dạng sóng; có thể nghe và nhập thời gian."),
       );
-  return () => {
+  const dispose = () => {
     cancelled = true;
     cancelAnimationFrame(raf);
     player.pause();
     player.removeAttribute("src");
     envelope = null;
   };
+  dispose.pause = () => player.pause();
+  dispose.setSource = async (url) => {
+    if (cancelled) return;
+    player.pause();
+    player.src = url;
+    player.load();
+    if (!envelope && loadWaveform) {
+      try {
+        const waveform = await loadWaveform();
+        if (!cancelled) envelope = waveform;
+      } catch {
+        if (!cancelled)
+          notice("Chưa tải được dạng sóng; có thể nghe và nhập thời gian.");
+      }
+    }
+  };
+  return dispose;
 }

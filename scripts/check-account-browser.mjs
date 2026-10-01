@@ -324,6 +324,8 @@ try {
   assert.equal(await page.locator("#adminWorkspace").isVisible(), false);
   profile = { ...profile, role: "ADMIN", version: 3 };
   await page.reload();
+  await page.locator('[data-admin-nav="students"]').click();
+  await page.locator("[data-documents] > summary").click();
   await page
     .getByText("Chưa có kết nối Google hoạt động.", { exact: false })
     .waitFor();
@@ -339,15 +341,8 @@ try {
       exact: false,
     })
     .waitFor();
-  await page
-    .locator("summary")
-    .filter({ hasText: "Hồ sơ Google Docs của tôi" })
-    .click();
   await page.locator("[data-owner-documents] [data-doc-create]").waitFor();
-  await page
-    .locator("summary")
-    .filter({ hasText: "Hồ sơ Google Docs của tôi" })
-    .click();
+  await page.locator("[data-documents] > summary").click();
   googleStatus = { configured: false, connected: false };
   await page.locator("[data-student]").click();
   await page

@@ -571,3 +571,7 @@
     grid-column: 1 / -1;
   }
 }
+.assignment-question-image {
+  max-width: 100%;
+  height: auto;
+}

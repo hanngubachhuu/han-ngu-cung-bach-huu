@@ -61,6 +61,7 @@ export async function learnerData() {
     c
       .from("lesson_content")
       .select("id,level,lesson_no,title_zh,title_vi,course_id")
+      .not("id", "like", "exam-%")
       .order("level")
       .order("lesson_no"),
     c
@@ -111,6 +112,7 @@ export async function adminStudent(userId) {
     c
       .from("lesson_content")
       .select("id,course_id,lesson_no,title_vi")
+      .not("id", "like", "exam-%")
       .order("level")
       .order("lesson_no"),
     c
@@ -118,6 +120,13 @@ export async function adminStudent(userId) {
       .select("lesson_id,score,max_score,submitted_at,source")
       .eq("user_id", userId)
       .eq("source", "self_reported")
+      .order("submitted_at", { ascending: false })
+      .limit(30),
+    c
+      .from("learning_attempts")
+      .select("id,lesson_id,score,max_score,submitted_at,source")
+      .eq("user_id", userId)
+      .eq("source", "official")
       .order("submitted_at", { ascending: false })
       .limit(30),
   ]);
@@ -128,6 +137,7 @@ export async function adminStudent(userId) {
     courses: results[2].data,
     lessons: results[3].data,
     attempts: results[4].data,
+    officialAttempts: results[5].data,
   };
 }
 export async function adminAction(
