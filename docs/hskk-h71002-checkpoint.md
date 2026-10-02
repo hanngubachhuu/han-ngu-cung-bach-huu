@@ -1,6 +1,16 @@
 # H71002 shared exam / authoring checkpoint
 
-H71002 was manually published by the human Admin at `2026-10-02T12:44:15.326637Z`. Audio authoring is complete and unchanged: 27 confirmed, Q13/Q16/Q26 manually adjusted, zero unresolved, one original run and 27 valid clips. The current official learner implementation below supersedes the earlier missing-transport audit, which is retained as history. Global Speaking and scheduler remain disabled; no real H71002 learner attempt has been created.
+H71002 was manually published by the human Admin at `2026-10-02T12:44:15.326637Z`. Audio authoring is complete and unchanged: 27 confirmed, Q13/Q16/Q26 manually adjusted, zero unresolved, one original run and 27 valid clips. A real BachHuu learner attempt now exists; its incomplete submission and prompt-playback failures are recorded below. Global Speaking and scheduler remain disabled. Earlier zero-attempt/unpublished notes are historical.
+
+## Real hosted exam failure and recovery fix — 2026-10-02
+
+The real attempt started at `13:23:15.688660Z` and its original immutable response deadline was `13:39:32.211660Z`. Read-only reconciliation verifies **27 reservations but only 25 uploaded/confirmed/bound recordings**. Q26/Q27 (1,467,601 and 1,438,519 bytes) have no stored objects and no upload confirmation; the submission remains draft. Do not confuse reservations with uploaded bytes. The original upload recovery deadline is `14:09:32.211660Z`; this patch does not extend it or modify the attempt.
+
+The human reports intermittent/truncated question audio and a microphone meter that did not react. **REAL HOSTED HSKK SUBMISSION VERIFIED is not PASS.** The previous private-prompt player subtracts fetch/metadata latency from each listening window and can silently skip a prompt; this requires a separate server-timed loading correction. No score/result has been published.
+
+The recovery patch gives only POST uploads of reserved `speaking-private/<recording-id>/raw` objects a 120-second client budget (previously 8 seconds); other provider requests stay at 8 seconds and caller cancellation remains effective. Size/hash/request identity, server upload deadlines and RLS are unchanged. Microphone preflight now resumes the analyser and requires sustained live input, at least one second of sampling and nonempty recorded bytes; encoded silence cannot pass. Device selection invalidates the previous check. Completed attempts recover their retained IndexedDB media without asking to restart the microphone. Preparation UI exposes five steps and removes the misleading pre-exam timer/saved counter.
+
+Validation: 30 relevant unit/SQL tests PASS; lint and build PASS; actual-renderer synthetic microphone/delivery browser suites PASS at 390/768/1366px. Browser checks use deterministic fake audio, test rejection of an inadequate sample, meter response, 27 synthetic recordings and automatic submission; they are not hosted evidence. Initial browser runs overlapped the dist rebuild and failed to load assets; both passed after build completed. The Admin-display production deployment `dpl_FrdztJUxuLLCZYFnqq4SKEPjQJ61` is READY on `hanngubachhuu.vercel.app` at commit `a752911`. This recovery patch's hosted deployment/CI remain pending at commit time.
 
 ## Manual publication and Admin display follow-up — 2026-10-02
 

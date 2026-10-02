@@ -2,12 +2,19 @@
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import path from "node:path";
 import { syntheticWave } from "../server/recording-audio.mjs";
+await fs.mkdir("test-results/hskk", { recursive: true });
+const microphoneFixture = path.resolve(
+  "test-results/hskk/microphone-fixture.wav",
+);
+await fs.writeFile(microphoneFixture, syntheticWave(10));
 const browser = await chromium.launch({
   headless: true,
   args: [
     "--use-fake-ui-for-media-stream",
     "--use-fake-device-for-media-stream",
+    "--use-file-for-fake-audio-capture=" + microphoneFixture,
   ],
   ...(process.env.BROWSER_EXECUTABLE
     ? { executablePath: process.env.BROWSER_EXECUTABLE }
@@ -271,7 +278,7 @@ try {
     await page
       .getByRole("button", { name: "Bắt đầu ghi thử", exact: true })
       .click();
-    await page.waitForTimeout(300);
+    await page.waitForTimeout(1500);
     await page
       .getByRole("button", { name: "Dừng ghi thử", exact: true })
       .click();

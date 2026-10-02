@@ -1,3 +1,4 @@
+import { providerFetch } from "./provider-fetch.mjs";
 let clientPromise;
 let capabilitiesPromise;
 export let aiEnabled = false;
@@ -29,13 +30,7 @@ export async function getClient() {
       const { createClient } = await import("./vendor/supabase.mjs");
       return createClient(config.url, config.publishableKey, {
         global: {
-          fetch: (url, options = {}) =>
-            fetch(url, {
-              ...options,
-              signal: options.signal
-                ? AbortSignal.any([options.signal, AbortSignal.timeout(8000)])
-                : AbortSignal.timeout(8000),
-            }),
+          fetch: providerFetch,
         },
       });
     })().catch((error) => {

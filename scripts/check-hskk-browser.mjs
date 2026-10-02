@@ -2,6 +2,7 @@
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import path from "node:path";
 import { appendSegmentationRun } from "../study/hskk-segment-review-state.mjs";
 import {
   normalizeRecording,
@@ -11,11 +12,17 @@ import {
 const base = process.env.STUDY_BASE_URL || "http://127.0.0.1:4173";
 const raw = syntheticWave(9),
   mp3 = (await normalizeRecording(raw, audioHash(raw))).bytes;
+await fs.mkdir("test-results/hskk", { recursive: true });
+const microphoneFixture = path.resolve(
+  "test-results/hskk/microphone-fixture.wav",
+);
+await fs.writeFile(microphoneFixture, syntheticWave(10));
 const browser = await chromium.launch({
   headless: true,
   args: [
     "--use-fake-ui-for-media-stream",
     "--use-fake-device-for-media-stream",
+    "--use-file-for-fake-audio-capture=" + microphoneFixture,
   ],
   ...(process.env.BROWSER_EXECUTABLE
     ? { executablePath: process.env.BROWSER_EXECUTABLE }
@@ -156,6 +163,15 @@ try {
     await page.locator("[data-heard]").check();
     await page.getByRole("button", { name: "Tiếp tục", exact: true }).click();
     await page.getByRole("button", { name: "Cho phép microphone" }).click();
+    assert.equal(
+      await page
+        .getByRole("button", {
+          name: "Microphone hoạt động — Tiếp tục",
+          exact: true,
+        })
+        .isDisabled(),
+      true,
+    );
     await page.getByRole("button", { name: "Bắt đầu ghi thử" }).click();
     await page.waitForTimeout(400);
     await page
@@ -164,8 +180,30 @@ try {
     await page.waitForFunction(() =>
       document
         .querySelector("[data-message]")
-        ?.textContent.includes("Microphone đã tạo dữ liệu âm thanh."),
+        ?.textContent.includes("Chưa nhận đủ tiếng nói."),
     );
+    assert.equal(
+      await page
+        .getByRole("button", {
+          name: "Microphone hoạt động — Tiếp tục",
+          exact: true,
+        })
+        .isDisabled(),
+      true,
+    );
+    await page
+      .getByRole("button", { name: "Ghi thử lại", exact: true })
+      .click();
+    await page.waitForTimeout(1500);
+    assert.ok(await page.locator("meter").evaluate((m) => m.value > 0.1));
+    await page
+      .getByRole("button", { name: "Dừng ghi thử", exact: true })
+      .click();
+    await page
+      .getByText("Đã nhận tín hiệu microphone. Bạn có thể tiếp tục.", {
+        exact: true,
+      })
+      .waitFor();
     assert.equal(await page.locator("[data-body] audio").count(), 0);
     await page
       .getByRole("button", {

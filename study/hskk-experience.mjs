@@ -1,6 +1,7 @@
 import { HSKKExamEngine } from "./hskk-exam-engine.mjs";
 import { ExamAudioPlayer, ExamRecorder } from "./hskk-exam-media.mjs";
 import { escapeHtml as esc } from "./core.mjs";
+import { microphoneLevel, MicrophoneSample } from "./hskk-microphone.mjs";
 export function formatExamTime(seconds) {
   return seconds === null
     ? "—"
@@ -20,6 +21,8 @@ export async function mountExamExperience(
     lastQuestionNumber,
     levelFrame,
     context;
+  let sampleActive = false;
+  const microphoneSample = new MicrophoneSample();
   const audioElement = document.createElement("audio");
   audioElement.preload = "metadata";
   const player = new ExamAudioPlayer(audioElement);
@@ -43,11 +46,12 @@ export async function mountExamExperience(
     },
     onChange: render,
   });
-  function button(label, callback) {
+  function button(label, callback, { primary = true, disabled = false } = {}) {
     const b = document.createElement("button");
     b.type = "button";
-    b.className = "st-button primary";
+    b.className = `st-button${primary ? " primary" : ""}`;
     b.textContent = label;
+    b.disabled = disabled;
     b.onclick = async () => {
       b.disabled = true;
       try {
@@ -55,10 +59,11 @@ export async function mountExamExperience(
       } catch {
         message("Chưa hoàn tất. Kiểm tra thiết bị và kết nối rồi thử lại.");
       } finally {
-        b.disabled = false;
+        if (b.isConnected) b.disabled = false;
       }
     };
     root.querySelector("[data-actions]").append(b);
+    return b;
   }
   function message(text) {
     const node = root.querySelector("[data-message]");
@@ -94,7 +99,25 @@ export async function mountExamExperience(
     }
     root.dataset.state = view.state;
     root.dataset.question = view.question?.id || "";
-    root.innerHTML = `<article class="hskk-card hskk-session"><div class="hskk-progress"><p data-question-title tabindex="-1">${view.question ? `Câu ${view.question.number} / ${view.total}` : esc(exam.title)}</p><output class="hskk-timer" data-timer aria-label="Thời gian còn lại">${formatExamTime(view.remaining)}</output></div><div data-body></div><div data-actions class="account-actions"></div><p data-saved class="hskk-muted">${view.saved} / ${view.total} câu đã lưu</p><p data-message role="status"></p></article>`;
+    const steps = [
+      ["CREATED", "Thông tin"],
+      ["CANDIDATE_VERIFIED", "Thiết bị"],
+      ["MIC_CHECK", "Microphone"],
+      ["READY", "Sẵn sàng"],
+      ["STRUCTURE", "Cấu trúc đề"],
+    ];
+    const step =
+      view.state === "DEVICE_CHECK"
+        ? 2
+        : steps.findIndex(([state]) => state === view.state);
+    const preparing = step >= 0;
+    const timerLabels = {
+      COUNTDOWN: "Bắt đầu sau",
+      LISTENING: "Thời gian nghe",
+      RECORDING: "Thời gian trả lời",
+      PREPARATION: "Thời gian chuẩn bị",
+    };
+    root.innerHTML = `<article class="hskk-card hskk-session${preparing ? " hskk-preflight" : ""}"><header class="hskk-progress"><div><p class="st-eyebrow">${preparing ? "CHUẨN BỊ BÀI THI" : "THI THỬ HSKK"}</p><p data-question-title tabindex="-1">${view.question ? `Câu ${view.question.number} / ${view.total}` : esc(exam.title)}</p></div><div class="hskk-time-block" ${view.remaining === null ? "hidden" : ""}><span>${timerLabels[view.state] || "Thời gian còn lại"}</span><output class="hskk-timer" data-timer aria-label="Thời gian còn lại">${formatExamTime(view.remaining)}</output></div></header>${preparing ? `<nav class="hskk-preflight-nav" aria-label="Các bước chuẩn bị"><p>Bước ${step + 1} / ${steps.length}</p><ol>${steps.map(([, label], i) => `<li ${i === step ? 'aria-current="step"' : ""} class="${i < step ? "complete" : ""}"><span aria-hidden="true">${i < step ? "✓" : i + 1}</span><span>${label}</span></li>`).join("")}</ol><p class="hskk-muted">Hoàn tất kiểm tra trước khi đồng hồ thi bắt đầu.</p></nav>` : `<div class="hskk-exam-progress"><progress max="${view.total}" value="${view.question ? view.question.number - 1 : view.saved}" aria-label="Tiến trình bài thi"></progress><p data-saved class="hskk-muted">${view.saved} / ${view.total} câu đã lưu</p></div>`}<section class="hskk-session-content"><div data-body></div><div data-actions class="account-actions"></div>${preparing ? `<p data-saved hidden>${view.saved} / ${view.total} câu đã lưu</p>` : ""}<p data-message role="status" aria-live="polite"></p></section></article>`;
     const body = root.querySelector("[data-body]");
     if (view.question && previousQuestion !== view.question.id) {
       root
@@ -191,44 +214,136 @@ export async function mountExamExperience(
     }
     if (view.state === "MIC_CHECK") {
       body.innerHTML =
-        "<h2>Thử microphone</h2><p>Nói thử một câu và kiểm tra mức âm thanh.</p><meter min='0' max='1' value='0' aria-label='Mức âm thanh microphone'></meter>";
+        "<h2>Thử microphone</h2><p>Chọn microphone, bấm ghi thử rồi nói một câu trong vài giây.</p><label>Microphone<select data-microphone></select></label><div class='hskk-mic-level'><span data-mic-signal>Chưa nhận tín hiệu</span><meter min='0' max='1' value='0' aria-label='Mức âm thanh microphone'></meter><p class='hskk-muted'>Thanh mức âm sẽ thay đổi khi bạn nói.</p></div>";
       context = new AudioContext();
-      const analyser = context.createAnalyser();
-      context.createMediaStreamSource(stream).connect(analyser);
+      let analyser = context.createAnalyser();
+      let microphoneSource = context.createMediaStreamSource(stream);
+      microphoneSource.connect(analyser);
       const data = new Uint8Array(analyser.fftSize);
+      let previousFrame = performance.now();
       const level = () => {
         if (disposed || root.dataset.state !== "MIC_CHECK") {
           context.close();
           return;
         }
         analyser.getByteTimeDomainData(data);
-        const rms = Math.sqrt(
-          data.reduce((sum, v) => sum + ((v - 128) / 128) ** 2, 0) /
-            data.length,
-        );
-        body.querySelector("meter").value = Math.min(1, rms * 4);
+        const { rms, value } = microphoneLevel(data);
+        const now = performance.now();
+        if (sampleActive && context.state === "running")
+          microphoneSample.observe(rms, now - previousFrame);
+        previousFrame = now;
+        body.querySelector("meter").value =
+          context.state === "running" ? value : 0;
+        body.querySelector("[data-mic-signal]").textContent =
+          rms >= 0.01 && context.state === "running"
+            ? "Đang nhận âm thanh"
+            : "Chưa nhận tiếng nói rõ";
         levelFrame = requestAnimationFrame(level);
       };
       level();
-      button("Bắt đầu ghi thử", async () => {
+      const select = body.querySelector("[data-microphone]");
+      void navigator.mediaDevices
+        .enumerateDevices()
+        .then((devices) => {
+          if (disposed || !select.isConnected) return;
+          for (const device of devices.filter((d) => d.kind === "audioinput")) {
+            const option = document.createElement("option");
+            option.value = device.deviceId;
+            option.textContent = device.label || "Microphone";
+            select.append(option);
+          }
+          select.value =
+            stream.getAudioTracks()[0]?.getSettings().deviceId || "default";
+        })
+        .catch(() =>
+          message("Kiểm tra microphone đang được chọn trong trình duyệt."),
+        );
+      const start = button("Bắt đầu ghi thử", async () => {
         micDone = false;
+        microphoneSample.reset();
+        await context.resume();
+        if (context.state !== "running") throw Error("MICROPHONE_UNAVAILABLE");
         recorder.start();
+        sampleActive = true;
+        select.disabled = true;
+        start.hidden = true;
+        stop.hidden = false;
+        continueButton.disabled = true;
         message("Đang ghi âm thử…");
       });
-      button("Dừng ghi thử", async () => {
-        const blob = await recorder.stop();
-        micDone = Boolean(blob?.size);
-        message(
-          micDone
-            ? "Microphone đã tạo dữ liệu âm thanh."
-            : "Chưa ghi được âm thanh; kiểm tra microphone.",
-        );
-      });
-      button("Microphone hoạt động — Tiếp tục", async () => {
-        if (!micDone)
-          return message("Hoàn tất kiểm tra microphone trước khi tiếp tục.");
-        await engine.advance();
-      });
+      const stop = button(
+        "Dừng ghi thử",
+        async () => {
+          const blob = await recorder.stop();
+          sampleActive = false;
+          const track = stream.getAudioTracks()[0];
+          micDone = microphoneSample.ready({
+            bytes: blob?.size || 0,
+            active:
+              track?.readyState === "live" && track.enabled && !track.muted,
+            running: context.state === "running",
+          });
+          select.disabled = false;
+          start.hidden = false;
+          start.textContent = "Ghi thử lại";
+          stop.hidden = true;
+          continueButton.disabled = !micDone;
+          message(
+            micDone
+              ? "Đã nhận tín hiệu microphone. Bạn có thể tiếp tục."
+              : "Chưa nhận đủ tiếng nói. Chọn đúng microphone, kiểm tra âm lượng đầu vào rồi ghi thử lại vài giây.",
+          );
+        },
+        { primary: false },
+      );
+      stop.hidden = true;
+      const continueButton = button(
+        "Microphone hoạt động — Tiếp tục",
+        async () => {
+          const track = stream.getAudioTracks()[0];
+          if (
+            !micDone ||
+            track?.readyState !== "live" ||
+            !track.enabled ||
+            track.muted
+          )
+            return message("Hoàn tất kiểm tra microphone trước khi tiếp tục.");
+          await engine.advance();
+        },
+        { disabled: true },
+      );
+      select.onchange = async () => {
+        select.disabled = true;
+        continueButton.disabled = true;
+        micDone = false;
+        try {
+          const next = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              deviceId: { exact: select.value },
+            },
+          });
+          if (disposed || !select.isConnected) {
+            next.getTracks().forEach((track) => track.stop());
+            return;
+          }
+          await recorder.dispose();
+          stream = next;
+          recorder = new ExamRecorder(stream);
+          microphoneSource.disconnect();
+          analyser.disconnect();
+          analyser = context.createAnalyser();
+          microphoneSource = context.createMediaStreamSource(stream);
+          microphoneSource.connect(analyser);
+          microphoneSample.reset();
+          message("Đã đổi microphone. Ghi thử một câu để kiểm tra.");
+        } catch {
+          message(
+            "Chưa mở được microphone này. Kiểm tra thiết bị và quyền truy cập.",
+          );
+        } finally {
+          select.disabled = false;
+        }
+      };
     }
     if (view.state === "READY") {
       body.innerHTML =
@@ -236,7 +351,14 @@ export async function mountExamExperience(
       button("Tôi đã sẵn sàng", () => engine.advance());
     }
     if (view.state === "STRUCTURE") {
-      body.innerHTML = `<h2>Cấu trúc đề</h2><p>${exam.questions.length} câu · ${exam.sections.length} phần</p><ol>${exam.sections.map((s) => `<li>${esc(s.title_vi)} · ${exam.questions.filter((q) => q.section_id === s.id).length} câu${s.preparation_seconds ? ` · ${formatExamTime(s.preparation_seconds)} chuẩn bị` : ""}</li>`).join("")}</ol>`;
+      body.innerHTML = `<h2>Cấu trúc đề</h2><p>${exam.questions.length} câu · ${exam.sections.length} phần</p><ol class="hskk-structure">${exam.sections
+        .map((s, i) => {
+          const questions = exam.questions.filter((q) => q.section_id === s.id);
+          return `<li><span class="hskk-muted">PHẦN ${i + 1}</span><h3>${esc(s.title_vi)}</h3><p>Câu ${questions[0].number}–${questions.at(-1).number} · ${questions.length} câu</p><p>${questions[0].response_seconds} giây trả lời mỗi câu${s.preparation_seconds ? ` · ${formatExamTime(s.preparation_seconds)} chuẩn bị` : ""}</p></li>`;
+        })
+        .join(
+          "",
+        )}</ol><p class="hskk-muted">Khi bắt đầu, bài thi chạy theo thứ tự và tự chuyển câu.</p>`;
       button("Bắt đầu", () => engine.advance());
     }
   }
@@ -256,7 +378,9 @@ export async function mountExamExperience(
     transport.loadSession = async () => transport.refreshSession();
     if (
       recovered.server_started_at &&
-      !["SUBMITTED", "GRADED", "PUBLISHED"].includes(recovered.state)
+      !["COMPLETED", "SUBMITTED", "GRADED", "PUBLISHED"].includes(
+        recovered.state,
+      )
     ) {
       root.innerHTML =
         '<p>Đang khôi phục bài thi. Thời gian vẫn tiếp tục.</p><button class="st-button" data-resume>Cho phép microphone và khôi phục</button>';
