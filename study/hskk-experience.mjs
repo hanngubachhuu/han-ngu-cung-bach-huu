@@ -13,11 +13,11 @@ export async function mountExamExperience(
 ) {
   let stream,
     recorder,
-    testBlobUrl,
     interval,
     ticking = false,
     disposed = false,
     micDone = false,
+    lastQuestionNumber,
     levelFrame,
     context;
   const audioElement = document.createElement("audio");
@@ -60,7 +60,7 @@ export async function mountExamExperience(
   const status = {
     COUNTDOWN: "Bài thi sẽ bắt đầu sau",
     LISTENING: "Đang nghe…",
-    RECORDING: "Đang ghi âm",
+    RECORDING: "● Đang ghi âm…",
     PREPARATION: "Thời gian chuẩn bị",
     COMPLETED: "Bài thi thử đã hoàn thành.",
     SUBMITTED: "Bài thi thử đã được nộp.",
@@ -69,6 +69,7 @@ export async function mountExamExperience(
   };
   function render(view) {
     if (disposed) return;
+    const previousQuestion = root.dataset.question;
     if (
       root.dataset.state === view.state &&
       root.dataset.question === (view.question?.id || "")
@@ -86,8 +87,19 @@ export async function mountExamExperience(
     }
     root.dataset.state = view.state;
     root.dataset.question = view.question?.id || "";
-    root.innerHTML = `<article class="hskk-card hskk-session"><div class="hskk-progress"><p>${view.question ? `Câu ${view.question.number} / ${view.total}` : esc(exam.title)}</p><output class="hskk-timer" data-timer aria-label="Thời gian còn lại">${formatExamTime(view.remaining)}</output></div><div data-body></div><div data-actions class="account-actions"></div><p data-saved class="hskk-muted">${view.saved} / ${view.total} câu đã lưu</p><p data-message role="status"></p></article>`;
+    root.innerHTML = `<article class="hskk-card hskk-session"><div class="hskk-progress"><p data-question-title tabindex="-1">${view.question ? `Câu ${view.question.number} / ${view.total}` : esc(exam.title)}</p><output class="hskk-timer" data-timer aria-label="Thời gian còn lại">${formatExamTime(view.remaining)}</output></div><div data-body></div><div data-actions class="account-actions"></div><p data-saved class="hskk-muted">${view.saved} / ${view.total} câu đã lưu</p><p data-message role="status"></p></article>`;
     const body = root.querySelector("[data-body]");
+    if (view.question && previousQuestion !== view.question.id) {
+      root
+        .querySelector("[data-question-title]")
+        .focus({ preventScroll: true });
+      message(
+        lastQuestionNumber
+          ? `Đã hoàn thành câu ${lastQuestionNumber}. Chuyển sang câu ${view.question.number}.`
+          : `Câu ${view.question.number}.`,
+      );
+      lastQuestionNumber = view.question.number;
+    }
     if (status[view.state]) {
       body.innerHTML = `${view.section ? `<h2>${esc(view.section.title_vi)}</h2>` : ""}<p class="hskk-status">${status[view.state]}</p>`;
       if (view.question?.prompt_mode !== "audio" && view.question)
@@ -167,7 +179,7 @@ export async function mountExamExperience(
     }
     if (view.state === "MIC_CHECK") {
       body.innerHTML =
-        "<h2>Thử microphone</h2><p>Hãy nói thử một câu, dừng ghi và nghe lại.</p><meter min='0' max='1' value='0' aria-label='Mức âm thanh microphone'></meter><div data-replay></div>";
+        "<h2>Thử microphone</h2><p>Nói thử một câu và kiểm tra mức âm thanh.</p><meter min='0' max='1' value='0' aria-label='Mức âm thanh microphone'></meter>";
       context = new AudioContext();
       const analyser = context.createAnalyser();
       context.createMediaStreamSource(stream).connect(analyser);
@@ -191,31 +203,24 @@ export async function mountExamExperience(
         recorder.start();
         message("Đang ghi âm thử…");
       });
-      button("Dừng và nghe lại", async () => {
+      button("Dừng ghi thử", async () => {
         const blob = await recorder.stop();
-        if (!blob) return;
-        if (testBlobUrl) URL.revokeObjectURL(testBlobUrl);
-        testBlobUrl = URL.createObjectURL(blob);
-        const a = document.createElement("audio");
-        a.controls = true;
-        a.src = testBlobUrl;
-        a.onended = () => {
-          micDone = true;
-          message(
-            "Đã nghe lại bản ghi. Hãy xác nhận âm thanh rõ trước khi tiếp tục.",
-          );
-        };
-        body.querySelector("[data-replay]").replaceChildren(a);
+        micDone = Boolean(blob?.size);
+        message(
+          micDone
+            ? "Microphone đã tạo dữ liệu âm thanh."
+            : "Chưa ghi được âm thanh; kiểm tra microphone.",
+        );
       });
-      button("Tôi nghe rõ bản ghi — Tiếp tục", async () => {
+      button("Microphone hoạt động — Tiếp tục", async () => {
         if (!micDone)
-          return message("Nghe hết bản ghi thử trước khi tiếp tục.");
+          return message("Hoàn tất kiểm tra microphone trước khi tiếp tục.");
         await engine.advance();
       });
     }
     if (view.state === "READY") {
       body.innerHTML =
-        "<h2>Xác nhận sẵn sàng</h2><p>Audio phát theo thứ tự, ghi âm tự bắt đầu và tự dừng khi hết giờ. Không quay lại hoặc ghi lại câu đã kết thúc.</p>";
+        "<h2>Xác nhận sẵn sàng</h2><p>Audio phát theo thứ tự, ghi âm tự bắt đầu và tự dừng khi hết giờ. Mỗi câu chỉ được ghi một lần và tự chuyển khi hết thời gian.</p>";
       button("Tôi đã sẵn sàng", () => engine.advance());
     }
     if (view.state === "STRUCTURE") {
@@ -255,6 +260,5 @@ export async function mountExamExperience(
     await engine.dispose();
     stream?.getTracks().forEach((t) => t.stop());
     if (context?.state !== "closed") await context?.close();
-    if (testBlobUrl) URL.revokeObjectURL(testBlobUrl);
   };
 }

@@ -216,6 +216,7 @@ export function recordingIdentity(session, question) {
     questionId: question.version_id,
     question_key: question.id,
     question_version: question.version,
+    exam_version: session.exam_version,
   };
 }
 export function assertRecordingReference(session, question, recording, now) {

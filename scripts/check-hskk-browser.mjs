@@ -116,7 +116,33 @@ try {
     await context.route("**/local-engine-check", (route) =>
       route.fulfill({
         contentType: "text/html",
-        body: `<!doctype html><html lang="vi"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/study/study.css"><link rel="stylesheet" href="/study/account.css"><link rel="stylesheet" href="/study/hskk.css"><body class="study-page"><main class="hskk-main"><section id="check"></section></main><script type="module">import {mountExamExperience} from '/study/hskk-experience.mjs';import {previewTransport} from '/study/hskk-preview-transport.mjs';const exam=${JSON.stringify(fixture)};const transport=previewTransport(exam,'local-preview');globalThis.captureBytes=[];const original=transport.saveRecording;transport.saveRecording=entry=>{globalThis.captureBytes.push({bytes:entry.blob.size,type:entry.blob.type,question:entry.questionId});return original(entry);};globalThis.dispose=await mountExamExperience(document.querySelector('#check'),{exam,candidate:{id:'local-preview',name:'Xem trước',email:'local@example.invalid'},transport,preview:true});</script></body></html>`,
+        body: `<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/study/study.css"><link rel="stylesheet" href="/study/account.css"><link rel="stylesheet" href="/study/hskk.css"><body class="study-page"><main class="hskk-main"><section id="check"></section></main><script type="module">
+          import {mountExamExperience} from '/study/hskk-experience.mjs';
+          import {previewTransport} from '/study/hskk-preview-transport.mjs';
+          import {ExamSessionJournal} from '/study/hskk-session-journal.mjs';
+          const exam=${JSON.stringify(fixture)}, owner='local-student';
+          // Only the transport is synthetic. Mount the actual student UI, not Admin preview.
+          const transport=previewTransport(exam,owner), session=await transport.loadSession();
+          globalThis.captureBytes=[]; globalThis.offline=true; globalThis.submissions=0;
+          globalThis.journal=new ExamSessionJournal(owner,session.attempt_id);
+          const original=transport.saveRecording, transition=transport.transition;
+          transport.saveRecording=async entry=>{
+            globalThis.captureBytes.push({bytes:entry.blob.size,type:entry.blob.type,question:entry.questionId,requestId:entry.requestId,owner:entry.ownerId,attempt:entry.attemptId,questionVersion:entry.question_version,examVersion:entry.exam_version});
+            if(globalThis.offline) throw Error('offline');
+            return original(entry);
+          };
+          transport.transition=async(attempt,target)=>target==='COMPLETED'?{...await transport.loadSession(),state:'COMPLETED'}:transition(attempt,target);
+          transport.submit=async()=>{globalThis.submissions++;return {...await transport.loadSession(),state:'SUBMITTED'};};
+          // Audit every learner render, including short lived per-question states.
+          globalThis.learnerViews=[]; globalThis.objectUrls=0;
+          const createUrl=URL.createObjectURL.bind(URL);
+          URL.createObjectURL=value=>{globalThis.objectUrls++;return createUrl(value);};
+          new MutationObserver(()=>{
+            const root=document.querySelector('#check');
+            globalThis.learnerViews.push({state:root.dataset.state,question:root.dataset.question,audio:root.querySelectorAll('audio,video,[data-replay],a[download],canvas').length,forbidden:/nghe lại|phát lại|ghi lại/i.test(root.innerText),actions:[...root.querySelectorAll('[data-actions] button')].map(b=>b.textContent),focused:document.activeElement?.hasAttribute('data-question-title'),message:root.querySelector('[data-message]')?.textContent});
+          }).observe(document.querySelector('#check'),{subtree:true,childList:true,characterData:true});
+          globalThis.dispose=await mountExamExperience(document.querySelector('#check'),{exam,candidate:{id:owner,name:'Học viên kiểm thử',email:'local@example.invalid'},transport,journal:globalThis.journal,preview:false});
+        </script></body></html>`,
       }),
     );
     await page.goto(base + "/local-engine-check");
@@ -133,22 +159,18 @@ try {
     await page.getByRole("button", { name: "Bắt đầu ghi thử" }).click();
     await page.waitForTimeout(400);
     await page
-      .getByRole("button", { name: /Dừng (và nghe lại|ghi thử)/ })
+      .getByRole("button", { name: "Dừng ghi thử", exact: true })
       .click();
-    await page.waitForFunction(
-      () =>
-        document.querySelector("[data-replay] audio") ||
-        document
-          .querySelector("[data-message]")
-          ?.textContent.includes("Microphone đã tạo dữ liệu âm thanh."),
+    await page.waitForFunction(() =>
+      document
+        .querySelector("[data-message]")
+        ?.textContent.includes("Microphone đã tạo dữ liệu âm thanh."),
     );
-    if (await page.locator("[data-replay] audio").count()) {
-      await page.locator("[data-replay] audio").evaluate((a) => a.play());
-      await page.getByText("Đã nghe lại bản ghi.", { exact: false }).waitFor();
-    } else assert.equal(await page.locator("[data-body] audio").count(), 0);
+    assert.equal(await page.locator("[data-body] audio").count(), 0);
     await page
       .getByRole("button", {
-        name: /Tôi nghe rõ bản ghi — Tiếp tục|Microphone hoạt động — Tiếp tục/,
+        name: "Microphone hoạt động — Tiếp tục",
+        exact: true,
       })
       .click();
     await page.getByRole("button", { name: "Tôi đã sẵn sàng" }).click();
@@ -157,6 +179,16 @@ try {
       fullPage: true,
     });
     await page.getByRole("button", { name: "Bắt đầu", exact: true }).click();
+    await page
+      .locator('#check[data-state="RECORDING"][data-question="b"]')
+      .waitFor();
+    await page
+      .getByText(fixture.questions[1].prompt, { exact: true })
+      .waitFor();
+    await page.screenshot({
+      path: `test-results/hskk/recording-${width}.png`,
+      fullPage: true,
+    });
     await page
       .getByText("Bài thi thử đã hoàn thành.", { exact: true })
       .waitFor({ timeout: 15000 });
@@ -169,8 +201,78 @@ try {
       captured.map((r) => r.question),
       ["pa", "pb"],
     );
+    assert.ok(
+      captured.every(
+        (r) =>
+          r.owner === "local-student" &&
+          r.attempt === captured[0].attempt &&
+          r.examVersion === 2 &&
+          r.questionVersion === 1,
+      ),
+    );
+    const queued = await page.evaluate(() => globalThis.journal.load());
+    assert.equal(queued.length, 2);
+    assert.deepEqual(
+      queued.map((row) => row.entry.requestId).sort(),
+      captured.map((row) => row.requestId).sort(),
+    );
+    // Read persisted Blob bytes inside the browser; Playwright serialization does not preserve Blob.
+    assert.ok(
+      await page.evaluate(async () =>
+        (await globalThis.journal.load()).every(
+          (row) => row.entry.blob instanceof Blob && row.entry.blob.size > 0,
+        ),
+      ),
+    );
+    assert.deepEqual(
+      await page.evaluate(async () => {
+        const { ExamSessionJournal } = await import(
+          "/study/hskk-session-journal.mjs"
+        );
+        const rows = await globalThis.journal.load(),
+          attempt = rows[0].entry.attemptId;
+        const otherOwner = new ExamSessionJournal("other-student", attempt),
+          otherAttempt = new ExamSessionJournal(
+            "local-student",
+            "other-attempt",
+          );
+        const counts = [
+          (await otherOwner.load()).length,
+          (await otherAttempt.load()).length,
+        ];
+        otherOwner.close();
+        otherAttempt.close();
+        return counts;
+      }),
+      [0, 0],
+    );
+    const views = await page.evaluate(() => globalThis.learnerViews);
+    assert.ok(views.every((view) => !view.audio && !view.forbidden));
+    for (const question of ["a", "b"]) {
+      assert.ok(
+        views.some(
+          (view) => view.state === "RECORDING" && view.question === question,
+        ),
+      );
+      assert.ok(
+        views.some((view) => view.question === question && view.focused),
+      );
+    }
+    assert.ok(
+      views.some(
+        (view) => view.message === "Đã hoàn thành câu 1. Chuyển sang câu 2.",
+      ),
+    );
+    assert.ok(
+      views
+        .filter((view) =>
+          ["LISTENING", "RECORDING", "PREPARATION"].includes(view.state),
+        )
+        .every((view) => view.actions.length === 0),
+    );
+    assert.equal(await page.evaluate(() => globalThis.objectUrls), 0);
     assert.equal(
-      await page.getByRole("button", { name: "Kết thúc xem trước" }).count(),
+      await page.getByRole("button", { name: "Nộp bài thi thử" }).count(),
       1,
     );
     assert.ok(
@@ -182,8 +284,25 @@ try {
       path: `test-results/hskk/completion-${width}.png`,
       fullPage: true,
     });
-    await page.getByRole("button", { name: "Kết thúc xem trước" }).click();
-    await page.getByText("Đã kết thúc xem trước.", { exact: false }).waitFor();
+    await page.evaluate(() => {
+      globalThis.offline = false;
+      window.dispatchEvent(new Event("online"));
+    });
+    await page.waitForFunction(
+      () =>
+        document.querySelector("[data-saved]")?.textContent ===
+        "2 / 2 câu đã lưu",
+    );
+    const retried = await page.evaluate(() => globalThis.captureBytes);
+    assert.equal(retried.length, 4);
+    assert.equal(new Set(retried.map((r) => r.requestId)).size, 2);
+    assert.equal(
+      (await page.evaluate(() => globalThis.journal.load())).length,
+      0,
+    );
+    await page.getByRole("button", { name: "Nộp bài thi thử" }).click();
+    await page.getByText("Bài thi thử đã được nộp.", { exact: true }).waitFor();
+    assert.equal(await page.evaluate(() => globalThis.submissions), 1);
     await page.evaluate(() => globalThis.dispose());
     const adminId = "00000000-0000-4000-8000-000000000001",
       adminUser = {
@@ -481,7 +600,13 @@ try {
     evidence.push({
       width,
       captured,
-      scope: "local preview, fake microphone, no official submission",
+      learnerAutoNext: true,
+      learnerPlayback: false,
+      learnerRerecord: false,
+      indexedDbBlobQueue: true,
+      retryRequestIds: retried.map((r) => r.requestId),
+      scope:
+        "actual student renderer, local synthetic transport, fake microphone; no hosted or official submission",
     });
     await context.close();
   }
