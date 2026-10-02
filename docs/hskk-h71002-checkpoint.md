@@ -1,6 +1,63 @@
 # H71002 shared exam / authoring checkpoint
 
-This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup. The original source is registered/uploaded in private production Storage. Structural proposals are now persisted and playable in the real Admin waveform. No question has been confirmed; the post-persistence real Student check remains pending and the publishing pipeline remains blocked.
+This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup. The original source is registered/uploaded in private production Storage. The real Admin's human review is persisted: 27/27 confirmed, three manually adjusted and zero unresolved. Hosted finalization, the real Student security check after confirmation, and all 27 confirmed clips pass. **AUDIO VERIFIED + CLIPS GENERATED: PASS.** Publication and official learner/session binding remain gated.
+
+## Persisted human review and finalization — 2026-10-02 (Asia/Bangkok)
+
+The human's report was independently reconciled with the immutable production draft, not used to create confirmation state. Production revision **132 before clip generation**, saved at **`2026-10-02T00:16:54.503095Z`**, contains exactly 27 questions and **27/27 verified segments, zero unresolved**. The existing validator counts verified `MANUALLY_ADJUSTED` segments as confirmed; raw statuses are 24 CONFIRMED and three MANUALLY_ADJUSTED. The actual adjusted questions are **Q13, Q16 and Q26**. They were already persisted by the real Admin before this verification; no timestamp or confirmation was rewritten here.
+
+Every segment has the actual reviewer **`e4099061-45f0-4a9d-a501-73bcd16b069e`**, independently verified as ADMIN / APPROVED, and an individual review timestamp. Each question's last audit event is `segment_confirmed`; its recorded current segment exactly equals the presently stored segment, including boundaries, source hash, run, identity/version, reviewer and timestamp. There are 33 historical question-confirmation events because some questions were reviewed again; history is preserved rather than collapsed. The entire draft history contains 132 immutable revisions and 132 draft audit rows at this checkpoint.
+
+The original segmentation run **`b48bd897-2c9d-4e54-9d4c-3d98530ceb26`** is the sole run and is byte-for-byte JSON-equal to its revision-1 snapshot. Source hash remains **`101dc744ac9923f9a2925baa52899133944661bee153912443da89f4fe4c39f0`**, source size **18,417,371 bytes**, exam version **1**. The source registry and private bucket still contain exactly one matching source/object. The exam remains a draft. Existing proposal snapshots remain NEEDS_REVIEW as immutable detection evidence; current reviewed question segments are all verified and are the authoritative finalization/clip input.
+
+### Finalization and hosted Admin
+
+The existing shared server validator was run read-only on the actual production revision-132 snapshot: `validateSourceReview` and `checkFinalization` both PASS. All 27 segment identities, question/exam versions, integer bounds, source identities, review metadata, ordering, durations and non-overlap pass. All 26 inter-question gaps are EXPECTED_GAP using the persisted non-question reviews; no unexplained blocking gap or automatic timestamp correction occurred.
+
+The actual approved Admin then ran the hosted same-origin probe at **`2026-10-02T06:51:20.232Z`**. Configuration GET HTTP 200 reports revision 132, 27 questions, 27 confirmed, adjustments [13,16,26], no unresolved question and one run. Existing **POST `action=finalize` is validation-only**, returns HTTP 200, `ready=true`, `READY_FOR_PUBLISH`, revision 132 and no blocking question. This internal audio-ready status does not publish or grant official learner access. Waveform GET and production audio GET both return HTTP 200. SHA-256 over the actually downloaded production bytes matches the canonical hash and exact byte size.
+
+The real hosted Admin page was reloaded, showing **Audio: 27/27 câu đã xác nhận**, 27 proposal cards, zero needing review and three manual adjustments. Its audio check displays “Audio đã đủ điều kiện. Đề còn cần kiểm tra các điều kiện xuất bản.” Publish remains disabled. Confirmed playback succeeds for Q1 (4.58 s), Q16 (6.8 s with the confirmed end at 326900 ms) and Q27 (6.3 s); actual displayed playhead endpoints are 88.189 s, 326.993 s and 1034.687 s, with empty player error fields. Browser stop overshoot is not a persisted boundary change.
+
+### HSKK_SEGMENT_SECURITY after confirmation
+
+| Security check | Result | Evidence |
+| --- | --- | --- |
+| Anonymous | **PASS** | Fresh production audio/waveform/source/runs/proposals/status/exam GETs at `2026-10-02T06:52:45.665Z` each return only 401 AUTH_REQUIRED. |
+| Student after persistence and confirmation | **PASS** | Actual STUDENT / APPROVED session, `2026-10-02T07:05:08.774Z`: audio/waveform/source/runs/proposals/audit/status/configuration each returns 403 ADMIN_REQUIRED with no partial data. Draft/source RPCs deny; private source registry/draft/audit queries return PGRST106 and no data. Vercel independently records all eight production GETs as 403. |
+| Admin after persistence and confirmation | **PASS** | Actual ADMIN / APPROVED session: hosted configuration, finalization, waveform and source reads all HTTP 200; real confirmed playback succeeds. |
+| Storage private object / enumeration by Student | **PASS** | SDK download returns no bytes; bucket-root/exam-prefix listing returns zero objects. Independently scoped Supabase edge logs (`07:04:40Z–07:05:15Z`) show the authenticated object GET returned HTTP 400 JSON and both authenticated listing POSTs returned HTTP 200 JSON. The listings are filtered empty; no object name or metadata is visible. |
+
+**HSKK_SEGMENT_SECURITY: PASS before clip generation.** The initial GitHub Pages WRONG_ORIGIN and unauthenticated Vercel AUTH_REQUIRED diagnostic stops were not substituted for this real Student result. Immediately after the Student attempts, the database still had revision 132, the same saved timestamp, 132 revisions/audit rows, one original run and zero clips; those read attempts made no data change. No broad CORS, RLS, Storage-policy or schema change was made. The real Admin was reloaded after those attempts and again played Q1/Q16/Q27 successfully before clip generation.
+
+### Confirmed physical clips and production provenance
+
+After the persisted-human-review, hosted-finalization and real-Student security gates passed, the actual approved Admin ran the existing **POST `action=clip&question=q1` through `q27`** implementation. Each request used the original private production source and exact persisted confirmed millisecond boundaries. A SHA-256 fingerprint of all 27 reviewed identities/bounds/statuses/reviewers/timestamps was checked before every request; it remained unchanged. No segmentation run, confirmation or boundary adjustment was created by this batch.
+
+**27/27 real clips generated and validated, zero failed questions.** The batch completed at **`2026-10-02T07:23:54.855Z`** (14:23:54, Asia/Bangkok). Server clip provenance was stored before returning each MP3. The latest immutable draft is **revision 159**, saved at `07:23:51.986572Z`; it contains exactly 27 provenance records, one per question, bound to input draft revisions 132–158. There are 159 draft revisions and 159 draft audit rows, including 27 new clip-provenance save audits attributed to the actual approved Admin. The reviewed questions, original run, question review audit and non-question reviews are JSON-equal to revision 132. Exam status remains **draft**, audio validation status READY_FOR_PUBLISH; this does not perform publication.
+
+The returned physical MP3s and manifest were downloaded as **`D:/download/H71002-confirmed-clips.zip`**, **2,943,900 bytes**, archive SHA-256 **`06cb7b9392646e3747de29e406abb4f58af2565c8b79cca746541158411ffe5c`**. This is an authorized Admin download, not a public asset. Each clip is also preserved in ignored `test-results/hskk/confirmed-production-clips/`; no audio was added to Git or dist and no production clip-bucket upload was performed. The existing authoring API stores provenance in immutable production draft revisions; future official storage/access/session binding is outside this checkpoint.
+
+An independent local read of the actual downloaded ZIP verifies CRC32, exactly 27 MP3 entries plus provenance.json, nonempty bytes, MP3 codec/one audio stream, full ffmpeg decoding without error, ffprobe duration and SHA-256 for **every Q1–Q27**. All hashes match the production-persisted provenance, not just the browser report. All durations match the exact reviewed bounds within the repository's **200 ms** tolerance; maximum observed difference is **0.014 ms**. The three genuinely adjusted inputs are retained exactly:
+
+| Question | Confirmed start_ms | Confirmed end_ms | Independent MP3 duration (seconds) |
+| --- | --- | --- | --- |
+| Q13 | 254180 | 259803 | 5.622993 |
+| Q16 | 320100 | 326900 | 6.800000 |
+| Q26 | 933805 | 939601 | 5.795986 |
+
+Every clip records correct exam/question identity and version, exact source ID/hash, original run ID, reviewed start/end, actual reviewer/review timestamp, server creation timestamp, method `ffmpeg_atrim_confirmed_ms`, duration and clip hash. Independent reconciliation confirms all 27 downloaded manifests match their production records and expected draft-revision bindings.
+
+**Original source: UNCHANGED.** The server hashes the private production source before every clip operation. Source registry remains the sole matching immutable record; the private bucket still contains only the original object. That object's created_at and updated_at both remain **`2026-10-01T20:24:59.197837Z`**. Source bytes/hash/size and original run remain canonical; no source transcode, truncation or replacement occurred. ffmpeg encodes the derived clips only.
+
+After the batch the real production Admin was reloaded, still showing **Audio: 27/27 câu đã xác nhận**, 27 confirmed, zero needing review and three manual adjustments. Real Q1/Q16/Q27 confirmed playback was repeated successfully with empty player error fields; displayed playhead endpoints were 88.221 s, 326.995 s and 1034.646 s. Publication is disabled because the official exam/session binding has not been performed, not because audio remains unresolved. Ignored screenshots `confirmed-clips-admin-production-overview.png` and `confirmed-clips-admin-production.png` preserve the actual hosted Admin overview and final Q27 waveform/player state.
+
+Ignored evidence: `production-reviewed-draft.json`, `production-reviewed-validation.json`, `production-clip-provenance.json`, `confirmed-production-clips-validation.json`, `server-clip-provenance-reconciliation.json`, the private clips/manifest, and the filtered Console scripts under `test-results/hskk/`. No JWT value, secret or private object URL is recorded in this checkpoint.
+
+### Validation and stop
+
+**22/22 relevant tests PASS**, including existing finalization, confirmed MP3 generation/provenance, API Student/anonymous denial before reads, immutable draft/RLS, source validation and idempotent persistence tests. Fixture clip generation is synthetic and is not a production H71002 clip. `npm run lint` and `npm run build` PASS. Relevant HSKK and Admin browser checks PASS at 390/768/1366px; the Admin check was rerun alone after an unrelated document-parser timeout during concurrent work. Existing PR CI at current code HEAD `8a7f3d5` is PASS: [study web app](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36973072400), [lesson data](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/36973072427). No implementation or unrelated test changed for this verification.
+
+**STOP — AUDIO VERIFIED + CLIPS GENERATED: PASS.** Human review 27/27 confirmed, three actually adjusted, zero unresolved; finalization PASS; HSKK_SEGMENT_SECURITY PASS; clip generation/provenance 27/27 PASS. The read/security checks made no data mutation; the subsequently authorized clip batch appended 27 immutable provenance revisions/audits. Original source **UNCHANGED**. Publication **NOT PERFORMED**. No learner access, learner session, Speaking or scheduler was enabled. Official exam/version/access/session binding is a separate later task and was not performed here.
 
 ## Student automatic advance — 2026-10-02 (Asia/Bangkok), local verification
 
