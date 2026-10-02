@@ -272,8 +272,17 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
           await deliveryApi("upload", { bytes: btoa(binary) });
           await showDelivery();
         } catch {
-          deliveryStatus.textContent =
-            "Chưa hoàn tất audio câu. Chọn đúng ZIP đã duyệt; có thể tải lại cùng file để tiếp tục kiểm tra.";
+          try {
+            // A lost response can follow a successful immutable upload. Read
+            // authoritative receipts before asking the Admin to retry.
+            await showDelivery();
+            if (delivery.verified_clips !== 27)
+              deliveryStatus.textContent =
+                "Chưa hoàn tất audio câu. Chọn đúng ZIP đã duyệt; có thể tải lại cùng file để tiếp tục kiểm tra.";
+          } catch {
+            deliveryStatus.textContent =
+              "Chưa kiểm tra được audio câu đã lưu. Mở lại đề để đối chiếu trước khi thử lại.";
+          }
         } finally {
           input.disabled = false;
         }

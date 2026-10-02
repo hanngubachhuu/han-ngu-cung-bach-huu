@@ -95,7 +95,7 @@ export async function storeExistingClips(
   const { data: auth, error: authError } = await client.auth.getUser();
   if (authError || !auth.user) throw Error("AUTH_REQUIRED");
   let verified = 0;
-  for (const item of files) {
+  const store = async (item) => {
     const { clip, bytes: audio } = item;
     const { error } = await client.storage
       .from(promptBucket)
@@ -125,7 +125,11 @@ export async function storeExistingClips(
     });
     if (receiptError) throw Error("CLIP_RECEIPT_FAILED");
     verified++;
-  }
+  };
+  // Bounded parallelism keeps the existing 27-file operation within the hosted
+  // request budget. Each independent immutable object is read and hashed first.
+  for (let i = 0; i < files.length; i += 3)
+    await Promise.all(files.slice(i, i + 3).map(store));
   return {
     verified,
     version_id: binding.version_id,

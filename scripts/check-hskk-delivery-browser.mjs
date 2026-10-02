@@ -17,6 +17,111 @@ const base = process.env.STUDY_BASE_URL || "http://127.0.0.1:4173";
 const audio = syntheticWave(0.15).toString("base64"),
   evidence = [];
 try {
+  // Real page bootstrap and authenticated production adapter, with local-only
+  // mocked provider/API responses. Missing public auth configuration must fail.
+  const entryContext = await browser.newContext();
+  const fixtureUser = {
+    id: "00000000-0000-4000-8000-000000000099",
+    email: "fixture@example.invalid",
+    aud: "authenticated",
+    role: "authenticated",
+  };
+  const fixtureToken =
+    Buffer.from('{"alg":"HS256"}').toString("base64url") +
+    "." +
+    Buffer.from(
+      JSON.stringify({
+        sub: fixtureUser.id,
+        exp: Math.floor(Date.now() / 1000) + 3600,
+      }),
+    ).toString("base64url") +
+    ".localfixture";
+  await entryContext.addInitScript(
+    ({ user, token }) =>
+      localStorage.setItem(
+        "sb-dmeqxdznzobbarvkmxyg-auth-token",
+        JSON.stringify({
+          user,
+          access_token: token,
+          refresh_token: "localfixture",
+          expires_at: Math.floor(Date.now() / 1000) + 3600,
+          expires_in: 3600,
+          token_type: "bearer",
+        }),
+      ),
+    { user: fixtureUser, token: fixtureToken },
+  );
+  await entryContext.route(
+    "https://dmeqxdznzobbarvkmxyg.supabase.co/**",
+    (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify(
+          new URL(route.request().url()).pathname.includes("profiles")
+            ? {
+                user_id: fixtureUser.id,
+                full_name: "Fixture",
+                role: "STUDENT",
+                status: "APPROVED",
+              }
+            : fixtureUser,
+        ),
+      }),
+  );
+  let catalogOpen = false;
+  const entryCalls = [];
+  await entryContext.route("**/api/hskk-session?**", (route) => {
+    const action = new URL(route.request().url()).searchParams.get("action");
+    assert.equal(
+      route.request().headers().authorization,
+      "Bearer " + fixtureToken,
+    );
+    entryCalls.push(action);
+    return route.fulfill({
+      status: action === "catalog" ? 200 : 403,
+      contentType: "application/json",
+      body: JSON.stringify(
+        action === "catalog"
+          ? catalogOpen
+            ? [{ exam_code: "H71002" }]
+            : []
+          : { error: "EXAM_ACCESS_REQUIRED" },
+      ),
+    });
+  });
+  const entryPage = await entryContext.newPage();
+  await entryPage.goto(base + "/hskk-de-thi.html?exam=H71002");
+  await entryPage.waitForFunction(() =>
+    document.querySelector('script[src^="data/supabase-public.js"]'),
+  );
+  await entryPage.waitForTimeout(500);
+  assert.equal(
+    await entryPage
+      .getByRole("button", { name: "Bắt đầu thi thử", exact: true })
+      .isEnabled(),
+    false,
+  );
+  assert.ok(entryCalls.includes("catalog"));
+  catalogOpen = true;
+  await entryPage.reload();
+  await entryPage
+    .getByText("Đề đã được mở cho tài khoản của bạn.", { exact: false })
+    .waitFor();
+  assert.equal(
+    await entryPage
+      .getByRole("button", { name: "Bắt đầu thi thử", exact: true })
+      .isEnabled(),
+    true,
+  );
+  await entryPage
+    .getByRole("button", { name: "Bắt đầu thi thử", exact: true })
+    .click();
+  await entryPage
+    .getByText("Chưa mở được bài thi.", { exact: false })
+    .waitFor();
+  assert.ok(entryCalls.includes("load"));
+  await entryContext.close();
   for (const width of [390, 768, 1366]) {
     const context = await browser.newContext({
         viewport: { width, height: 850 },
