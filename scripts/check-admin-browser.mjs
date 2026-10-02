@@ -40,6 +40,7 @@ try {
     let role = "ADMIN",
       loseResponse = false,
       sourceCalls = 0,
+      hskkPublished = false,
       revision = 0;
     const uid = "00000000-0000-4000-8000-000000000001",
       user = {
@@ -165,6 +166,8 @@ try {
           }
         }
         if (path.endsWith("/assignment_command")) return fulfill([]);
+        if (path.endsWith("/hskk_publication"))
+          return fulfill({ ready: false });
         return fulfill([]);
       },
     );
@@ -221,6 +224,19 @@ try {
         body: JSON.stringify(data),
       });
     });
+    await context.route("**/api/hskk-delivery*", (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          prepared: hskkPublished,
+          published: hskkPublished,
+          version_id: hskkPublished ? "published-fixture" : null,
+          question_count: hskkPublished ? 27 : 0,
+          verified_clips: hskkPublished ? 27 : 0,
+          controlled_students: hskkPublished ? 1 : 0,
+        }),
+      }),
+    );
     await page.goto(base + "/quan-tri.html");
     await page.locator("[data-admin-nav]").first().waitFor();
     assert.deepEqual(await page.locator("[data-admin-nav]").allTextContents(), [
@@ -327,6 +343,50 @@ try {
       `page overflow ${width}`,
     );
     assert.deepEqual(errors, []);
+    // Publication changes the registry, while the source stays an authoring draft.
+    hskkPublished = true;
+    models.set("H71002", {
+      id: "H71002",
+      code: "H71002",
+      type: "HSKK",
+      level: "elementary",
+      title: "H71002 đã xuất bản",
+      active: true,
+      revision: 4,
+      questions: source.questions,
+    });
+    await page.goto(
+      base + "/quan-tri.html?section=exams&type=HSKK&level=elementary",
+    );
+    await page.getByText("27 câu · Đang hoạt động", { exact: true }).waitFor();
+    assert.equal(await page.getByText("27 câu · Chưa xuất bản").count(), 0);
+    await page.locator('[data-edit-exam="H71002"]').click();
+    await page
+      .getByText("Đề đã xuất bản. Học viên được cấp quyền có thể bắt đầu.", {
+        exact: false,
+      })
+      .waitFor();
+    assert.equal(await page.locator("[data-publish]").isDisabled(), true);
+    await page.locator('[data-editor-tab="audio"]').click();
+    assert.ok(
+      (await page.locator("[data-delivery-status]").innerText()).startsWith(
+        "Đề đã xuất bản · 27 câu",
+      ),
+    );
+    await page.locator('[data-editor-tab="content"]').click();
+    // Exercise real wheel input after publication and editor navigation.
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.mouse.move(width - 20, 750);
+    await page.mouse.wheel(0, 600);
+    await page.waitForFunction(() => document.scrollingElement.scrollTop > 0);
+    await page.locator("[data-title]").fill("Thay đổi chưa xuất bản");
+    assert.ok(
+      (await page.locator("[data-audio-status]").innerText()).includes(
+        "Thay đổi đang sửa cần chuẩn bị và xuất bản lại",
+      ),
+    );
+    assert.equal(await page.locator("[data-publish]").isDisabled(), true);
+    assert.deepEqual(errors, []);
     role = "STUDENT";
     const before = sourceCalls;
     await page.goto(
@@ -348,6 +408,8 @@ try {
       audioReview: true,
       retainedNavigation: true,
       idempotentPublish: true,
+      publishedCatalogAndEditor: true,
+      wheelAfterPublication: true,
       nonAdminDenied: true,
       overflow: false,
       provider: "mocked",

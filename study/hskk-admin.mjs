@@ -28,6 +28,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
     audioPendingChange = 0,
     contentPendingChange = 0;
   let delivery,
+    unpublishedChanges = false,
     readiness = { ready: false };
   const deliveryApi = (action, body) =>
     hskkDeliveryRequest(code, action, { ownerId: profile.user_id, body });
@@ -172,9 +173,17 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         audioStatus: () => {
           const s = reviewSummary(source),
             gate = checkFinalization(source);
+          const message =
+            delivery?.published === true
+              ? unpublishedChanges
+                ? "Đề đã xuất bản. Thay đổi đang sửa cần chuẩn bị và xuất bản lại để áp dụng."
+                : "Đề đã xuất bản. Học viên được cấp quyền có thể bắt đầu."
+              : readiness?.ready
+                ? "Đề đã đủ điều kiện xuất bản."
+                : "Hoàn tất chuẩn bị đề, audio câu và quyền học viên trước khi xuất bản.";
           return {
             ready: gate.ready && readiness?.ready === true,
-            message: `Audio: ${s.confirmed}/${s.total} câu đã xác nhận${s.needs_review ? ` · ${s.needs_review} câu chưa xác nhận` : ""}. ${readiness?.ready ? "Đề đã đủ điều kiện xuất bản." : "Hoàn tất chuẩn bị đề, audio câu và quyền học viên trước khi xuất bản."}`,
+            message: `Audio: ${s.confirmed}/${s.total} câu đã xác nhận${s.needs_review ? ` · ${s.needs_review} câu chưa xác nhận` : ""}. ${message}`,
           };
         },
         publish: async (body) => {
@@ -189,7 +198,19 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
           if (error) throw Error("HSKK_NOT_READY");
           return data;
         },
+        onPublished: () => {
+          unpublishedChanges = false;
+          delivery = { ...delivery, published: true };
+          readiness = { ready: false };
+          onSaved();
+          void showDelivery().catch(() =>
+            report(
+              "Đề đã xuất bản. Mở lại để kiểm tra trạng thái chuẩn bị đề.",
+            ),
+          );
+        },
         onChange: () => {
+          unpublishedChanges = true;
           readiness = { ready: false };
           contentChanges++;
           clearTimeout(contentTimer);
@@ -203,6 +224,8 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         loadWaveform: () => api("waveform"),
         onUpdate: (value, { persisted = false } = {}) => {
           source = value;
+          unpublishedChanges = true;
+          readiness = { ready: false };
           editor.refreshGate();
           if (persisted) {
             report(
@@ -242,7 +265,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         await refreshDelivery();
         if (alive)
           deliveryStatus.textContent = delivery.prepared
-            ? `${delivery.question_count} câu đã gắn phiên bản · ${delivery.verified_clips}/27 audio đã kiểm tra · ${delivery.controlled_students} học viên được cấp quyền.`
+            ? `${delivery.published ? "Đề đã xuất bản · " : ""}${delivery.question_count} câu đã gắn phiên bản · ${delivery.verified_clips}/27 audio đã kiểm tra · ${delivery.controlled_students} học viên được cấp quyền.`
             : "Chưa chuẩn bị phiên bản cho học viên.";
       };
       deliveryPanel.querySelector("[data-prepare]").onclick = async (event) => {
@@ -309,7 +332,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
           await showDelivery();
         } catch {
           deliveryStatus.textContent =
-            "Dịch vụ thi chưa sẵn sàng. Đề vẫn chưa được xuất bản.";
+            "Dịch vụ thi chưa sẵn sàng. Kiểm tra kết nối rồi thử lại.";
         }
       };
       try {

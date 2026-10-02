@@ -1,6 +1,18 @@
 # H71002 shared exam / authoring checkpoint
 
-H71002 is unpublished. Audio authoring is complete and unchanged: 27 confirmed, Q13/Q16/Q26 manually adjusted, zero unresolved, one original run and 27 valid clips. The current official learner implementation below supersedes the earlier missing-transport audit, which is retained as history. Global Speaking and scheduler remain disabled; no real H71002 learner attempt has been created.
+H71002 was manually published by the human Admin at `2026-10-02T12:44:15.326637Z`. Audio authoring is complete and unchanged: 27 confirmed, Q13/Q16/Q26 manually adjusted, zero unresolved, one original run and 27 valid clips. The current official learner implementation below supersedes the earlier missing-transport audit, which is retained as history. Global Speaking and scheduler remain disabled; no real H71002 learner attempt has been created.
+
+## Manual publication and Admin display follow-up — 2026-10-02
+
+The human reported completing **LƯU & XUẤT BẢN**. A read-only production reconciliation at `13:04:47Z` verifies registry revision 4 and active version `0b3d1a53-c3d0-4d5c-a55f-3fa60ed4ccb4`, with the actual assignment status `published` and the timestamp above. The entire authoring revision 159, original source Storage metadata, HSK enrollments/access, previous attempts, 27 clip receipts and the sole controlled grant match the pre-publication baseline exactly. There are still zero H71002 preflights and live sessions. Publication was the human's action; this follow-up performs no database or Storage writes.
+
+The Admin list incorrectly merged the unchanged audio-authoring draft's inactive state over the official registry's published state. The merge now preserves the registry's title, revision, active state and update timestamp while adding current audio review information. The editor recognizes an already-published binding separately from draft publication readiness, shows **Đề đã xuất bản**, and keeps publication disabled until any new content is prepared and passes the existing server gate. Newly edited content is explicitly identified as not yet applied to learners. No server publication check, policy or immutable audio record is changed.
+
+The reported scrolling problem was reproduced in the older Admin tab despite visible document overflow and no modal/body scroll lock. Fresh production Chrome tabs successfully receive real wheel input on Admin, Trang chủ and Tài khoản. The human independently confirmed **Đã cuộn được ở tab mới**. The underlying stale-tab input problem remains undiagnosed; no speculative CSS scroll override is added. The local Admin browser regression checks wheel scrolling after publication and editor navigation at 390/768/1366 px.
+
+Manual publication is now complete. The remaining real hosted checkpoint requires BachHuu to perform the actual microphone exam, followed by submitted recording privacy and Admin playback checks. Earlier unpublished/manual-publication-blocked statements below are historical. **REAL HOSTED HSKK SUBMISSION VERIFIED is not yet PASS.** No learner recording, submission, grade or result publication is claimed by this display correction.
+
+Local validation for this correction: **217/217 tests PASS**, lint, completed build and study validation PASS. The central Admin browser check passes at 390/768/1366 px, including the published registry/editor, unpublished edit message and real wheel input. An initial browser/validator invocation overlapped the rebuild of `dist` and failed; both pass after rerunning against the completed build. Exact-head CI and production deployment evidence are reported on PR #36. The browser provider fixtures are local synthetic evidence, separate from the real hosted read-only reconciliation and the human's scrolling confirmation.
 
 ## Protected delivery follow-up — 2026-10-02, from PR #36 HEAD 1b01fe5
 

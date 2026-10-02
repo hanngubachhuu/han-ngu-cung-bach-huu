@@ -1,6 +1,16 @@
 # Central Admin workspace checkpoint
 
-PR #36's accepted central Admin UX is preserved. H71002 audio authoring remains complete: 27 confirmed, three actual manual adjustments (Q13/Q16/Q26), zero unresolved and 27 valid clips. The official learner implementation reuses the existing assignment/access/submission/grading architecture, with real production schema applied and 216 local tests passing. **H71002 is unpublished; real hosted Storage HTTP is PASS, and real learner end-to-end submission remains pending manual publication.** Earlier missing-transport/zero-confirmation/API-404/source-upload-pending statements are historical and superseded by this phase.
+PR #36's accepted central Admin UX is preserved. H71002 audio authoring remains complete: 27 confirmed, three actual manual adjustments (Q13/Q16/Q26), zero unresolved and 27 valid clips. The official learner implementation reuses the existing assignment/access/submission/grading architecture, with real production schema applied. **H71002 was manually published by the human Admin at 12:44:15Z on 2026-10-02; real hosted Storage HTTP is PASS, and real learner end-to-end submission remains pending the actual microphone exam.** Earlier missing-transport/zero-confirmation/API-404/source-upload-pending statements are historical and superseded by this phase.
+
+## Published state and scrolling follow-up — 2026-10-02
+
+Read-only production reconciliation verifies the published assignment, active version `0b3d1a53-c3d0-4d5c-a55f-3fa60ed4ccb4`, registry revision 4 and unchanged authoring revision 159. Existing source metadata, HSK rights/history, 27 clip receipts and one controlled grant remain equal to the pre-publication baseline. No H71002 preflight or live session exists. This UI follow-up performs no production database/Storage mutation.
+
+The HSKK source catalog's draft status previously overwrote the authoritative registry state. The list now retains the saved publication state, title, revision and update time while showing current source audio review. The editor displays **Đề đã xuất bản** for a published official binding, distinguishes subsequent unpublished edits, and retains the existing guarded publication flow. No audio/version/policy change is required.
+
+Fresh production Chrome tabs scroll successfully on Admin, Trang chủ and Tài khoản, confirmed independently by the human. The older Admin tab's input problem was observed without any CSS body/document lock or modal; its cause remains unproven. No speculative global scroll CSS is introduced. The relevant local browser regression exercises wheel input after publication and editor navigation at three widths. Detailed evidence and the remaining real Student microphone/submission checkpoint are in [H71002 checkpoint](hskk-h71002-checkpoint.md).
+
+Local validation: **217/217 tests PASS**, lint/build/study validation PASS and central Admin browser PASS at 390/768/1366 px. Browser and validation are run against a completed build; their first overlapping-build invocation failed and the sequential rerun passed. Exact changed-head CI and production deployment are recorded on PR #36. No real Student submission is inferred from synthetic browser fixtures.
 
 ## Protected delivery follow-up — 2026-10-02, from HEAD 1b01fe5
 

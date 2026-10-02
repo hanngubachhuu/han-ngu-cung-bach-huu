@@ -5,6 +5,7 @@ import {
   examValidation,
   ExamEditSession,
   safeMedia,
+  mergeExamCatalog,
 } from "../study/admin-exam-core.mjs";
 import { parseExamFile } from "../server/exam-parser.mjs";
 import {
@@ -12,6 +13,37 @@ import {
   syntheticPdf,
   tenQuestions,
 } from "./helpers/exam-fixtures.mjs";
+test("published registry state survives merging an unchanged authoring draft", () => {
+  const saved = {
+    id: "H71002",
+    title: "Tên đề đã lưu",
+    active: true,
+    revision: 4,
+    updated_at: "2026-10-02T12:44:15Z",
+    question_count: 27,
+  };
+  const source = {
+    id: "H71002",
+    title: "Tên nguồn",
+    active: false,
+    updated_at: "2026-10-02T07:23:54Z",
+    source_review: true,
+    audio_source_name: "H71002.mp3",
+    audio: { total: 27, confirmed: 27, needs_review: 0 },
+  };
+  const [exam] = mergeExamCatalog([saved], [source]);
+  assert.equal(exam.active, true);
+  assert.equal(exam.title, saved.title);
+  assert.equal(exam.updated_at, saved.updated_at);
+  assert.equal(exam.revision, 4);
+  assert.equal(exam.source_review, true);
+  assert.deepEqual(exam.audio, source.audio);
+  assert.equal(saved.audio, undefined);
+  assert.equal(source.active, false);
+  assert.deepEqual(mergeExamCatalog([], [source]), [source]);
+  assert.deepEqual(mergeExamCatalog([saved], []), [saved]);
+});
+
 test("PDF and Word create real exams independently of any lesson selection", async () => {
   for (const [bytes, filename] of [
     [syntheticPdf([tenQuestions()]), "exam.pdf"],

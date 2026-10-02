@@ -1,5 +1,9 @@
 import { escapeHtml as esc } from "./core.mjs";
-import { examLevels, importedExam } from "./admin-exam-core.mjs";
+import {
+  examLevels,
+  importedExam,
+  mergeExamCatalog,
+} from "./admin-exam-core.mjs";
 import { adminExamCommand, hskkAdminRequest } from "./admin-exam-service.mjs";
 import { mountExamEditor } from "./admin-exam-editor.mjs";
 import { readExamFile } from "./exam-import-ui.mjs";
@@ -97,14 +101,10 @@ export function mountExamWorkspace(root, profile) {
       hskkAdminRequest("catalog", "catalog", { ownerId }),
     ]);
     if (!alive || n !== generation) return;
-    entries = registered.status === "fulfilled" ? registered.value : [];
-    if (sources.status === "fulfilled")
-      for (const source of sources.value) {
-        const previous = entries.find((e) => e.id === source.id);
-        if (previous)
-          Object.assign(previous, source, { title: previous.title });
-        else entries.push(source);
-      }
+    entries = mergeExamCatalog(
+      registered.status === "fulfilled" ? registered.value : [],
+      sources.status === "fulfilled" ? sources.value : [],
+    );
     list();
     status(
       registered.status === "rejected"

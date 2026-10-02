@@ -32,6 +32,22 @@ export const kindLabels = Object.freeze({
   short_response: "Trả lời ngắn",
   long_response: "Trả lời dài",
 });
+
+// The registry owns publication state; source drafts only add audio review data.
+export function mergeExamCatalog(registered, sources) {
+  const entries = new Map(registered.map((exam) => [exam.id, { ...exam }]));
+  for (const source of sources) {
+    entries.set(source.id, {
+      ...source,
+      ...entries.get(source.id),
+      source_review: source.source_review,
+      audio_source_name: source.audio_source_name,
+      audio: source.audio,
+    });
+  }
+  return [...entries.values()];
+}
+
 export function importedExam(
   document,
   { type, level, title, filename, sha256 },
