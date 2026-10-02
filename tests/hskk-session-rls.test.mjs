@@ -90,6 +90,19 @@ test("real transport schema: approved selected access, preflight creates no live
       0,
     );
     await as(student);
+    await session("transition", {
+      attempt_id: id,
+      state: "CANDIDATE_VERIFIED",
+    });
+    await db.exec("reset role");
+    await db.query(
+      "update account_internal.hskk_preflights set expires_at=clock_timestamp()-interval '1 second' where id=$1",
+      [id],
+    );
+    await as(student);
+    const reopened = await session("load", { exam_code: "H71002" });
+    assert.equal(reopened.session.attempt_id, id);
+    assert.equal(reopened.session.state, "CREATED");
     for (const state of [
       "CANDIDATE_VERIFIED",
       "DEVICE_CHECK",
