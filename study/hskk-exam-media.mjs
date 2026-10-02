@@ -4,10 +4,14 @@ export class ExamAudioPlayer {
     this.stopCurrent = null;
     this.generation = 0;
   }
-  async playSegment(url, segment) {
+  async playSegment(
+    url,
+    segment,
+    { keepPrepared = false, validateStart } = {},
+  ) {
     if (!segment?.verified || !(segment.end_seconds > segment.start_seconds))
       throw Error("AUDIO_SEGMENTS_UNVERIFIED");
-    this.stop();
+    this.stop({ keepPrepared });
     const a = this.audio;
     if (a.getAttribute("src") !== url) {
       a.src = url;
@@ -54,20 +58,79 @@ export class ExamAudioPlayer {
       a.addEventListener("timeupdate", check);
       a.addEventListener("ended", done);
       a.addEventListener("error", fail);
-      a.play().catch(fail);
+      a.play()
+        .then(() => {
+          if (validateStart && !validateStart()) {
+            a.pause();
+            clean();
+            reject(Error("AUDIO_WINDOW_MISSED"));
+          }
+        })
+        .catch(fail);
     });
   }
-  stop() {
-    this.generation++;
-    this.cancelMetadata?.();
+  stop({ keepPrepared = false } = {}) {
+    if (!keepPrepared) {
+      this.generation++;
+      this.cancelMetadata?.();
+      if (this.prepared?.url) URL.revokeObjectURL(this.prepared.url);
+      this.prepared = null;
+    }
     this.audio.pause();
     this.stopCurrent?.();
+  }
+  async preparePrivatePrompt(load, identity) {
+    this.stop();
+    const generation = this.generation;
+    const blob = await load();
+    if (generation !== this.generation) return;
+    if (!blob?.size) throw Error("AUDIO_UNAVAILABLE");
+    const url = URL.createObjectURL(blob);
+    this.prepared = { url, identity, ready: false };
+    const a = this.audio;
+    a.src = url;
+    a.load();
+    if (a.readyState < 3)
+      await new Promise((resolve, reject) => {
+        const clean = () => {
+          clearTimeout(timeout);
+          a.removeEventListener("canplay", ready);
+          a.removeEventListener("error", fail);
+          this.cancelMetadata = null;
+        };
+        const ready = () => {
+          clean();
+          resolve();
+        };
+        const fail = () => {
+          clean();
+          reject(Error("AUDIO_UNAVAILABLE"));
+        };
+        const timeout = setTimeout(fail, 10000);
+        this.cancelMetadata = ready;
+        a.addEventListener("canplay", ready);
+        a.addEventListener("error", fail);
+      });
+    if (generation === this.generation && this.prepared?.url === url)
+      this.prepared.ready = true;
+  }
+  async playPreparedPrompt(identity, duration, offset, graceSeconds = 0.25) {
+    if (!this.prepared?.ready || this.prepared.identity !== identity)
+      throw Error("AUDIO_NOT_READY");
+    if (offset() > graceSeconds) throw Error("AUDIO_WINDOW_MISSED");
+    // Bytes and decoding are ready before the listening clock starts. Never trim the beginning.
+    await this.playSegment(
+      this.prepared.url,
+      { verified: true, start_seconds: 0, end_seconds: duration },
+      { keepPrepared: true, validateStart: () => offset() <= graceSeconds },
+    );
   }
   async playPrivatePrompt(load, duration, offset) {
     this.stop();
     const generation = this.generation;
     const blob = await load();
-    if (generation !== this.generation || offset() >= duration) return;
+    if (generation !== this.generation) return;
+    if (offset() >= duration) throw Error("AUDIO_WINDOW_MISSED");
     const url = URL.createObjectURL(blob);
     try {
       const audio = this.audio;
@@ -94,11 +157,11 @@ export class ExamAudioPlayer {
           audio.addEventListener("loadedmetadata", ready);
           audio.addEventListener("error", fail);
         });
-      if (generation !== this.generation || offset() >= duration) return;
-      // The loader's latency consumes the same listening window.
+      if (generation !== this.generation) return;
+      if (offset() > 0.25) throw Error("AUDIO_WINDOW_MISSED");
       await this.playSegment(url, {
         verified: true,
-        start_seconds: Math.min(duration, offset()),
+        start_seconds: 0,
         end_seconds: duration,
       });
     } finally {

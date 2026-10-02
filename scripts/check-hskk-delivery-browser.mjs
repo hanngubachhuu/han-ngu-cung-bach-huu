@@ -154,7 +154,11 @@ try {
         level: "elementary",
         source_type: "official",
         delivery_mode: "private_clips",
-        timing: { countdown_seconds: 0.1 },
+        timing: {
+          countdown_seconds: 0.1,
+          prompt_load_seconds: 0.6,
+          prompt_start_grace_ms: 250,
+        },
         sections: [
           { id: "one", title_vi: "Phần kiểm thử", preparation_seconds: 0 },
         ],
@@ -195,7 +199,18 @@ try {
       };
       const bytes = Uint8Array.from(atob(audio), (c) => c.charCodeAt(0));
       const stored = new Map();
-      window.deliveryEvidence = { saved: 0, submissions: 0, replays: 0 };
+      window.deliveryEvidence = {
+        saved: 0,
+        submissions: 0,
+        replays: 0,
+        starts: [],
+      };
+      const nativePlay = HTMLMediaElement.prototype.play;
+      HTMLMediaElement.prototype.play = function () {
+        if (this.src.startsWith("blob:"))
+          window.deliveryEvidence.starts.push(this.currentTime);
+        return nativePlay.call(this);
+      };
       const transport = {
         production: true,
         loadSession: async () => ({
@@ -211,11 +226,15 @@ try {
           session.server_time = Date.now() + 900000;
           if (state === "COUNTDOWN") {
             session.server_started_at = session.server_time;
-            session.server_deadline = session.server_time + 10900;
+            session.server_deadline =
+              session.server_time + 100 + 27 * (600 + 150 + 250 + 250);
           }
           return { ...session };
         },
-        prompt: async () => new Blob([bytes], { type: "audio/wav" }),
+        prompt: async () => {
+          await new Promise((r) => setTimeout(r, 200));
+          return new Blob([bytes], { type: "audio/wav" });
+        },
         saveRecording: async (entry) => {
           if (
             !entry.blob.size ||
@@ -260,6 +279,7 @@ try {
         },
       );
     }, audio);
+    await page.getByRole("button", { name: "Tiếng Việt", exact: true }).click();
     await page
       .getByRole("button", { name: "Xác nhận thông tin", exact: true })
       .click();
@@ -295,7 +315,7 @@ try {
     try {
       await page
         .getByText("Đã nộp bài", { exact: true })
-        .waitFor({ timeout: 30000 });
+        .waitFor({ timeout: 60000 });
     } catch (error) {
       const diagnostic = await page.evaluate(() => ({
         evidence: window.deliveryEvidence,
@@ -321,6 +341,15 @@ try {
     }));
     assert.equal(result.evidence.saved, 27);
     assert.equal(result.evidence.submissions, 1);
+    assert.equal(
+      result.evidence.starts.length,
+      27,
+      "Every delayed private prompt must actually play.",
+    );
+    assert.ok(
+      result.evidence.starts.every((start) => start === 0),
+      "Private prompt loading must not trim the beginning.",
+    );
     assert.equal(result.audioControls, 0);
     assert.equal(result.overflow, false);
     assert.deepEqual(errors, []);

@@ -5,7 +5,10 @@ import { fuzzystrmatch } from "@electric-sql/pglite/contrib/fuzzystrmatch";
 const admin = "00000000-0000-4000-8000-000000000001",
   student = "00000000-0000-4000-8000-000000000002";
 // All data here is synthetic and remains in the in-memory database.
-export async function deliveryFixture({ controlledClock = false } = {}) {
+export async function deliveryFixture({
+  controlledClock = false,
+  bufferedPrompts = true,
+} = {}) {
   const db = new PGlite({ extensions: { unaccent, fuzzystrmatch } });
   let controlledNow = Date.now();
   if (controlledClock) {
@@ -31,11 +34,12 @@ export async function deliveryFixture({ controlledClock = false } = {}) {
     .filter((f) => f.endsWith(".sql"))
     .sort()) {
     if (
-      !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary|hskk_authoring_drafts|central_admin_exam_workspace|hskk_official_delivery|hskk_official_sessions|hskk_official_publication|hskk_official_history|hskk_preflight_recovery/.test(
+      !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary|hskk_authoring_drafts|central_admin_exam_workspace|hskk_official_delivery|hskk_official_sessions|hskk_official_publication|hskk_official_history|hskk_preflight_recovery|hskk_buffered_prompts/.test(
         file,
       )
     )
       continue;
+    if (!bufferedPrompts && file.includes("hskk_buffered_prompts")) continue;
     if (file.includes("learner_accounts_and_access"))
       await db.exec(
         `insert into public.lesson_content(id,level,lesson_no,title_zh,title_vi,content)values('hsk1_bai1',1,1,'你好','Bài học','{}');insert into public.student_lesson_access(user_id,lesson_id)values('${student}','hsk1_bai1');`,
@@ -43,7 +47,9 @@ export async function deliveryFixture({ controlledClock = false } = {}) {
     let sql = await fs.readFile(new URL(file, dir), "utf8");
     if (
       controlledClock &&
-      /hskk_official_sessions|hskk_preflight_recovery/.test(file)
+      /hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts/.test(
+        file,
+      )
     )
       sql = sql.replaceAll("clock_timestamp()", "test_only.hskk_now()");
     await db.exec(sql);

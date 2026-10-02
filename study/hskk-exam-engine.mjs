@@ -38,6 +38,7 @@ export class HSKKExamEngine {
     this.persistence = new Map();
     this.answered = new Set();
     this.recordings = {};
+    this.audioErrors = new Map();
     this.disposed = false;
     this.busy = false;
   }
@@ -51,6 +52,7 @@ export class HSKKExamEngine {
     if (this.session && this.session.attempt_id !== session.attempt_id)
       throw Error("SESSION_IDENTITY_MISMATCH");
     this.session = session;
+    this.applyDeliveryTiming(session);
     this.now = serverClock(session.server_time, this.monotonic);
     this.recordings = session.recordings || this.recordings;
     for (const saved of (await this.journal?.load()) || []) {
@@ -90,6 +92,7 @@ export class HSKKExamEngine {
       if (next.attempt_id !== this.session.attempt_id)
         throw Error("SESSION_IDENTITY_MISMATCH");
       this.session = next;
+      this.applyDeliveryTiming(next);
       this.now = serverClock(next.server_time, this.monotonic);
       if (target === "COUNTDOWN") this.timeline = buildTimeline(this.exam);
       await this.tick();
@@ -99,6 +102,26 @@ export class HSKKExamEngine {
   }
   question() {
     return this.exam.questions.find((q) => q.id === this.frame?.question_id);
+  }
+  applyDeliveryTiming(session) {
+    if (this.exam.delivery_mode !== "private_clips" || !session.delivery_timing)
+      return;
+    const { prompt_load_seconds: load, prompt_start_grace_ms: grace } =
+      session.delivery_timing;
+    if (
+      !Number.isFinite(load) ||
+      load < 0 ||
+      load > 20 ||
+      !Number.isFinite(grace) ||
+      grace < 0 ||
+      grace > 1000
+    )
+      throw Error("INVALID_DELIVERY_TIMING");
+    this.exam.timing = { ...this.exam.timing, ...session.delivery_timing };
+  }
+  audioFailure(q) {
+    this.audioErrors.set(q.id, q.number);
+    this.onChange(this.view());
   }
   async finishRecording() {
     clearTimeout(this.recordingStop);
@@ -170,6 +193,7 @@ export class HSKKExamEngine {
     }
   }
   async retrySaves() {
+    if (this.view().upload_window_expired) throw Error("UPLOAD_WINDOW_EXPIRED");
     await Promise.all(
       [...this.pending].map(([id, entry]) =>
         this.save(
@@ -197,7 +221,12 @@ export class HSKKExamEngine {
         : { state: this.session.state };
     const key = `${next.state}:${next.question_id || next.section_id || ""}`;
     if (key !== this.frameKey) {
-      this.audio.stop();
+      this.audio.stop({
+        keepPrepared:
+          next.state === "LISTENING" &&
+          this.frame?.state === "PROMPT_LOADING" &&
+          this.frame.question_id === next.question_id,
+      });
       await this.finishRecording();
       if (this.disposed) return;
       // Recorder sealing may take time; keep the absolute server timeline instead of delaying it.
@@ -214,22 +243,22 @@ export class HSKKExamEngine {
       this.frameKey = `${next.state}:${next.question_id || next.section_id || ""}`;
       this.frame = next;
       const q = this.question();
+      if (next.state === "PROMPT_LOADING")
+        void this.audio.preparePrompt(q).catch(() => this.audioFailure(q));
       if (next.state === "LISTENING") {
         if (this.exam.delivery_mode === "private_clips") {
           const listening = next;
-          void this.audio
-            .playPrompt(q, () =>
-              Math.max(
-                0,
-                (this.now() -
-                  this.session.server_started_at -
-                  listening.start) /
-                  1000,
-              ),
-            )
-            .catch(() =>
-              this.onChange({ ...this.view(), recording_status: "ERROR" }),
-            );
+          const play =
+            this.exam.timing.prompt_load_seconds > 0
+              ? this.audio.playBufferedPrompt.bind(this.audio)
+              : this.audio.playPrompt.bind(this.audio);
+          void play(q, () =>
+            Math.max(
+              0,
+              (this.now() - this.session.server_started_at - listening.start) /
+                1000,
+            ),
+          ).catch(() => this.audioFailure(q));
         } else {
           const elapsed =
             (this.now() - this.session.server_started_at - next.start) / 1000;
@@ -241,9 +270,7 @@ export class HSKKExamEngine {
                 q.audio_segment.start_seconds + Math.max(0, elapsed),
               ),
             })
-            .catch(() =>
-              this.onChange({ ...this.view(), recording_status: "ERROR" }),
-            );
+            .catch(() => this.audioFailure(q));
         }
       }
       if (next.state === "RECORDING" && !this.answered.has(q.id)) {
@@ -296,6 +323,19 @@ export class HSKKExamEngine {
       saved: Object.keys(this.recordings).length,
       pending: this.pending.size,
       total: this.exam.questions.length,
+      recordings: this.recordings,
+      audio_status: this.audioErrors.size ? "ERROR" : "OK",
+      audio_error_question: [...this.audioErrors.values()].at(-1),
+      phase_seconds: this.frame?.end
+        ? (this.frame.end - this.frame.start) / 1000
+        : null,
+      upload_window_expired: Boolean(
+        this.transport.production &&
+          this.session?.server_deadline &&
+          this.now() >=
+            (this.session.upload_deadline ||
+              this.session.server_deadline + 30 * 60 * 1000),
+      ),
     };
   }
   async submit() {

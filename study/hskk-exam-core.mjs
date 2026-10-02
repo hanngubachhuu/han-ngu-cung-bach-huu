@@ -154,14 +154,22 @@ export function buildTimeline(exam) {
   for (const s of exam.sections) {
     add("PREPARATION", s.preparation_seconds, { section_id: s.id });
     for (const q of exam.questions.filter((q) => q.section_id === s.id)) {
-      if (q.prompt_mode === "audio")
+      if (q.prompt_mode === "audio") {
+        if (exam.delivery_mode === "private_clips")
+          add("PROMPT_LOADING", exam.timing.prompt_load_seconds || 0, {
+            section_id: s.id,
+            question_id: q.id,
+          });
         add(
           "LISTENING",
           exam.delivery_mode === "private_clips"
-            ? q.prompt_audio.duration_ms / 1000
+            ? (q.prompt_audio.duration_ms +
+                (exam.timing.prompt_start_grace_ms || 0)) /
+                1000
             : q.audio_segment.end_seconds - q.audio_segment.start_seconds,
           { section_id: s.id, question_id: q.id },
         );
+      }
       add(q.auto_start ? "RECORDING" : "READY_TO_RESPOND", q.response_seconds, {
         section_id: s.id,
         question_id: q.id,

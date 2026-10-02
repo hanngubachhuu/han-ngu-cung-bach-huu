@@ -15,9 +15,11 @@ export function mountExamEditor(
     audioRoot = null,
     audioStatus = () => null,
     onChange = () => {},
+    questionMedia = null,
   },
 ) {
   const state = new ExamEditSession(model);
+  let mediaUrl = null;
   let alive = true,
     busy = false,
     tab = "content";
@@ -56,6 +58,8 @@ export function mountExamEditor(
       });
   }
   function question() {
+    if (mediaUrl) URL.revokeObjectURL(mediaUrl);
+    mediaUrl = null;
     const q = state.model.questions[state.index];
     root.querySelector("[data-question-nav]").innerHTML = state.model.questions
       .map(
@@ -116,6 +120,27 @@ export function mountExamEditor(
             )
             .join("")}</select></label>`
     }<label>Gợi ý<textarea data-field="tip" rows="2">${esc(q.tip || "")}</textarea></label>${state.model.contexts?.length ? `<label>Đoạn đọc của câu<select data-field="contextId"><option value="">Không có đoạn đọc chung</option>${state.model.contexts.map((c, i) => `<option value="${esc(c.localId || c.id)}" ${q.contextId === (c.localId || c.id) ? "selected" : ""}>Đoạn ${i + 1}</option>`).join("")}</select></label>` : ""}<div class="account-actions"><button class="st-button" data-move="-1" ${state.index === 0 ? "disabled" : ""}>Đưa lên trước</button><button class="st-button" data-move="1" ${state.index === state.model.questions.length - 1 ? "disabled" : ""}>Đưa xuống sau</button></div><p class="st-help">${state.model.questions.length} câu · Thay đổi sẽ áp dụng khi lưu và xuất bản.</p>`;
+    if (q.prompt_image && questionMedia) {
+      const figure = document.createElement("figure");
+      figure.textContent = "Đang mở tranh nguồn…";
+      panel.prepend(figure);
+      void questionMedia(q)
+        .then((blob) => {
+          if (!alive || !figure.isConnected) return;
+          mediaUrl = URL.createObjectURL(blob);
+          const image = document.createElement("img");
+          image.src = mediaUrl;
+          image.alt = `Tranh nguồn câu ${q.number || state.index + 1}`;
+          image.style.maxWidth = "100%";
+          image.style.maxHeight = "320px";
+          figure.replaceChildren(image);
+        })
+        .catch(() => {
+          if (figure.isConnected)
+            figure.textContent =
+              "Chưa mở được tranh nguồn. Kiểm tra phiên Admin và kết nối.";
+        });
+    }
     for (const field of panel.querySelectorAll("[data-field]"))
       field.oninput = () => {
         q[field.dataset.field] =
@@ -297,6 +322,7 @@ export function mountExamEditor(
     audioPanel: root.querySelector("[data-source-upload]"),
     dispose() {
       alive = false;
+      if (mediaUrl) URL.revokeObjectURL(mediaUrl);
       root.replaceChildren();
     },
   };

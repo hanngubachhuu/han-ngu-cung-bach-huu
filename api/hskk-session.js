@@ -66,6 +66,7 @@ export function createSessionHandler({
         "SESSION_NOT_FOUND",
         "INVALID_REQUEST",
         "INVALID_TRANSITION",
+        "RUNTIME_UPDATE_REQUIRED",
         "PREFLIGHT_EXPIRED",
         "EXAM_UNAVAILABLE",
         "EXAM_NOT_COMPLETED",

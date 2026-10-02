@@ -30,6 +30,7 @@ jobs:
           node scripts/check-assignment-ui-browser.mjs
           node scripts/check-hskk-browser.mjs
           node scripts/check-hskk-delivery-browser.mjs
+          node scripts/check-hskk-cbt-browser.mjs
           node scripts/check-admin-browser.mjs
       - uses: actions/upload-artifact@v4
         if: always()

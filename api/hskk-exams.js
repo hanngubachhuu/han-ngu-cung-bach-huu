@@ -12,7 +12,7 @@ import {
   HSKKAudioSegmentationEngine,
 } from "../server/hskk-audio-segmentation.mjs";
 
-import { randomUUID } from "node:crypto";
+import { randomUUID, createHash } from "node:crypto";
 import { segmentAuthoringDraft } from "../server/hskk-segmentation-authoring.mjs";
 import {
   readDraftRevision,
@@ -31,6 +31,8 @@ export function createExamHandler({
       new URL("../server/hskk/" + code + ".json", import.meta.url),
       "utf8",
     ),
+  readPicture = (name) =>
+    fs.readFile(new URL("../server/hskk/assets/" + name, import.meta.url)),
   readAudio = async (code, client) =>
     readSourceAudio(client, JSON.parse(await readDraft(code))),
   segmenter = new HSKKAudioSegmentationEngine(),
@@ -88,6 +90,31 @@ export function createExamHandler({
       if (!/^[A-Za-z0-9_-]{1,64}$/.test(code || "")) {
         res.statusCode = 404;
         return res.end(JSON.stringify({ error: "EXAM_NOT_FOUND" }));
+      }
+      if (req.method === "GET" && action === "picture") {
+        const exam = JSON.parse(await readDraft(code));
+        const question = exam.questions.find(
+          (q) => q.id === url.searchParams.get("question"),
+        );
+        const picture = question?.prompt_image;
+        if (
+          question?.prompt_mode !== "image" ||
+          !picture ||
+          picture.file_name !== `${code}-${question.id}.jpg` ||
+          !/^[A-Za-z0-9_-]+-q\d+\.jpg$/.test(picture.file_name)
+        ) {
+          res.statusCode = 404;
+          return res.end(JSON.stringify({ error: "PICTURE_NOT_FOUND" }));
+        }
+        const bytes = await readPicture(picture.file_name);
+        if (
+          bytes.length !== picture.byte_size ||
+          createHash("sha256").update(bytes).digest("hex") !== picture.sha256
+        )
+          throw Error("SOURCE_HASH_MISMATCH");
+        res.setHeader("Content-Type", "image/jpeg");
+        res.statusCode = 200;
+        return res.end(bytes);
       }
       if (req.method === "GET" && action === "waveform") {
         const exam = JSON.parse(await readDraft(code));

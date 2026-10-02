@@ -32,6 +32,7 @@ export async function sessionCommand(client, command, payload) {
       "EXAM_ACCESS_REQUIRED",
       "SESSION_NOT_FOUND",
       "INVALID_TRANSITION",
+      "RUNTIME_UPDATE_REQUIRED",
       "PREFLIGHT_EXPIRED",
       "EXAM_UNAVAILABLE",
       "EXAM_NOT_COMPLETED",

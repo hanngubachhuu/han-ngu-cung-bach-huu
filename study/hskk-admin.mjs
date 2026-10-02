@@ -169,6 +169,8 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
       audioRoot.className = "admin-audio-review";
       editor = mountExamEditor(root, {
         model,
+        questionMedia: (question) =>
+          api("picture", { binary: true, question: question.id }),
         audioRoot,
         audioStatus: () => {
           const s = reviewSummary(source),

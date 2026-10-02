@@ -10,7 +10,12 @@ test("LOCAL SYNTHETIC server clock: all 27 real SQL windows, retries, private pr
     (
       await db.query("select public.hskk_session_command($1,$2) value", [
         command,
-        payload,
+        {
+          ...payload,
+          ...(payload.state === "COUNTDOWN"
+            ? { runtime_version: "hskk-buffered-v2" }
+            : {}),
+        },
       ])
     ).rows[0].value;
   const recording = async (command, payload) =>
@@ -98,6 +103,38 @@ test("LOCAL SYNTHETIC server clock: all 27 real SQL windows, retries, private pr
         (q.number <= 15 ? 7 : q.number <= 25 ? 10 : 90) * 1000,
       );
       if (listen) {
+        const loading = frames.find(
+          (f) => f.state === "PROMPT_LOADING" && f.question_id === q.id,
+        );
+        assert.equal(loading.end - loading.start, 5000);
+        assert.equal(
+          listen.end - listen.start,
+          q.prompt_audio.duration_ms + 250,
+        );
+        await setClock(live.server_started_at + loading.start);
+        await as(null, "service_role");
+        const loaded = (
+          await db.query("select public.hskk_current_prompt($1) value", [
+            {
+              owner_id: student,
+              attempt_id: id,
+              question_version_id: q.version_id,
+            },
+          ])
+        ).rows[0].value;
+        assert.equal(loaded.sha256, binding.clips[q.number - 1].sha256);
+        await assert.rejects(
+          db.query("select public.hskk_current_prompt($1)", [
+            {
+              owner_id: student,
+              attempt_id: id,
+              question_version_id: boot.exam.questions.find(
+                (x) => x.id !== q.id,
+              ).version_id,
+            },
+          ]),
+          /PROMPT_WINDOW_REQUIRED/,
+        );
         await setClock(live.server_started_at + listen.start);
         await as(student);
         await assert.rejects(

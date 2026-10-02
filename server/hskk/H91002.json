@@ -1,0 +1,182 @@
+{
+  "exam_code": "H91002",
+  "title": "H91002",
+  "level": "advanced",
+  "source_type": "official",
+  "exam_version": 1,
+  "status": "draft",
+  "provenance": {
+    "document": "H91002.pdf",
+    "audio": "H91002.mp3",
+    "source_version": "H91002",
+    "sha256": {
+      "H91002.pdf": "5deb12e3b7a7fcc2cd19c99de5e7d218799a3e7aea9b8ad2641f644c6370d9a1",
+      "H91002.mp3": "97c22584156721b01276fa5a7c406c30fbab1d6b0dffbed158b26d50c0ac4b48"
+    },
+    "imported_at": "2026-10-02T14:45:54.849Z",
+    "imported_by": "repository-source-import",
+    "review": "Exam PDF pages visually checked. Original source files unchanged. Audio boundaries require Admin review; no answer key or rubric inferred.",
+    "timing_review": "REQUIRED_SOURCE_AUDIO_REVIEW"
+  },
+  "audio": {
+    "mode": "single",
+    "url": "",
+    "duration_seconds": 1501.714286,
+    "byte_size": 24028099,
+    "segments_status": "unverified",
+    "source_audio_id": "97c22584156721b01276fa5a7c406c30fbab1d6b0dffbed158b26d50c0ac4b48"
+  },
+  "timing": {
+    "approximate_total_minutes": 24,
+    "countdown_seconds": 3
+  },
+  "submission_mode": "end_of_exam",
+  "scoring_mode": "teacher_review",
+  "rubric": null,
+  "sections": [
+    {
+      "id": "part1",
+      "title_vi": "Nghe và thuật lại",
+      "title_zh": "第一部分 · 听后复述",
+      "preparation_seconds": 0
+    },
+    {
+      "id": "part2",
+      "title_vi": "Đọc thành tiếng",
+      "title_zh": "第二部分 · 朗读",
+      "preparation_seconds": 600,
+      "preparation_section_ids": [
+        "part2",
+        "part3"
+      ]
+    },
+    {
+      "id": "part3",
+      "title_vi": "Trả lời câu hỏi",
+      "title_zh": "第三部分 · 回答问题",
+      "preparation_seconds": 0
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "number": 1,
+      "version": 1,
+      "version_id": null,
+      "section_id": "part1",
+      "type": "short_response",
+      "prompt": "有个国王没有儿子，他打算从全国选一个男孩做王子。于是给每个男孩一棵种子，看谁种的花最漂亮就选谁做王子。到了选王子的那天，几乎所有的小孩都捧着鲜艳、漂亮的花来了，只有一个小孩捧着一个空花盆伤心落泪，他没有种出花来。但是，他被选中了。原来，所有的种子都是被煮过的。",
+      "prompt_mode": "audio",
+      "pinyin": null,
+      "response_seconds": 120,
+      "response_warning_seconds": 10,
+      "auto_start": true,
+      "auto_stop": true,
+      "allow_replay": false,
+      "allow_rerecord": false,
+      "allow_navigation": false,
+      "audio_segment": null,
+      "answer_key": null
+    },
+    {
+      "id": "q2",
+      "number": 2,
+      "version": 1,
+      "version_id": null,
+      "section_id": "part1",
+      "type": "short_response",
+      "prompt": "孤独是每个人都曾经有过的心理体验，它并不可怕，重要的是你用什么方式去对待它。要战胜孤独，就要学会为别人着想，只要花一些时间和精力去关心、关注别人，相信你会在良好的人际关系中体验到一种自我价值感，而不是孤独感。“去点燃温暖别人的火，它也会温暖你自己。”",
+      "prompt_mode": "audio",
+      "pinyin": null,
+      "response_seconds": 120,
+      "response_warning_seconds": 10,
+      "auto_start": true,
+      "auto_stop": true,
+      "allow_replay": false,
+      "allow_rerecord": false,
+      "allow_navigation": false,
+      "audio_segment": null,
+      "answer_key": null
+    },
+    {
+      "id": "q3",
+      "number": 3,
+      "version": 1,
+      "version_id": null,
+      "section_id": "part1",
+      "type": "short_response",
+      "prompt": "虽然我们知道一些优秀的电视节目对人有教育指导作用，但是在对人智力发展的贡献上，看电视是无论如何也不能取代阅读的。因为人在看电视和读书时，参与活动的心理机制是不同的。电视画面给人提供了丰富多彩的形象，但留给人想象的空间就小了，人只能被动接受信息。读书则相反。",
+      "prompt_mode": "audio",
+      "pinyin": null,
+      "response_seconds": 120,
+      "response_warning_seconds": 10,
+      "auto_start": true,
+      "auto_stop": true,
+      "allow_replay": false,
+      "allow_rerecord": false,
+      "allow_navigation": false,
+      "audio_segment": null,
+      "answer_key": null
+    },
+    {
+      "id": "q4",
+      "number": 4,
+      "version": 1,
+      "version_id": null,
+      "section_id": "part2",
+      "type": "read_aloud",
+      "prompt": "小张在公司做白领，觉得自己的能力没有得到上级的认可，他经常想：如果有一天能见到老总，有机会展示一下自己的才干就好了。小张的同事小刘，也有同样的想法。但他更进了一步，去打听老总上下班的时间，算好老总大概在何时进电梯，他也在这个时候去坐电梯，希望能遇到老总，有机会可以打个招呼。他们的同事小李更进一步，他详细了解老总的奋斗经历、毕业院校、人际风格、关心的问题等，精心设计了几句简单却有分量的开场白，在算好的时间去坐电梯，跟老总打过几次招呼后，终于有一天跟老总长谈了一次，不久就争取到了更好的职位。愚者错失机会，智者善抓机会，成功者创造机会。机会只会准备好的人，这准备二字，并非说说而已。",
+      "prompt_mode": "text",
+      "pinyin": null,
+      "response_seconds": 120,
+      "response_warning_seconds": 10,
+      "auto_start": true,
+      "auto_stop": true,
+      "allow_replay": false,
+      "allow_rerecord": false,
+      "allow_navigation": false,
+      "audio_segment": null,
+      "answer_key": null
+    },
+    {
+      "id": "q5",
+      "number": 5,
+      "version": 1,
+      "version_id": null,
+      "section_id": "part3",
+      "type": "long_response",
+      "prompt": "你对自己的哪些方面感到满意？请简单介绍一下。",
+      "prompt_mode": "text",
+      "pinyin": null,
+      "response_seconds": 150,
+      "response_warning_seconds": 10,
+      "auto_start": true,
+      "auto_stop": true,
+      "allow_replay": false,
+      "allow_rerecord": false,
+      "allow_navigation": false,
+      "audio_segment": null,
+      "answer_key": null
+    },
+    {
+      "id": "q6",
+      "number": 6,
+      "version": 1,
+      "version_id": null,
+      "section_id": "part3",
+      "type": "long_response",
+      "prompt": "中国有句话叫“知足常乐”，你怎么看？为什么？",
+      "prompt_mode": "text",
+      "pinyin": null,
+      "response_seconds": 150,
+      "response_warning_seconds": 10,
+      "auto_start": true,
+      "auto_stop": true,
+      "allow_replay": false,
+      "allow_rerecord": false,
+      "allow_navigation": false,
+      "audio_segment": null,
+      "answer_key": null
+    }
+  ]
+}

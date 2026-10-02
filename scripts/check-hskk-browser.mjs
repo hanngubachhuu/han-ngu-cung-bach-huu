@@ -1,5 +1,6 @@
 // Local browser evidence only: real MediaRecorder, fake device and provider/session responses.
 import { chromium } from "playwright";
+import { cbtText } from "../study/hskk-cbt-copy.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -79,6 +80,7 @@ const fixture = {
 const evidence = [];
 try {
   for (const width of [390, 768, 1366]) {
+    const ui = (label) => cbtText(label, width === 768 ? "zh" : "vi");
     const context = await browser.newContext({
       viewport: { width, height: 900 },
       permissions: ["microphone"],
@@ -154,69 +156,85 @@ try {
     );
     await page.goto(base + "/local-engine-check");
     await page
-      .getByRole("button", { name: "Xác nhận thông tin", exact: true })
+      .getByRole("button", {
+        name: width === 768 ? "中文" : "Tiếng Việt",
+        exact: true,
+      })
       .click();
     await page
-      .getByRole("button", { name: "Phát âm kiểm tra tai nghe", exact: true })
+      .getByRole("button", { name: ui("Xác nhận thông tin"), exact: true })
+      .click();
+    await page
+      .getByRole("button", {
+        name: ui("Phát âm kiểm tra tai nghe"),
+        exact: true,
+      })
       .click();
     assert.equal(await page.locator("[data-body] audio").count(), 0);
     await page.locator("[data-heard]").check();
-    await page.getByRole("button", { name: "Tiếp tục", exact: true }).click();
-    await page.getByRole("button", { name: "Cho phép microphone" }).click();
+    await page
+      .getByRole("button", { name: ui("Tiếp tục"), exact: true })
+      .click();
+    await page.getByRole("button", { name: ui("Cho phép microphone") }).click();
     assert.equal(
       await page
         .getByRole("button", {
-          name: "Microphone hoạt động — Tiếp tục",
+          name: ui("Microphone hoạt động — Tiếp tục"),
           exact: true,
         })
         .isDisabled(),
       true,
     );
-    await page.getByRole("button", { name: "Bắt đầu ghi thử" }).click();
+    await page.getByRole("button", { name: ui("Bắt đầu ghi thử") }).click();
     await page.waitForTimeout(400);
     await page
-      .getByRole("button", { name: "Dừng ghi thử", exact: true })
+      .getByRole("button", { name: ui("Dừng ghi thử"), exact: true })
       .click();
-    await page.waitForFunction(() =>
-      document
-        .querySelector("[data-message]")
-        ?.textContent.includes("Chưa nhận đủ tiếng nói."),
-    );
+    await page
+      .getByText(
+        ui(
+          "Chưa nhận đủ tiếng nói. Chọn đúng microphone, kiểm tra âm lượng đầu vào rồi ghi thử lại vài giây.",
+        ),
+        { exact: true },
+      )
+      .waitFor();
     assert.equal(
       await page
         .getByRole("button", {
-          name: "Microphone hoạt động — Tiếp tục",
+          name: ui("Microphone hoạt động — Tiếp tục"),
           exact: true,
         })
         .isDisabled(),
       true,
     );
     await page
-      .getByRole("button", { name: "Ghi thử lại", exact: true })
+      .getByRole("button", { name: ui("Ghi thử lại"), exact: true })
       .click();
     await page.waitForTimeout(1500);
     assert.ok(await page.locator("meter").evaluate((m) => m.value > 0.1));
     await page
-      .getByRole("button", { name: "Dừng ghi thử", exact: true })
+      .getByRole("button", { name: ui("Dừng ghi thử"), exact: true })
       .click();
     await page
-      .getByText("Đã nhận tín hiệu microphone. Bạn có thể tiếp tục.", {
+      .getByText(ui("Đã nhận tín hiệu microphone. Bạn có thể tiếp tục."), {
         exact: true,
       })
       .waitFor();
     assert.equal(await page.locator("[data-body] audio").count(), 0);
     await page
       .getByRole("button", {
-        name: "Microphone hoạt động — Tiếp tục",
+        name: ui("Microphone hoạt động — Tiếp tục"),
         exact: true,
       })
       .click();
-    await page.getByRole("button", { name: "Tôi đã sẵn sàng" }).click();
+    await page.getByRole("button", { name: ui("Tôi đã sẵn sàng") }).click();
     await page.screenshot({
       path: `test-results/hskk/pre-exam-${width}.png`,
       fullPage: true,
     });
-    await page.getByRole("button", { name: "Bắt đầu", exact: true }).click();
+    await page
+      .getByRole("button", { name: ui("Bắt đầu"), exact: true })
+      .click();
     await page
       .locator('#check[data-state="RECORDING"][data-question="b"]')
       .waitFor();
@@ -228,7 +246,7 @@ try {
       fullPage: true,
     });
     await page
-      .getByText("Bài thi thử đã hoàn thành.", { exact: true })
+      .getByText(ui("Bài thi thử đã hoàn thành."), { exact: true })
       .waitFor({ timeout: 15000 });
     const captured = await page.evaluate(() => globalThis.captureBytes);
     assert.equal(captured.length, 2);
@@ -298,7 +316,8 @@ try {
     }
     assert.ok(
       views.some(
-        (view) => view.message === "Đã hoàn thành câu 1. Chuyển sang câu 2.",
+        (view) =>
+          view.message === ui("Đã hoàn thành câu 1. Chuyển sang câu 2."),
       ),
     );
     assert.ok(
@@ -308,9 +327,13 @@ try {
         )
         .every((view) => view.actions.length === 0),
     );
-    assert.equal(await page.evaluate(() => globalThis.objectUrls), 0);
     assert.equal(
-      await page.getByRole("button", { name: "Nộp bài thi thử" }).count(),
+      await page.evaluate(() => globalThis.objectUrls),
+      2,
+      "Only two preflight trials may create local media URLs; learner answers remain private.",
+    );
+    assert.equal(
+      await page.getByRole("button", { name: ui("Nộp bài thi thử") }).count(),
       1,
     );
     assert.ok(
@@ -327,9 +350,9 @@ try {
       window.dispatchEvent(new Event("online"));
     });
     await page.waitForFunction(
-      () =>
-        document.querySelector("[data-saved]")?.textContent ===
-        "2 / 2 câu đã lưu",
+      (expected) =>
+        document.querySelector("[data-saved]")?.textContent === expected,
+      ui("2 / 2 câu đã lưu"),
     );
     const retried = await page.evaluate(() => globalThis.captureBytes);
     assert.equal(retried.length, 4);
@@ -338,8 +361,10 @@ try {
       (await page.evaluate(() => globalThis.journal.load())).length,
       0,
     );
-    await page.getByRole("button", { name: "Nộp bài thi thử" }).click();
-    await page.getByText("Bài thi thử đã được nộp.", { exact: true }).waitFor();
+    await page.getByRole("button", { name: ui("Nộp bài thi thử") }).click();
+    await page
+      .getByText(ui("Bài thi thử đã được nộp."), { exact: true })
+      .waitFor();
     assert.equal(await page.evaluate(() => globalThis.submissions), 1);
     await page.evaluate(() => globalThis.dispose());
     const adminId = "00000000-0000-4000-8000-000000000001",

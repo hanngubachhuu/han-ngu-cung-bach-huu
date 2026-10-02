@@ -43,7 +43,11 @@ export function productionTransport({ exam, session: initial, ownerId }) {
       return call("get", { attempt_id: attemptId });
     },
     transition: (id, state) =>
-      call("transition", { attempt_id: id, state }, { method: "POST" }),
+      call(
+        "transition",
+        { attempt_id: id, state, runtime_version: "hskk-buffered-v2" },
+        { method: "POST" },
+      ),
     saveRecording: async (entry) => {
       const q = exam.questions.find((q) => q.version_id === entry.questionId);
       if (

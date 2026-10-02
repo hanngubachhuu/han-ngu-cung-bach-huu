@@ -2,8 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { deliveryFixture } from "./helpers/hskk-delivery-fixture.mjs";
 import { buildTimeline } from "../study/hskk-exam-core.mjs";
-async function readyFixture() {
-  const f = await deliveryFixture(),
+import fs from "node:fs/promises";
+async function readyFixture(options) {
+  const f = await deliveryFixture(options),
     { db, as, rpc, admin, student } = f;
   const prepared = await rpc("prepare", { expected_revision: 1 });
   await rpc("grant_access", { student_id: student });
@@ -36,7 +37,12 @@ async function readyFixture() {
     (
       await db.query("select public.hskk_session_command($1,$2) value", [
         command,
-        payload,
+        {
+          ...payload,
+          ...(payload.state === "COUNTDOWN"
+            ? { runtime_version: "hskk-buffered-v2" }
+            : {}),
+        },
       ])
     ).rows[0].value;
   const recording = async (command, payload = {}) =>
@@ -110,8 +116,16 @@ test("real transport schema: approved selected access, preflight creates no live
       "READY",
       "STRUCTURE",
       "COUNTDOWN",
-    ])
+    ]) {
+      if (state === "COUNTDOWN")
+        await assert.rejects(
+          db.query("select public.hskk_session_command('transition',$1)", [
+            { attempt_id: id, state },
+          ]),
+          /RUNTIME_UPDATE_REQUIRED/,
+        );
       await session("transition", { attempt_id: id, state });
+    }
     const live = await session("get", { attempt_id: id });
     assert.ok(live.server_deadline > live.server_started_at);
     assert.equal(
@@ -171,6 +185,63 @@ test("real transport schema: approved selected access, preflight creates no live
     await db.close();
   }
 });
+test("buffered migration leaves historical session rows, deadlines and timeline intact; recovery uses the original timing", async () => {
+  const { db, as, student, session } = await readyFixture({
+    bufferedPrompts: false,
+  });
+  try {
+    await as(student);
+    const boot = await session("load", { exam_code: "H71002" });
+    const id = boot.session.attempt_id;
+    for (const state of [
+      "CANDIDATE_VERIFIED",
+      "DEVICE_CHECK",
+      "MIC_CHECK",
+      "READY",
+      "STRUCTURE",
+      "COUNTDOWN",
+    ])
+      await session("transition", { attempt_id: id, state });
+    await db.exec("reset role");
+    const snapshot = async () =>
+      (
+        await db.query(
+          "select to_jsonb(s) value from account_internal.hskk_sessions s where attempt_id=$1",
+          [id],
+        )
+      ).rows[0].value;
+    const before = await snapshot();
+    assert.equal(
+      before.timeline.some((frame) => frame.state === "PROMPT_LOADING"),
+      false,
+    );
+    const sql = await fs.readFile(
+      new URL(
+        "../supabase/migrations/20261002144733_hskk_buffered_prompts.sql",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+    await db.exec(sql);
+    assert.deepEqual(await snapshot(), before);
+    await as(student);
+    const after = await session("get", { attempt_id: id });
+    assert.deepEqual(after.delivery_timing, {
+      prompt_load_seconds: 0,
+      prompt_start_grace_ms: 0,
+    });
+    assert.equal(after.server_deadline, Date.parse(before.exam_deadline));
+    assert.equal(after.upload_deadline, Date.parse(before.upload_deadline));
+    const same = await session("transition", {
+      attempt_id: id,
+      state: "COUNTDOWN",
+    });
+    assert.equal(same.server_started_at, Date.parse(before.started_at));
+  } finally {
+    await db.close();
+  }
+});
+
 test("synthetic elapsed attempt: 27 identities, single recording, denial of own playback, private Admin grading and published-only results", async () => {
   const f = await readyFixture(),
     { db, as, student, admin, session, recording } = f;

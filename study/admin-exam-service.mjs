@@ -14,7 +14,7 @@ export async function adminExamCommand(command, payload = {}, ownerId) {
 export async function hskkAdminRequest(
   code,
   action,
-  { ownerId, method = "GET", body, binary = false } = {},
+  { ownerId, method = "GET", body, binary = false, question } = {},
 ) {
   const session = await getSession();
   if (!session || session.user.id !== ownerId) throw Error("ACCOUNT_CHANGED");
@@ -25,6 +25,7 @@ export async function hskkAdminRequest(
   const params = new URLSearchParams({
     exam: code,
     ...(action ? { action } : {}),
+    ...(question ? { question } : {}),
   });
   const res = await fetch(base + "?" + params, {
     method,

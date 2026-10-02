@@ -2,6 +2,8 @@ import { HSKKExamEngine } from "./hskk-exam-engine.mjs";
 import { ExamAudioPlayer, ExamRecorder } from "./hskk-exam-media.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { microphoneLevel, MicrophoneSample } from "./hskk-microphone.mjs";
+import { cbtShell, cbtIcon, listeningIllustration } from "./hskk-cbt-view.mjs";
+import { cbtText, localizeCBT } from "./hskk-cbt-copy.mjs";
 export function formatExamTime(seconds) {
   return seconds === null
     ? "—"
@@ -22,6 +24,15 @@ export async function mountExamExperience(
     levelFrame,
     context;
   let sampleActive = false;
+  let language = "vi",
+    languageSelected = false,
+    fontLarge = false;
+  let analyser, microphoneSource, sampleUrl;
+  const notes = new Map();
+  const trialAudio = document.createElement("audio");
+  const t = (text) => cbtText(text, language);
+  root.classList.add("hskk-cbt-root");
+  if (!preview) document.body.classList.add("hskk-cbt-active");
   const microphoneSample = new MicrophoneSample();
   const audioElement = document.createElement("audio");
   audioElement.preload = "metadata";
@@ -33,6 +44,20 @@ export async function mountExamExperience(
         question.prompt_audio.duration_ms / 1000,
         offset,
       );
+  if (transport.production) {
+    player.preparePrompt = (question) =>
+      player.preparePrivatePrompt(
+        () => transport.prompt(question.version_id),
+        question.version_id,
+      );
+    player.playBufferedPrompt = (question, offset) =>
+      player.playPreparedPrompt(
+        question.version_id,
+        question.prompt_audio.duration_ms / 1000,
+        offset,
+        engine.exam.timing.prompt_start_grace_ms / 1000,
+      );
+  }
   const engine = new HSKKExamEngine({
     exam,
     candidateId: candidate.id,
@@ -50,14 +75,18 @@ export async function mountExamExperience(
     const b = document.createElement("button");
     b.type = "button";
     b.className = `st-button${primary ? " primary" : ""}`;
-    b.textContent = label;
+    b.textContent = t(label);
     b.disabled = disabled;
     b.onclick = async () => {
       b.disabled = true;
       try {
         await callback();
-      } catch {
-        message("Chưa hoàn tất. Kiểm tra thiết bị và kết nối rồi thử lại.");
+      } catch (error) {
+        message(
+          error.message === "RUNTIME_UPDATE_REQUIRED"
+            ? "Giao diện thi đã được cập nhật. Tải lại trang để kiểm tra thiết bị rồi bắt đầu; bài thi chưa tính giờ."
+            : "Chưa hoàn tất. Kiểm tra thiết bị và kết nối rồi thử lại.",
+        );
       } finally {
         if (b.isConnected) b.disabled = false;
       }
@@ -67,9 +96,57 @@ export async function mountExamExperience(
   }
   function message(text) {
     const node = root.querySelector("[data-message]");
-    if (node) node.textContent = text;
+    if (node) node.textContent = t(text);
+  }
+  function monitorMicrophone() {
+    if (!context || context.state === "closed") context = new AudioContext();
+    microphoneSource?.disconnect();
+    analyser = context.createAnalyser();
+    microphoneSource = context.createMediaStreamSource(stream);
+    microphoneSource.connect(analyser);
+    cancelAnimationFrame(levelFrame);
+    const data = new Uint8Array(analyser.fftSize);
+    let previousFrame = performance.now();
+    const level = () => {
+      if (disposed || context.state === "closed") return;
+      analyser.getByteTimeDomainData(data);
+      const { rms, value } = microphoneLevel(data),
+        now = performance.now();
+      if (sampleActive && context.state === "running")
+        microphoneSample.observe(rms, now - previousFrame);
+      previousFrame = now;
+      root.querySelectorAll("meter").forEach((meter) => {
+        meter.value = context.state === "running" ? value : 0;
+      });
+      const signal = root.querySelector("[data-mic-signal]");
+      if (signal)
+        signal.textContent =
+          rms >= 0.01 && context.state === "running"
+            ? t("Đang nhận âm thanh")
+            : t("Chưa nhận tiếng nói rõ");
+      levelFrame = requestAnimationFrame(level);
+    };
+    level();
+  }
+  function notices(view) {
+    if (view.audio_status === "ERROR") {
+      const node = root.querySelector("[data-audio-message]");
+      if (node)
+        node.textContent = t(
+          `Audio câu ${view.audio_error_question || ""} chưa phát đầy đủ. Lượt thi này cần được kiểm tra lại.`,
+        );
+    }
+    if (view.upload_window_expired && view.saved < view.total)
+      message(
+        `Đã hết thời hạn tải bản ghi. Server đã lưu ${view.saved}/${view.total} câu; bài chưa được nộp. Giữ cửa sổ này để bảo toàn các bản ghi còn lại.`,
+      );
+    else if (view.recording_status === "ERROR")
+      message(
+        "Có bản ghi chưa lưu được. Bài vẫn giữ thời gian; bạn có thể thử lưu lại khi kết nối trở lại.",
+      );
   }
   const status = {
+    PROMPT_LOADING: "Đang tải audio câu hỏi…",
     COUNTDOWN: "Bài thi sẽ bắt đầu sau",
     LISTENING: "Đang nghe…",
     RECORDING: "● Đang ghi âm…",
@@ -89,12 +166,16 @@ export async function mountExamExperience(
       root.querySelector("[data-timer]").textContent = formatExamTime(
         view.remaining,
       );
-      root.querySelector("[data-saved]").textContent =
-        `${view.saved} / ${view.total} câu đã lưu`;
-      if (view.recording_status === "ERROR")
-        message(
-          "Có bản ghi chưa lưu được. Bài vẫn giữ thời gian; bạn có thể thử lưu lại khi kết nối trở lại.",
+      root.querySelector("[data-saved]").textContent = t(
+        `${view.saved} / ${view.total} câu đã lưu`,
+      );
+      const progress = root.querySelector("[data-phase-progress]");
+      if (progress && view.phase_seconds)
+        progress.value = Math.min(
+          100,
+          (100 * view.remaining) / view.phase_seconds,
         );
+      notices(view);
       return;
     }
     root.dataset.state = view.state;
@@ -114,10 +195,49 @@ export async function mountExamExperience(
     const timerLabels = {
       COUNTDOWN: "Bắt đầu sau",
       LISTENING: "Thời gian nghe",
+      PROMPT_LOADING: "Chuẩn bị audio",
       RECORDING: "Thời gian trả lời",
       PREPARATION: "Thời gian chuẩn bị",
     };
-    root.innerHTML = `<article class="hskk-card hskk-session${preparing ? " hskk-preflight" : ""}"><header class="hskk-progress"><div><p class="st-eyebrow">${preparing ? "CHUẨN BỊ BÀI THI" : "THI THỬ HSKK"}</p><p data-question-title tabindex="-1">${view.question ? `Câu ${view.question.number} / ${view.total}` : esc(exam.title)}</p></div><div class="hskk-time-block" ${view.remaining === null ? "hidden" : ""}><span>${timerLabels[view.state] || "Thời gian còn lại"}</span><output class="hskk-timer" data-timer aria-label="Thời gian còn lại">${formatExamTime(view.remaining)}</output></div></header>${preparing ? `<nav class="hskk-preflight-nav" aria-label="Các bước chuẩn bị"><p>Bước ${step + 1} / ${steps.length}</p><ol>${steps.map(([, label], i) => `<li ${i === step ? 'aria-current="step"' : ""} class="${i < step ? "complete" : ""}"><span aria-hidden="true">${i < step ? "✓" : i + 1}</span><span>${label}</span></li>`).join("")}</ol><p class="hskk-muted">Hoàn tất kiểm tra trước khi đồng hồ thi bắt đầu.</p></nav>` : `<div class="hskk-exam-progress"><progress max="${view.total}" value="${view.question ? view.question.number - 1 : view.saved}" aria-label="Tiến trình bài thi"></progress><p data-saved class="hskk-muted">${view.saved} / ${view.total} câu đã lưu</p></div>`}<section class="hskk-session-content"><div data-body></div><div data-actions class="account-actions"></div>${preparing ? `<p data-saved hidden>${view.saved} / ${view.total} câu đã lưu</p>` : ""}<p data-message role="status" aria-live="polite"></p></section></article>`;
+    root.innerHTML = cbtShell({
+      exam,
+      candidate,
+      view,
+      preparing,
+      step,
+      steps,
+      time: formatExamTime(view.remaining),
+      language,
+    });
+    queueMicrotask(() => !disposed && localizeCBT(root, language));
+    root.classList.toggle("cbt-font-large", fontLarge);
+    root
+      .querySelector("[data-timer]")
+      .setAttribute(
+        "aria-label",
+        timerLabels[view.state] || "Thời gian còn lại",
+      );
+    root.querySelectorAll("[data-help]").forEach((node) => {
+      node.onclick = () => {
+        const help = root.querySelector("[data-help-content]");
+        help.hidden = false;
+        help.textContent = t(
+          node.dataset.help === "rules"
+            ? "Bài thi chạy theo thứ tự và giờ server. Mỗi câu ghi một lần; không quay lại câu đã qua. Giữ tab mở đến khi bài được nộp."
+            : "Đeo tai nghe. Nói khi trạng thái chuyển sang Đang ghi âm. Bản ghi tự lưu; ô nháp chỉ để chuẩn bị, không được chấm.",
+        );
+      };
+    });
+    root.querySelector("[data-answer-card]").onclick = () => {
+      const help = root.querySelector("[data-help-content]");
+      help.hidden = false;
+      const current = engine.view();
+      help.textContent = `${t(`Đã lưu ${current.saved}/${current.total} câu.`)} ${exam.questions.map((q) => `${q.number}: ${t(current.recordings?.[q.id] ? "đã lưu" : "chưa lưu")}`).join(" · ")}`;
+    };
+    root.querySelector("[data-font]").onclick = () => {
+      fontLarge = !fontLarge;
+      root.classList.toggle("cbt-font-large", fontLarge);
+    };
     const body = root.querySelector("[data-body]");
     if (view.question && previousQuestion !== view.question.id) {
       root
@@ -132,31 +252,73 @@ export async function mountExamExperience(
     }
     if (status[view.state]) {
       body.innerHTML = `${view.section ? `<h2>${esc(view.section.title_vi)}</h2>` : ""}<p class="hskk-status">${status[view.state]}</p>`;
-      if (view.question?.prompt_mode !== "audio" && view.question)
-        body.innerHTML += `<p class="hskk-question" lang="zh">${esc(view.question.prompt)}</p>${view.question.pinyin ? `<p>${esc(view.question.pinyin)}</p>` : ""}`;
-      if (view.state === "PREPARATION")
+      if (view.question) {
+        let content =
+          view.question.prompt_mode === "audio"
+            ? listeningIllustration
+            : `<p class="hskk-question" lang="zh">${esc(view.question.prompt)}</p>${view.question.pinyin ? `<p class="cbt-pinyin">${esc(view.question.pinyin)}</p>` : ""}`;
+        if (
+          view.question.prompt_mode === "image" &&
+          view.question.image_blob_url?.startsWith("blob:")
+        )
+          content += `<img class="cbt-source-picture" src="${esc(view.question.image_blob_url)}" alt="Tranh câu ${view.question.number}">`;
+        body.innerHTML += `<div class="cbt-question-box"><span class="cbt-question-number">${view.question.number}</span>${content}</div>`;
+        if (view.question.prompt_mode !== "audio") {
+          const key = view.question.id;
+          body.insertAdjacentHTML(
+            "beforeend",
+            '<label class="cbt-notes">草稿区（不计分）<textarea data-notes aria-label="Nháp chuẩn bị, không chấm điểm"></textarea></label>',
+          );
+          const area = body.querySelector("[data-notes]");
+          area.value = notes.get(key) || "";
+          area.oninput = () => notes.set(key, area.value);
+        }
+      }
+      if (view.state === "PREPARATION") {
+        const scope = view.section.preparation_section_ids || [view.section.id];
         body.innerHTML += exam.questions
           .filter(
-            (q) =>
-              q.section_id === view.section.id && q.prompt_mode !== "audio",
+            (q) => scope.includes(q.section_id) && q.prompt_mode !== "audio",
           )
           .map(
             (q) =>
-              `<p lang="zh" class="hskk-question">${q.number}. ${esc(q.prompt)}</p>`,
+              `<div class="cbt-preparation-question"><p lang="zh" class="hskk-question">${q.number}. ${esc(q.prompt)}</p>${q.pinyin ? `<p class="cbt-pinyin">${esc(q.pinyin)}</p>` : ""}${q.image_blob_url?.startsWith("blob:") ? `<img class="cbt-source-picture" src="${esc(q.image_blob_url)}" alt="Tranh câu ${q.number}">` : ""}<label class="cbt-notes">草稿区（不计分）<textarea data-preparation-notes="${esc(q.id)}" aria-label="Nháp chuẩn bị, không chấm điểm"></textarea></label></div>`,
           )
           .join("");
+        body.querySelectorAll("[data-preparation-notes]").forEach((area) => {
+          const key = area.dataset.preparationNotes;
+          area.value = notes.get(key) || "";
+          area.oninput = () => notes.set(key, area.value);
+        });
+      }
       if (view.state === "COMPLETED") {
         if (transport.production)
           message(
             "Đang lưu các bản ghi và nộp bài. Giữ trang mở cho đến khi hiện Đã nộp bài.",
           );
-        button(preview ? "Kết thúc xem trước" : "Nộp bài thi thử", async () => {
-          if (preview) {
-            message(
-              "Đã kết thúc xem trước. Không tạo bài nộp hoặc kết quả chấm.",
-            );
-          } else await engine.submit();
-        });
+        button(
+          preview ? "Kết thúc xem trước" : "Nộp bài thi thử",
+          async () => {
+            if (preview) {
+              message(
+                "Đã kết thúc xem trước. Không tạo bài nộp hoặc kết quả chấm.",
+              );
+            } else {
+              try {
+                await engine.submit();
+              } catch (error) {
+                message(
+                  error.message === "UPLOAD_WINDOW_EXPIRED" ||
+                    engine.view().upload_window_expired
+                    ? `Đã hết thời hạn tải bản ghi. Đã lưu ${engine.view().saved}/${view.total} câu; bài chưa được nộp.`
+                    : `Chưa nộp được bài. Đã lưu ${engine.view().saved}/${view.total} câu; giữ trang mở và thử lưu lại khi kết nối ổn định.`,
+                );
+              }
+            }
+          },
+          { disabled: view.upload_window_expired && !preview },
+        );
+        notices(view);
       }
       if (["SUBMITTED", "GRADED", "PUBLISHED"].includes(view.state))
         void engine.result().then((result) => {
@@ -167,12 +329,25 @@ export async function mountExamExperience(
       return;
     }
     if (view.state === "CREATED") {
+      if (!languageSelected) {
+        body.innerHTML = `<div class="cbt-language"><span lang="zh" class="cbt-language-mark">汉</span><h2 lang="zh">欢迎参加汉语网络考试</h2><p>Chọn ngôn ngữ giao diện · 请选择语言</p></div>`;
+        for (const [value, label] of [
+          ["vi", "Tiếng Việt"],
+          ["zh", "中文"],
+        ])
+          button(label, () => {
+            language = value;
+            languageSelected = true;
+            delete root.dataset.state;
+            render(view);
+          });
+        return;
+      }
       body.innerHTML = `<h2>Xác nhận thông tin</h2><p>${esc(candidate.name)}</p><p>${esc(candidate.email)}</p>`;
       button("Xác nhận thông tin", () => engine.advance());
     }
     if (view.state === "CANDIDATE_VERIFIED") {
-      body.innerHTML =
-        "<h2>Kiểm tra thiết bị</h2><p>Dùng tai nghe để âm thanh đề không lọt vào bản ghi. Mở âm lượng vừa đủ nghe.</p><label><input type='checkbox' data-heard> Tôi nghe rõ âm thanh</label>";
+      body.innerHTML = `<h2>Kiểm tra thiết bị</h2><div class="cbt-device-art">${cbtIcon("headphones")}</div><p>Dùng tai nghe để âm thanh đề không lọt vào bản ghi. Mở âm lượng vừa đủ nghe.</p><label><input type='checkbox' data-heard> Tôi nghe rõ âm thanh</label>`;
       button("Phát âm kiểm tra tai nghe", async () => {
         const toneContext = new AudioContext();
         try {
@@ -209,38 +384,14 @@ export async function mountExamExperience(
       button("Cho phép microphone", async () => {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         recorder = new ExamRecorder(stream);
+        monitorMicrophone();
+        await context.resume();
         await engine.advance();
       });
     }
     if (view.state === "MIC_CHECK") {
       body.innerHTML =
         "<h2>Thử microphone</h2><p>Chọn microphone, bấm ghi thử rồi nói một câu trong vài giây.</p><label>Microphone<select data-microphone></select></label><div class='hskk-mic-level'><span data-mic-signal>Chưa nhận tín hiệu</span><meter min='0' max='1' value='0' aria-label='Mức âm thanh microphone'></meter><p class='hskk-muted'>Thanh mức âm sẽ thay đổi khi bạn nói.</p></div>";
-      context = new AudioContext();
-      let analyser = context.createAnalyser();
-      let microphoneSource = context.createMediaStreamSource(stream);
-      microphoneSource.connect(analyser);
-      const data = new Uint8Array(analyser.fftSize);
-      let previousFrame = performance.now();
-      const level = () => {
-        if (disposed || root.dataset.state !== "MIC_CHECK") {
-          context.close();
-          return;
-        }
-        analyser.getByteTimeDomainData(data);
-        const { rms, value } = microphoneLevel(data);
-        const now = performance.now();
-        if (sampleActive && context.state === "running")
-          microphoneSample.observe(rms, now - previousFrame);
-        previousFrame = now;
-        body.querySelector("meter").value =
-          context.state === "running" ? value : 0;
-        body.querySelector("[data-mic-signal]").textContent =
-          rms >= 0.01 && context.state === "running"
-            ? "Đang nhận âm thanh"
-            : "Chưa nhận tiếng nói rõ";
-        levelFrame = requestAnimationFrame(level);
-      };
-      level();
       const select = body.querySelector("[data-microphone]");
       void navigator.mediaDevices
         .enumerateDevices()
@@ -275,6 +426,10 @@ export async function mountExamExperience(
         "Dừng ghi thử",
         async () => {
           const blob = await recorder.stop();
+          trialAudio.pause();
+          if (sampleUrl) URL.revokeObjectURL(sampleUrl);
+          sampleUrl = blob?.size ? URL.createObjectURL(blob) : null;
+          hearTrial.disabled = !sampleUrl;
           sampleActive = false;
           const track = stream.getAudioTracks()[0];
           micDone = microphoneSample.ready({
@@ -285,7 +440,7 @@ export async function mountExamExperience(
           });
           select.disabled = false;
           start.hidden = false;
-          start.textContent = "Ghi thử lại";
+          start.textContent = t("Ghi thử lại");
           stop.hidden = true;
           continueButton.disabled = !micDone;
           message(
@@ -297,6 +452,15 @@ export async function mountExamExperience(
         { primary: false },
       );
       stop.hidden = true;
+      const hearTrial = button(
+        "Nghe bản ghi thử",
+        async () => {
+          if (!sampleUrl) return;
+          trialAudio.src = sampleUrl;
+          await trialAudio.play();
+        },
+        { primary: false, disabled: true },
+      );
       const continueButton = button(
         "Microphone hoạt động — Tiếp tục",
         async () => {
@@ -308,6 +472,10 @@ export async function mountExamExperience(
             track.muted
           )
             return message("Hoàn tất kiểm tra microphone trước khi tiếp tục.");
+          trialAudio.pause();
+          trialAudio.removeAttribute("src");
+          if (sampleUrl) URL.revokeObjectURL(sampleUrl);
+          sampleUrl = null;
           await engine.advance();
         },
         { disabled: true },
@@ -329,11 +497,11 @@ export async function mountExamExperience(
           await recorder.dispose();
           stream = next;
           recorder = new ExamRecorder(stream);
-          microphoneSource.disconnect();
-          analyser.disconnect();
-          analyser = context.createAnalyser();
-          microphoneSource = context.createMediaStreamSource(stream);
-          microphoneSource.connect(analyser);
+          monitorMicrophone();
+          hearTrial.disabled = true;
+          trialAudio.pause();
+          if (sampleUrl) URL.revokeObjectURL(sampleUrl);
+          sampleUrl = null;
           microphoneSample.reset();
           message("Đã đổi microphone. Ghi thử một câu để kiểm tra.");
         } catch {
@@ -389,6 +557,8 @@ export async function mountExamExperience(
           try {
             stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             recorder = new ExamRecorder(stream);
+            monitorMicrophone();
+            await context.resume();
             resolve();
           } catch {
             root.querySelector("p").textContent =
@@ -416,6 +586,10 @@ export async function mountExamExperience(
   }, 100);
   return async () => {
     disposed = true;
+    root.classList.remove("hskk-cbt-root", "cbt-font-large");
+    if (!preview) document.body.classList.remove("hskk-cbt-active");
+    trialAudio.pause();
+    if (sampleUrl) URL.revokeObjectURL(sampleUrl);
     clearInterval(interval);
     cancelAnimationFrame(levelFrame);
     window.removeEventListener("online", reconnect);
