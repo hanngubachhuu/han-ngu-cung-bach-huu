@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import { readCachedReview } from "../server/hskk-cached-review.mjs";
 import { documentContext } from "../server/document-service.mjs";
 import { generateConfirmedClip } from "../server/hskk-confirmed-clips.mjs";
+import { readDeliveryReadiness } from "../server/hskk-delivery.mjs";
 import {
   checkFinalization,
   reviewSummary,
@@ -39,6 +40,7 @@ export function createExamHandler({
       .filter((f) => /^[A-Za-z0-9_-]+\.json$/.test(f))
       .map((f) => f.slice(0, -5)),
   cachedReview = readCachedReview,
+  deliveryReadiness = readDeliveryReadiness,
 } = {}) {
   return async (req, res) => {
     res.setHeader("Cache-Control", "private, no-store");
@@ -217,11 +219,7 @@ export function createExamHandler({
           ...(saved?.configuration || (await cachedReview(draft))),
           database_revision: saved?.revision || 0,
           draft_storage_available: storage.available,
-          // Source authoring is not yet wired to an official timed HSKK session.
-          publish_readiness: {
-            ready: false,
-            reasons: ["Đề chưa được kết nối với phiên thi chính thức."],
-          },
+          publish_readiness: await deliveryReadiness(client, code),
         }),
       );
     } catch (e) {

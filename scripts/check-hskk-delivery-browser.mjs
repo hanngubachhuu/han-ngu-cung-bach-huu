@@ -285,9 +285,25 @@ try {
       .getByRole("button", { name: "Tôi đã sẵn sàng", exact: true })
       .click();
     await page.getByRole("button", { name: "Bắt đầu", exact: true }).click();
-    await page
-      .getByText("Đã nộp bài", { exact: true })
-      .waitFor({ timeout: 30000 });
+    try {
+      await page
+        .getByText("Đã nộp bài", { exact: true })
+        .waitFor({ timeout: 30000 });
+    } catch (error) {
+      const diagnostic = await page.evaluate(() => ({
+        evidence: window.deliveryEvidence,
+        state: document.querySelector("#hskkContent")?.dataset.state,
+        question: document.querySelector("#hskkContent")?.dataset.question,
+        text: document.querySelector("#hskkContent")?.innerText,
+      }));
+      await fs.mkdir("test-results/hskk", { recursive: true });
+      await page.screenshot({
+        path: `test-results/hskk/delivery-failed-${width}.png`,
+        fullPage: true,
+      });
+      console.error(JSON.stringify({ width, ...diagnostic, errors }));
+      throw error;
+    }
     await page.getByText("Chưa công bố kết quả.", { exact: true }).waitFor();
     const result = await page.evaluate(() => ({
       evidence: window.deliveryEvidence,

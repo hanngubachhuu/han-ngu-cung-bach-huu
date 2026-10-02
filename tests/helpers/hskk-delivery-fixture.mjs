@@ -5,8 +5,18 @@ import { fuzzystrmatch } from "@electric-sql/pglite/contrib/fuzzystrmatch";
 const admin = "00000000-0000-4000-8000-000000000001",
   student = "00000000-0000-4000-8000-000000000002";
 // All data here is synthetic and remains in the in-memory database.
-export async function deliveryFixture() {
+export async function deliveryFixture({ controlledClock = false } = {}) {
   const db = new PGlite({ extensions: { unaccent, fuzzystrmatch } });
+  let controlledNow = Date.now();
+  if (controlledClock) {
+    // Isolated in-memory test database only. No clock override is deployed.
+    await db.exec(`create schema test_only;
+      create table test_only.clock(ms bigint not null);
+      create function test_only.hskk_now() returns timestamptz language sql security definer set search_path='' as $$select to_timestamp(ms/1000.0) from test_only.clock$$;
+      revoke all on schema test_only from public;
+      revoke all on function test_only.hskk_now() from public;`);
+    await db.query("insert into test_only.clock values($1)", [controlledNow]);
+  }
   await db.exec(`create role anon;create role authenticated;create role service_role;create schema auth;create schema storage;create schema extensions;
  create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}',raw_app_meta_data jsonb default '{}');
  create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
@@ -30,7 +40,13 @@ export async function deliveryFixture() {
       await db.exec(
         `insert into public.lesson_content(id,level,lesson_no,title_zh,title_vi,content)values('hsk1_bai1',1,1,'你好','Bài học','{}');insert into public.student_lesson_access(user_id,lesson_id)values('${student}','hsk1_bai1');`,
       );
-    await db.exec(await fs.readFile(new URL(file, dir), "utf8"));
+    let sql = await fs.readFile(new URL(file, dir), "utf8");
+    if (
+      controlledClock &&
+      /hskk_official_sessions|hskk_preflight_recovery/.test(file)
+    )
+      sql = sql.replaceAll("clock_timestamp()", "test_only.hskk_now()");
+    await db.exec(sql);
   }
   await db.exec(
     `grant select,insert,update,delete on storage.objects to authenticated;update public.profiles set status='APPROVED';update public.profiles set role='ADMIN' where user_id='${admin}';`,
@@ -105,5 +121,12 @@ export async function deliveryFixture() {
       expected_revision: 0,
     },
   ]);
-  return { db, as, rpc, admin, student, config };
+  const setClock = async (ms) => {
+    if (!controlledClock || !Number.isSafeInteger(ms) || ms < controlledNow)
+      throw Error("INVALID_TEST_CLOCK");
+    await db.exec("reset role");
+    await db.query("update test_only.clock set ms=$1", [ms]);
+    controlledNow = ms;
+  };
+  return { db, as, rpc, admin, student, config, setClock };
 }

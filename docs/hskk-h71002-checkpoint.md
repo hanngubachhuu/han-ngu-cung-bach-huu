@@ -2,6 +2,33 @@
 
 H71002 is unpublished. Audio authoring is complete and unchanged: 27 confirmed, Q13/Q16/Q26 manually adjusted, zero unresolved, one original run and 27 valid clips. The current official learner implementation below supersedes the earlier missing-transport audit, which is retained as history. Global Speaking and scheduler remain disabled; no real H71002 learner attempt has been created.
 
+## Protected delivery follow-up — 2026-10-02, from PR #36 HEAD 1b01fe5
+
+**HSKK_CLIP_STORAGE_HTTP: PASS using real hosted Admin, BachHuu Student and anonymous requests.** The human ran the read-only Console checkpoint on the Vercel production origin. Admin evidence at `2026-10-02T12:08:53.421Z` verifies the approved Admin identity, existing official version `0b3d1a53-c3d0-4d5c-a55f-3fa60ed4ccb4` and unchanged authoring revision 159. Every Q1–Q27 object returns HTTP 200; all 27 match their exact persisted clip hash, question/exam version, source/run/boundary provenance, duration within the existing 200 ms validation tolerance and decoded valid MP3. These are actual production-stored bytes, not the ZIP or local fixtures.
+
+Student evidence at `2026-10-02T12:09:15.990Z` independently verifies APPROVED STUDENT and the selected BachHuu identity. Direct private object GET is denied with HTTP 400; private bucket listing returns HTTP 200 and exactly zero objects. Anonymous private and public-route object GETs are also denied with HTTP 400. The checkpoint accepts a 400 only with an established Storage object-not-found/authorization denial body; a network error, null status, generic 400 or 500 cannot pass. Filtered evidence is retained in ignored `hosted-storage-admin-http.json` and `hosted-storage-student-http.json`, without JWTs, response bodies or private object URLs. The SDK-null limitation recorded below is superseded by these actual HTTP results.
+
+The production transport was already connected at the starting HEAD. The remaining authoring GET incorrectly hardcoded an obsolete “not connected” readiness message. It now reads the existing Admin-only official binding and server publication-readiness RPC, performs no prepare/publish mutation, and stays closed on unavailable binding/provider failure. This is a diagnostic correction; the actual publication transaction remains independently guarded. No migration, RLS change, Storage write or production data mutation is required in this follow-up.
+
+There is no safe production test-clock facility. The minimum accelerated check is confined to the in-memory PGlite test database: the actual session SQL uses a root-controlled clock there, with no Student schema/function privilege and no deployed clock override. It verifies all 27 server prompt/recording windows, response lengths 7/10/90 seconds, preparation 420 seconds, premature/client-forged-time denial, stable retry identities, one submission and private/no-score result behavior. This is **LOCAL SYNTHETIC SQL evidence**, not a real hosted recording or production clock change.
+
+| Requested checkpoint | Current result and scope                                                                                                                                        |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Clip delivery        | **PASS** for actual Admin stored bytes and local current-window authorization; real Student session prompt delivery **NOT TESTED** before manual publication.   |
+| HTTP storage         | **PASS** — real approved Admin 27 × HTTP 200; real selected Student denied, zero listed objects; anonymous denied.                                              |
+| Production session   | **PASS** for connected implementation and local actual-SQL semantics; real live hosted attempt **BLOCKED** pending the human's manual publication.              |
+| Student exam         | **BLOCKED** pending manual publication; unpublished Student start remains correctly denied.                                                                     |
+| Recording privacy    | **PASS** for local SQL/API enforcement and the unchanged production policies; real own/other H71002 recording reads **NOT TESTED** because no recording exists. |
+| Submission           | **NOT TESTED** with a real hosted Student; local 27-recording submission PASS.                                                                                  |
+| Admin playback       | **NOT TESTED** for real learner recordings; actual Admin reads of all 27 prompt clips PASS.                                                                     |
+| Grading              | Existing manual workflow ready and locally tested; real H71002 grading **NOT TESTED**. No approved automatic HSKK rubric is invented.                           |
+| Result publication   | **NOT TESTED**; no score/result published.                                                                                                                      |
+| H71002 publication   | **NOT PERFORMED**. The human explicitly chose to publish manually after security PASS.                                                                          |
+
+Full tests **216/216 PASS**, zero failures/skips; lint, build, study validation (105 syntax checks) and all 30 lesson validators PASS. Central Admin and delivery browser checks PASS at 390/768/1366 px, with actual local MediaRecorder/IndexedDB and synthetic provider/session/microphone: 27 recordings, one automatic submission, no self-playback controls and no overflow. One earlier delivery-browser run timed out at submission; diagnostic capture was added and the rerun passed at all three widths, without changing fixture/production timing. Its first timeout cause remains unproven. Exact-head CI and deployment are reported on PR #36 after the changed application code is verified.
+
+Read-only predeployment reconciliation/backup is `before-readiness-deployment.json`: source object 1, authoring revision 159, four HSK enrollments, 26 HSK access rows, three existing attempts, 27 receipts, one controlled grant, zero H71002 preflights and zero sessions. H71002 remains unpublished. **REAL HOSTED HSKK SUBMISSION VERIFIED is not claimed.** The next prerequisite is the human's publication of this already prepared version; no automatic publication, learner exam/session, recording, grading, result publication, global Speaking activation or scheduler activation is performed here.
+
 ## Official learner implementation — 2026-10-02, from PR #36 HEAD 9d48f98
 
 The existing courses, selected lesson access, official assignment/question versions, attempts, submission answers, private recording pipeline, teacher grading and result publication are reused. H71002 has a separate `exam-H71002` internal delivery container; existing HSK lessons and history are not converted. Intermediate and Advanced have no invented exams or grants.
@@ -63,7 +90,7 @@ The human ran the read-only checkpoint in the real approved **STUDENT** session 
 | Student Admin-delivery management | PASS — 403 ADMIN_REQUIRED |
 | Student authoring audio, waveform, source, runs, proposals, audit, status and configuration | PASS — all eight requests return 403 ADMIN_REQUIRED |
 | Student prompt without an authorized live attempt | PASS — 403 PROMPT_DENIED |
-| Student private clip download / bucket enumeration | SDK returns no clip and zero objects; direct HTTP confirmation pending because the SDK status is null |
+| Student private clip download / bucket enumeration | Superseded by actual HTTP follow-up above: private GET denied HTTP 400; list HTTP 200 with zero objects. Earlier SDK status was null. |
 | Real approved Admin preparation | PASS — 27 question versions / 27 verified clips / 1 controlled learner |
 
 Read-only production reconciliation after the Student requests at **11:10:11Z** still finds **zero preflights, zero live sessions, three unchanged existing attempts, 27 distinct question UUIDs, 27 verified receipts, 27 private objects and one controlled grant**. The bucket is private and H71002 remains unpublished. The hosted Admin page has no overflow at its actual 1920px viewport. Hosted viewport emulation did not change that viewport, so the 390/768/1366px results are local browser evidence only. Real full-exam microphone recording, submission, Admin learner playback/grading and result publication remain **NOT TESTED** pending the separate manual publication and controlled human exam.

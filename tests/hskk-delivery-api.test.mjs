@@ -7,6 +7,7 @@ import {
   inspectClipArchive,
   sha256,
   storeExistingClips,
+  readDeliveryReadiness,
 } from "../server/hskk-delivery.mjs";
 import { readCurrentPrompt } from "../server/hskk-session-service.mjs";
 const response = () => ({
@@ -17,6 +18,38 @@ const response = () => ({
   end(body) {
     this.body = body;
   },
+});
+
+test("authoring readiness reads the actual server gate and remains closed on missing binding or RPC failure", async () => {
+  const calls = [];
+  const client = {
+    rpc: async (name, args) => {
+      calls.push([name, args.command]);
+      return name === "hskk_delivery_admin"
+        ? {
+            data: {
+              prepared: true,
+              version_id: "existing-version",
+              published: false,
+            },
+          }
+        : { data: { ready: true } };
+    },
+  };
+  assert.deepEqual(await readDeliveryReadiness(client, "H71002"), {
+    ready: true,
+    published: false,
+    version_id: "existing-version",
+    reasons: [],
+  });
+  assert.deepEqual(calls, [
+    ["hskk_delivery_admin", "get"],
+    ["hskk_publication", "readiness"],
+  ]);
+  client.rpc = async () => ({ error: { message: "provider error" } });
+  assert.equal((await readDeliveryReadiness(client, "H71002")).ready, false);
+  client.rpc = async () => ({ data: { prepared: false } });
+  assert.equal((await readDeliveryReadiness(client, "H71002")).ready, false);
 });
 test("hosted handlers reject anonymous/unauthorized requests before touching source, archive or prompt storage", async () => {
   for (const factory of [createDeliveryHandler, createSessionHandler]) {

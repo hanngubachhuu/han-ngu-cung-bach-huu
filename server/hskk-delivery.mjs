@@ -18,6 +18,33 @@ export async function deliveryCommand(client, command, payload) {
     );
   return data;
 }
+// Read the authoritative publication gate; never prepare or publish on a GET.
+export async function readDeliveryReadiness(client, code) {
+  const unavailable = {
+    ready: false,
+    reasons: ["Đề chưa đủ điều kiện mở cho học viên."],
+  };
+  try {
+    const binding = await deliveryCommand(client, "get", { exam_code: code });
+    if (!binding?.prepared || !binding.version_id) return unavailable;
+    const { data, error } = await client.rpc("hskk_publication", {
+      command: "readiness",
+      payload: { exam_code: code, version_id: binding.version_id },
+    });
+    if (error || !data) return unavailable;
+    return {
+      ready: data.ready === true || binding.published === true,
+      published: binding.published === true,
+      version_id: binding.version_id,
+      reasons:
+        data.ready === true || binding.published === true
+          ? []
+          : unavailable.reasons,
+    };
+  } catch {
+    return unavailable;
+  }
+}
 export function receiptClient(env = process.env) {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY)
     throw Error("SERVER_NOT_READY");
