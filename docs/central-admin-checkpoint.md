@@ -1,6 +1,30 @@
 # Central Admin workspace checkpoint
 
-PR #36 continues from `ba434e7`, with accepted Admin UX at `3e8a9b7`. The 2026-10-02 update applies only the prepared HSKK authoring infrastructure after a verified scoped backup. It does **not** certify production deployment or a complete official HSKK publication/submission flow.
+PR #36's accepted central Admin UX is preserved. Current production H71002 audio authoring is complete: 27 confirmed, three actual manual adjustments (Q13/Q16/Q26), zero unresolved and 27 valid clips with persisted provenance. **Official HSKK exam/version/access/session/submission integration is BLOCKED. H71002 is unpublished.** The earlier implementation/deployment notes below are retained as historical checkpoints; their zero-confirmation/API-404/source-upload-pending statements are superseded by this current audit and the detailed H71002 checkpoint.
+
+## Current official H71002 integration audit — 2026-10-02 (Asia/Bangkok)
+
+Continues PR #36 HEAD `9b43944`. Read-only production reconciliation at `2026-10-02T08:15:33.412984Z` / 15:15:33 Asia/Bangkok finds authoring revision 159, 27 verified questions, adjustments [13,16,26], one original run and 27 clip provenance records. All 27 authoring question `version_id` values remain null. This does not create official question versions or a publishable exam.
+
+The existing official assignment/version/attempt/submission/access model already admits HSKK through `courses.program` and can be reused. Production still lacks `account_internal.admin_exams` and `public.admin_exam_command(text,jsonb)`; `20261001140652_central_admin_exam_workspace.sql` is unapplied and, alone, still refuses HSKK publication. There are zero real HSKK courses, delivery containers, access rows, assignment/question versions, attempts, submissions and learner recordings. No HSK1/HSK2 lesson, grant or historical submission was changed.
+
+| Checkpoint | Current status |
+| --- | --- |
+| Exam/version binding | **BLOCKED** — central production registry/RPC and official H71002 UUID bindings missing. |
+| HSKK access | **BLOCKED** — no real HSKK catalog/entitlement rows. |
+| Student session | **BLOCKED** — HSKK Start is disabled; only nonpersistent preview transport exists. |
+| Question audio delivery | **BLOCKED** — completed private clips/provenance lack official learner delivery/storage/version binding. |
+| Recording submission | **BLOCKED** — no controlled real H71002 gate or official 27-recording session transport. |
+| Admin learner-recording playback | **NOT TESTED** — no real H71002 submission exists. |
+| Teacher grading | **NOT TESTED** — generic model tests are separate from H71002 teacher review. |
+| Result publication | **NOT TESTED** — no H71002 result was published. |
+| Hosted official-session security | **NOT TESTED** — authoring JWT/security PASS does not prove this absent session path. |
+
+Global Speaking remains false, scheduler jobs zero and synthetic test gate empty. The existing global/synthetic recording gate cannot authorize a real H71002 student; the owner-read recording policy also needs an HSKK-specific reconciliation to meet the no-Student-playback rule. No fake canary rows, Auth markers, parallel version architecture, invented official scoring rubric or policy bypass was created.
+
+The actual approved Admin production page was reloaded successfully: it shows 27/27 audio confirmations and “Đề chưa được kết nối với phiên thi chính thức.” **LƯU & XUẤT BẢN remains disabled.** Production alias still runs READY deployment `dpl_2EuaB8G6HHZXbbs7nfwYQ5qpNv82`, commit `0e2367e`; the later PR auto-advance change is not yet deployed. No hosted student session/submission/grade/result is claimed.
+
+**STOP under the user's explicit missing-transport/missing-real-access conditions.** This checkpoint changes documentation only and performs zero production mutations or new migrations. Full existing tests **202/202 PASS**, lint/build/study/canonical lesson validators PASS; HSKK and central Admin mock browser checks PASS at 390/768/1366px. Exact documentation-HEAD CI is reported separately with the final commit/run. Detailed blockers, separate hosted/local/mock evidence and the completed audio provenance are in [H71002 checkpoint](hskk-h71002-checkpoint.md).
 
 ## Navigation and content boundaries
 
