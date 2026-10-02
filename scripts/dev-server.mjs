@@ -1,6 +1,8 @@
 import examImportHandler from "../api/exam-import.js";
 import recordingHandler from "../api/recordings.js";
 import hskkHandler from "../api/hskk-exams.js";
+import hskkDeliveryHandler from "../api/hskk-delivery.js";
+import hskkSessionHandler from "../api/hskk-session.js";
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -33,6 +35,8 @@ http
           "/api/recordings",
           "/api/exam-import",
           "/api/hskk-exams",
+          "/api/hskk-delivery",
+          "/api/hskk-session",
         ].includes(url.pathname)
       ) {
         let body = "",
@@ -41,7 +45,9 @@ http
           size += chunk.length;
           if (
             size >
-            (url.pathname === "/api/exam-import" ? 4.3 * 1024 * 1024 : 650000)
+            (["/api/exam-import", "/api/hskk-delivery"].includes(url.pathname)
+              ? 4.3 * 1024 * 1024
+              : 650000)
           ) {
             res.writeHead(413);
             res.end();
@@ -51,15 +57,19 @@ http
         }
         req.body = body;
         await (
-          url.pathname === "/api/hskk-exams"
-            ? hskkHandler
-            : url.pathname === "/api/exam-import"
-            ? examImportHandler
-            : url.pathname === "/api/recordings"
-              ? recordingHandler
-              : url.pathname === "/api/account"
-                ? accountHandler
-                : handler
+          url.pathname === "/api/hskk-session"
+            ? hskkSessionHandler
+            : url.pathname === "/api/hskk-delivery"
+              ? hskkDeliveryHandler
+              : url.pathname === "/api/hskk-exams"
+                ? hskkHandler
+                : url.pathname === "/api/exam-import"
+                  ? examImportHandler
+                  : url.pathname === "/api/recordings"
+                    ? recordingHandler
+                    : url.pathname === "/api/account"
+                      ? accountHandler
+                      : handler
         )(req, res);
         return;
       }

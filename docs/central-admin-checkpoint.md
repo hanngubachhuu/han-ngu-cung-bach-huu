@@ -1,8 +1,18 @@
 # Central Admin workspace checkpoint
 
-PR #36's accepted central Admin UX is preserved. Current production H71002 audio authoring is complete: 27 confirmed, three actual manual adjustments (Q13/Q16/Q26), zero unresolved and 27 valid clips with persisted provenance. **Official HSKK exam/version/access/session/submission integration is BLOCKED. H71002 is unpublished.** The earlier implementation/deployment notes below are retained as historical checkpoints; their zero-confirmation/API-404/source-upload-pending statements are superseded by this current audit and the detailed H71002 checkpoint.
+PR #36's accepted central Admin UX is preserved. H71002 audio authoring remains complete: 27 confirmed, three actual manual adjustments (Q13/Q16/Q26), zero unresolved and 27 valid clips. The official learner implementation now reuses the existing assignment/access/submission/grading architecture, with real production schema applied and 210 local tests passing. **H71002 is unpublished; hosted preparation and real learner end-to-end checks are recorded separately below.** Earlier missing-transport/zero-confirmation/API-404/source-upload-pending statements are historical and superseded by this phase.
 
-## Current official H71002 integration audit — 2026-10-02 (Asia/Bangkok)
+## Official H71002 learner implementation — 2026-10-02, from HEAD 9d48f98
+
+The central registry migration and four forward HSKK migrations are applied after scoped reconciliation/backups. Current immutable source, authoring revision 159, all reviewed boundaries and clip provenance are preserved. Four HSK enrollments, 26 HSK access rows and three existing attempts remain unchanged. No original source, confirmed boundary or clip was regenerated; no scheduler or global Speaking activation was performed.
+
+The existing editor's Audio tab adds **Chuẩn bị phiên bản đề**, the existing reviewed ZIP upload, **Học viên kiểm thử**, **Cấp quyền đề này** and **Kiểm tra dịch vụ thi**. These call actual authenticated server APIs/RPCs. The selected controlled learner is the uniquely matched approved Student **BachHuu**. The existing publication button is enabled only after the server verifies official versions, 27 persisted clip receipts, real selected access and runtime readiness. It remains a manual action; no exam is automatically published.
+
+The production Student adapter uses the shared HSKK engine, microphone check, server countdown/timeline, queued recording uploads and automatic advance/submission. The account's existing submission history opens the original pinned HSKK version. The existing **Bài nộp** queue/player/manual grading/result publication are reused; the H71002 processing button runs the existing worker only for the selected submitted attempt. There is no second grading application. The internal teacher-review criterion uses the existing grade scale and is not presented as an official HSKK rubric.
+
+**LOCAL PASS:** immutable version binding, access, server deadlines, recording identities, Student denial of own/other playback, 27-recording submission, Admin private playback authorization, manual grading and published-only results. **HOSTED NOT TESTED:** real full-duration learner exam, submission, Admin learner audio playback, grading and published result before manual exam publication. Registry/clip/access preparation and new hosted security smoke are recorded in the follow-up once deployed. Relevant synthetic browser checks pass at 390/768/1366px; they do not prove hosted learner E2E. Full tests 210/210, lint/build/study/30 lesson validators pass. Detailed evidence and remaining blockers: [H71002 checkpoint](hskk-h71002-checkpoint.md).
+
+## Historical official H71002 integration audit — 2026-10-02 (Asia/Bangkok)
 
 Continues PR #36 HEAD `9b43944`. Read-only production reconciliation at `2026-10-02T08:15:33.412984Z` / 15:15:33 Asia/Bangkok finds authoring revision 159, 27 verified questions, adjustments [13,16,26], one original run and 27 clip provenance records. All 27 authoring question `version_id` values remain null. This does not create official question versions or a publishable exam.
 

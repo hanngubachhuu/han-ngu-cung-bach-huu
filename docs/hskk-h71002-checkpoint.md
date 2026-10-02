@@ -1,8 +1,44 @@
 # H71002 shared exam / authoring checkpoint
 
-This is an unpublished implementation. It does not enable Speaking or create a real learner attempt. The prepared authoring migration was applied on 2026-10-02 after reconciliation and a private backup. The original source is registered/uploaded in private production Storage. The real Admin's human review is persisted: 27/27 confirmed, three manually adjusted and zero unresolved. Hosted finalization, the real Student security check after confirmation, and all 27 confirmed clips pass. **AUDIO VERIFIED + CLIPS GENERATED: PASS.** Publication and official learner/session binding remain gated.
+H71002 is unpublished. Audio authoring is complete and unchanged: 27 confirmed, Q13/Q16/Q26 manually adjusted, zero unresolved, one original run and 27 valid clips. The current official learner implementation below supersedes the earlier missing-transport audit, which is retained as history. Global Speaking and scheduler remain disabled; no real H71002 learner attempt has been created.
 
-## Official production integration audit — 2026-10-02 (Asia/Bangkok)
+## Official learner implementation — 2026-10-02, from PR #36 HEAD 9d48f98
+
+The existing courses, selected lesson access, official assignment/question versions, attempts, submission answers, private recording pipeline, teacher grading and result publication are reused. H71002 has a separate `exam-H71002` internal delivery container; existing HSK lessons and history are not converted. Intermediate and Advanced have no invented exams or grants.
+
+Production schema reconciliation and secret-free ignored backups preceded each migration. The previously missing central registry migration and four forward HSKK migrations are applied: official delivery, sessions, guarded publication and historical session loading. Applied migrations were not rewritten. Before/after counts remain: three existing attempts, four HSK enrollments, 26 HSK lesson access rows, one private original source, authoring revision 159 and zero scheduler jobs. Backups are in ignored `test-results/hskk/` (`delivery-before-schema-backup.json`, `before-delivery-ddl.json`, `before-sessions-ddl.json`, `before-publication-ddl.json`, `before-history-ddl.json`); they contain no JWTs, credentials or signed/private URLs.
+
+At this implementation checkpoint production registry preparation, clip storage and the selected learner grant are **pending the new deployment**. The selected real account is **BachHuu**, uniquely matched to an APPROVED STUDENT profile. Only that account is authorized for the controlled H71002 grant. No global Speaking gate or scheduler activation is used.
+
+| Checkpoint | LOCAL evidence | HOSTED evidence |
+| --- | --- | --- |
+| Exam/version | PASS — existing immutable assignment/version model, idempotent preparation | Schema applied; actual registry preparation pending |
+| Question versions | PASS — 27 stable UUIDs per version and immutable membership | Actual binding pending |
+| Audio delivery | PASS — exact existing ZIP, each clip hash, independent stored-byte verification, current-window owner authorization | Private bucket/policies installed; actual 27-clip upload pending |
+| Learner access | PASS — approved selected enrollment plus H71002-only controlled grant | BachHuu selected; actual grant pending |
+| Session | PASS — real API/transport implemented, server start/deadline, ordered preflight, no live attempt before prerequisites | Real learner session NOT TESTED before manual exam publication |
+| Submission | PASS — 27 owner/attempt/question-bound confirmed recordings; idempotent finish, automatic submission | Real learner submission NOT TESTED |
+| Admin playback | PASS — submitted H71002 recordings use existing conversion/Drive archive/private Admin player | No real H71002 recording yet; NOT TESTED |
+| Grading | PASS — existing manual grade/regrade RPC and UI | No real H71002 grading; NOT TESTED |
+| Result publication | PASS — existing immutable publication; no learner score/feedback before teacher publication | No real H71002 result; NOT TESTED |
+
+### Delivery, timing and privacy
+
+The new same-origin `/api/hskk-session` uses Supabase Auth and the current approved Student profile; SQL independently checks selected enrollment/access, the explicit controlled grant and publication. Student projections omit original source hash/path, run/boundaries/confidence/audit, authoring revisions and audio-question transcripts. The private `hskk-prompt-clips` bucket has no Student read/list/signed-URL policy. Only the current LISTENING question of the owner's published pinned session can stream its verified clip through the server. The full original MP3 remains private authoring-only.
+
+A preflight is separate from a live attempt. Candidate/device/microphone/readiness/structure must precede COUNTDOWN. The authoritative immutable server timeline drives recording and automatic advance. Blob sealing, owner/attempt-scoped IndexedDB durability and uploads remain queued without delaying the next question. The 30-minute upload recovery grace does not extend the exam's response windows. Duplicate retries retain one request/recording identity; rerecording is denied. HSKK-specific Storage authorization denies the owner playback of both raw and converted recordings while preserving unrelated recording behavior. Admin reads converted audio only after submission. No global worker schedule is enabled; the existing worker can process only the explicitly selected submitted H71002 recordings.
+
+The existing teacher grade model uses an internal manual `teacher_review` criterion on its 0–10 storage scale and the existing normalized result. This is **not an asserted official HSKK scoring rubric or automatic score**. Teacher feedback alone is projected after result publication; private grade notes remain private. Existing attempts and their original question snapshots remain immutable; the account submission history links to the pinned HSKK renderer rather than the generic recorder.
+
+The central Admin provides version preparation, upload of the existing reviewed ZIP, selected-learner grant and runtime verification. Publication validates 27 immutable UUID bindings, source/review provenance, all 27 independently verified stored clips, real approved selected access and the server runtime. The sole **LƯU & XUẤT BẢN** action calls the server gate. A browser boolean and the legacy generic publication RPC cannot bypass it. Publication is a separate manual human action and has not been performed.
+
+### Validation scope
+
+Full existing tests: **210/210 PASS**. The forward historical/catalog correction additionally passes the relevant four DB tests. Lint, build, study validator and all 30 canonical lessons pass. Existing HSKK and central Admin browser suites pass at 390/768/1366px. The new delivery browser check also passes at those widths: 27 recordings, automatic advance/submission, no learner recording playback controls and no overflow. Its transport and microphone are **LOCAL SYNTHETIC**; actual renderer, MediaRecorder and IndexedDB are used. It is not hosted end-to-end evidence. The actual downloaded production ZIP separately passes 27-file hash inspection without regenerating any clip.
+
+CI and exact new production deployment evidence are recorded in the follow-up below. **STOP before automatic exam publication, real full-exam learner testing, PR merge, global Speaking or scheduler activation.** A real full-duration microphone exam, submitted Admin playback/teacher grading and published-result check remain human/hosted checks after manual H71002 publication.
+
+## Historical official production integration audit — 2026-10-02 (Asia/Bangkok)
 
 **BLOCKED; the user's explicit STOP conditions apply. H71002 was not published.** This follow-up starts at PR #36 HEAD `9b43944` and audits the existing production schema before any catalog/access/session mutation. Audio authoring remains complete and was not reopened or redesigned. The read-only production audit at **`2026-10-02T08:15:33.412984Z` / 15:15:33 Asia/Bangkok** still finds revision **159**, 27 verified questions, adjustments **Q13/Q16/Q26**, 27 clip provenance records and one original run. All **27 `version_id` values are still null** in this unpublished authoring draft; they are not official question-version UUIDs.
 

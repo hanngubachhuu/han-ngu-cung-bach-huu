@@ -80,7 +80,16 @@ export function mountAssignments(root, profile) {
           }
         };
       for (const button of root.querySelectorAll("[data-open]"))
-        button.onclick = () => open(button.dataset.open);
+        button.onclick = () => {
+          const previous = mine.find((a) => a.id === button.dataset.open);
+          if (previous?.lesson_id === "exam-H71002") {
+            location.href =
+              "hskk-de-thi.html?exam=H71002&attempt=" +
+              encodeURIComponent(previous.id);
+            return;
+          }
+          open(button.dataset.open);
+        };
       for (const [selector, action] of [
         ["[data-catalog-prev]", () => catalogPage--],
         ["[data-catalog-next]", () => catalogPage++],

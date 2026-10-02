@@ -215,19 +215,36 @@ export class HSKKExamEngine {
       this.frame = next;
       const q = this.question();
       if (next.state === "LISTENING") {
-        const elapsed =
-          (this.now() - this.session.server_started_at - next.start) / 1000;
-        void this.audio
-          .playSegment(this.exam.audio.url, {
-            ...q.audio_segment,
-            start_seconds: Math.min(
-              q.audio_segment.end_seconds,
-              q.audio_segment.start_seconds + Math.max(0, elapsed),
-            ),
-          })
-          .catch(() =>
-            this.onChange({ ...this.view(), recording_status: "ERROR" }),
-          );
+        if (this.exam.delivery_mode === "private_clips") {
+          const listening = next;
+          void this.audio
+            .playPrompt(q, () =>
+              Math.max(
+                0,
+                (this.now() -
+                  this.session.server_started_at -
+                  listening.start) /
+                  1000,
+              ),
+            )
+            .catch(() =>
+              this.onChange({ ...this.view(), recording_status: "ERROR" }),
+            );
+        } else {
+          const elapsed =
+            (this.now() - this.session.server_started_at - next.start) / 1000;
+          void this.audio
+            .playSegment(this.exam.audio.url, {
+              ...q.audio_segment,
+              start_seconds: Math.min(
+                q.audio_segment.end_seconds,
+                q.audio_segment.start_seconds + Math.max(0, elapsed),
+              ),
+            })
+            .catch(() =>
+              this.onChange({ ...this.view(), recording_status: "ERROR" }),
+            );
+        }
       }
       if (next.state === "RECORDING" && !this.answered.has(q.id)) {
         // A recovered session cannot manufacture audio for already elapsed questions.
@@ -248,6 +265,21 @@ export class HSKKExamEngine {
     }
     this.frame = next;
     this.onChange(this.view());
+    if (
+      this.transport.production &&
+      next.state === "COMPLETED" &&
+      Object.keys(this.recordings).length === this.exam.questions.length &&
+      !this.submitting
+    ) {
+      this.submitting = true;
+      void this.submit()
+        .catch(() =>
+          this.onChange({ ...this.view(), recording_status: "ERROR" }),
+        )
+        .finally(() => {
+          this.submitting = false;
+        });
+    }
   }
   view() {
     return {

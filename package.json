@@ -18,6 +18,7 @@
   "dependencies": {
     "@supabase/supabase-js": "2.57.4",
     "hanzi-writer": "3.7.3",
+    "jszip": "3.10.1",
     "mammoth": "1.13.0",
     "parse5": "8.0.0",
     "pdfjs-dist": "6.3.289",
@@ -31,7 +32,6 @@
     "eslint": "9.36.0",
     "globals": "16.4.0",
     "hanzi-writer-data": "2.0.1",
-    "jszip": "3.10.1",
     "playwright": "1.62.1",
     "prettier": "3.6.2",
     "supabase": "2.117.0"

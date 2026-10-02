@@ -23,6 +23,13 @@ export async function mountExamExperience(
   const audioElement = document.createElement("audio");
   audioElement.preload = "metadata";
   const player = new ExamAudioPlayer(audioElement);
+  if (transport.production)
+    player.playPrompt = (question, offset) =>
+      player.playPrivatePrompt(
+        () => transport.prompt(question.version_id),
+        question.prompt_audio.duration_ms / 1000,
+        offset,
+      );
   const engine = new HSKKExamEngine({
     exam,
     candidateId: candidate.id,
@@ -63,7 +70,7 @@ export async function mountExamExperience(
     RECORDING: "● Đang ghi âm…",
     PREPARATION: "Thời gian chuẩn bị",
     COMPLETED: "Bài thi thử đã hoàn thành.",
-    SUBMITTED: "Bài thi thử đã được nộp.",
+    SUBMITTED: transport.production ? "Đã nộp bài" : "Bài thi thử đã được nộp.",
     GRADED: "Chưa công bố kết quả.",
     PUBLISHED: "Đã công bố kết quả.",
   };
@@ -115,7 +122,11 @@ export async function mountExamExperience(
               `<p lang="zh" class="hskk-question">${q.number}. ${esc(q.prompt)}</p>`,
           )
           .join("");
-      if (view.state === "COMPLETED")
+      if (view.state === "COMPLETED") {
+        if (transport.production)
+          message(
+            "Đang lưu các bản ghi và nộp bài. Giữ trang mở cho đến khi hiện Đã nộp bài.",
+          );
         button(preview ? "Kết thúc xem trước" : "Nộp bài thi thử", async () => {
           if (preview) {
             message(
@@ -123,11 +134,12 @@ export async function mountExamExperience(
             );
           } else await engine.submit();
         });
+      }
       if (["SUBMITTED", "GRADED", "PUBLISHED"].includes(view.state))
         void engine.result().then((result) => {
           message(result.message);
           if (result.status === "published")
-            body.innerHTML += `<p>Điểm: ${esc(result.score)}</p><p>${esc(result.feedback)}</p>`;
+            body.innerHTML += `<p>Điểm: ${esc(result.score)}</p>${Array.isArray(result.feedback) ? result.feedback.map((q, i) => `<p>Câu ${i + 1}: ${esc(q.feedback)}</p>`).join("") : `<p>${esc(result.feedback)}</p>`}`;
         });
       return;
     }
@@ -238,7 +250,33 @@ export async function mountExamExperience(
         ),
       );
   window.addEventListener("online", reconnect);
-  await engine.recover();
+  // Recover a live timeline without creating another attempt or resetting time.
+  if (transport.production) {
+    const recovered = await transport.loadSession();
+    transport.loadSession = async () => transport.refreshSession();
+    if (
+      recovered.server_started_at &&
+      !["SUBMITTED", "GRADED", "PUBLISHED"].includes(recovered.state)
+    ) {
+      root.innerHTML =
+        '<p>Đang khôi phục bài thi. Thời gian vẫn tiếp tục.</p><button class="st-button" data-resume>Cho phép microphone và khôi phục</button>';
+      await new Promise((resolve) => {
+        root.querySelector("[data-resume]").onclick = async () => {
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            recorder = new ExamRecorder(stream);
+            resolve();
+          } catch {
+            root.querySelector("p").textContent =
+              "Cần quyền microphone để khôi phục ghi âm. Thời gian thi vẫn tiếp tục.";
+          }
+        };
+      });
+    }
+    transport.loadSession = async () => recovered;
+    await engine.recover();
+    transport.loadSession = async () => transport.refreshSession();
+  } else await engine.recover();
   interval = setInterval(async () => {
     if (ticking) return;
     ticking = true;

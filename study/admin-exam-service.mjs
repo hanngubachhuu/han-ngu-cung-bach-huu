@@ -44,3 +44,28 @@ export async function hskkAdminRequest(
   if ((await getSession())?.user.id !== ownerId) throw Error("ACCOUNT_CHANGED");
   return data;
 }
+export async function hskkDeliveryRequest(
+  code,
+  action = "get",
+  { ownerId, body } = {},
+) {
+  const session = await getSession();
+  if (!session || session.user.id !== ownerId) throw Error("ACCOUNT_CHANGED");
+  const res = await fetch(
+    "./api/hskk-delivery?" + new URLSearchParams({ exam: code, action }),
+    {
+      method: body ? "POST" : "GET",
+      cache: "no-store",
+      headers: {
+        Authorization: "Bearer " + session.access_token,
+        ...(body ? { "Content-Type": "application/json" } : {}),
+      },
+      ...(body ? { body: JSON.stringify(body) } : {}),
+      signal: AbortSignal.timeout(120000),
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) throw Error(data.error);
+  if ((await getSession())?.user.id !== ownerId) throw Error("ACCOUNT_CHANGED");
+  return data;
+}

@@ -2,6 +2,7 @@ export class ExamAudioPlayer {
   constructor(audio) {
     this.audio = audio;
     this.stopCurrent = null;
+    this.generation = 0;
   }
   async playSegment(url, segment) {
     if (!segment?.verified || !(segment.end_seconds > segment.start_seconds))
@@ -57,8 +58,52 @@ export class ExamAudioPlayer {
     });
   }
   stop() {
+    this.generation++;
+    this.cancelMetadata?.();
     this.audio.pause();
     this.stopCurrent?.();
+  }
+  async playPrivatePrompt(load, duration, offset) {
+    this.stop();
+    const generation = this.generation;
+    const blob = await load();
+    if (generation !== this.generation || offset() >= duration) return;
+    const url = URL.createObjectURL(blob);
+    try {
+      const audio = this.audio;
+      audio.src = url;
+      audio.load();
+      if (audio.readyState < 1)
+        await new Promise((resolve, reject) => {
+          const clean = () => {
+            clearTimeout(timeout);
+            audio.removeEventListener("loadedmetadata", ready);
+            audio.removeEventListener("error", fail);
+            this.cancelMetadata = null;
+          };
+          const ready = () => {
+            clean();
+            resolve();
+          };
+          const fail = () => {
+            clean();
+            reject(Error("AUDIO_UNAVAILABLE"));
+          };
+          const timeout = setTimeout(fail, 10000);
+          this.cancelMetadata = ready;
+          audio.addEventListener("loadedmetadata", ready);
+          audio.addEventListener("error", fail);
+        });
+      if (generation !== this.generation || offset() >= duration) return;
+      // The loader's latency consumes the same listening window.
+      await this.playSegment(url, {
+        verified: true,
+        start_seconds: Math.min(duration, offset()),
+        end_seconds: duration,
+      });
+    } finally {
+      URL.revokeObjectURL(url);
+    }
   }
 }
 export class ExamRecorder {

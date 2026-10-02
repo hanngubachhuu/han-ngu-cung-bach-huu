@@ -13,6 +13,7 @@ import {
 } from "./assignment-service.mjs";
 import { escapeHtml as esc } from "./core.mjs";
 import { getClient, getSession } from "./auth.mjs";
+import { hskkDeliveryRequest } from "./admin-exam-service.mjs";
 import { mountDistractorGenerator } from "./distractor-admin.mjs";
 import {
   QuestionWriteSession,
@@ -236,6 +237,34 @@ export function mountAssignmentAdmin(root, profile, { mode = "legacy" } = {}) {
         ${editable ? '<div class="account-actions assignment-sticky"><button class="st-button primary" type="submit">Lưu điểm</button><button class="st-button" type="button" data-preview>Xem trước kết quả</button><button class="st-button primary" type="button" data-publish disabled>Công bố kết quả</button></div>' : grade ? `<label>Lý do chấm lại<input data-reason maxlength="1000" required></label><label>Phiên bản chấm mới cho một câu<select data-new-key><option value="">Giữ phiên bản chấm hiện tại</option>${revisedKeys.map((k) => `<option value="${esc(k.original)}:${esc(k.question.id)}">Câu ${k.position} · ${text(k.question.prompt)}</option>`).join("")}</select></label><button class="st-button" type="button" data-regrade>Tạo lần chấm lại</button>` : "<p>Bài đang làm, chưa có bản chấm.</p>"}</form><div data-preview-output></div>`;
       const dirty = new Set(),
         form = content.querySelector("[data-grades]");
+      if (data.lesson_id === "exam-H71002" && data.state === "submitted") {
+        const process = document.createElement("button");
+        process.type = "button";
+        process.className = "st-button";
+        process.textContent = "Chuẩn bị audio để nghe và chấm";
+        process.onclick = async () => {
+          process.disabled = true;
+          try {
+            let remaining = 27;
+            while (active && remaining > 0) {
+              const result = await hskkDeliveryRequest("H71002", "process", {
+                ownerId: profile.user_id,
+                body: { attempt_id: data.attempt_id },
+              });
+              remaining = result.remaining || 0;
+              if (!result.processed && remaining)
+                throw Error("AUDIO_PROCESSING");
+              process.textContent = `Đang chuẩn bị audio · còn ${Math.max(0, remaining - 1)} câu`;
+            }
+            if (active) await inspect(id);
+          } catch (error) {
+            report(error);
+            process.disabled = false;
+            process.textContent = "Thử chuẩn bị audio lại";
+          }
+        };
+        form.before(process);
+      }
       for (const node of content.querySelectorAll(
         "[data-recording-playback]",
       )) {

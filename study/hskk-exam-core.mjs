@@ -43,6 +43,7 @@ export function validateExam(exam, { playable = false } = {}) {
   );
   requireValue(
     exam.source_type !== "official" ||
+      exam.delivery_mode === "private_clips" ||
       (exam.provenance?.document &&
         exam.provenance?.audio &&
         exam.provenance?.source_version),
@@ -102,7 +103,13 @@ export function validateExam(exam, { playable = false } = {}) {
         typeof q.allow_rerecord === "boolean",
       "INVALID_RECORDING_RULES",
     );
-    if (q.prompt_mode === "audio" && (playable || q.audio_segment)) {
+    if (exam.delivery_mode === "private_clips") {
+      requireValue(
+        /^[0-9a-f-]{36}$/.test(q.version_id || "") &&
+          positive(q.prompt_audio?.duration_ms),
+        "QUESTION_VERSION_MISMATCH",
+      );
+    } else if (q.prompt_mode === "audio" && (playable || q.audio_segment)) {
       const a = q.audio_segment;
       requireValue(
         (!playable || a?.verified === true) &&
@@ -119,7 +126,8 @@ export function validateExam(exam, { playable = false } = {}) {
   }
   if (playable)
     requireValue(
-      exam.audio?.url && positive(exam.timing?.countdown_seconds),
+      (exam.delivery_mode === "private_clips" || exam.audio?.url) &&
+        positive(exam.timing?.countdown_seconds),
       "INVALID_AUDIO",
     );
   return exam;
@@ -149,7 +157,9 @@ export function buildTimeline(exam) {
       if (q.prompt_mode === "audio")
         add(
           "LISTENING",
-          q.audio_segment.end_seconds - q.audio_segment.start_seconds,
+          exam.delivery_mode === "private_clips"
+            ? q.prompt_audio.duration_ms / 1000
+            : q.audio_segment.end_seconds - q.audio_segment.start_seconds,
           { section_id: s.id, question_id: q.id },
         );
       add(q.auto_start ? "RECORDING" : "READY_TO_RESPOND", q.response_seconds, {

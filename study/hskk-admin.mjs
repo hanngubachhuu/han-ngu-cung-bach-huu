@@ -4,7 +4,11 @@ import { mountAudioReview } from "./hskk-audio-review.mjs";
 import { reviewSummary, checkFinalization } from "./hskk-review-validation.mjs";
 import { levels } from "./hskk-exam-core.mjs";
 import { mountExamEditor } from "./admin-exam-editor.mjs";
-import { adminExamCommand, hskkAdminRequest } from "./admin-exam-service.mjs";
+import {
+  adminExamCommand,
+  hskkAdminRequest,
+  hskkDeliveryRequest,
+} from "./admin-exam-service.mjs";
 
 // Mounted source authoring: one central account gate and the existing audio engine.
 export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
@@ -23,6 +27,20 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
     contentChanges = 0,
     audioPendingChange = 0,
     contentPendingChange = 0;
+  let delivery,
+    readiness = { ready: false };
+  const deliveryApi = (action, body) =>
+    hskkDeliveryRequest(code, action, { ownerId: profile.user_id, body });
+  async function refreshDelivery() {
+    delivery = await deliveryApi("get");
+    const c = await getClient();
+    const checked = await c.rpc("hskk_publication", {
+      command: "readiness",
+      payload: { exam_code: code, version_id: delivery.version_id },
+    });
+    readiness = checked.error ? { ready: false } : checked.data;
+    editor?.refreshGate();
+  }
   const ownerId = profile.user_id;
   const api = (action, options = {}) =>
     hskkAdminRequest(code, action, { ownerId, ...options });
@@ -71,7 +89,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
       editor.state.model.backend_available === false ||
       contentSaving
     )
-      return;
+      return false;
     contentSaving = true;
     try {
       if (!contentPending) {
@@ -87,16 +105,18 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         contentPending,
         ownerId,
       );
-      if (!alive) return;
+      if (!alive) return false;
       const newer = contentChanges > contentPendingChange;
       editor.state.model.revision = saved.revision;
       contentPending = null;
       report("Đã tự động lưu nội dung đang kiểm tra.");
       if (newer) contentTimer = setTimeout(saveContent, 600);
+      return !newer;
     } catch {
       report(
         "Chưa lưu được nội dung. Thay đổi đang được giữ trong lần mở này.",
       );
+      return false;
     } finally {
       contentSaving = false;
     }
@@ -153,14 +173,24 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
           const s = reviewSummary(source),
             gate = checkFinalization(source);
           return {
-            ready: gate.ready && source.publish_readiness?.ready === true,
-            message: `Audio: ${s.confirmed}/${s.total} câu đã xác nhận${s.needs_review ? ` · ${s.needs_review} câu chưa xác nhận` : ""}. ${source.publish_readiness?.reasons?.join(" ") || "Đề chưa được kết nối với phiên thi chính thức."}`,
+            ready: gate.ready && readiness?.ready === true,
+            message: `Audio: ${s.confirmed}/${s.total} câu đã xác nhận${s.needs_review ? ` · ${s.needs_review} câu chưa xác nhận` : ""}. ${readiness?.ready ? "Đề đã đủ điều kiện xuất bản." : "Hoàn tất chuẩn bị đề, audio câu và quyền học viên trước khi xuất bản."}`,
           };
         },
-        publish: async () => {
-          throw Error("HSKK_OFFICIAL_BINDING_REQUIRED");
+        publish: async (body) => {
+          await adminExamCommand("save_working", body, ownerId);
+          await deliveryApi("prepare", {});
+          await refreshDelivery();
+          const client = await getClient();
+          const { data, error } = await client.rpc("hskk_publication", {
+            command: "publish",
+            payload: { exam_code: code, version_id: delivery.version_id },
+          });
+          if (error) throw Error("HSKK_NOT_READY");
+          return data;
         },
         onChange: () => {
+          readiness = { ready: false };
           contentChanges++;
           clearTimeout(contentTimer);
           contentTimer = setTimeout(saveContent, 600);
@@ -201,6 +231,98 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
       input.accept = ".mp3,audio/mpeg";
       label.append(input);
       editor.audioPanel.append(label);
+      const deliveryPanel = document.createElement("section");
+      deliveryPanel.innerHTML =
+        '<h3>Chuẩn bị đề cho học viên</h3><p data-delivery-status>Đang kiểm tra…</p><button class="st-button" data-prepare>Chuẩn bị phiên bản đề</button><label>Audio câu đã duyệt <input type="file" accept=".zip,application/zip" data-clips></label><label>Học viên kiểm thử <select data-learner><option value="">Chọn học viên</option></select></label><button class="st-button" data-grant>Cấp quyền đề này</button><button class="st-button" data-runtime>Kiểm tra dịch vụ thi</button>';
+      editor.audioPanel.append(deliveryPanel);
+      const deliveryStatus = deliveryPanel.querySelector(
+        "[data-delivery-status]",
+      );
+      const showDelivery = async () => {
+        await refreshDelivery();
+        if (alive)
+          deliveryStatus.textContent = delivery.prepared
+            ? `${delivery.question_count} câu đã gắn phiên bản · ${delivery.verified_clips}/27 audio đã kiểm tra · ${delivery.controlled_students} học viên được cấp quyền.`
+            : "Chưa chuẩn bị phiên bản cho học viên.";
+      };
+      deliveryPanel.querySelector("[data-prepare]").onclick = async (event) => {
+        event.currentTarget.disabled = true;
+        try {
+          if (!(await saveContent())) throw Error("CONTENT_NOT_SAVED");
+          await deliveryApi("prepare", {});
+          await showDelivery();
+        } catch {
+          deliveryStatus.textContent =
+            "Chưa chuẩn bị được phiên bản đề. Kiểm tra nội dung và kết nối rồi thử lại.";
+        } finally {
+          event.target.disabled = false;
+        }
+      };
+      deliveryPanel.querySelector("[data-clips]").onchange = async (event) => {
+        const input = event.target;
+        input.disabled = true;
+        try {
+          const file = input.files[0];
+          if (!file || file.size > 4 * 1024 * 1024) throw Error();
+          const bytes = new Uint8Array(await file.arrayBuffer());
+          let binary = "";
+          for (let i = 0; i < bytes.length; i += 16384)
+            binary += String.fromCharCode(...bytes.subarray(i, i + 16384));
+          deliveryStatus.textContent = "Đang lưu và kiểm tra 27 audio câu…";
+          await deliveryApi("upload", { bytes: btoa(binary) });
+          await showDelivery();
+        } catch {
+          deliveryStatus.textContent =
+            "Chưa hoàn tất audio câu. Chọn đúng ZIP đã duyệt; có thể tải lại cùng file để tiếp tục kiểm tra.";
+        } finally {
+          input.disabled = false;
+        }
+      };
+      deliveryPanel.querySelector("[data-grant]").onclick = async () => {
+        try {
+          const id = deliveryPanel.querySelector("[data-learner]").value;
+          if (!id) return;
+          const c = await getClient();
+          const { error } = await c.rpc("hskk_delivery_admin", {
+            command: "grant_access",
+            payload: { exam_code: code, student_id: id },
+          });
+          if (error) throw error;
+          await showDelivery();
+        } catch {
+          deliveryStatus.textContent =
+            "Chưa cấp được quyền. Chọn học viên đã được duyệt rồi thử lại.";
+        }
+      };
+      deliveryPanel.querySelector("[data-runtime]").onclick = async () => {
+        try {
+          await deliveryApi("runtime", {});
+          await showDelivery();
+        } catch {
+          deliveryStatus.textContent =
+            "Dịch vụ thi chưa sẵn sàng. Đề vẫn chưa được xuất bản.";
+        }
+      };
+      try {
+        const c = await getClient();
+        const students = await c
+          .from("profiles")
+          .select("user_id,full_name")
+          .eq("role", "STUDENT")
+          .eq("status", "APPROVED")
+          .order("full_name")
+          .limit(100);
+        for (const student of students.data || []) {
+          const option = document.createElement("option");
+          option.value = student.user_id;
+          option.textContent = student.full_name;
+          deliveryPanel.querySelector("[data-learner]").append(option);
+        }
+        await showDelivery();
+      } catch {
+        deliveryStatus.textContent =
+          "Chưa kiểm tra được việc chuẩn bị đề. Thử mở lại đề.";
+      }
       input.onchange = async () => {
         input.disabled = true;
         try {
