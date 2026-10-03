@@ -9,6 +9,9 @@
 - General Admin makeup migration applied as production `20261003183857 / assignment_admin_makeup`. Before/after row hashes, counts, Storage policies, original source/authoring, enrollments/access, both session histories, submissions/results/grades all match exactly. Speaking remains false; cron jobs zero. Application rollout remains pending the completion-fix CI.
 - Clarification: the original recovered attempt was submitted 27/27 at `17:52:08.881719Z`; the human Admin subsequently published its result at `18:06:16.972882Z`. That human publication supersedes the earlier snapshot saying its result was still private. The agent did not publish, grade or alter that result.
 
+- Hosted Admin processing revealed error 42703: local assignment-version record `v` shadows relation alias `v` in the ordinary-session processing query. The older makeup-specific branch bypassed this defect. Forward migration `20261003185205_hskk_admin_recording_process_alias.sql` changes only that query alias while preserving the function OID and ACL. Regression reproduces the same error without a makeup receipt, then six SQL/security tests PASS, including Student denial and the exact 27 Admin recording identities. Production hotfix application and playback verification pending.
+- Completion commit `80719f6` CI passed unit/SQL/lint/build but its browser job expected the existing local-trial confirmation wording. Preserve that wording; the existing three-width HSKK browser now PASS. Do not deploy the failed-CI commit; final corrected application CI pending.
+
 Next: deploy the exact tested completion-fix application after CI, verify hosted Admin receipt/makeup controls and real recording playback, and obtain fresh real-Student privacy/completion evidence. Preserve all original source/history, no more test attempts, no automatic result publication, Speaking/scheduler off.
 
 ## Hosted makeup recovery and general Admin authority — 2026-10-04

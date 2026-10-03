@@ -39,7 +39,7 @@ export async function deliveryFixture({
       )
     )
       if (
-        !/hskk_missing_recording_makeup|hskk_makeup_history_guard|assignment_admin_makeup/.test(
+        !/hskk_missing_recording_makeup|hskk_makeup_history_guard|assignment_admin_makeup|hskk_admin_recording_process_alias/.test(
           file,
         )
       )
@@ -52,6 +52,8 @@ export async function deliveryFixture({
     if (!bufferedPrompts && file.includes("hskk_makeup_history_guard"))
       continue;
     if (!bufferedPrompts && file.includes("assignment_admin_makeup")) continue;
+    if (!bufferedPrompts && file.includes("hskk_admin_recording_process_alias"))
+      continue;
     if (file.includes("learner_accounts_and_access"))
       await db.exec(
         `insert into public.lesson_content(id,level,lesson_no,title_zh,title_vi,content)values('hsk1_bai1',1,1,'你好','Bài học','{}');insert into public.student_lesson_access(user_id,lesson_id)values('${student}','hsk1_bai1');`,

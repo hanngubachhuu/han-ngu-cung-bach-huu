@@ -325,6 +325,12 @@ test("synthetic elapsed attempt: 27 identities, single recording, denial of own 
     const pending = await session("result", { attempt_id: id });
     assert.equal(pending.published_at, undefined);
     assert.equal(pending.score, undefined);
+    await assert.rejects(
+      db.query("select public.hskk_publication('process_list',$1) value", [
+        { exam_code: "H71002", attempt_id: id },
+      ]),
+      /ADMIN_REQUIRED/,
+    );
     await db.query(
       "select set_config('storage.operation','object.get_authenticated',false)",
     );
@@ -335,6 +341,19 @@ test("synthetic elapsed attempt: 27 identities, single recording, denial of own 
         )
       ).rows.length,
       0,
+    );
+    await as(admin);
+    const processList = (
+      await db.query(
+        "select public.hskk_publication('process_list',$1) value",
+        [{ exam_code: "H71002", attempt_id: id }],
+      )
+    ).rows[0].value;
+    assert.equal(processList.recording_ids.length, 27);
+    assert.deepEqual(
+      new Set(processList.recording_ids),
+      new Set(recordings),
+      "Admin processing must work for an ordinary submitted session, without a makeup receipt.",
     );
     await db.exec("reset role");
     const grades = (

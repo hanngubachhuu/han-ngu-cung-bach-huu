@@ -183,7 +183,7 @@ export async function mountExamExperience(
       root.dataset.question = "";
       root.classList.remove("hskk-cbt-root", "cbt-font-large");
       if (!preview) document.body.classList.remove("hskk-cbt-active");
-      root.innerHTML = `<section class="hskk-card" data-submission-complete aria-labelledby="hskkSubmissionTitle"><p class="st-eyebrow">${esc(exam.exam_code)}</p><h1 id="hskkSubmissionTitle" tabindex="-1">${t("Đã nộp bài")}</h1><p>${t(`Đã lưu ${view.saved}/${view.total} câu.`)}</p><p>${t("Microphone đã tắt. Bạn có thể rời trang.")}</p><p data-message role="status" aria-live="polite">${t("Đang kiểm tra kết quả…")}</p><div data-result></div><div class="account-actions"><a class="st-button primary" href="tai-khoan.html#officialAssignments">${t("Về bài nộp của tôi")}</a><a class="st-button" href="hskk.html">${t("Về danh sách đề HSKK")}</a></div></section>`;
+      root.innerHTML = `<section class="hskk-card" data-submission-complete aria-labelledby="hskkSubmissionTitle"><p class="st-eyebrow">${esc(exam.exam_code)}</p><h1 id="hskkSubmissionTitle" tabindex="-1">${t(transport.production ? "Đã nộp bài" : "Bài thi thử đã được nộp.")}</h1><p>${t(`Đã lưu ${view.saved}/${view.total} câu.`)}</p><p>${t("Microphone đã tắt. Bạn có thể rời trang.")}</p><p data-message role="status" aria-live="polite">${t("Đang kiểm tra kết quả…")}</p><div data-result></div><div class="account-actions"><a class="st-button primary" href="tai-khoan.html#officialAssignments">${t("Về bài nộp của tôi")}</a><a class="st-button" href="hskk.html">${t("Về danh sách đề HSKK")}</a></div></section>`;
       root.querySelector("h1").focus({ preventScroll: true });
       void engine
         .result()
