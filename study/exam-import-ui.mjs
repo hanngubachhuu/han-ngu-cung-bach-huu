@@ -29,7 +29,7 @@ const errors = {
 const message = (e) =>
   errors[e.message] ||
   "Chưa hoàn tất thao tác. Bản nháp được giữ; kiểm tra kết nối rồi thử lại.";
-export async function readExamFile(file, ownerId) {
+export async function readExamFile(file, ownerId, { hskkLevel } = {}) {
   if (!/\.(pdf|docx)$/i.test(file.name)) throw Error("DOCUMENT_UNSUPPORTED");
   if (!file.size || file.size > 3 * 1024 * 1024)
     throw Error("DOCUMENT_TOO_LARGE");
@@ -49,8 +49,12 @@ export async function readExamFile(file, ownerId) {
         "Content-Type": "application/json",
         Authorization: "Bearer " + session.access_token,
       },
-      body: JSON.stringify({ filename: file.name, bytes: btoa(binary) }),
-      signal: AbortSignal.timeout(55000),
+      body: JSON.stringify({
+        filename: file.name,
+        bytes: btoa(binary),
+        ...(hskkLevel ? { hskk_level: hskkLevel } : {}),
+      }),
+      signal: AbortSignal.timeout(hskkLevel ? 120000 : 55000),
     },
   );
   const data = await response.json();

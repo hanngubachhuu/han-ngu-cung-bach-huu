@@ -3,6 +3,7 @@ import recordingHandler from "../api/recordings.js";
 import hskkHandler from "../api/hskk-exams.js";
 import hskkDeliveryHandler from "../api/hskk-delivery.js";
 import hskkSessionHandler from "../api/hskk-session.js";
+import hskkImportHandler from "../api/hskk-import.js";
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -37,6 +38,7 @@ http
           "/api/hskk-exams",
           "/api/hskk-delivery",
           "/api/hskk-session",
+          "/api/hskk-import",
         ].includes(url.pathname)
       ) {
         let body = "",
@@ -57,19 +59,21 @@ http
         }
         req.body = body;
         await (
-          url.pathname === "/api/hskk-session"
-            ? hskkSessionHandler
-            : url.pathname === "/api/hskk-delivery"
-              ? hskkDeliveryHandler
-              : url.pathname === "/api/hskk-exams"
-                ? hskkHandler
-                : url.pathname === "/api/exam-import"
-                  ? examImportHandler
-                  : url.pathname === "/api/recordings"
-                    ? recordingHandler
-                    : url.pathname === "/api/account"
-                      ? accountHandler
-                      : handler
+          url.pathname === "/api/hskk-import"
+            ? hskkImportHandler
+            : url.pathname === "/api/hskk-session"
+              ? hskkSessionHandler
+              : url.pathname === "/api/hskk-delivery"
+                ? hskkDeliveryHandler
+                : url.pathname === "/api/hskk-exams"
+                  ? hskkHandler
+                  : url.pathname === "/api/exam-import"
+                    ? examImportHandler
+                    : url.pathname === "/api/recordings"
+                      ? recordingHandler
+                      : url.pathname === "/api/account"
+                        ? accountHandler
+                        : handler
         )(req, res);
         return;
       }

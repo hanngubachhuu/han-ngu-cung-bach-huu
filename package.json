@@ -7,6 +7,7 @@
   },
   "scripts": {
     "audio:install": "node scripts/install-recording-runtime.mjs",
+    "hskk:install": "node scripts/install-hskk-ocr-runtime.mjs",
     "build": "node scripts/render-study-pages.mjs && node scripts/render-account-pages.mjs && node scripts/render-hskk-pages.mjs && node scripts/build-study-data.mjs && node scripts/build-study-reference.mjs && node scripts/build-study-lexicon.mjs && node scripts/build-web.mjs",
     "test": "node --test --test-concurrency=2 tests/*.test.mjs",
     "dev": "node --env-file-if-exists=.env.local scripts/dev-server.mjs",
@@ -16,13 +17,15 @@
     "test:browser": "node scripts/check-study-browser.mjs"
   },
   "dependencies": {
+    "@napi-rs/canvas": "1.0.10",
     "@supabase/supabase-js": "2.57.4",
     "hanzi-writer": "3.7.3",
     "jszip": "3.10.1",
     "mammoth": "1.13.0",
     "parse5": "8.0.0",
     "pdfjs-dist": "6.3.289",
-    "pinyin-pro": "3.27.0"
+    "pinyin-pro": "3.27.0",
+    "tesseract.js": "7.0.0"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",

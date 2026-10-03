@@ -2,12 +2,14 @@ import {
   studentContext,
   sessionCommand,
   readCurrentPrompt,
+  readCurrentPicture,
 } from "../server/hskk-session-service.mjs";
 export const config = { maxDuration: 30 };
 export function createSessionHandler({
   authorize = studentContext,
   command = sessionCommand,
   prompt = readCurrentPrompt,
+  picture = readCurrentPicture,
 } = {}) {
   return async (req, res) => {
     res.setHeader("Cache-Control", "private, no-store");
@@ -40,6 +42,17 @@ export function createSessionHandler({
         )
           throw Error("INVALID_REQUEST");
         payload = JSON.parse(raw);
+      }
+      if (
+        ["picture", "makeup_picture"].includes(action) &&
+        req.method === "GET"
+      ) {
+        const image = await picture(userId, payload, undefined, {
+          makeup: action === "makeup_picture",
+        });
+        res.setHeader("Content-Type", "image/jpeg");
+        res.statusCode = 200;
+        return res.end(image);
       }
       if (
         ["prompt", "makeup_prompt"].includes(action) &&

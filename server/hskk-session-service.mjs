@@ -1,5 +1,45 @@
 import { createClient } from "@supabase/supabase-js";
 import { receiptClient, sha256 } from "./hskk-delivery.mjs";
+import fs from "node:fs/promises";
+export async function readCurrentPicture(
+  userId,
+  payload,
+  server = receiptClient(),
+  { makeup = false } = {},
+) {
+  const { data, error } = await server.rpc(
+    makeup ? "hskk_makeup_picture" : "hskk_current_picture",
+    {
+      payload: {
+        owner_id: userId,
+        attempt_id: payload.attempt_id,
+        question_version_id: payload.question_version_id,
+        ...(makeup ? { makeup_window_id: payload.makeup_window_id } : {}),
+      },
+    },
+  );
+  if (
+    error ||
+    !data ||
+    !/^[A-Za-z0-9_-]{1,64}$/.test(data.exam_code) ||
+    !/^q\d+$/.test(data.question_id)
+  )
+    throw Error("PROMPT_DENIED");
+  const bytes = data.bytes
+    ? Buffer.from(data.bytes, "base64")
+    : await fs.readFile(
+        new URL(
+          `./hskk/assets/${data.exam_code}-${data.question_id}.jpg`,
+          import.meta.url,
+        ),
+      );
+  if (
+    bytes.length !== data.picture?.byte_size ||
+    sha256(bytes) !== data.picture.sha256
+  )
+    throw Error("PROMPT_UNAVAILABLE");
+  return bytes;
+}
 export async function studentContext(token, env = process.env) {
   const client = createClient(env.SUPABASE_URL, env.SUPABASE_PUBLISHABLE_KEY, {
     auth: {

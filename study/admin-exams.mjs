@@ -146,6 +146,7 @@ export function mountExamWorkspace(root, profile) {
         panel.dispose = mountHSKKAdmin(content, {
           profile,
           code: id,
+          segmentationPending: entry.segmentation_pending,
           onSaved: () => void load(),
         });
       } else {
@@ -192,14 +193,28 @@ export function mountExamWorkspace(root, profile) {
     creation.innerHTML = `<button class="st-button" data-back-create>← Quay lại Đề thi</button><h3>Tạo đề mới</h3><form data-create-form class="admin-create-form"><label>Loại đề<select name="type"><option value="HSK">HSK</option><option value="HSKK">HSKK</option></select></label><label>Cấp độ<select name="level"></select></label><label>Tên đề<input name="title" required maxlength="200"></label><label>Tệp đề<input name="file" type="file" accept=".pdf,.docx" required></label><p class="st-help">PDF có thể chọn chữ hoặc Word (.docx), tối đa 3 MiB.</p><button class="st-button primary" type="submit">Tạo đề</button><p data-create-status role="status"></p></form>`;
     creation.querySelector("[data-back-create]").onclick = () => showList();
     const form = creation.querySelector("form");
+    const sourceFields = document.createElement("div");
+    sourceFields.innerHTML =
+      '<label>Mã đề HSKK<input name="code" maxlength="64" pattern="[A-Za-z0-9_-]+"></label><label>Âm thanh hoặc video của đề<input name="sourceAudio" type="file" accept=".mp3,.mp4,audio/mpeg,video/mp4"></label><p class="st-help">Hệ thống đọc nội dung và tranh từ PDF/Word (gồm PDF scan), tách âm thanh nếu dùng MP4, rồi đề xuất phân câu. MP3 tối đa 32 MiB, MP4 tối đa 256 MiB. File gốc được giữ riêng; bạn đối chiếu nội dung, thời gian và nghe các đoạn trước khi xác nhận.</p>';
+    form.querySelector("button[type=submit]").before(sourceFields);
+    const sourceOptions = () => {
+      sourceFields.hidden = form.elements.type.value !== "HSKK";
+      form.elements.code.required = form.elements.sourceAudio.required =
+        !sourceFields.hidden;
+      form.elements.title.required = sourceFields.hidden;
+      form.elements.title.closest("label").hidden = !sourceFields.hidden;
+    };
     const options = () => {
       form.elements.level.innerHTML = examLevels[form.elements.type.value]
         .map((l) => `<option value="${l.value}">${l.label}</option>`)
         .join("");
+      sourceOptions();
     };
     form.elements.type.value = selectedType || "HSK";
     options();
     if (selectedLevel) form.elements.level.value = selectedLevel;
+    sourceOptions();
+    form.elements.level.onchange = sourceOptions;
     form.elements.type.onchange = options;
     form.onsubmit = async (e) => {
       e.preventDefault();
@@ -208,9 +223,24 @@ export function mountExamWorkspace(root, profile) {
       if (b.disabled) return;
       b.disabled = true;
       feedback.textContent = "Đang đọc đề…";
+      const selected = {
+        type: form.elements.type.value,
+        level: form.elements.level.value,
+        code: form.elements.code.value.trim(),
+        title: form.elements.title.value,
+        file: form.elements.file.files[0],
+        audio: form.elements.sourceAudio.files[0],
+      };
+      const controls = [...form.querySelectorAll("input,select")].map((n) => [
+        n,
+        n.disabled,
+      ]);
+      for (const [n] of controls) n.disabled = true;
       try {
-        const file = form.elements.file.files[0],
-          document = await readExamFile(file, ownerId);
+        const file = selected.file,
+          document = await readExamFile(file, ownerId, {
+            hskkLevel: selected.type === "HSKK" ? selected.level : undefined,
+          });
         const sha256 = [
           ...new Uint8Array(
             await crypto.subtle.digest("SHA-256", await file.arrayBuffer()),
@@ -219,10 +249,35 @@ export function mountExamWorkspace(root, profile) {
           .map((b) => b.toString(16).padStart(2, "0"))
           .join("");
         if (!alive) return;
+        if (selected.type === "HSKK") {
+          const { createHSKKSource, chooseSourcePictures } = await import(
+            "./hskk-import-ui.mjs"
+          );
+          const sourceDocument =
+            selected.level === "intermediate"
+              ? await chooseSourcePictures(document, sourceFields)
+              : document;
+          if (!alive) return;
+          const model = await createHSKKSource({
+            document: sourceDocument,
+            file,
+            audio: selected.audio,
+            code: selected.code,
+            level: selected.level,
+            ownerId,
+            status: (text) => {
+              feedback.textContent = text;
+            },
+          });
+          select(model.type, model.level, false);
+          await load();
+          await open(model.id, true, model);
+          return;
+        }
         const model = importedExam(document, {
-          type: form.elements.type.value,
-          level: form.elements.level.value,
-          title: form.elements.title.value,
+          type: selected.type,
+          level: selected.level,
+          title: selected.title,
           filename: file.name,
           sha256,
         });
@@ -238,8 +293,13 @@ export function mountExamWorkspace(root, profile) {
             DOCUMENT_TOO_LARGE: "File vượt quá 3 MiB.",
             NO_QUESTIONS:
               "Chưa nhận diện được câu hỏi. Kiểm tra đánh số câu trong file.",
+            PICTURES_REQUIRED:
+              "Chưa xác định được đúng hai tranh trong file đề. Kiểm tra bản PDF/Word gốc trước khi tiếp tục; chưa đăng ký nguồn.",
+            SOURCE_DEFINITION_LOCKED:
+              "Mã đề đã có nguồn. Mở đề đó từ danh sách để tiếp tục; dùng mã riêng cho một nguồn khác.",
           }[e.message] || "Chưa đọc được đề. Giữ file gốc và thử lại.";
       } finally {
+        for (const [n, disabled] of controls) n.disabled = disabled;
         b.disabled = false;
       }
     };

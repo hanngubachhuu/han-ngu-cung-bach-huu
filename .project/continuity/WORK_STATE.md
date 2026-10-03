@@ -1,6 +1,14 @@
 # WORK STATE — HÁN NGỮ CÙNG BÁCH HỮU
 
-## Current checkpoint COMPLETE — 2026-10-04
+## ACTIVE — shared three-level HSKK authoring and hosted verification, 2026-10-04
+
+Human requests the complete shared import/authoring/delivery/session/grading/makeup path for all three levels and actual H80000/H91002 tests, so future same-structure sources require classification/content and segment review rather than code patches. Baseline application da4a57a, documentation 4046647; preserve original H71002 source, authoring run, versions, answers, recordings and published grades/results. No unrelated lesson or UI redesign.
+
+Audit confirms H71002-only delivery API, archive filenames/count, course binding, readiness, publication/processing and controlled-test guards; intermediate images are currently authoring-only and new imports lack a durable source-definition path. Plan: one validated level contract, immutable private source definitions for new Admin imports, generic version-bound delivery plus protected learner images, dynamic counts/course/timing, all-level SQL/API/browser regression and hosted source/security/real human test. Never auto-confirm unknown boundaries or infer source corrections; review current provisional timing/text before publication. Global Speaking/scheduler remain off. No production mutation yet in this phase; record backups and validate local migration before applying.
+
+Implementation now includes local PDF/Word OCR and source-picture extraction, immutable originals and hashed MP4 parts, verified MP4 audio derivatives, generic private canonical definitions, human content/timing receipts, server clip creation/storage with retry, dynamic version-pinned 27/14/6 delivery/session/submission/processing and protected current/preparation/makeup pictures. Real local MP3s produce 27/14/6 unconfirmed proposals; H71002 beep regression fixed without changing its required 27-proposal test. All-level isolated SQL/browser tests and native MediaRecorder/fake-microphone makeup pass. Production full function backup and row/hash/grade/policy snapshots match previous baseline: no live mutation yet. Full final tests/CI/rollout and actual H80000/H91002 trials are still pending. H91002 initial 120-second retelling template must be human-checked against measured 65–70-second source gaps. Details: docs/hskk-shared-workflow-checkpoint.md.
+
+## Previous H71002 checkpoint COMPLETE — 2026-10-04
 
 Production application da4a57a is READY, deployment dpl_21bg8sjMieeE6hGXZKV4dS3DPMVQ; six assets match exact Git source. Both application CI workflows PASS; 238/238 tests, lint/build and responsive/security regressions PASS. Old makeup submitted 27/27; separately authorized real full test submitted 27/27, human audio/microphone/auto-next PASS. Human also verifies the deployed submitted recovery screen and account-history navigation. Actual approved Admin sees the new receipt status, shared missing-only makeup control and privately plays Q1/Q26/Q27.
 

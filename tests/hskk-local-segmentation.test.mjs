@@ -86,6 +86,64 @@ test("second config: ordered measured candidates, partial detection and null unr
   assert.equal(empty.matched, 0);
   assert.ok(empty.questions.every((q) => q.end_ms === null));
 });
+test("adjacent beeps stay with prompts while isolated response-end signals preserve measured timing", () => {
+  const adjacent = structuredClone(analysis);
+  adjacent.speech_regions = [1000, 9000, 17000, 25000].flatMap((start) => [
+    { start_ms: start, end_ms: start + 500 },
+    { start_ms: start + 700, end_ms: start + 1000 },
+  ]);
+  adjacent.cue_tones = adjacent.speech_regions.filter((_, i) => i % 2);
+  assert.equal(proposeSegments(exam, adjacent).matched, 3);
+  const isolated = structuredClone(analysis);
+  isolated.speech_regions = [1000, 11000, 21000, 31000].flatMap((start) => [
+    { start_ms: start, end_ms: start + 1000 },
+    { start_ms: start + 8000, end_ms: start + 8600 },
+  ]);
+  isolated.cue_tones = isolated.speech_regions.filter((_, i) => i % 2);
+  const run = proposeSegments(exam, isolated);
+  assert.equal(run.matched, 3);
+  assert.deepEqual(
+    run.questions.map((q) => q.start_ms),
+    [1000, 11000, 21000],
+  );
+  assert.ok(
+    run.questions.every(
+      (q) => q.status === "NEEDS_REVIEW" && !q.admin_confirmed,
+    ),
+  );
+});
+for (const code of ["H80000", "H91002"]) {
+  const file = `.cache/hskk-sources/${code}.mp3`;
+  let exists = true;
+  try {
+    await fs.access(file);
+  } catch {
+    exists = false;
+  }
+  test(
+    `REAL private ${code}: all ordered proposals remain unconfirmed and source is unchanged`,
+    { skip: !exists },
+    async () => {
+      const config = JSON.parse(
+        await fs.readFile(`server/hskk/${code}.json`, "utf8"),
+      );
+      const bytes = await fs.readFile(file),
+        hash = audioHash(bytes);
+      const run = await new HSKKAudioSegmentationEngine().segment({
+        exam: config,
+        bytes,
+        sourceHash: config.audio.source_audio_id,
+      });
+      assert.equal(run.matched, config.questions.length);
+      assert.ok(
+        run.questions.every(
+          (q) => q.status === "NEEDS_REVIEW" && !q.admin_confirmed,
+        ),
+      );
+      assert.equal(audioHash(await fs.readFile(file)), hash);
+    },
+  );
+}
 test("rerun preserves edits and original proposals; manual override revokes confirmation and appends audit", () => {
   const e = structuredClone(exam),
     r = proposeSegments(e, analysis);

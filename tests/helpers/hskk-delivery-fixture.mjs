@@ -8,6 +8,8 @@ const admin = "00000000-0000-4000-8000-000000000001",
 export async function deliveryFixture({
   controlledClock = false,
   bufferedPrompts = true,
+  examCode = "H71002",
+  sourceCode = examCode,
 } = {}) {
   const db = new PGlite({ extensions: { unaccent, fuzzystrmatch } });
   let controlledNow = Date.now();
@@ -39,7 +41,7 @@ export async function deliveryFixture({
       )
     )
       if (
-        !/hskk_missing_recording_makeup|hskk_makeup_history_guard|assignment_admin_makeup|hskk_admin_recording_process_alias/.test(
+        !/hskk_missing_recording_makeup|hskk_makeup_history_guard|assignment_admin_makeup|hskk_admin_recording_process_alias|hskk_shared_level_workflow/.test(
           file,
         )
       )
@@ -54,6 +56,8 @@ export async function deliveryFixture({
     if (!bufferedPrompts && file.includes("assignment_admin_makeup")) continue;
     if (!bufferedPrompts && file.includes("hskk_admin_recording_process_alias"))
       continue;
+    if (!bufferedPrompts && file.includes("hskk_shared_level_workflow"))
+      continue;
     if (file.includes("learner_accounts_and_access"))
       await db.exec(
         `insert into public.lesson_content(id,level,lesson_no,title_zh,title_vi,content)values('hsk1_bai1',1,1,'你好','Bài học','{}');insert into public.student_lesson_access(user_id,lesson_id)values('${student}','hsk1_bai1');`,
@@ -61,7 +65,7 @@ export async function deliveryFixture({
     let sql = await fs.readFile(new URL(file, dir), "utf8");
     if (
       controlledClock &&
-      /official_assignment_model|official_assignment_commands|hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts|hskk_controlled_test_attempt|hskk_missing_recording_makeup|hskk_makeup_history_guard|assignment_admin_makeup/.test(
+      /official_assignment_model|official_assignment_commands|hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts|hskk_controlled_test_attempt|hskk_missing_recording_makeup|hskk_makeup_history_guard|assignment_admin_makeup|hskk_shared_level_workflow/.test(
         file,
       )
     )
@@ -82,15 +86,17 @@ export async function deliveryFixture({
     (
       await db.query("select public.hskk_delivery_admin($1,$2) value", [
         command,
-        { exam_code: "H71002", ...payload },
+        { exam_code: examCode, ...payload },
       ])
     ).rows[0].value;
   const config = JSON.parse(
     await fs.readFile(
-      new URL("../../server/hskk/H71002.json", import.meta.url),
+      new URL(`../../server/hskk/${sourceCode}.json`, import.meta.url),
       "utf8",
     ),
   );
+  config.exam_code = examCode;
+  config.title = examCode;
   config.audio.segmentation_runs = [{ run_id: crypto.randomUUID() }];
   config.audio.clip_provenance = [];
   for (const q of config.questions) {
@@ -117,24 +123,25 @@ export async function deliveryFixture({
     });
   }
   await db.query(
-    "insert into account_internal.hskk_exam_source_assets(exam_code,sha256,object_path,byte_size,created_by)values('H71002',$1,$2,100,$3)",
+    "insert into account_internal.hskk_exam_source_assets(exam_code,sha256,object_path,byte_size,created_by)values($4,$1,$2,100,$3)",
     [
       config.audio.source_audio_id,
-      "H71002/" + config.audio.source_audio_id + ".mp3",
+      examCode + "/" + config.audio.source_audio_id + ".mp3",
       admin,
+      examCode,
     ],
   );
   await db.query(
     "insert into storage.objects(bucket_id,name,metadata)values('hskk-authoring-sources',$1,$2)",
     [
-      "H71002/" + config.audio.source_audio_id + ".mp3",
+      examCode + "/" + config.audio.source_audio_id + ".mp3",
       { size: 100, mimetype: "audio/mpeg" },
     ],
   );
   await as(admin);
   await db.query("select public.hskk_authoring_draft('save',$1)", [
     {
-      exam_code: "H71002",
+      exam_code: examCode,
       configuration: config,
       source_sha256: config.audio.source_audio_id,
       request_id: crypto.randomUUID(),

@@ -78,6 +78,12 @@ export function productionTransport({ exam, session: initial, ownerId }) {
         { attempt_id: attemptId, question_version_id: qid },
         { binary: true },
       ),
+    picture: (qid) =>
+      call(
+        "picture",
+        { attempt_id: attemptId, question_version_id: qid },
+        { binary: true },
+      ),
     submit: (id) => call("submit", { attempt_id: id }, { method: "POST" }),
     result: (id) => call("result", { attempt_id: id }),
   };

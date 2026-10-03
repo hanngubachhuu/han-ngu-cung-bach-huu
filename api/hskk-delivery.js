@@ -3,6 +3,7 @@ import {
   deliveryCommand,
   prepareDelivery,
   storeExistingClips,
+  storeStagedClip,
   receiptClient,
   controlledTestCommand,
 } from "../server/hskk-delivery.mjs";
@@ -12,7 +13,7 @@ import { createDriveArchive } from "../server/recording-drive.mjs";
 // Importing the actual handler and transport is part of the production bundle;
 // readiness cannot be asserted by a browser-supplied boolean.
 import sessionHandler from "./hskk-session.js";
-async function verifyRuntime(client) {
+async function verifyRuntime(client, code) {
   if (typeof sessionHandler !== "function") throw Error("DELIVERY_NOT_READY");
   await recordingRuntimeHealth();
   await createDriveArchive();
@@ -21,7 +22,7 @@ async function verifyRuntime(client) {
   const { error } = await server.rpc("hskk_runtime_verified", {
     payload: {
       actor: data.user.id,
-      exam_code: "H71002",
+      exam_code: code,
       runtime_version: "hskk-official-v1",
     },
   });
@@ -36,6 +37,7 @@ export function createDeliveryHandler({
   processRecording = productionRecordingJob,
   runtime = verifyRuntime,
   controlledTest = controlledTestCommand,
+  storeClip = storeStagedClip,
 } = {}) {
   return async (req, res) => {
     res.setHeader("Cache-Control", "private, no-store");
@@ -54,15 +56,29 @@ export function createDeliveryHandler({
       const url = new URL(req.url, "https://local.invalid"),
         code = url.searchParams.get("exam"),
         action = url.searchParams.get("action") || "get";
-      if (code !== "H71002") throw Error("EXAM_UNAVAILABLE");
+      if (!/^[A-Za-z0-9_-]{1,64}$/.test(code || ""))
+        throw Error("EXAM_UNAVAILABLE");
       let result;
       if (req.method === "GET" && action === "get")
         result = await deliveryCommand(client, "get", { exam_code: code });
       else if (req.method === "POST" && action === "prepare")
         result = await prepare(client, code);
       else if (req.method === "POST" && action === "runtime")
-        result = await runtime(client);
-      else if (
+        result = await runtime(client, code);
+      else if (req.method === "POST" && action === "store_clip") {
+        const raw =
+          typeof req.body === "string"
+            ? req.body
+            : JSON.stringify(req.body || {});
+        if (
+          !String(req.headers["content-type"] || "").startsWith(
+            "application/json",
+          ) ||
+          Buffer.byteLength(raw) > 2048
+        )
+          throw Error("INVALID_REQUEST");
+        result = await storeClip(client, code, JSON.parse(raw).question_key);
+      } else if (
         req.method === "POST" &&
         [
           "test-inspect",

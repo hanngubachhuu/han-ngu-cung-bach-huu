@@ -54,7 +54,8 @@ export function mountExamEditor(
     root
       .querySelectorAll("input,textarea,select,[data-question],[data-move]")
       .forEach((n) => {
-        n.disabled = busy || !!state.pending;
+        n.disabled =
+          busy || !!state.pending || n.hasAttribute("data-structure-locked");
       });
   }
   function question() {
@@ -140,6 +141,14 @@ export function mountExamEditor(
             figure.textContent =
               "Chưa mở được tranh nguồn. Kiểm tra phiên Admin và kết nối.";
         });
+    }
+    if (hskk) {
+      for (const field of panel.querySelectorAll(
+        '[data-field="kind"],[data-field="prompt_mode"],[data-move]',
+      ))
+        field.setAttribute("data-structure-locked", "");
+      panel.querySelector('[data-field="image"]').closest("label").remove();
+      panel.querySelector('[data-field="response_seconds"]').max = "300";
     }
     for (const field of panel.querySelectorAll("[data-field]"))
       field.oninput = () => {

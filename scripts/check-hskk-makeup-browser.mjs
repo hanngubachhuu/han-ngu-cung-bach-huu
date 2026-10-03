@@ -48,7 +48,20 @@ const questions = [26, 27].map((number) => ({
 try {
   for (const width of [390, 768, 1366]) {
     const caseQuestions = structuredClone(questions);
+    const code =
+      width === 768 ? "H80000" : width === 1366 ? "H91002" : "H71002";
+    let pictureCalls = 0;
+    if (width === 768) {
+      caseQuestions.forEach((q, i) => {
+        q.number = 11 + i;
+        q.prompt_mode = "image";
+        q.prompt = "";
+        q.prompt_image = { available: true };
+      });
+    }
     if (width === 1366) {
+      caseQuestions[0].number = 1;
+      caseQuestions[1].number = 5;
       caseQuestions[0].prompt_mode = "audio";
       caseQuestions[0].prompt = "";
       caseQuestions[0].prompt_audio = { duration_ms: 150 };
@@ -152,7 +165,9 @@ try {
     );
     await context.route("**/api/hskk-session?**", async (route) => {
       const action = new URL(route.request().url()).searchParams.get("action"),
-        p = route.request().postData() ? route.request().postDataJSON() : Object.fromEntries(new URL(route.request().url()).searchParams);
+        p = route.request().postData()
+          ? route.request().postDataJSON()
+          : Object.fromEntries(new URL(route.request().url()).searchParams);
       if (action === "catalog") return json(route, []);
       if (action === "makeup_load")
         return json(route, {
@@ -188,6 +203,15 @@ try {
           body: syntheticWave(0.15),
         });
       }
+      if (action === "makeup_picture") {
+        assert.ok(timing[p.question_version_id]);
+        pictureCalls++;
+        return route.fulfill({
+          status: 200,
+          contentType: "image/jpeg",
+          body: await fs.readFile("server/hskk/assets/H80000-q11.jpg"),
+        });
+      }
       if (action === "makeup_bind") {
         const entry = reserveCalls.find(
           (x) => reservations.get(x.request_id).id === p.recording_id,
@@ -207,11 +231,16 @@ try {
       errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(
-      base + "/hskk-de-thi.html?exam=H71002&attempt=" + attempt + "&makeup=1",
+      base +
+        "/hskk-de-thi.html?exam=" +
+        code +
+        "&attempt=" +
+        attempt +
+        "&makeup=1",
     );
-    await page.getByRole("heading", { name: "H71002 · Nộp bù" }).waitFor();
+    await page.getByRole("heading", { name: code + " · Nộp bù" }).waitFor();
     assert.equal(
-      await page.getByRole("heading", { name: "Câu 1", exact: true }).count(),
+      await page.getByRole("heading", { name: "Câu 2", exact: true }).count(),
       0,
     );
     await page.getByRole("button", { name: "Kiểm tra microphone" }).click();
@@ -239,6 +268,7 @@ try {
       .waitFor();
     assert.equal(submitted, 1);
     assert.equal(reservations.size, 2);
+    assert.equal(pictureCalls, width === 768 ? 2 : 0);
     assert.ok(uploadCalls.every((x) => x.bytes > 0));
     assert.ok(reserveCalls.length >= 3);
     assert.equal(
@@ -266,6 +296,8 @@ try {
       pass: true,
       widths: [390, 768, 1366],
       missingOnly: [26, 27],
+      levels: 3,
+      intermediatePrivatePictures: 2,
       realMediaRecorder: true,
       retryIdentity: true,
       hosted: false,

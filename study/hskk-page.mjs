@@ -100,6 +100,19 @@ if (route === "exam" || levels[route])
         { ownerId: session.user.id },
       );
       if (levels[route]) {
+        for (const exam of catalog.filter((e) => e.level === route)) {
+          if (
+            Array.from(root.querySelectorAll(".hskk-card h2")).some(
+              (h) => h.textContent === exam.exam_code,
+            )
+          )
+            continue;
+          const card = document.createElement("article");
+          card.className = "hskk-card";
+          card.innerHTML = `<p class="hskk-badge">Đã mở cho tài khoản của bạn</p><h2>${esc(exam.exam_code)}</h2><p>HSKK ${levels[route]} · Đề thi thử</p><p>${exam.question_count} câu · ${exam.section_count} phần</p><a class="st-button" href="hskk-de-thi.html?exam=${encodeURIComponent(exam.exam_code)}">Xem đề →</a>`;
+          root.querySelector(".hskk-empty")?.remove();
+          root.append(card);
+        }
         for (const card of root.querySelectorAll(".hskk-card")) {
           if (
             catalog.some(
@@ -112,6 +125,14 @@ if (route === "exam" || levels[route])
         return;
       }
       if (!attempt && !catalog.some((e) => e.exam_code === code)) return;
+      if (!root.querySelector("button")) {
+        const exam = catalog.find((e) => e.exam_code === code);
+        if (!exam) return;
+        root.innerHTML =
+          `<a href="${urls[exam.level]}">HSKK ${levels[exam.level]}</a>` +
+          intro(exam.exam_code, exam.title) +
+          `<div class="hskk-facts"><span>${exam.question_count} câu</span><span>${exam.section_count} phần</span><span>Khoảng ${exam.approximate_minutes} phút</span><span>${exam.preparation_minutes} phút chuẩn bị</span></div><ol class="hskk-sections">${exam.sections.map((s) => `<li>${esc(s.title)} · ${s.questions} câu · ${s.response_seconds} giây trả lời mỗi câu</li>`).join("")}</ol><p class="hskk-notice"></p><button class="st-button primary">Bắt đầu thi thử</button>`;
+      }
       const button = root.querySelector("button");
       if (!button) return;
       const notice = root.querySelector(".hskk-notice");

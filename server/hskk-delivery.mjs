@@ -3,7 +3,11 @@ import { createHash } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { checkFinalization } from "../study/hskk-review-validation.mjs";
 import { readDraftRevision, validateSourceReview } from "./hskk-authoring.mjs";
-import fs from "node:fs/promises";
+import { readCanonicalSource } from "./hskk-canonical-source.mjs";
+import {
+  importAssetCommand,
+  verifiedImportBytes,
+} from "./hskk-import-media.mjs";
 export const promptBucket = "hskk-prompt-clips";
 export const sha256 = (bytes) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -91,9 +95,7 @@ export function receiptClient(env = process.env) {
 export async function prepareDelivery(client, code) {
   const saved = (await readDraftRevision(client, code)).record;
   if (!saved) throw Error("DELIVERY_NOT_READY");
-  const canonical = JSON.parse(
-    await fs.readFile(new URL(`./hskk/${code}.json`, import.meta.url), "utf8"),
-  );
+  const canonical = await readCanonicalSource(code, client);
   const exam = validateSourceReview(canonical, saved.configuration);
   if (!checkFinalization(exam).ready) throw Error("DELIVERY_NOT_READY");
   return deliveryCommand(client, "prepare", {
@@ -102,22 +104,25 @@ export async function prepareDelivery(client, code) {
   });
 }
 // Reuses the already generated archive. Never decodes, cuts or re-encodes audio.
-export async function inspectClipArchive(bytes, clips) {
+export async function inspectClipArchive(bytes, clips, code = "H71002") {
   if (
     !Buffer.isBuffer(bytes) ||
     bytes.length > 4 * 1024 * 1024 ||
-    clips?.length !== 27
+    !/^[A-Za-z0-9_-]{1,64}$/.test(code) ||
+    ![6, 14, 27].includes(clips?.length) ||
+    new Set(clips.map((q) => q.question_key)).size !== clips.length ||
+    clips.some((q, i) => q.question_key !== `q${i + 1}`)
   )
     throw Error("INVALID_ARCHIVE");
   // Inspect declared sizes before decompressing. The persisted SHA-256 then
   // checks each decoded file against the approved bytes, including corruption.
   const zip = await JSZip.loadAsync(bytes);
   const names = clips.map(
-    (q) => `H71002-Q${q.question_key.slice(1).padStart(2, "0")}.mp3`,
+    (q) => `${code}-Q${q.question_key.slice(1).padStart(2, "0")}.mp3`,
   );
   const files = Object.values(zip.files);
   if (
-    files.length !== 28 ||
+    files.length !== clips.length + 1 ||
     files.some(
       (f) =>
         f.dir ||
@@ -150,7 +155,7 @@ export async function storeExistingClips(
   { server = receiptClient(), code = "H71002" } = {},
 ) {
   const binding = await deliveryCommand(client, "get", { exam_code: code });
-  const files = await inspectClipArchive(bytes, binding.clips);
+  const files = await inspectClipArchive(bytes, binding.clips, code);
   const { data: auth, error: authError } = await client.auth.getUser();
   if (authError || !auth.user) throw Error("AUTH_REQUIRED");
   let verified = 0;
@@ -193,6 +198,59 @@ export async function storeExistingClips(
     verified,
     version_id: binding.version_id,
     original_source: "UNCHANGED",
+    published: false,
+  };
+}
+// One previously generated private clip per request avoids archive/body limits.
+// Binding, stored bytes and the server-only verification receipt must all agree.
+export async function storeStagedClip(
+  client,
+  code,
+  questionKey,
+  server = receiptClient(),
+) {
+  const binding = await deliveryCommand(client, "get", { exam_code: code });
+  const clip = binding.clips?.find((q) => q.question_key === questionKey);
+  if (!clip) throw Error("INVALID_REQUEST");
+  const asset = await importAssetCommand(client, "get", {
+    exam_code: code,
+    sha256: clip.sha256,
+    kind: "mp3",
+  });
+  const bytes = await verifiedImportBytes(client, asset);
+  const { error } = await client.storage
+    .from(promptBucket)
+    .upload(clip.path, bytes, {
+      contentType: "audio/mpeg",
+      upsert: false,
+      cacheControl: "0",
+    });
+  if (
+    error &&
+    !["409", "Duplicate"].includes(String(error.statusCode || error.code))
+  )
+    throw Error("CLIP_UPLOAD_FAILED");
+  const { data: stored, error: readError } = await client.storage
+    .from(promptBucket)
+    .download(clip.path);
+  if (readError || !stored) throw Error("CLIP_READ_FAILED");
+  const restored = Buffer.from(await stored.arrayBuffer());
+  if (restored.length !== bytes.length || sha256(restored) !== clip.sha256)
+    throw Error("STORED_CLIP_HASH_MISMATCH");
+  const { data: auth, error: authError } = await client.auth.getUser();
+  if (authError || !auth?.user) throw Error("AUTH_REQUIRED");
+  const { error: receiptError } = await server.rpc("hskk_prompt_verified", {
+    payload: {
+      sha256: clip.sha256,
+      byte_size: restored.length,
+      actor: auth.user.id,
+    },
+  });
+  if (receiptError) throw Error("CLIP_RECEIPT_FAILED");
+  return {
+    verified: true,
+    question_key: questionKey,
+    version_id: binding.version_id,
     published: false,
   };
 }

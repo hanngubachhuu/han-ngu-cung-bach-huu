@@ -35,7 +35,11 @@ export async function hskkAdminRequest(
       ...(body ? { "Content-Type": "application/json" } : {}),
     },
     ...(body ? { body: JSON.stringify(body) } : {}),
-    signal: AbortSignal.timeout(action === "segment" ? 120000 : 30000),
+    signal: AbortSignal.timeout(
+      ["segment", "stage_clip", "clip", "waveform"].includes(action)
+        ? 120000
+        : 30000,
+    ),
   });
   if (!res.ok) {
     const data = await res.json();
@@ -62,6 +66,27 @@ export async function hskkDeliveryRequest(
         ...(body ? { "Content-Type": "application/json" } : {}),
       },
       ...(body ? { body: JSON.stringify(body) } : {}),
+      signal: AbortSignal.timeout(120000),
+    },
+  );
+  const data = await res.json();
+  if (!res.ok) throw Error(data.error);
+  if ((await getSession())?.user.id !== ownerId) throw Error("ACCOUNT_CHANGED");
+  return data;
+}
+export async function hskkImportRequest(action, body, ownerId) {
+  const session = await getSession();
+  if (session?.user.id !== ownerId) throw Error("ACCOUNT_CHANGED");
+  const res = await fetch(
+    "./api/hskk-import?" + new URLSearchParams({ action }),
+    {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + session.access_token,
+      },
+      body: JSON.stringify(body),
       signal: AbortSignal.timeout(120000),
     },
   );

@@ -7,7 +7,7 @@ import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { ffmpeg, ffprobe, decoderEnvironment } from "./recording-runtime.mjs";
 const execute = promisify(execFile);
-export const engineVersion = "local-energy-1";
+export const engineVersion = "local-energy-2";
 export async function analyzeSource(bytes, expectedHash) {
   const sha256 = createHash("sha256").update(bytes).digest("hex");
   if (sha256 !== expectedHash) throw Error("SOURCE_HASH_MISMATCH");
@@ -138,6 +138,8 @@ export function analyzePCM(pcm) {
   if (start !== null)
     regions.push({ start_ms: start * 20, end_ms: (last + 1) * 20 });
   const speech_regions = regions.filter((r) => r.end_ms - r.start_ms >= 180);
+  const cue_tones = speech_regions.filter((r) => narrowBandTone(pcm, r));
+  const repeated_cues = repeatedCueRegions(pcm, speech_regions);
   const silence = [];
   let cursor = 0;
   for (const r of speech_regions) {
@@ -155,11 +157,94 @@ export function analyzePCM(pcm) {
     );
   return {
     speech_regions,
+    cue_tones,
+    repeated_cues,
     silence,
     rms_threshold: threshold,
     frame_ms: 20,
     waveform: { step_ms: 100, peaks },
   };
+}
+// Duration alone cannot distinguish a beep from a short spoken sentence.
+// Three independent 200ms samples must carry a stable, almost pure sinusoid.
+function narrowBandTone(pcm, region) {
+  const duration = region.end_ms - region.start_ms;
+  if (duration < 500 || duration > 1800) return false;
+  const frequencies = [];
+  for (const fraction of [0.25, 0.5, 0.75]) {
+    const middle = Math.round((region.start_ms + duration * fraction) * 8),
+      start = middle - 800,
+      size = 1600;
+    if (start < 0 || (start + size) * 2 > pcm.length) return false;
+    let crossings = 0,
+      energy = 0,
+      previous = pcm.readInt16LE(start * 2);
+    for (let i = 0; i < size; i++) {
+      const v = pcm.readInt16LE((start + i) * 2);
+      energy += v * v;
+      if (v >= 0 !== previous >= 0) crossings++;
+      previous = v;
+    }
+    const estimate = (crossings * 8000) / (2 * size);
+    let best = 0,
+      frequency = 0;
+    for (let hz = estimate - 5; hz <= estimate + 5; hz += 1) {
+      if (hz < 300 || hz > 3000) continue;
+      const coefficient = 2 * Math.cos((2 * Math.PI * hz) / 8000);
+      let a = 0,
+        b = 0;
+      for (let i = 0; i < size; i++) {
+        const s = pcm.readInt16LE((start + i) * 2) + coefficient * a - b;
+        b = a;
+        a = s;
+      }
+      const ratio =
+        (2 * (a * a + b * b - coefficient * a * b)) / (size * energy);
+      if (ratio > best) {
+        best = ratio;
+        frequency = hz;
+      }
+    }
+    if (!Number.isFinite(best) || best < 0.85) return false;
+    frequencies.push(frequency);
+  }
+  return Math.max(...frequencies) - Math.min(...frequencies) <= 5;
+}
+function repeatedCueRegions(pcm, regions) {
+  const candidates = regions.filter(
+    (r, i) =>
+      r.end_ms - r.start_ms >= 500 &&
+      r.end_ms - r.start_ms <= 1800 &&
+      i > 0 &&
+      r.start_ms - regions[i - 1].end_ms >= 20000,
+  );
+  const result = [];
+  const sample = (r) => Math.round((r.start_ms + r.end_ms) * 4) - 1600;
+  const match = (a, b) => {
+    const first = sample(a),
+      second = sample(b);
+    let maximum = 0;
+    for (let shift = -160; shift <= 160; shift++) {
+      let cross = 0,
+        aa = 0,
+        bb = 0;
+      for (let i = 0; i < 1600; i++) {
+        const x = pcm.readInt16LE((first + i * 2) * 2),
+          y = pcm.readInt16LE((second + i * 2 + shift) * 2);
+        cross += x * y;
+        aa += x * x;
+        bb += y * y;
+      }
+      maximum = Math.max(maximum, cross / Math.sqrt(aa * bb));
+    }
+    return maximum > 0.95;
+  };
+  for (const a of candidates) {
+    const group = candidates.filter((b) => a === b || match(a, b));
+    if (group.length >= 3)
+      for (const r of group) if (!result.includes(r)) result.push(r);
+  }
+  return result.sort((a, b) => a.start_ms - b.start_ms);
 }
 export class HSKKAudioSegmentationEngine {
   async segment({ bytes, exam, sourceHash }) {
@@ -176,8 +261,28 @@ export class HSKKAudioSegmentationEngine {
 export function proposeSegments(exam, analysis) {
   const run_id = randomUUID(),
     created_at = new Date().toISOString();
+  // A beep adjacent to spoken content belongs to that candidate region. An
+  // isolated signal following a response gap is a separate timing boundary.
+  const transitions = [
+    ...(analysis.cue_tones || []).filter((t) => {
+      const index = analysis.speech_regions.findIndex(
+        (r) => r.start_ms === t.start_ms && r.end_ms === t.end_ms,
+      );
+      return (
+        index <= 0 ||
+        t.start_ms - analysis.speech_regions[index - 1].end_ms > 1800
+      );
+    }),
+    ...(analysis.repeated_cues || []),
+  ];
   const regions = [];
   for (const r of analysis.speech_regions) {
+    if (
+      transitions.some(
+        (t) => t.start_ms === r.start_ms && t.end_ms === r.end_ms,
+      )
+    )
+      continue;
     const previous = regions.at(-1);
     if (previous && r.start_ms - previous.end_ms <= 1800)
       previous.end_ms = r.end_ms;
@@ -185,11 +290,11 @@ export function proposeSegments(exam, analysis) {
   }
   const proposals = [],
     used = new Set();
-  let cursor = 0;
-  for (const section of exam.sections) {
-    const questions = exam.questions.filter((q) => q.section_id === section.id);
-    // Find a complete consecutive run supported by measured response gaps. A structural match
-    // cannot distinguish repeated examples or spoken words, so ties remain unresolved.
+  const sectionQuestions = exam.sections.map((section) =>
+    exam.questions.filter((q) => q.section_id === section.id),
+  );
+  const chainCache = new Map();
+  const findChains = (questions, cursor) => {
     const chains = [];
     for (let start = cursor; start < regions.length; start++) {
       let error = 0,
@@ -201,10 +306,23 @@ export function proposeSegments(exam, analysis) {
         if (!next || expected <= 0) {
           break;
         }
-        const gap = next.start_ms - r.end_ms,
+        // A transition signal can close the response window before the next
+        // prompt. Removing it from speech candidates must preserve that clock
+        // boundary, including the short seven-second elementary responses.
+        const transition = transitions
+          .filter((t) => t.start_ms >= r.end_ms && t.start_ms <= next.start_ms)
+          .sort((a, b) => a.start_ms - b.start_ms)[0];
+        const gap = (transition?.start_ms ?? next.start_ms) - r.end_ms,
           deviation = Math.abs(gap - expected);
+        const longRetelling =
+          questions[j].type === "short_response" &&
+          questions[j].prompt_mode === "audio" &&
+          r.end_ms - r.start_ms >= 10000 &&
+          gap >= 20000 &&
+          gap <= 180000;
         if (
           deviation > Math.max(1800, expected * 0.2) &&
+          !longRetelling &&
           !(
             j === questions.length - 1 &&
             gap >= expected &&
@@ -220,6 +338,34 @@ export function proposeSegments(exam, analysis) {
         chains.push({ start, count, score: 1 - error / count });
     }
     chains.sort((a, b) => b.count - a.count || b.score - a.score);
+    return chains;
+  };
+  const canComplete = (index, cursor) => {
+    if (index >= sectionQuestions.length) return true;
+    const key = index + ":" + cursor;
+    if (chainCache.has(key)) return chainCache.get(key);
+    const questions = sectionQuestions[index];
+    const possible = findChains(questions, cursor).some(
+      (c) =>
+        c.count === questions.length &&
+        canComplete(index + 1, c.start + c.count),
+    );
+    chainCache.set(key, possible);
+    return possible;
+  };
+  let cursor = 0;
+  for (const [sectionIndex, questions] of sectionQuestions.entries()) {
+    // A full remaining ordered structure may resolve equal local candidates.
+    // If several complete paths remain possible, preserve the ambiguity.
+    let chains = findChains(questions, cursor);
+    if (sectionIndex + 1 < sectionQuestions.length) {
+      const supported = chains.filter(
+        (c) =>
+          c.count === questions.length &&
+          canComplete(sectionIndex + 1, c.start + c.count),
+      );
+      if (supported.length) chains = supported;
+    }
     const best = chains[0],
       ambiguous =
         chains[1] &&
@@ -253,6 +399,14 @@ export function proposeSegments(exam, analysis) {
         reason: r
           ? "Measured energy region in an ordered response-gap chain; words unverified."
           : "Không xác định chắc chắn đoạn âm thanh cho câu này.",
+        observed_wait_ms: r
+          ? [...(analysis.cue_tones || []), ...(analysis.repeated_cues || [])]
+              .sort((a, b) => a.start_ms - b.start_ms)
+              .find(
+                (t) =>
+                  t.start_ms >= r.end_ms && t.start_ms - r.end_ms <= 180000,
+              )?.start_ms - r.end_ms || null
+          : null,
       });
     }
     if (best && !ambiguous) cursor = best.start + best.count;
@@ -287,6 +441,28 @@ export function proposeSegments(exam, analysis) {
         : "Measured non-speech gap; response/preparation role requires review.",
     });
   }
+  non_questions.push(
+    ...(analysis.cue_tones || []).map((t) => ({
+      ...t,
+      segment_type: "TRANSITION",
+      status: "NEEDS_REVIEW",
+      detection_method: "narrow_band_tone",
+      run_id,
+      reason:
+        "Measured narrow-band tone; review its transition role against the original audio.",
+    })),
+  );
+  non_questions.push(
+    ...(analysis.repeated_cues || []).map((t) => ({
+      ...t,
+      segment_type: "UNKNOWN",
+      status: "NEEDS_REVIEW",
+      detection_method: "repeated_waveform_signal",
+      run_id,
+      reason:
+        "Short waveform repeated at least three times after long response gaps; transition meaning requires listening review.",
+    })),
+  );
   return {
     run_id,
     job_id: run_id,

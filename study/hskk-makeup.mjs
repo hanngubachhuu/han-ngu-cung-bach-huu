@@ -25,6 +25,7 @@ export async function mountMakeup(root, { ownerId, attemptId }) {
   const pending = new Map(),
     work = new Map(),
     retries = new Map();
+  const pictureUrls = new Set();
   let alive = true,
     stream,
     recorder,
@@ -194,11 +195,30 @@ export async function mountMakeup(root, { ownerId, attemptId }) {
             clock,
             started: false,
             sealing: false,
-            audioReady: q.prompt_mode !== "audio",
+            audioReady: q.prompt_mode === "text",
             audioFailed: false,
             listening: false,
           };
           update();
+          if (q.prompt_mode === "image") {
+            const blob = await call(
+              "picture",
+              {
+                makeup_window_id: boot.window_id,
+                question_version_id: q.version_id,
+              },
+              { binary: true },
+            );
+            if (!alive) return;
+            const url = URL.createObjectURL(blob);
+            pictureUrls.add(url);
+            const image = document.createElement("img");
+            image.src = url;
+            image.alt = "Tranh câu " + q.number;
+            image.className = "cbt-source-picture";
+            row.querySelector("[data-state]").before(image);
+            if (active?.q.version_id === q.version_id) active.audioReady = true;
+          }
           if (q.prompt_mode === "audio") {
             await player.preparePrivatePrompt(
               () =>
@@ -382,6 +402,11 @@ export async function mountMakeup(root, { ownerId, attemptId }) {
         at >= active.t.record_start &&
         at < active.t.record_end
       ) {
+        if (active.q.prompt_mode === "image" && !active.audioReady) {
+          active.audioFailed = true;
+          message("Tranh chưa tải kịp. Báo Admin để mở lại đúng câu này.");
+          return;
+        }
         recorder.start();
         active.started = true;
         message("Đang ghi câu " + active.q.number + ".");
@@ -426,6 +451,7 @@ export async function mountMakeup(root, { ownerId, attemptId }) {
     clearInterval(timer);
     cancelAnimationFrame(meterFrame);
     player.stop();
+    for (const url of pictureUrls) URL.revokeObjectURL(url);
     await recorder?.dispose();
     await context?.close();
     original.close();

@@ -30,6 +30,44 @@ export async function mountExamExperience(
   let analyser, microphoneSource, sampleUrl;
   let resourcesReleased = false;
   const notes = new Map();
+  const pictureRequests = new Map(),
+    pictureUrls = new Set();
+  function loadPictures(view) {
+    if (!transport.production || !transport.picture || resourcesReleased)
+      return;
+    const section = view.section;
+    const ids =
+      view.state === "PREPARATION"
+        ? section?.preparation_section_ids || [section?.id]
+        : [];
+    const visible = exam.questions.filter(
+      (q) =>
+        q.prompt_mode === "image" &&
+        (ids.includes(q.section_id) || q.id === view.question?.id),
+    );
+    for (const q of visible) {
+      if (q.image_blob_url || pictureRequests.has(q.id)) continue;
+      const request = transport
+        .picture(q.version_id)
+        .then((blob) => {
+          if (disposed || resourcesReleased) return;
+          const url = URL.createObjectURL(blob);
+          pictureUrls.add(url);
+          q.image_blob_url = url;
+          engine.exam.questions.find((x) => x.id === q.id).image_blob_url = url;
+          delete root.dataset.state;
+          render(engine.view());
+        })
+        .catch(() => {
+          if (!disposed && !resourcesReleased)
+            message(
+              `Chưa tải được tranh câu ${q.number}. Hệ thống sẽ thử lại.`,
+            );
+          setTimeout(() => pictureRequests.delete(q.id), 5000);
+        });
+      pictureRequests.set(q.id, request);
+    }
+  }
   const trialAudio = document.createElement("audio");
   const t = (text) => cbtText(text, language);
   root.classList.add("hskk-cbt-root");
@@ -75,6 +113,8 @@ export async function mountExamExperience(
   function releaseResources() {
     if (resourcesReleased) return;
     resourcesReleased = true;
+    for (const url of pictureUrls) URL.revokeObjectURL(url);
+    pictureUrls.clear();
     clearInterval(interval);
     cancelAnimationFrame(levelFrame);
     window.removeEventListener("online", reconnect);
@@ -176,6 +216,7 @@ export async function mountExamExperience(
   };
   function render(view) {
     if (disposed) return;
+    loadPictures(view);
     if (["SUBMITTED", "GRADED", "PUBLISHED"].includes(view.state)) {
       if (resourcesReleased && root.dataset.state === view.state) return;
       releaseResources();

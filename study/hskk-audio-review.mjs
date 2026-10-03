@@ -143,6 +143,12 @@ export function mountAudioReview(
         to = saved?.end_ms ?? p?.end_ms;
       row.innerHTML = `<summary>Câu ${q.number} · ${confirmed(saved) ? "Đã xác nhận" : "Cần kiểm tra"}</summary><p>${esc(part?.title_vi || q.section_id)}</p><p lang="zh">${esc(q.prompt)}</p><p>Đề xuất: ${timestamp(p?.start_ms)} → ${timestamp(p?.end_ms)} · Điểm cấu trúc ${Math.round((p?.confidence || 0) * 100)}% · ${saved?.detection_method === "manual" ? "Chỉnh thủ công" : "Đề xuất tự động"} · <span data-state>${reviewLabel(saved)}</span></p>${["unverified_cue", "source_cue"].includes(p?.match_kind) ? '<p role="note">Đoạn này chỉ là đề xuất vùng lời dẫn/chuyển tiếp. Chưa xác minh câu hỏi được đọc trong audio.</p>' : ""}<p data-period></p><canvas data-editor width="1000" height="120" style="width:100%;height:120px;touch-action:none" aria-label="Ranh giới, vùng chọn và vị trí phát; có thể chỉnh bằng ô thời gian bên dưới"></canvas><label>Bắt đầu HH:MM:SS.mmm (hoặc giây)<input data-from value="${from == null ? "" : timestamp(from)}" inputmode="decimal"></label><label>Kết thúc HH:MM:SS.mmm (hoặc giây)<input data-to value="${to == null ? "" : timestamp(to)}" inputmode="decimal"></label><p data-duration></p><p data-error role="alert"></p><div class="account-actions"><button class="st-button" data-play>Nghe đoạn</button><button class="st-button" data-before>Nghe từ đầu −2 giây</button><button class="st-button" data-after>Nghe tới cuối +2 giây</button><button class="st-button" data-context>Nghe ±2 giây</button><button class="st-button" data-start>Đặt điểm bắt đầu</button><button class="st-button" data-end>Đặt điểm kết thúc</button><button class="st-button" data-replace>Khôi phục đề xuất</button><button class="st-button" data-confirm>Xác nhận đoạn</button><button class="st-button" data-next>Xác nhận & sang câu tiếp</button></div><p>Điểm cấu trúc không phải xác suất nhận dạng lời nói. Chỉ xác nhận sau khi nghe.</p>`;
       section.append(row);
+      if (p?.observed_wait_ms > 0) {
+        const notice = document.createElement("p");
+        notice.setAttribute("role", "note");
+        notice.textContent = `Khoảng từ cuối đoạn tới tín hiệu chuyển tiếp: ${(p.observed_wait_ms / 1000).toFixed(2)} giây. Đối chiếu thời gian trả lời với audio gốc; số đo này không tự thay thời gian thi.`;
+        row.querySelector("[data-period]").before(notice);
+      }
       const values = () => [
         parseTimestamp(row.querySelector("[data-from]").value),
         parseTimestamp(row.querySelector("[data-to]").value),

@@ -102,7 +102,11 @@ export function examValidation(model) {
   const keys = new Set();
   for (const [i, q] of (model.questions || []).entries()) {
     const prefix = `Câu ${i + 1}: `;
-    if (!q.prompt?.trim()) issues.push(prefix + "bổ sung nội dung câu hỏi.");
+    if (
+      !q.prompt?.trim() &&
+      !(model.type === "HSKK" && ["audio", "image"].includes(q.prompt_mode))
+    )
+      issues.push(prefix + "bổ sung nội dung câu hỏi.");
     if (keys.has(q.question_key || q.id))
       issues.push(prefix + "trùng câu hỏi trong đề.");
     keys.add(q.question_key || q.id);

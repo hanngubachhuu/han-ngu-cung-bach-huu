@@ -248,7 +248,14 @@ export function mountAssignmentAdmin(root, profile, { mode = "legacy" } = {}) {
       }).catch((error) => {
         if (makeup.isConnected) makeup.textContent = assignmentMessage(error);
       });
-      if (data.lesson_id === "exam-H71002" && data.state === "submitted") {
+      const examCode = data.lesson_id?.match(
+        /^exam-([A-Za-z0-9_-]{1,64})$/,
+      )?.[1];
+      if (
+        examCode &&
+        data.answers.every((a) => a.question.kind === "speaking") &&
+        data.state === "submitted"
+      ) {
         const process = document.createElement("button");
         process.type = "button";
         process.className = "st-button";
@@ -256,9 +263,9 @@ export function mountAssignmentAdmin(root, profile, { mode = "legacy" } = {}) {
         process.onclick = async () => {
           process.disabled = true;
           try {
-            let remaining = 27;
+            let remaining = data.answers.length;
             while (active && remaining > 0) {
-              const result = await hskkDeliveryRequest("H71002", "process", {
+              const result = await hskkDeliveryRequest(examCode, "process", {
                 ownerId: profile.user_id,
                 body: { attempt_id: data.attempt_id },
               });

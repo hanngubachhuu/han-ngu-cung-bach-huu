@@ -11,7 +11,10 @@ import {
 } from "./admin-exam-service.mjs";
 
 // Mounted source authoring: one central account gate and the existing audio engine.
-export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
+export function mountHSKKAdmin(
+  root,
+  { profile, code, segmentationPending = false, onSaved = () => {} },
+) {
   let alive = true,
     source,
     editor,
@@ -156,6 +159,8 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
               active: false,
               backend_available: saved.status === "fulfilled",
               audio_source_name: source.provenance.audio,
+              sections: structuredClone(source.sections),
+              warnings: source.provenance.recognition_warnings || [],
               questions: source.questions.map((q) => ({
                 ...structuredClone(q),
                 question_key: q.id,
@@ -258,8 +263,66 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
       editor.audioPanel.append(label);
       const deliveryPanel = document.createElement("section");
       deliveryPanel.innerHTML =
-        '<h3>Chuẩn bị đề cho học viên</h3><p data-delivery-status>Đang kiểm tra…</p><button class="st-button" data-prepare>Chuẩn bị phiên bản đề</button><label>Audio câu đã duyệt <input type="file" accept=".zip,application/zip" data-clips></label><label>Học viên kiểm thử <select data-learner><option value="">Chọn học viên</option></select></label><button class="st-button" data-grant>Cấp quyền đề này</button><button class="st-button" data-runtime>Kiểm tra dịch vụ thi</button><button class="st-button" data-controlled-test>Cấp một lượt kiểm thử mới</button><p data-test-status aria-live="polite">Lượt mới chỉ dành cho học viên đã có quyền H71002 và có lượt cũ hết hạn. Lượt cũ được giữ nguyên.</p>';
+        '<h3>Chuẩn bị đề cho học viên</h3><p data-delivery-status>Đang kiểm tra…</p><button class="st-button" data-prepare>Chuẩn bị phiên bản đề</button><label>Audio câu đã duyệt <input type="file" accept=".zip,application/zip" data-clips></label><label>Học viên kiểm thử <select data-learner><option value="">Chọn học viên</option></select></label><button class="st-button" data-grant>Cấp quyền đề này</button><button class="st-button" data-runtime>Kiểm tra dịch vụ thi</button><button class="st-button" data-controlled-test>Cấp một lượt kiểm thử mới</button><p data-test-status aria-live="polite">Lượt mới chỉ dành cho học viên đã có quyền đề này và có lượt cũ hết hạn. Lượt cũ được giữ nguyên.</p>';
       editor.audioPanel.append(deliveryPanel);
+      if (segmentationPending)
+        report(
+          "Nguồn đã được giữ và kiểm tra hash. Phân câu chưa hoàn tất; mở Phân đoạn audio và bấm chạy phân đoạn để tiếp tục.",
+        );
+      const timingReview = document.createElement("section");
+      timingReview.innerHTML =
+        '<h3>Đối chiếu nội dung và thời gian</h3><p>Kiểm tra nội dung chữ, tranh, thời gian trả lời từng câu và thời gian chuẩn bị theo file gốc. Xác nhận lại nếu sửa các mục này.</p><div data-preparation></div><button class="st-button" data-content-review>Đã đối chiếu nội dung, tranh và thời gian</button><p data-review-status role="status"></p>';
+      editor.audioPanel.prepend(timingReview);
+      editor.state.model.sections ||= structuredClone(source.sections);
+      for (const section of editor.state.model.sections) {
+        const label = document.createElement("label");
+        label.textContent = section.title_vi + " · Chuẩn bị (giây) ";
+        const field = document.createElement("input");
+        field.type = "number";
+        field.min = "0";
+        field.max = "900";
+        field.value = section.preparation_seconds;
+        field.oninput = () => {
+          section.preparation_seconds = Number(field.value);
+          contentChanges++;
+          readiness = { ready: false };
+          clearTimeout(contentTimer);
+          contentTimer = setTimeout(saveContent, 600);
+          editor.refreshGate();
+        };
+        label.append(field);
+        timingReview.querySelector("[data-preparation]").append(label);
+      }
+      timingReview.querySelector("[data-content-review]").onclick = async (
+        event,
+      ) => {
+        const button = event.currentTarget;
+        button.disabled = true;
+        const status = timingReview.querySelector("[data-review-status]");
+        try {
+          if (!(await saveContent())) throw Error("CONTENT_NOT_SAVED");
+          const client = await getClient();
+          const { error } = await client.rpc("hskk_delivery_admin", {
+            command: "review_content",
+            payload: {
+              exam_code: code,
+              expected_revision: editor.state.model.revision,
+            },
+          });
+          if (error) throw error;
+          status.textContent =
+            "Đã ghi nhận lần đối chiếu bằng tài khoản Admin của bạn.";
+        } catch {
+          status.textContent =
+            "Chưa xác nhận được. Kiểm tra nội dung, thời gian và việc lưu đề rồi thử lại.";
+        } finally {
+          if (alive) button.disabled = false;
+        }
+      };
+      const generate = document.createElement("button");
+      generate.className = "st-button";
+      generate.textContent = "Tạo và lưu audio các câu đã xác nhận";
+      deliveryPanel.querySelector("[data-prepare]").before(generate);
       const deliveryStatus = deliveryPanel.querySelector(
         "[data-delivery-status]",
       );
@@ -267,8 +330,81 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         await refreshDelivery();
         if (alive)
           deliveryStatus.textContent = delivery.prepared
-            ? `${delivery.published ? "Đề đã xuất bản · " : ""}${delivery.question_count} câu đã gắn phiên bản · ${delivery.verified_clips}/27 audio đã kiểm tra · ${delivery.controlled_students} học viên được cấp quyền.`
+            ? `${delivery.published ? "Đề đã xuất bản · " : ""}${delivery.question_count} câu đã gắn phiên bản · ${delivery.verified_clips}/${source.questions.length} audio đã kiểm tra · ${delivery.controlled_students} học viên được cấp quyền.`
             : "Chưa chuẩn bị phiên bản cho học viên.";
+      };
+      generate.onclick = async () => {
+        generate.disabled = true;
+        let controls = [];
+        let staged = false;
+        try {
+          clearTimeout(timer);
+          clearTimeout(contentTimer);
+          if (audioPending || audioChanges > audioPendingChange)
+            await saveAudio();
+          if (saving || audioPending || !(await saveContent()))
+            throw Error("CONTENT_NOT_SAVED");
+          const client = await getClient();
+          const checked = await client.rpc("hskk_delivery_admin", {
+            command: "review_status",
+            payload: { exam_code: code },
+          });
+          if (checked.error || checked.data?.reviewed !== true)
+            throw Error("CONTENT_REVIEW_REQUIRED");
+          const finalization = await api("finalize", { method: "POST" });
+          if (!finalization.ready) throw Error("DRAFT_NOT_READY");
+          controls = [
+            ...root.querySelectorAll("input,select,textarea,button"),
+          ].map((node) => [node, node.disabled]);
+          for (const [node] of controls) node.disabled = true;
+          staged = true;
+          for (const [i, q] of source.questions.entries()) {
+            if (!alive) return;
+            deliveryStatus.textContent = `Đang tạo audio câu ${i + 1}/${source.questions.length} từ phân đoạn đã duyệt…`;
+            await api("stage_clip", { method: "POST", question: q.id });
+          }
+          const current = await api();
+          source.database_revision = current.database_revision;
+          source.audio.clip_provenance = current.audio.clip_provenance;
+          await deliveryApi("prepare", {});
+          for (const [i, q] of source.questions.entries()) {
+            deliveryStatus.textContent = `Đang lưu và kiểm tra hash audio câu ${i + 1}/${source.questions.length}…`;
+            await deliveryApi("store_clip", { question_key: q.id });
+          }
+          await showDelivery();
+        } catch (e) {
+          deliveryStatus.textContent =
+            e.message === "CONTENT_REVIEW_REQUIRED"
+              ? "Hãy đối chiếu và xác nhận nội dung, tranh và thời gian trước khi tạo audio câu."
+              : "Chưa hoàn tất audio câu. Đối chiếu nội dung/thời gian và xác nhận đủ phân đoạn, rồi bấm lại để tiếp tục. Đề chưa được xuất bản.";
+        } finally {
+          if (alive && staged) {
+            try {
+              const current = await api();
+              if (
+                current.questions.every(
+                  (q, i) =>
+                    JSON.stringify(q.audio_segment) ===
+                    JSON.stringify(source.questions[i]?.audio_segment),
+                )
+              ) {
+                source.database_revision = current.database_revision;
+                source.audio.clip_provenance = current.audio.clip_provenance;
+              } else {
+                deliveryStatus.textContent =
+                  "Phân đoạn đã thay đổi ở nơi khác. Mở lại đề để đối chiếu trước khi tiếp tục.";
+              }
+            } catch {
+              deliveryStatus.textContent =
+                "Chưa đọc lại được trạng thái lưu. Mở lại đề trước khi tiếp tục; các audio đã lưu được giữ nguyên.";
+            }
+          }
+          if (alive) {
+            for (const [node, disabled] of controls) node.disabled = disabled;
+            editor.refreshGate();
+            generate.disabled = false;
+          }
+        }
       };
       deliveryPanel.querySelector("[data-prepare]").onclick = async (event) => {
         event.currentTarget.disabled = true;
@@ -293,7 +429,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
           let binary = "";
           for (let i = 0; i < bytes.length; i += 16384)
             binary += String.fromCharCode(...bytes.subarray(i, i + 16384));
-          deliveryStatus.textContent = "Đang lưu và kiểm tra 27 audio câu…";
+          deliveryStatus.textContent = `Đang lưu và kiểm tra ${source.questions.length} audio câu…`;
           await deliveryApi("upload", { bytes: btoa(binary) });
           await showDelivery();
         } catch {
@@ -301,7 +437,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
             // A lost response can follow a successful immutable upload. Read
             // authoritative receipts before asking the Admin to retry.
             await showDelivery();
-            if (delivery.verified_clips !== 27)
+            if (delivery.verified_clips !== source.questions.length)
               deliveryStatus.textContent =
                 "Chưa hoàn tất audio câu. Chọn đúng ZIP đã duyệt; có thể tải lại cùng file để tiếp tục kiểm tra.";
           } catch {
@@ -372,7 +508,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
           }
           makeupStatus.textContent = `Đã mở nộp bù câu ${current.missing_numbers.join(", ")} · Hạn ${new Date(opened.expires_at).toLocaleString("vi-VN")}. Các câu đã nhận được giữ nguyên. Gửi học viên liên kết: `;
           const link = document.createElement("a");
-          link.href = `./hskk-de-thi.html?exam=H71002&attempt=${current.attempt_id}&makeup=1`;
+          link.href = `./hskk-de-thi.html?exam=${encodeURIComponent(code)}&attempt=${current.attempt_id}&makeup=1`;
           link.textContent = "Mở trang nộp bù";
           makeupStatus.append(link);
         } catch {
@@ -410,7 +546,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
               expected_previous_attempt_id: current.previous_attempt_id,
             });
           }
-          status.textContent = `Lượt kiểm thử đã được cấp: ${authorized.attempt_id}. Học viên mở H71002 để kiểm tra thiết bị và bắt đầu. Lượt cũ được giữ nguyên; kết quả kiểm thử chưa công bố.`;
+          status.textContent = `Lượt kiểm thử đã được cấp: ${authorized.attempt_id}. Học viên mở ${code} để kiểm tra thiết bị và bắt đầu. Lượt cũ được giữ nguyên; kết quả kiểm thử chưa công bố.`;
         } catch {
           status.textContent =
             "Chưa cấp được lượt mới. Chỉ cấp một lượt cho học viên đã có quyền, đúng phiên bản đã xuất bản và lượt cũ hết hạn. Có thể bấm lại để đối chiếu lượt đã cấp.";
