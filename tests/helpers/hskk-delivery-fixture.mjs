@@ -38,11 +38,14 @@ export async function deliveryFixture({
         file,
       )
     )
-      if (!file.includes("hskk_missing_recording_makeup")) continue;
+      if (!/hskk_missing_recording_makeup|hskk_makeup_history_guard/.test(file))
+        continue;
     if (!bufferedPrompts && file.includes("hskk_buffered_prompts")) continue;
     if (!bufferedPrompts && file.includes("hskk_controlled_test_attempt"))
       continue;
     if (!bufferedPrompts && file.includes("hskk_missing_recording_makeup"))
+      continue;
+    if (!bufferedPrompts && file.includes("hskk_makeup_history_guard"))
       continue;
     if (file.includes("learner_accounts_and_access"))
       await db.exec(
@@ -51,7 +54,7 @@ export async function deliveryFixture({
     let sql = await fs.readFile(new URL(file, dir), "utf8");
     if (
       controlledClock &&
-      /hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts|hskk_controlled_test_attempt|hskk_missing_recording_makeup/.test(
+      /official_assignment_model|hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts|hskk_controlled_test_attempt|hskk_missing_recording_makeup|hskk_makeup_history_guard/.test(
         file,
       )
     )

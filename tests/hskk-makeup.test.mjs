@@ -257,6 +257,24 @@ for (const variant of ["retry", "received", "expired"])
             /MAKEUP_TRANSPORT_REQUIRED/,
           );
         }
+        // Match the production trigger's expired clock, not only the RPC clock.
+        // The first implementation failed here with SUBMISSION_LOCKED.
+        await db.exec("reset role");
+        await assert.rejects(
+          db.query(
+            "update public.submission_answers set answer='null'::jsonb where attempt_id=$1 and position=1",
+            [id],
+          ),
+          /SUBMISSION_LOCKED/,
+        );
+        await assert.rejects(
+          db.query(
+            "update public.submission_answers set answer=$2 where attempt_id=$1 and position=27",
+            [id, { recording_id: r26.id }],
+          ),
+          /SUBMISSION_LOCKED/,
+        );
+        await as(student);
         await makeup("bind", { recording_id: r26.id });
         await makeup("bind", { recording_id: r26.id });
         await assert.rejects(
