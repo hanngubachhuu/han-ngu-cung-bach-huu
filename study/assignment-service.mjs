@@ -3,6 +3,9 @@ import { getClient, getSession } from "./auth.mjs";
 export async function assignmentCommand(command, payload = {}, ownerId) {
   return authenticatedCommand("assignment_command", command, payload, ownerId);
 }
+export async function assignmentMakeup(command, payload = {}, ownerId) {
+  return authenticatedCommand("assignment_makeup", command, payload, ownerId);
+}
 export async function assignmentAuthoring(command, payload = {}, ownerId) {
   return authenticatedCommand(
     "assignment_authoring",
@@ -27,6 +30,17 @@ async function authenticatedCommand(rpc, command, payload, ownerId) {
 }
 
 const messages = {
+  MAKEUP_NOT_AVAILABLE:
+    "Chưa có lượt nộp bù cho bài này hoặc không còn câu bị thiếu.",
+  MAKEUP_ALREADY_OPEN: "Bài đã có lượt nộp bù đang mở. Dùng đúng lượt đó.",
+  MAKEUP_INCOMPLETE:
+    "Còn câu nộp bù chưa được máy chủ nhận. Giữ trang mở và thử lưu lại.",
+  MAKEUP_TRANSPORT_REQUIRED:
+    "Admin đã mở nộp bù. Mở liên kết nộp bù để bổ sung câu còn thiếu.",
+  UPLOAD_WINDOW_EXPIRED:
+    "Lượt nộp bù đã hết hạn. Nhờ Admin mở lại những câu vẫn còn thiếu.",
+  RECORDING_LOCKED:
+    "Câu đã được nhận hoặc không thuộc lượt nộp bù; không thể thay câu trả lời.",
   RECORDING_REQUIRED: "Lưu bản ghi cho từng câu nói trước khi nộp bài.",
   RECORDING_EXPIRED:
     "Bản ghi đã hết hạn hoặc đã được dọn. Ghi lại và lưu trước khi nộp bài.",

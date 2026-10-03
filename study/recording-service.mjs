@@ -21,6 +21,7 @@ export async function uploadRecording({
   ownerId,
   makeupWindowId,
   originalRequestId,
+  assignmentMakeupWindowId,
 }) {
   if (!blob.size || blob.size > 8 * 1024 * 1024)
     throw Error("AUDIO_INVALID_SIZE");
@@ -38,6 +39,9 @@ export async function uploadRecording({
       sha256: hash,
       size: blob.size,
       mime: blob.type.split(";")[0],
+      ...(assignmentMakeupWindowId
+        ? { assignment_makeup_window_id: assignmentMakeupWindowId }
+        : {}),
       ...(makeupWindowId
         ? {
             makeup_window_id: makeupWindowId,

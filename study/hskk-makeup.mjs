@@ -94,7 +94,7 @@ export async function mountMakeup(root, { ownerId, attemptId }) {
     if (alive) root.querySelector("[data-message]").textContent = text;
   };
   function render() {
-    root.innerHTML = `<section class="hskk-card"><h1>H71002 · Nộp bù</h1><p>Chỉ bổ sung câu chưa được nhận. Các câu đã lưu được giữ nguyên. Bài sẽ ghi nhận thời điểm nộp bù thực tế.</p><p data-summary></p><p data-message role="status"></p><meter min="0" max="1" value="0" aria-label="Mức âm thanh microphone"></meter><div data-mic></div><div data-questions></div><button class="st-button" data-submit>Nộp bài sau khi bổ sung</button></section>`;
+    root.innerHTML = `<section class="hskk-card"><h1>${esc(boot.exam_code || new URL(location.href).searchParams.get("exam") || "HSKK")} · Nộp bù</h1><p>Chỉ bổ sung câu chưa được nhận. Các câu đã lưu được giữ nguyên. Bài sẽ ghi nhận thời điểm nộp bù thực tế.</p><p data-summary></p><p data-message role="status"></p><meter min="0" max="1" value="0" aria-label="Mức âm thanh microphone"></meter><div data-mic></div><div data-questions></div><button class="st-button" data-submit>Nộp bài sau khi bổ sung</button></section>`;
     const mic = document.createElement("button");
     mic.className = "st-button";
     mic.textContent = "Kiểm tra microphone";

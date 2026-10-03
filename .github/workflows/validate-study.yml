@@ -28,6 +28,7 @@ jobs:
           node scripts/check-assignment-authoring-browser.mjs
           node scripts/check-assignment-cp2-browser.mjs
           node scripts/check-assignment-ui-browser.mjs
+          node scripts/check-assignment-makeup-browser.mjs
           node scripts/check-hskk-browser.mjs
           node scripts/check-hskk-delivery-browser.mjs
           node scripts/check-hskk-cbt-browser.mjs

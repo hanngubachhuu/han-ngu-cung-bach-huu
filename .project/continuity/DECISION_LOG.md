@@ -1,5 +1,9 @@
 # DECISION LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Every official exam/lesson supports Admin-opened makeup — human decision 2026-10-04
+- Direct human instruction: any exam or lesson may be opened for Student makeup by Admin. Applies to official submission history across HSK/HSKK. Missing means server has not received an answer; received answers remain frozen.
+- Preserve pinned content, accepted answers, original timing/receipt and old published grades. Append actual recovery receipt and a new unpublished grading revision if the original was already submitted. Keep approval, ownership and lesson entitlement checks; a makeup opening never grants course/exam entitlement.
+
 Chỉ lưu quyết định có ảnh hưởng về sau.
 
 ## H71002 missing-question makeup — human decision 2026-10-04

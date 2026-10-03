@@ -5,6 +5,7 @@ import {
 } from "./assignment-question-form.mjs";
 import { mountDocumentExamImport } from "./exam-import-ui.mjs";
 import { mountRecorder } from "./recording-ui.mjs";
+import { mountAdminMakeup } from "./assignment-makeup.mjs";
 import {
   assignmentCommand as call,
   assignmentAuthoring as callAuthor,
@@ -238,6 +239,15 @@ export function mountAssignmentAdmin(root, profile, { mode = "legacy" } = {}) {
         ${editable ? '<div class="account-actions assignment-sticky"><button class="st-button primary" type="submit">Lưu điểm</button><button class="st-button" type="button" data-preview>Xem trước kết quả</button><button class="st-button primary" type="button" data-publish disabled>Công bố kết quả</button></div>' : grade ? `<label>Lý do chấm lại<input data-reason maxlength="1000" required></label><label>Phiên bản chấm mới cho một câu<select data-new-key><option value="">Giữ phiên bản chấm hiện tại</option>${revisedKeys.map((k) => `<option value="${esc(k.original)}:${esc(k.question.id)}">Câu ${k.position} · ${text(k.question.prompt)}</option>`).join("")}</select></label><button class="st-button" type="button" data-regrade>Tạo lần chấm lại</button>` : "<p>Bài đang làm, chưa có bản chấm.</p>"}</form><div data-preview-output></div>`;
       const dirty = new Set(),
         form = content.querySelector("[data-grades]");
+      const makeup = document.createElement("section");
+      makeup.className = "assignment-question";
+      form.before(makeup);
+      mountAdminMakeup(makeup, {
+        attemptId: id,
+        ownerId: profile.user_id,
+      }).catch((error) => {
+        if (makeup.isConnected) makeup.textContent = assignmentMessage(error);
+      });
       if (data.lesson_id === "exam-H71002" && data.state === "submitted") {
         const process = document.createElement("button");
         process.type = "button";

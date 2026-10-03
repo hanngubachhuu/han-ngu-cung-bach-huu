@@ -1,5 +1,11 @@
 # CHANGELOG HANDOFF — HÁN NGỮ CÙNG BÁCH HỮU
 
+## 2026-10-04 — real makeup received, shared Admin opening
+- Hosted fix: f0b62dd, both CI PASS, migration 20261003175113. The same real Q26/Q27 bytes were bound after the narrow history-trigger correction. Actual Student submitted at 2026-10-03T17:52:08.881719Z; old attempt submitted 27/27, frozen 25 answers unchanged. Real Admin sees receipt and both new recordings.
+- Human expands makeup authority to every official lesson/exam. Forward generic migration and shared UI now cover all eight written formats plus speaking; missing-only, immutable received answers, original versions/timing, old published grades and real late receipts. Admin opens from submission detail; entitled owner uses a supplied link or Nộp bù in their own history.
+- Final local validation: 238/238, lint/full build/validators, seven targeted SQL cases, same-request reload/network recovery at 390/768/1366 px, existing assignment and HSKK recovery browsers PASS. Exact CI/production generic rollout still pending. No unrelated fixtures were edited; preserve untracked docs/speaking-pilot-preflight.md.
+- Real full test active on production application 32b6fd9: cb7fa9fa-362c-432d-9aca-7ad9035f36da, human microphone, deadline 18:29:07Z. Do not interrupt Student or redeploy mid-exam. Wait for legitimate receipt and human audio report; verify private Admin playback/denial before calling hosted E2E PASS.
+
 Mỗi phiên quan trọng để lại một entry ngắn.
 
 ## 2026-10-04 — H71002 missing-question recovery rollout

@@ -1,5 +1,10 @@
 # BUG LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+### HSKK-MAKEUP-HISTORY-GUARD — hosted recovery VERIFIED
+- Actual source of the 0/2 stuck screen: recordings confirmed in private Storage, then the unchanged original history trigger rejected their answer binding after the original deadline. Initial synthetic clock override missed the trigger clock; regression now reproduces that exact rejection and verifies the narrow missing-only exception.
+- Forward hotfix f0b62dd / production migration 20261003175113 applied after both CI PASS. The real Student retry bound the same already uploaded files; human submitted at 17:52:08.881719Z. Server 27/27, submitted; original 25 accepted answers unchanged. No duplicate recordings or deadline extension.
+- Generalization explicitly authorized by the human: all official exams/lessons, not a hardcoded H71002-only control. Generic implementation remains under validation, not yet deployed.
+
 Không coi một bug lịch sử là bug hiện tại nếu chưa tái xác minh.
 
 ## Current verified bugs
