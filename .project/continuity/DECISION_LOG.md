@@ -2,6 +2,11 @@
 
 Chỉ lưu quyết định có ảnh hưởng về sau.
 
+## H71002 missing-question makeup — human decision 2026-10-04
+- The human permits recording only the server-missing questions in an Admin-opened bounded makeup window when retained original bytes are unavailable. Received questions cannot be replaced or rerecorded.
+- Keep the original attempt, pinned version, timing/deadlines and accepted recordings. Append immutable recovery provenance and actual late receipt; never backdate submission. Retained bytes and already uploaded/unbound references are reused where available.
+- Old-attempt makeup and the separately authorized single new full hosted test are distinct checkpoints. Human microphone/audio/submission and real Admin playback are mandatory for hosted proof; synthetic local tests do not establish production readiness.
+
 ## DEC-001 — Project-specific continuity
 - Date: 2026-09-28
 - Decision: Continuity phải dành riêng cho repository này.

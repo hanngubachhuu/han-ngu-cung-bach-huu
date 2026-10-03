@@ -2,6 +2,15 @@
 
 Mỗi phiên quan trọng để lại một entry ngắn.
 
+## 2026-10-04 — H71002 missing-question recovery rollout
+- Goal: repair submission waiting on Q26/Q27 uploads, support human-authorized Admin-opened missing-question makeup, prepare one separate new controlled hosted test.
+- Completed: application `32b6fd9`, 234/234 tests, lint/build/validators, three-width local browser checks and both exact CI workflows PASS. Production `dpl_J2Sa5Jy9jQtE3ALVSDGxSRGiUm9g` READY with six live assets matching the build. Forward migrations applied as `20261003171309` and `20261003171323`; no RLS policy weakening.
+- Real approved Admin opened frozen Q26/Q27 makeup window `90d2f4b5-a0e8-4eea-b2c5-3945da590c90` for BachHuu's old attempt. Expires `2026-10-03T21:17:30.438481Z`. Authorized separate new test preflight `cb7fa9fa-362c-432d-9aca-7ad9035f36da`; no actual new session was manufactured.
+- Production preservation: all old row hashes match baseline, original attempt remains draft 25/27, source/confirmed boundaries/clips unchanged, Speaking false, cron zero. Real audit entries record Admin actor. Baseline and screenshots are ignored under `test-results/hskk/`.
+- Pending: human opens the provided `makeup=1` old-attempt link and actually resends retained recordings or records only missing Q26/Q27, then submits. Verify all 27 legitimate server references, actual late receipt and private Admin playback; do not claim full new E2E from makeup. Then run the separately authorized full normal human test.
+- If window expired: inspect using actual Admin and open a separately audited window; never extend the old session or the immutable prior makeup deadline. Do not reuse synthetic browser results as hosted proof.
+- Do not touch: original source MP3, original segmentation run, 27 confirmed clips, unrelated HSK1/HSK2 access, old 25 recordings, global Speaking/scheduler, published grades, untracked `docs/speaking-pilot-preflight.md`.
+
 ~~~md
 ## YYYY-MM-DD — Session N
 ### Goal

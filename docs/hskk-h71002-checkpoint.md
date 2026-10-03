@@ -16,11 +16,19 @@ Makeup completion validates all 27 references, preserves the original session/ti
 | Student/anonymous/other-owner denial and private Storage/no future prompt | PASS — local SQL/API |
 | Actual renderer microphone, immutable retry, missing-only layout, submission at 390/768/1366 px | PASS — local fake microphone/provider; not human hosted proof |
 | Full tests / lint / build / validators | PASS — 234/234 tests; lint/build/study/30 lessons |
-| Exact application CI | PENDING — must pass before production rollout |
-| Production migration / deployment / real Admin opening | NOT PERFORMED yet |
+| Exact application CI | PASS — both workflows for application commit `32b6fd9` |
+| Production migration / deployment / real Admin opening | PASS — guarded migrations applied, exact application deployed, real approved Admin opened Q26/Q27 only |
 | BachHuu actual Q26/Q27 makeup, legitimate old submission, Admin playback | NOT TESTED |
 
-No production mutation has yet been performed in this phase. No source/clip/segmentation/publication/global Speaking/scheduler changes are included. The hosted makeup result and the new full hosted E2E result must be reported separately.
+Production rollout is verified at `2026-10-03T17:18:40Z` (October 4 local time). Application commit `32b6fd98d3c59643b3ca6794f1c78b6409ad2e87` is READY / Production, deployment `dpl_J2Sa5Jy9jQtE3ALVSDGxSRGiUm9g`, on `hanngubachhuu.vercel.app`. Both exact-commit [study CI](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/37139089343) and [lesson CI](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/37139089281) PASS. Six hosted application assets match the tested build. Anonymous makeup-load, authoring status and source-audio requests return `401 AUTH_REQUIRED`.
+
+Forward migrations are recorded as `20261003171309 / hskk_controlled_test_attempt` and `20261003171323 / hskk_missing_recording_makeup`. All five new private tables have RLS enabled, zero direct policies and no authenticated SELECT; renamed implementation helpers have EXECUTE revoked, public entrypoints retain real role/owner guards, and the prompt descriptor is service-role-only. Existing Storage policies, grade/result rows and all historical row hashes are unchanged after migration.
+
+The real approved Admin opened window `90d2f4b5-a0e8-4eea-b2c5-3945da590c90` for BachHuu's original attempt `ba99f979-a21e-4555-86ac-7fda9d8802e3`, pinned version `0b3d1a53-c3d0-4d5c-a55f-3fa60ed4ccb4`. Its frozen missing set is exactly Q26/Q27; 25 accepted answers are preserved. Opened at `2026-10-03T17:17:30.438481Z`, expires `2026-10-03T21:17:30.438481Z` (04:17:30 October 4 in Vietnam). The immutable grant records the actual Admin identity. An independent controlled test preflight `cb7fa9fa-362c-432d-9aca-7ad9035f36da` was authorized at `2026-10-03T17:18:17.564030Z`; no new actual exam session, audio or submission was created by the Admin actions.
+
+Read-only verification after both openings: preflights 1→2; attempts remain 4, sessions 1, answer rows 27, recording reservations 27, Storage objects 94. Every prior answer/recording/session/preflight/attempt/submission/Storage/authoring/access row hash matches the baseline. The old attempt is still legitimately draft 25/27 with unchanged original deadlines. Source hash, all 27 confirmed clips and authoring revision 159 remain unchanged; Speaking false and scheduler zero. Ignored evidence: `test-results/hskk/makeup-hosted-admin-opened.png`, `makeup-production-http.json`, and the baseline snapshots.
+
+Human Student makeup and Admin playback remain NOT TESTED until real retained-byte recovery or new microphone recordings are received and legitimately submitted. The separate new full hosted E2E remains NOT STARTED. No source/clip/segmentation/publication/global Speaking/scheduler changes occurred. Report these two checkpoints independently.
 
 ## New controlled H71002 test and Q26/Q27 upload correction — 2026-10-03
 
@@ -34,11 +42,11 @@ The forward controlled-test migration allows an approved Admin to authorize exac
 | --- | --- |
 | Q26/Q27 delayed uploads, shared submit and immutable retry regression | PASS — local |
 | Admin-only one-test authorization, Student/anonymous denial, pinned version, old-row equality and normal preflight/countdown | PASS — local PostgreSQL/API |
-| Full unit/SQL suite | PASS — 230/230; two document-parser timeout failures during concurrent build passed on full rerun after build |
+| Full unit/SQL suite | PASS — 234/234; document-parser timeouts during concurrent build passed on full rerun after build |
 | Lint / build / study validation / 30 canonical lesson validation | PASS |
-| Local browser regressions | IN PROGRESS |
-| Exact change CI and production deployment | NOT TESTED yet |
-| Production migration and real Admin test authorization | NOT PERFORMED yet |
+| Local browser regressions | PASS — 390/768/1366 px; synthetic transport/microphone only |
+| Exact change CI and production deployment | PASS — exact application `32b6fd9`, both workflows and Production READY |
+| Production migration and real Admin test authorization | PASS — one separate test preflight; original attempt/history preserved |
 | New real Student microphone/audio/27-recording submission and Admin playback | NOT TESTED — requires actual human hosted attempt |
 
 The new hosted E2E checkpoint must remain incomplete until a real normal Student attempt is submitted and Admin playback is verified. Synthetic microphones, direct SQL-generated answers or API-only submission cannot pass it. Keep test grades private; stop and report the exact failed step if the real flow fails.
