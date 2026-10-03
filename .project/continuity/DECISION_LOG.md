@@ -1,6 +1,23 @@
 # DECISION LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Completion acceptance — 2026-10-04
+
+The human confirms the deployed submitted screen and return to account-history work. Server receipt remains authoritative; pending uploads must retain recovery rather than prematurely ending the exam. Admin receipt status is separate from grading/publication. Shared makeup is limited to server-missing answers on a pinned version and requires an audited Admin opening; it preserves previously accepted answers and published grades. Stop at the verified checkpoint; do not create another test or publish any new result.
+
+## 2026-10-04
+
+After server-confirmed submission automatically end microphone capture and leave the timed workspace for a receipt screen with history navigation. Show Admin receipt independently from grading status; never navigate away while uploads are pending.
+
+## Every official exam/lesson supports Admin-opened makeup — human decision 2026-10-04
+- Direct human instruction: any exam or lesson may be opened for Student makeup by Admin. Applies to official submission history across HSK/HSKK. Missing means server has not received an answer; received answers remain frozen.
+- Preserve pinned content, accepted answers, original timing/receipt and old published grades. Append actual recovery receipt and a new unpublished grading revision if the original was already submitted. Keep approval, ownership and lesson entitlement checks; a makeup opening never grants course/exam entitlement.
+
 Chỉ lưu quyết định có ảnh hưởng về sau.
+
+## H71002 missing-question makeup — human decision 2026-10-04
+- The human permits recording only the server-missing questions in an Admin-opened bounded makeup window when retained original bytes are unavailable. Received questions cannot be replaced or rerecorded.
+- Keep the original attempt, pinned version, timing/deadlines and accepted recordings. Append immutable recovery provenance and actual late receipt; never backdate submission. Retained bytes and already uploaded/unbound references are reused where available.
+- Old-attempt makeup and the separately authorized single new full hosted test are distinct checkpoints. Human microphone/audio/submission and real Admin playback are mandatory for hosted proof; synthetic local tests do not establish production readiness.
 
 ## DEC-001 — Project-specific continuity
 - Date: 2026-09-28

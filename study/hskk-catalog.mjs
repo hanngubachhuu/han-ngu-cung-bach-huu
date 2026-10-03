@@ -1,0 +1,52 @@
+// Safe public listing only. Draft question content/provenance stays server-side.
+export const examCatalog = Object.freeze([
+  {
+    exam_code: "H71002",
+    title: "Thi thử HSKK Sơ cấp",
+    level: "elementary",
+    exam_version: 1,
+    status: "draft",
+    question_count: 27,
+    section_count: 3,
+    approximate_minutes: 17,
+    preparation_minutes: 7,
+    document_url: "media/hskk/H71002.pdf",
+    sections: [
+      { title: "Nghe và nhắc lại", questions: 15, response_seconds: 7 },
+      { title: "Nghe và trả lời", questions: 10, response_seconds: 10 },
+      { title: "Trả lời câu hỏi", questions: 2, response_seconds: 90 },
+    ],
+  },
+  {
+    exam_code: "H80000",
+    title: "H80000",
+    level: "intermediate",
+    exam_version: 1,
+    status: "draft",
+    question_count: 14,
+    section_count: 3,
+    approximate_minutes: 21,
+    preparation_minutes: 10,
+    sections: [
+      { title: "Nghe và nhắc lại", questions: 10, response_seconds: 10 },
+      { title: "Nhìn tranh và nói", questions: 2, response_seconds: 120 },
+      { title: "Trả lời câu hỏi", questions: 2, response_seconds: 120 },
+    ],
+  },
+  {
+    exam_code: "H91002",
+    title: "H91002",
+    level: "advanced",
+    exam_version: 1,
+    status: "draft",
+    question_count: 6,
+    section_count: 3,
+    approximate_minutes: 24,
+    preparation_minutes: 10,
+    sections: [
+      { title: "Nghe và thuật lại", questions: 3, response_seconds: 120 },
+      { title: "Đọc thành tiếng", questions: 1, response_seconds: 120 },
+      { title: "Trả lời câu hỏi", questions: 2, response_seconds: 150 },
+    ],
+  },
+]);

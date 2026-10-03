@@ -175,9 +175,9 @@ try {
   await page.getByRole("link", { name: "Quản trị học viên →" }).waitFor();
   await page.goto(base + "/quan-tri.html");
   await page
-    .getByText("Bài nộp, chấm điểm và đề HSK / HSKK", { exact: true })
+    .locator('[data-admin-nav="students"]')
     .click();
-  await page.locator("[data-bank]").click();
+  await page.locator("[data-lesson-workspace] > summary").click();
   await page.getByText("Thêm / sửa câu hỏi", { exact: true }).click();
   const open = async () =>
     page

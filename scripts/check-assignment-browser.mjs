@@ -394,7 +394,7 @@ try {
   work.answers[1].answer = { recording_id: "synthetic-admin-playback" };
   await page.goto(base + "/quan-tri.html");
   await page
-    .getByText("Bài nộp, chấm điểm và đề HSK / HSKK", { exact: true })
+    .locator('[data-admin-nav="submissions"]')
     .click();
   await page.locator("[data-attempt]").click();
   await page
@@ -439,7 +439,8 @@ try {
   }
   work.answers[0].question.kind = "mcq";
   work.answers[0].answer = originalAnswer;
-  await page.locator("[data-bank]").click();
+  await page.locator('[data-admin-nav="students"]').click();
+  await page.locator("[data-lesson-workspace] > summary").click();
   await page
     .locator('[data-exam-list] td[data-label="Cấp độ"]')
     .getByText("HSK 1", { exact: true })
@@ -463,7 +464,7 @@ try {
     2,
   );
   await page.locator('[data-move-up="bank20"]').click();
-  await page.getByRole("button", { name: "Lưu đề nháp", exact: true }).click();
+  await page.getByRole("button", { name: "Lưu bộ bài tập", exact: true }).click();
   await page.waitForFunction(
     () =>
       document.querySelector('[data-definition] [name="title"]')?.value === "",
@@ -517,7 +518,7 @@ try {
       document.querySelector('[data-definition] [name="title"]')?.value ===
       "Đề trước (từ v1)",
   );
-  await page.getByRole("button", { name: "Lưu đề nháp", exact: true }).click();
+  await page.getByRole("button", { name: "Lưu bộ bài tập", exact: true }).click();
   await page.waitForFunction(
     () =>
       document.querySelector('[data-definition] [name="title"]')?.value === "",

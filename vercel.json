@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run audio:install && npm run build",
+  "buildCommand": "npm run audio:install && npm run hskk:install && npm run build",
   "outputDirectory": "dist",
   "rewrites": [
     {
@@ -17,6 +17,22 @@
     }
   ],
   "functions": {
+    "api/hskk-import.js": {
+      "maxDuration": 120,
+      "includeFiles": "{server/hskk/**,.cache/recording-runtime/linux-x64-8.1.3/**}"
+    },
+    "api/hskk-delivery.js": {
+      "maxDuration": 120,
+      "includeFiles": "{server/hskk/**,.cache/recording-runtime/linux-x64-8.1.3/**}"
+    },
+    "api/hskk-session.js": {
+      "maxDuration": 30,
+      "includeFiles": "server/hskk/assets/**"
+    },
+    "api/hskk-exams.js": {
+      "maxDuration": 120,
+      "includeFiles": "{server/hskk/**,.cache/recording-runtime/linux-x64-8.1.3/**}"
+    },
     "api/study.js": {
       "maxDuration": 120
     },
@@ -25,8 +41,8 @@
       "includeFiles": ".cache/recording-runtime/linux-x64-8.1.3/**"
     },
     "api/exam-import.js": {
-      "maxDuration": 60,
-      "includeFiles": "{server/exam-parser-thread.mjs,server/exam-document-parser.mjs,server/exam-file.mjs,node_modules/pdfjs-dist/**,node_modules/mammoth/**,node_modules/parse5/**}"
+      "maxDuration": 120,
+      "includeFiles": "{server/{exam*,hskk*}.mjs,node_modules/{pdfjs-dist,mammoth,parse5,tesseract.js*,@napi-rs/canvas*}/**,.cache/hskk-ocr/**}"
     }
   },
   "headers": [

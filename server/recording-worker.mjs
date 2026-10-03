@@ -168,7 +168,10 @@ export function recordingStorage(client) {
     },
   };
 }
-export async function productionRecordingJob(env = process.env) {
+export async function productionRecordingJob(
+  env = process.env,
+  { hskkRecordingId } = {},
+) {
   if (
     !env.SUPABASE_SERVICE_ROLE_KEY ||
     !env.SUPABASE_URL ||
@@ -182,10 +185,17 @@ export async function productionRecordingJob(env = process.env) {
     },
   });
   const command = async (name, payload) => {
-    const { data, error } = await client.rpc("recording_worker", {
-      command: name,
-      payload,
-    });
+    const { data, error } = await client.rpc(
+      hskkRecordingId && name === "claim"
+        ? "hskk_recording_claim"
+        : "recording_worker",
+      hskkRecordingId && name === "claim"
+        ? { payload: { recording_id: hskkRecordingId } }
+        : {
+            command: name,
+            payload,
+          },
+    );
     if (error)
       throw Error(
         error.message === "STALE_RECORDING_LEASE"

@@ -1,6 +1,6 @@
 // Presentation adapter only: keep the established form payload and version semantics.
 import { escapeHtml as esc } from "./core.mjs";
-export function mountQuestionFields(form) {
+export function mountQuestionFields(form, { hideRubric = false } = {}) {
   const field = (name) => form.elements.namedItem(name);
   const options = field("options"),
     answer = field("answer"),
@@ -25,11 +25,9 @@ export function mountQuestionFields(form) {
     answerLabel.hidden =
       mcq ||
       ["speaking", "writing", "translation", "true_false"].includes(kind.value);
-    field("rubric_version_id").closest("label").hidden = ![
-      "speaking",
-      "writing",
-      "translation",
-    ].includes(kind.value);
+    field("rubric_version_id").closest("label").hidden =
+      hideRubric ||
+      !["speaking", "writing", "translation"].includes(kind.value);
     box.hidden = !mcq && kind.value !== "true_false";
     box.replaceChildren();
     if (kind.value === "true_false") {

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { documentContext } from "../server/document-service.mjs";
 import { parseExamFile } from "../server/exam-parser.mjs";
 import { documentLimits } from "../server/exam-file.mjs";
-export const config = { maxDuration: 60 };
+export const config = { maxDuration: 120 };
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "private, no-store");
   res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -56,7 +56,14 @@ export default async function handler(req, res) {
     )
       throw Error("DOCUMENT_UNSUPPORTED");
     const bytes = Buffer.from(body.bytes, "base64");
-    const parsed = await parseExamFile(bytes, body.filename);
+    if (
+      body.hskk_level &&
+      !["elementary", "intermediate", "advanced"].includes(body.hskk_level)
+    )
+      throw Error("DOCUMENT_UNSUPPORTED");
+    const parsed = await parseExamFile(bytes, body.filename, {
+      hskkLevel: body.hskk_level,
+    });
     res.statusCode = 200;
     res.end(
       JSON.stringify({

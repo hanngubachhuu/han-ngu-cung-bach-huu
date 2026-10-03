@@ -1,9 +1,42 @@
 # BUG LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Closed with hosted evidence — 2026-10-04
+
+- Completion workspace/microphone defect: fixed in production da4a57a. Local real-browser track-ended regression PASS at three widths; actual Student verifies terminal receipt and account-history navigation after reopening the submitted hosted attempt.
+- Admin receipt ambiguity: actual production queue/detail now shows “Đã nhận trên hệ thống” independently of grading/publication.
+- Ordinary submitted HSKK processing error 42703: scoped alias-only migration 20261003185553 applied, normal-session SQL regression PASS and all 27 actual new-attempt recordings processed/archived. Actual Admin private playback Q1/Q26/Q27 PASS.
+- Q26/Q27 recovery: old makeup and separately authorized normal full test are both legitimately submitted 27/27. Actual Student feedback confirms clear prompt audio, microphone and automatic advancement.
+- Shared makeup final hosted Student denial PASS; no Storage-policy or entitlement widening. Earlier rollout-pending notes below are historical.
+
+## 2026-10-04
+
+Completion UI: real hosted 27/27 submission left microphone capture and CBT workspace active. Reproduced RED, renderer cleanup and terminal confirmation now pass responsive browser regression; production rollout pending.
+
+### HSKK-MAKEUP-HISTORY-GUARD — hosted recovery VERIFIED
+- Actual source of the 0/2 stuck screen: recordings confirmed in private Storage, then the unchanged original history trigger rejected their answer binding after the original deadline. Initial synthetic clock override missed the trigger clock; regression now reproduces that exact rejection and verifies the narrow missing-only exception.
+- Forward hotfix f0b62dd / production migration 20261003175113 applied after both CI PASS. The real Student retry bound the same already uploaded files; human submitted at 17:52:08.881719Z. Server 27/27, submitted; original 25 accepted answers unchanged. No duplicate recordings or deadline extension.
+- Generalization explicitly authorized by the human: all official exams/lessons, not a hardcoded H71002-only control. Generic implementation remains under validation, not yet deployed.
+
 Không coi một bug lịch sử là bug hiện tại nếu chưa tái xác minh.
 
 ## Current verified bugs
-Chưa có bug nào được đánh dấu OPEN ở thời điểm bootstrap này.
+
+### HSKK-SUBMIT-INFLIGHT-Q26-Q27 — fix deployed; real full hosted test pending
+
+- Symptom: the historical BachHuu H71002 attempt has 25 uploaded/bound recordings; Q26/Q27 reservations exist but their original raw objects are absent and the deadline is expired.
+- Reproduction: with both 90-second final-question uploads in flight, the old client calls COMPLETED before either finishes because save() returns immediately for an already saving entry.
+- Change: join per-request upload promises; share simultaneous submit work; retain immutable Blob/identity, retry production uploads with bounded backoff, and stop at the original deadline. Do not block automatic question transitions.
+- Verification: meaningful regression failed before the fix and passes afterwards; full 234/234 tests, lint/build/validators and both exact application CI workflows pass. Production `32b6fd9` matches the tested assets. This proves a client race, not the exact historic network failure.
+- Scope: original session/deadlines and 25 received recordings remain unchanged; only the later explicitly authorized missing-question makeup may add Q26/Q27 with an actual late timestamp. No source/clip/publication changes.
+- Exact next: the real Admin authorized the single separate new test preflight. Verify the normal human microphone/27 recordings/submission/Admin playback after the separate old-attempt makeup. Stop on any real E2E failure.
+
+### HSKK-MISSING-QUESTION-MAKEUP — explicitly authorized scope expansion
+
+- Human chooses an Admin-opened missing-question makeup window; allow recording only when the missing original file is absent. This narrowly supersedes the earlier no-history-write restriction.
+- Local SQL/API proof: exact missing-set/revision/version authorization; keep 25 accepted answers/recordings, original session/timeline/deadlines unchanged; reuse already uploaded reference or retained bytes; new missing-only recording; expiry and separately audited reopening; validate all 27, record actual late timestamp and keep review unpublished.
+- Existing Admin player/grade workflow is reused with a makeup label and only bound recordings queued for processing. Storage/RLS policies are retained; no source/clip/global Speaking/scheduler changes.
+- Renderer: real MediaRecorder on a local fake microphone, missing-only Q26/Q27, delayed/retried upload identity, actual local prompt decoding, one submission, 390/768/1366 px PASS. Hosted human recovery remains NOT TESTED.
+- Full suite 234/234 PASS plus lint/build/validators; exact code CI PASS, production deployment READY, both forward migrations applied. Real Admin opened window `90d2f4b5-a0e8-4eea-b2c5-3945da590c90`, frozen Q26/Q27 only, expires `2026-10-03T21:17:30.438481Z`. Audit actor matches the actual approved Admin. All prior row hashes, Storage policies and Speaking false/cron zero are preserved. Human makeup and Admin playback remain NOT TESTED; never fabricate or force an old submission.
 
 ## Historical areas to reconcile
 

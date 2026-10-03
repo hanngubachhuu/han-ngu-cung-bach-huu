@@ -1,0 +1,199 @@
+/* Admin task surfaces reuse the shared Modern Scholar token declarations. */
+.admin-workspace {
+  min-width: 0;
+  margin-top: var(--space-lg);
+}
+.admin-workspace [hidden] {
+  display: none !important;
+}
+.admin-primary-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  padding-bottom: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+.admin-primary-nav .st-button {
+  flex: 1 1 auto;
+  min-height: var(--space-2xl);
+}
+.admin-primary-nav [aria-current],
+.admin-question-nav [aria-current],
+.admin-workspace [aria-pressed="true"] {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.admin-module-header,
+.admin-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+.admin-editor-header > div {
+  min-width: 0;
+  flex: 1;
+}
+.admin-editor-header > div:last-child {
+  max-width: var(--max-w-content);
+  flex: 0 1 40%;
+}
+.admin-exam-types,
+.admin-exam-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+.admin-exam-types button {
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  min-height: var(--space-3xl);
+}
+.admin-exam-types span {
+  display: block;
+  margin-top: var(--space-xs);
+  color: var(--color-text-secondary);
+}
+.admin-exam-list article {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.admin-create-form {
+  max-width: var(--max-w-content);
+}
+.admin-question-layout {
+  display: grid;
+  grid-template-columns: minmax(120px, 200px) minmax(0, 1fr);
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+.admin-question-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-xs);
+  align-content: start;
+}
+.admin-question-nav .st-button {
+  min-height: var(--space-2xl);
+  padding: var(--space-xs);
+  min-width: 0;
+}
+.admin-exam-editor input,
+.admin-exam-editor select,
+.admin-exam-editor textarea,
+.admin-audio-review input,
+.admin-audio-review select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: var(--space-2xl);
+  font: inherit;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+.admin-exam-editor textarea {
+  resize: vertical;
+}
+.admin-workspace .st-button {
+  min-height: var(--space-2xl);
+}
+.admin-workspace .account-actions {
+  min-width: 0;
+}
+.admin-workspace .account-actions .st-button {
+  white-space: normal;
+}
+.admin-audio-review details,
+.admin-instructions {
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.admin-workspace summary {
+  min-height: var(--space-2xl);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.admin-audio-summary {
+  padding: var(--space-sm);
+  background: var(--color-surface-subtle);
+  border-radius: var(--radius-sm);
+}
+.admin-audio-review canvas {
+  max-width: 100%;
+}
+.admin-audio-review audio {
+  width: 100%;
+}
+.admin-audio-review label {
+  display: grid;
+  gap: var(--space-xs);
+  margin-block: var(--space-md);
+}
+.admin-empty {
+  padding: var(--space-lg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  grid-column: 1 / -1;
+}
+.admin-workspace :focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+.admin-workspace [lang="zh"] {
+  font-family: var(--font-chinese);
+}
+@media (max-width: 768px) {
+  .admin-question-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-question-nav {
+    display: flex;
+    overflow-x: auto;
+    padding: var(--space-xs);
+  }
+  .admin-question-nav .st-button {
+    flex: 0 0 var(--space-2xl);
+  }
+  .admin-editor-header {
+    display: block;
+  }
+  .admin-editor-header > div:last-child {
+    max-width: 100%;
+    margin-top: var(--space-md);
+  }
+}
+@media (max-width: 480px) {
+  .account-main:has(.admin-workspace) {
+    padding-inline: var(--space-md);
+  }
+  .admin-exam-types,
+  .admin-exam-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .admin-module-header {
+    flex-wrap: wrap;
+  }
+  .admin-primary-nav .st-button {
+    flex-basis: 40%;
+  }
+  .admin-audio-review .account-actions .st-button {
+    flex: 1 1 40%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-workspace * {
+    scroll-behavior: auto;
+    transition: none;
+    animation: none;
+  }
+}

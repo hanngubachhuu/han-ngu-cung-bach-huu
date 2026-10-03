@@ -6,7 +6,9 @@ import {
   assignmentText as text,
 } from "./assignment-service.mjs";
 import { escapeHtml as esc } from "./core.mjs";
+import { safeMedia } from "./media-url.mjs";
 import { createAssignmentDraft } from "./assignment-draft.mjs";
+import { mountAssignmentMakeup, makeupLink } from "./assignment-makeup.mjs";
 
 export function mountAssignments(root, profile) {
   let recorders = [];
@@ -35,6 +37,7 @@ export function mountAssignments(root, profile) {
     clearInterval(timer);
     clearTimeout(debounce);
     window.removeEventListener("online", online);
+    makeupDispose?.();
   };
   function report(error) {
     const status = root.querySelector("[data-status]");
@@ -57,7 +60,7 @@ export function mountAssignments(root, profile) {
       if (!active || generation !== request) return;
       root.innerHTML = `<h3>Bài nộp HSK / HSKK</h3><p>Bài có câu tự luận sẽ được Bách Hữu chấm. Kết quả hiển thị sau khi được công bố.</p><p data-status role="status"></p>
         <div class="account-grid"><section><h4>Bài đang mở</h4>${catalog.length ? catalog.map((l) => `<div class="assignment-row"><span>${text(l.course_title)} · ${text(l.title_vi)}</span><button class="st-button" data-start="${esc(l.id)}">Bắt đầu lượt mới</button></div>`).join("") : "<p>Chưa có bài được mở nhận bài nộp.</p>"}<div class="account-actions"><button class="st-button" data-catalog-prev ${catalogPage ? "" : "disabled"}>← Trước</button><button class="st-button" data-catalog-next ${catalog.length === 20 ? "" : "disabled"}>Sau →</button></div></section>
-        <section><h4>Bài của bạn</h4>${mine.length ? mine.map((a) => `<div class="assignment-row"><span>${text(a.title_vi)}<small>${new Date(a.started_at).toLocaleString("vi-VN")} · ${a.state === "draft" ? "Đang làm" : a.published_revision ? "Đã có kết quả" : "Chờ công bố"}</small></span><button class="st-button" data-open="${esc(a.id)}">${a.state === "draft" ? "Tiếp tục" : "Xem bài"}</button></div>`).join("") : "<p>Chưa có bài nộp chính thức.</p>"}<div class="account-actions"><button class="st-button" data-history-prev ${historyPage ? "" : "disabled"}>← Trước</button><button class="st-button" data-history-next ${mine.length === 20 ? "" : "disabled"}>Sau →</button></div></section></div>`;
+        <section><h4>Bài của bạn</h4>${mine.length ? mine.map((a) => `<div class="assignment-row"><span>${text(a.title_vi)}<small>${new Date(a.started_at).toLocaleString("vi-VN")} · ${a.state === "draft" ? "Đang làm" : a.published_revision ? "Đã có kết quả" : "Chờ công bố"}</small></span><button class="st-button" data-open="${esc(a.id)}">${a.makeup_window_id ? "Nộp bù" : a.state === "draft" ? "Tiếp tục" : "Xem bài"}</button></div>`).join("") : "<p>Chưa có bài nộp chính thức.</p>"}<div class="account-actions"><button class="st-button" data-history-prev ${historyPage ? "" : "disabled"}>← Trước</button><button class="st-button" data-history-next ${mine.length === 20 ? "" : "disabled"}>Sau →</button></div></section></div>`;
       for (const button of root.querySelectorAll("[data-start]"))
         button.onclick = async () => {
           button.disabled = true;
@@ -79,7 +82,20 @@ export function mountAssignments(root, profile) {
           }
         };
       for (const button of root.querySelectorAll("[data-open]"))
-        button.onclick = () => open(button.dataset.open);
+        button.onclick = () => {
+          const previous = mine.find((a) => a.id === button.dataset.open);
+          if (previous?.makeup_window_id) {
+            location.href = makeupLink(previous.id, previous.makeup_exam_code);
+            return;
+          }
+          if (previous?.lesson_id === "exam-H71002") {
+            location.href =
+              "hskk-de-thi.html?exam=H71002&attempt=" +
+              encodeURIComponent(previous.id);
+            return;
+          }
+          open(button.dataset.open);
+        };
       for (const [selector, action] of [
         ["[data-catalog-prev]", () => catalogPage--],
         ["[data-catalog-next]", () => catalogPage++],
@@ -174,7 +190,7 @@ export function mountAssignments(root, profile) {
                   : answer || "",
           )}</textarea></label>
           ${q.options?.length ? `<p class="st-help">${q.options.map(text).join(" · ")}</p>` : ""}`;
-          return `${speaking ? `<section class="speaking-question" data-question-page="${position - 1}" ${position !== 1 ? "hidden" : ""}>` : ""}<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}${speaking ? "</section>" : ""}`;
+          return `${speaking ? `<section class="speaking-question" data-question-page="${position - 1}" ${position !== 1 ? "hidden" : ""}>` : ""}<fieldset class="assignment-question" data-question="${esc(q.id)}" ${locked ? "disabled" : ""}><legend>Câu ${position} · ${grade ? grade.score : "Tối đa 10"}${grade ? "/10" : " điểm"}</legend><p class="assignment-prompt">${text(q.prompt)}</p>${q.pinyin ? `<p class="st-help">${text(q.pinyin)}</p>` : ""}${q.image && safeMedia(q.image) ? `<img class="assignment-question-image" src="${esc(q.image)}" alt="Hình của câu ${position}" loading="lazy">` : ""}${q.audio && safeMedia(q.audio) ? `<audio controls src="${esc(q.audio)}" aria-label="Audio câu ${position}"></audio>` : ""}${q.context_version_id ? `<p class="st-help">Dùng đoạn đọc chung phía trên.</p>` : ""}${input}${grade?.feedback ? `<p class="assignment-feedback">Nhận xét: ${text(grade.feedback)}</p>` : ""}</fieldset>${q.kind === "speaking" ? `<div class="assignment-question" data-recorder="${esc(q.id)}"></div>` : ""}${speaking ? "</section>" : ""}`;
         })
         .join(
           "",
@@ -539,6 +555,21 @@ export function mountAssignments(root, profile) {
     tick();
     if (!draft.conflicted) draft.flush().catch(report);
   }
-  list();
+  let makeupDispose;
+  const makeupAttempt = new URL(location.href).searchParams.get(
+    "makeup_attempt",
+  );
+  if (makeupAttempt) {
+    root.innerHTML = '<p data-status role="status">Đang tải nộp bù…</p>';
+    mountAssignmentMakeup(root, {
+      attemptId: makeupAttempt,
+      ownerId: profile.user_id,
+    })
+      .then((dispose) => {
+        if (active) makeupDispose = dispose;
+        else dispose();
+      })
+      .catch(report);
+  } else list();
   return disconnect;
 }

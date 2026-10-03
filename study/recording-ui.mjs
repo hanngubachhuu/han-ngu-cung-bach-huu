@@ -21,6 +21,8 @@ export function mountRecorder(
     ownerId,
     answer,
     locked = false,
+    allowReplay = true,
+    lockReceived = false,
     onAnswer = async () => {},
     onState = () => {},
     autoSave = true,
@@ -69,7 +71,10 @@ export function mountRecorder(
             : "idle";
     clock.hidden = !recording;
     if (record) {
-      record.disabled = busy || recording;
+      record.disabled =
+        busy ||
+        recording ||
+        (lockReceived && (!!answer?.recording_id || pending));
       record.hidden = recording;
       record.classList.toggle("primary", !blob && !answer?.recording_id);
     }
@@ -81,9 +86,10 @@ export function mountRecorder(
       save.disabled = busy || recording || !blob;
       save.hidden = !pending || recording;
     }
-    replay.hidden = !blob || recording;
+    replay.hidden = !allowReplay || !blob || recording;
     replay.disabled = busy || recording;
-    play.hidden = !answer?.recording_id || recording || (!!blob && !locked);
+    play.hidden =
+      !allowReplay || !answer?.recording_id || recording || (!!blob && !locked);
     onState({
       busy: recording || busy || pending,
       saved: !!answer?.recording_id && !pending,
@@ -102,7 +108,12 @@ export function mountRecorder(
   }
   if (record)
     record.onclick = async () => {
-      if (busy || recording) return;
+      if (
+        busy ||
+        recording ||
+        (lockReceived && (answer?.recording_id || pending))
+      )
+        return;
       if (!media?.getUserMedia || !Recorder) {
         report(
           "Trình duyệt chưa hỗ trợ ghi âm. Dùng Chrome, Edge hoặc Safari mới qua HTTPS.",
@@ -157,9 +168,13 @@ export function mountRecorder(
           pending = true;
           localUrl = URL.createObjectURL(blob);
           audio.src = localUrl;
-          audio.hidden = false;
+          audio.hidden = !allowReplay;
           record.textContent = "Ghi lại";
-          report("✓ Đã ghi âm. Bạn có thể nghe lại hoặc ghi lại.");
+          report(
+            allowReplay
+              ? "✓ Đã ghi âm. Bạn có thể nghe lại hoặc ghi lại."
+              : "✓ Đã ghi âm. Đang gửi đúng bản ghi này; giữ trang mở.",
+          );
           controls();
           if (autoSave) void saveRecording();
         };
@@ -228,6 +243,7 @@ export function mountRecorder(
   }
   if (save) save.onclick = saveRecording;
   replay.onclick = async () => {
+    if (!allowReplay) return;
     if (!localUrl || busy || recording) return;
     audio.src = localUrl;
     audio.hidden = false;
@@ -238,6 +254,7 @@ export function mountRecorder(
     }
   };
   play.onclick = async () => {
+    if (!allowReplay) return;
     if (busy || !answer?.recording_id) return;
     busy = true;
     controls();

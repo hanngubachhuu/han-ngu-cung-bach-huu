@@ -1,6 +1,31 @@
 # CHANGELOG HANDOFF — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Verified rollout complete — 2026-10-04
+
+Application da4a57a deployed READY / Production at 2026-10-03T19:08:17Z, six live assets equal Git source, both exact application CI PASS. 238/238 local tests plus lint/build and security/responsive regressions PASS. Actual old makeup and new full test both submitted 27/27. Human audio/auto-next and deployed terminal receipt/history navigation PASS. Actual Admin receipt labels, shared makeup inspection and Q1/Q26/Q27 private playback PASS. Normal Admin pipeline prepared all 27 new recordings after alias-only SQL fix.
+
+Actual Student privacy PASS (authoring403, Admin makeup denied, empty private buckets, direct recording400); anonymous audio401. Original row/policy/result/source history preserved; only the 27 authorized new recording rows and 27 private playback objects were processed. Generic makeup migration 20261003183857 and processing fix 20261003185553 applied. Speaking false; cron0; no new publication/extra session/learner grant. PR #36 stays draft/unmerged; preserve untracked docs/speaking-pilot-preflight.md. Historical pending notes below are superseded; current scope is complete.
+
+## 2026-10-04
+
+General Admin makeup applied as 20261003183857 with every pre-existing row/policy hash unchanged. Real full BachHuu test submitted 27/27 and human audio/auto-next PASS. Completion microphone cleanup/receipt screen and Admin receipt presentation validated locally; exact CI/rollout pending.
+
+## 2026-10-04 — real makeup received, shared Admin opening
+- Hosted fix: f0b62dd, both CI PASS, migration 20261003175113. The same real Q26/Q27 bytes were bound after the narrow history-trigger correction. Actual Student submitted at 2026-10-03T17:52:08.881719Z; old attempt submitted 27/27, frozen 25 answers unchanged. Real Admin sees receipt and both new recordings.
+- Human expands makeup authority to every official lesson/exam. Forward generic migration and shared UI now cover all eight written formats plus speaking; missing-only, immutable received answers, original versions/timing, old published grades and real late receipts. Admin opens from submission detail; entitled owner uses a supplied link or Nộp bù in their own history.
+- Final local validation: 238/238, lint/full build/validators, seven targeted SQL cases, same-request reload/network recovery at 390/768/1366 px, existing assignment and HSKK recovery browsers PASS. Exact CI/production generic rollout still pending. No unrelated fixtures were edited; preserve untracked docs/speaking-pilot-preflight.md.
+- Real full test active on production application 32b6fd9: cb7fa9fa-362c-432d-9aca-7ad9035f36da, human microphone, deadline 18:29:07Z. Do not interrupt Student or redeploy mid-exam. Wait for legitimate receipt and human audio report; verify private Admin playback/denial before calling hosted E2E PASS.
+
 Mỗi phiên quan trọng để lại một entry ngắn.
+
+## 2026-10-04 — H71002 missing-question recovery rollout
+- Goal: repair submission waiting on Q26/Q27 uploads, support human-authorized Admin-opened missing-question makeup, prepare one separate new controlled hosted test.
+- Completed: application `32b6fd9`, 234/234 tests, lint/build/validators, three-width local browser checks and both exact CI workflows PASS. Production `dpl_J2Sa5Jy9jQtE3ALVSDGxSRGiUm9g` READY with six live assets matching the build. Forward migrations applied as `20261003171309` and `20261003171323`; no RLS policy weakening.
+- Real approved Admin opened frozen Q26/Q27 makeup window `90d2f4b5-a0e8-4eea-b2c5-3945da590c90` for BachHuu's old attempt. Expires `2026-10-03T21:17:30.438481Z`. Authorized separate new test preflight `cb7fa9fa-362c-432d-9aca-7ad9035f36da`; no actual new session was manufactured.
+- Production preservation: all old row hashes match baseline, original attempt remains draft 25/27, source/confirmed boundaries/clips unchanged, Speaking false, cron zero. Real audit entries record Admin actor. Baseline and screenshots are ignored under `test-results/hskk/`.
+- Pending: human opens the provided `makeup=1` old-attempt link and actually resends retained recordings or records only missing Q26/Q27, then submits. Verify all 27 legitimate server references, actual late receipt and private Admin playback; do not claim full new E2E from makeup. Then run the separately authorized full normal human test.
+- If window expired: inspect using actual Admin and open a separately audited window; never extend the old session or the immutable prior makeup deadline. Do not reuse synthetic browser results as hosted proof.
+- Do not touch: original source MP3, original segmentation run, 27 confirmed clips, unrelated HSK1/HSK2 access, old 25 recordings, global Speaking/scheduler, published grades, untracked `docs/speaking-pilot-preflight.md`.
 
 ~~~md
 ## YYYY-MM-DD — Session N

@@ -236,9 +236,10 @@ try {
     }, syntheticMp3);
     assert.equal(await page.locator("[data-record]").count(), 0);
     await page.locator("[data-play]").click();
-    await page.waitForFunction(
-      () => document.querySelector("#recorder audio").readyState >= 2,
-    );
+    await page.waitForFunction(() => {
+      const audio = document.querySelector("#recorder audio");
+      return audio.readyState >= 2 && !audio.paused && audio.currentTime > 0;
+    });
     await page.evaluate(() => globalThis.audioWidget.dispose());
     await page.evaluate(async () => {
       const { mountRecorder } = await import("./study/recording-ui.mjs");

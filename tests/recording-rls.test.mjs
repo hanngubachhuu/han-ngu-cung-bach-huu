@@ -42,7 +42,7 @@ test("Speaking private DB state machine and storage RLS", async (t) => {
       files = (await fs.readdir(dir)).filter((f) => f.endsWith(".sql")).sort();
     for (const file of files) {
       if (
-        !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary/.test(
+        !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary|hskk_authoring_drafts/.test(
           file,
         )
       )

@@ -310,7 +310,7 @@ try {
         name + " overflow",
       );
       const visible = await page
-        .locator("[data-assignments],[data-assignment-admin]")
+        .locator('[data-assignments],[data-admin-panel="submissions"]')
         .innerText();
       assert.doesNotMatch(
         visible,
@@ -383,9 +383,7 @@ try {
     assert.equal(objects.size, 2);
     admin = true;
     await page.goto(base + "/quan-tri.html");
-    await page
-      .getByText("Bài nộp, chấm điểm và đề HSK / HSKK", { exact: true })
-      .click();
+    await page.locator('[data-admin-nav="submissions"]').click();
     await screenshot("admin-queue");
     await page.locator("[data-search]").fill("không có");
     assert.equal(await page.locator("[data-attempt]").count(), 0);
