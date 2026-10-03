@@ -42,7 +42,7 @@
     },
     "api/exam-import.js": {
       "maxDuration": 120,
-      "includeFiles": "{server/exam-parser-thread.mjs,server/exam-document-parser.mjs,server/hskk-document-parser.mjs,server/hskk-ocr-runtime.mjs,server/exam-file.mjs,node_modules/pdfjs-dist/**,node_modules/mammoth/**,node_modules/parse5/**,node_modules/tesseract.js/**,node_modules/tesseract.js-core/**,node_modules/@napi-rs/canvas*/**,.cache/hskk-ocr/**}"
+      "includeFiles": "{server/{exam*,hskk*}.mjs,node_modules/{pdfjs-dist,mammoth,parse5,tesseract.js*,@napi-rs/canvas*}/**,.cache/hskk-ocr/**}"
     }
   },
   "headers": [
