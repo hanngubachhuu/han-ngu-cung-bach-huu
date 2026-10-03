@@ -27,7 +27,7 @@ All exam PDF pages were rendered and visually checked. The exact source Q11/Q12 
 
 H80000: 10 listening/repeat questions, 2 picture descriptions and 2 answers; 600 seconds preparation covers both final sections. Source text and pinyin are preserved. Listening response duration remains explicitly provisional until source-audio review. No listening transcript is invented.
 
-H91002: 3 listening/retelling questions, 1 reading passage and 2 answers; 600 seconds preparation covers reading and answering. Printed response times and source text are preserved. The supplied private answer transcript supplies authoring text for the listening questions, which the learner listening renderer never displays. No scoring rubric or answer key is inferred.
+H91002: 3 listening/retelling questions, 1 reading passage and 2 answers; 600 seconds preparation covers reading and answering. Printed response times and source text are preserved. The supplied private answer transcript supplies authoring text for the listening questions, which the learner listening renderer never displays. No scoring rubric or answer key is inferred. A second visual comparison of the source PDF confirms that Q4 itself prints the apparently incomplete phrase `机会只会准备好的人`; the draft preserves it verbatim. This source-text issue needs explicit human review before publication rather than an invented correction.
 
 Both drafts deliberately have empty public audio URLs and unverified/null boundaries. They cannot be treated as ready exams. Source registration, byte verification, audio timing/segmentation review, human confirmation and separate publication remain required before real learner testing.
 
@@ -37,6 +37,14 @@ Both drafts deliberately have empty public audio URLs and unverified/null bounda
 - Actual renderer microphone workflow: 390/768/1366 px; input signal, inadequate-sample rejection, device/preflight gate, retained recordings and Vietnamese/Chinese UI. Synthetic devices/transport only.
 - Delayed current-clip playback: 27 clips actually start at zero and 27 recordings auto-submit once at all three widths. Synthetic local transport, not hosted human audio evidence.
 - PostgreSQL role/timeline and immutable recovery tests pass; original response/preparation times and historic session rows remain unchanged.
-- Lint, build, study validation and 226 unit/SQL tests pass. Exact-head CI and hosted deployment are recorded on PR #36 after completion.
+- Lint, build, study validation and 226 unit/SQL tests pass. Both exact-application-commit workflows pass: [study](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/37028624742) and [lessons](https://github.com/hanngubachhuu/han-ngu-cung-bach-huu/actions/runs/37028624345).
+
+## Hosted verification — 2026-10-03
+
+Production deployment **`dpl_AsG7VUhR2j7udmq4UAxMaxxgkZ7V`** is READY for application commit **`31cbbc5e3cf99e8b900adbfb01a97436a6763e7f`** on `hanngubachhuu.vercel.app`. The six changed CBT/runtime assets return HTTP 200 and their fetched bytes match the local build. The real approved Admin opens H71002 with its unchanged 27 confirmed questions and published state; H80000 opens as an unpublished 14-question draft. Its protected Q11 and Q12 images actually decode at 279 × 396 and 377 × 250 px respectively, matching the supplied private PDF assets. H91002 opens with exactly six questions, code-only title, no provider branding in the editor and publication disabled; Q4 is displayed as reading aloud with a 120-second response and the actual supplied source passage. The temporary Chrome disconnection was resolved using a fresh tab in the restored Admin browser; it did not require session-token extraction or a data mutation. The ignored screenshot is `test-results/hskk/cbt-admin-H91002-draft.png`.
+
+Anonymous hosted draft configuration/picture requests return 401 AUTH_REQUIRED. Raw server draft JSON and source-picture paths return 404. Student denial for the new picture action is verified by API tests, but a fresh real hosted Student test of that new action remains NOT TESTED. Earlier real hosted Student authoring/Storage denial evidence does not substitute for that new endpoint check.
+
+Read-only production reconciliation before/after deployment and Admin navigation preserves all backed-up H71002 authoring, source/clip/recording Storage objects, access, session, answers and recording rows. The applied buffered-prompt migration version is `20261002154036`; it changes guarded function definitions for future starts while preserving existing immutable rows/deadlines. Speaking remains false and scheduler jobs remain zero. No new source upload, segmentation, confirmation, generated clip, learner grant, exam/session creation, result publication or RLS change is performed in this verification.
 
 No human exam listening success, legitimate submitted BachHuu attempt, new draft readiness or official scoring accuracy is claimed from these checks.
