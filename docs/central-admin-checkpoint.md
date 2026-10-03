@@ -1,5 +1,48 @@
 # Central Admin workspace checkpoint
 
+## Admin-opened makeup for missing recordings — 2026-10-03
+
+The human explicitly authorizes a bounded Admin-opened makeup window and a new recording when the original missing recording is no longer retained. This supersedes the earlier prohibition on modifying the old incomplete submission ONLY for the explicitly missing answers. The user's one new full hosted E2E test remains a separate checkpoint.
+
+The server freezes the missing question UUIDs and the already accepted answers on the original pinned version. An approved Admin can open a four-hour window only for an entitled approved Student's expired, unsubmitted H71002 attempt. Stable request IDs, expected revision/version/missing-set checks, per-attempt locking and immutable private grant/timing/provenance rows protect the scope. Student/anonymous cannot open windows or inspect another account. Existing RLS policies and Storage permissions are retained.
+
+If server bytes already exist but the original bind failed, the exact owned reference is reused. Retained local audio is resent unchanged with an explicitly linked, separately durable recovery identity. Otherwise only a missing question can receive one new, server-timed recording in the open window (Q26/Q27 each retain 90 seconds). Received answers cannot be replaced, replayed or rerecorded. Failed uploads retain the Blob and reuse their identity with backoff; expired windows deny further writes. An expired window needs a separately audited Admin opening rather than silently extending its deadline.
+
+Makeup completion validates all 27 references, preserves the original session/timeline/deadlines and 25 already accepted answers/recordings, fills only the missing answers, and records the actual late receipt time. It creates a private teacher-review result, no published score. The Admin conversion queue includes only the bound 27 recordings, not historical missing/unbound reservations; the existing review workspace clearly labels the added questions and actual recovery timestamp.
+
+| Evidence | Current status |
+| --- | --- |
+| PostgreSQL: retained bytes, already uploaded/unbound reference, missing-only new recording, expiry/reopening, old row equality, 27 references, actual late timestamp, no result publication | PASS — local synthetic database |
+| Student/anonymous/other-owner denial and private Storage/no future prompt | PASS — local SQL/API |
+| Actual renderer microphone, immutable retry, missing-only layout, submission at 390/768/1366 px | PASS — local fake microphone/provider; not human hosted proof |
+| Full tests / lint / build / validators | PASS — 234/234 tests; lint/build/study/30 lessons |
+| Exact application CI | PENDING — must pass before production rollout |
+| Production migration / deployment / real Admin opening | NOT PERFORMED yet |
+| BachHuu actual Q26/Q27 makeup, legitimate old submission, Admin playback | NOT TESTED |
+
+No production mutation has yet been performed in this phase. No source/clip/segmentation/publication/global Speaking/scheduler changes are included. The hosted makeup result and the new full hosted E2E result must be reported separately.
+
+## New controlled H71002 test and Q26/Q27 upload correction — 2026-10-03
+
+The user explicitly selects the real approved Student BachHuu for one new controlled hosted test on the existing published version. The historical attempt remains a draft with 25 uploaded/bound recordings; its expired deadline, answers, recording reservations and absent Q26/Q27 objects are preserved. No missing audio is fabricated or retroactively submitted.
+
+A regression reproduces a client submission race: retry/submit previously treated an already running upload as completed, allowing COMPLETED transition before the two long final-question recordings were saved. The correction joins actual upload promises, shares concurrent submission work, retains the same Blob/request/owner/attempt/question/exam identity on failure, retries failed production uploads in the background with bounded backoff, and stops retrying at the original upload deadline. Question deadlines and automatic advance do not wait for network work. Local reproduction uses the historical Q26/Q27 byte sizes and 90-second response windows; it does not establish the exact cause of the historical failed network uploads.
+
+The forward controlled-test migration allows an approved Admin to authorize exactly one separately audited H71002 test preflight for an already entitled approved Student on the current published version, after the previous actual attempt's upload deadline has expired. It preserves all historical rows and uses the normal Student preflight/countdown path to create an actual session. Stable request identity, version/prior-attempt checks, a serialized insertion guard and an immutable private authorization table prevent repeated grants, Student self-authorization and duplicate starts. No new source, clip, learner entitlement, result publication, RLS policy relaxation, Speaking activation or scheduler activation is included.
+
+| Evidence | Status |
+| --- | --- |
+| Q26/Q27 delayed uploads, shared submit and immutable retry regression | PASS — local |
+| Admin-only one-test authorization, Student/anonymous denial, pinned version, old-row equality and normal preflight/countdown | PASS — local PostgreSQL/API |
+| Full unit/SQL suite | PASS — 230/230; two document-parser timeout failures during concurrent build passed on full rerun after build |
+| Lint / build / study validation / 30 canonical lesson validation | PASS |
+| Local browser regressions | IN PROGRESS |
+| Exact change CI and production deployment | NOT TESTED yet |
+| Production migration and real Admin test authorization | NOT PERFORMED yet |
+| New real Student microphone/audio/27-recording submission and Admin playback | NOT TESTED — requires actual human hosted attempt |
+
+The new hosted E2E checkpoint must remain incomplete until a real normal Student attempt is submitted and Admin playback is verified. Synthetic microphones, direct SQL-generated answers or API-only submission cannot pass it. Keep test grades private; stop and report the exact failed step if the real flow fails.
+
 PR #36's accepted central Admin UX is preserved. H71002 audio authoring remains complete: 27 confirmed, three actual manual adjustments (Q13/Q16/Q26), zero unresolved and 27 valid clips. The official learner implementation reuses the existing assignment/access/submission/grading architecture, with real production schema applied. **H71002 was manually published by the human Admin at 12:44:15Z on 2026-10-02; real hosted Storage HTTP is PASS, and real learner end-to-end submission remains pending the actual microphone exam.** Earlier missing-transport/zero-confirmation/API-404/source-upload-pending statements are historical and superseded by this phase.
 
 ## Published state and scrolling follow-up — 2026-10-02

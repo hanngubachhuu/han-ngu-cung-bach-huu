@@ -29,6 +29,98 @@ const definition = () => ({
     allow_rerecord: false,
   })),
 });
+
+test("submission waits for the in-flight Q26/Q27 uploads, shares retries and submits once", async () => {
+  const e = definition();
+  e.questions.forEach((q, i) => {
+    q.id = "q" + (26 + i);
+    q.number = 26 + i;
+    q.response_seconds = 90;
+  });
+  const releases = [],
+    calls = [],
+    entries = e.questions.map((q, i) => ({
+      blob: new Blob([new Uint8Array(i ? 1438519 : 1467601)], {
+        type: "audio/webm",
+      }),
+      requestId: "stable-" + q.id,
+      ownerId: "A",
+      attemptId: "attempt",
+      question_key: q.id,
+      questionId: q.version_id,
+      question_version: q.version,
+      exam_version: e.exam_version,
+    }));
+  const completed = {
+    ...session(e, 181010),
+    server_deadline: 181010,
+    upload_deadline: 1981010,
+    state: "COMPLETED",
+  };
+  let transitions = 0,
+    submits = 0;
+  const engine = new HSKKExamEngine({
+    exam: e,
+    candidateId: "A",
+    monotonic: () => 0,
+    transport: {
+      loadSession: async () => completed,
+      saveRecording: async (entry) => {
+        calls.push(entry);
+        await new Promise((resolve) => releases.push(resolve));
+        return {
+          owner_id: "A",
+          attempt_id: "attempt",
+          question_version_id: entry.questionId,
+          confirmed: true,
+        };
+      },
+      transition: async () => {
+        transitions++;
+        return completed;
+      },
+      submit: async () => {
+        submits++;
+        return { ...completed, state: "SUBMITTED" };
+      },
+    },
+    journal: {
+      load: async () =>
+        entries.map((entry, i) => ({ questionId: e.questions[i].id, entry })),
+      remove: async () => {},
+      close() {},
+    },
+    audio: { stop() {} },
+    recorder: { dispose: async () => {} },
+  });
+  await engine.recover();
+  const uploads = engine.retrySaves();
+  await flush();
+  const first = engine.submit(),
+    second = engine.submit();
+  // Handle a failing implementation without leaking rejected promises.
+  const outcomes = Promise.allSettled([first, second]);
+  await flush();
+  const earlyTransitions = transitions;
+  releases.forEach((resolve) => resolve());
+  await uploads;
+  const results = await outcomes;
+  assert.equal(
+    earlyTransitions,
+    0,
+    "Do not submit while the two large uploads are still in flight.",
+  );
+  assert.ok(results.every((result) => result.status === "fulfilled"));
+  assert.equal(
+    calls.length,
+    2,
+    "One immutable upload identity per question, including concurrent retry.",
+  );
+  assert.equal(submits, 1);
+  assert.equal(engine.view().saved, 2);
+  assert.equal(engine.view().state, "SUBMITTED");
+  await engine.dispose();
+});
 function session(e, time = 1000) {
   return {
     candidate_id: "A",
@@ -47,6 +139,80 @@ function session(e, time = 1000) {
     server_time: time,
   };
 }
+test("production background retry retains a long Blob, backs off and never retries after upload expiry", async () => {
+  const e = definition();
+  let elapsed = 0,
+    calls = 0;
+  const entry = {
+    blob: new Blob([new Uint8Array(1467601)], { type: "audio/webm" }),
+    requestId: "stable-long",
+    ownerId: "A",
+    attemptId: "attempt",
+    question_key: "q1",
+    questionId: "v1",
+    question_version: 1,
+    exam_version: 2,
+  };
+  const engine = new HSKKExamEngine({
+    exam: e,
+    candidateId: "A",
+    monotonic: () => elapsed,
+    transport: {
+      production: true,
+      loadSession: async () => ({
+        ...session(e, 1050),
+        state: "COMPLETED",
+        upload_deadline: 10000,
+      }),
+      saveRecording: async (saved) => {
+        calls++;
+        assert.equal(saved.blob, entry.blob);
+        assert.equal(saved.requestId, entry.requestId);
+        if (calls === 1) throw Error("storage temporarily unavailable");
+        return {
+          owner_id: "A",
+          attempt_id: "attempt",
+          question_version_id: "v1",
+          confirmed: true,
+        };
+      },
+    },
+    journal: {
+      load: async () => [{ questionId: "q1", entry }],
+      remove: async () => {},
+      close() {},
+    },
+    audio: { stop() {} },
+    recorder: { dispose: async () => {} },
+  });
+  await engine.recover();
+  await flush();
+  assert.equal(calls, 1);
+  elapsed = 1999;
+  await engine.tick();
+  await flush();
+  assert.equal(calls, 1);
+  elapsed = 2000;
+  await engine.tick();
+  await flush();
+  assert.equal(calls, 2);
+  assert.equal(engine.view().saved, 1);
+  engine.pending.set("q2", {
+    ...entry,
+    question_key: "q2",
+    questionId: "v2",
+    question_version: 2,
+    requestId: "stable-expired",
+  });
+  elapsed = 8950;
+  await engine.tick();
+  await flush();
+  assert.equal(calls, 2);
+  assert.equal(engine.pending.size, 1);
+  await assert.rejects(engine.retrySaves(), /UPLOAD_WINDOW_EXPIRED/);
+  await engine.dispose();
+});
+
 test("deadline seals Blob and auto-advances despite stalled local write/network; last deadline completes", async (t) => {
   t.mock.timers.enable({ apis: ["setTimeout"] });
   const e = definition();

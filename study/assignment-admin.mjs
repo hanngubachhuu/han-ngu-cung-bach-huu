@@ -204,6 +204,7 @@ export function mountAssignmentAdmin(root, profile, { mode = "legacy" } = {}) {
         );
       }
       content.innerHTML = `<p class="assignment-learner">${text(learners.get(id) || "Học viên")}</p><div class="assignment-heading"><h4>${text(data.title)}</h4><span class="assignment-pill ${data.result ? "published" : ""}">${data.result ? "Đã công bố" : data.submitted_at ? "Chờ chấm / công bố" : "Đang làm"}</span></div><p>Bắt đầu: ${new Date(data.started_at).toLocaleString("vi-VN")}<br>Nộp: ${data.submitted_at ? new Date(data.submitted_at).toLocaleString("vi-VN") : "Chưa nộp"} · ${data.duration_seconds ?? "—"} giây${data.timed_out ? " · Hết giờ" : ""}</p>
+        ${data.makeup ? `<p class="hskk-notice">Có nộp bù câu ${text(data.makeup.questions.join(", "))} · Nhận bổ sung: ${new Date(data.makeup.received_at).toLocaleString("vi-VN")}. Các câu đã nhận từ lượt gốc được giữ nguyên.</p>` : ""}
         ${data.result ? `<p>Kết quả đang công bố: <strong>${data.result.normalized_score}/100</strong> · lần ${data.result.revision}</p>` : ""}
         ${(data.contexts || []).map((c, i) => `<section class="assignment-question" id="admin-context-${i}"><h4>${text(c.title)}</h4><p class="assignment-prompt">${text(c.content)}</p></section>`).join("")}<form data-grades>${data.answers
           .map((a) => {

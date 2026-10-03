@@ -1,5 +1,16 @@
 # WORK STATE — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Active H71002 hosted E2E checkpoint — 2026-10-03
+
+- Latest human decision: permit a separately Admin-opened, bounded makeup window for server-missing questions; if retained audio is absent, allow a new recording ONLY for those missing questions. This supersedes the earlier blanket no-rerecord/history-write restriction for that narrowly audited recovery. Keep original session/timeline/deadlines and all already accepted answer/recording rows unchanged; append recovery records, bind only missing answers, record actual late submission timestamp, and never pretend it was an on-time original submission. The one NEW full E2E test remains separate and not yet started. No migration/deployment/grant has yet been performed in this phase.
+
+- User accepts the CBT interface at application commit 31cbbc5 / documentation eb5ac48; no redesign in this phase.
+- The user explicitly selects BachHuu and authorizes one NEW controlled test attempt. The old draft attempt ba99f979-a21e-4555-86ac-7fda9d8802e3 remains historical evidence, with 25 uploaded/bound recordings and expired deadline; never repair/restart/extend/delete it.
+- Verified live baseline: one HSKK preflight/session, active published H71002 version 0b3d1a53-c3d0-4d5c-a55f-3fa60ed4ccb4, authoring revision 159, Speaking false, cron zero. The current unique(owner_id,assignment_version_id) preflight slot prevents a second attempt for BachHuu.
+- Required smallest prerequisite: an approved Admin may authorize one separately audited controlled H71002 test preflight for an already entitled Student, preserving the existing version and every historic row. Keep the normal Student access/preflight/countdown path; do not create session/recording/submission rows directly.
+- Dependencies/verification: guarded session load, Admin authorization, current published version and existing entitlement, serialized/idempotent one-test authorization, immutable history, no future prompt or Student playback exposure; targeted SQL/API tests, full 226+ tests, browser regressions, lint/build/validators/CI before deployment/migration. Scoped row hashes/counts/functions/constraints are saved in ignored test-results/hskk/real-e2e-before-controlled-attempt.json before any mutation.
+- Next: implement/verify the controlled test authorization, then use the real Student browser and human microphone for one complete hosted attempt; STOP and report the exact step if it fails. No synthetic fixture may prove hosted E2E. Grade workspace may be inspected; do not publish test results or enable Speaking/scheduler.
+
 ## Snapshot
 
 - Status: ACTIVE

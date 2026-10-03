@@ -4,6 +4,7 @@ import {
   prepareDelivery,
   storeExistingClips,
   receiptClient,
+  controlledTestCommand,
 } from "../server/hskk-delivery.mjs";
 import { productionRecordingJob } from "../server/recording-worker.mjs";
 import { recordingRuntimeHealth } from "../server/recording-audio.mjs";
@@ -34,6 +35,7 @@ export function createDeliveryHandler({
   upload = storeExistingClips,
   processRecording = productionRecordingJob,
   runtime = verifyRuntime,
+  controlledTest = controlledTestCommand,
 } = {}) {
   return async (req, res) => {
     res.setHeader("Cache-Control", "private, no-store");
@@ -60,7 +62,28 @@ export function createDeliveryHandler({
         result = await prepare(client, code);
       else if (req.method === "POST" && action === "runtime")
         result = await runtime(client);
-      else if (req.method === "POST" && action === "process") {
+      else if (
+        req.method === "POST" &&
+        [
+          "test-inspect",
+          "test-authorize",
+          "makeup-inspect",
+          "makeup-open",
+        ].includes(action)
+      ) {
+        const body =
+          typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+        result = await controlledTest(
+          client,
+          action === "test-inspect" || action === "makeup-inspect"
+            ? "inspect"
+            : action === "makeup-open"
+              ? "open"
+              : "authorize",
+          { ...body, exam_code: code },
+          { makeup: action.startsWith("makeup-") },
+        );
+      } else if (req.method === "POST" && action === "process") {
         const body =
           typeof req.body === "string" ? JSON.parse(req.body) : req.body;
         const { data, error } = await client.rpc("hskk_publication", {
@@ -113,17 +136,38 @@ export function createDeliveryHandler({
         "CLIP_HASH_MISMATCH",
         "STORED_CLIP_HASH_MISMATCH",
         "EXAM_UNAVAILABLE",
+        "EXAM_ACCESS_REQUIRED",
+        "INVALID_REQUEST",
+        "TEST_ATTEMPT_ALREADY_AUTHORIZED",
+        "TEST_ATTEMPT_NOT_AVAILABLE",
+        "MAKEUP_NOT_AVAILABLE",
+        "MAKEUP_ALREADY_OPEN",
+        "SESSION_NOT_FOUND",
       ].includes(error.message)
         ? error.message
         : "DELIVERY_NOT_READY";
       res.statusCode =
         category === "AUTH_REQUIRED"
           ? 401
-          : category === "ADMIN_REQUIRED"
+          : [
+                "ADMIN_REQUIRED",
+                "EXAM_ACCESS_REQUIRED",
+                "SESSION_NOT_FOUND",
+              ].includes(category)
             ? 403
-            : category === "VERSION_CONFLICT"
+            : [
+                  "VERSION_CONFLICT",
+                  "TEST_ATTEMPT_ALREADY_AUTHORIZED",
+                  "TEST_ATTEMPT_NOT_AVAILABLE",
+                  "MAKEUP_NOT_AVAILABLE",
+                  "MAKEUP_ALREADY_OPEN",
+                ].includes(category)
               ? 409
-              : ["INVALID_ARCHIVE", "CLIP_HASH_MISMATCH"].includes(category)
+              : [
+                    "INVALID_ARCHIVE",
+                    "CLIP_HASH_MISMATCH",
+                    "INVALID_REQUEST",
+                  ].includes(category)
                 ? 400
                 : 503;
       res.end(JSON.stringify({ error: category }));

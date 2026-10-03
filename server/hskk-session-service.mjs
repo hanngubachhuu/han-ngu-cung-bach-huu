@@ -22,10 +22,14 @@ export async function studentContext(token, env = process.env) {
 }
 export async function sessionCommand(client, command, payload) {
   const { data, error } = await client.rpc(
-    command === "resume" ? "hskk_resume" : "hskk_session_command",
+    command.startsWith("makeup_")
+      ? "hskk_makeup"
+      : command === "resume"
+        ? "hskk_resume"
+        : "hskk_session_command",
     command === "resume"
       ? { attempt_id: payload.attempt_id }
-      : { command, payload },
+      : { command: command.replace(/^makeup_/, ""), payload },
   );
   if (error) {
     const allowed = [
@@ -41,6 +45,10 @@ export async function sessionCommand(client, command, payload) {
       "RECORDING_LOCKED",
       "INVALID_RECORDING_REFERENCE",
       "SUBMISSION_LOCKED",
+      "MAKEUP_NOT_AVAILABLE",
+      "MAKEUP_TRANSPORT_REQUIRED",
+      "RECORDING_WINDOW_REQUIRED",
+      "VERSION_CONFLICT",
     ];
     throw Error(
       allowed.includes(error.message) ? error.message : "SESSION_UNAVAILABLE",
@@ -52,14 +60,19 @@ export async function readCurrentPrompt(
   userId,
   payload,
   server = receiptClient(),
+  { makeup = false } = {},
 ) {
-  const { data, error } = await server.rpc("hskk_current_prompt", {
-    payload: {
-      owner_id: userId,
-      attempt_id: payload.attempt_id,
-      question_version_id: payload.question_version_id,
+  const { data, error } = await server.rpc(
+    makeup ? "hskk_makeup_prompt" : "hskk_current_prompt",
+    {
+      payload: {
+        owner_id: userId,
+        attempt_id: payload.attempt_id,
+        question_version_id: payload.question_version_id,
+        ...(makeup ? { makeup_window_id: payload.makeup_window_id } : {}),
+      },
     },
-  });
+  );
   if (error || !data) throw Error("PROMPT_DENIED");
   const { data: audio, error: readError } = await server.storage
     .from(data.bucket)

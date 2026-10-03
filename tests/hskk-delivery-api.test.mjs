@@ -90,6 +90,99 @@ test("hosted handlers reject anonymous/unauthorized requests before touching sou
     assert.equal(denied.headers["Cache-Control"], "private, no-store");
   }
 });
+test("controlled test authorization uses the approved Admin boundary and never trusts a browser-supplied exam", async () => {
+  const calls = [];
+  const create = (authorize) =>
+    createDeliveryHandler({
+      authorize,
+      controlledTest: async (_client, command, payload) => {
+        calls.push({ command, payload });
+        return { authorized: true, attempt_id: "new-test" };
+      },
+    });
+  const req = {
+    method: "POST",
+    headers: { authorization: "Bearer synthetic.test.token" },
+    url: "/api/hskk-delivery?exam=H71002&action=test-authorize",
+    body: { exam_code: "OTHER", student_id: "selected", request_id: "stable" },
+  };
+  const anonymous = response();
+  await create(async () => ({}))({ ...req, headers: {} }, anonymous);
+  assert.equal(anonymous.statusCode, 401);
+  assert.equal(calls.length, 0);
+  const student = response();
+  await create(async () => {
+    throw Error("ADMIN_REQUIRED");
+  })(req, student);
+  assert.equal(student.statusCode, 403);
+  assert.equal(calls.length, 0);
+  const allowed = response();
+  await create(async () => ({}))(req, allowed);
+  assert.equal(allowed.statusCode, 200);
+  assert.equal(calls[0].command, "authorize");
+  assert.equal(calls[0].payload.exam_code, "H71002");
+  assert.equal(calls[0].payload.request_id, "stable");
+});
+
+test("makeup Admin actions and Student prompt/command routes retain actual authorization boundaries", async () => {
+  const calls = [];
+  const admin = createDeliveryHandler({
+    authorize: async () => {
+      throw Error("ADMIN_REQUIRED");
+    },
+    controlledTest: async () => {
+      calls.push("unsafe");
+    },
+  });
+  const denied = response();
+  await admin(
+    {
+      method: "POST",
+      headers: { authorization: "Bearer synthetic.test.token" },
+      url: "/api/hskk-delivery?exam=H71002&action=makeup-open",
+      body: {},
+    },
+    denied,
+  );
+  assert.equal(denied.statusCode, 403);
+  assert.equal(calls.length, 0);
+  const handler = createSessionHandler({
+    authorize: async () => ({ client: {}, userId: "real-approved-owner" }),
+    command: async (_c, action, payload) => {
+      calls.push({ action, payload });
+      return { submitted: true };
+    },
+    prompt: async (owner, payload, _server, options) => {
+      calls.push({ owner, payload, options });
+      return Buffer.from("local-prompt");
+    },
+  });
+  const anonymous = response();
+  await handler(
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      url: "/api/hskk-session?action=makeup_submit",
+      body: {},
+    },
+    anonymous,
+  );
+  assert.equal(anonymous.statusCode, 401);
+  assert.equal(calls.length, 0);
+  const allowed = response();
+  await handler(
+    {
+      method: "GET",
+      headers: { authorization: "Bearer synthetic.test.token" },
+      url: "/api/hskk-session?action=makeup_prompt&makeup_window_id=selected&owner_id=forged",
+    },
+    allowed,
+  );
+  assert.equal(allowed.statusCode, 200);
+  assert.equal(calls[0].owner, "real-approved-owner");
+  assert.equal(calls[0].options.makeup, true);
+});
+
 test("actual archive reader checks every pre-existing clip hash and rejects missing, altered, extra or traversal files", async () => {
   const zip = new JSZip(),
     clips = [];

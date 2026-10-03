@@ -41,8 +41,13 @@ export function createSessionHandler({
           throw Error("INVALID_REQUEST");
         payload = JSON.parse(raw);
       }
-      if (action === "prompt" && req.method === "GET") {
-        const audio = await prompt(userId, payload);
+      if (
+        ["prompt", "makeup_prompt"].includes(action) &&
+        req.method === "GET"
+      ) {
+        const audio = await prompt(userId, payload, undefined, {
+          makeup: action === "makeup_prompt",
+        });
         res.setHeader("Content-Type", "audio/mpeg");
         res.statusCode = 200;
         return res.end(audio);
@@ -50,8 +55,15 @@ export function createSessionHandler({
       if (
         !(
           req.method === "GET"
-            ? ["catalog", "load", "get", "result", "resume"]
-            : ["transition", "bind_recording", "submit"]
+            ? ["catalog", "load", "get", "result", "resume", "makeup_load"]
+            : [
+                "transition",
+                "bind_recording",
+                "submit",
+                "makeup_start",
+                "makeup_bind",
+                "makeup_submit",
+              ]
         ).includes(action)
       )
         throw Error("INVALID_REQUEST");
@@ -76,6 +88,10 @@ export function createSessionHandler({
         "INVALID_RECORDING_REFERENCE",
         "SUBMISSION_LOCKED",
         "PROMPT_DENIED",
+        "MAKEUP_NOT_AVAILABLE",
+        "MAKEUP_TRANSPORT_REQUIRED",
+        "RECORDING_WINDOW_REQUIRED",
+        "VERSION_CONFLICT",
       ];
       const category = allowed.includes(error.message)
         ? error.message
@@ -88,6 +104,7 @@ export function createSessionHandler({
                 "EXAM_ACCESS_REQUIRED",
                 "SESSION_NOT_FOUND",
                 "PROMPT_DENIED",
+                "MAKEUP_NOT_AVAILABLE",
               ].includes(category)
             ? 403
             : category === "SESSION_UNAVAILABLE"

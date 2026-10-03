@@ -34,12 +34,16 @@ export async function deliveryFixture({
     .filter((f) => f.endsWith(".sql"))
     .sort()) {
     if (
-      !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary|hskk_authoring_drafts|central_admin_exam_workspace|hskk_official_delivery|hskk_official_sessions|hskk_official_publication|hskk_official_history|hskk_preflight_recovery|hskk_buffered_prompts/.test(
+      !/create_lesson_access_core_schema|create_private_lesson_storage|private_lesson_content_rpc|private_lesson_rpc_to_authenticated|chinese_study_workspace|study_saved_dictionary_snapshots|study_explicit_grants|study_saved_characters_and_quota|study_search_typo_tolerance|learner_accounts_and_access|official_assignment|assignment_authoring_provenance_archive|speaking_private_pipeline|document_exam_import|speaking_submission_boundary|speaking_synthetic_canary|hskk_authoring_drafts|central_admin_exam_workspace|hskk_official_delivery|hskk_official_sessions|hskk_official_publication|hskk_official_history|hskk_preflight_recovery|hskk_buffered_prompts|hskk_controlled_test_attempt/.test(
         file,
       )
     )
-      continue;
+      if (!file.includes("hskk_missing_recording_makeup")) continue;
     if (!bufferedPrompts && file.includes("hskk_buffered_prompts")) continue;
+    if (!bufferedPrompts && file.includes("hskk_controlled_test_attempt"))
+      continue;
+    if (!bufferedPrompts && file.includes("hskk_missing_recording_makeup"))
+      continue;
     if (file.includes("learner_accounts_and_access"))
       await db.exec(
         `insert into public.lesson_content(id,level,lesson_no,title_zh,title_vi,content)values('hsk1_bai1',1,1,'你好','Bài học','{}');insert into public.student_lesson_access(user_id,lesson_id)values('${student}','hsk1_bai1');`,
@@ -47,7 +51,7 @@ export async function deliveryFixture({
     let sql = await fs.readFile(new URL(file, dir), "utf8");
     if (
       controlledClock &&
-      /hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts/.test(
+      /hskk_official_sessions|hskk_preflight_recovery|hskk_buffered_prompts|hskk_controlled_test_attempt|hskk_missing_recording_makeup/.test(
         file,
       )
     )

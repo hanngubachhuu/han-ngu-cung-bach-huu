@@ -258,7 +258,7 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
       editor.audioPanel.append(label);
       const deliveryPanel = document.createElement("section");
       deliveryPanel.innerHTML =
-        '<h3>Chuẩn bị đề cho học viên</h3><p data-delivery-status>Đang kiểm tra…</p><button class="st-button" data-prepare>Chuẩn bị phiên bản đề</button><label>Audio câu đã duyệt <input type="file" accept=".zip,application/zip" data-clips></label><label>Học viên kiểm thử <select data-learner><option value="">Chọn học viên</option></select></label><button class="st-button" data-grant>Cấp quyền đề này</button><button class="st-button" data-runtime>Kiểm tra dịch vụ thi</button>';
+        '<h3>Chuẩn bị đề cho học viên</h3><p data-delivery-status>Đang kiểm tra…</p><button class="st-button" data-prepare>Chuẩn bị phiên bản đề</button><label>Audio câu đã duyệt <input type="file" accept=".zip,application/zip" data-clips></label><label>Học viên kiểm thử <select data-learner><option value="">Chọn học viên</option></select></label><button class="st-button" data-grant>Cấp quyền đề này</button><button class="st-button" data-runtime>Kiểm tra dịch vụ thi</button><button class="st-button" data-controlled-test>Cấp một lượt kiểm thử mới</button><p data-test-status aria-live="polite">Lượt mới chỉ dành cho học viên đã có quyền H71002 và có lượt cũ hết hạn. Lượt cũ được giữ nguyên.</p>';
       editor.audioPanel.append(deliveryPanel);
       const deliveryStatus = deliveryPanel.querySelector(
         "[data-delivery-status]",
@@ -335,6 +335,87 @@ export function mountHSKKAdmin(root, { profile, code, onSaved = () => {} }) {
         } catch {
           deliveryStatus.textContent =
             "Dịch vụ thi chưa sẵn sàng. Kiểm tra kết nối rồi thử lại.";
+        }
+      };
+      const testRequests = new Map();
+      const makeupButton = document.createElement("button");
+      makeupButton.className = "st-button";
+      makeupButton.textContent = "Mở nộp bù câu chưa nhận";
+      const makeupStatus = document.createElement("p");
+      makeupStatus.setAttribute("aria-live", "polite");
+      deliveryPanel.append(makeupButton, makeupStatus);
+      const makeupRequests = new Map();
+      makeupButton.onclick = async () => {
+        const student_id = deliveryPanel.querySelector("[data-learner]").value;
+        if (!student_id) {
+          makeupStatus.textContent = "Chọn học viên cần nộp bù.";
+          return;
+        }
+        makeupButton.disabled = true;
+        try {
+          const current = await deliveryApi("makeup-inspect", { student_id });
+          let opened = current;
+          if (!current.window_id) {
+            if (!current.can_open) throw Error("MAKEUP_NOT_AVAILABLE");
+            const key =
+              current.attempt_id + ":" + (current.last_window_id || "first");
+            if (!makeupRequests.has(key))
+              makeupRequests.set(key, crypto.randomUUID());
+            opened = await deliveryApi("makeup-open", {
+              student_id,
+              attempt_id: current.attempt_id,
+              request_id: makeupRequests.get(key),
+              expected_revision: current.revision,
+              expected_version_id: current.version_id,
+              expected_missing: current.missing,
+            });
+          }
+          makeupStatus.textContent = `Đã mở nộp bù câu ${current.missing_numbers.join(", ")} · Hạn ${new Date(opened.expires_at).toLocaleString("vi-VN")}. Các câu đã nhận được giữ nguyên. Gửi học viên liên kết: `;
+          const link = document.createElement("a");
+          link.href = `./hskk-de-thi.html?exam=H71002&attempt=${current.attempt_id}&makeup=1`;
+          link.textContent = "Mở trang nộp bù";
+          makeupStatus.append(link);
+        } catch {
+          makeupStatus.textContent =
+            "Chưa mở được nộp bù. Chỉ mở cho lượt chưa nộp, đã hết hạn và còn câu chưa được nhận. Kiểm tra lại học viên/lượt thi.";
+        } finally {
+          if (alive) makeupButton.disabled = false;
+        }
+      };
+      deliveryPanel.querySelector("[data-controlled-test]").onclick = async (
+        event,
+      ) => {
+        const button = event.currentTarget,
+          status = deliveryPanel.querySelector("[data-test-status]");
+        const studentId = deliveryPanel.querySelector("[data-learner]").value;
+        if (!studentId) {
+          status.textContent = "Chọn đúng học viên kiểm thử đã được duyệt.";
+          return;
+        }
+        button.disabled = true;
+        try {
+          const current = await deliveryApi("test-inspect", {
+            student_id: studentId,
+          });
+          let authorized = current;
+          if (!current.authorized) {
+            if (!current.can_authorize)
+              throw Error("TEST_ATTEMPT_NOT_AVAILABLE");
+            if (!testRequests.has(studentId))
+              testRequests.set(studentId, crypto.randomUUID());
+            authorized = await deliveryApi("test-authorize", {
+              student_id: studentId,
+              request_id: testRequests.get(studentId),
+              expected_version_id: current.version_id,
+              expected_previous_attempt_id: current.previous_attempt_id,
+            });
+          }
+          status.textContent = `Lượt kiểm thử đã được cấp: ${authorized.attempt_id}. Học viên mở H71002 để kiểm tra thiết bị và bắt đầu. Lượt cũ được giữ nguyên; kết quả kiểm thử chưa công bố.`;
+        } catch {
+          status.textContent =
+            "Chưa cấp được lượt mới. Chỉ cấp một lượt cho học viên đã có quyền, đúng phiên bản đã xuất bản và lượt cũ hết hạn. Có thể bấm lại để đối chiếu lượt đã cấp.";
+        } finally {
+          if (alive) button.disabled = false;
         }
       };
       try {

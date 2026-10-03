@@ -35,6 +35,8 @@ export class HSKKExamEngine {
     this.session = null;
     this.activeQuestion = null;
     this.pending = new Map();
+    this.uploads = new Map();
+    this.retries = new Map();
     this.persistence = new Map();
     this.answered = new Set();
     this.recordings = {};
@@ -169,8 +171,17 @@ export class HSKKExamEngine {
     }
     return this.persistence.get(entry.requestId);
   }
-  async save(q, entry) {
-    if (entry.saving || this.disposed) return;
+  save(q, entry) {
+    if (this.disposed) return Promise.resolve();
+    // A submit/retry must join the actual upload, not mistake "already saving"
+    // for "saved". The immutable Blob/request identity is shared throughout.
+    if (this.uploads.has(entry.requestId))
+      return this.uploads.get(entry.requestId);
+    const work = Promise.resolve().then(() => this.saveEntry(q, entry));
+    this.uploads.set(entry.requestId, work);
+    return work;
+  }
+  async saveEntry(q, entry) {
     entry.saving = true;
     try {
       await this.persist(q, entry);
@@ -184,23 +195,36 @@ export class HSKKExamEngine {
       this.pending.delete(q.id);
       await this.journal?.remove(q.id);
       this.persistence.delete(entry.requestId);
+      this.retries.delete(entry.requestId);
       this.onChange(this.view());
     } catch {
+      const attempts = (this.retries.get(entry.requestId)?.attempts || 0) + 1;
+      this.retries.set(entry.requestId, {
+        attempts,
+        at: this.now() + Math.min(30000, 2000 * 2 ** Math.min(attempts - 1, 4)),
+      });
       if (!this.disposed)
         this.onChange({ ...this.view(), recording_status: "ERROR" });
     } finally {
       entry.saving = false;
+      this.uploads.delete(entry.requestId);
     }
   }
-  async retrySaves() {
+  async retrySaves({ automatic = false } = {}) {
     if (this.view().upload_window_expired) throw Error("UPLOAD_WINDOW_EXPIRED");
     await Promise.all(
-      [...this.pending].map(([id, entry]) =>
-        this.save(
-          this.exam.questions.find((q) => q.id === id),
-          entry,
+      [...this.pending]
+        .filter(
+          ([, entry]) =>
+            !automatic ||
+            this.now() >= (this.retries.get(entry.requestId)?.at || 0),
+        )
+        .map(([id, entry]) =>
+          this.save(
+            this.exam.questions.find((q) => q.id === id),
+            entry,
+          ),
         ),
-      ),
     );
   }
   async tick() {
@@ -294,6 +318,24 @@ export class HSKKExamEngine {
     this.onChange(this.view());
     if (
       this.transport.production &&
+      !this.view().upload_window_expired &&
+      !this.retrying &&
+      [...this.pending.values()].some(
+        (entry) =>
+          !this.uploads.has(entry.requestId) &&
+          this.now() >= (this.retries.get(entry.requestId)?.at || 0),
+      )
+    ) {
+      this.retrying = true;
+      // Network recovery is background work; it must not hold the next frame.
+      void this.retrySaves({ automatic: true })
+        .catch(() => {})
+        .finally(() => {
+          this.retrying = false;
+        });
+    }
+    if (
+      this.transport.production &&
       next.state === "COMPLETED" &&
       Object.keys(this.recordings).length === this.exam.questions.length &&
       !this.submitting
@@ -338,8 +380,17 @@ export class HSKKExamEngine {
       ),
     };
   }
-  async submit() {
+  submit() {
+    if (this.submitFlight) return this.submitFlight;
+    const work = this.finishSubmission().finally(() => {
+      this.submitFlight = null;
+    });
+    this.submitFlight = work;
+    return work;
+  }
+  async finishSubmission() {
     await this.retrySaves();
+    if (this.pending.size) throw Error("RECORDING_SAVE_PENDING");
     const completed = await this.transport.transition(
       this.session.attempt_id,
       "COMPLETED",

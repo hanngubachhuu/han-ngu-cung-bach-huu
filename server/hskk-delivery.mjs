@@ -18,6 +18,38 @@ export async function deliveryCommand(client, command, payload) {
     );
   return data;
 }
+export async function controlledTestCommand(
+  client,
+  command,
+  payload,
+  { makeup = false } = {},
+) {
+  const { data, error } = await client.rpc(
+    makeup ? "hskk_makeup" : "hskk_controlled_test",
+    {
+      command,
+      payload,
+    },
+  );
+  if (error) {
+    const allowed = new Set([
+      "ADMIN_REQUIRED",
+      "EXAM_ACCESS_REQUIRED",
+      "EXAM_UNAVAILABLE",
+      "INVALID_REQUEST",
+      "VERSION_CONFLICT",
+      "TEST_ATTEMPT_ALREADY_AUTHORIZED",
+      "TEST_ATTEMPT_NOT_AVAILABLE",
+      "MAKEUP_NOT_AVAILABLE",
+      "MAKEUP_ALREADY_OPEN",
+      "SESSION_NOT_FOUND",
+    ]);
+    throw Error(
+      allowed.has(error.message) ? error.message : "DELIVERY_NOT_READY",
+    );
+  }
+  return data;
+}
 // Read the authoritative publication gate; never prepare or publish on a GET.
 export async function readDeliveryReadiness(client, code) {
   const unavailable = {

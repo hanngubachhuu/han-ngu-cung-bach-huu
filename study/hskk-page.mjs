@@ -67,6 +67,33 @@ if (route === "exam" || levels[route])
       if (!session) return;
       const code = new URLSearchParams(location.search).get("exam");
       const attempt = new URLSearchParams(location.search).get("attempt");
+      if (
+        route === "exam" &&
+        attempt &&
+        new URLSearchParams(location.search).get("makeup") === "1"
+      ) {
+        const { mountMakeup } = await import("./hskk-makeup.mjs");
+        try {
+          const dispose = await mountMakeup(root, {
+            ownerId: session.user.id,
+            attemptId: attempt,
+          });
+          window.addEventListener("pagehide", () => void dispose(), {
+            once: true,
+          });
+          window.addEventListener("study:auth", (event) => {
+            if (event.detail.userId !== session.user.id) {
+              void dispose();
+              root.textContent =
+                "Phiên đăng nhập đã thay đổi. Mở lại bằng tài khoản của bạn.";
+            }
+          });
+        } catch {
+          root.textContent =
+            "Chưa mở được nộp bù. Đăng nhập đúng tài khoản và nhờ Admin mở lượt cho những câu chưa nhận.";
+        }
+        return;
+      }
       const catalog = await hskkSessionRequest(
         "catalog",
         {},

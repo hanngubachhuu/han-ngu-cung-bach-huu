@@ -3,7 +3,23 @@
 Không coi một bug lịch sử là bug hiện tại nếu chưa tái xác minh.
 
 ## Current verified bugs
-Chưa có bug nào được đánh dấu OPEN ở thời điểm bootstrap này.
+
+### HSKK-SUBMIT-INFLIGHT-Q26-Q27 — local fix verified; hosted test pending
+
+- Symptom: the historical BachHuu H71002 attempt has 25 uploaded/bound recordings; Q26/Q27 reservations exist but their original raw objects are absent and the deadline is expired.
+- Reproduction: with both 90-second final-question uploads in flight, the old client calls COMPLETED before either finishes because save() returns immediately for an already saving entry.
+- Change: join per-request upload promises; share simultaneous submit work; retain immutable Blob/identity, retry production uploads with bounded backoff, and stop at the original deadline. Do not block automatic question transitions.
+- Verification: meaningful regression failed before the fix and passes afterwards; full 230/230 tests, lint/build/validators pass. This proves a client race, not the exact historic network failure.
+- Scope: no history edits, no recovered audio claim, no back/rerecord, no deadline extension, no source/clip/publication changes.
+- Exact next: complete local browser/CI/deployment, authorize the user's single new controlled test through actual Admin, then verify a real microphone/27 recordings/submission/Admin playback. Stop on any real E2E failure.
+
+### HSKK-MISSING-QUESTION-MAKEUP — explicitly authorized scope expansion
+
+- Human chooses an Admin-opened missing-question makeup window; allow recording only when the missing original file is absent. This narrowly supersedes the earlier no-history-write restriction.
+- Local SQL/API proof: exact missing-set/revision/version authorization; keep 25 accepted answers/recordings, original session/timeline/deadlines unchanged; reuse already uploaded reference or retained bytes; new missing-only recording; expiry and separately audited reopening; validate all 27, record actual late timestamp and keep review unpublished.
+- Existing Admin player/grade workflow is reused with a makeup label and only bound recordings queued for processing. Storage/RLS policies are retained; no source/clip/global Speaking/scheduler changes.
+- Renderer: real MediaRecorder on a local fake microphone, missing-only Q26/Q27, delayed/retried upload identity, actual local prompt decoding, one submission, 390/768/1366 px PASS. Hosted human recovery remains NOT TESTED.
+- Full suite now 234/234 PASS plus lint/build/validators. Exact code CI/deployment/migration/Admin grant and human makeup remain next; never fabricate or force an old submission.
 
 ## Historical areas to reconcile
 
