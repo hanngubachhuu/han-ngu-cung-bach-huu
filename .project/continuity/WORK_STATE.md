@@ -1,5 +1,13 @@
 # WORK STATE — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Current checkpoint COMPLETE — 2026-10-04
+
+Production application da4a57a is READY, deployment dpl_21bg8sjMieeE6hGXZKV4dS3DPMVQ; six assets match exact Git source. Both application CI workflows PASS; 238/238 tests, lint/build and responsive/security regressions PASS. Old makeup submitted 27/27; separately authorized real full test submitted 27/27, human audio/microphone/auto-next PASS. Human also verifies the deployed submitted recovery screen and account-history navigation. Actual approved Admin sees the new receipt status, shared missing-only makeup control and privately plays Q1/Q26/Q27.
+
+Production generic makeup and scoped processing-alias fixes are applied. All 27 new-attempt recordings were processed/archived by the normal Admin pipeline. Existing row/hash reconciliation confirms only those 27 recording rows and 27 new private playback objects changed; all original answers, submissions, versions, source, policies, access and published grades/results are preserved. Actual approved Student privacy checkpoint PASS, anonymous audio 401, private enumerations empty. No further live attempt or grading/publication by the agent. Speaking false; cron zero.
+
+No remaining blocker for this scope. Preserve PR #36 draft/unmerged, untracked docs/speaking-pilot-preflight.md and all private authoring drafts. Next work requires a separate human request; do not continue publishing, enabling Speaking/scheduler or adding learners. Full evidence: docs/hskk-h71002-checkpoint.md, top verified rollout section. Historical ACTIVE/PENDING snapshots below are superseded.
+
 ## Full hosted submission and completion-screen fix — 2026-10-04
 
 - Real BachHuu test `cb7fa9fa-362c-432d-9aca-7ad9035f36da` received and submitted **27/27** at `2026-10-03T18:29:14.901826Z`, including Q26/Q27. Human feedback explicitly confirms clear audio, working microphone and automatic advancement. Result revision 1 is draft, not published by the agent.

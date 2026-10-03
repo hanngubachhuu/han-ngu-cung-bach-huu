@@ -1,5 +1,11 @@
 # CHANGELOG HANDOFF — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Verified rollout complete — 2026-10-04
+
+Application da4a57a deployed READY / Production at 2026-10-03T19:08:17Z, six live assets equal Git source, both exact application CI PASS. 238/238 local tests plus lint/build and security/responsive regressions PASS. Actual old makeup and new full test both submitted 27/27. Human audio/auto-next and deployed terminal receipt/history navigation PASS. Actual Admin receipt labels, shared makeup inspection and Q1/Q26/Q27 private playback PASS. Normal Admin pipeline prepared all 27 new recordings after alias-only SQL fix.
+
+Actual Student privacy PASS (authoring403, Admin makeup denied, empty private buckets, direct recording400); anonymous audio401. Original row/policy/result/source history preserved; only the 27 authorized new recording rows and 27 private playback objects were processed. Generic makeup migration 20261003183857 and processing fix 20261003185553 applied. Speaking false; cron0; no new publication/extra session/learner grant. PR #36 stays draft/unmerged; preserve untracked docs/speaking-pilot-preflight.md. Historical pending notes below are superseded; current scope is complete.
+
 ## 2026-10-04
 
 General Admin makeup applied as 20261003183857 with every pre-existing row/policy hash unchanged. Real full BachHuu test submitted 27/27 and human audio/auto-next PASS. Completion microphone cleanup/receipt screen and Admin receipt presentation validated locally; exact CI/rollout pending.

@@ -1,5 +1,13 @@
 # BUG LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Closed with hosted evidence — 2026-10-04
+
+- Completion workspace/microphone defect: fixed in production da4a57a. Local real-browser track-ended regression PASS at three widths; actual Student verifies terminal receipt and account-history navigation after reopening the submitted hosted attempt.
+- Admin receipt ambiguity: actual production queue/detail now shows “Đã nhận trên hệ thống” independently of grading/publication.
+- Ordinary submitted HSKK processing error 42703: scoped alias-only migration 20261003185553 applied, normal-session SQL regression PASS and all 27 actual new-attempt recordings processed/archived. Actual Admin private playback Q1/Q26/Q27 PASS.
+- Q26/Q27 recovery: old makeup and separately authorized normal full test are both legitimately submitted 27/27. Actual Student feedback confirms clear prompt audio, microphone and automatic advancement.
+- Shared makeup final hosted Student denial PASS; no Storage-policy or entitlement widening. Earlier rollout-pending notes below are historical.
+
 ## 2026-10-04
 
 Completion UI: real hosted 27/27 submission left microphone capture and CBT workspace active. Reproduced RED, renderer cleanup and terminal confirmation now pass responsive browser regression; production rollout pending.

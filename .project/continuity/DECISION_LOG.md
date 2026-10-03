@@ -1,5 +1,9 @@
 # DECISION LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Completion acceptance — 2026-10-04
+
+The human confirms the deployed submitted screen and return to account-history work. Server receipt remains authoritative; pending uploads must retain recovery rather than prematurely ending the exam. Admin receipt status is separate from grading/publication. Shared makeup is limited to server-missing answers on a pinned version and requires an audited Admin opening; it preserves previously accepted answers and published grades. Stop at the verified checkpoint; do not create another test or publish any new result.
+
 ## 2026-10-04
 
 After server-confirmed submission automatically end microphone capture and leave the timed workspace for a receipt screen with history navigation. Show Admin receipt independently from grading status; never navigate away while uploads are pending.
