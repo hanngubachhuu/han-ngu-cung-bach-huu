@@ -29,7 +29,7 @@ export const kindLabels = Object.freeze({
   speaking_long_answer: "Trả lời câu hỏi",
   picture_description: "Miêu tả tranh",
   read_aloud: "Đọc thành tiếng",
-  short_response: "Trả lời ngắn",
+  short_response: "Nghe và thuật lại",
   long_response: "Trả lời dài",
 });
 
