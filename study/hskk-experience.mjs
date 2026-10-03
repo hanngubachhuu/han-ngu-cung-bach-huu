@@ -28,6 +28,7 @@ export async function mountExamExperience(
     languageSelected = false,
     fontLarge = false;
   let analyser, microphoneSource, sampleUrl;
+  let resourcesReleased = false;
   const notes = new Map();
   const trialAudio = document.createElement("audio");
   const t = (text) => cbtText(text, language);
@@ -71,6 +72,23 @@ export async function mountExamExperience(
     },
     onChange: render,
   });
+  function releaseResources() {
+    if (resourcesReleased) return;
+    resourcesReleased = true;
+    clearInterval(interval);
+    cancelAnimationFrame(levelFrame);
+    window.removeEventListener("online", reconnect);
+    sampleActive = false;
+    trialAudio.pause();
+    trialAudio.removeAttribute("src");
+    if (sampleUrl) URL.revokeObjectURL(sampleUrl);
+    sampleUrl = null;
+    microphoneSource?.disconnect();
+    stream?.getTracks().forEach((track) => track.stop());
+    if (context && context.state !== "closed")
+      void context.close().catch(() => {});
+    void engine.dispose().catch(() => {});
+  }
   function button(label, callback, { primary = true, disabled = false } = {}) {
     const b = document.createElement("button");
     b.type = "button";
@@ -158,6 +176,32 @@ export async function mountExamExperience(
   };
   function render(view) {
     if (disposed) return;
+    if (["SUBMITTED", "GRADED", "PUBLISHED"].includes(view.state)) {
+      if (resourcesReleased && root.dataset.state === view.state) return;
+      releaseResources();
+      root.dataset.state = view.state;
+      root.dataset.question = "";
+      root.classList.remove("hskk-cbt-root", "cbt-font-large");
+      if (!preview) document.body.classList.remove("hskk-cbt-active");
+      root.innerHTML = `<section class="hskk-card" data-submission-complete aria-labelledby="hskkSubmissionTitle"><p class="st-eyebrow">${esc(exam.exam_code)}</p><h1 id="hskkSubmissionTitle" tabindex="-1">${t("Đã nộp bài")}</h1><p>${t(`Đã lưu ${view.saved}/${view.total} câu.`)}</p><p>${t("Microphone đã tắt. Bạn có thể rời trang.")}</p><p data-message role="status" aria-live="polite">${t("Đang kiểm tra kết quả…")}</p><div data-result></div><div class="account-actions"><a class="st-button primary" href="tai-khoan.html#officialAssignments">${t("Về bài nộp của tôi")}</a><a class="st-button" href="hskk.html">${t("Về danh sách đề HSKK")}</a></div></section>`;
+      root.querySelector("h1").focus({ preventScroll: true });
+      void engine
+        .result()
+        .then((result) => {
+          if (disposed) return;
+          message(result.message);
+          if (result.status === "published")
+            root.querySelector("[data-result]").innerHTML =
+              `<p>Điểm: ${esc(result.score)}</p>${Array.isArray(result.feedback) ? result.feedback.map((q, i) => `<p>Câu ${i + 1}: ${esc(q.feedback)}</p>`).join("") : `<p>${esc(result.feedback)}</p>`}`;
+        })
+        .catch(() => {
+          if (!disposed)
+            message(
+              "Bài đã nộp thành công. Bạn có thể xem kết quả sau trong Bài của bạn.",
+            );
+        });
+      return;
+    }
     const previousQuestion = root.dataset.question;
     if (
       root.dataset.state === view.state &&
@@ -320,12 +364,6 @@ export async function mountExamExperience(
         );
         notices(view);
       }
-      if (["SUBMITTED", "GRADED", "PUBLISHED"].includes(view.state))
-        void engine.result().then((result) => {
-          message(result.message);
-          if (result.status === "published")
-            body.innerHTML += `<p>Điểm: ${esc(result.score)}</p>${Array.isArray(result.feedback) ? result.feedback.map((q, i) => `<p>Câu ${i + 1}: ${esc(q.feedback)}</p>`).join("") : `<p>${esc(result.feedback)}</p>`}`;
-        });
       return;
     }
     if (view.state === "CREATED") {
@@ -571,30 +609,24 @@ export async function mountExamExperience(
     await engine.recover();
     transport.loadSession = async () => transport.refreshSession();
   } else await engine.recover();
-  interval = setInterval(async () => {
-    if (ticking) return;
-    ticking = true;
-    try {
-      await engine.tick();
-    } catch {
-      message(
-        "Ghi âm bị gián đoạn. Kiểm tra microphone; thời gian bài vẫn tiếp tục.",
-      );
-    } finally {
-      ticking = false;
-    }
-  }, 100);
+  if (!resourcesReleased)
+    interval = setInterval(async () => {
+      if (ticking) return;
+      ticking = true;
+      try {
+        await engine.tick();
+      } catch {
+        message(
+          "Ghi âm bị gián đoạn. Kiểm tra microphone; thời gian bài vẫn tiếp tục.",
+        );
+      } finally {
+        ticking = false;
+      }
+    }, 100);
   return async () => {
     disposed = true;
     root.classList.remove("hskk-cbt-root", "cbt-font-large");
     if (!preview) document.body.classList.remove("hskk-cbt-active");
-    trialAudio.pause();
-    if (sampleUrl) URL.revokeObjectURL(sampleUrl);
-    clearInterval(interval);
-    cancelAnimationFrame(levelFrame);
-    window.removeEventListener("online", reconnect);
-    await engine.dispose();
-    stream?.getTracks().forEach((t) => t.stop());
-    if (context?.state !== "closed") await context?.close();
+    releaseResources();
   };
 }

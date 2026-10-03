@@ -1,5 +1,9 @@
 # BUG LOG — HÁN NGỮ CÙNG BÁCH HỮU
 
+## 2026-10-04
+
+Completion UI: real hosted 27/27 submission left microphone capture and CBT workspace active. Reproduced RED, renderer cleanup and terminal confirmation now pass responsive browser regression; production rollout pending.
+
 ### HSKK-MAKEUP-HISTORY-GUARD — hosted recovery VERIFIED
 - Actual source of the 0/2 stuck screen: recordings confirmed in private Storage, then the unchanged original history trigger rejected their answer binding after the original deadline. Initial synthetic clock override missed the trigger clock; regression now reproduces that exact rejection and verifies the narrow missing-only exception.
 - Forward hotfix f0b62dd / production migration 20261003175113 applied after both CI PASS. The real Student retry bound the same already uploaded files; human submitted at 17:52:08.881719Z. Server 27/27, submitted; original 25 accepted answers unchanged. No duplicate recordings or deadline extension.

@@ -1,5 +1,16 @@
 # WORK STATE — HÁN NGỮ CÙNG BÁCH HỮU
 
+## Full hosted submission and completion-screen fix — 2026-10-04
+
+- Real BachHuu test `cb7fa9fa-362c-432d-9aca-7ad9035f36da` received and submitted **27/27** at `2026-10-03T18:29:14.901826Z`, including Q26/Q27. Human feedback explicitly confirms clear audio, working microphone and automatic advancement. Result revision 1 is draft, not published by the agent.
+- The human screenshot exposes a remaining completion UI defect: after successful automatic submission the timed CBT shell and microphone monitor remain active. The new renderer releases microphone tracks, analyser/context, audio, timer, online listener and journal after server-confirmed submission, then automatically replaces the exam workspace with a submission confirmation and links to account submission history/HSKK. Pending/failed uploads keep the exam recovery flow. Reopening a submitted exam does not record or submit again; unavailable result lookup cannot hide a successful receipt.
+- Regression reproduced RED against the old build (microphone track still live), then PASS at 390/768/1366 px: all 27 delayed prompt clips start from zero, 27 recordings, one submission, every microphone track ended, exam shell/skin removed, history link present, submitted recovery without another submission, and safe result-fetch failure. Targeted 24 engine/media/microphone tests PASS; lint PASS. Full 238-test suite and both CI workflows already PASS for general makeup commit `2db4b1a`; exact completion-fix CI/rollout are pending.
+- Admin now displays **Đã nhận trên hệ thống** independently of the secondary grading/publication state. Draft attempts remain **Đang làm**. This changes presentation, not submission or score state.
+- General Admin makeup migration applied as production `20261003183857 / assignment_admin_makeup`. Before/after row hashes, counts, Storage policies, original source/authoring, enrollments/access, both session histories, submissions/results/grades all match exactly. Speaking remains false; cron jobs zero. Application rollout remains pending the completion-fix CI.
+- Clarification: the original recovered attempt was submitted 27/27 at `17:52:08.881719Z`; the human Admin subsequently published its result at `18:06:16.972882Z`. That human publication supersedes the earlier snapshot saying its result was still private. The agent did not publish, grade or alter that result.
+
+Next: deploy the exact tested completion-fix application after CI, verify hosted Admin receipt/makeup controls and real recording playback, and obtain fresh real-Student privacy/completion evidence. Preserve all original source/history, no more test attempts, no automatic result publication, Speaking/scheduler off.
+
 ## Hosted makeup recovery and general Admin authority — 2026-10-04
 
 - VERIFIED: the original blocking production trigger rejected Q26/Q27 binding after the original deadline (`SUBMISSION_LOCKED`) although both real new recordings had already reached private Storage. Forward hotfix `f0b62dd` passed both CI workflows and was applied as `20261003175113 / hskk_makeup_history_guard`; the real Student tab retried the same references and successfully submitted.

@@ -139,6 +139,15 @@ try {
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(base + "/hskk-de-thi.html?exam=H71002");
     await page.evaluate(async (audio) => {
+      const getUserMedia = navigator.mediaDevices.getUserMedia.bind(
+        navigator.mediaDevices,
+      );
+      window.deliveryTracks = [];
+      navigator.mediaDevices.getUserMedia = async (options) => {
+        const stream = await getUserMedia(options);
+        window.deliveryTracks.push(...stream.getTracks());
+        return stream;
+      };
       const { mountExamExperience } = await import(
           "/study/hskk-experience.mjs"
         ),
@@ -278,6 +287,22 @@ try {
           journal: new ExamSessionJournal(owner, id),
         },
       );
+      window.deliveryRemount = async ({ unavailableResult = false } = {}) => {
+        await window.deliveryDispose();
+        if (unavailableResult)
+          transport.result = async () => {
+            throw Error("OFFLINE");
+          };
+        window.deliveryDispose = await mountExamExperience(
+          document.querySelector("#hskkContent"),
+          {
+            exam,
+            candidate: { id: owner, name: "Học viên kiểm thử" },
+            transport,
+            journal: new ExamSessionJournal(owner, id),
+          },
+        );
+      };
     }, audio);
     await page.getByRole("button", { name: "Tiếng Việt", exact: true }).click();
     await page
@@ -338,6 +363,9 @@ try {
         "audio[controls],video[controls]",
       ).length,
       overflow: document.documentElement.scrollWidth > innerWidth + 1,
+      tracks: window.deliveryTracks.map((track) => track.readyState),
+      examShell: Boolean(document.querySelector(".cbt-examination")),
+      examSkin: document.body.classList.contains("hskk-cbt-active"),
     }));
     assert.equal(result.evidence.saved, 27);
     assert.equal(result.evidence.submissions, 1);
@@ -352,6 +380,40 @@ try {
     );
     assert.equal(result.audioControls, 0);
     assert.equal(result.overflow, false);
+    assert.ok(result.tracks.length > 0);
+    assert.ok(
+      result.tracks.every((state) => state === "ended"),
+      "A successful submission must release the microphone.",
+    );
+    assert.equal(
+      result.examShell,
+      false,
+      "Leave the timed CBT workspace after a server-confirmed submission.",
+    );
+    assert.equal(result.examSkin, false);
+    assert.equal(
+      await page
+        .getByRole("link", { name: "Về bài nộp của tôi", exact: true })
+        .getAttribute("href"),
+      "tai-khoan.html#officialAssignments",
+    );
+    await page.evaluate(() => window.deliveryRemount());
+    await page.getByText("Chưa công bố kết quả.", { exact: true }).waitFor();
+    assert.equal(await page.locator("[data-submission-complete]").count(), 1);
+    await page.evaluate(() =>
+      window.deliveryRemount({ unavailableResult: true }),
+    );
+    await page
+      .getByText(
+        "Bài đã nộp thành công. Bạn có thể xem kết quả sau trong Bài của bạn.",
+        { exact: true },
+      )
+      .waitFor();
+    assert.equal(
+      await page.evaluate(() => window.deliveryEvidence.submissions),
+      1,
+      "Reopening a submitted exam must not submit again.",
+    );
     assert.deepEqual(errors, []);
     await fs.mkdir("test-results/hskk", { recursive: true });
     await page.screenshot({

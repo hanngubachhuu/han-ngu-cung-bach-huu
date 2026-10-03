@@ -1,5 +1,9 @@
 # CHANGELOG HANDOFF — HÁN NGỮ CÙNG BÁCH HỮU
 
+## 2026-10-04
+
+General Admin makeup applied as 20261003183857 with every pre-existing row/policy hash unchanged. Real full BachHuu test submitted 27/27 and human audio/auto-next PASS. Completion microphone cleanup/receipt screen and Admin receipt presentation validated locally; exact CI/rollout pending.
+
 ## 2026-10-04 — real makeup received, shared Admin opening
 - Hosted fix: f0b62dd, both CI PASS, migration 20261003175113. The same real Q26/Q27 bytes were bound after the narrow history-trigger correction. Actual Student submitted at 2026-10-03T17:52:08.881719Z; old attempt submitted 27/27, frozen 25 answers unchanged. Real Admin sees receipt and both new recordings.
 - Human expands makeup authority to every official lesson/exam. Forward generic migration and shared UI now cover all eight written formats plus speaking; missing-only, immutable received answers, original versions/timing, old published grades and real late receipts. Admin opens from submission detail; entitled owner uses a supplied link or Nộp bù in their own history.

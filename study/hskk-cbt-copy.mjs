@@ -61,6 +61,13 @@ const chinese = {
   "Thời gian chuẩn bị": "准备时间",
   "Bài thi thử đã hoàn thành.": "模拟考试已完成。",
   "Đã nộp bài": "已交卷",
+  "Microphone đã tắt. Bạn có thể rời trang.":
+    "麦克风已关闭。您可以离开此页面。",
+  "Đang kiểm tra kết quả…": "正在查询成绩…",
+  "Về bài nộp của tôi": "查看我的答卷",
+  "Về danh sách đề HSKK": "返回HSKK试卷列表",
+  "Bài đã nộp thành công. Bạn có thể xem kết quả sau trong Bài của bạn.":
+    "答卷已成功提交。您可以稍后在我的答卷中查看成绩。",
   "Bài thi thử đã được nộp.": "模拟考试已交卷。",
   "Chưa công bố kết quả.": "成绩尚未公布。",
   "Đã công bố kết quả.": "成绩已公布。",
